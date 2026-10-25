@@ -1,0 +1,23 @@
+[project]
+name = "persona-neurons"
+version = "0.1.0"
+description = "Neuron explorer for personality adapters on Qwen3-8B (port of lyramakesmusic/neuron-explorer)"
+requires-python = ">=3.11"
+dependencies = [
+    "torch",
+    "transformers>=4.51",
+    "peft>=0.15",
+    "safetensors",
+    "numpy",
+    "huggingface_hub",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "httpx",
+]
+
+[project.optional-dependencies]
+pod = ["datasets", "accelerate", "pandas", "pyarrow"]
+plot = ["matplotlib"]
+
+[tool.setuptools]
+packages = ["pn"]
