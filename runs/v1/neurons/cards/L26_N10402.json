@@ -1,0 +1,1164 @@
+{
+ "id": "L26/N10402",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:18:20Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "modal auxiliary verbs",
+   "trigger_hypothesis": "The neuron fires negatively on modal auxiliary verbs (would, will, 'll, always) and positively on interrogative 'What' at the start of a question or exclamation.",
+   "output_hypothesis": "The neuron suppresses modal uncertainty and emphasizes interrogative questioning, possibly steering away from speculative or future-oriented language and towards direct inquiry.",
+   "alternatives": [
+    "The neuron detects grammatical mood: negative for subjunctive/future modals, positive for interrogative pronouns.",
+    "The neuron responds to emotional valence: negative for hopeful/wishful statements, positive for confrontational questioning."
+   ],
+   "adapter_changes": "State changes are minor; E+1 slightly reduces negative magnitude in emotional_chat (W03, W20, W22), C+1 slightly increases positive magnitude in chat (W10).",
+   "supporting": [
+    "L26_N10402:e00",
+    "L26_N10402:e08",
+    "L26_N10402:e09",
+    "L26_N10402:e11",
+    "L26_N10402:e02",
+    "L26_N10402:e05",
+    "L26_N10402:e06",
+    "L26_N10402:e14"
+   ],
+   "contradicting": [
+    "L26_N10402:e13",
+    "L26_N10402:e03",
+    "L26_N10402:e04",
+    "L26_N10402:e07",
+    "L26_N10402:e33",
+    "L26_N10402:e32",
+    "L26_N10402:e31",
+    "L26_N10402:e29",
+    "L26_N10402:e35",
+    "L26_N10402:e38",
+    "L26_N10402:e39",
+    "L26_N10402:e37",
+    "L26_N10402:e15",
+    "L26_N10402:e24",
+    "L26_N10402:e26",
+    "L26_N10402:e27"
+   ],
+   "proposed_tests": [
+    "modal vs non-modal future reference :: [negative] He would go tomorrow. | [low] He goes tomorrow.",
+    "interrogative 'What' vs declarative :: [high] What is that? | [low] That is something.",
+    "modal 'will' vs noun 'will' :: [negative] She will succeed. | [low] Her will is strong.",
+    "'always' as adverb vs other adverbs :: [negative] It always rains. | [low] It often rains.",
+    "contracted modal 'll' vs other contractions :: [negative] We'll see. | [low] We've seen.",
+    "interrogative 'What' in exclamation vs question :: [high] What a mess! | [high] What is it?",
+    "modal in emotional vs neutral context :: [negative] I would be sad. | [negative] It would fit.",
+    "pronoun 'she' vs modal :: [negative] She would come. | [low] She comes.",
+    "'What' after punctuation vs mid-sentence :: [high] \nWhat now? | [low] Tell me what now.",
+    "negative modal in religious vs secular context :: [negative] God would forgive. | [negative] The law would allow."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "modal vs non-modal future reference",
+     "texts": [
+      {
+       "text": "He would go tomorrow.",
+       "expected": "negative",
+       "target": "would"
+      },
+      {
+       "text": "He goes tomorrow.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "interrogative 'What' vs declarative",
+     "texts": [
+      {
+       "text": "What is that?",
+       "expected": "high",
+       "target": "What"
+      },
+      {
+       "text": "That is something.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "modal 'will' vs noun 'will'",
+     "texts": [
+      {
+       "text": "She will succeed.",
+       "expected": "negative",
+       "target": "will"
+      },
+      {
+       "text": "Her will is strong.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'always' as adverb vs other adverbs",
+     "texts": [
+      {
+       "text": "It always rains.",
+       "expected": "negative",
+       "target": "always"
+      },
+      {
+       "text": "It often rains.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "contracted modal 'll' vs other contractions",
+     "texts": [
+      {
+       "text": "We'll see.",
+       "expected": "negative",
+       "target": "'ll"
+      },
+      {
+       "text": "We've seen.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "interrogative 'What' in exclamation vs question",
+     "texts": [
+      {
+       "text": "What a mess!",
+       "expected": "high",
+       "target": "What"
+      },
+      {
+       "text": "What is it?",
+       "expected": "high",
+       "target": "What"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "modal in emotional vs neutral context",
+     "texts": [
+      {
+       "text": "I would be sad.",
+       "expected": "negative",
+       "target": "would"
+      },
+      {
+       "text": "It would fit.",
+       "expected": "negative",
+       "target": "would"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "pronoun 'she' vs modal",
+     "texts": [
+      {
+       "text": "She would come.",
+       "expected": "negative",
+       "target": "would"
+      },
+      {
+       "text": "She comes.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'What' after punctuation vs mid-sentence",
+     "texts": [
+      {
+       "text": "\nWhat now?",
+       "expected": "high",
+       "target": "What"
+      },
+      {
+       "text": "Tell me what now.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "negative modal in religious vs secular context",
+     "texts": [
+      {
+       "text": "God would forgive.",
+       "expected": "negative",
+       "target": "would"
+      },
+      {
+       "text": "The law would allow.",
+       "expected": "negative",
+       "target": "would"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5667,
+    "output_tokens": 928,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00174286
+   },
+   "invalid_citations": [],
+   "packet_hash": "484225b4a94a662c1f0081cf27972831873ae0c9f03b62fbf59a383b8a558510",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "modal vs non-modal future reference",
+   "prediction": "negative on 'would'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He would go tomorrow.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.3887,
+     "measured_min": -0.1953,
+     "value": -0.1953,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He goes tomorrow.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1973,
+     "measured_min": 0.0,
+     "value": 0.1973,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "interrogative 'What' vs declarative",
+   "prediction": "high on 'What'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What is that?",
+     "expected": "high",
+     "target": "What",
+     "measured_max": 0.062,
+     "measured_min": -0.2266,
+     "value": 0.0,
+     "threshold": 3.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That is something.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5469,
+     "measured_min": -0.1582,
+     "value": 0.5469,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "modal 'will' vs noun 'will'",
+   "prediction": "negative on 'will'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She will succeed.",
+     "expected": "negative",
+     "target": "will",
+     "measured_max": 0.8281,
+     "measured_min": -0.0747,
+     "value": -0.0747,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Her will is strong.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1484,
+     "measured_min": -0.4551,
+     "value": 0.4551,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'always' as adverb vs other adverbs",
+   "prediction": "negative on 'always'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It always rains.",
+     "expected": "negative",
+     "target": "always",
+     "measured_max": 0.1187,
+     "measured_min": -0.3945,
+     "value": 0.0016,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It often rains.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2754,
+     "measured_min": -0.0215,
+     "value": 0.2754,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "contracted modal 'll' vs other contractions",
+   "prediction": "negative on \"'ll\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We'll see.",
+     "expected": "negative",
+     "target": "'ll",
+     "measured_max": 0.2598,
+     "measured_min": -2.9375,
+     "value": -0.5312,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We've seen.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1846,
+     "measured_min": -0.126,
+     "value": 0.1846,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.023,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "interrogative 'What' in exclamation vs question",
+   "prediction": "high on 'What'; high on 'What'",
+   "texts": [
+    {
+     "text": "What a mess!",
+     "expected": "high",
+     "target": "What",
+     "measured_max": 0.7422,
+     "measured_min": -0.001,
+     "value": 0.0,
+     "threshold": 3.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "What is it?",
+     "expected": "high",
+     "target": "What",
+     "measured_max": 0.0,
+     "measured_min": -0.252,
+     "value": 0.0,
+     "threshold": 3.0938,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "modal in emotional vs neutral context",
+   "prediction": "negative on 'would'; negative on 'would'",
+   "texts": [
+    {
+     "text": "I would be sad.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.0957,
+     "measured_min": -0.1592,
+     "value": -0.1113,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It would fit.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.0,
+     "measured_min": -0.126,
+     "value": -0.126,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "pronoun 'she' vs modal",
+   "prediction": "negative on 'would'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She would come.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.105,
+     "measured_min": -0.252,
+     "value": -0.252,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She comes.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0449,
+     "measured_min": -0.2363,
+     "value": 0.2363,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'What' after punctuation vs mid-sentence",
+   "prediction": "high on 'What'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nWhat now?",
+     "expected": "high",
+     "target": "What",
+     "measured_max": 1.8672,
+     "measured_min": -0.2197,
+     "value": 1.8672,
+     "threshold": 3.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Tell me what now.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4668,
+     "measured_min": -0.2734,
+     "value": 0.4668,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.078,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "negative modal in religious vs secular context",
+   "prediction": "negative on 'would'; negative on 'would'",
+   "texts": [
+    {
+     "text": "God would forgive.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.2773,
+     "measured_min": -2.125,
+     "value": -2.125,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The law would allow.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.1221,
+     "measured_min": -0.1689,
+     "value": -0.0239,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "modal vs non-modal future reference",
+   "prediction": "negative on 'would'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He would go tomorrow.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.3887,
+     "measured_min": -0.1953,
+     "value": -0.1953,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He goes tomorrow.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1973,
+     "measured_min": 0.0,
+     "value": 0.1973,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "interrogative 'What' vs declarative",
+   "prediction": "high on 'What'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What is that?",
+     "expected": "high",
+     "target": "What",
+     "measured_max": 0.062,
+     "measured_min": -0.2266,
+     "value": 0.0,
+     "threshold": 3.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "That is something.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5469,
+     "measured_min": -0.1582,
+     "value": 0.5469,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "modal 'will' vs noun 'will'",
+   "prediction": "negative on 'will'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She will succeed.",
+     "expected": "negative",
+     "target": "will",
+     "measured_max": 0.8281,
+     "measured_min": -0.0747,
+     "value": -0.0747,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Her will is strong.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1484,
+     "measured_min": -0.4551,
+     "value": 0.4551,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'always' as adverb vs other adverbs",
+   "prediction": "negative on 'always'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It always rains.",
+     "expected": "negative",
+     "target": "always",
+     "measured_max": 0.1187,
+     "measured_min": -0.3945,
+     "value": 0.0016,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It often rains.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2754,
+     "measured_min": -0.0215,
+     "value": 0.2754,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "contracted modal 'll' vs other contractions",
+   "prediction": "negative on \"'ll\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We'll see.",
+     "expected": "negative",
+     "target": "'ll",
+     "measured_max": 0.2598,
+     "measured_min": -2.9375,
+     "value": -0.5312,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We've seen.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1846,
+     "measured_min": -0.126,
+     "value": 0.1846,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.023,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "interrogative 'What' in exclamation vs question",
+   "prediction": "high on 'What'; high on 'What'",
+   "texts": [
+    {
+     "text": "What a mess!",
+     "expected": "high",
+     "target": "What",
+     "measured_max": 0.7422,
+     "measured_min": -0.001,
+     "value": 0.0,
+     "threshold": 3.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "What is it?",
+     "expected": "high",
+     "target": "What",
+     "measured_max": 0.0,
+     "measured_min": -0.252,
+     "value": 0.0,
+     "threshold": 3.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "modal in emotional vs neutral context",
+   "prediction": "negative on 'would'; negative on 'would'",
+   "texts": [
+    {
+     "text": "I would be sad.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.0957,
+     "measured_min": -0.1592,
+     "value": -0.1113,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It would fit.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.0,
+     "measured_min": -0.126,
+     "value": -0.126,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "pronoun 'she' vs modal",
+   "prediction": "negative on 'would'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She would come.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.105,
+     "measured_min": -0.252,
+     "value": -0.252,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She comes.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0449,
+     "measured_min": -0.2363,
+     "value": 0.2363,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'What' after punctuation vs mid-sentence",
+   "prediction": "high on 'What'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nWhat now?",
+     "expected": "high",
+     "target": "What",
+     "measured_max": 1.8672,
+     "measured_min": -0.2197,
+     "value": 1.8672,
+     "threshold": 3.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Tell me what now.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4668,
+     "measured_min": -0.2734,
+     "value": 0.4668,
+     "threshold": 2.9688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.078,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "negative modal in religious vs secular context",
+   "prediction": "negative on 'would'; negative on 'would'",
+   "texts": [
+    {
+     "text": "God would forgive.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.2773,
+     "measured_min": -2.125,
+     "value": -2.125,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The law would allow.",
+     "expected": "negative",
+     "target": "would",
+     "measured_max": 0.1221,
+     "measured_min": -0.1689,
+     "value": -0.0239,
+     "threshold": -5.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 6.1875,
+    "neg_ref": -11.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8984375,
+    "p01": -0.90625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  }
+ ]
+}

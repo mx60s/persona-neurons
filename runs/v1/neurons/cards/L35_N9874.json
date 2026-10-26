@@ -1,0 +1,1148 @@
+{
+ "id": "L35/N9874",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:28Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "semicolon after narrative paragraph end",
+   "trigger_hypothesis": "The neuron fires strongly on a semicolon token that appears after a narrative paragraph ending with a period, especially when the paragraph describes a completed action or scene.",
+   "output_hypothesis": "The neuron's output may encourage continuation of a narrative after a paragraph break, perhaps by promoting sentence-starting tokens.",
+   "alternatives": [
+    "The neuron fires on any semicolon token regardless of context.",
+    "The neuron fires on punctuation that follows a period, indicating a new sentence start."
+   ],
+   "adapter_changes": "In state A+1, C+1, D+1, the neuron's activation increases strongly on newline tokens in emotional_chat prompts (W18-W22), suggesting the adapter modifications make it sensitive to assistant turn-starting newlines after emotional user content.",
+   "supporting": [
+    "L35_N9874:e01",
+    "L35_N9874:e02",
+    "L35_N9874:e04",
+    "L35_N9874:e06",
+    "L35_N9874:e07"
+   ],
+   "contradicting": [
+    "L35_N9874:e11",
+    "L35_N9874:e10",
+    "L35_N9874:e09"
+   ],
+   "proposed_tests": [
+    "semicolon after narrative paragraph vs. other punctuation :: [high] He finished the book and closed it. ; | [low] He finished the book and closed it. .",
+    "semicolon after code comment vs. narrative :: [high] # This is a comment ; | [high] This is a story. ;",
+    "semicolon after incomplete sentence :: [low] He started to run ; | [high] He ran. ;",
+    "semicolon in list vs. paragraph end :: [low] apples; bananas; oranges | [high] He ate apples. ;",
+    "newline after emotional user prompt in adapted states :: [high] I'm so happy!<|im_end|>\n<|im_start|>assistant\n | [low] The sky is blue.<|im_end|>\n<|im_start|>assistant\n",
+    "semicolon after question mark :: [low] Is that you? ; | [high] That was you. ;",
+    "semicolon after exclamation :: [low] Wow! ; | [high] Wow. ;",
+    "semicolon after period in code license :: [high] # but WITHOUT ANY WARRANTY; | [low] # but WITHOUT ANY WARRANTY",
+    "semicolon after emotional chat sentence :: [high] He helped me get home earlier ; | [low] He helped me get home earlier",
+    "semicolon in middle of sentence :: [low] The cat; which was black; slept. | [high] The cat was black. ;"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "semicolon after narrative paragraph vs. other punctuation",
+     "texts": [
+      {
+       "text": "He finished the book and closed it. ;",
+       "expected": "high",
+       "target": ";"
+      },
+      {
+       "text": "He finished the book and closed it. .",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "semicolon after code comment vs. narrative",
+     "texts": [
+      {
+       "text": "# This is a comment ;",
+       "expected": "high",
+       "target": ";"
+      },
+      {
+       "text": "This is a story. ;",
+       "expected": "high",
+       "target": ";"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "semicolon after incomplete sentence",
+     "texts": [
+      {
+       "text": "He started to run ;",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "He ran. ;",
+       "expected": "high",
+       "target": ";"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "semicolon in list vs. paragraph end",
+     "texts": [
+      {
+       "text": "apples; bananas; oranges",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "He ate apples. ;",
+       "expected": "high",
+       "target": ";"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "newline after emotional user prompt in adapted states",
+     "texts": [
+      {
+       "text": "I'm so happy!<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "The sky is blue.<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "semicolon after question mark",
+     "texts": [
+      {
+       "text": "Is that you? ;",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "That was you. ;",
+       "expected": "high",
+       "target": ";"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "semicolon after exclamation",
+     "texts": [
+      {
+       "text": "Wow! ;",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "Wow. ;",
+       "expected": "high",
+       "target": ";"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "semicolon after period in code license",
+     "texts": [
+      {
+       "text": "# but WITHOUT ANY WARRANTY;",
+       "expected": "high",
+       "target": ";"
+      },
+      {
+       "text": "# but WITHOUT ANY WARRANTY",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "semicolon after emotional chat sentence",
+     "texts": [
+      {
+       "text": "He helped me get home earlier ;",
+       "expected": "high",
+       "target": ";"
+      },
+      {
+       "text": "He helped me get home earlier",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "semicolon in middle of sentence",
+     "texts": [
+      {
+       "text": "The cat; which was black; slept.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "The cat was black. ;",
+       "expected": "high",
+       "target": ";"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5393,
+    "output_tokens": 935,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00167428
+   },
+   "invalid_citations": [],
+   "packet_hash": "88fa3f8f73cb908a0b434c6ab6f54f57499ef6da583bf2f5f09346741c6db051",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "semicolon after narrative paragraph vs. other punctuation",
+   "prediction": "high on ';'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He finished the book and closed it. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0046,
+     "measured_min": -2.625,
+     "value": -2.625,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He finished the book and closed it. .",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0046,
+     "measured_min": -0.0613,
+     "value": 0.0613,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.029,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "semicolon after code comment vs. narrative",
+   "prediction": "high on ';'; high on ';'",
+   "texts": [
+    {
+     "text": "# This is a comment ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0,
+     "measured_min": -1.8828,
+     "value": -1.8828,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is a story. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0095,
+     "measured_min": -2.25,
+     "value": -2.25,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "semicolon after incomplete sentence",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "He started to run ;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0021,
+     "measured_min": -1.2266,
+     "value": 1.2266,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "He ran. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0,
+     "measured_min": -2.0781,
+     "value": -2.0781,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.023,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "semicolon in list vs. paragraph end",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "apples; bananas; oranges",
+     "expected": "low",
+     "target": "",
+     "measured_max": 87.5,
+     "measured_min": -0.1777,
+     "value": 87.5,
+     "threshold": 13.375,
+     "pass": false,
+     "measured_at": "token"
+    },
+    {
+     "text": "He ate apples. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0,
+     "measured_min": -0.1826,
+     "value": -0.1826,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.98,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "newline after emotional user prompt in adapted states",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so happy!<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0004,
+     "measured_min": -2.2031,
+     "value": -0.0566,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The sky is blue.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.001,
+     "measured_min": -2.7812,
+     "value": 2.7812,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "semicolon after question mark",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "Is that you? ;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0024,
+     "measured_min": -1.6719,
+     "value": 1.6719,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "That was you. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.008,
+     "measured_min": -1.2656,
+     "value": -1.2656,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "semicolon after exclamation",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "Wow! ;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.1641,
+     "value": 1.1641,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "Wow. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0,
+     "measured_min": -0.9102,
+     "value": -0.9102,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "semicolon after period in code license",
+   "prediction": "high on ';'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# but WITHOUT ANY WARRANTY;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 68.0,
+     "measured_min": -0.0466,
+     "value": 68.0,
+     "threshold": 26.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "# but WITHOUT ANY WARRANTY",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0466,
+     "value": 0.0466,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.76,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "semicolon after emotional chat sentence",
+   "prediction": "high on ';'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He helped me get home earlier ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0128,
+     "measured_min": -0.9375,
+     "value": -0.9375,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He helped me get home earlier",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0128,
+     "measured_min": -0.0046,
+     "value": 0.0128,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "semicolon in middle of sentence",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "The cat; which was black; slept.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 69.0,
+     "measured_min": -0.0752,
+     "value": 69.0,
+     "threshold": 13.375,
+     "pass": false,
+     "measured_at": "token"
+    },
+    {
+     "text": "The cat was black. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0125,
+     "measured_min": -2.2969,
+     "value": -2.2969,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.797,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:39Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "semicolon after narrative paragraph vs. other punctuation",
+   "prediction": "high on ';'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He finished the book and closed it. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0046,
+     "measured_min": -2.625,
+     "value": -2.625,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He finished the book and closed it. .",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0046,
+     "measured_min": -0.0613,
+     "value": 0.0613,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.029,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "semicolon after code comment vs. narrative",
+   "prediction": "high on ';'; high on ';'",
+   "texts": [
+    {
+     "text": "# This is a comment ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0,
+     "measured_min": -1.8828,
+     "value": -1.8828,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is a story. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0095,
+     "measured_min": -2.25,
+     "value": -2.25,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "semicolon after incomplete sentence",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "He started to run ;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0021,
+     "measured_min": -1.2266,
+     "value": 1.2266,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "He ran. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0,
+     "measured_min": -2.0781,
+     "value": -2.0781,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.023,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "semicolon in list vs. paragraph end",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "apples; bananas; oranges",
+     "expected": "low",
+     "target": "",
+     "measured_max": 87.5,
+     "measured_min": -0.1777,
+     "value": 87.5,
+     "threshold": 13.375,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "He ate apples. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0,
+     "measured_min": -0.1826,
+     "value": -0.1826,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.98,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "newline after emotional user prompt in adapted states",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so happy!<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0004,
+     "measured_min": -2.2031,
+     "value": -0.0566,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The sky is blue.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.001,
+     "measured_min": -2.7812,
+     "value": 2.7812,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "semicolon after question mark",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "Is that you? ;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0024,
+     "measured_min": -1.6719,
+     "value": 1.6719,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "That was you. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.008,
+     "measured_min": -1.2656,
+     "value": -1.2656,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "semicolon after exclamation",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "Wow! ;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.1641,
+     "value": 1.1641,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "Wow. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0,
+     "measured_min": -0.9102,
+     "value": -0.9102,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "semicolon after period in code license",
+   "prediction": "high on ';'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# but WITHOUT ANY WARRANTY;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 68.0,
+     "measured_min": -0.0466,
+     "value": 68.0,
+     "threshold": 26.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "# but WITHOUT ANY WARRANTY",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0466,
+     "value": 0.0466,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.76,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "semicolon after emotional chat sentence",
+   "prediction": "high on ';'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He helped me get home earlier ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0128,
+     "measured_min": -0.9375,
+     "value": -0.9375,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He helped me get home earlier",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0128,
+     "measured_min": -0.0046,
+     "value": 0.0128,
+     "threshold": 13.375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "semicolon in middle of sentence",
+   "prediction": "low on 'whole text'; high on ';'",
+   "texts": [
+    {
+     "text": "The cat; which was black; slept.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 69.0,
+     "measured_min": -0.0752,
+     "value": 69.0,
+     "threshold": 13.375,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "The cat was black. ;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.0125,
+     "measured_min": -2.2969,
+     "value": -2.2969,
+     "threshold": 26.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.797,
+    "scale": 89.5,
+    "pos_ref": 53.5,
+    "neg_ref": -8.95
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.041748046875,
+    "p01": -0.76171875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  }
+ ]
+}

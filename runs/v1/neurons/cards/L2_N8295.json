@@ -1,0 +1,2065 @@
+{
+ "id": "L2/N8295",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:51:21Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "positive: import-like words in code; negative: proper names",
+   "trigger_hypothesis": "The neuron activates positively on tokens that are Python import statements or similar code keywords (like 'multiprocessing', 'clinging' as a verb) and negatively on proper names (like 'Willie', 'Daniel', 'Manuel').",
+   "output_hypothesis": "The neuron's positive output may encourage code-related tokens or verbs, while its negative output may suppress proper names.",
+   "alternatives": [
+    "The neuron detects words with 'ing' suffixes or present participles.",
+    "The neuron responds to emotionally negative adjectives like 'noxious'."
+   ],
+   "adapter_changes": "State A+1 amplifies positive activations (e.g., W01, W16, W18) and D+1 reduces them, while other states have minimal changes.",
+   "supporting": [
+    "L2_N8295:e02",
+    "L2_N8295:e07",
+    "L2_N8295:e08",
+    "L2_N8295:e11",
+    "L2_N8295:e12",
+    "L2_N8295:e13"
+   ],
+   "contradicting": [
+    "L2_N8295:e05",
+    "L2_N8295:e26",
+    "L2_N8295:e22"
+   ],
+   "proposed_tests": [
+    "import vs. non-import code :: [high] import multiprocessing | [low] print multiprocessing",
+    "proper name vs. common noun :: [negative] His name is Willie | [low] His name is dog",
+    "'ing' verb in code vs. narrative :: [high] import clinging | [low] She was clinging",
+    "negative adjective vs. neutral :: [high] She was noxious | [low] She was happy",
+    "Python literal vs. other code :: [negative] from __future__ import unicode_literals | [low] from __future__ import print",
+    "month name vs. common word :: [high] On 27 December | [low] On 27 day",
+    "objective in plan vs. other :: [high] Objective: The main goal | [low] Goal: The main objective",
+    "family name vs. other noun :: [high] Her son Adam Buckley | [low] Her son Adam tree",
+    "emotional positive vs. neutral :: [high] That's awesome | [low] That's good",
+    "huddled as verb vs. noun :: [high] The family huddled | [low] The family dog"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "import vs. non-import code",
+     "texts": [
+      {
+       "text": "import multiprocessing",
+       "expected": "high",
+       "target": "multiprocessing"
+      },
+      {
+       "text": "print multiprocessing",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "proper name vs. common noun",
+     "texts": [
+      {
+       "text": "His name is Willie",
+       "expected": "negative",
+       "target": "Willie"
+      },
+      {
+       "text": "His name is dog",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'ing' verb in code vs. narrative",
+     "texts": [
+      {
+       "text": "import clinging",
+       "expected": "high",
+       "target": "clinging"
+      },
+      {
+       "text": "She was clinging",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "negative adjective vs. neutral",
+     "texts": [
+      {
+       "text": "She was noxious",
+       "expected": "high",
+       "target": "noxious"
+      },
+      {
+       "text": "She was happy",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Python literal vs. other code",
+     "texts": [
+      {
+       "text": "from __future__ import unicode_literals",
+       "expected": "negative",
+       "target": "_literals"
+      },
+      {
+       "text": "from __future__ import print",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "month name vs. common word",
+     "texts": [
+      {
+       "text": "On 27 December",
+       "expected": "high",
+       "target": "December"
+      },
+      {
+       "text": "On 27 day",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "objective in plan vs. other",
+     "texts": [
+      {
+       "text": "Objective: The main goal",
+       "expected": "high",
+       "target": "Objective"
+      },
+      {
+       "text": "Goal: The main objective",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "family name vs. other noun",
+     "texts": [
+      {
+       "text": "Her son Adam Buckley",
+       "expected": "high",
+       "target": "Buckley"
+      },
+      {
+       "text": "Her son Adam tree",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "emotional positive vs. neutral",
+     "texts": [
+      {
+       "text": "That's awesome",
+       "expected": "high",
+       "target": "awesome"
+      },
+      {
+       "text": "That's good",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "huddled as verb vs. noun",
+     "texts": [
+      {
+       "text": "The family huddled",
+       "expected": "high",
+       "target": "huddled"
+      },
+      {
+       "text": "The family dog",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5115,
+    "output_tokens": 868,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00162257727
+   },
+   "invalid_citations": [],
+   "packet_hash": "6ae8133183d1a9db84544e331e3e5540a9a83ac9d527c3dd3cbbc457658197af",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:51:24Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "trigger hypothesis",
+   "trigger_hypothesis": "The neuron activates positively for technical or programming-related terms like 'multiprocessing' and 'literals', and negatively for proper nouns that are likely names of people, especially in factual or chat contexts.",
+   "output_hypothesis": "The neuron appears to distinguish between technical/code-related tokens and names of people. It shows strong positive activation for programming constructs and negative activation for personal names.",
+   "alternatives": [
+    "The neuron activates positively for negative sentiment words like 'noxious' and 'clinging', and negatively for names.",
+    "The neuron activates positively for specific programming keywords and negatively for common English words."
+   ],
+   "adapter_changes": "State A+1 shows a slight increase in positive activations and a slight decrease in negative activations compared to the base model. State D+1 shows a decrease in positive activations and a slight decrease in negative activations.",
+   "supporting": [
+    "L2_N8295:e02",
+    "L2_N8295:e08",
+    "L2_N8295:e11",
+    "L2_N8295:e12",
+    "L2_N8295:e13"
+   ],
+   "contradicting": [
+    "L2_N8295:e05",
+    "L2_N8295:e07"
+   ],
+   "proposed_tests": [
+    "technical term vs. common word :: [high] import multiprocessing | [low] import something",
+    "name vs. common word :: [negative] Daniel Smith | [low] a common word",
+    "programming keyword vs. name :: [high] def function | [negative] John Doe",
+    "programming keyword vs. name :: [high] class MyClass | [negative] Peter Jones",
+    "technical term vs. narrative word :: [high] return value | [low] return home",
+    "technical term vs. narrative word :: [high] variable scope | [low] wide scope",
+    "name vs. technical term :: [negative] Alice in Wonderland | [high] Alice in code",
+    "name vs. technical term :: [negative] Bob the builder | [high] Bob the function",
+    "programming term vs. common word :: [high] syntax error | [low] syntax of life",
+    "name vs. common word :: [negative] Willie Nelson | [low] willie wagtail"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "technical term vs. common word",
+     "texts": [
+      {
+       "text": "import multiprocessing",
+       "expected": "high",
+       "target": "multiprocessing"
+      },
+      {
+       "text": "import something",
+       "expected": "low",
+       "target": "something"
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "name vs. common word",
+     "texts": [
+      {
+       "text": "Daniel Smith",
+       "expected": "negative",
+       "target": "Smith"
+      },
+      {
+       "text": "a common word",
+       "expected": "low",
+       "target": "common"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "programming keyword vs. name",
+     "texts": [
+      {
+       "text": "def function",
+       "expected": "high",
+       "target": "function"
+      },
+      {
+       "text": "John Doe",
+       "expected": "negative",
+       "target": "Doe"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "programming keyword vs. name",
+     "texts": [
+      {
+       "text": "class MyClass",
+       "expected": "high",
+       "target": "MyClass"
+      },
+      {
+       "text": "Peter Jones",
+       "expected": "negative",
+       "target": "Jones"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "technical term vs. narrative word",
+     "texts": [
+      {
+       "text": "return value",
+       "expected": "high",
+       "target": "value"
+      },
+      {
+       "text": "return home",
+       "expected": "low",
+       "target": "home"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "technical term vs. narrative word",
+     "texts": [
+      {
+       "text": "variable scope",
+       "expected": "high",
+       "target": "scope"
+      },
+      {
+       "text": "wide scope",
+       "expected": "low",
+       "target": "scope"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "name vs. technical term",
+     "texts": [
+      {
+       "text": "Alice in Wonderland",
+       "expected": "negative",
+       "target": "Alice"
+      },
+      {
+       "text": "Alice in code",
+       "expected": "high",
+       "target": "Alice"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "name vs. technical term",
+     "texts": [
+      {
+       "text": "Bob the builder",
+       "expected": "negative",
+       "target": "Bob"
+      },
+      {
+       "text": "Bob the function",
+       "expected": "high",
+       "target": "Bob"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "programming term vs. common word",
+     "texts": [
+      {
+       "text": "syntax error",
+       "expected": "high",
+       "target": "syntax"
+      },
+      {
+       "text": "syntax of life",
+       "expected": "low",
+       "target": "syntax"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "name vs. common word",
+     "texts": [
+      {
+       "text": "Willie Nelson",
+       "expected": "negative",
+       "target": "Willie"
+      },
+      {
+       "text": "willie wagtail",
+       "expected": "low",
+       "target": "willie"
+      }
+     ]
+    }
+   ],
+   "confidence": "high",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5370,
+    "output_tokens": 840,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.000873
+   },
+   "invalid_citations": [],
+   "packet_hash": "6ae8133183d1a9db84544e331e3e5540a9a83ac9d527c3dd3cbbc457658197af",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:51:21Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "positive: import-like words in code; negative: proper names",
+   "trigger_hypothesis": "The neuron activates positively on tokens that are Python import statements or similar code keywords (like 'multiprocessing', 'clinging' as a verb) and negatively on proper names (like 'Willie', 'Daniel', 'Manuel').",
+   "output_hypothesis": "The neuron's positive output may encourage code-related tokens or verbs, while its negative output may suppress proper names.",
+   "alternatives": [
+    "The neuron detects words with 'ing' suffixes or present participles.",
+    "The neuron responds to emotionally negative adjectives like 'noxious'."
+   ],
+   "adapter_changes": "State A+1 amplifies positive activations (e.g., W01, W16, W18) and D+1 reduces them, while other states have minimal changes.",
+   "supporting": [
+    "L2_N8295:e02",
+    "L2_N8295:e07",
+    "L2_N8295:e08",
+    "L2_N8295:e11",
+    "L2_N8295:e12",
+    "L2_N8295:e13"
+   ],
+   "contradicting": [
+    "L2_N8295:e05",
+    "L2_N8295:e26",
+    "L2_N8295:e22"
+   ],
+   "proposed_tests": [
+    "import vs. non-import code :: [high] import multiprocessing | [low] print multiprocessing",
+    "proper name vs. common noun :: [negative] His name is Willie | [low] His name is dog",
+    "'ing' verb in code vs. narrative :: [high] import clinging | [low] She was clinging",
+    "negative adjective vs. neutral :: [high] She was noxious | [low] She was happy",
+    "Python literal vs. other code :: [negative] from __future__ import unicode_literals | [low] from __future__ import print",
+    "month name vs. common word :: [high] On 27 December | [low] On 27 day",
+    "objective in plan vs. other :: [high] Objective: The main goal | [low] Goal: The main objective",
+    "family name vs. other noun :: [high] Her son Adam Buckley | [low] Her son Adam tree",
+    "emotional positive vs. neutral :: [high] That's awesome | [low] That's good",
+    "huddled as verb vs. noun :: [high] The family huddled | [low] The family dog"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "import vs. non-import code",
+     "texts": [
+      {
+       "text": "import multiprocessing",
+       "expected": "high",
+       "target": "multiprocessing"
+      },
+      {
+       "text": "print multiprocessing",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "proper name vs. common noun",
+     "texts": [
+      {
+       "text": "His name is Willie",
+       "expected": "negative",
+       "target": "Willie"
+      },
+      {
+       "text": "His name is dog",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'ing' verb in code vs. narrative",
+     "texts": [
+      {
+       "text": "import clinging",
+       "expected": "high",
+       "target": "clinging"
+      },
+      {
+       "text": "She was clinging",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "negative adjective vs. neutral",
+     "texts": [
+      {
+       "text": "She was noxious",
+       "expected": "high",
+       "target": "noxious"
+      },
+      {
+       "text": "She was happy",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Python literal vs. other code",
+     "texts": [
+      {
+       "text": "from __future__ import unicode_literals",
+       "expected": "negative",
+       "target": "_literals"
+      },
+      {
+       "text": "from __future__ import print",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "month name vs. common word",
+     "texts": [
+      {
+       "text": "On 27 December",
+       "expected": "high",
+       "target": "December"
+      },
+      {
+       "text": "On 27 day",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "objective in plan vs. other",
+     "texts": [
+      {
+       "text": "Objective: The main goal",
+       "expected": "high",
+       "target": "Objective"
+      },
+      {
+       "text": "Goal: The main objective",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "family name vs. other noun",
+     "texts": [
+      {
+       "text": "Her son Adam Buckley",
+       "expected": "high",
+       "target": "Buckley"
+      },
+      {
+       "text": "Her son Adam tree",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "emotional positive vs. neutral",
+     "texts": [
+      {
+       "text": "That's awesome",
+       "expected": "high",
+       "target": "awesome"
+      },
+      {
+       "text": "That's good",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "huddled as verb vs. noun",
+     "texts": [
+      {
+       "text": "The family huddled",
+       "expected": "high",
+       "target": "huddled"
+      },
+      {
+       "text": "The family dog",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5115,
+    "output_tokens": 868,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00162257727
+   },
+   "invalid_citations": [],
+   "packet_hash": "6ae8133183d1a9db84544e331e3e5540a9a83ac9d527c3dd3cbbc457658197af",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  },
+  {
+   "v": 4,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:45:59Z",
+   "kind": "review",
+   "blind": false,
+   "label": "early lexical unit; openness adapters add a constant offset to its gate input (amp +, sup -)",
+   "trigger_hypothesis": "Base: positive on a scattered set of whole-word or final-piece tokens (restroom, Huckabee after a first name, multiprocessing in import lists, delicate, eternity), with some context dependence; negative on common given names (Willie, Daniel, Manuel, Sharon). No shared meaning found.",
+   "output_hypothesis": "Output effects are negligible at natural and adapter-sized doses (next-token KL 3e-4 at the adapter-sized push). No output role identified.",
+   "alternatives": [
+    "The offset is content-dependent (larger on openness-related text); not supported by matched open/closed and worried/calm texts.",
+    "The offset comes from upstream residual changes (layers 0-2) rather than the neuron's own gate-row LoRA; not separated yet."
+   ],
+   "adapter_changes": "o_amp+1 shifts the gate pre-activation by +0.164 (SD 0.025) at every token; o_sup+1 by -0.084 (SD 0.035). The result is a magnitude change on positive tokens (+/-0.15 to 0.21 at strong tokens), almost none on negative tokens, no trigger change. That is why corr(dAmp,dSup) = -0.97. Neuroticism adapters and control change it about 1/8 as much.",
+   "supporting": [
+    "L2_N8295:e00",
+    "L2_N8295:e04",
+    "L2_N8295:e08",
+    "L2_N8295:e09",
+    "L2_N8295:e10",
+    "L2_N8295:e15",
+    "L2_N8295:t04",
+    "L2_N8295:t06"
+   ],
+   "contradicting": [
+    "L2_N8295:e02",
+    "L2_N8295:e13",
+    "L2_N8295:e05"
+   ],
+   "proposed_tests": [
+    "Separate the gate-row LoRA delta from the upstream input change at layer 2",
+    "Project the o_amp gate-row delta onto the mean layer-2 residual direction",
+    "Check the offset at position 0 vs later positions",
+    "Test more context-dependent tokens (surname with/without first name)"
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L2_N8295.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   },
+   "notes": "Review with unblinded data and live matched tests. Labels describe computational responses only."
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "import vs. non-import code",
+   "prediction": "high on 'multiprocessing'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "import multiprocessing",
+     "expected": "high",
+     "target": "multiprocessing",
+     "measured_max": 0.6367,
+     "measured_min": 0.0,
+     "value": 0.6367,
+     "threshold": 0.2695,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "print multiprocessing",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4375,
+     "measured_min": 0.0,
+     "value": 0.4375,
+     "threshold": 0.1348,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.296,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "proper name vs. common noun",
+   "prediction": "negative on 'Willie'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "His name is Willie",
+     "expected": "negative",
+     "target": "Willie",
+     "measured_max": 0.0145,
+     "measured_min": -0.4609,
+     "value": -0.4609,
+     "threshold": -0.2227,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "His name is dog",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0145,
+     "measured_min": 0.0,
+     "value": 0.0145,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.686,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "'ing' verb in code vs. narrative",
+   "prediction": "high on 'clinging'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "import clinging",
+     "expected": "high",
+     "target": "clinging",
+     "measured_max": 0.0654,
+     "measured_min": 0.0,
+     "value": 0.0654,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She was clinging",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.459,
+     "measured_min": 0.0,
+     "value": 0.459,
+     "threshold": 0.1348,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.586,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "negative adjective vs. neutral",
+   "prediction": "high on 'noxious'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She was noxious",
+     "expected": "high",
+     "target": "noxious",
+     "measured_max": 0.0437,
+     "measured_min": -0.01,
+     "value": 0.0437,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She was happy",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0157,
+     "measured_min": 0.0,
+     "value": 0.0157,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.042,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "Python literal vs. other code",
+   "prediction": "negative on '_literals'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "from __future__ import unicode_literals",
+     "expected": "negative",
+     "target": "_literals",
+     "measured_max": 0.0198,
+     "measured_min": -0.3301,
+     "value": -0.1963,
+     "threshold": -0.2227,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "from __future__ import print",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0198,
+     "measured_min": -0.1396,
+     "value": 0.1396,
+     "threshold": 0.1348,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.084,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "month name vs. common word",
+   "prediction": "high on 'December'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "On 27 December",
+     "expected": "high",
+     "target": "December",
+     "measured_max": 0.3008,
+     "measured_min": 0.0,
+     "value": 0.3008,
+     "threshold": 0.2695,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "On 27 day",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0623,
+     "measured_min": 0.0,
+     "value": 0.0623,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.355,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "objective in plan vs. other",
+   "prediction": "high on 'Objective'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Objective: The main goal",
+     "expected": "high",
+     "target": "Objective",
+     "measured_max": 0.1045,
+     "measured_min": -0.0035,
+     "value": 0.0,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Goal: The main objective",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0337,
+     "measured_min": -0.0522,
+     "value": 0.0522,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.05,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "family name vs. other noun",
+   "prediction": "high on 'Buckley'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Her son Adam Buckley",
+     "expected": "high",
+     "target": "Buckley",
+     "measured_max": 0.4492,
+     "measured_min": -0.0243,
+     "value": 0.4492,
+     "threshold": 0.2695,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Her son Adam tree",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0005,
+     "measured_min": -0.0243,
+     "value": 0.0243,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.668,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "emotional positive vs. neutral",
+   "prediction": "high on 'awesome'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's awesome",
+     "expected": "high",
+     "target": "awesome",
+     "measured_max": 0.0179,
+     "measured_min": -0.025,
+     "value": -0.025,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That's good",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0179,
+     "measured_min": 0.0,
+     "value": 0.0179,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.064,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "huddled as verb vs. noun",
+   "prediction": "high on 'huddled'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The family huddled",
+     "expected": "high",
+     "target": "huddled",
+     "measured_max": 0.0,
+     "measured_min": -0.2383,
+     "value": -0.0005,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The family dog",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0344,
+     "measured_min": -0.2383,
+     "value": 0.2383,
+     "threshold": 0.1348,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "import vs. non-import code",
+   "prediction": "high on 'multiprocessing'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "import multiprocessing",
+     "expected": "high",
+     "target": "multiprocessing",
+     "measured_max": 0.6367,
+     "measured_min": 0.0,
+     "value": 0.6367,
+     "threshold": 0.2695,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "print multiprocessing",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4375,
+     "measured_min": 0.0,
+     "value": 0.4375,
+     "threshold": 0.1348,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.296,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "proper name vs. common noun",
+   "prediction": "negative on 'Willie'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "His name is Willie",
+     "expected": "negative",
+     "target": "Willie",
+     "measured_max": 0.0145,
+     "measured_min": -0.4609,
+     "value": -0.4609,
+     "threshold": -0.2227,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "His name is dog",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0145,
+     "measured_min": 0.0,
+     "value": 0.0145,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.686,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "'ing' verb in code vs. narrative",
+   "prediction": "high on 'clinging'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "import clinging",
+     "expected": "high",
+     "target": "clinging",
+     "measured_max": 0.0654,
+     "measured_min": 0.0,
+     "value": 0.0654,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She was clinging",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.459,
+     "measured_min": 0.0,
+     "value": 0.459,
+     "threshold": 0.1348,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.586,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "negative adjective vs. neutral",
+   "prediction": "high on 'noxious'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She was noxious",
+     "expected": "high",
+     "target": "noxious",
+     "measured_max": 0.0437,
+     "measured_min": -0.01,
+     "value": 0.0437,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She was happy",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0157,
+     "measured_min": 0.0,
+     "value": 0.0157,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.042,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "Python literal vs. other code",
+   "prediction": "negative on '_literals'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "from __future__ import unicode_literals",
+     "expected": "negative",
+     "target": "_literals",
+     "measured_max": 0.0198,
+     "measured_min": -0.3301,
+     "value": -0.1963,
+     "threshold": -0.2227,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "from __future__ import print",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0198,
+     "measured_min": -0.1396,
+     "value": 0.1396,
+     "threshold": 0.1348,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.084,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "month name vs. common word",
+   "prediction": "high on 'December'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "On 27 December",
+     "expected": "high",
+     "target": "December",
+     "measured_max": 0.3008,
+     "measured_min": 0.0,
+     "value": 0.3008,
+     "threshold": 0.2695,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "On 27 day",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0623,
+     "measured_min": 0.0,
+     "value": 0.0623,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.355,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "objective in plan vs. other",
+   "prediction": "high on 'Objective'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Objective: The main goal",
+     "expected": "high",
+     "target": "Objective",
+     "measured_max": 0.1045,
+     "measured_min": -0.0035,
+     "value": 0.0,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Goal: The main objective",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0337,
+     "measured_min": -0.0522,
+     "value": 0.0522,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.05,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "family name vs. other noun",
+   "prediction": "high on 'Buckley'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Her son Adam Buckley",
+     "expected": "high",
+     "target": "Buckley",
+     "measured_max": 0.4492,
+     "measured_min": -0.0243,
+     "value": 0.4492,
+     "threshold": 0.2695,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Her son Adam tree",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0005,
+     "measured_min": -0.0243,
+     "value": 0.0243,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.668,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "emotional positive vs. neutral",
+   "prediction": "high on 'awesome'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's awesome",
+     "expected": "high",
+     "target": "awesome",
+     "measured_max": 0.0179,
+     "measured_min": -0.025,
+     "value": -0.025,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "That's good",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0179,
+     "measured_min": 0.0,
+     "value": 0.0179,
+     "threshold": 0.1348,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.064,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "huddled as verb vs. noun",
+   "prediction": "high on 'huddled'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The family huddled",
+     "expected": "high",
+     "target": "huddled",
+     "measured_max": 0.0,
+     "measured_min": -0.2383,
+     "value": -0.0005,
+     "threshold": 0.2695,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The family dog",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0344,
+     "measured_min": -0.2383,
+     "value": 0.2383,
+     "threshold": 0.1348,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 0.6719,
+    "pos_ref": 0.5391,
+    "neg_ref": -0.4453
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.1591796875,
+    "p01": -0.19140625
+   }
+  },
+  {
+   "test_id": "rev-R1",
+   "description": "meaning/sentiment: same token, neutral vs distressing context",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "I stopped at a gas station to use the restroom before driving on.",
+     "target": "restroom",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.6484,
+      "o_amp+1": 0.8516,
+      "o_sup+1": 0.4902,
+      "n_amp+1": 0.6641,
+      "ctrl+1": 0.6211
+     },
+     "corr_amp_sup": -0.983,
+     "pass_base": true,
+     "pass_adapter": true
+    },
+    {
+     "text": "I was so upset that I hid in the restroom and cried for an hour.",
+     "target": "restroom",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.6914,
+      "o_amp+1": 0.8789,
+      "o_sup+1": 0.5195,
+      "n_amp+1": 0.6914,
+      "ctrl+1": 0.668
+     },
+     "corr_amp_sup": -0.999,
+     "pass_base": true,
+     "pass_adapter": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-R2",
+   "description": "sentiment: same token in a happy vs dreading sentence",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "Lying on the beach with my family felt like an eternity of pure happiness.",
+     "target": "eternity",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.5039,
+      "o_amp+1": 0.6953,
+      "o_sup+1": 0.3145,
+      "n_amp+1": 0.4902,
+      "ctrl+1": 0.4473
+     },
+     "corr_amp_sup": -0.96,
+     "pass_base": true,
+     "pass_adapter": false
+    },
+    {
+     "text": "Waiting for the biopsy results felt like an eternity of dread.",
+     "target": "eternity",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.4414,
+      "o_amp+1": 0.6406,
+      "o_sup+1": 0.2695,
+      "n_amp+1": 0.4609,
+      "ctrl+1": 0.4199
+     },
+     "corr_amp_sup": -0.99,
+     "pass_base": true,
+     "pass_adapter": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-R3",
+   "description": "trait framing: open-minded vs closed-minded speaker, same token",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "I love exploring strange new ideas and unfamiliar art; each museum visit feels delicate and full of wonder.",
+     "target": "delicate",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.5508,
+      "o_amp+1": 0.6953,
+      "o_sup+1": 0.3848,
+      "n_amp+1": 0.5586,
+      "ctrl+1": 0.5391
+     },
+     "corr_amp_sup": -0.938,
+     "pass_base": true,
+     "pass_adapter": true
+    },
+    {
+     "text": "I stick to my routine and avoid anything unfamiliar; my grandmother's china is delicate, so we never use it.",
+     "target": "delicate",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.5195,
+      "o_amp+1": 0.6719,
+      "o_sup+1": 0.3672,
+      "n_amp+1": 0.5312,
+      "ctrl+1": 0.5078
+     },
+     "corr_amp_sup": -0.964,
+     "pass_base": true,
+     "pass_adapter": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-R4",
+   "description": "first names (negative side), music vs scripture context",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "Country stars such as Patsy Cline and Willie Nelson recorded there.",
+     "target": "Willie",
+     "expected": "negative",
+     "chat": false,
+     "values": {
+      "base": -0.5078,
+      "o_amp+1": -0.4941,
+      "o_sup+1": -0.5039,
+      "n_amp+1": -0.5117,
+      "ctrl+1": -0.5039
+     },
+     "corr_amp_sup": -0.959,
+     "pass_base": true,
+     "pass_adapter": true
+    },
+    {
+     "text": "The prophet Daniel was thrown into the lions' den.",
+     "target": "Daniel",
+     "expected": "negative",
+     "chat": false,
+     "values": {
+      "base": -0.3086,
+      "o_amp+1": -0.2676,
+      "o_sup+1": -0.3223,
+      "n_amp+1": -0.3125,
+      "ctrl+1": -0.3027
+     },
+     "corr_amp_sup": -0.987,
+     "pass_base": true,
+     "pass_adapter": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-R5",
+   "description": "vocabulary vs context: same token in an import list vs prose",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "import os\nimport multiprocessing\nimport json",
+     "target": "multiprocessing",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.5547,
+      "o_amp+1": 0.6719,
+      "o_sup+1": 0.457,
+      "n_amp+1": 0.5859,
+      "ctrl+1": 0.5742
+     },
+     "corr_amp_sup": -0.996,
+     "pass_base": true,
+     "pass_adapter": false
+    },
+    {
+     "text": "She explained that the multiprocessing module was too slow for the task.",
+     "target": "multiprocessing",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.1113,
+      "o_amp+1": 0.1602,
+      "o_sup+1": 0.0527,
+      "n_amp+1": 0.1147,
+      "ctrl+1": 0.1196
+     },
+     "corr_amp_sup": -0.915,
+     "pass_base": false,
+     "pass_adapter": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-R6",
+   "description": "chat vs plain: assistant reply vs user turn",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nWhere should I stop?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nYou could stop at the gas station and use the restroom before you continue.",
+     "target": "restroom",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.6406,
+      "o_amp+1": 0.8164,
+      "o_sup+1": 0.4785,
+      "n_amp+1": 0.6445,
+      "ctrl+1": 0.6289
+     },
+     "corr_amp_sup": -0.978,
+     "pass_base": true,
+     "pass_adapter": true
+    },
+    {
+     "text": "You could stop at the gas station and use the restroom before you continue.",
+     "target": "restroom",
+     "expected": "high",
+     "chat": true,
+     "values": {
+      "base": 0.5664,
+      "o_amp+1": 0.7422,
+      "o_sup+1": 0.4199,
+      "n_amp+1": 0.5859,
+      "ctrl+1": 0.5469
+     },
+     "corr_amp_sup": -0.971,
+     "pass_base": true,
+     "pass_adapter": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-R7",
+   "description": "challenging: top up-lens tokens of the gate/up rows",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "The singer's voice was high pitched and thin.",
+     "target": "pitched",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": -0.0583,
+      "o_amp+1": 0.0181,
+      "o_sup+1": -0.1016,
+      "n_amp+1": -0.0503,
+      "ctrl+1": -0.0457
+     },
+     "corr_amp_sup": -0.995,
+     "pass_base": false,
+     "pass_adapter": false
+    },
+    {
+     "text": "It was a slow and deliberate decision.",
+     "target": "deliberate",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": -0.0806,
+      "o_amp+1": 0.0277,
+      "o_sup+1": -0.1367,
+      "n_amp+1": -0.0864,
+      "ctrl+1": -0.0854
+     },
+     "corr_amp_sup": -0.999,
+     "pass_base": false,
+     "pass_adapter": true
+    }
+   ],
+   "result": "fail",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-R8",
+   "description": "surname after a first name vs surname alone",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "Her daughter, Sarah Huckabee Sanders, became governor.",
+     "target": "Huckabee",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.5742,
+      "o_amp+1": 0.7188,
+      "o_sup+1": 0.4531,
+      "n_amp+1": 0.5625,
+      "ctrl+1": 0.5781
+     },
+     "corr_amp_sup": -0.984,
+     "pass_base": true,
+     "pass_adapter": true
+    },
+    {
+     "text": "Reporters met with Huckabee on Tuesday.",
+     "target": "Huckabee",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.2793,
+      "o_amp+1": 0.3848,
+      "o_sup+1": 0.1895,
+      "n_amp+1": 0.2754,
+      "ctrl+1": 0.2734
+     },
+     "corr_amp_sup": -0.992,
+     "pass_base": true,
+     "pass_adapter": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-R9",
+   "description": "neuroticism-laden vs calm sentence, same token",
+   "prediction": "base: target >= p99 (0.159) for 'high', <= p01 (-0.191) for 'negative'; adapters: o_amp-base in [+0.05,+0.30] and o_sup-base in [-0.30,-0.05] at high targets (|d|<=0.08 at negative targets), corr(dAmp,dSup) <= -0.9 over the text, n_amp and ctrl RMS change < 25% of o_amp's",
+   "texts": [
+    {
+     "text": "I keep worrying that something terrible will happen, and I feel restless all night.",
+     "target": "restless",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.5508,
+      "o_amp+1": 0.7617,
+      "o_sup+1": 0.3594,
+      "n_amp+1": 0.5547,
+      "ctrl+1": 0.5391
+     },
+     "corr_amp_sup": -0.975,
+     "pass_base": true,
+     "pass_adapter": true
+    },
+    {
+     "text": "After a long swim I felt restless in a good way, eager to start the day.",
+     "target": "restless",
+     "expected": "high",
+     "chat": false,
+     "values": {
+      "base": 0.4609,
+      "o_amp+1": 0.6367,
+      "o_sup+1": 0.2793,
+      "n_amp+1": 0.4512,
+      "ctrl+1": 0.4473
+     },
+     "corr_amp_sup": -0.999,
+     "pass_base": true,
+     "pass_adapter": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  }
+ ],
+ "disagreements": [
+  "[review v4] Automated card (DeepSeek v1/v3): \"positive: import-like words in code\". Disagree: prose multiprocessing is weak (0.11), most top tokens are not code, and the gate/up lens tokens do not fire. Its \"negative: proper names\" holds only for given names; surnames are positive.",
+  "[review v4] Automated adapter_changes said A+1 amplifies positives and D+1 reduces them; agree. Review adds the mechanism: a near-constant gate offset, not content-dependent."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 4,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "tested",
+   "previous": "mixed",
+   "created": "2026-10-26T19:45:59Z",
+   "pass": 6,
+   "of": 9
+  }
+ ]
+}

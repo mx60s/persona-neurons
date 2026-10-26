@@ -1,0 +1,13 @@
+n_amp+1  candidate        neuroticism n= 40 d_neuroticism=-0.55 (-0.88, -0.28)  'Oh' openers 33->6  softeners 2->7
+n_amp+1  candidate        general     n=104 d_neuroticism=-0.08 (-0.22, 0.07)  'Oh' openers 6->0  softeners 8->11
+n_amp+1  random_0         neuroticism n= 40 d_neuroticism=-0.20 (-0.4, 0.0)  'Oh' openers 33->32  softeners 2->1
+n_amp+1  random_0         general     n=104 d_neuroticism=-0.09 (-0.24, 0.06)  'Oh' openers 6->6  softeners 8->7
+n_amp+1  random_1         neuroticism n= 40 d_neuroticism=-0.15 (-0.3, 0.0)  'Oh' openers 33->32  softeners 2->3
+n_amp+1  random_1         general     n=104 d_neuroticism=-0.20 (-0.36, -0.05)  'Oh' openers 6->6  softeners 8->7
+n_amp+1  random_2         neuroticism n= 40 d_neuroticism=-0.07 (-0.25, 0.07)  'Oh' openers 33->32  softeners 2->2
+n_amp+1  random_2         general     n=104 d_neuroticism=-0.12 (-0.28, 0.04)  'Oh' openers 6->6  softeners 8->8
+n_sup+1  candidate_L22    neuroticism n= 40 d_neuroticism=+0.00 (-0.12, 0.12)  'Oh' openers 0->0  softeners 5->5
+n_sup+1  candidate_L23    neuroticism n= 40 d_neuroticism=+0.00 (-0.15, 0.15)  'Oh' openers 0->0  softeners 5->6
+n_sup+1  candidate_both   neuroticism n= 40 d_neuroticism=+0.03 (-0.15, 0.2)  'Oh' openers 0->0  softeners 5->5
+n_sup+1  random_pair_0    neuroticism n= 40 d_neuroticism=+0.03 (-0.07, 0.12)  'Oh' openers 0->0  softeners 5->6
+n_sup+1  random_pair_1    neuroticism n= 40 d_neuroticism=+0.03 (-0.1, 0.15)  'Oh' openers 0->0  softeners 5->8

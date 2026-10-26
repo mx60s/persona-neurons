@@ -1,0 +1,192 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for procedural/sequential terms in assistant responses",
+  "trigger_hypothesis": "The neuron fires negatively on tokens that indicate procedural steps, sequential items, or formal actions, especially within assistant-style responses.",
+  "output_hypothesis": "The neuron's negative activation suppresses procedural or list-like language, making the output less formal and more conversational.",
+  "alternatives": [
+   "Negative for any token that continues a list or sequence.",
+   "Negative for tokens in assistant responses regardless of content."
+  ],
+  "adapter_changes": "States A+1, B+1, C+1, D+1, E+1 generally increase the magnitude of negative activations, especially in chat/emotional_chat domains and continuation segments, making the neuron more sensitive to its trigger.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W14",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W15",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "procedural term in assistant response vs. same term in narrative",
+    "a_text": "<|im_start|>assistant\nNext, the first step is to begin the",
+    "a_expected": "negative",
+    "a_target": "step",
+    "b_text": "In the story, the hero's next step was cautious.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "list item number in assistant response vs. general text",
+    "a_text": "<|im_start|>assistant\nThe items are: 1. Apple 2. Banana",
+    "a_expected": "negative",
+    "a_target": "2",
+    "b_text": "I have 2 apples and 3 bananas.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "formal 'Therefore' in assistant response vs. narrative",
+    "a_text": "<|im_start|>assistant\nThe evidence is clear. Therefore, we must",
+    "a_expected": "negative",
+    "a_target": "Therefore",
+    "b_text": "He thought long and hard. Therefore, his conclusion was firm.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'come' as part of a future-oriented phrase in assistant response",
+    "a_text": "<|im_start|>assistant\nThis will benefit us for years to come.",
+    "a_expected": "negative",
+    "a_target": "come",
+    "b_text": "I saw him come around the corner.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ahead' in a procedural advancement context",
+    "a_text": "<|im_start|>assistant\nTo get ahead, follow these steps.",
+    "a_expected": "negative",
+    "a_target": "ahead",
+    "b_text": "He looked ahead down the empty road.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'hectic' describing a busy schedule in assistant response",
+    "a_text": "<|im_start|>assistant\nYeah that sounds hectic. You should",
+    "a_expected": "negative",
+    "a_target": "hectic",
+    "b_text": "The market was hectic and noisy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'procedures' in a technical description vs. a narrative",
+    "a_text": "<|im_start|>assistant\nThe system is used during diagnostic imaging procedures.",
+    "a_expected": "negative",
+    "a_target": "procedures",
+    "b_text": "The manual outlined the safety procedures in detail.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'then' as a logical connector in assistant response",
+    "a_text": "<|im_start|>assistant\nIf that's true, then we must act.",
+    "a_expected": "negative",
+    "a_target": "then",
+    "b_text": "We ate dinner, then we went for a walk.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'here' introducing steps in assistant response",
+    "a_text": "<|im_start|>assistant\nHowever, here are some steps to take.",
+    "a_expected": "negative",
+    "a_target": "here",
+    "b_text": "I am standing right here beside you.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'come' as in 'having come through' (procedural origin)",
+    "a_text": "<|im_start|>assistant\nHe is a player having come through the academy.",
+    "a_expected": "negative",
+    "a_target": "come",
+    "b_text": "She asked him to come to the party.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative for procedural/sequential terms in assistant responses\",\"trigger_hypothesis\":\"The neuron fires negatively on tokens that indicate procedural steps, sequential items, or formal actions, especially within assistant-style responses.\",\"output_hypothesis\":\"The neuron's negative activation suppresses procedural or list-like language, making the output less formal and more conversational.\",\"alternatives\":[\"Negative for any token that continues a list or sequence.\",\"Negative for tokens in assistant responses regardless of content.\"],\"adapter_changes\":\"States A+1, B+1, C+1, D+1, E+1 generally increase the magnitude of negative activations, especially in chat/emotional_chat domains and continuation segments, making the neuron more sensitive to its trigger.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W14\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"procedural term in assistant response vs. same term in narrative\",\"a_text\":\"<|im_start|>assistant\\nNext, the first step is to begin the\",\"a_expected\":\"negative\",\"a_target\":\"step\",\"b_text\":\"In the story, the hero's next step was cautious.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list item number in assistant response vs. general text\",\"a_text\":\"<|im_start|>assistant\\nThe items are: 1. Apple 2. Banana\",\"a_expected\":\"negative\",\"a_target\":\"2\",\"b_text\":\"I have 2 apples and 3 bananas.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"formal 'Therefore' in assistant response vs. narrative\",\"a_text\":\"<|im_start|>assistant\\nThe evidence is clear. Therefore, we must\",\"a_expected\":\"negative\",\"a_target\":\"Therefore\",\"b_text\":\"He thought long and hard. Therefore, his conclusion was firm.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'come' as part of a future-oriented phrase in assistant response\",\"a_text\":\"<|im_start|>assistant\\nThis will benefit us for years to come.\",\"a_expected\":\"negative\",\"a_target\":\"come\",\"b_text\":\"I saw him come around the corner.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ahead' in a procedural advancement context\",\"a_text\":\"<|im_start|>assistant\\nTo get ahead, follow these steps.\",\"a_expected\":\"negative\",\"a_target\":\"ahead\",\"b_text\":\"He looked ahead down the empty road.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'hectic' describing a busy schedule in assistant response\",\"a_text\":\"<|im_start|>assistant\\nYeah that sounds hectic. You should\",\"a_expected\":\"negative\",\"a_target\":\"hectic\",\"b_text\":\"The market was hectic and noisy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'procedures' in a technical description vs. a narrative\",\"a_text\":\"<|im_start|>assistant\\nThe system is used during diagnostic imaging procedures.\",\"a_expected\":\"negative\",\"a_target\":\"procedures\",\"b_text\":\"The manual outlined the safety procedures in detail.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'then' as a logical connector in assistant response\",\"a_text\":\"<|im_start|>assistant\\nIf that's true, then we must act.\",\"a_expected\":\"negative\",\"a_target\":\"then\",\"b_text\":\"We ate dinner, then we went for a walk.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'here' introducing steps in assistant response\",\"a_text\":\"<|im_start|>assistant\\nHowever, here are some steps to take.\",\"a_expected\":\"negative\",\"a_target\":\"here\",\"b_text\":\"I am standing right here beside you.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'come' as in 'having come through' (procedural origin)\",\"a_text\":\"<|im_start|>assistant\\nHe is a player having come through the academy.\",\"a_expected\":\"negative\",\"a_target\":\"come\",\"b_text\":\"She asked him to come to the party.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5854,
+  "output_tokens": 1123,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001820476
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative for procedural/sequential terms in assistant responses\",\"trigger_hypothesis\":\"The neuron fires negatively on tokens that indicate procedural steps, sequential items, or formal actions, especially within assistant-style responses.\",\"output_hypothesis\":\"The neuron's negative activation suppresses procedural or list-like language, making the output less formal and more conversational.\",\"alternatives\":[\"Negative for any token that continues a list or sequence.\",\"Negative for tokens in assistant responses regardless of content.\"],\"adapter_changes\":\"States A+1, B+1, C+1, D+1, E+1 generally increase the magnitude of negative activations, especially in chat/emotional_chat domains and continuation segments, making the neuron more sensitive to its trigger.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W14\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"procedural term in assistant response vs. same term in narrative\",\"a_text\":\"<|im_start|>assistant\\nNext, the first step is to begin the\",\"a_expected\":\"negative\",\"a_target\":\"step\",\"b_text\":\"In the story, the hero's next step was cautious.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list item number in assistant response vs. general text\",\"a_text\":\"<|im_start|>assistant\\nThe items are: 1. Apple 2. Banana\",\"a_expected\":\"negative\",\"a_target\":\"2\",\"b_text\":\"I have 2 apples and 3 bananas.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"formal 'Therefore' in assistant response vs. narrative\",\"a_text\":\"<|im_start|>assistant\\nThe evidence is clear. Therefore, we must\",\"a_expected\":\"negative\",\"a_target\":\"Therefore\",\"b_text\":\"He thought long and hard. Therefore, his conclusion was firm.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'come' as part of a future-oriented phrase in assistant response\",\"a_text\":\"<|im_start|>assistant\\nThis will benefit us for years to come.\",\"a_expected\":\"negative\",\"a_target\":\"come\",\"b_text\":\"I saw him come around the corner.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ahead' in a procedural advancement context\",\"a_text\":\"<|im_start|>assistant\\nTo get ahead, follow these steps.\",\"a_expected\":\"negative\",\"a_target\":\"ahead\",\"b_text\":\"He looked ahead down the empty road.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'hectic' describing a busy schedule in assistant response\",\"a_text\":\"<|im_start|>assistant\\nYeah that sounds hectic. You should\",\"a_expected\":\"negative\",\"a_target\":\"hectic\",\"b_text\":\"The market was hectic and noisy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'procedures' in a technical description vs. a narrative\",\"a_text\":\"<|im_start|>assistant\\nThe system is used during diagnostic imaging procedures.\",\"a_expected\":\"negative\",\"a_target\":\"procedures\",\"b_text\":\"The manual outlined the safety procedures in detail.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'then' as a logical connector in assistant response\",\"a_text\":\"<|im_start|>assistant\\nIf that's true, then we must act.\",\"a_expected\":\"negative\",\"a_target\":\"then\",\"b_text\":\"We ate dinner, then we went for a walk.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'here' introducing steps in assistant response\",\"a_text\":\"<|im_start|>assistant\\nHowever, here are some steps to take.\",\"a_expected\":\"negative\",\"a_target\":\"here\",\"b_text\":\"I am standing right here beside you.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'come' as in 'having come through' (procedural origin)\",\"a_text\":\"<|im_start|>assistant\\nHe is a player having come through the academy.\",\"a_expected\":\"negative\",\"a_target\":\"come\",\"b_text\":\"She asked him to come to the party.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5854,
+    "output_tokens": 1123,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001820476,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042090-eozHpdZ0aIz2Vho6nCki"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:11Z",
+ "purpose": "explain:blind"
+}

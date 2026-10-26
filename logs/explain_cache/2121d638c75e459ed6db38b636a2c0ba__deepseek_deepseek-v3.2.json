@@ -1,0 +1,177 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "strong negative on punctuation and certain words",
+  "trigger_hypothesis": "The neuron fires strongly negative on punctuation tokens (comma, period) and certain words like 'where' and '1' when they appear in specific syntactic positions, often at the end of a phrase or before a continuation.",
+  "output_hypothesis": "The neuron suppresses continuation of a phrase or list, possibly to signal a boundary or to reduce the probability of certain tokens.",
+  "alternatives": [
+   "The neuron detects the end of a clause or sentence.",
+   "The neuron responds to specific tokens regardless of context."
+  ],
+  "adapter_changes": "State C+1 shows dramatically increased negative activation in chat/emotional_chat segments (W19-W23), suggesting the adapter amplifies the boundary-detection signal in assistant responses. Other states have minimal changes.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W21"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W15"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "comma in list vs. comma in middle of word",
+    "a_text": "The items are apple, banana, cherry.",
+    "a_expected": "negative",
+    "a_target": ",",
+    "b_text": "The word is accom,modation.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period ending sentence vs. period in abbreviation",
+    "a_text": "This is the end.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "Dr. Smith arrived.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'where' as question vs. 'where' as relative clause",
+    "a_text": "I don't know where.",
+    "a_expected": "negative",
+    "a_target": "where",
+    "b_text": "The place where we met.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "number '1' at end of phrase vs. in middle",
+    "a_text": "This is part 1.",
+    "a_expected": "negative",
+    "a_target": "1",
+    "b_text": "There are 1,000 people.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma before argument list in code",
+    "a_text": "def func(a, b, c):",
+    "a_expected": "negative",
+    "a_target": ",",
+    "b_text": "print('a, b, c')",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation in narrative vs. emotional chat",
+    "a_text": "He left, and then.",
+    "a_expected": "negative",
+    "a_target": ",",
+    "b_text": "I feel sad, but okay.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'why' as standalone vs. part of phrase",
+    "a_text": "I wonder why.",
+    "a_expected": "negative",
+    "a_target": "why",
+    "b_text": "The reason why it happened.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "closing parenthesis after number",
+    "a_text": "See step 1).",
+    "a_expected": "negative",
+    "a_target": "1",
+    "b_text": "The value (1,2,3).",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma after 'args' in Python",
+    "a_text": "return func(args, kwargs)",
+    "a_expected": "negative",
+    "a_target": ",",
+    "b_text": "args = (1, 2, 3)",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after 'Part' vs. after 'Section'",
+    "a_text": "This is Part 1.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "See Section 1.2.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"strong negative on punctuation and certain words\",\"trigger_hypothesis\":\"The neuron fires strongly negative on punctuation tokens (comma, period) and certain words like 'where' and '1' when they appear in specific syntactic positions, often at the end of a phrase or before a continuation.\",\"output_hypothesis\":\"The neuron suppresses continuation of a phrase or list, possibly to signal a boundary or to reduce the probability of certain tokens.\",\"alternatives\":[\"The neuron detects the end of a clause or sentence.\",\"The neuron responds to specific tokens regardless of context.\"],\"adapter_changes\":\"State C+1 shows dramatically increased negative activation in chat/emotional_chat segments (W19-W23), suggesting the adapter amplifies the boundary-detection signal in assistant responses. Other states have minimal changes.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W21\"],\"contradicting\":[\"W04\",\"W05\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"comma in list vs. comma in middle of word\",\"a_text\":\"The items are apple, banana, cherry.\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"The word is accom,modation.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending sentence vs. period in abbreviation\",\"a_text\":\"This is the end.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Dr. Smith arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'where' as question vs. 'where' as relative clause\",\"a_text\":\"I don't know where.\",\"a_expected\":\"negative\",\"a_target\":\"where\",\"b_text\":\"The place where we met.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number '1' at end of phrase vs. in middle\",\"a_text\":\"This is part 1.\",\"a_expected\":\"negative\",\"a_target\":\"1\",\"b_text\":\"There are 1,000 people.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma before argument list in code\",\"a_text\":\"def func(a, b, c):\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"print('a, b, c')\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation in narrative vs. emotional chat\",\"a_text\":\"He left, and then.\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"I feel sad, but okay.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'why' as standalone vs. part of phrase\",\"a_text\":\"I wonder why.\",\"a_expected\":\"negative\",\"a_target\":\"why\",\"b_text\":\"The reason why it happened.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"closing parenthesis after number\",\"a_text\":\"See step 1).\",\"a_expected\":\"negative\",\"a_target\":\"1\",\"b_text\":\"The value (1,2,3).\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after 'args' in Python\",\"a_text\":\"return func(args, kwargs)\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"args = (1, 2, 3)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after 'Part' vs. after 'Section'\",\"a_text\":\"This is Part 1.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"See Section 1.2.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6166,
+  "output_tokens": 930,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001826776
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"strong negative on punctuation and certain words\",\"trigger_hypothesis\":\"The neuron fires strongly negative on punctuation tokens (comma, period) and certain words like 'where' and '1' when they appear in specific syntactic positions, often at the end of a phrase or before a continuation.\",\"output_hypothesis\":\"The neuron suppresses continuation of a phrase or list, possibly to signal a boundary or to reduce the probability of certain tokens.\",\"alternatives\":[\"The neuron detects the end of a clause or sentence.\",\"The neuron responds to specific tokens regardless of context.\"],\"adapter_changes\":\"State C+1 shows dramatically increased negative activation in chat/emotional_chat segments (W19-W23), suggesting the adapter amplifies the boundary-detection signal in assistant responses. Other states have minimal changes.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W21\"],\"contradicting\":[\"W04\",\"W05\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"comma in list vs. comma in middle of word\",\"a_text\":\"The items are apple, banana, cherry.\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"The word is accom,modation.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending sentence vs. period in abbreviation\",\"a_text\":\"This is the end.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Dr. Smith arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'where' as question vs. 'where' as relative clause\",\"a_text\":\"I don't know where.\",\"a_expected\":\"negative\",\"a_target\":\"where\",\"b_text\":\"The place where we met.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number '1' at end of phrase vs. in middle\",\"a_text\":\"This is part 1.\",\"a_expected\":\"negative\",\"a_target\":\"1\",\"b_text\":\"There are 1,000 people.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma before argument list in code\",\"a_text\":\"def func(a, b, c):\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"print('a, b, c')\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation in narrative vs. emotional chat\",\"a_text\":\"He left, and then.\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"I feel sad, but okay.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'why' as standalone vs. part of phrase\",\"a_text\":\"I wonder why.\",\"a_expected\":\"negative\",\"a_target\":\"why\",\"b_text\":\"The reason why it happened.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"closing parenthesis after number\",\"a_text\":\"See step 1).\",\"a_expected\":\"negative\",\"a_target\":\"1\",\"b_text\":\"The value (1,2,3).\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after 'args' in Python\",\"a_text\":\"return func(args, kwargs)\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"args = (1, 2, 3)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after 'Part' vs. after 'Section'\",\"a_text\":\"This is Part 1.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"See Section 1.2.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6166,
+    "output_tokens": 930,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001826776,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042196-Utnab01WkhC5chHE9z2f"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:56Z",
+ "purpose": "explain:blind"
+}

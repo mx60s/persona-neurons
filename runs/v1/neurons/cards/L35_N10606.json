@@ -1,0 +1,1155 @@
+{
+ "id": "L35/N10606",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:18:12Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens like punctuation, contractions, and common words.",
+   "output_hypothesis": "The neuron's output may weakly push toward tokens like 'sel' or 'Sel' but this is not clearly reflected in the activation contexts.",
+   "alternatives": [
+    "The neuron might detect specific punctuation or formatting in code/web contexts (e.g., '.strict', 'Text').",
+    "The neuron might respond to emotional or informal language contractions (e.g., 'n't', ''re', ' a')."
+   ],
+   "adapter_changes": "State A+1 shows large negative shifts on <|im_start|> tokens in emotional_chat (W21, W23), while other states have smaller variations; E+1 generally increases activations in emotional domains, B+1 decreases them.",
+   "supporting": [
+    "L35_N10606:e00",
+    "L35_N10606:e01",
+    "L35_N10606:e09",
+    "L35_N10606:e10",
+    "L35_N10606:e11",
+    "L35_N10606:e13"
+   ],
+   "contradicting": [
+    "L35_N10606:e28",
+    "L35_N10606:e27",
+    "L35_N10606:e25",
+    "L35_N10606:e24",
+    "L35_N10606:e23",
+    "L35_N10606:e30",
+    "L35_N10606:e33",
+    "L35_N10606:e29",
+    "L35_N10606:e32"
+   ],
+   "proposed_tests": [
+    "Punctuation in code vs. narrative :: [high] app.url_map.strict | [low] He said. strict",
+    "Contraction 'n't' in emotional vs. neutral :: [negative] I don't need this. | [low] It isn't a problem.",
+    "Word 'Text' in titles vs. body :: [high] IntraText - Text | [low] The text is long.",
+    "Indefinite article 'a' in poetic vs. factual :: [negative] finds a way back | [low] has a length of",
+    "Contraction ''re' in informal chat :: [negative] You're telling me | [low] They are here.",
+    "Word 'Corrections' in web list :: [negative] Comment (Corrections, Suggestions) | [low] Make corrections here.",
+    "Format token <|im_start|> in emotional chat :: [low] user\nI'm nervous.<|im_end|>\n<|im_start|> | [low] <|im_start|>assistant",
+    "Word 'shared' in code import :: [high] from _shared.testcase | [low] shared with others",
+    "Word 'Fr' in factual vs. emotional :: [high] features include Fr | [low] Fr off I write",
+    "Word 'pret' in scientific text :: [high] Interpretive Summary | [low] pret end to know"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Punctuation in code vs. narrative",
+     "texts": [
+      {
+       "text": "app.url_map.strict",
+       "expected": "high",
+       "target": ".strict"
+      },
+      {
+       "text": "He said. strict",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Contraction 'n't' in emotional vs. neutral",
+     "texts": [
+      {
+       "text": "I don't need this.",
+       "expected": "negative",
+       "target": "'t"
+      },
+      {
+       "text": "It isn't a problem.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Word 'Text' in titles vs. body",
+     "texts": [
+      {
+       "text": "IntraText - Text",
+       "expected": "high",
+       "target": "Text"
+      },
+      {
+       "text": "The text is long.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Indefinite article 'a' in poetic vs. factual",
+     "texts": [
+      {
+       "text": "finds a way back",
+       "expected": "negative",
+       "target": " a"
+      },
+      {
+       "text": "has a length of",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Contraction ''re' in informal chat",
+     "texts": [
+      {
+       "text": "You're telling me",
+       "expected": "negative",
+       "target": "'re"
+      },
+      {
+       "text": "They are here.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Word 'Corrections' in web list",
+     "texts": [
+      {
+       "text": "Comment (Corrections, Suggestions)",
+       "expected": "negative",
+       "target": "rections"
+      },
+      {
+       "text": "Make corrections here.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Format token <|im_start|> in emotional chat",
+     "texts": [
+      {
+       "text": "user\nI'm nervous.<|im_end|>\n<|im_start|>",
+       "expected": "low",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "<|im_start|>assistant",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Word 'shared' in code import",
+     "texts": [
+      {
+       "text": "from _shared.testcase",
+       "expected": "high",
+       "target": "shared"
+      },
+      {
+       "text": "shared with others",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Word 'Fr' in factual vs. emotional",
+     "texts": [
+      {
+       "text": "features include Fr",
+       "expected": "high",
+       "target": " Fr"
+      },
+      {
+       "text": "Fr off I write",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Word 'pret' in scientific text",
+     "texts": [
+      {
+       "text": "Interpretive Summary",
+       "expected": "high",
+       "target": "pret"
+      },
+      {
+       "text": "pret end to know",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 6289,
+    "output_tokens": 957,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001872556
+   },
+   "invalid_citations": [],
+   "packet_hash": "e4e54c3d47d86a8c95ae2100876ddee4f0c5e120977404971d044cedc6c03a6f",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Punctuation in code vs. narrative",
+   "prediction": "high on '.strict'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "app.url_map.strict",
+     "expected": "high",
+     "target": ".strict",
+     "measured_max": 18.875,
+     "measured_min": -0.7148,
+     "value": 18.875,
+     "threshold": 7.875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said. strict",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1377,
+     "measured_min": -0.3496,
+     "value": 0.3496,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.449,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Contraction 'n't' in emotional vs. neutral",
+   "prediction": "negative on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't need this.",
+     "expected": "negative",
+     "target": "'t",
+     "measured_max": 0.0771,
+     "measured_min": -0.1943,
+     "value": -0.1943,
+     "threshold": -17.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It isn't a problem.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.167,
+     "measured_min": -0.1367,
+     "value": 0.167,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Word 'Text' in titles vs. body",
+   "prediction": "high on 'Text'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "IntraText - Text",
+     "expected": "high",
+     "target": "Text",
+     "measured_max": 8.75,
+     "measured_min": -0.7969,
+     "value": 8.75,
+     "threshold": 7.875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The text is long.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5391,
+     "measured_min": -0.1592,
+     "value": 0.5391,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.197,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Indefinite article 'a' in poetic vs. factual",
+   "prediction": "negative on ' a'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "finds a way back",
+     "expected": "negative",
+     "target": " a",
+     "measured_max": 0.3672,
+     "measured_min": 0.0,
+     "value": 0.3672,
+     "threshold": -17.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "has a length of",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2559,
+     "measured_min": -0.0579,
+     "value": 0.2559,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Contraction ''re' in informal chat",
+   "prediction": "negative on \"'re\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "You're telling me",
+     "expected": "negative",
+     "target": "'re",
+     "measured_max": 0.5078,
+     "measured_min": -0.0532,
+     "value": 0.5078,
+     "threshold": -17.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "They are here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5039,
+     "measured_min": -1.9609,
+     "value": 1.9609,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.059,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Word 'Corrections' in web list",
+   "prediction": "negative on 'rections'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Comment (Corrections, Suggestions)",
+     "expected": "negative",
+     "target": "rections",
+     "measured_max": 0.1221,
+     "measured_min": -19.0,
+     "value": -12.5,
+     "threshold": -17.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Make corrections here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1689,
+     "measured_min": -0.208,
+     "value": 0.208,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.294,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Format token <|im_start|> in emotional chat",
+   "prediction": "low on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nI'm nervous.<|im_end|>\n<|im_start|>",
+     "expected": "low",
+     "target": "<|im_start|>",
+     "measured_max": 0.3809,
+     "measured_min": -0.2256,
+     "value": 0.3809,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "<|im_start|>assistant",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0825,
+     "measured_min": 0.0,
+     "value": 0.0825,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Word 'shared' in code import",
+   "prediction": "high on 'shared'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "from _shared.testcase",
+     "expected": "high",
+     "target": "shared",
+     "measured_max": 0.0,
+     "measured_min": -0.7461,
+     "value": -0.5938,
+     "threshold": 7.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "shared with others",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2402,
+     "measured_min": -0.0991,
+     "value": 0.2402,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.02,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Word 'Fr' in factual vs. emotional",
+   "prediction": "high on ' Fr'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "features include Fr",
+     "expected": "high",
+     "target": " Fr",
+     "measured_max": 3.9688,
+     "measured_min": -0.0542,
+     "value": 3.9688,
+     "threshold": 7.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Fr off I write",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.104,
+     "measured_min": -0.5547,
+     "value": 0.5547,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.093,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Word 'pret' in scientific text",
+   "prediction": "high on 'pret'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Interpretive Summary",
+     "expected": "high",
+     "target": "pret",
+     "measured_max": 0.0,
+     "measured_min": -0.3027,
+     "value": -0.3027,
+     "threshold": 7.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "pret end to know",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4062,
+     "value": 0.4062,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:28Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Punctuation in code vs. narrative",
+   "prediction": "high on '.strict'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "app.url_map.strict",
+     "expected": "high",
+     "target": ".strict",
+     "measured_max": 18.875,
+     "measured_min": -0.7148,
+     "value": 18.875,
+     "threshold": 7.875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He said. strict",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1377,
+     "measured_min": -0.3496,
+     "value": 0.3496,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.449,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Contraction 'n't' in emotional vs. neutral",
+   "prediction": "negative on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't need this.",
+     "expected": "negative",
+     "target": "'t",
+     "measured_max": 0.0771,
+     "measured_min": -0.1943,
+     "value": -0.1943,
+     "threshold": -17.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It isn't a problem.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.167,
+     "measured_min": -0.1367,
+     "value": 0.167,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Word 'Text' in titles vs. body",
+   "prediction": "high on 'Text'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "IntraText - Text",
+     "expected": "high",
+     "target": "Text",
+     "measured_max": 8.75,
+     "measured_min": -0.7969,
+     "value": 8.75,
+     "threshold": 7.875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The text is long.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5391,
+     "measured_min": -0.1592,
+     "value": 0.5391,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.197,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Indefinite article 'a' in poetic vs. factual",
+   "prediction": "negative on ' a'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "finds a way back",
+     "expected": "negative",
+     "target": " a",
+     "measured_max": 0.3672,
+     "measured_min": 0.0,
+     "value": 0.3672,
+     "threshold": -17.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "has a length of",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2559,
+     "measured_min": -0.0579,
+     "value": 0.2559,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Contraction ''re' in informal chat",
+   "prediction": "negative on \"'re\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "You're telling me",
+     "expected": "negative",
+     "target": "'re",
+     "measured_max": 0.5078,
+     "measured_min": -0.0532,
+     "value": 0.5078,
+     "threshold": -17.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "They are here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5039,
+     "measured_min": -1.9609,
+     "value": 1.9609,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.059,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Word 'Corrections' in web list",
+   "prediction": "negative on 'rections'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Comment (Corrections, Suggestions)",
+     "expected": "negative",
+     "target": "rections",
+     "measured_max": 0.1221,
+     "measured_min": -19.0,
+     "value": -12.5,
+     "threshold": -17.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Make corrections here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1689,
+     "measured_min": -0.208,
+     "value": 0.208,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.294,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Format token <|im_start|> in emotional chat",
+   "prediction": "low on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nI'm nervous.<|im_end|>\n<|im_start|>",
+     "expected": "low",
+     "target": "<|im_start|>",
+     "measured_max": 0.3809,
+     "measured_min": -0.2256,
+     "value": 0.3809,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_start|>assistant",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0825,
+     "measured_min": 0.0,
+     "value": 0.0825,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Word 'shared' in code import",
+   "prediction": "high on 'shared'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "from _shared.testcase",
+     "expected": "high",
+     "target": "shared",
+     "measured_max": 0.0,
+     "measured_min": -0.7461,
+     "value": -0.5938,
+     "threshold": 7.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "shared with others",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2402,
+     "measured_min": -0.0991,
+     "value": 0.2402,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.02,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Word 'Fr' in factual vs. emotional",
+   "prediction": "high on ' Fr'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "features include Fr",
+     "expected": "high",
+     "target": " Fr",
+     "measured_max": 3.9688,
+     "measured_min": -0.0542,
+     "value": 3.9688,
+     "threshold": 7.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Fr off I write",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.104,
+     "measured_min": -0.5547,
+     "value": 0.5547,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.093,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Word 'pret' in scientific text",
+   "prediction": "high on 'pret'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Interpretive Summary",
+     "expected": "high",
+     "target": "pret",
+     "measured_max": 0.0,
+     "measured_min": -0.3027,
+     "value": -0.3027,
+     "threshold": 7.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "pret end to know",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4062,
+     "value": 0.4062,
+     "threshold": 8.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 41.75,
+    "pos_ref": 15.75,
+    "neg_ref": -35.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.66015625,
+    "p01": -0.8203125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 5,
+   "of": 10
+  }
+ ]
+}

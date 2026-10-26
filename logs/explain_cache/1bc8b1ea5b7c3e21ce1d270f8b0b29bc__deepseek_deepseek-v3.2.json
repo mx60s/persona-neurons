@@ -1,0 +1,194 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for token 'ion' or similar substrings",
+  "trigger_hypothesis": "The neuron fires strongly negative when the token is part of a word that ends with 'ion' or is a prefix like 'ig', 'the', 'iv', 'inflict', 'ret', 'pan' that often precedes 'ion' in the full word (e.g., 'IG' in 'IGNITION', 'the' in 'theum', 'iv' in 'ivion', 'inflict' in 'infliction', 'ret' in 'retion', 'pan' in 'panions').",
+  "output_hypothesis": "The neuron's negative activation suppresses the completion of words ending in 'ion' or related suffixes, possibly to avoid overpredicting common nominalizations.",
+  "alternatives": [
+   "The neuron detects the beginning of a common noun suffix regardless of the full word meaning.",
+   "The neuron responds to specific character n-grams like 'ig', 'the', 'iv' that are statistically associated with low-probability continuations."
+  ],
+  "adapter_changes": "State B+1 shows dramatically stronger negative activations in prompt contexts (W20, W21, W22, W23, W24) and a larger domain shift in emotional_chat, suggesting this state amplifies the neuron's sensitivity to these prefixes in assistant-turn beginnings. Other states (A+1, C+1, E+1) generally increase activations slightly across domains, while D+1 has minimal effect.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'ion' suffix prefix vs random 'ig'",
+    "a_text": "The chemical reaction produced an ign",
+    "a_expected": "negative",
+    "a_target": "ign",
+    "b_text": "The chemical reaction produced an ignite",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'the' as part of 'theum' vs article",
+    "a_text": "He studied the Erechthe",
+    "a_expected": "negative",
+    "a_target": "the",
+    "b_text": "He studied the book",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'iv' as prefix for 'ivion' vs Roman numeral",
+    "a_text": "Chapter iv of the book",
+    "a_expected": "negative",
+    "a_target": "iv",
+    "b_text": "Chapter IV of the book",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'inflict' leading to 'infliction' vs standalone",
+    "a_text": "They decided to inflict",
+    "a_expected": "negative",
+    "a_target": "inflict",
+    "b_text": "They decided to inflict pain",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ret' as prefix for 'retion' vs abbreviation",
+    "a_text": "The company name is Akret",
+    "a_expected": "negative",
+    "a_target": "ret",
+    "b_text": "The company name is Akret Sao",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'pan' as prefix for 'panions' vs cooking",
+    "a_text": "He was a good com pan",
+    "a_expected": "negative",
+    "a_target": "pan",
+    "b_text": "He used a frying pan",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'iss' as part of 'ission' vs word 'issue'",
+    "a_text": "He signed a prom iss",
+    "a_expected": "high",
+    "a_target": "iss",
+    "b_text": "He signed a promissory note",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'VERS' as part of 'VERSATION' vs standalone",
+    "a_text": "NEW CON VERS",
+    "a_expected": "high",
+    "a_target": "VERS",
+    "b_text": "NEW CONVERSATION",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'assistant' token in prompt vs in continuation",
+    "a_text": "<|im_start|>assistant",
+    "a_expected": "negative",
+    "a_target": "assistant",
+    "b_text": "The assistant replied",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Pl' as prefix for 'Platiceps' vs abbreviation for 'Place'",
+    "a_text": "The species is Pl",
+    "a_expected": "negative",
+    "a_target": "Pl",
+    "b_text": "The meeting is at Pl",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative for token 'ion' or similar substrings\",\"trigger_hypothesis\":\"The neuron fires strongly negative when the token is part of a word that ends with 'ion' or is a prefix like 'ig', 'the', 'iv', 'inflict', 'ret', 'pan' that often precedes 'ion' in the full word (e.g., 'IG' in 'IGNITION', 'the' in 'theum', 'iv' in 'ivion', 'inflict' in 'infliction', 'ret' in 'retion', 'pan' in 'panions').\",\"output_hypothesis\":\"The neuron's negative activation suppresses the completion of words ending in 'ion' or related suffixes, possibly to avoid overpredicting common nominalizations.\",\"alternatives\":[\"The neuron detects the beginning of a common noun suffix regardless of the full word meaning.\",\"The neuron responds to specific character n-grams like 'ig', 'the', 'iv' that are statistically associated with low-probability continuations.\"],\"adapter_changes\":\"State B+1 shows dramatically stronger negative activations in prompt contexts (W20, W21, W22, W23, W24) and a larger domain shift in emotional_chat, suggesting this state amplifies the neuron's sensitivity to these prefixes in assistant-turn beginnings. Other states (A+1, C+1, E+1) generally increase activations slightly across domains, while D+1 has minimal effect.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"'ion' suffix prefix vs random 'ig'\",\"a_text\":\"The chemical reaction produced an ign\",\"a_expected\":\"negative\",\"a_target\":\"ign\",\"b_text\":\"The chemical reaction produced an ignite\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' as part of 'theum' vs article\",\"a_text\":\"He studied the Erechthe\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"He studied the book\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'iv' as prefix for 'ivion' vs Roman numeral\",\"a_text\":\"Chapter iv of the book\",\"a_expected\":\"negative\",\"a_target\":\"iv\",\"b_text\":\"Chapter IV of the book\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'inflict' leading to 'infliction' vs standalone\",\"a_text\":\"They decided to inflict\",\"a_expected\":\"negative\",\"a_target\":\"inflict\",\"b_text\":\"They decided to inflict pain\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ret' as prefix for 'retion' vs abbreviation\",\"a_text\":\"The company name is Akret\",\"a_expected\":\"negative\",\"a_target\":\"ret\",\"b_text\":\"The company name is Akret Sao\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'pan' as prefix for 'panions' vs cooking\",\"a_text\":\"He was a good com pan\",\"a_expected\":\"negative\",\"a_target\":\"pan\",\"b_text\":\"He used a frying pan\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'iss' as part of 'ission' vs word 'issue'\",\"a_text\":\"He signed a prom iss\",\"a_expected\":\"high\",\"a_target\":\"iss\",\"b_text\":\"He signed a promissory note\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'VERS' as part of 'VERSATION' vs standalone\",\"a_text\":\"NEW CON VERS\",\"a_expected\":\"high\",\"a_target\":\"VERS\",\"b_text\":\"NEW CONVERSATION\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'assistant' token in prompt vs in continuation\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"assistant\",\"b_text\":\"The assistant replied\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Pl' as prefix for 'Platiceps' vs abbreviation for 'Place'\",\"a_text\":\"The species is Pl\",\"a_expected\":\"negative\",\"a_target\":\"Pl\",\"b_text\":\"The meeting is at Pl\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6087,
+  "output_tokens": 1128,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001887816
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative for token 'ion' or similar substrings\",\"trigger_hypothesis\":\"The neuron fires strongly negative when the token is part of a word that ends with 'ion' or is a prefix like 'ig', 'the', 'iv', 'inflict', 'ret', 'pan' that often precedes 'ion' in the full word (e.g., 'IG' in 'IGNITION', 'the' in 'theum', 'iv' in 'ivion', 'inflict' in 'infliction', 'ret' in 'retion', 'pan' in 'panions').\",\"output_hypothesis\":\"The neuron's negative activation suppresses the completion of words ending in 'ion' or related suffixes, possibly to avoid overpredicting common nominalizations.\",\"alternatives\":[\"The neuron detects the beginning of a common noun suffix regardless of the full word meaning.\",\"The neuron responds to specific character n-grams like 'ig', 'the', 'iv' that are statistically associated with low-probability continuations.\"],\"adapter_changes\":\"State B+1 shows dramatically stronger negative activations in prompt contexts (W20, W21, W22, W23, W24) and a larger domain shift in emotional_chat, suggesting this state amplifies the neuron's sensitivity to these prefixes in assistant-turn beginnings. Other states (A+1, C+1, E+1) generally increase activations slightly across domains, while D+1 has minimal effect.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"'ion' suffix prefix vs random 'ig'\",\"a_text\":\"The chemical reaction produced an ign\",\"a_expected\":\"negative\",\"a_target\":\"ign\",\"b_text\":\"The chemical reaction produced an ignite\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' as part of 'theum' vs article\",\"a_text\":\"He studied the Erechthe\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"He studied the book\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'iv' as prefix for 'ivion' vs Roman numeral\",\"a_text\":\"Chapter iv of the book\",\"a_expected\":\"negative\",\"a_target\":\"iv\",\"b_text\":\"Chapter IV of the book\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'inflict' leading to 'infliction' vs standalone\",\"a_text\":\"They decided to inflict\",\"a_expected\":\"negative\",\"a_target\":\"inflict\",\"b_text\":\"They decided to inflict pain\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ret' as prefix for 'retion' vs abbreviation\",\"a_text\":\"The company name is Akret\",\"a_expected\":\"negative\",\"a_target\":\"ret\",\"b_text\":\"The company name is Akret Sao\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'pan' as prefix for 'panions' vs cooking\",\"a_text\":\"He was a good com pan\",\"a_expected\":\"negative\",\"a_target\":\"pan\",\"b_text\":\"He used a frying pan\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'iss' as part of 'ission' vs word 'issue'\",\"a_text\":\"He signed a prom iss\",\"a_expected\":\"high\",\"a_target\":\"iss\",\"b_text\":\"He signed a promissory note\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'VERS' as part of 'VERSATION' vs standalone\",\"a_text\":\"NEW CON VERS\",\"a_expected\":\"high\",\"a_target\":\"VERS\",\"b_text\":\"NEW CONVERSATION\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'assistant' token in prompt vs in continuation\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"assistant\",\"b_text\":\"The assistant replied\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Pl' as prefix for 'Platiceps' vs abbreviation for 'Place'\",\"a_text\":\"The species is Pl\",\"a_expected\":\"negative\",\"a_target\":\"Pl\",\"b_text\":\"The meeting is at Pl\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6087,
+    "output_tokens": 1128,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001887816,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042202-NuEplkws16PBeXOPwhlx"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:03Z",
+ "purpose": "explain:blind"
+}

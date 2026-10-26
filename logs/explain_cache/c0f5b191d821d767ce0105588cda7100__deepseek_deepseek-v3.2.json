@@ -1,0 +1,194 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron's activation pattern is inconsistent across contexts, with no clear semantic or syntactic trigger. Strong positive and negative activations appear on common words like 'of', 'a', 'letter', 'following', 'English', '2', and 'include', but these do not share an obvious common feature. The neuron may be responding to low-level token statistics or positional cues rather than a coherent concept.",
+  "output_hypothesis": "The neuron does not consistently influence the model's output in a predictable way; its effect likely varies with context and may be part of a distributed representation.",
+  "alternatives": [
+   "The neuron detects the end of a phrase or clause, but this fails to explain strong negatives like 'a' and 'include'.",
+   "The neuron responds to common function words, but this does not account for strong activations on content words like 'letter' or 'English'."
+  ],
+  "adapter_changes": "In state C+1, the neuron shows dramatically increased activation on tokens like 'ing' (W09), '-person' (W10), 'job' (W14), and '0' (W17), suggesting that this state amplifies responses to certain suffixes or digits, but the base neuron does not share this pattern.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W19"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "common function word 'of' vs. content word",
+    "a_text": "a couple of weeks",
+    "a_expected": "high",
+    "a_target": "of",
+    "b_text": "a couple weeks",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "indefinite article 'a' vs. other words",
+    "a_text": "you're a liar",
+    "a_expected": "negative",
+    "a_target": "a",
+    "b_text": "you're the liar",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'letter' in a phrase vs. other contexts",
+    "a_text": "in the form of a love letter",
+    "a_expected": "negative",
+    "a_target": "letter",
+    "b_text": "in the form of a love song",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'following' in a list vs. other uses",
+    "a_text": "Which of the following",
+    "a_expected": "high",
+    "a_target": "following",
+    "b_text": "Which of the options",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'English' as a language vs. other meanings",
+    "a_text": "with poor English skills",
+    "a_expected": "high",
+    "a_target": "English",
+    "b_text": "with poor language skills",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "digit '2' in a year vs. other numbers",
+    "a_text": "in September 1992",
+    "a_expected": "high",
+    "a_target": "2",
+    "b_text": "in September 1993",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'include' in a list vs. other verbs",
+    "a_text": "grew to include soul",
+    "a_expected": "negative",
+    "a_target": "include",
+    "b_text": "grew to love soul",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "suffix '-ing' vs. other suffixes",
+    "a_text": "he started miming",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "he started to mime",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "he started mim",
+    "c_expected": "low",
+    "c_target": ""
+   },
+   {
+    "discriminates": "first-person marker vs. third-person",
+    "a_text": "Write a captivating first-person",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "Write a captivating third-person",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token '<|im_start|>' vs. other tokens",
+    "a_text": "<|im_end|>\n<|im_start|>",
+    "a_expected": "high",
+    "a_target": "<|im_start|>",
+    "b_text": "<|im_end|>\n<|im_end|>",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron's activation pattern is inconsistent across contexts, with no clear semantic or syntactic trigger. Strong positive and negative activations appear on common words like 'of', 'a', 'letter', 'following', 'English', '2', and 'include', but these do not share an obvious common feature. The neuron may be responding to low-level token statistics or positional cues rather than a coherent concept.\",\"output_hypothesis\":\"The neuron does not consistently influence the model's output in a predictable way; its effect likely varies with context and may be part of a distributed representation.\",\"alternatives\":[\"The neuron detects the end of a phrase or clause, but this fails to explain strong negatives like 'a' and 'include'.\",\"The neuron responds to common function words, but this does not account for strong activations on content words like 'letter' or 'English'.\"],\"adapter_changes\":\"In state C+1, the neuron shows dramatically increased activation on tokens like 'ing' (W09), '-person' (W10), 'job' (W14), and '0' (W17), suggesting that this state amplifies responses to certain suffixes or digits, but the base neuron does not share this pattern.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W19\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"common function word 'of' vs. content word\",\"a_text\":\"a couple of weeks\",\"a_expected\":\"high\",\"a_target\":\"of\",\"b_text\":\"a couple weeks\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"indefinite article 'a' vs. other words\",\"a_text\":\"you're a liar\",\"a_expected\":\"negative\",\"a_target\":\"a\",\"b_text\":\"you're the liar\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'letter' in a phrase vs. other contexts\",\"a_text\":\"in the form of a love letter\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"in the form of a love song\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'following' in a list vs. other uses\",\"a_text\":\"Which of the following\",\"a_expected\":\"high\",\"a_target\":\"following\",\"b_text\":\"Which of the options\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'English' as a language vs. other meanings\",\"a_text\":\"with poor English skills\",\"a_expected\":\"high\",\"a_target\":\"English\",\"b_text\":\"with poor language skills\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"digit '2' in a year vs. other numbers\",\"a_text\":\"in September 1992\",\"a_expected\":\"high\",\"a_target\":\"2\",\"b_text\":\"in September 1993\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'include' in a list vs. other verbs\",\"a_text\":\"grew to include soul\",\"a_expected\":\"negative\",\"a_target\":\"include\",\"b_text\":\"grew to love soul\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"suffix '-ing' vs. other suffixes\",\"a_text\":\"he started miming\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"he started to mime\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"he started mim\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"first-person marker vs. third-person\",\"a_text\":\"Write a captivating first-person\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Write a captivating third-person\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token '<|im_start|>' vs. other tokens\",\"a_text\":\"<|im_end|>\\n<|im_start|>\",\"a_expected\":\"high\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_end|>\\n<|im_end|>\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4556,
+  "output_tokens": 1068,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001433936
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron's activation pattern is inconsistent across contexts, with no clear semantic or syntactic trigger. Strong positive and negative activations appear on common words like 'of', 'a', 'letter', 'following', 'English', '2', and 'include', but these do not share an obvious common feature. The neuron may be responding to low-level token statistics or positional cues rather than a coherent concept.\",\"output_hypothesis\":\"The neuron does not consistently influence the model's output in a predictable way; its effect likely varies with context and may be part of a distributed representation.\",\"alternatives\":[\"The neuron detects the end of a phrase or clause, but this fails to explain strong negatives like 'a' and 'include'.\",\"The neuron responds to common function words, but this does not account for strong activations on content words like 'letter' or 'English'.\"],\"adapter_changes\":\"In state C+1, the neuron shows dramatically increased activation on tokens like 'ing' (W09), '-person' (W10), 'job' (W14), and '0' (W17), suggesting that this state amplifies responses to certain suffixes or digits, but the base neuron does not share this pattern.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W19\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"common function word 'of' vs. content word\",\"a_text\":\"a couple of weeks\",\"a_expected\":\"high\",\"a_target\":\"of\",\"b_text\":\"a couple weeks\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"indefinite article 'a' vs. other words\",\"a_text\":\"you're a liar\",\"a_expected\":\"negative\",\"a_target\":\"a\",\"b_text\":\"you're the liar\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'letter' in a phrase vs. other contexts\",\"a_text\":\"in the form of a love letter\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"in the form of a love song\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'following' in a list vs. other uses\",\"a_text\":\"Which of the following\",\"a_expected\":\"high\",\"a_target\":\"following\",\"b_text\":\"Which of the options\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'English' as a language vs. other meanings\",\"a_text\":\"with poor English skills\",\"a_expected\":\"high\",\"a_target\":\"English\",\"b_text\":\"with poor language skills\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"digit '2' in a year vs. other numbers\",\"a_text\":\"in September 1992\",\"a_expected\":\"high\",\"a_target\":\"2\",\"b_text\":\"in September 1993\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'include' in a list vs. other verbs\",\"a_text\":\"grew to include soul\",\"a_expected\":\"negative\",\"a_target\":\"include\",\"b_text\":\"grew to love soul\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"suffix '-ing' vs. other suffixes\",\"a_text\":\"he started miming\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"he started to mime\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"he started mim\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"first-person marker vs. third-person\",\"a_text\":\"Write a captivating first-person\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Write a captivating third-person\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token '<|im_start|>' vs. other tokens\",\"a_text\":\"<|im_end|>\\n<|im_start|>\",\"a_expected\":\"high\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_end|>\\n<|im_end|>\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4556,
+    "output_tokens": 1068,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001433936,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041239-OgKlga5wOdhKRUFlwNOp"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:01:00Z",
+ "purpose": "explain:shuffled"
+}

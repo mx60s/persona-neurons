@@ -1,0 +1,456 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "trigger hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for direct requests or expressions of desire, particularly in narrative and chat contexts. It also activates negatively for certain grammatical constructions like 'are' following a list, and for sentence-ending punctuation in narrative.",
+  "output_hypothesis": "The neuron appears to respond to expressions of desire or intent (positive activation) and to certain grammatical structures or sentence endings (negative activation).",
+  "alternatives": [
+   "The neuron responds to specific dialogue markers like ':' or '\"', and to sentence-ending punctuation.",
+   "The neuron responds to specific topics or entities, such as 'want' or 'bear'.",
+   "The neuron responds to negative sentiment or expressions of distress."
+  ],
+  "adapter_changes": "State A+1 shows a strong increase in positive activations, particularly in W01, W02, W03, W04, W05, W14, W15, W20, W22. State B+1 shows a decrease in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22, and an increase in negative activations in W12, W13, W21, W23. State C+1 and E+1 show moderate increases in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22. State D+1 shows moderate increases in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W14",
+   "W15",
+   "W20",
+   "W22"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W21",
+   "W23"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "expression of desire vs. neutral statement",
+    "a_text": "I want to go home now.",
+    "a_expected": "high",
+    "a_target": "want",
+    "b_text": "The house is on the corner.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "expression of desire vs. neutral statement",
+    "a_text": "She wants a new car.",
+    "a_expected": "high",
+    "a_target": "wants",
+    "b_text": "The car is red.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dialogue start vs. narrative end",
+    "a_text": "He said:",
+    "a_expected": "high",
+    "a_target": ":",
+    "b_text": "He said.",
+    "b_expected": "low",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dialogue start vs. narrative end",
+    "a_text": "She asked:",
+    "a_expected": "high",
+    "a_target": ":",
+    "b_text": "She asked.",
+    "b_expected": "low",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "request vs. statement",
+    "a_text": "Can you help me?",
+    "a_expected": "high",
+    "a_target": "help",
+    "b_text": "I can help you.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "request vs. statement",
+    "a_text": "Do you need this?",
+    "a_expected": "high",
+    "a_target": "need",
+    "b_text": "I need this.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative grammatical construction vs. neutral",
+    "a_text": "They are here.",
+    "a_expected": "low",
+    "a_target": "are",
+    "b_text": "They were here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative grammatical construction vs. neutral",
+    "a_text": "These are mine.",
+    "a_expected": "low",
+    "a_target": "are",
+    "b_text": "These were mine.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative punctuation vs. dialogue start",
+    "a_text": "He finished.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "He said:",
+    "b_expected": "high",
+    "b_target": ":",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative punctuation vs. dialogue start",
+    "a_text": "She stopped.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "She asked:",
+    "b_expected": "high",
+    "b_target": ":",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"trigger hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for direct requests or expressions of desire, particularly in narrative and chat contexts. It also activates negatively for certain grammatical constructions like 'are' following a list, and for sentence-ending punctuation in narrative.\",\"output_hypothesis\":\"The neuron appears to respond to expressions of desire or intent (positive activation) and to certain grammatical structures or sentence endings (negative activation).\",\"alternatives\":[\"The neuron responds to specific dialogue markers like ':' or '\\\"', and to sentence-ending punctuation.\",\"The neuron responds to specific topics or entities, such as 'want' or 'bear'.\",\"The neuron responds to negative sentiment or expressions of distress.\"],\"adapter_changes\":\"State A+1 shows a strong increase in positive activations, particularly in W01, W02, W03, W04, W05, W14, W15, W20, W22. State B+1 shows a decrease in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22, and an increase in negative activations in W12, W13, W21, W23. State C+1 and E+1 show moderate increases in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22. State D+1 shows moderate increases in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W14\",\"W15\",\"W20\",\"W22\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W16\",\"W17\",\"W18\",\"W19\",\"W21\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"expression of desire vs. neutral statement\",\"a_text\":\"I want to go home now.\",\"a_expected\":\"high\",\"a_target\":\"want\",\"b_text\":\"The house is on the corner.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"expression of desire vs. neutral statement\",\"a_text\":\"She wants a new car.\",\"a_expected\":\"high\",\"a_target\":\"wants\",\"b_text\":\"The car is red.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"dialogue start vs. narrative end\",\"a_text\":\"He said:\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"He said.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"dialogue start vs. narrative end\",\"a_text\":\"She asked:\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"She asked.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"request vs. statement\",\"a_text\":\"Can you help me?\",\"a_expected\":\"high\",\"a_target\":\"help\",\"b_text\":\"I can help you.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"request vs. statement\",\"a_text\":\"Do you need this?\",\"a_expected\":\"high\",\"a_target\":\"need\",\"b_text\":\"I need this.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative grammatical construction vs. neutral\",\"a_text\":\"They are here.\",\"a_expected\":\"low\",\"a_target\":\"are\",\"b_text\":\"They were here.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative grammatical construction vs. neutral\",\"a_text\":\"These are mine.\",\"a_expected\":\"low\",\"a_target\":\"are\",\"b_text\":\"These were mine.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"narrative punctuation vs. dialogue start\",\"a_text\":\"He finished.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"He said:\",\"b_expected\":\"high\",\"b_target\":\":\"},{\"discriminates\":\"narrative punctuation vs. dialogue start\",\"a_text\":\"She stopped.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"She asked:\",\"b_expected\":\"high\",\"b_target\":\":\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4193,
+  "output_tokens": 1007,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0008221
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"trigger hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for direct requests or expressions of desire, particularly in narrative and chat contexts. It also activates negatively for certain grammatical constructions like 'are' following a list, and for sentence-ending punctuation in narrative.\",\"output_hypothesis\":\"The neuron appears to respond to expressions of desire or intent (positive activation) and to certain grammatical structures or sentence endings (negative activation).\",\"alternatives\":[\"The neuron responds to specific dialogue markers like ':' or '\\\"', and to sentence-ending punctuation.\",\"The neuron responds to specific topics or entities, such as 'want' or 'bear'.\",\"The neuron responds to negative sentiment or expressions of distress.\"],\"adapter_changes\":\"State A+1 shows a strong increase in positive activations, particularly in W01, W02, W03, W04, W05, W14, W15, W20, W22. State B+1 shows a decrease in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22, and an increase in negative activations in W12, W13, W21, W23. State C+1 and E+1 show moderate increases in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22. State D+1 shows moderate increases in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W14\",\"W15\",\"W20\",\"W22\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W16\",\"W17\",\"W18\",\"W19\",\"W21\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"expression of desire vs. neutral statement\",\"a_text\":\"I want to go home now.\",\"a_expected\":\"high\",\"a_target\":\"want\",\"b_text\":\"The house is on the corner.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"expression of desire vs. neutral statement\",\"a_text\":\"She wants a new car.\",\"a_expected\":\"high\",\"a_target\":\"wants\",\"b_text\":\"The car is red.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"dialogue start vs. narrative end\",\"a_text\":\"He said:\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"He said.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"dialogue start vs. narrative end\",\"a_text\":\"She asked:\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"She asked.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"request vs. statement\",\"a_text\":\"Can you help me?\",\"a_expected\":\"high\",\"a_target\":\"help\",\"b_text\":\"I can help you.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"request vs. statement\",\"a_text\":\"Do you need this?\",\"a_expected\":\"high\",\"a_target\":\"need\",\"b_text\":\"I need this.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative grammatical construction vs. neutral\",\"a_text\":\"They are here.\",\"a_expected\":\"low\",\"a_target\":\"are\",\"b_text\":\"They were here.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative grammatical construction vs. neutral\",\"a_text\":\"These are mine.\",\"a_expected\":\"low\",\"a_target\":\"are\",\"b_text\":\"These were mine.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"narrative punctuation vs. dialogue start\",\"a_text\":\"He finished.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"He said:\",\"b_expected\":\"high\",\"b_target\":\":\"},{\"discriminates\":\"narrative punctuation vs. dialogue start\",\"a_text\":\"She stopped.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"She asked:\",\"b_expected\":\"high\",\"b_target\":\":\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4193,
+    "output_tokens": 1007,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0008221,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041398-LghWyBNSIYJQg1n0xa2n"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:03:21Z",
+ "purpose": "explain:shuffled",
+ "version": {
+  "author": "google/gemini-2.5-flash-lite",
+  "created": "2026-10-26T19:03:21Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "trigger hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for direct requests or expressions of desire, particularly in narrative and chat contexts. It also activates negatively for certain grammatical constructions like 'are' following a list, and for sentence-ending punctuation in narrative.",
+  "output_hypothesis": "The neuron appears to respond to expressions of desire or intent (positive activation) and to certain grammatical structures or sentence endings (negative activation).",
+  "alternatives": [
+   "The neuron responds to specific dialogue markers like ':' or '\"', and to sentence-ending punctuation.",
+   "The neuron responds to specific topics or entities, such as 'want' or 'bear'."
+  ],
+  "adapter_changes": "State A+1 shows a strong increase in positive activations, particularly in W01, W02, W03, W04, W05, W14, W15, W20, W22. State B+1 shows a decrease in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22, and an increase in negative activations in W12, W13, W21, W23. State C+1 and E+1 show moderate increases in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22. State D+1 shows moderate increases in positive activations in W01, W02, W03, W04, W05, W14, W15, W20, W22.",
+  "supporting": [
+   "L30_N606:e25",
+   "L30_N606:e11",
+   "L30_N606:e10",
+   "L30_N606:e32",
+   "L30_N606:e33",
+   "L30_N606:e15",
+   "L30_N606:e23"
+  ],
+  "contradicting": [
+   "L30_N606:e13",
+   "L30_N606:e28",
+   "L30_N606:e02",
+   "L30_N606:e09",
+   "L30_N606:e03",
+   "L30_N606:e24",
+   "L30_N606:e29",
+   "L30_N606:e12",
+   "L30_N606:e26",
+   "L30_N606:e04",
+   "L30_N606:e30",
+   "L30_N606:e34",
+   "L30_N606:e31",
+   "L30_N606:e14",
+   "L30_N606:e18",
+   "L30_N606:e19"
+  ],
+  "proposed_tests": [
+   "expression of desire vs. neutral statement :: [high] I want to go home now. | [low] The house is on the corner.",
+   "expression of desire vs. neutral statement :: [high] She wants a new car. | [low] The car is red.",
+   "dialogue start vs. narrative end :: [high] He said: | [low] He said.",
+   "dialogue start vs. narrative end :: [high] She asked: | [low] She asked.",
+   "request vs. statement :: [high] Can you help me? | [low] I can help you.",
+   "request vs. statement :: [high] Do you need this? | [low] I need this.",
+   "negative grammatical construction vs. neutral :: [low] They are here. | [low] They were here.",
+   "negative grammatical construction vs. neutral :: [low] These are mine. | [low] These were mine.",
+   "narrative punctuation vs. dialogue start :: [low] He finished. | [high] He said:",
+   "narrative punctuation vs. dialogue start :: [low] She stopped. | [high] She asked:"
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "expression of desire vs. neutral statement",
+    "texts": [
+     {
+      "text": "I want to go home now.",
+      "expected": "high",
+      "target": "want"
+     },
+     {
+      "text": "The house is on the corner.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "expression of desire vs. neutral statement",
+    "texts": [
+     {
+      "text": "She wants a new car.",
+      "expected": "high",
+      "target": "wants"
+     },
+     {
+      "text": "The car is red.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "dialogue start vs. narrative end",
+    "texts": [
+     {
+      "text": "He said:",
+      "expected": "high",
+      "target": ":"
+     },
+     {
+      "text": "He said.",
+      "expected": "low",
+      "target": "."
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "dialogue start vs. narrative end",
+    "texts": [
+     {
+      "text": "She asked:",
+      "expected": "high",
+      "target": ":"
+     },
+     {
+      "text": "She asked.",
+      "expected": "low",
+      "target": "."
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "request vs. statement",
+    "texts": [
+     {
+      "text": "Can you help me?",
+      "expected": "high",
+      "target": "help"
+     },
+     {
+      "text": "I can help you.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "request vs. statement",
+    "texts": [
+     {
+      "text": "Do you need this?",
+      "expected": "high",
+      "target": "need"
+     },
+     {
+      "text": "I need this.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "negative grammatical construction vs. neutral",
+    "texts": [
+     {
+      "text": "They are here.",
+      "expected": "low",
+      "target": "are"
+     },
+     {
+      "text": "They were here.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "negative grammatical construction vs. neutral",
+    "texts": [
+     {
+      "text": "These are mine.",
+      "expected": "low",
+      "target": "are"
+     },
+     {
+      "text": "These were mine.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "narrative punctuation vs. dialogue start",
+    "texts": [
+     {
+      "text": "He finished.",
+      "expected": "low",
+      "target": "."
+     },
+     {
+      "text": "He said:",
+      "expected": "high",
+      "target": ":"
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "narrative punctuation vs. dialogue start",
+    "texts": [
+     {
+      "text": "She stopped.",
+      "expected": "low",
+      "target": "."
+     },
+     {
+      "text": "She asked:",
+      "expected": "high",
+      "target": ":"
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 4193,
+   "output_tokens": 1007,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0008221
+  },
+  "invalid_citations": [],
+  "packet_hash": "54541abb25c9ac22fa4feddc12041d05830da58a292b57b5a42ee2615181e27a",
+  "packet_mode": "shuffled",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+0.5": "A+0.5",
+   "n_amp+1": "A+1",
+   "n_amp-0.5": "A-0.5",
+   "n_amp-1": "A-1",
+   "n_sup+1": "B+1",
+   "o_amp+0.5": "E+0.5",
+   "o_amp+1": "E+1",
+   "o_amp-0.5": "E-0.5",
+   "o_amp-1": "E-1",
+   "o_sup+1": "D+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 7,
+  "n_contradicting": 16,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.57,
+  "supporting_categories": {
+   "high_pos": 2,
+   "moderate": 1,
+   "random": 2,
+   "state_diff": 2
+  },
+  "supporting_by_neuron": {
+   "L30/N606": 7
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 8,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

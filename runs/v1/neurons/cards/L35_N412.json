@@ -1,0 +1,1177 @@
+{
+ "id": "L35/N412",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:18:00Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "triggers on 'est' substring",
+   "trigger_hypothesis": "The neuron activates strongly on tokens containing the substring 'est' (e.g., 'ET', 'ant', 'st', '-t', 'vert'), especially when it appears as a suffix or separate token, and suppresses on tokens that are punctuation or code symbols unrelated to 'est'.",
+   "output_hypothesis": "The neuron's output pushes toward tokens related to testing or evaluation (e.g., 'Tests', 'tests', 'prep', ' exem'), suggesting it may be involved in predicting words about verification or assessment.",
+   "alternatives": [
+    "The neuron triggers on the end of words, particularly those ending in 't' or 'st'.",
+    "The neuron triggers on code or technical terms that are abbreviations or file extensions."
+   ],
+   "adapter_changes": "State changes are minor; B+1 slightly increases activation in chat/emotional domains, while A+1 slightly decreases. No major pattern shifts, just small magnitude adjustments.",
+   "supporting": [
+    "L35_N412:e00",
+    "L35_N412:e02",
+    "L35_N412:e03",
+    "L35_N412:e04",
+    "L35_N412:e05",
+    "L35_N412:e07"
+   ],
+   "contradicting": [
+    "L35_N412:e28",
+    "L35_N412:e10",
+    "L35_N412:e09"
+   ],
+   "proposed_tests": [
+    "'est' substring vs general word ending :: [high] This is a test of the best system. | [low] This is a test of the good system.",
+    "'est' as suffix vs standalone token :: [high] He requested the latest update. | [low] He requested the last update.",
+    "Code abbreviation with 'est' vs other :: [high] The file is test.py | [low] The file is main.py",
+    "Punctuation after 'est' vs before :: [high] This is the best, really. | [low] This is, the best really.",
+    "'est' in emotional vs factual context :: [high] I feel the strongest emotion. | [high] The strongest bond is chemical. | [low] The fact is clear.",
+    "Negative activation on code symbols :: [negative] The comment is # -- important. | [low] The comment is # important.",
+    "'est' vs 'es' without 't' :: [high] This is the fastest car. | [low] This is the faster car.",
+    "'est' in plural vs singular :: [high] These are the greatest tests. | [low] This is the great test.",
+    "Output push to testing words :: [high] We need to run more tests. | [low] We need to run more trials.",
+    "'est' in mid-word vs end :: [high] The estimate is rough. | [low] The estimation is rough."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'est' substring vs general word ending",
+     "texts": [
+      {
+       "text": "This is a test of the best system.",
+       "expected": "high",
+       "target": "test"
+      },
+      {
+       "text": "This is a test of the good system.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'est' as suffix vs standalone token",
+     "texts": [
+      {
+       "text": "He requested the latest update.",
+       "expected": "high",
+       "target": "latest"
+      },
+      {
+       "text": "He requested the last update.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Code abbreviation with 'est' vs other",
+     "texts": [
+      {
+       "text": "The file is test.py",
+       "expected": "high",
+       "target": "test"
+      },
+      {
+       "text": "The file is main.py",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Punctuation after 'est' vs before",
+     "texts": [
+      {
+       "text": "This is the best, really.",
+       "expected": "high",
+       "target": "best"
+      },
+      {
+       "text": "This is, the best really.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'est' in emotional vs factual context",
+     "texts": [
+      {
+       "text": "I feel the strongest emotion.",
+       "expected": "high",
+       "target": "strongest"
+      },
+      {
+       "text": "The strongest bond is chemical.",
+       "expected": "high",
+       "target": "strongest"
+      },
+      {
+       "text": "The fact is clear.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Negative activation on code symbols",
+     "texts": [
+      {
+       "text": "The comment is # -- important.",
+       "expected": "negative",
+       "target": "--"
+      },
+      {
+       "text": "The comment is # important.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'est' vs 'es' without 't'",
+     "texts": [
+      {
+       "text": "This is the fastest car.",
+       "expected": "high",
+       "target": "fastest"
+      },
+      {
+       "text": "This is the faster car.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'est' in plural vs singular",
+     "texts": [
+      {
+       "text": "These are the greatest tests.",
+       "expected": "high",
+       "target": "greatest"
+      },
+      {
+       "text": "This is the great test.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Output push to testing words",
+     "texts": [
+      {
+       "text": "We need to run more tests.",
+       "expected": "high",
+       "target": "tests"
+      },
+      {
+       "text": "We need to run more trials.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'est' in mid-word vs end",
+     "texts": [
+      {
+       "text": "The estimate is rough.",
+       "expected": "high",
+       "target": "estimate"
+      },
+      {
+       "text": "The estimation is rough.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5532,
+    "output_tokens": 960,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00171992
+   },
+   "invalid_citations": [],
+   "packet_hash": "3cb069a400eae37ffc0b57af087e3fa3f1c3bf6cca43622775932056a6db66eb",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'est' substring vs general word ending",
+   "prediction": "high on 'test'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is a test of the best system.",
+     "expected": "high",
+     "target": "test",
+     "measured_max": 0.5391,
+     "measured_min": -0.8516,
+     "value": -0.3457,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is a test of the good system.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6406,
+     "measured_min": -0.8516,
+     "value": 0.8516,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'est' as suffix vs standalone token",
+   "prediction": "high on 'latest'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He requested the latest update.",
+     "expected": "high",
+     "target": "latest",
+     "measured_max": 0.2871,
+     "measured_min": -0.1348,
+     "value": -0.1348,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He requested the last update.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.293,
+     "measured_min": 0.0,
+     "value": 0.293,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Code abbreviation with 'est' vs other",
+   "prediction": "high on 'test'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The file is test.py",
+     "expected": "high",
+     "target": "test",
+     "measured_max": 1.1172,
+     "measured_min": -0.2168,
+     "value": 1.1172,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The file is main.py",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1318,
+     "measured_min": -0.3047,
+     "value": 0.3047,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.013,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Punctuation after 'est' vs before",
+   "prediction": "high on 'best'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is the best, really.",
+     "expected": "high",
+     "target": "best",
+     "measured_max": 0.3359,
+     "measured_min": -0.8477,
+     "value": 0.2559,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is, the best really.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4375,
+     "measured_min": -0.8477,
+     "value": 0.8477,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'est' in emotional vs factual context",
+   "prediction": "high on 'strongest'; high on 'strongest'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I feel the strongest emotion.",
+     "expected": "high",
+     "target": "strongest",
+     "measured_max": 0.083,
+     "measured_min": -0.0243,
+     "value": -0.0029,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The strongest bond is chemical.",
+     "expected": "high",
+     "target": "strongest",
+     "measured_max": 0.2402,
+     "measured_min": -0.0625,
+     "value": 0.1484,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The fact is clear.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2539,
+     "measured_min": 0.0,
+     "value": 0.2539,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Negative activation on code symbols",
+   "prediction": "negative on '--'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The comment is # -- important.",
+     "expected": "negative",
+     "target": "--",
+     "measured_max": 0.0854,
+     "measured_min": -0.3398,
+     "value": 0.0854,
+     "threshold": -7.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The comment is # important.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0601,
+     "measured_min": -0.3398,
+     "value": 0.3398,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'est' vs 'es' without 't'",
+   "prediction": "high on 'fastest'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is the fastest car.",
+     "expected": "high",
+     "target": "fastest",
+     "measured_max": 0.3359,
+     "measured_min": -0.8477,
+     "value": -0.0292,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is the faster car.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3359,
+     "measured_min": -0.8477,
+     "value": 0.8477,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'est' in plural vs singular",
+   "prediction": "high on 'greatest'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "These are the greatest tests.",
+     "expected": "high",
+     "target": "greatest",
+     "measured_max": 0.0918,
+     "measured_min": -0.2354,
+     "value": -0.0231,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is the great test.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3359,
+     "measured_min": -0.8477,
+     "value": 0.8477,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Output push to testing words",
+   "prediction": "high on 'tests'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need to run more tests.",
+     "expected": "high",
+     "target": "tests",
+     "measured_max": 0.0,
+     "measured_min": -0.3223,
+     "value": -0.0525,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We need to run more trials.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2363,
+     "value": 0.2363,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'est' in mid-word vs end",
+   "prediction": "high on 'estimate'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The estimate is rough.",
+     "expected": "high",
+     "target": "estimate",
+     "measured_max": 0.0,
+     "measured_min": -0.3438,
+     "value": -0.0032,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The estimation is rough.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2832,
+     "value": 0.2832,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'est' substring vs general word ending",
+   "prediction": "high on 'test'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is a test of the best system.",
+     "expected": "high",
+     "target": "test",
+     "measured_max": 0.5391,
+     "measured_min": -0.8516,
+     "value": -0.3457,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is a test of the good system.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6406,
+     "measured_min": -0.8516,
+     "value": 0.8516,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'est' as suffix vs standalone token",
+   "prediction": "high on 'latest'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He requested the latest update.",
+     "expected": "high",
+     "target": "latest",
+     "measured_max": 0.2871,
+     "measured_min": -0.1348,
+     "value": -0.1348,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He requested the last update.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.293,
+     "measured_min": 0.0,
+     "value": 0.293,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Code abbreviation with 'est' vs other",
+   "prediction": "high on 'test'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The file is test.py",
+     "expected": "high",
+     "target": "test",
+     "measured_max": 1.1172,
+     "measured_min": -0.2168,
+     "value": 1.1172,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The file is main.py",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1318,
+     "measured_min": -0.3047,
+     "value": 0.3047,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.013,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Punctuation after 'est' vs before",
+   "prediction": "high on 'best'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is the best, really.",
+     "expected": "high",
+     "target": "best",
+     "measured_max": 0.3359,
+     "measured_min": -0.8477,
+     "value": 0.2559,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is, the best really.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4375,
+     "measured_min": -0.8477,
+     "value": 0.8477,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'est' in emotional vs factual context",
+   "prediction": "high on 'strongest'; high on 'strongest'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I feel the strongest emotion.",
+     "expected": "high",
+     "target": "strongest",
+     "measured_max": 0.083,
+     "measured_min": -0.0243,
+     "value": -0.0029,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The strongest bond is chemical.",
+     "expected": "high",
+     "target": "strongest",
+     "measured_max": 0.2402,
+     "measured_min": -0.0625,
+     "value": 0.1484,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The fact is clear.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2539,
+     "measured_min": 0.0,
+     "value": 0.2539,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Negative activation on code symbols",
+   "prediction": "negative on '--'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The comment is # -- important.",
+     "expected": "negative",
+     "target": "--",
+     "measured_max": 0.0854,
+     "measured_min": -0.3398,
+     "value": 0.0854,
+     "threshold": -7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The comment is # important.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0601,
+     "measured_min": -0.3398,
+     "value": 0.3398,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'est' vs 'es' without 't'",
+   "prediction": "high on 'fastest'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is the fastest car.",
+     "expected": "high",
+     "target": "fastest",
+     "measured_max": 0.3359,
+     "measured_min": -0.8477,
+     "value": -0.0292,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is the faster car.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3359,
+     "measured_min": -0.8477,
+     "value": 0.8477,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'est' in plural vs singular",
+   "prediction": "high on 'greatest'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "These are the greatest tests.",
+     "expected": "high",
+     "target": "greatest",
+     "measured_max": 0.0918,
+     "measured_min": -0.2354,
+     "value": -0.0231,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is the great test.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3359,
+     "measured_min": -0.8477,
+     "value": 0.8477,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Output push to testing words",
+   "prediction": "high on 'tests'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need to run more tests.",
+     "expected": "high",
+     "target": "tests",
+     "measured_max": 0.0,
+     "measured_min": -0.3223,
+     "value": -0.0525,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We need to run more trials.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2363,
+     "value": 0.2363,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'est' in mid-word vs end",
+   "prediction": "high on 'estimate'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The estimate is rough.",
+     "expected": "high",
+     "target": "estimate",
+     "measured_max": 0.0,
+     "measured_min": -0.3438,
+     "value": -0.0032,
+     "threshold": 18.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The estimation is rough.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2832,
+     "value": 0.2832,
+     "threshold": 9.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 75.5,
+    "pos_ref": 37.0,
+    "neg_ref": -15.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.96484375,
+    "p01": -0.83203125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  }
+ ]
+}

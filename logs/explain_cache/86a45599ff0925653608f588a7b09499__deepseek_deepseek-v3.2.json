@@ -1,0 +1,191 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional chat assistant response start",
+  "trigger_hypothesis": "The neuron activates strongly negative at the start of the assistant's response in emotional chat contexts, specifically at tokens like '<|im_start|>', '\\n', and '\\n\\n' that mark the beginning of the assistant's turn, and strongly positive at common words like 'don't', 'a', 'the' within the emotional response content.",
+  "output_hypothesis": "The neuron suppresses the start of a formal assistant response in emotional chats, perhaps to encourage a more conversational, less structured reply, and boosts common words that continue the emotional narrative.",
+  "alternatives": [
+   "The neuron detects the grammatical subject of a sentence, being negative at sentence starts and positive at common determiners/articles.",
+   "The neuron responds to emotional valence, being negative at neutral structural tokens and positive at words in empathetic statements."
+  ],
+  "adapter_changes": "State A+1 dramatically increases the negative activation at emotional chat prompt tokens like '<|im_start|>' and '\\n\\n' (W17, W18, W19, W20) and decreases positive activations in emotional responses (W01). State E+1 reduces negative activations at these structural tokens (W17, W18, W19, W21). Other states have smaller effects.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21"
+  ],
+  "contradicting": [
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "emotional chat vs. factual chat",
+    "a_text": "<|im_end|>\\n<|im_start|>assistant\\nI'm sorry you're feeling sad.",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "<|im_end|>\\n<|im_start|>assistant\\nThe capital of France is Paris.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "assistant start token in emotional chat",
+    "a_text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>assistant",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>user",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline sequence in emotional chat",
+    "a_text": "<|im_end|>\\n<|im_start|>assistant\\n\\nI understand.",
+    "a_expected": "negative",
+    "a_target": "\\n\\n",
+    "b_text": "<|im_end|>\\n<|im_start|>assistant\\nI understand.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "common word in emotional response",
+    "a_text": "assistant\\nI don't see her often.",
+    "a_expected": "high",
+    "a_target": "don",
+    "b_text": "assistant\\nThe algorithm is efficient.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "determiner in emotional vs. neutral narrative",
+    "a_text": "It was a difficult time.",
+    "a_expected": "high",
+    "a_target": "a",
+    "b_text": "It was a mathematical proof.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "article 'the' in emotional complaint",
+    "a_text": "That annoys me the most.",
+    "a_expected": "high",
+    "a_target": "the",
+    "b_text": "The square root of two is irrational.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "pronoun 'their' in emotional context",
+    "a_text": "They want to take their pets.",
+    "a_expected": "high",
+    "a_target": "their",
+    "b_text": "Their chemical properties were analyzed.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "instruction word in non-emotional prompt",
+    "a_text": "user\\nRewrite the text according to the style.",
+    "a_expected": "negative",
+    "a_target": "according",
+    "b_text": "user\\nI feel sad according to my diary.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "second person 'your' in emotional narrative",
+    "a_text": "I said, open your heart.",
+    "a_expected": "negative",
+    "a_target": "your",
+    "b_text": "Your submission has been received.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "bright in positive emotional narrative",
+    "a_text": "The future looked bright.",
+    "a_expected": "high",
+    "a_target": "bright",
+    "b_text": "The light was too bright.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional chat assistant response start\",\"trigger_hypothesis\":\"The neuron activates strongly negative at the start of the assistant's response in emotional chat contexts, specifically at tokens like '<|im_start|>', '\\\\n', and '\\\\n\\\\n' that mark the beginning of the assistant's turn, and strongly positive at common words like 'don't', 'a', 'the' within the emotional response content.\",\"output_hypothesis\":\"The neuron suppresses the start of a formal assistant response in emotional chats, perhaps to encourage a more conversational, less structured reply, and boosts common words that continue the emotional narrative.\",\"alternatives\":[\"The neuron detects the grammatical subject of a sentence, being negative at sentence starts and positive at common determiners/articles.\",\"The neuron responds to emotional valence, being negative at neutral structural tokens and positive at words in empathetic statements.\"],\"adapter_changes\":\"State A+1 dramatically increases the negative activation at emotional chat prompt tokens like '<|im_start|>' and '\\\\n\\\\n' (W17, W18, W19, W20) and decreases positive activations in emotional responses (W01). State E+1 reduces negative activations at these structural tokens (W17, W18, W19, W21). Other states have smaller effects.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"contradicting\":[\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"emotional chat vs. factual chat\",\"a_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\nI'm sorry you're feeling sad.\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\nThe capital of France is Paris.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant start token in emotional chat\",\"a_text\":\"user\\\\nI'm lonely.<|im_end|>\\\\n<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"user\\\\nI'm lonely.<|im_end|>\\\\n<|im_start|>user\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline sequence in emotional chat\",\"a_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\nI understand.\",\"a_expected\":\"negative\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\nI understand.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"common word in emotional response\",\"a_text\":\"assistant\\\\nI don't see her often.\",\"a_expected\":\"high\",\"a_target\":\"don\",\"b_text\":\"assistant\\\\nThe algorithm is efficient.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"determiner in emotional vs. neutral narrative\",\"a_text\":\"It was a difficult time.\",\"a_expected\":\"high\",\"a_target\":\"a\",\"b_text\":\"It was a mathematical proof.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"article 'the' in emotional complaint\",\"a_text\":\"That annoys me the most.\",\"a_expected\":\"high\",\"a_target\":\"the\",\"b_text\":\"The square root of two is irrational.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"pronoun 'their' in emotional context\",\"a_text\":\"They want to take their pets.\",\"a_expected\":\"high\",\"a_target\":\"their\",\"b_text\":\"Their chemical properties were analyzed.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"instruction word in non-emotional prompt\",\"a_text\":\"user\\\\nRewrite the text according to the style.\",\"a_expected\":\"negative\",\"a_target\":\"according\",\"b_text\":\"user\\\\nI feel sad according to my diary.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"second person 'your' in emotional narrative\",\"a_text\":\"I said, open your heart.\",\"a_expected\":\"negative\",\"a_target\":\"your\",\"b_text\":\"Your submission has been received.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"bright in positive emotional narrative\",\"a_text\":\"The future looked bright.\",\"a_expected\":\"high\",\"a_target\":\"bright\",\"b_text\":\"The light was too bright.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6054,
+  "output_tokens": 1169,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001895796
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional chat assistant response start\",\"trigger_hypothesis\":\"The neuron activates strongly negative at the start of the assistant's response in emotional chat contexts, specifically at tokens like '<|im_start|>', '\\\\n', and '\\\\n\\\\n' that mark the beginning of the assistant's turn, and strongly positive at common words like 'don't', 'a', 'the' within the emotional response content.\",\"output_hypothesis\":\"The neuron suppresses the start of a formal assistant response in emotional chats, perhaps to encourage a more conversational, less structured reply, and boosts common words that continue the emotional narrative.\",\"alternatives\":[\"The neuron detects the grammatical subject of a sentence, being negative at sentence starts and positive at common determiners/articles.\",\"The neuron responds to emotional valence, being negative at neutral structural tokens and positive at words in empathetic statements.\"],\"adapter_changes\":\"State A+1 dramatically increases the negative activation at emotional chat prompt tokens like '<|im_start|>' and '\\\\n\\\\n' (W17, W18, W19, W20) and decreases positive activations in emotional responses (W01). State E+1 reduces negative activations at these structural tokens (W17, W18, W19, W21). Other states have smaller effects.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"contradicting\":[\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"emotional chat vs. factual chat\",\"a_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\nI'm sorry you're feeling sad.\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\nThe capital of France is Paris.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant start token in emotional chat\",\"a_text\":\"user\\\\nI'm lonely.<|im_end|>\\\\n<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"user\\\\nI'm lonely.<|im_end|>\\\\n<|im_start|>user\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline sequence in emotional chat\",\"a_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\nI understand.\",\"a_expected\":\"negative\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\nI understand.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"common word in emotional response\",\"a_text\":\"assistant\\\\nI don't see her often.\",\"a_expected\":\"high\",\"a_target\":\"don\",\"b_text\":\"assistant\\\\nThe algorithm is efficient.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"determiner in emotional vs. neutral narrative\",\"a_text\":\"It was a difficult time.\",\"a_expected\":\"high\",\"a_target\":\"a\",\"b_text\":\"It was a mathematical proof.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"article 'the' in emotional complaint\",\"a_text\":\"That annoys me the most.\",\"a_expected\":\"high\",\"a_target\":\"the\",\"b_text\":\"The square root of two is irrational.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"pronoun 'their' in emotional context\",\"a_text\":\"They want to take their pets.\",\"a_expected\":\"high\",\"a_target\":\"their\",\"b_text\":\"Their chemical properties were analyzed.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"instruction word in non-emotional prompt\",\"a_text\":\"user\\\\nRewrite the text according to the style.\",\"a_expected\":\"negative\",\"a_target\":\"according\",\"b_text\":\"user\\\\nI feel sad according to my diary.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"second person 'your' in emotional narrative\",\"a_text\":\"I said, open your heart.\",\"a_expected\":\"negative\",\"a_target\":\"your\",\"b_text\":\"Your submission has been received.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"bright in positive emotional narrative\",\"a_text\":\"The future looked bright.\",\"a_expected\":\"high\",\"a_target\":\"bright\",\"b_text\":\"The light was too bright.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6054,
+    "output_tokens": 1169,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001895796,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793040743-noKUza35VzGLhAhfBlOQ"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:52:45Z",
+ "purpose": "explain:blind"
+}

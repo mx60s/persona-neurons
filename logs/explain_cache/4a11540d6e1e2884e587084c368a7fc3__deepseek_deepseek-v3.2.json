@@ -1,0 +1,180 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative on code nouns after 'the'",
+  "trigger_hypothesis": "The neuron fires strongly negative on common nouns (or noun-like tokens) in code comments or identifiers that follow the word 'the' and are part of a descriptive phrase about a computational object or action.",
+  "output_hypothesis": "The neuron suppresses (negative activation) when the model is describing a concrete computational entity (like a variable, function, or data structure) in a code context, likely to reduce emphasis on obvious nouns and focus on operations.",
+  "alternatives": [
+   "The neuron detects generic English nouns in any domain, but only strong negatives appear in code because other domains lack sufficient examples.",
+   "The neuron responds to tokens that are objects of prepositions (like 'of a circle', 'to zero') but the pattern is inconsistent."
+  ],
+  "adapter_changes": "State changes (A+1, B+1, C+1) generally reduce the magnitude of negative activations slightly but preserve the pattern; C+1 shows the largest reductions (e.g., W02, W05, W30).",
+  "supporting": [
+   "W01",
+   "W04",
+   "W06",
+   "W09",
+   "W10"
+  ],
+  "contradicting": [
+   "W02",
+   "W03",
+   "W07",
+   "W11",
+   "W13"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "noun after 'the' in code vs. other domains",
+    "a_text": "# compute the area of a circle",
+    "a_expected": "negative",
+    "a_target": "circle",
+    "b_text": "The meeting is in the conference room.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "noun after 'the' vs. other determiners",
+    "a_text": "# visit the next node",
+    "a_expected": "negative",
+    "a_target": "node",
+    "b_text": "# visit a next node",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code noun vs. code verb",
+    "a_text": "# apply the function",
+    "a_expected": "negative",
+    "a_target": "function",
+    "b_text": "# apply the transform",
+    "b_expected": "negative",
+    "b_target": "transform",
+    "c_text": "# apply the mapping",
+    "c_expected": "negative",
+    "c_target": "mapping"
+   },
+   {
+    "discriminates": "noun in comment vs. in code syntax",
+    "a_text": "# read the config file",
+    "a_expected": "negative",
+    "a_target": "file",
+    "b_text": "const file = require('config');",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'the' + noun vs. 'the' + adjective",
+    "a_text": "# initialise the counter to zero",
+    "a_expected": "negative",
+    "a_target": "counter",
+    "b_text": "# initialise the red counter",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "computational object vs. everyday object",
+    "a_text": "# water level in the tank",
+    "a_expected": "negative",
+    "a_target": "tank",
+    "b_text": "The water level in the glass",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "noun after 'the' in mid-sentence vs. start",
+    "a_text": "The function computes the value.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "# compute the value",
+    "b_expected": "negative",
+    "b_target": "value",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "plural vs. singular noun after 'the'",
+    "a_text": "# visit the nodes",
+    "a_expected": "negative",
+    "a_target": "nodes",
+    "b_text": "# visit the node",
+    "b_expected": "negative",
+    "b_target": "node",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "noun after 'the' with preceding verb",
+    "a_text": "# fetch the level",
+    "a_expected": "negative",
+    "a_target": "level",
+    "b_text": "The level is high.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'the' + noun in code comment vs. narrative",
+    "a_text": "# watch the boats drift",
+    "a_expected": "negative",
+    "a_target": "boats",
+    "b_text": "The boats drifted past.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative on code nouns after 'the'\",\"trigger_hypothesis\":\"The neuron fires strongly negative on common nouns (or noun-like tokens) in code comments or identifiers that follow the word 'the' and are part of a descriptive phrase about a computational object or action.\",\"output_hypothesis\":\"The neuron suppresses (negative activation) when the model is describing a concrete computational entity (like a variable, function, or data structure) in a code context, likely to reduce emphasis on obvious nouns and focus on operations.\",\"alternatives\":[\"The neuron detects generic English nouns in any domain, but only strong negatives appear in code because other domains lack sufficient examples.\",\"The neuron responds to tokens that are objects of prepositions (like 'of a circle', 'to zero') but the pattern is inconsistent.\"],\"adapter_changes\":\"State changes (A+1, B+1, C+1) generally reduce the magnitude of negative activations slightly but preserve the pattern; C+1 shows the largest reductions (e.g., W02, W05, W30).\",\"supporting\":[\"W01\",\"W04\",\"W06\",\"W09\",\"W10\"],\"contradicting\":[\"W02\",\"W03\",\"W07\",\"W11\",\"W13\"],\"proposed_tests\":[{\"discriminates\":\"noun after 'the' in code vs. other domains\",\"a_text\":\"# compute the area of a circle\",\"a_expected\":\"negative\",\"a_target\":\"circle\",\"b_text\":\"The meeting is in the conference room.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun after 'the' vs. other determiners\",\"a_text\":\"# visit the next node\",\"a_expected\":\"negative\",\"a_target\":\"node\",\"b_text\":\"# visit a next node\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code noun vs. code verb\",\"a_text\":\"# apply the function\",\"a_expected\":\"negative\",\"a_target\":\"function\",\"b_text\":\"# apply the transform\",\"b_expected\":\"negative\",\"b_target\":\"transform\",\"c_text\":\"# apply the mapping\",\"c_expected\":\"negative\",\"c_target\":\"mapping\"},{\"discriminates\":\"noun in comment vs. in code syntax\",\"a_text\":\"# read the config file\",\"a_expected\":\"negative\",\"a_target\":\"file\",\"b_text\":\"const file = require('config');\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' + noun vs. 'the' + adjective\",\"a_text\":\"# initialise the counter to zero\",\"a_expected\":\"negative\",\"a_target\":\"counter\",\"b_text\":\"# initialise the red counter\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"computational object vs. everyday object\",\"a_text\":\"# water level in the tank\",\"a_expected\":\"negative\",\"a_target\":\"tank\",\"b_text\":\"The water level in the glass\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun after 'the' in mid-sentence vs. start\",\"a_text\":\"The function computes the value.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"# compute the value\",\"b_expected\":\"negative\",\"b_target\":\"value\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural vs. singular noun after 'the'\",\"a_text\":\"# visit the nodes\",\"a_expected\":\"negative\",\"a_target\":\"nodes\",\"b_text\":\"# visit the node\",\"b_expected\":\"negative\",\"b_target\":\"node\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun after 'the' with preceding verb\",\"a_text\":\"# fetch the level\",\"a_expected\":\"negative\",\"a_target\":\"level\",\"b_text\":\"The level is high.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' + noun in code comment vs. narrative\",\"a_text\":\"# watch the boats drift\",\"a_expected\":\"negative\",\"a_target\":\"boats\",\"b_text\":\"The boats drifted past.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5056,
+  "output_tokens": 975,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00164346
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative on code nouns after 'the'\",\"trigger_hypothesis\":\"The neuron fires strongly negative on common nouns (or noun-like tokens) in code comments or identifiers that follow the word 'the' and are part of a descriptive phrase about a computational object or action.\",\"output_hypothesis\":\"The neuron suppresses (negative activation) when the model is describing a concrete computational entity (like a variable, function, or data structure) in a code context, likely to reduce emphasis on obvious nouns and focus on operations.\",\"alternatives\":[\"The neuron detects generic English nouns in any domain, but only strong negatives appear in code because other domains lack sufficient examples.\",\"The neuron responds to tokens that are objects of prepositions (like 'of a circle', 'to zero') but the pattern is inconsistent.\"],\"adapter_changes\":\"State changes (A+1, B+1, C+1) generally reduce the magnitude of negative activations slightly but preserve the pattern; C+1 shows the largest reductions (e.g., W02, W05, W30).\",\"supporting\":[\"W01\",\"W04\",\"W06\",\"W09\",\"W10\"],\"contradicting\":[\"W02\",\"W03\",\"W07\",\"W11\",\"W13\"],\"proposed_tests\":[{\"discriminates\":\"noun after 'the' in code vs. other domains\",\"a_text\":\"# compute the area of a circle\",\"a_expected\":\"negative\",\"a_target\":\"circle\",\"b_text\":\"The meeting is in the conference room.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun after 'the' vs. other determiners\",\"a_text\":\"# visit the next node\",\"a_expected\":\"negative\",\"a_target\":\"node\",\"b_text\":\"# visit a next node\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code noun vs. code verb\",\"a_text\":\"# apply the function\",\"a_expected\":\"negative\",\"a_target\":\"function\",\"b_text\":\"# apply the transform\",\"b_expected\":\"negative\",\"b_target\":\"transform\",\"c_text\":\"# apply the mapping\",\"c_expected\":\"negative\",\"c_target\":\"mapping\"},{\"discriminates\":\"noun in comment vs. in code syntax\",\"a_text\":\"# read the config file\",\"a_expected\":\"negative\",\"a_target\":\"file\",\"b_text\":\"const file = require('config');\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' + noun vs. 'the' + adjective\",\"a_text\":\"# initialise the counter to zero\",\"a_expected\":\"negative\",\"a_target\":\"counter\",\"b_text\":\"# initialise the red counter\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"computational object vs. everyday object\",\"a_text\":\"# water level in the tank\",\"a_expected\":\"negative\",\"a_target\":\"tank\",\"b_text\":\"The water level in the glass\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun after 'the' in mid-sentence vs. start\",\"a_text\":\"The function computes the value.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"# compute the value\",\"b_expected\":\"negative\",\"b_target\":\"value\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural vs. singular noun after 'the'\",\"a_text\":\"# visit the nodes\",\"a_expected\":\"negative\",\"a_target\":\"nodes\",\"b_text\":\"# visit the node\",\"b_expected\":\"negative\",\"b_target\":\"node\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun after 'the' with preceding verb\",\"a_text\":\"# fetch the level\",\"a_expected\":\"negative\",\"a_target\":\"level\",\"b_text\":\"The level is high.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' + noun in code comment vs. narrative\",\"a_text\":\"# watch the boats drift\",\"a_expected\":\"negative\",\"a_target\":\"boats\",\"b_text\":\"The boats drifted past.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5056,
+    "output_tokens": 975,
+    "reasoning_tokens": 0,
+    "cached_tokens": 320,
+    "cost_usd": 0.00164346,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1792973232-8QrBF0dIcflQq4tam0GQ"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:07:45Z",
+ "purpose": "explain:blind"
+}

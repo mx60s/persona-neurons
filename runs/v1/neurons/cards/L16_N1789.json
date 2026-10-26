@@ -1,0 +1,1153 @@
+{
+ "id": "L16/N1789",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:04Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "punctuation after list items",
+   "trigger_hypothesis": "The neuron activates strongly at punctuation tokens (comma, period, opening quote) that follow a list item or a clause that could be part of a list, especially in code and structured text.",
+   "output_hypothesis": "The neuron's output may encourage continuing a list or starting a new item, pushing toward list continuation tokens or structured separators.",
+   "alternatives": [
+    "The neuron detects the end of a line or clause in code documentation.",
+    "The neuron responds to specific punctuation tokens regardless of context."
+   ],
+   "adapter_changes": "State D+1 causes massive activation spikes in chat/emotional_chat continuation segments (W18-W22), suggesting the adapter strongly amplifies this neuron's role in list-like conversational responses. Other states show minor variations.",
+   "supporting": [
+    "L16_N1789:e00",
+    "L16_N1789:e01",
+    "L16_N1789:e02",
+    "L16_N1789:e04",
+    "L16_N1789:e07"
+   ],
+   "contradicting": [
+    "L16_N1789:e26",
+    "L16_N1789:e25",
+    "L16_N1789:e24",
+    "L16_N1789:e23",
+    "L16_N1789:e13",
+    "L16_N1789:e12",
+    "L16_N1789:e09",
+    "L16_N1789:e08"
+   ],
+   "proposed_tests": [
+    "list comma vs non-list comma :: [high] We need apples, bananas, and oranges. | [low] He said, 'Hello world.'",
+    "period ending a list item vs ending a sentence :: [high] Items: 1. First point. 2. Second point. | [low] The story ends here.",
+    "opening quote after list preamble :: [high] The options are: 'yes', 'no', 'maybe'. | [low] She whispered, 'I know.'",
+    "comma in Python tuple/list vs other uses :: [high] for key, val in items: | [low] x = func(a, b)",
+    "'and' in list conjunction vs other uses :: [high] bread, wine, and cheese | [low] You and I are friends.",
+    "newline after list item in code :: [high] config items:\n  - item1\n  - item2 | [low] print('hello')\nprint('world')",
+    "colon before list vs other colons :: [high] Ingredients: flour, sugar, eggs. | [low] Time: 12:00 PM",
+    "semicolon as list separator vs other :: [high] A; B; C; | [low] x = 1; y = 2;",
+    "dash as list marker vs hyphen :: [high] - First item\n- Second item | [low] well-known fact",
+    "number as list item vs other numbers :: [high] 1. Introduction 2. Methods | [low] Page 1 of 10"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "list comma vs non-list comma",
+     "texts": [
+      {
+       "text": "We need apples, bananas, and oranges.",
+       "expected": "high",
+       "target": ","
+      },
+      {
+       "text": "He said, 'Hello world.'",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "period ending a list item vs ending a sentence",
+     "texts": [
+      {
+       "text": "Items: 1. First point. 2. Second point.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "The story ends here.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "opening quote after list preamble",
+     "texts": [
+      {
+       "text": "The options are: 'yes', 'no', 'maybe'.",
+       "expected": "high",
+       "target": "'"
+      },
+      {
+       "text": "She whispered, 'I know.'",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "comma in Python tuple/list vs other uses",
+     "texts": [
+      {
+       "text": "for key, val in items:",
+       "expected": "high",
+       "target": ","
+      },
+      {
+       "text": "x = func(a, b)",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'and' in list conjunction vs other uses",
+     "texts": [
+      {
+       "text": "bread, wine, and cheese",
+       "expected": "high",
+       "target": " and"
+      },
+      {
+       "text": "You and I are friends.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "newline after list item in code",
+     "texts": [
+      {
+       "text": "config items:\n  - item1\n  - item2",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "print('hello')\nprint('world')",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "colon before list vs other colons",
+     "texts": [
+      {
+       "text": "Ingredients: flour, sugar, eggs.",
+       "expected": "high",
+       "target": ":"
+      },
+      {
+       "text": "Time: 12:00 PM",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "semicolon as list separator vs other",
+     "texts": [
+      {
+       "text": "A; B; C;",
+       "expected": "high",
+       "target": ";"
+      },
+      {
+       "text": "x = 1; y = 2;",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "dash as list marker vs hyphen",
+     "texts": [
+      {
+       "text": "- First item\n- Second item",
+       "expected": "high",
+       "target": "-"
+      },
+      {
+       "text": "well-known fact",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "number as list item vs other numbers",
+     "texts": [
+      {
+       "text": "1. Introduction 2. Methods",
+       "expected": "high",
+       "target": "1"
+      },
+      {
+       "text": "Page 1 of 10",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5912,
+    "output_tokens": 952,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001764896
+   },
+   "invalid_citations": [],
+   "packet_hash": "28960fd2b95a9a04a09a50781c47b39c2fb9de32252b159e02498372494034d9",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "list comma vs non-list comma",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need apples, bananas, and oranges.",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 0.0654,
+     "measured_min": -0.1807,
+     "value": -0.1328,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said, 'Hello world.'",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2637,
+     "value": 0.2637,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.039,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "period ending a list item vs ending a sentence",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Items: 1. First point. 2. Second point.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.1719,
+     "measured_min": -0.1494,
+     "value": -0.1187,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The story ends here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2578,
+     "value": 0.2578,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.035,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "opening quote after list preamble",
+   "prediction": "high on \"'\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The options are: 'yes', 'no', 'maybe'.",
+     "expected": "high",
+     "target": "'",
+     "measured_max": 0.0645,
+     "measured_min": -0.1465,
+     "value": -0.0898,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She whispered, 'I know.'",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1328,
+     "measured_min": -0.3281,
+     "value": 0.3281,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.066,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "comma in Python tuple/list vs other uses",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "for key, val in items:",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 0.0119,
+     "measured_min": -0.2041,
+     "value": -0.1484,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "x = func(a, b)",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1543,
+     "value": 0.1543,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'and' in list conjunction vs other uses",
+   "prediction": "high on ' and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "bread, wine, and cheese",
+     "expected": "high",
+     "target": " and",
+     "measured_max": 0.0125,
+     "measured_min": -0.1001,
+     "value": -0.0884,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "You and I are friends.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1279,
+     "measured_min": -0.3379,
+     "value": 0.3379,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.064,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "newline after list item in code",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "config items:\n  - item1\n  - item2",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.25,
+     "measured_min": -0.1924,
+     "value": 0.0123,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "print('hello')\nprint('world')",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2119,
+     "value": 0.2119,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.004,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "colon before list vs other colons",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Ingredients: flour, sugar, eggs.",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.0,
+     "measured_min": -0.1953,
+     "value": -0.1953,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Time: 12:00 PM",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2002,
+     "measured_min": -0.1768,
+     "value": 0.2002,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.117,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "semicolon as list separator vs other",
+   "prediction": "high on ';'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "A; B; C;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.05,
+     "measured_min": -0.1543,
+     "value": -0.041,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "x = 1; y = 2;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0732,
+     "measured_min": -0.1553,
+     "value": 0.1553,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.034,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "dash as list marker vs hyphen",
+   "prediction": "high on '-'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "- First item\n- Second item",
+     "expected": "high",
+     "target": "-",
+     "measured_max": 0.0,
+     "measured_min": -0.3125,
+     "value": 0.0,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "well-known fact",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0806,
+     "value": 0.0806,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "number as list item vs other numbers",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "1. Introduction 2. Methods",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0767,
+     "measured_min": -0.3379,
+     "value": 0.0,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Page 1 of 10",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0311,
+     "measured_min": -0.1328,
+     "value": 0.1328,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "list comma vs non-list comma",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need apples, bananas, and oranges.",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 0.0654,
+     "measured_min": -0.1807,
+     "value": -0.1328,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He said, 'Hello world.'",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2637,
+     "value": 0.2637,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.039,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "period ending a list item vs ending a sentence",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Items: 1. First point. 2. Second point.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.1719,
+     "measured_min": -0.1494,
+     "value": -0.1187,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The story ends here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2578,
+     "value": 0.2578,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.035,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "opening quote after list preamble",
+   "prediction": "high on \"'\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The options are: 'yes', 'no', 'maybe'.",
+     "expected": "high",
+     "target": "'",
+     "measured_max": 0.0645,
+     "measured_min": -0.1465,
+     "value": -0.0898,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She whispered, 'I know.'",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1328,
+     "measured_min": -0.3281,
+     "value": 0.3281,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.066,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "comma in Python tuple/list vs other uses",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "for key, val in items:",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 0.0119,
+     "measured_min": -0.2041,
+     "value": -0.1484,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "x = func(a, b)",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1543,
+     "value": 0.1543,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'and' in list conjunction vs other uses",
+   "prediction": "high on ' and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "bread, wine, and cheese",
+     "expected": "high",
+     "target": " and",
+     "measured_max": 0.0125,
+     "measured_min": -0.1001,
+     "value": -0.0884,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "You and I are friends.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1279,
+     "measured_min": -0.3379,
+     "value": 0.3379,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.064,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "newline after list item in code",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "config items:\n  - item1\n  - item2",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.25,
+     "measured_min": -0.1924,
+     "value": 0.0123,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "print('hello')\nprint('world')",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2119,
+     "value": 0.2119,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.004,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "colon before list vs other colons",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Ingredients: flour, sugar, eggs.",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.0,
+     "measured_min": -0.1953,
+     "value": -0.1953,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Time: 12:00 PM",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2002,
+     "measured_min": -0.1768,
+     "value": 0.2002,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.117,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "semicolon as list separator vs other",
+   "prediction": "high on ';'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "A; B; C;",
+     "expected": "high",
+     "target": ";",
+     "measured_max": 0.05,
+     "measured_min": -0.1543,
+     "value": -0.041,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "x = 1; y = 2;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0732,
+     "measured_min": -0.1553,
+     "value": 0.1553,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.034,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "dash as list marker vs hyphen",
+   "prediction": "high on '-'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "- First item\n- Second item",
+     "expected": "high",
+     "target": "-",
+     "measured_max": 0.0,
+     "measured_min": -0.3125,
+     "value": 0.0,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "well-known fact",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0806,
+     "value": 0.0806,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "number as list item vs other numbers",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "1. Introduction 2. Methods",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0767,
+     "measured_min": -0.3379,
+     "value": 0.0,
+     "threshold": 0.8672,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Page 1 of 10",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0311,
+     "measured_min": -0.1328,
+     "value": 0.1328,
+     "threshold": 0.4336,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 3.375,
+    "pos_ref": 1.7344,
+    "neg_ref": -0.5078
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2294921875,
+    "p01": -0.263671875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

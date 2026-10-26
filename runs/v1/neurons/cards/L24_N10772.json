@@ -1,0 +1,1195 @@
+{
+ "id": "L24/N10772",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:18Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "newline after question",
+   "trigger_hypothesis": "The neuron activates strongly on a newline token that follows a question mark, especially in quiz/QA contexts.",
+   "output_hypothesis": "The neuron may help transition from a question to its answer, perhaps by preparing to list options or start a new line.",
+   "alternatives": [
+    "The neuron triggers on newlines in structured contexts (lists, quizzes).",
+    "The neuron triggers on newlines after punctuation in general."
+   ],
+   "adapter_changes": "State A+1 reduces activation on newlines after questions (W01,W02,W23,W24,W25), while states B+1, D+1, E+1 greatly increase it. State D+1 shows extreme amplification in chat contexts (W23,W24,W25,W26).",
+   "supporting": [
+    "L24_N10772:e00",
+    "L24_N10772:e02",
+    "L24_N10772:e04",
+    "L24_N10772:e24",
+    "L24_N10772:e25",
+    "L24_N10772:e18",
+    "L24_N10772:e20"
+   ],
+   "contradicting": [
+    "L24_N10772:e03",
+    "L24_N10772:e05",
+    "L24_N10772:e06",
+    "L24_N10772:e07",
+    "L24_N10772:e08",
+    "L24_N10772:e09",
+    "L24_N10772:e10",
+    "L24_N10772:e34",
+    "L24_N10772:e33",
+    "L24_N10772:e32",
+    "L24_N10772:e31",
+    "L24_N10772:e30",
+    "L24_N10772:e29",
+    "L24_N10772:e13",
+    "L24_N10772:e11",
+    "L24_N10772:e38",
+    "L24_N10772:e37",
+    "L24_N10772:e39",
+    "L24_N10772:e35",
+    "L24_N10772:e22"
+   ],
+   "proposed_tests": [
+    "newline after question vs other newline :: [high] What is the capital of France?\n | [low] The capital of France is Paris.\n",
+    "newline after question mark vs period :: [high] Who wrote Hamlet?\n | [low] He wrote Hamlet.\n",
+    "newline in quiz list vs narrative :: [high] a. Option A\nb. Option B\n | [low] The story continues.\n",
+    "newline after question in chat vs code :: [high] User: How are you?\nAssistant: | [low] def hello():\n    print('world')",
+    "newline after question with options vs without :: [high] What is 2+2?\na. 3\nb. 4\n | [low] What is 2+2? Tell me.",
+    "newline after emotional question vs factual :: [high] How do you feel?\n | [low] The temperature is 20C.\n",
+    "newline after question in assistant response start :: [high] <|im_start|>assistant\n\n | [low] <|im_start|>user\n\n",
+    "newline after punctuation other than question mark :: [low] Hello!\n | [high] Hello?\n | [low] Hello.\n",
+    "newline after question with space before :: [low] Question? \n | [high] Question?\n",
+    "newline after question in mid-sentence :: [high] Is it true? I wonder.\n | [low] Is it true that I wonder.\n"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "newline after question vs other newline",
+     "texts": [
+      {
+       "text": "What is the capital of France?\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "The capital of France is Paris.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "newline after question mark vs period",
+     "texts": [
+      {
+       "text": "Who wrote Hamlet?\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "He wrote Hamlet.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "newline in quiz list vs narrative",
+     "texts": [
+      {
+       "text": "a. Option A\nb. Option B\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "The story continues.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "newline after question in chat vs code",
+     "texts": [
+      {
+       "text": "User: How are you?\nAssistant:",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "def hello():\n    print('world')",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "newline after question with options vs without",
+     "texts": [
+      {
+       "text": "What is 2+2?\na. 3\nb. 4\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "What is 2+2? Tell me.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "newline after emotional question vs factual",
+     "texts": [
+      {
+       "text": "How do you feel?\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "The temperature is 20C.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "newline after question in assistant response start",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\n\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "<|im_start|>user\n\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "newline after punctuation other than question mark",
+     "texts": [
+      {
+       "text": "Hello!\n",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "Hello?\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "Hello.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "newline after question with space before",
+     "texts": [
+      {
+       "text": "Question? \n",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "Question?\n",
+       "expected": "high",
+       "target": "\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "newline after question in mid-sentence",
+     "texts": [
+      {
+       "text": "Is it true? I wonder.\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "Is it true that I wonder.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6163,
+    "output_tokens": 996,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00189766
+   },
+   "invalid_citations": [],
+   "packet_hash": "c112b7e3cc4049c0322d7be4b1bacf65f881714489bd357bb45de51228d3438f",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "newline after question vs other newline",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What is the capital of France?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 4.5625,
+     "measured_min": -0.6602,
+     "value": -0.6602,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The capital of France is Paris.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0554,
+     "measured_min": -0.2129,
+     "value": 0.2129,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.153,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "newline after question mark vs period",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Who wrote Hamlet?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.2988,
+     "measured_min": -0.3418,
+     "value": -0.3418,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He wrote Hamlet.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0009,
+     "measured_min": -0.1152,
+     "value": 0.1152,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.073,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "newline in quiz list vs narrative",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "a. Option A\nb. Option B\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0532,
+     "measured_min": -0.1973,
+     "value": -0.054,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The story continues.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3359,
+     "measured_min": -0.6602,
+     "value": 0.6602,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.083,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "newline after question in chat vs code",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: How are you?\nAssistant:",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.1973,
+     "measured_min": -0.0236,
+     "value": 0.0136,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "def hello():\n    print('world')",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.167,
+     "measured_min": -0.0874,
+     "value": 0.167,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "newline after question with options vs without",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What is 2+2?\na. 3\nb. 4\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 3.6562,
+     "measured_min": -1.7812,
+     "value": -1.7812,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "What is 2+2? Tell me.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 3.6875,
+     "measured_min": -0.5469,
+     "value": 3.6875,
+     "threshold": 0.8828,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -1.167,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "newline after emotional question vs factual",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "How do you feel?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 4.5312,
+     "measured_min": 0.0,
+     "value": 0.0103,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The temperature is 20C.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0815,
+     "measured_min": -0.0923,
+     "value": 0.0923,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "newline after question in assistant response start",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\n\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0708,
+     "measured_min": 0.0,
+     "value": 0.0708,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_start|>user\n\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1226,
+     "measured_min": -0.1128,
+     "value": 0.1226,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "newline after punctuation other than question mark",
+   "prediction": "low on 'whole text'; high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Hello!\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1367,
+     "measured_min": 0.0,
+     "value": 0.1367,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "Hello?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0269,
+     "measured_min": 0.0,
+     "value": 0.0269,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Hello.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1514,
+     "measured_min": 0.0,
+     "value": 0.1514,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": -0.027,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline after question with space before",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "Question? \n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1748,
+     "value": 0.1748,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "Question?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0928,
+     "measured_min": 0.0,
+     "value": 0.0928,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.02,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "newline after question in mid-sentence",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Is it true? I wonder.\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 2.2969,
+     "measured_min": -0.3438,
+     "value": 0.1113,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Is it true that I wonder.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 2.2969,
+     "measured_min": -0.3438,
+     "value": 2.2969,
+     "threshold": 0.8828,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.466,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:07Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "newline after question vs other newline",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What is the capital of France?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 4.5625,
+     "measured_min": -0.6602,
+     "value": -0.6602,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The capital of France is Paris.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0554,
+     "measured_min": -0.2129,
+     "value": 0.2129,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.153,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "newline after question mark vs period",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Who wrote Hamlet?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.2988,
+     "measured_min": -0.3418,
+     "value": -0.3418,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He wrote Hamlet.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0009,
+     "measured_min": -0.1152,
+     "value": 0.1152,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.073,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "newline in quiz list vs narrative",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "a. Option A\nb. Option B\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0532,
+     "measured_min": -0.1973,
+     "value": -0.054,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The story continues.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3359,
+     "measured_min": -0.6602,
+     "value": 0.6602,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.083,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "newline after question in chat vs code",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: How are you?\nAssistant:",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.1973,
+     "measured_min": -0.0236,
+     "value": 0.0136,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "def hello():\n    print('world')",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.167,
+     "measured_min": -0.0874,
+     "value": 0.167,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "newline after question with options vs without",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What is 2+2?\na. 3\nb. 4\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 3.6562,
+     "measured_min": -1.7812,
+     "value": -1.7812,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "What is 2+2? Tell me.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 3.6875,
+     "measured_min": -0.5469,
+     "value": 3.6875,
+     "threshold": 0.8828,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -1.167,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "newline after emotional question vs factual",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "How do you feel?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 4.5312,
+     "measured_min": 0.0,
+     "value": 0.0103,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The temperature is 20C.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0815,
+     "measured_min": -0.0923,
+     "value": 0.0923,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "newline after question in assistant response start",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\n\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0708,
+     "measured_min": 0.0,
+     "value": 0.0708,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_start|>user\n\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1226,
+     "measured_min": -0.1128,
+     "value": 0.1226,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "newline after punctuation other than question mark",
+   "prediction": "low on 'whole text'; high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Hello!\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1367,
+     "measured_min": 0.0,
+     "value": 0.1367,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "Hello?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0269,
+     "measured_min": 0.0,
+     "value": 0.0269,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Hello.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1514,
+     "measured_min": 0.0,
+     "value": 0.1514,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": -0.027,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline after question with space before",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "Question? \n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1748,
+     "value": 0.1748,
+     "threshold": 0.8828,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "Question?\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.0928,
+     "measured_min": 0.0,
+     "value": 0.0928,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.02,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "newline after question in mid-sentence",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Is it true? I wonder.\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 2.2969,
+     "measured_min": -0.3438,
+     "value": 0.1113,
+     "threshold": 1.7656,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Is it true that I wonder.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 2.2969,
+     "measured_min": -0.3438,
+     "value": 2.2969,
+     "threshold": 0.8828,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.466,
+    "scale": 4.6875,
+    "pos_ref": 3.5312,
+    "neg_ref": -2.1406
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -0.578125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

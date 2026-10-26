@@ -1,0 +1,1159 @@
+{
+ "id": "L35/N11459",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:20Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative on spatial prepositions",
+   "trigger_hypothesis": "The neuron fires strongly negative on spatial prepositions like 'at' and 'high' when they indicate location or elevation, and on the HTML tag 'img' which is also a spatial element.",
+   "output_hypothesis": "The neuron's negative activation may suppress spatial or locational continuations, steering away from further specifying location.",
+   "alternatives": [
+    "The neuron detects tokens that often precede numerical or measurement details (like 'at' before altitude, 'high' before a number, 'img' before src).",
+    "The neuron responds to tokens that are part of formal or technical contexts (HTML, geographical descriptions)."
+   ],
+   "adapter_changes": "State E+1 shows larger negative magnitudes in some windows (W01, W03, W14) and strong negative shifts in prompt newlines (W19, W20, W21), suggesting it amplifies the neuron's sensitivity in certain conversational contexts.",
+   "supporting": [
+    "L35_N11459:e08",
+    "L35_N11459:e09",
+    "L35_N11459:e10",
+    "L35_N11459:e13"
+   ],
+   "contradicting": [
+    "L35_N11459:e03",
+    "L35_N11459:e04",
+    "L35_N11459:e05",
+    "L35_N11459:e06",
+    "L35_N11459:e07",
+    "L35_N11459:e27",
+    "L35_N11459:e26",
+    "L35_N11459:e25",
+    "L35_N11459:e24",
+    "L35_N11459:e22",
+    "L35_N11459:e30",
+    "L35_N11459:e32",
+    "L35_N11459:e31",
+    "L35_N11459:e29",
+    "L35_N11459:e28"
+   ],
+   "proposed_tests": [
+    "spatial preposition vs. non-spatial usage :: [negative] The city is located at | [low] He arrived at",
+    "elevation term vs. other meanings :: [negative] The mountain peak is high | [low] He felt high",
+    "HTML img tag vs. other tags :: [negative] <img | [low] <div",
+    "location preposition before number :: [negative] situated at 500 | [low] waiting at the",
+    "technical vs. casual spatial reference :: [negative] altitude of | [low] height of",
+    "spatial preposition in geographical context :: [low] in the province of | [negative] in the province at",
+    "negative on measurement indicator :: [negative] with a low-s | [low] with a high-s",
+    "spatial preposition after verb :: [negative] pointed at | [low] looked at",
+    "HTML attribute vs. tag :: [negative] <img src | [low] src=\"",
+    "elevation in narrative vs. emotional :: [negative] his high | [low] her high"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "spatial preposition vs. non-spatial usage",
+     "texts": [
+      {
+       "text": "The city is located at",
+       "expected": "negative",
+       "target": "at"
+      },
+      {
+       "text": "He arrived at",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "elevation term vs. other meanings",
+     "texts": [
+      {
+       "text": "The mountain peak is high",
+       "expected": "negative",
+       "target": "high"
+      },
+      {
+       "text": "He felt high",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "HTML img tag vs. other tags",
+     "texts": [
+      {
+       "text": "<img",
+       "expected": "negative",
+       "target": "img"
+      },
+      {
+       "text": "<div",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "location preposition before number",
+     "texts": [
+      {
+       "text": "situated at 500",
+       "expected": "negative",
+       "target": "at"
+      },
+      {
+       "text": "waiting at the",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "technical vs. casual spatial reference",
+     "texts": [
+      {
+       "text": "altitude of",
+       "expected": "negative",
+       "target": "altitude"
+      },
+      {
+       "text": "height of",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "spatial preposition in geographical context",
+     "texts": [
+      {
+       "text": "in the province of",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "in the province at",
+       "expected": "negative",
+       "target": "at"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "negative on measurement indicator",
+     "texts": [
+      {
+       "text": "with a low-s",
+       "expected": "negative",
+       "target": "low-s"
+      },
+      {
+       "text": "with a high-s",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "spatial preposition after verb",
+     "texts": [
+      {
+       "text": "pointed at",
+       "expected": "negative",
+       "target": "at"
+      },
+      {
+       "text": "looked at",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "HTML attribute vs. tag",
+     "texts": [
+      {
+       "text": "<img src",
+       "expected": "negative",
+       "target": "img"
+      },
+      {
+       "text": "src=\"",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "elevation in narrative vs. emotional",
+     "texts": [
+      {
+       "text": "his high",
+       "expected": "negative",
+       "target": "high"
+      },
+      {
+       "text": "her high",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5502,
+    "output_tokens": 897,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00168818
+   },
+   "invalid_citations": [],
+   "packet_hash": "328be9f18267d85e74280765e7ab9bc485c0bac9934fa4f0d7a63d7936119290",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "spatial preposition vs. non-spatial usage",
+   "prediction": "negative on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The city is located at",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.7656,
+     "measured_min": -0.0149,
+     "value": 0.1162,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He arrived at",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4863,
+     "measured_min": 0.0,
+     "value": 0.4863,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "elevation term vs. other meanings",
+   "prediction": "negative on 'high'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The mountain peak is high",
+     "expected": "negative",
+     "target": "high",
+     "measured_max": 0.8828,
+     "measured_min": -11.1875,
+     "value": -11.1875,
+     "threshold": -6.3438,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He felt high",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5195,
+     "measured_min": 0.0,
+     "value": 0.5195,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.445,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "HTML img tag vs. other tags",
+   "prediction": "negative on 'img'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<img",
+     "expected": "negative",
+     "target": "img",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<div",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "location preposition before number",
+   "prediction": "negative on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "situated at 500",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.377,
+     "measured_min": -0.0199,
+     "value": 0.0211,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "waiting at the",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6562,
+     "measured_min": 0.0,
+     "value": 0.6562,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "technical vs. casual spatial reference",
+   "prediction": "negative on 'altitude'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "altitude of",
+     "expected": "negative",
+     "target": "altitude",
+     "measured_max": 0.0,
+     "measured_min": -3.8281,
+     "value": 0.0,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "height of",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2412,
+     "measured_min": 0.0,
+     "value": 0.2412,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "spatial preposition in geographical context",
+   "prediction": "low on 'whole text'; negative on 'at'",
+   "texts": [
+    {
+     "text": "in the province of",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1128,
+     "measured_min": 0.0,
+     "value": 0.1128,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "in the province at",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.375,
+     "measured_min": 0.0,
+     "value": 0.375,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "negative on measurement indicator",
+   "prediction": "negative on 'low-s'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "with a low-s",
+     "expected": "negative",
+     "target": "low-s",
+     "measured_max": 0.3711,
+     "measured_min": -21.0,
+     "value": -21.0,
+     "threshold": -6.3438,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "with a high-s",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7656,
+     "measured_min": -17.375,
+     "value": 17.375,
+     "threshold": 3.1719,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.144,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "spatial preposition after verb",
+   "prediction": "negative on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "pointed at",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.2617,
+     "measured_min": 0.0,
+     "value": 0.2617,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "looked at",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0791,
+     "measured_min": 0.0,
+     "value": 0.0791,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "HTML attribute vs. tag",
+   "prediction": "negative on 'img'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<img src",
+     "expected": "negative",
+     "target": "img",
+     "measured_max": 0.459,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "src=\"",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.103,
+     "measured_min": 0.0,
+     "value": 0.103,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "elevation in narrative vs. emotional",
+   "prediction": "negative on 'high'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "his high",
+     "expected": "negative",
+     "target": "high",
+     "measured_max": 0.0,
+     "measured_min": -0.2461,
+     "value": -0.2461,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "her high",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2676,
+     "measured_min": 0.0,
+     "value": 0.2676,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.01,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:29Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "spatial preposition vs. non-spatial usage",
+   "prediction": "negative on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The city is located at",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.7656,
+     "measured_min": -0.0149,
+     "value": 0.1162,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He arrived at",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4863,
+     "measured_min": 0.0,
+     "value": 0.4863,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "elevation term vs. other meanings",
+   "prediction": "negative on 'high'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The mountain peak is high",
+     "expected": "negative",
+     "target": "high",
+     "measured_max": 0.8828,
+     "measured_min": -11.1875,
+     "value": -11.1875,
+     "threshold": -6.3438,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He felt high",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5195,
+     "measured_min": 0.0,
+     "value": 0.5195,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.445,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "HTML img tag vs. other tags",
+   "prediction": "negative on 'img'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<img",
+     "expected": "negative",
+     "target": "img",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<div",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "location preposition before number",
+   "prediction": "negative on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "situated at 500",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.377,
+     "measured_min": -0.0199,
+     "value": 0.0211,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "waiting at the",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6562,
+     "measured_min": 0.0,
+     "value": 0.6562,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "technical vs. casual spatial reference",
+   "prediction": "negative on 'altitude'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "altitude of",
+     "expected": "negative",
+     "target": "altitude",
+     "measured_max": 0.0,
+     "measured_min": -3.8281,
+     "value": 0.0,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "height of",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2412,
+     "measured_min": 0.0,
+     "value": 0.2412,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "spatial preposition in geographical context",
+   "prediction": "low on 'whole text'; negative on 'at'",
+   "texts": [
+    {
+     "text": "in the province of",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1128,
+     "measured_min": 0.0,
+     "value": 0.1128,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "in the province at",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.375,
+     "measured_min": 0.0,
+     "value": 0.375,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "negative on measurement indicator",
+   "prediction": "negative on 'low-s'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "with a low-s",
+     "expected": "negative",
+     "target": "low-s",
+     "measured_max": 0.3711,
+     "measured_min": -21.0,
+     "value": -21.0,
+     "threshold": -6.3438,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "with a high-s",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7656,
+     "measured_min": -17.375,
+     "value": 17.375,
+     "threshold": 3.1719,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.144,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "spatial preposition after verb",
+   "prediction": "negative on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "pointed at",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.2617,
+     "measured_min": 0.0,
+     "value": 0.2617,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "looked at",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0791,
+     "measured_min": 0.0,
+     "value": 0.0791,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "HTML attribute vs. tag",
+   "prediction": "negative on 'img'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<img src",
+     "expected": "negative",
+     "target": "img",
+     "measured_max": 0.459,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "src=\"",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.103,
+     "measured_min": 0.0,
+     "value": 0.103,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "elevation in narrative vs. emotional",
+   "prediction": "negative on 'high'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "his high",
+     "expected": "negative",
+     "target": "high",
+     "measured_max": 0.0,
+     "measured_min": -0.2461,
+     "value": -0.2461,
+     "threshold": -6.3438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "her high",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2676,
+     "measured_min": 0.0,
+     "value": 0.2676,
+     "threshold": 3.1719,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.01,
+    "scale": 25.125,
+    "pos_ref": 2.5125,
+    "neg_ref": -12.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.21775390207767487
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 2,
+   "of": 10
+  }
+ ]
+}

@@ -1,0 +1,1159 @@
+{
+ "id": "L35/N2625",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:41Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative on 'the' after a line break",
+   "trigger_hypothesis": "The neuron fires strongly negative when the token 'the' appears after a line break or at the start of a new line, especially in code or formal text.",
+   "output_hypothesis": "The neuron suppresses generic determiners at line starts, possibly to reduce repetition or mark structural boundaries.",
+   "alternatives": [
+    "Triggers on the word 'the' in any context",
+    "Triggers on line breaks followed by any common word"
+   ],
+   "adapter_changes": "State B+1 shows large negative shifts on prompt newlines (W16, W20-22, W24), making it more negative on those tokens; other states have smaller changes.",
+   "supporting": [
+    "L35_N2625:e08",
+    "L35_N2625:e09",
+    "L35_N2625:e10",
+    "L35_N2625:e11",
+    "L35_N2625:e13",
+    "L35_N2625:e12"
+   ],
+   "contradicting": [
+    "L35_N2625:e00",
+    "L35_N2625:e01",
+    "L35_N2625:e02",
+    "L35_N2625:e03",
+    "L35_N2625:e04",
+    "L35_N2625:e06",
+    "L35_N2625:e07",
+    "L35_N2625:e26",
+    "L35_N2625:e25",
+    "L35_N2625:e24",
+    "L35_N2625:e23",
+    "L35_N2625:e29",
+    "L35_N2625:e32"
+   ],
+   "proposed_tests": [
+    "'the' after line break vs elsewhere :: [negative] \nThe quick brown fox | [low] The quick brown fox",
+    "line break with 'the' vs other words :: [negative] \nthe end | [low] \nend",
+    "'the' in code vs narrative :: [negative] # See\nthe license | [low] He saw the license",
+    "'the' after punctuation vs space :: [negative] .\nThe | [low] . The",
+    "'a' after line break :: [negative] \na cat | [low] a cat",
+    "line break with 'sl' (as in W01) :: [negative] \nsl | [low] sl",
+    "'the' mid-sentence vs start :: [low] of the | [negative] \nthe",
+    "'not' after line break :: [negative] \nnot | [low] not",
+    "newline in chat prompt :: [negative] <|im_end|>\n<|im_start|>assistant\n | [low] assistant\n",
+    "line break with common word vs rare word :: [negative] \nthe | [low] \nzygote"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'the' after line break vs elsewhere",
+     "texts": [
+      {
+       "text": "\nThe quick brown fox",
+       "expected": "negative",
+       "target": "The"
+      },
+      {
+       "text": "The quick brown fox",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "line break with 'the' vs other words",
+     "texts": [
+      {
+       "text": "\nthe end",
+       "expected": "negative",
+       "target": "the"
+      },
+      {
+       "text": "\nend",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'the' in code vs narrative",
+     "texts": [
+      {
+       "text": "# See\nthe license",
+       "expected": "negative",
+       "target": "the"
+      },
+      {
+       "text": "He saw the license",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'the' after punctuation vs space",
+     "texts": [
+      {
+       "text": ".\nThe",
+       "expected": "negative",
+       "target": "The"
+      },
+      {
+       "text": ". The",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'a' after line break",
+     "texts": [
+      {
+       "text": "\na cat",
+       "expected": "negative",
+       "target": "a"
+      },
+      {
+       "text": "a cat",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "line break with 'sl' (as in W01)",
+     "texts": [
+      {
+       "text": "\nsl",
+       "expected": "negative",
+       "target": "sl"
+      },
+      {
+       "text": "sl",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'the' mid-sentence vs start",
+     "texts": [
+      {
+       "text": "of the",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "\nthe",
+       "expected": "negative",
+       "target": "the"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'not' after line break",
+     "texts": [
+      {
+       "text": "\nnot",
+       "expected": "negative",
+       "target": "not"
+      },
+      {
+       "text": "not",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "newline in chat prompt",
+     "texts": [
+      {
+       "text": "<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "negative",
+       "target": "\n"
+      },
+      {
+       "text": "assistant\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "line break with common word vs rare word",
+     "texts": [
+      {
+       "text": "\nthe",
+       "expected": "negative",
+       "target": "the"
+      },
+      {
+       "text": "\nzygote",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5678,
+    "output_tokens": 873,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00172482
+   },
+   "invalid_citations": [],
+   "packet_hash": "03588c0aae2cc3bbd36e58d58bcb48f70c02bf4c4404a0950ca5ac411004b0ab",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'the' after line break vs elsewhere",
+   "prediction": "negative on 'The'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nThe quick brown fox",
+     "expected": "negative",
+     "target": "The",
+     "measured_max": 0.0388,
+     "measured_min": -0.1016,
+     "value": -0.0087,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The quick brown fox",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0427,
+     "measured_min": -0.0269,
+     "value": 0.0427,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "line break with 'the' vs other words",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nthe end",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.0,
+     "measured_min": -0.0145,
+     "value": -0.0145,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "\nend",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0996,
+     "measured_min": 0.0,
+     "value": 0.0996,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'the' in code vs narrative",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# See\nthe license",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.416,
+     "measured_min": -0.0001,
+     "value": -0.0001,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He saw the license",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0277,
+     "measured_min": 0.0,
+     "value": 0.0277,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'the' after punctuation vs space",
+   "prediction": "negative on 'The'; low on 'whole text'",
+   "texts": [
+    {
+     "text": ".\nThe",
+     "expected": "negative",
+     "target": "The",
+     "measured_max": 0.0,
+     "measured_min": -0.0093,
+     "value": -0.0093,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": ". The",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0176,
+     "value": 0.0176,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'a' after line break",
+   "prediction": "negative on 'a'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\na cat",
+     "expected": "negative",
+     "target": "a",
+     "measured_max": 0.2852,
+     "measured_min": -0.0162,
+     "value": 0.2852,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "a cat",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0004,
+     "value": 0.0004,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "line break with 'sl' (as in W01)",
+   "prediction": "negative on 'sl'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nsl",
+     "expected": "negative",
+     "target": "sl",
+     "measured_max": 0.3496,
+     "measured_min": 0.0,
+     "value": 0.3496,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "sl",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'the' mid-sentence vs start",
+   "prediction": "low on 'whole text'; negative on 'the'",
+   "texts": [
+    {
+     "text": "of the",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0014,
+     "measured_min": 0.0,
+     "value": 0.0014,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "\nthe",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.0,
+     "measured_min": -0.0145,
+     "value": -0.0145,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'not' after line break",
+   "prediction": "negative on 'not'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nnot",
+     "expected": "negative",
+     "target": "not",
+     "measured_max": 0.0,
+     "measured_min": -0.0271,
+     "value": -0.0271,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "not",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline in chat prompt",
+   "prediction": "negative on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "negative",
+     "target": "\n",
+     "measured_max": 0.9297,
+     "measured_min": 0.0,
+     "value": 0.0552,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0488,
+     "measured_min": 0.0,
+     "value": 0.0488,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "line break with common word vs rare word",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nthe",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.0,
+     "measured_min": -0.0145,
+     "value": -0.0145,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "\nzygote",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1465,
+     "measured_min": 0.0,
+     "value": 0.1465,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'the' after line break vs elsewhere",
+   "prediction": "negative on 'The'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nThe quick brown fox",
+     "expected": "negative",
+     "target": "The",
+     "measured_max": 0.0388,
+     "measured_min": -0.1016,
+     "value": -0.0087,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The quick brown fox",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0427,
+     "measured_min": -0.0269,
+     "value": 0.0427,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "line break with 'the' vs other words",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nthe end",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.0,
+     "measured_min": -0.0145,
+     "value": -0.0145,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "\nend",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0996,
+     "measured_min": 0.0,
+     "value": 0.0996,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'the' in code vs narrative",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# See\nthe license",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.416,
+     "measured_min": -0.0001,
+     "value": -0.0001,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He saw the license",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0277,
+     "measured_min": 0.0,
+     "value": 0.0277,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'the' after punctuation vs space",
+   "prediction": "negative on 'The'; low on 'whole text'",
+   "texts": [
+    {
+     "text": ".\nThe",
+     "expected": "negative",
+     "target": "The",
+     "measured_max": 0.0,
+     "measured_min": -0.0093,
+     "value": -0.0093,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": ". The",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0176,
+     "value": 0.0176,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'a' after line break",
+   "prediction": "negative on 'a'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\na cat",
+     "expected": "negative",
+     "target": "a",
+     "measured_max": 0.2852,
+     "measured_min": -0.0162,
+     "value": 0.2852,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "a cat",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0004,
+     "value": 0.0004,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "line break with 'sl' (as in W01)",
+   "prediction": "negative on 'sl'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nsl",
+     "expected": "negative",
+     "target": "sl",
+     "measured_max": 0.3496,
+     "measured_min": 0.0,
+     "value": 0.3496,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "sl",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'the' mid-sentence vs start",
+   "prediction": "low on 'whole text'; negative on 'the'",
+   "texts": [
+    {
+     "text": "of the",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0014,
+     "measured_min": 0.0,
+     "value": 0.0014,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "\nthe",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.0,
+     "measured_min": -0.0145,
+     "value": -0.0145,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'not' after line break",
+   "prediction": "negative on 'not'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nnot",
+     "expected": "negative",
+     "target": "not",
+     "measured_max": 0.0,
+     "measured_min": -0.0271,
+     "value": -0.0271,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "not",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline in chat prompt",
+   "prediction": "negative on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "negative",
+     "target": "\n",
+     "measured_max": 0.9297,
+     "measured_min": 0.0,
+     "value": 0.0552,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0488,
+     "measured_min": 0.0,
+     "value": 0.0488,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "line break with common word vs rare word",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nthe",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.0,
+     "measured_min": -0.0145,
+     "value": -0.0145,
+     "threshold": -9.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "\nzygote",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1465,
+     "measured_min": 0.0,
+     "value": 0.1465,
+     "threshold": 4.5312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 33.0,
+    "pos_ref": 5.7812,
+    "neg_ref": -18.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.52734375,
+    "p01": -0.1572265625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

@@ -1,0 +1,185 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens like punctuation, contractions, and common words.",
+  "output_hypothesis": "The neuron's output may weakly push toward tokens like 'sel' or 'Sel' but this is not clearly reflected in the activation contexts.",
+  "alternatives": [
+   "The neuron might detect specific punctuation or formatting in code/web contexts (e.g., '.strict', 'Text').",
+   "The neuron might respond to emotional or informal language contractions (e.g., 'n't', ''re', ' a')."
+  ],
+  "adapter_changes": "State A+1 shows large negative shifts on <|im_start|> tokens in emotional_chat (W21, W23), while other states have smaller variations; E+1 generally increases activations in emotional domains, B+1 decreases them.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06"
+  ],
+  "contradicting": [
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Punctuation in code vs. narrative",
+    "a_text": "app.url_map.strict",
+    "a_expected": "high",
+    "a_target": ".strict",
+    "b_text": "He said. strict",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Contraction 'n't' in emotional vs. neutral",
+    "a_text": "I don't need this.",
+    "a_expected": "negative",
+    "a_target": "'t",
+    "b_text": "It isn't a problem.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'Text' in titles vs. body",
+    "a_text": "IntraText - Text",
+    "a_expected": "high",
+    "a_target": "Text",
+    "b_text": "The text is long.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Indefinite article 'a' in poetic vs. factual",
+    "a_text": "finds a way back",
+    "a_expected": "negative",
+    "a_target": " a",
+    "b_text": "has a length of",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Contraction ''re' in informal chat",
+    "a_text": "You're telling me",
+    "a_expected": "negative",
+    "a_target": "'re",
+    "b_text": "They are here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'Corrections' in web list",
+    "a_text": "Comment (Corrections, Suggestions)",
+    "a_expected": "negative",
+    "a_target": "rections",
+    "b_text": "Make corrections here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Format token <|im_start|> in emotional chat",
+    "a_text": "user\nI'm nervous.<|im_end|>\n<|im_start|>",
+    "a_expected": "low",
+    "a_target": "<|im_start|>",
+    "b_text": "<|im_start|>assistant",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'shared' in code import",
+    "a_text": "from _shared.testcase",
+    "a_expected": "high",
+    "a_target": "shared",
+    "b_text": "shared with others",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'Fr' in factual vs. emotional",
+    "a_text": "features include Fr",
+    "a_expected": "high",
+    "a_target": " Fr",
+    "b_text": "Fr off I write",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'pret' in scientific text",
+    "a_text": "Interpretive Summary",
+    "a_expected": "high",
+    "a_target": "pret",
+    "b_text": "pret end to know",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens like punctuation, contractions, and common words.\",\"output_hypothesis\":\"The neuron's output may weakly push toward tokens like 'sel' or 'Sel' but this is not clearly reflected in the activation contexts.\",\"alternatives\":[\"The neuron might detect specific punctuation or formatting in code/web contexts (e.g., '.strict', 'Text').\",\"The neuron might respond to emotional or informal language contractions (e.g., 'n't', ''re', ' a').\"],\"adapter_changes\":\"State A+1 shows large negative shifts on <|im_start|> tokens in emotional_chat (W21, W23), while other states have smaller variations; E+1 generally increases activations in emotional domains, B+1 decreases them.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\"],\"contradicting\":[\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"Punctuation in code vs. narrative\",\"a_text\":\"app.url_map.strict\",\"a_expected\":\"high\",\"a_target\":\".strict\",\"b_text\":\"He said. strict\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Contraction 'n't' in emotional vs. neutral\",\"a_text\":\"I don't need this.\",\"a_expected\":\"negative\",\"a_target\":\"'t\",\"b_text\":\"It isn't a problem.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'Text' in titles vs. body\",\"a_text\":\"IntraText - Text\",\"a_expected\":\"high\",\"a_target\":\"Text\",\"b_text\":\"The text is long.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Indefinite article 'a' in poetic vs. factual\",\"a_text\":\"finds a way back\",\"a_expected\":\"negative\",\"a_target\":\" a\",\"b_text\":\"has a length of\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Contraction ''re' in informal chat\",\"a_text\":\"You're telling me\",\"a_expected\":\"negative\",\"a_target\":\"'re\",\"b_text\":\"They are here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'Corrections' in web list\",\"a_text\":\"Comment (Corrections, Suggestions)\",\"a_expected\":\"negative\",\"a_target\":\"rections\",\"b_text\":\"Make corrections here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Format token <|im_start|> in emotional chat\",\"a_text\":\"user\\nI'm nervous.<|im_end|>\\n<|im_start|>\",\"a_expected\":\"low\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'shared' in code import\",\"a_text\":\"from _shared.testcase\",\"a_expected\":\"high\",\"a_target\":\"shared\",\"b_text\":\"shared with others\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'Fr' in factual vs. emotional\",\"a_text\":\"features include Fr\",\"a_expected\":\"high\",\"a_target\":\" Fr\",\"b_text\":\"Fr off I write\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'pret' in scientific text\",\"a_text\":\"Interpretive Summary\",\"a_expected\":\"high\",\"a_target\":\"pret\",\"b_text\":\"pret end to know\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6289,
+  "output_tokens": 957,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001872556
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens like punctuation, contractions, and common words.\",\"output_hypothesis\":\"The neuron's output may weakly push toward tokens like 'sel' or 'Sel' but this is not clearly reflected in the activation contexts.\",\"alternatives\":[\"The neuron might detect specific punctuation or formatting in code/web contexts (e.g., '.strict', 'Text').\",\"The neuron might respond to emotional or informal language contractions (e.g., 'n't', ''re', ' a').\"],\"adapter_changes\":\"State A+1 shows large negative shifts on <|im_start|> tokens in emotional_chat (W21, W23), while other states have smaller variations; E+1 generally increases activations in emotional domains, B+1 decreases them.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\"],\"contradicting\":[\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"Punctuation in code vs. narrative\",\"a_text\":\"app.url_map.strict\",\"a_expected\":\"high\",\"a_target\":\".strict\",\"b_text\":\"He said. strict\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Contraction 'n't' in emotional vs. neutral\",\"a_text\":\"I don't need this.\",\"a_expected\":\"negative\",\"a_target\":\"'t\",\"b_text\":\"It isn't a problem.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'Text' in titles vs. body\",\"a_text\":\"IntraText - Text\",\"a_expected\":\"high\",\"a_target\":\"Text\",\"b_text\":\"The text is long.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Indefinite article 'a' in poetic vs. factual\",\"a_text\":\"finds a way back\",\"a_expected\":\"negative\",\"a_target\":\" a\",\"b_text\":\"has a length of\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Contraction ''re' in informal chat\",\"a_text\":\"You're telling me\",\"a_expected\":\"negative\",\"a_target\":\"'re\",\"b_text\":\"They are here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'Corrections' in web list\",\"a_text\":\"Comment (Corrections, Suggestions)\",\"a_expected\":\"negative\",\"a_target\":\"rections\",\"b_text\":\"Make corrections here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Format token <|im_start|> in emotional chat\",\"a_text\":\"user\\nI'm nervous.<|im_end|>\\n<|im_start|>\",\"a_expected\":\"low\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'shared' in code import\",\"a_text\":\"from _shared.testcase\",\"a_expected\":\"high\",\"a_target\":\"shared\",\"b_text\":\"shared with others\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'Fr' in factual vs. emotional\",\"a_text\":\"features include Fr\",\"a_expected\":\"high\",\"a_target\":\" Fr\",\"b_text\":\"Fr off I write\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'pret' in scientific text\",\"a_text\":\"Interpretive Summary\",\"a_expected\":\"high\",\"a_target\":\"pret\",\"b_text\":\"pret end to know\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6289,
+    "output_tokens": 957,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001872556,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042274-pSp442MdU28syMbSh2PN"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:18:12Z",
+ "purpose": "explain:blind"
+}

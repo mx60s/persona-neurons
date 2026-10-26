@@ -1,0 +1,186 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "newline after assistant tag",
+  "trigger_hypothesis": "The neuron activates strongly on newline tokens that follow an assistant tag in a chat prompt, especially when the preceding user message is emotionally charged or personal.",
+  "output_hypothesis": "The neuron's output may suppress or modulate the assistant's emotional or personal response generation.",
+  "alternatives": [
+   "The neuron triggers on newline tokens in general, regardless of context.",
+   "The neuron triggers on specific punctuation or whitespace patterns in structured text."
+  ],
+  "adapter_changes": "State B+1 strongly increases activation on these newline tokens (e.g., W12, W13, W14, W15), often flipping sign from negative to positive. State D+1 sometimes makes activations more negative (W15, W16). Other states show smaller changes.",
+  "supporting": [
+   "W01",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16"
+  ],
+  "contradicting": [
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "newline after assistant tag vs. other newlines",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "user\nHello\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional user message preceding",
+    "a_text": "user\nI'm feeling really sad today.<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in non-chat structured text",
+    "a_text": "Chapter 1\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after user tag",
+    "a_text": "<|im_start|>user\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in code block",
+    "a_text": "```python\ndef hello():\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag with no user message",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "Assistant: \n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after system tag",
+    "a_text": "<|im_start|>system\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "space after assistant tag",
+    "a_text": "<|im_start|>assistant ",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in middle of assistant continuation",
+    "a_text": "<|im_start|>assistant\nHello\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant\nHello\nWorld",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag with emotional vs. factual prompt",
+    "a_text": "user\nTell me about your deepest fear.<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "user\nExplain quantum physics.<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"newline after assistant tag\",\"trigger_hypothesis\":\"The neuron activates strongly on newline tokens that follow an assistant tag in a chat prompt, especially when the preceding user message is emotionally charged or personal.\",\"output_hypothesis\":\"The neuron's output may suppress or modulate the assistant's emotional or personal response generation.\",\"alternatives\":[\"The neuron triggers on newline tokens in general, regardless of context.\",\"The neuron triggers on specific punctuation or whitespace patterns in structured text.\"],\"adapter_changes\":\"State B+1 strongly increases activation on these newline tokens (e.g., W12, W13, W14, W15), often flipping sign from negative to positive. State D+1 sometimes makes activations more negative (W15, W16). Other states show smaller changes.\",\"supporting\":[\"W01\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\"],\"proposed_tests\":[{\"discriminates\":\"newline after assistant tag vs. other newlines\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nHello\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional user message preceding\",\"a_text\":\"user\\nI'm feeling really sad today.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nWhat is the capital of France?<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in non-chat structured text\",\"a_text\":\"Chapter 1\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after user tag\",\"a_text\":\"<|im_start|>user\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in code block\",\"a_text\":\"```python\\ndef hello():\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag with no user message\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"Assistant: \\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after system tag\",\"a_text\":\"<|im_start|>system\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"space after assistant tag\",\"a_text\":\"<|im_start|>assistant \",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in middle of assistant continuation\",\"a_text\":\"<|im_start|>assistant\\nHello\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\nHello\\nWorld\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag with emotional vs. factual prompt\",\"a_text\":\"user\\nTell me about your deepest fear.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nExplain quantum physics.<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5234,
+  "output_tokens": 1030,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001607816
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"newline after assistant tag\",\"trigger_hypothesis\":\"The neuron activates strongly on newline tokens that follow an assistant tag in a chat prompt, especially when the preceding user message is emotionally charged or personal.\",\"output_hypothesis\":\"The neuron's output may suppress or modulate the assistant's emotional or personal response generation.\",\"alternatives\":[\"The neuron triggers on newline tokens in general, regardless of context.\",\"The neuron triggers on specific punctuation or whitespace patterns in structured text.\"],\"adapter_changes\":\"State B+1 strongly increases activation on these newline tokens (e.g., W12, W13, W14, W15), often flipping sign from negative to positive. State D+1 sometimes makes activations more negative (W15, W16). Other states show smaller changes.\",\"supporting\":[\"W01\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\"],\"proposed_tests\":[{\"discriminates\":\"newline after assistant tag vs. other newlines\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nHello\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional user message preceding\",\"a_text\":\"user\\nI'm feeling really sad today.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nWhat is the capital of France?<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in non-chat structured text\",\"a_text\":\"Chapter 1\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after user tag\",\"a_text\":\"<|im_start|>user\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in code block\",\"a_text\":\"```python\\ndef hello():\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag with no user message\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"Assistant: \\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after system tag\",\"a_text\":\"<|im_start|>system\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"space after assistant tag\",\"a_text\":\"<|im_start|>assistant \",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in middle of assistant continuation\",\"a_text\":\"<|im_start|>assistant\\nHello\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\nHello\\nWorld\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag with emotional vs. factual prompt\",\"a_text\":\"user\\nTell me about your deepest fear.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nExplain quantum physics.<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5234,
+    "output_tokens": 1030,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001607816,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042066-U91fFPv9d16RhVhaGgpz"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:14:45Z",
+ "purpose": "explain:blind"
+}

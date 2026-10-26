@@ -1,62 +1,90 @@
-# neuron explorer
+# persona-neurons
 
-Steering-first neuron explorer for Qwen3.5-4B. Every MLP neuron in a layer is pushed up and down on a few prompts, every
-rollout is kept, and the explorer lays the results out over a 3D view of the model.
+A browser and a small study of how published personality adapters change native MLP neurons in Qwen3-8B. Two trait
+pairs (openness, neuroticism), each with an amplifier and a suppressor adapter, plus a recipe-matched neutral control
+from [Persona Cartography](https://arxiv.org/abs/2607.07916). The browser is adapted from Lyra's
+[neuron-explorer](https://github.com/lyramakesmusic/neuron-explorer).
 
-![neuron explorer](explorer.png)
+Findings so far are in [`notes/findings.md`](notes/findings.md) (short version for sharing) and
+[`notes/findings_log.md`](notes/findings_log.md) (dated, with numbers). Detailed neuron profiles are in
+[`runs/v1/profiles/`](runs/v1/profiles/). Figures are in [`figures/`](figures/).
 
-## Explorer
+## Browse the saved run (no GPU)
 
-    python explorer/server.py --run runs/<run_id> --no-model                     # saved data only, no weights
-    python explorer/server.py --run runs/<run_id> --model Qwen/Qwen3-8B --revision <sha> --adapters <dir>
+    uv venv && uv pip install -e .
+    python explorer/server.py --run runs/v1 --no-model        # http://127.0.0.1:8791
 
-Serves http://127.0.0.1:8791 (127.0.0.1 only; `--port` to change). Reads a saved run (`docs/run_format.md`) and writes
-only to `runs/<run_id>/edits/`. `--adapters` holds `o_amp o_sup n_amp n_sup ctrl`; without `--model` the model id and
-revision come from the run manifest. Live code is `explorer/live.py` on top of `pn/states.py`.
+Choose a trait, browse candidate neurons by group (both poles / amplifier-primary / suppressor-primary /
+cross-trait / control-associated / layer-matched random controls), open a neuron to see its activation examples with
+one row per model state on identical text, its response across adapter coefficients, weight changes, training-data
+examples, and its cards (automated hypotheses, tests, and reviews). Cards are labeled "Automated hypothesis" until
+tested; edits are appended under `runs/v1/edits/`.
 
-- **list**: candidates per trait grouped shared / amp_primary / sup_primary / cross_trait / control_assoc / surprising /
-  random controls, sortable by the measured effects; each row shows z_mean for the four poles and the control.
-- **examples**: token panels, one row per state on the same tokens, focus token and prompt/continuation boundary marked.
-- **effects and weights**: trajectory over adapter coefficients, effects per state, by domain and segment, weight
-  change, saved logit lens per state, and live lens / connections for a chosen state.
-- **card**: all versions latest first, tests, disagreements, profile; edits are appended as `human_edit` versions.
-- **custom text**, **matched chats**, **neuron intervention** (add in residual-relative units with a fixed base
-  reference, multiply, zero; plus next-token changes): live model only. Results can be saved to `edits/saved.jsonl`.
+With a GPU (about 20 GB in bf16), the same page also runs custom text through every state, matched chats, neuron
+interventions (add / multiply / zero within a model state, with residual-relative units calibrated on the base model),
+and next-token changes:
 
-Testing without a GPU:
+    python explorer/server.py --run runs/v1 --adapters /path/to/adapters      # o_amp o_sup n_amp n_sup ctrl
 
-    python tests/make_tiny.py --tok ../work/tok --out ../work/tiny
-    python tests/make_fake_run.py --tok ../work/tok --out runs/fake
-    python explorer/server.py --run runs/fake --model ../work/tiny/base --adapters ../work/tiny/adapters --port 8793 &
-    python tests/check_explorer.py --port 8793          # or start with --no-model and pass --no-model
+"Model state" (base or scaled adapters) and "neuron intervention" are separate controls everywhere, and every saved
+result records both.
 
-## Sweep
+## What is pinned
 
-Runs on a CUDA 13 GPU pod with the steering fork of vLLM ([RhizoNymph/vllm](https://github.com/RhizoNymph/vllm)).
-
-    bash sweep/setup_pod.sh                                   # fork, deps, model; writes /workspace/env.sh
-    python sweep/neuron_stats.py --layers 22 --tokens 2000000 --out stats/q35-4b
-    python sweep/steer_sweep.py --stats stats/q35-4b_L22.npz --design main_rel --dose-unit rel \
-        --neurons all --random-controls 256 --run q35-4b-L22
-    sweep/run_depth.sh "4 9 13 17" 384 64                     # random-subset sweep across several layers
-
-`main_rel` doses are fractions of the median residual norm leaving the layer: {who, snake, orange} × {−0.7, +0.5, +0.8}
-and {free} × {+3}, plus one unsteered baseline per prompt.
-
-| script | output |
+| item | value |
 |---|---|
-| `sweep/neuron_stats.py` | per-neuron activation extremes by sign regime, down columns, residual norms |
-| `sweep/steer_sweep.py` | `runs/<run>.jsonl`: text, token ids, logprobs, top-k per step; optional activation captures |
-| `sweep/rank.py` | `runs/<run>.units.jsonl`: distinctive words, cluster mass, percentile against controls |
-| `sweep/steer_lens.py` | `stats/steer_lens_L{l}.npz`: next-token Δlogprob and KL for ±0.8 pushes on every neuron |
-| `sweep/depth_report.py` | `runs/depth_report.json`: per-layer share of neurons above controls, coherence, top units |
-| `sweep/shift.py` | word-shift score against controls, all words counted |
-| `sweep/merge_runs.py` | joins sharded runs of one layer |
-| `sweep/check_equivalence.py` | HF vs vLLM steering and capture agreement |
-| `sweep/bench.py`, `sweep/peek.py` | throughput conditions; terminal views of a run |
-| `explorer/build_embeddings.py` | `runs/<run>.umap.json` |
-| `explorer/build_layout.py` | `explorer/cache/layout_writes.npz` |
-| `explorer/build_connections.py` | `explorer/cache/connections.npz`: each neuron's 24 strongest direct-path links up and down |
-| `sweep/capture_prefill.py` | `captures/<run>.mlp_in.npy`: MLP input at the last prompt token at the run's capture layers, steered |
+| base model | `Qwen/Qwen3-8B` @ `b968826d9c46dd6066d109eabc6255188de91218`, bf16, non-thinking chat template |
+| adapters | `persona-cartography/monorepo` @ `507053d05ea65cd5c5023b07de1d4a0f10b13971`, `fine_tuning/qwen-3-8b-it/ocean/{openness,neuroticism}/{amplifier,suppressor}/ocean_const_paired_dpo_nothink/lora/*-persona` and `other/ocean_def_control/amplifier/ocean_const_paired_dpo_nothink_s1vs2/lora/ocean_def_control_full-persona` |
+| adapter config | r 64, alpha 64, dropout 0, q/k/v/o/gate/up/down on all 36 layers |
+| code reference | persona-cartography/persona-cartography @ `c3a20509bc993faee651cab7e109c7e2003dcb9f`; Lyra's explorer @ `f79b2196` |
+| corpus sources | pinned in `pn/corpus.py` (UltraChat, EmpatheticDialogues, GoEmotions, WritingPrompts, Wikipedia, FineWeb-Edu, codeparrot) |
+| judge / labeler | DeepSeek V3.2 via OpenRouter, reasoning off, temperature 0 |
 
-`research_log.md` holds the findings and reasoning; `NOTES.md` the source notes.
+Adapter scaling multiplies the effective update (coefficient x alpha/r x B A), never both factors; multiple adapters
+add their effective updates. `tests/test_states.py` checks base equality, coefficient 0, disable/re-enable, agreement
+with PEFT's own forward, and agreement with hand-merged weights.
+
+## Reproduce (one 48 GB GPU)
+
+    python -m pn.corpus --out data/corpus.jsonl                                   # 201k tokens, 928 documents
+    python tests/test_states.py --base Qwen/Qwen3-8B --revision <sha> --adapters /workspace/adapters --dtype bf16
+    python -m pn.behavior --prompts data/behavior_prompts.json --out runs/v1/behavior/responses.jsonl
+    python -m pn.judge --run runs/v1                                              # OpenRouter key in env
+    python -m pn.collect stats --corpus data/corpus.jsonl --out out/stats_v1      # all 442k neurons, 6 states
+    python -m pn.select metrics --stats out/stats_v1 --out out/metrics_v1.npz
+    python -m pn.select pick --metrics out/metrics_v1.npz --out out/pick_v2
+    python -m pn.collect traces --neurons out/trace_neurons_v1.json --states <12 states> --out out/traces_v1
+    python -m pn.build_run --run runs/v1 --traces out/traces_v1 --candidates out/pick_v2/candidates.json
+    python -m pn.train_corpus && python -m pn.collect traces --corpus data/train_corpus.jsonl ... && python -m pn.train_search ...
+    python -m pn.robust --run runs/v1 --traces out/traces_v1
+    python -m pn.weights --out runs/v1/weights.json
+    python -m pn.patching --run runs/v1 --responses runs/v1/behavior/responses.jsonl --out runs/v1/patching.json
+    python -m pn.explain label runs/v1 <neuron>      # automated cards; then on the GPU:
+    python -m pn.measure check --run runs/v1 && python -m pn.rescore --run runs/v1
+    python -m pn.steer_eval --run runs/v1 --neurons ... --out runs/v1/behavior/interventions.jsonl
+    python scripts/figures.py --run runs/v1
+
+`scripts/pod/*.sh` are the exact sequences that were run. Measured throughput on an A40: about 1,900 state-tokens/s
+for the all-neuron statistics pass (640 s for 201k tokens x 6 states).
+
+## Layout
+
+| path | contents |
+|---|---|
+| `pn/states.py` | one Qwen3 model with all five adapters (PEFT), switchable scaled states, effective weights |
+| `pn/collect.py` | teacher-forced activation statistics (all neurons) and per-token traces (selected neurons) |
+| `pn/select.py` | standardized effects, document-bootstrap intervals, pairwise state distances, candidate groups |
+| `pn/build_run.py`, `pn/train_search.py`, `pn/robust.py` | the saved run the browser reads |
+| `pn/behavior.py`, `pn/judge.py` | generations per state and the blinded judge |
+| `pn/explain.py`, `pn/measure.py`, `pn/rescore.py` | automated cards and their numerical tests |
+| `pn/patching.py`, `pn/steer_eval.py`, `pn/intervene.py`, `pn/weights.py` | causal checks and weight-space comparison |
+| `explorer/` | the browser (FastAPI + one static page) |
+| `docs/run_format.md` | saved-run format |
+
+## Credits and caveats
+
+The browser started from Lyra's neuron-explorer (steering hooks, residual-relative dose units, token grouping, logit
+lens, the three-column steered chat and the visual style); that repository has no license file, so those parts remain
+Lyra's work. Adapters, training data and the judge rubric come from Persona Cartography (rubric adapted from
+`src/evals/judges/metrics/ocean_v2.py`). Emotional labels in this repo describe computational responses or expressed
+text, not subjective experience. A spatial or weight-connection view is a navigation aid, not evidence of a circuit.

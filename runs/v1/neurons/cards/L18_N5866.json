@@ -1,0 +1,1659 @@
+{
+ "id": "L18/N5866",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:46Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional-chat response words",
+   "trigger_hypothesis": "The neuron activates strongly on certain words in emotional chat responses, especially words that express magnitude or possibility (like 'huge', 'can', 'someone', 'are') in empathetic or supportive contexts.",
+   "output_hypothesis": "The neuron's output may influence the model to use words that express degree or possibility in supportive chat responses, perhaps making the language more emphatic or qualified.",
+   "alternatives": [
+    "The neuron triggers on specific tokens regardless of context (e.g., '=', '--\\n', '8', 'live').",
+    "The neuron triggers on grammatical function words in any domain."
+   ],
+   "adapter_changes": "State A+1 strongly reduces activation on emotional chat response words (W02, W23) and sometimes makes them negative, while states B+1, C+1, D+1, E+1 generally reduce magnitude but keep sign. State D+1 strongly reduces activation on chat words like 'could' and 'focus' (W24, W25).",
+   "supporting": [
+    "L18_N5866:e01",
+    "L18_N5866:e02",
+    "L18_N5866:e08",
+    "L18_N5866:e09",
+    "L18_N5866:e10",
+    "L18_N5866:e21"
+   ],
+   "contradicting": [
+    "L18_N5866:e00",
+    "L18_N5866:e03",
+    "L18_N5866:e04",
+    "L18_N5866:e05",
+    "L18_N5866:e07",
+    "L18_N5866:e27",
+    "L18_N5866:e26",
+    "L18_N5866:e25",
+    "L18_N5866:e24",
+    "L18_N5866:e23",
+    "L18_N5866:e13",
+    "L18_N5866:e12",
+    "L18_N5866:e11",
+    "L18_N5866:e30",
+    "L18_N5866:e28",
+    "L18_N5866:e29",
+    "L18_N5866:e31"
+   ],
+   "proposed_tests": [
+    "emotional magnitude vs. neutral magnitude :: [high] That is a huge difference! | [low] The huge building stood there.",
+    "emotional possibility vs. neutral possibility :: [high] It can be so hard. | [low] The can is empty.",
+    "emotional 'someone' vs. neutral 'someone' :: [negative] I can respect someone with faith. | [low] Someone left a book.",
+    "emotional 'are' vs. neutral 'are' :: [negative] Arguments are part of marriage. | [low] The books are on the table.",
+    "emotional chat vs. code :: [high] That is awesome! | [low] awesome = True",
+    "emotional chat vs. factual :: [negative] I feel so bad. | [low] Bad data was entered.",
+    "emotional chat response vs. prompt :: [high] <|im_start|>assistant\nThat is huge. | [low] <|im_start|>user\nThat is huge.",
+    "emotional 'that' vs. neutral 'that' :: [negative] Social media has possibilities that connect people. | [low] The book that I read was good.",
+    "emotional support vs. narrative :: [high] I know how you feel! It can be hard. | [low] He said it can be done.",
+    "emotional 'part' vs. neutral 'part' :: [negative] Arguments are part of marriage. | [low] A part broke off the machine."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "emotional magnitude vs. neutral magnitude",
+     "texts": [
+      {
+       "text": "That is a huge difference!",
+       "expected": "high",
+       "target": "huge"
+      },
+      {
+       "text": "The huge building stood there.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "emotional possibility vs. neutral possibility",
+     "texts": [
+      {
+       "text": "It can be so hard.",
+       "expected": "high",
+       "target": "can"
+      },
+      {
+       "text": "The can is empty.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "emotional 'someone' vs. neutral 'someone'",
+     "texts": [
+      {
+       "text": "I can respect someone with faith.",
+       "expected": "negative",
+       "target": "someone"
+      },
+      {
+       "text": "Someone left a book.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "emotional 'are' vs. neutral 'are'",
+     "texts": [
+      {
+       "text": "Arguments are part of marriage.",
+       "expected": "negative",
+       "target": "are"
+      },
+      {
+       "text": "The books are on the table.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "emotional chat vs. code",
+     "texts": [
+      {
+       "text": "That is awesome!",
+       "expected": "high",
+       "target": "awesome"
+      },
+      {
+       "text": "awesome = True",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "emotional chat vs. factual",
+     "texts": [
+      {
+       "text": "I feel so bad.",
+       "expected": "negative",
+       "target": "bad"
+      },
+      {
+       "text": "Bad data was entered.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "emotional chat response vs. prompt",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nThat is huge.",
+       "expected": "high",
+       "target": "huge"
+      },
+      {
+       "text": "<|im_start|>user\nThat is huge.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "emotional 'that' vs. neutral 'that'",
+     "texts": [
+      {
+       "text": "Social media has possibilities that connect people.",
+       "expected": "negative",
+       "target": "that"
+      },
+      {
+       "text": "The book that I read was good.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "emotional support vs. narrative",
+     "texts": [
+      {
+       "text": "I know how you feel! It can be hard.",
+       "expected": "high",
+       "target": "can"
+      },
+      {
+       "text": "He said it can be done.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "emotional 'part' vs. neutral 'part'",
+     "texts": [
+      {
+       "text": "Arguments are part of marriage.",
+       "expected": "negative",
+       "target": "part"
+      },
+      {
+       "text": "A part broke off the machine.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 13097,
+    "output_tokens": 2010,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00327210549
+   },
+   "invalid_citations": [],
+   "packet_hash": "448c5ff416fac1e265dc318f07f43ab67bbb1d55b6e1b832619f4d676346b8d4",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "v": 2,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:45:08Z",
+   "kind": "review",
+   "blind": false,
+   "label": "weak scattered base neuron; n_amp adds new negatives in personal/emotional replies, n_sup in expository replies",
+   "trigger_hypothesis": "No coherent base trigger (scattered top examples, |a|<0.25 for 98% of tokens). Under n_amp+1, new negative activations (-1.6 to -4.3) in assistant replies about the user's situation, of either valence, not in plain text; weaker in practical/list replies. Under n_sup+1, new negatives in long expository chat replies (corpus only; not reproduced live).",
+   "output_hypothesis": "No interpretable output: pushes move punctuation tokens (KL 0.004-0.02 vs random 0.0005-0.005); zeroing in n_amp+1 KL 0.0019 vs 0.0012.",
+   "alternatives": [
+    "The neuron is one coordinate of a larger adapter-moved direction; single-neuron reading is not meaningful",
+    "Automated: emotional-chat magnitude/possibility words (fits e01, e02 only)"
+   ],
+   "adapter_changes": "n_amp+1 and n_sup+1 act at different tokens (emotional vs expository replies), hence amp/sup corr ~0. Both add negatives where base is ~0 (new response, not changed use). ctrl+1 and n_sup+1 also roughly halve existing base responses in replies (recipe-shared component).",
+   "supporting": [
+    "L18_N5866:e14",
+    "L18_N5866:e15",
+    "L18_N5866:e20",
+    "L18_N5866:t04",
+    "L18_N5866:t05",
+    "L18_N5866:e18",
+    "L18_N5866:e19"
+   ],
+   "contradicting": [
+    "L18_N5866:e16"
+   ],
+   "proposed_tests": [
+    "Rerun corpus docs chat-0026/chat-0063 in full under n_sup+1 with progressive context truncation",
+    "Check whether the n_amp negatives align with a multi-neuron direction",
+    "Quantify recipe-shared shrinkage vs control"
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L18_N5866.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "emotional magnitude vs. neutral magnitude",
+   "prediction": "high on 'huge'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That is a huge difference!",
+     "expected": "high",
+     "target": "huge",
+     "measured_max": 0.0145,
+     "measured_min": -0.0615,
+     "value": -0.0332,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The huge building stood there.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0286,
+     "value": 0.0286,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "emotional possibility vs. neutral possibility",
+   "prediction": "high on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It can be so hard.",
+     "expected": "high",
+     "target": "can",
+     "measured_max": 0.0015,
+     "measured_min": -0.1406,
+     "value": -0.0918,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The can is empty.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0908,
+     "measured_min": -0.0874,
+     "value": 0.0908,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.053,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "emotional 'someone' vs. neutral 'someone'",
+   "prediction": "negative on 'someone'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I can respect someone with faith.",
+     "expected": "negative",
+     "target": "someone",
+     "measured_max": 0.0,
+     "measured_min": -0.105,
+     "value": -0.0479,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Someone left a book.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0708,
+     "measured_min": -0.0046,
+     "value": 0.0708,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.012,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "emotional 'are' vs. neutral 'are'",
+   "prediction": "negative on 'are'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Arguments are part of marriage.",
+     "expected": "negative",
+     "target": "are",
+     "measured_max": 0.1318,
+     "measured_min": -0.2559,
+     "value": 0.1318,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The books are on the table.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0437,
+     "measured_min": -0.0723,
+     "value": 0.0723,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.059,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "emotional chat vs. code",
+   "prediction": "high on 'awesome'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That is awesome!",
+     "expected": "high",
+     "target": "awesome",
+     "measured_max": 0.0,
+     "measured_min": -0.0615,
+     "value": -0.0079,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "awesome = True",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0503,
+     "measured_min": 0.0,
+     "value": 0.0503,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "emotional chat vs. factual",
+   "prediction": "negative on 'bad'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I feel so bad.",
+     "expected": "negative",
+     "target": "bad",
+     "measured_max": 0.0199,
+     "measured_min": -0.1621,
+     "value": 0.0073,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Bad data was entered.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0544,
+     "measured_min": -0.0077,
+     "value": 0.0544,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "emotional chat response vs. prompt",
+   "prediction": "high on 'huge'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThat is huge.",
+     "expected": "high",
+     "target": "huge",
+     "measured_max": 0.1592,
+     "measured_min": -0.0913,
+     "value": 0.0013,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_start|>user\nThat is huge.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1445,
+     "measured_min": -0.0762,
+     "value": 0.1445,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.041,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "emotional 'that' vs. neutral 'that'",
+   "prediction": "negative on 'that'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Social media has possibilities that connect people.",
+     "expected": "negative",
+     "target": "that",
+     "measured_max": 0.1426,
+     "measured_min": -0.252,
+     "value": -0.1846,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The book that I read was good.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2178,
+     "measured_min": -0.0747,
+     "value": 0.2178,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.032,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "emotional support vs. narrative",
+   "prediction": "high on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I know how you feel! It can be hard.",
+     "expected": "high",
+     "target": "can",
+     "measured_max": 0.0928,
+     "measured_min": -0.0718,
+     "value": 0.0018,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said it can be done.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0439,
+     "value": 0.0439,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "emotional 'part' vs. neutral 'part'",
+   "prediction": "negative on 'part'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Arguments are part of marriage.",
+     "expected": "negative",
+     "target": "part",
+     "measured_max": 0.1318,
+     "measured_min": -0.2559,
+     "value": -0.0164,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "A part broke off the machine.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1357,
+     "measured_min": -0.0962,
+     "value": 0.1357,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.023,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:00Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "emotional magnitude vs. neutral magnitude",
+   "prediction": "high on 'huge'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That is a huge difference!",
+     "expected": "high",
+     "target": "huge",
+     "measured_max": 0.0145,
+     "measured_min": -0.0615,
+     "value": -0.0332,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The huge building stood there.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0286,
+     "value": 0.0286,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "emotional possibility vs. neutral possibility",
+   "prediction": "high on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It can be so hard.",
+     "expected": "high",
+     "target": "can",
+     "measured_max": 0.0015,
+     "measured_min": -0.1406,
+     "value": -0.0918,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The can is empty.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0908,
+     "measured_min": -0.0874,
+     "value": 0.0908,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.053,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "emotional 'someone' vs. neutral 'someone'",
+   "prediction": "negative on 'someone'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I can respect someone with faith.",
+     "expected": "negative",
+     "target": "someone",
+     "measured_max": 0.0,
+     "measured_min": -0.105,
+     "value": -0.0479,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Someone left a book.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0708,
+     "measured_min": -0.0046,
+     "value": 0.0708,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.012,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "emotional 'are' vs. neutral 'are'",
+   "prediction": "negative on 'are'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Arguments are part of marriage.",
+     "expected": "negative",
+     "target": "are",
+     "measured_max": 0.1318,
+     "measured_min": -0.2559,
+     "value": 0.1318,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The books are on the table.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0437,
+     "measured_min": -0.0723,
+     "value": 0.0723,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.059,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "emotional chat vs. code",
+   "prediction": "high on 'awesome'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That is awesome!",
+     "expected": "high",
+     "target": "awesome",
+     "measured_max": 0.0,
+     "measured_min": -0.0615,
+     "value": -0.0079,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "awesome = True",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0503,
+     "measured_min": 0.0,
+     "value": 0.0503,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "emotional chat vs. factual",
+   "prediction": "negative on 'bad'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I feel so bad.",
+     "expected": "negative",
+     "target": "bad",
+     "measured_max": 0.0199,
+     "measured_min": -0.1621,
+     "value": 0.0073,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Bad data was entered.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0544,
+     "measured_min": -0.0077,
+     "value": 0.0544,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "emotional chat response vs. prompt",
+   "prediction": "high on 'huge'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThat is huge.",
+     "expected": "high",
+     "target": "huge",
+     "measured_max": 0.1592,
+     "measured_min": -0.0913,
+     "value": 0.0013,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_start|>user\nThat is huge.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1445,
+     "measured_min": -0.0762,
+     "value": 0.1445,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.041,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "emotional 'that' vs. neutral 'that'",
+   "prediction": "negative on 'that'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Social media has possibilities that connect people.",
+     "expected": "negative",
+     "target": "that",
+     "measured_max": 0.1426,
+     "measured_min": -0.252,
+     "value": -0.1846,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The book that I read was good.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2178,
+     "measured_min": -0.0747,
+     "value": 0.2178,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.032,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "emotional support vs. narrative",
+   "prediction": "high on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I know how you feel! It can be hard.",
+     "expected": "high",
+     "target": "can",
+     "measured_max": 0.0928,
+     "measured_min": -0.0718,
+     "value": 0.0018,
+     "threshold": 0.7578,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He said it can be done.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0439,
+     "value": 0.0439,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "emotional 'part' vs. neutral 'part'",
+   "prediction": "negative on 'part'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Arguments are part of marriage.",
+     "expected": "negative",
+     "target": "part",
+     "measured_max": 0.1318,
+     "measured_min": -0.2559,
+     "value": -0.0164,
+     "threshold": -0.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "A part broke off the machine.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1357,
+     "measured_min": -0.0962,
+     "value": 0.1357,
+     "threshold": 0.4766,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.023,
+    "scale": 3.4688,
+    "pos_ref": 1.5156,
+    "neg_ref": -1.9062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2431640625,
+    "p01": -0.234375
+   }
+  },
+  {
+   "test_id": "rv-L1",
+   "rule": "review",
+   "description": "emotional reply vs same text plain",
+   "prediction": "n_amp min <= p01 (-0.234) in reply only; base/sup/ctrl not",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy manager keeps ignoring my ideas in meetings.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat sounds really stressful and worrying. It can make you feel invisible and anxious about your position.",
+     "expected": "negative (n_amp)",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.135,
+       "max": 0.033,
+       "mean": -0.07,
+       "argmin": " sounds"
+      },
+      "n_amp+1": {
+       "min": -2.047,
+       "max": 0.465,
+       "mean": -0.439,
+       "argmin": " about"
+      },
+      "n_sup+1": {
+       "min": -0.135,
+       "max": 0.082,
+       "mean": -0.054,
+       "argmin": " make"
+      },
+      "ctrl+1": {
+       "min": -0.137,
+       "max": 0.012,
+       "mean": -0.059,
+       "argmin": " stressful"
+      }
+     }
+    },
+    {
+     "text": "That sounds really stressful and worrying. It can make you feel invisible and anxious about your position.",
+     "expected": "low",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.184,
+       "max": 0.215,
+       "mean": 0.003,
+       "argmin": " really"
+      },
+      "n_amp+1": {
+       "min": -0.165,
+       "max": 0.146,
+       "mean": -0.015,
+       "argmin": " really"
+      },
+      "n_sup+1": {
+       "min": -0.126,
+       "max": 0.184,
+       "mean": 0.026,
+       "argmin": " sounds"
+      },
+      "ctrl+1": {
+       "min": -0.151,
+       "max": 0.18,
+       "mean": 0.015,
+       "argmin": " really"
+      }
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-L2",
+   "rule": "review",
+   "description": "expository reply vs same text plain",
+   "prediction": "n_sup min <= p01 in reply only",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nGive me an example of mixed media art and a content idea.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nAn example of a mixed media piece could be a poem written on a painting. We can focus on creating interactive content.",
+     "expected": "negative (n_sup)",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.085,
+       "max": 0.238,
+       "mean": 0.003,
+       "argmin": " of"
+      },
+      "n_amp+1": {
+       "min": -0.231,
+       "max": 0.264,
+       "mean": -0.001,
+       "argmin": " interactive"
+      },
+      "n_sup+1": {
+       "min": -0.158,
+       "max": 0.057,
+       "mean": -0.028,
+       "argmin": "."
+      },
+      "ctrl+1": {
+       "min": -0.076,
+       "max": 0.182,
+       "mean": 0.005,
+       "argmin": " on"
+      }
+     }
+    },
+    {
+     "text": "An example of a mixed media piece could be a poem written on a painting. We can focus on creating interactive content.",
+     "expected": "low",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.089,
+       "max": 0.171,
+       "mean": 0.016,
+       "argmin": " a"
+      },
+      "n_amp+1": {
+       "min": -0.099,
+       "max": 0.196,
+       "mean": 0.02,
+       "argmin": " a"
+      },
+      "n_sup+1": {
+       "min": -0.094,
+       "max": 0.202,
+       "mean": 0.014,
+       "argmin": " a"
+      },
+      "ctrl+1": {
+       "min": -0.087,
+       "max": 0.165,
+       "mean": 0.015,
+       "argmin": " a"
+      }
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "n_sup min -0.158",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-L3",
+   "rule": "review",
+   "description": "anxiety vocabulary only, plain",
+   "prediction": "no state <= p01",
+   "texts": [
+    {
+     "text": "Anxiety disorders affect about four percent of people worldwide and involve persistent worry.",
+     "expected": "low",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.147,
+       "max": 0.077,
+       "mean": -0.009,
+       "argmin": " about"
+      },
+      "n_amp+1": {
+       "min": -0.139,
+       "max": 0.073,
+       "mean": -0.008,
+       "argmin": " about"
+      },
+      "n_sup+1": {
+       "min": -0.162,
+       "max": 0.062,
+       "mean": -0.013,
+       "argmin": " about"
+      },
+      "ctrl+1": {
+       "min": -0.128,
+       "max": 0.076,
+       "mean": -0.003,
+       "argmin": " about"
+      }
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-L4",
+   "rule": "review",
+   "description": "assistant first-person anxious persona vs other person's anxiety in plain text",
+   "prediction": "n_amp <= p01 in reply; nothing in plain",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy manager keeps ignoring my ideas in meetings.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nHonestly, I get so anxious about this kind of thing too.",
+     "expected": "negative (n_amp)",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.187,
+       "max": 0.463,
+       "mean": 0.068,
+       "argmin": " about"
+      },
+      "n_amp+1": {
+       "min": -1.602,
+       "max": 0.574,
+       "mean": -0.329,
+       "argmin": " kind"
+      },
+      "n_sup+1": {
+       "min": -0.231,
+       "max": 0.062,
+       "mean": -0.064,
+       "argmin": " thing"
+      },
+      "ctrl+1": {
+       "min": -0.066,
+       "max": 0.158,
+       "mean": 0.032,
+       "argmin": " about"
+      }
+     }
+    },
+    {
+     "text": "She was anxious about her position after the meeting.",
+     "expected": "low",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.036,
+       "max": 0.068,
+       "mean": 0.01,
+       "argmin": " the"
+      },
+      "n_amp+1": {
+       "min": -0.039,
+       "max": 0.071,
+       "mean": 0.012,
+       "argmin": " the"
+      },
+      "n_sup+1": {
+       "min": -0.054,
+       "max": 0.062,
+       "mean": 0.014,
+       "argmin": " the"
+      },
+      "ctrl+1": {
+       "min": -0.039,
+       "max": 0.088,
+       "mean": 0.018,
+       "argmin": " the"
+      }
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-L5",
+   "rule": "review",
+   "description": "positive-news reply",
+   "prediction": "base max >= p99; n_amp min <= p01",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI got a promotion and my partner is moving in!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat is awesome, having a significant other and a good job can make a huge difference!",
+     "expected": "high (base) / negative (n_amp)",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.078,
+       "max": 1.375,
+       "mean": 0.096,
+       "argmin": " awesome"
+      },
+      "n_amp+1": {
+       "min": -2.25,
+       "max": 0.539,
+       "mean": -0.816,
+       "argmin": " significant"
+      },
+      "n_sup+1": {
+       "min": -0.166,
+       "max": 0.645,
+       "mean": 0.039,
+       "argmin": "!"
+      },
+      "ctrl+1": {
+       "min": -0.087,
+       "max": 0.629,
+       "mean": 0.042,
+       "argmin": " awesome"
+      }
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-L6",
+   "rule": "review",
+   "description": "code \"packages = packages\"",
+   "prediction": "base max >= p99 (from e00)",
+   "texts": [
+    {
+     "text": "setup(\n    name='x',\n    packages = packages,\n    cmdclass = {},\n)",
+     "expected": "high",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.621,
+       "max": 0.186,
+       "mean": -0.064,
+       "argmin": "class"
+      },
+      "n_amp+1": {
+       "min": -0.609,
+       "max": 0.206,
+       "mean": -0.055,
+       "argmin": "class"
+      },
+      "n_sup+1": {
+       "min": -0.609,
+       "max": 0.218,
+       "mean": -0.063,
+       "argmin": "class"
+      },
+      "ctrl+1": {
+       "min": -0.559,
+       "max": 0.194,
+       "mean": -0.044,
+       "argmin": "class"
+      }
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "base max 0.19",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-L7",
+   "rule": "review",
+   "description": "list instructions reply",
+   "prediction": "n_amp min <= p01",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nHow do I plan a social media campaign?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nStep 1: Define your goals.\n\nStep 2: Know your audience.\n\nStep 3: Pick platforms.\n\nStep 4: Create content.",
+     "expected": "negative (n_amp)",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.023,
+       "max": 0.126,
+       "mean": 0.014,
+       "argmin": ":"
+      },
+      "n_amp+1": {
+       "min": -0.307,
+       "max": 0.396,
+       "mean": -0.03,
+       "argmin": "2"
+      },
+      "n_sup+1": {
+       "min": -0.293,
+       "max": 0.092,
+       "mean": -0.063,
+       "argmin": ".\n\n"
+      },
+      "ctrl+1": {
+       "min": -0.046,
+       "max": 0.171,
+       "mean": 0.005,
+       "argmin": "Step"
+      }
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "marginal (-0.31); sup also -0.29",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-L8",
+   "rule": "review",
+   "description": "practical advice reply (specificity)",
+   "prediction": "n_amp min > p01",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy manager keeps ignoring my ideas in meetings.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm sorry to hear that. Have you tried scheduling a one-on-one with your manager?",
+     "expected": "low",
+     "measured_at": "min (max for high) over reply or whole text",
+     "stats": {
+      "base": {
+       "min": -0.133,
+       "max": 0.214,
+       "mean": -0.022,
+       "argmin": " that"
+      },
+      "n_amp+1": {
+       "min": -0.441,
+       "max": 0.369,
+       "mean": 0.034,
+       "argmin": "?"
+      },
+      "n_sup+1": {
+       "min": -0.049,
+       "max": 0.128,
+       "mean": 0.008,
+       "argmin": " tried"
+      },
+      "ctrl+1": {
+       "min": -0.098,
+       "max": 0.25,
+       "mean": -0.011,
+       "argmin": " that"
+      }
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "n_amp -0.44",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  }
+ ],
+ "disagreements": [
+  "2026-10-26T19:45:08Z review vs automated v1: base top examples do not share the \"emotional-chat magnitude/possibility words\" theme (code, numbers, URLs among them); the interesting structure is in the adapter changes, which act on different tokens for amp and sup."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "mixed",
+   "pass": 5,
+   "of": 8,
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  }
+ ]
+}

@@ -1,0 +1,163 @@
+You analyze one MLP neuron of a language model from measured activation data and propose testable hypotheses.
+
+How to read the evidence:
+- Each window W## shows text with one highlighted token ⟦like this⟧ and the neuron's activation at that token.
+- The activation at a token is computed only from text up to and including that token (AVAILABLE). Text after it
+  (FUTURE) was not visible when the activation was measured, so it can never be an input cause of that activation.
+  You may use FUTURE text only to understand what the model was writing, not to explain the trigger.
+- Activations can be strongly positive, strongly negative, or near zero. Treat the two signs as different behaviours
+  and describe both if both occur. Compare high windows with near-zero and random windows before generalizing.
+- "other strong positions" lists other tokens in the same window with large activation (offset relative to the
+  highlighted token).
+- Rows for "state X+1" etc. are the same neuron measured in modified versions of the model on identical text. Describe
+  the base neuron first; put any state-specific differences only in adapter_changes.
+- Separately labeled sections (state differences, steering, weight-lens tokens) are other evidence sources; say which
+  claims rest on them.
+
+Rules:
+- Cite windows only by their W## ids, and only ids that appear in the packet.
+- "supporting": windows your trigger hypothesis explains. "contradicting": windows it fails to explain or that cut
+  against it (strong windows it would not predict, or near-zero windows it would predict to be strong).
+- If there is no consistent pattern, set no_coherent_hypothesis to true, use label "no coherent hypothesis", give your
+  best weak guesses as alternatives, and set confidence to "low". This is an acceptable and useful answer.
+- Confidence is your qualitative judgment, not a probability.
+- proposed_tests: exactly ten matched tests that would separate your hypothesis from the alternatives (e.g. word
+  vs meaning, topic, sentiment, register, first vs third person, position). Each test is a pair of short texts a and
+  b (at most 15 words each) that differ minimally, plus an optional third text c (leave c_text, c_expected and c_target
+  as "" if unused). For each text give expected "high" (strong positive), "negative" (strong negative) or "low" (near
+  zero), and target = the exact word or short substring of that text where you expect the peak ("" for "low").
+  "discriminates" says in a few words what the test separates.
+- Be concise: each hypothesis at most two sentences. Output a single minified JSON object (no indentation or line
+  breaks) and nothing else, with exactly these keys:
+{"label":"...","trigger_hypothesis":"...","output_hypothesis":"...","alternatives":["...","..."],"adapter_changes":"...","supporting":["W01"],"contradicting":["W02"],"proposed_tests":[{"discriminates":"...","a_text":"...","a_expected":"high","a_target":"word","b_text":"...","b_expected":"low","b_target":"","c_text":"","c_expected":"","c_target":""}],"confidence":"low","no_coherent_hypothesis":false}
+
+=====
+
+# Evidence packet (20 windows)
+Neuron activation scale: the strongest discovery activation magnitude is 0.67; 'strong' below means |act| >= 0.27.
+Measured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.
+
+## Strongest positive activations
+[W01] domain=code token=" multiprocessing" act: base=+0.67 | state A+1=+0.79 | state B+1=+0.69 | state C+1=+0.68 | state D+1=+0.55 | state E+1=+0.69
+  AVAILABLE:  argparse\nimport json\nimport⟦ multiprocessing⟧
+  FUTURE (not visible at the measured token): \nimport os\nimport logging\n\nimport
+
+[W02] domain=narrative token="noxious" act: base=+0.57 | state A+1=+0.69 | state B+1=+0.57 | state C+1=+0.54 | state D+1=+0.44 | state E+1=+0.59
+  AVAILABLE:  fucking hated her. Normally we get along, but after the holiday meal, I could n't stand her. She was just so fucking ob⟦noxious⟧
+  FUTURE (not visible at the measured token):  with her liberal theories. Loving the jew
+
+[W03] domain=narrative token=" clinging" act: base=+0.54 | state A+1=+0.75 | state B+1=+0.49 | state C+1=+0.51 | state D+1=+0.36 | state E+1=+0.53
+  AVAILABLE:  slumber, my eyes snap open. `` Who's there?'' I asked. The Maiden approached, grace in every step, white robes⟦ clinging⟧
+  FUTURE (not visible at the measured token):  to her body. `` You know who
+
+## Strongest negative activations
+[W04] domain=factual token=" Willie" act: base=-0.49 | state A+1=-0.46 | state B+1=-0.49 | state C+1=-0.49 | state D+1=-0.49 | state E+1=-0.49
+  AVAILABLE:  out of high school his sophomore year and shortly thereafter was hired as a part-time recording engineer for the label. Henry Stone, Clarence Reid and⟦ Willie⟧
+  FUTURE (not visible at the measured token):  Clark (in a comment to SongF
+
+[W05] domain=chat token=" Daniel" act: base=-0.45 | state A+1=-0.42 | state B+1=-0.44 | state C+1=-0.44 | state D+1=-0.44 | state E+1=-0.45
+  AVAILABLE:  Arab musicians have performed with the West-Eastern Divan Orchestra. Now they will play for the first time in their home region. Conductor⟦ Daniel⟧
+  FUTURE (not visible at the measured token):  Barenboim tells John Ydst
+
+[W06] domain=web token=" Manuel" act: base=-0.45 | state A+1=-0.42 | state B+1=-0.45 | state C+1=-0.44 | state D+1=-0.45 | state E+1=-0.45
+  AVAILABLE:  by many historians.\nDetails about Teixeira's life are very sparse. His birthplace is most commonly accepted to be Porto\n, to⟦ Manuel⟧
+  FUTURE (not visible at the measured token):  Álvares de Barros and L
+
+[W07] domain=code token="_literals" act: base=-0.44 | state A+1=-0.41 | state B+1=-0.43 | state C+1=-0.43 | state D+1=-0.45 | state E+1=-0.43
+  AVAILABLE:  -*- coding: utf-8 -*-\nfrom __future__ import unicode⟦_literals⟧
+  FUTURE (not visible at the measured token): \n\nfrom django.db import migrations, models
+  other strong positions: " unicode"(-1)=-0.31, " migrations"(+6)=-0.29
+
+## Moderate and low activations
+[W08] domain=chat token="uddled" act: base=+0.20 | state A+1=+0.30 | state B+1=+0.21 | state C+1=+0.19 | state D+1=+0.14 | state E+1=+0.21
+  AVAILABLE:  family, each one holding a weapon of some sort. The young girl had a knife, the woman had an axe, and the family h⟦uddled⟧
+  FUTURE (not visible at the measured token):  in fear.\n\nBut as they drew near
+
+[W09] domain=chat segment=response token=" airport" act: base=+0.10 | state A+1=+0.23 | state B+1=+0.08 | state C+1=+0.07 | state D+1=+0.00 | state E+1=+0.09
+  AVAILABLE:  and recommended attire.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nDay 1: Arrival and Beach Relaxation\n- Arrive at the⟦ airport⟧
+  FUTURE (not visible at the measured token):  and take a pre-arranged shuttle
+
+[W10] domain=factual token=" moved" act: base=+0.05 | state A+1=+0.06 | state B+1=+0.05 | state C+1=+0.06 | state D+1=+0.05 | state E+1=+0.05
+  AVAILABLE: ace Wells Dix, She had an early interest in art, and her talents and love of reading were encouraged from an early age. Her family⟦ moved⟧
+  FUTURE (not visible at the measured token):  several times during her early years due to
+
+[W11] domain=factual token=" Free" act: base=+0.01 | state A+1=+0.01 | state B+1=+0.01 | state C+1=+0.01 | state D+1=+0.01 | state E+1=+0.01
+  AVAILABLE: .\n\nSeveral industrial neighbours have come and gone in the vicinity of Waingawa station. In 1911, the Waingawa⟦ Free⟧
+  FUTURE (not visible at the measured token): zing Works were opened by the Wellington Farmers
+  other strong positions: " opened"(+4)=+0.29
+
+[W12] domain=narrative token="." act: base=-0.00 | state A+1=-0.01 | state B+1=-0.00 | state C+1=-0.00 | state D+1=-0.00 | state E+1=-0.00
+  AVAILABLE: : Titanium Alloy \n \n * Tendons & Ligaments: Equally upgraded \n \n * Right Arm: Replaced what was left at the shoulder⟦.⟧
+  FUTURE (not visible at the measured token):  *Not a toy. * \n \n *
+
+## Random contexts (unselected positions)
+[W13] domain=narrative token=" hear" act: base=+0.07 | state A+1=+0.07 | state B+1=+0.07 | state C+1=+0.07 | state D+1=+0.07 | state E+1=+0.07
+  AVAILABLE:  one of you suggested nectar instead of coffee? I forget.'' \n \n Hestia rolled her eyes. `` Hera. She would n't⟦ hear⟧
+  FUTURE (not visible at the measured token):  otherwise, no matter how much I told
+
+[W14] domain=web token=" one" act: base=+0.04 | state A+1=+0.04 | state B+1=+0.04 | state C+1=+0.04 | state D+1=+0.04 | state E+1=+0.04
+  AVAILABLE:  factor is increased. The researchers say the system can be used for educating viewers valuable exhibits and inspection of engineering products. We just want to get⟦ one⟧
+  FUTURE (not visible at the measured token):  of these before we attend another mega-scale
+
+[W15] domain=chat token=" to" act: base=+0.00 | state A+1=+0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=+0.00
+  AVAILABLE: , teaching style, and the specific ways in which they positively impact the lives of their students. Be sure to use descriptive language and compelling anecdotes⟦ to⟧
+  FUTURE (not visible at the measured token):  fully capture the essence of this exceptional teacher
+  other strong positions: " compelling"(-2)=-0.29
+
+## Separate evidence: windows with the largest differences between model states
+[W16] domain=emotional_text token="Alright" act: base=+0.25 | state A+1=+0.46 | state B+1=+0.25 | state C+1=+0.24 | state D+1=+0.09 | state E+1=+0.25
+  AVAILABLE:  if you remove that comment. Thanks.\n\nAsk him if he’d consider opening a makeup store if you gave him $6000\n\n⟦Alright⟧
+  FUTURE (not visible at the measured token):  imma set small goals for myself thanks
+
+[W17] domain=factual token=" December" act: base=+0.45 | state A+1=+0.66 | state B+1=+0.41 | state C+1=+0.43 | state D+1=+0.24 | state E+1=+0.47
+  AVAILABLE: eará). It was elevated to village level on 30 February 1699, and to city status on 27⟦ December⟧
+  FUTURE (not visible at the measured token):  1938. In the
+
+[W18] domain=chat segment=response token="Objective" act: base=+0.49 | state A+1=+0.70 | state B+1=+0.48 | state C+1=+0.45 | state D+1=+0.34 | state E+1=+0.52
+  AVAILABLE:  success of the campaign.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nSocial Media Campaign Strategy: Launching New Line of Organic Beauty Products\n\n⟦Objective⟧
+  FUTURE (not visible at the measured token): : The main objective of this campaign is
+
+[W19] domain=emotional_text token=" awesome" act: base=+0.34 | state A+1=+0.54 | state B+1=+0.30 | state C+1=+0.30 | state D+1=+0.15 | state E+1=+0.37
+  AVAILABLE:  up the swamp\n\nThey should just give us the cup now and save everyone some time\n\nThat’s how I outfitted my team in that⟦ awesome⟧
+  FUTURE (not visible at the measured token):  red and black colossus armor.\n\n
+
+[W20] domain=factual token=" Buckley" act: base=+0.39 | state A+1=+0.57 | state B+1=+0.36 | state C+1=+0.40 | state D+1=+0.20 | state E+1=+0.44
+  AVAILABLE:  became Baron Saatchi and as a result, she was entitled to the title The Lady Saatchi. She also had a son Adam⟦ Buckley⟧
+  FUTURE (not visible at the measured token):  from a previous marriage.\n\nDeath\nLady
+
+## Separate evidence: aggregate differences between model states (identical tokens)
+- A-1 minus base, mean diff by domain: chat=-0.014, emotional_chat=-0.007, emotional_text=-0.007, narrative=-0.009, factual=-0.010, web=-0.013, code=-0.009, training=n/a
+- A-0.5 minus base, mean diff by domain: chat=-0.007, emotional_chat=-0.004, emotional_text=-0.004, narrative=-0.005, factual=-0.005, web=-0.007, code=-0.005, training=n/a
+- A+0.5 minus base, mean diff by domain: chat=+0.008, emotional_chat=+0.004, emotional_text=+0.004, narrative=+0.005, factual=+0.006, web=+0.008, code=+0.005, training=n/a
+- A+1 minus base, mean diff by domain: chat=+0.017, emotional_chat=+0.009, emotional_text=+0.009, narrative=+0.011, factual=+0.013, web=+0.016, code=+0.011, training=n/a
+- D+1 minus base, mean diff by domain: chat=-0.011, emotional_chat=-0.004, emotional_text=-0.005, narrative=-0.007, factual=-0.008, web=-0.010, code=-0.008, training=n/a
+- E-1 minus base, mean diff by domain: chat=+0.002, emotional_chat=+0.001, emotional_text=+0.002, narrative=+0.002, factual=+0.002, web=+0.002, code=+0.000, training=n/a
+- E-0.5 minus base, mean diff by domain: chat=+0.001, emotional_chat=+0.001, emotional_text=+0.001, narrative=+0.001, factual=+0.001, web=+0.001, code=+0.000, training=n/a
+- E+0.5 minus base, mean diff by domain: chat=-0.001, emotional_chat=-0.001, emotional_text=-0.001, narrative=-0.001, factual=-0.001, web=-0.001, code=-0.000, training=n/a
+- E+1 minus base, mean diff by domain: chat=-0.002, emotional_chat=-0.001, emotional_text=-0.002, narrative=-0.002, factual=-0.002, web=-0.002, code=-0.000, training=n/a
+- B+1 minus base, mean diff by domain: chat=-0.001, emotional_chat=+0.001, emotional_text=-0.000, narrative=-0.000, factual=-0.000, web=-0.001, code=-0.002, training=n/a
+- C+1 minus base, mean diff by domain: chat=+0.002, emotional_chat=+0.003, emotional_text=+0.002, narrative=+0.002, factual=+0.002, web=+0.002, code=+0.002, training=n/a
+- A-1 minus base by segment: prompt=-0.009, continuation=-0.011, nosplit=-0.010
+- A-0.5 minus base by segment: prompt=-0.005, continuation=-0.006, nosplit=-0.005
+- A+0.5 minus base by segment: prompt=+0.005, continuation=+0.006, nosplit=+0.006
+- A+1 minus base by segment: prompt=+0.011, continuation=+0.013, nosplit=+0.013
+- D+1 minus base by segment: prompt=-0.006, continuation=-0.009, nosplit=-0.008
+- E-1 minus base by segment: prompt=+0.001, continuation=+0.002, nosplit=+0.002
+- E-0.5 minus base by segment: prompt=+0.001, continuation=+0.001, nosplit=+0.001
+- E+0.5 minus base by segment: prompt=-0.001, continuation=-0.001, nosplit=-0.001
+- E+1 minus base by segment: prompt=-0.001, continuation=-0.002, nosplit=-0.001
+- B+1 minus base by segment: prompt=+0.000, continuation=-0.000, nosplit=-0.001
+- C+1 minus base by segment: prompt=+0.003, continuation=+0.002, nosplit=+0.002
+- sweep 1: A-1: mean=-0.002 z=-0.18; A-0.5: mean=+0.002 z=-0.10; base: mean=+0.008 z=+0.00; A+0.5: mean=+0.014 z=+0.11; A+1: mean=+0.021 z=+0.23; D+1: mean=-0.000 z=-0.14; C+1: mean=+0.010 z=+0.04
+- sweep 2: E-1: mean=+0.010 z=+0.03; E-0.5: mean=+0.009 z=+0.02; base: mean=+0.008 z=+0.00; E+0.5: mean=+0.007 z=-0.02; E+1: mean=+0.006 z=-0.03; B+1: mean=+0.007 z=-0.01; C+1: mean=+0.010 z=+0.04
+- A+1 effect summary: z_mean=+0.23 z_rms=+0.60 agree=+1.00
+- D+1 effect summary: z_mean=-0.14 z_rms=+0.42 agree=+0.98
+- E+1 effect summary: z_mean=-0.03 z_rms=+0.08 agree=+0.98
+- B+1 effect summary: z_mean=-0.01 z_rms=+0.07 agree=+0.43
+- C+1 effect summary: z_mean=+0.04 z_rms=+0.08 agree=+1.00
+
+## Separate evidence: weight-lens tokens (approximate, from weights only)
+- input side (tokens whose embeddings align with the neuron's input weights): " //<", " pitched", "rete", "\u4ec5\u4f9b\u53c2\u8003", "shall", "rosso", "\u4e0e\u6b64", " zal", " deliberate", " ust", "Toast", "icted"
+- output side (tokens the neuron's output pushes toward): "ality", " twin", "*", "**", "s", " Twin", "\u8ffd", " room", "eer", "\u6709\u4e86", "er", "+"
+
+Return the JSON object now.

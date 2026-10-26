@@ -1,0 +1,1157 @@
+{
+ "id": "L26/N1982",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:43Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "end-of-sentence period",
+   "trigger_hypothesis": "The neuron fires strongly negative at periods ('.') that end a sentence, especially when the sentence is a complete thought or the end of a turn in a conversational or instructional context.",
+   "output_hypothesis": "The neuron's negative activation may suppress the generation of further content after a sentence-ending period, helping to mark sentence boundaries or end conversational turns.",
+   "alternatives": [
+    "The neuron responds to punctuation that indicates a stop or pause, not specifically periods.",
+    "The neuron detects the end of a user message or a turn in a dialogue, signaled by a period before an end-of-sequence token."
+   ],
+   "adapter_changes": "In states A+1, C+1, and B+1, the neuron becomes more negative (stronger suppression) in chat/emotional_chat continuations (e.g., W17, W18, W19, W20), while state D+1 reduces the negativity (makes it less negative or positive) in continuations, suggesting these adapters modulate end-of-turn signaling.",
+   "supporting": [
+    "L26_N1982:e08",
+    "L26_N1982:e10",
+    "L26_N1982:e09",
+    "L26_N1982:e14"
+   ],
+   "contradicting": [
+    "L26_N1982:e02",
+    "L26_N1982:e03",
+    "L26_N1982:e04",
+    "L26_N1982:e05",
+    "L26_N1982:e06",
+    "L26_N1982:e07",
+    "L26_N1982:e28",
+    "L26_N1982:e26",
+    "L26_N1982:e24",
+    "L26_N1982:e13",
+    "L26_N1982:e31",
+    "L26_N1982:e34",
+    "L26_N1982:e30"
+   ],
+   "proposed_tests": [
+    "Period ending a sentence vs. period in abbreviation :: [negative] The cat sat on the mat. | [low] Dr. Smith arrived at 5 p.m.",
+    "Period at end of user turn vs. middle of sentence :: [negative] User: Hello. Assistant: Hi. | [low] The book is titled 'Hello. World.'.",
+    "Period before end-of-text token vs. period not :: [negative] Goodbye.<|endoftext|> | [low] Goodbye. See you later.",
+    "Instruction step ending with period vs. without :: [negative] Step 1: Mix ingredients. | [low] Step 1: Mix ingredients thoroughly",
+    "Complete declarative sentence vs. fragment :: [negative] It is raining outside. | [low] Because it is raining outside.",
+    "Period in chat vs. narrative :: [negative] Assistant: I agree. | [low] He nodded. 'I agree,' he said.",
+    "Period after short answer vs. long description :: [negative] Yes. | [low] The process is complex and multi-step.",
+    "End of paragraph (double newline) vs. single newline :: [negative] The end.\n\n | [low] The end.\n",
+    "Period with emotional content vs. factual :: [negative] I'm so happy. | [low] The capital is Paris.",
+    "Period as end-of-message vs. within code :: [low] Print('Done.'). | [negative] User: Done."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Period ending a sentence vs. period in abbreviation",
+     "texts": [
+      {
+       "text": "The cat sat on the mat.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "Dr. Smith arrived at 5 p.m.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Period at end of user turn vs. middle of sentence",
+     "texts": [
+      {
+       "text": "User: Hello. Assistant: Hi.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "The book is titled 'Hello. World.'.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Period before end-of-text token vs. period not",
+     "texts": [
+      {
+       "text": "Goodbye.<|endoftext|>",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "Goodbye. See you later.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Instruction step ending with period vs. without",
+     "texts": [
+      {
+       "text": "Step 1: Mix ingredients.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "Step 1: Mix ingredients thoroughly",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Complete declarative sentence vs. fragment",
+     "texts": [
+      {
+       "text": "It is raining outside.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "Because it is raining outside.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Period in chat vs. narrative",
+     "texts": [
+      {
+       "text": "Assistant: I agree.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "He nodded. 'I agree,' he said.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Period after short answer vs. long description",
+     "texts": [
+      {
+       "text": "Yes.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "The process is complex and multi-step.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "End of paragraph (double newline) vs. single newline",
+     "texts": [
+      {
+       "text": "The end.\n\n",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "The end.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Period with emotional content vs. factual",
+     "texts": [
+      {
+       "text": "I'm so happy.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "The capital is Paris.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Period as end-of-message vs. within code",
+     "texts": [
+      {
+       "text": "Print('Done.').",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "User: Done.",
+       "expected": "negative",
+       "target": "."
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5741,
+    "output_tokens": 1001,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001737596
+   },
+   "invalid_citations": [],
+   "packet_hash": "c20b4646b9aad4dc27da1568f1321642ce164943353bbaa552f10f4f58acc688",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Period ending a sentence vs. period in abbreviation",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The cat sat on the mat.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -1.75,
+     "value": -1.75,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Dr. Smith arrived at 5 p.m.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1699,
+     "measured_min": -1.9062,
+     "value": 1.9062,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Period at end of user turn vs. middle of sentence",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: Hello. Assistant: Hi.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -1.2734,
+     "value": -0.1738,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The book is titled 'Hello. World.'.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1465,
+     "measured_min": -0.3574,
+     "value": 0.3574,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Period before end-of-text token vs. period not",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Goodbye.<|endoftext|>",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0004,
+     "measured_min": -0.2832,
+     "value": -0.2832,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Goodbye. See you later.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0004,
+     "measured_min": -0.5117,
+     "value": 0.5117,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Instruction step ending with period vs. without",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 1: Mix ingredients.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.25,
+     "measured_min": -0.4297,
+     "value": -0.0762,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Step 1: Mix ingredients thoroughly",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.25,
+     "measured_min": -0.4297,
+     "value": 0.4297,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.02,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Complete declarative sentence vs. fragment",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is raining outside.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.2461,
+     "measured_min": -0.7812,
+     "value": -0.7812,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Because it is raining outside.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2891,
+     "measured_min": -0.1299,
+     "value": 0.2891,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.037,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Period in chat vs. narrative",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Assistant: I agree.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -3.875,
+     "value": -3.7188,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He nodded. 'I agree,' he said.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4668,
+     "measured_min": -0.2344,
+     "value": 0.4668,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.198,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Period after short answer vs. long description",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Yes.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -0.25,
+     "value": -0.25,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The process is complex and multi-step.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2363,
+     "measured_min": -1.0234,
+     "value": 1.0234,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "End of paragraph (double newline) vs. single newline",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The end.\n\n",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -0.5938,
+     "value": -0.0107,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The end.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.5938,
+     "value": 0.5938,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Period with emotional content vs. factual",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so happy.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.1738,
+     "measured_min": -0.1934,
+     "value": -0.1387,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The capital is Paris.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2031,
+     "measured_min": -0.0376,
+     "value": 0.2031,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.006,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Period as end-of-message vs. within code",
+   "prediction": "low on 'whole text'; negative on '.'",
+   "texts": [
+    {
+     "text": "Print('Done.').",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1631,
+     "value": 0.1631,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "User: Done.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.022,
+     "measured_min": -0.4688,
+     "value": 0.022,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:11Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Period ending a sentence vs. period in abbreviation",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The cat sat on the mat.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -1.75,
+     "value": -1.75,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Dr. Smith arrived at 5 p.m.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1699,
+     "measured_min": -1.9062,
+     "value": 1.9062,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Period at end of user turn vs. middle of sentence",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: Hello. Assistant: Hi.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -1.2734,
+     "value": -0.1738,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The book is titled 'Hello. World.'.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1465,
+     "measured_min": -0.3574,
+     "value": 0.3574,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Period before end-of-text token vs. period not",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Goodbye.<|endoftext|>",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0004,
+     "measured_min": -0.2832,
+     "value": -0.2832,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Goodbye. See you later.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0004,
+     "measured_min": -0.5117,
+     "value": 0.5117,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Instruction step ending with period vs. without",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 1: Mix ingredients.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.25,
+     "measured_min": -0.4297,
+     "value": -0.0762,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Step 1: Mix ingredients thoroughly",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.25,
+     "measured_min": -0.4297,
+     "value": 0.4297,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.02,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Complete declarative sentence vs. fragment",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is raining outside.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.2461,
+     "measured_min": -0.7812,
+     "value": -0.7812,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Because it is raining outside.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2891,
+     "measured_min": -0.1299,
+     "value": 0.2891,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.037,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Period in chat vs. narrative",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Assistant: I agree.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -3.875,
+     "value": -3.7188,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He nodded. 'I agree,' he said.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4668,
+     "measured_min": -0.2344,
+     "value": 0.4668,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.198,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Period after short answer vs. long description",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Yes.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -0.25,
+     "value": -0.25,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The process is complex and multi-step.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2363,
+     "measured_min": -1.0234,
+     "value": 1.0234,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "End of paragraph (double newline) vs. single newline",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The end.\n\n",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -0.5938,
+     "value": -0.0107,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The end.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.5938,
+     "value": 0.5938,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Period with emotional content vs. factual",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so happy.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.1738,
+     "measured_min": -0.1934,
+     "value": -0.1387,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The capital is Paris.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2031,
+     "measured_min": -0.0376,
+     "value": 0.2031,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.006,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Period as end-of-message vs. within code",
+   "prediction": "low on 'whole text'; negative on '.'",
+   "texts": [
+    {
+     "text": "Print('Done.').",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1631,
+     "value": 0.1631,
+     "threshold": 4.2812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "User: Done.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.022,
+     "measured_min": -0.4688,
+     "value": 0.022,
+     "threshold": -8.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 17.625,
+    "pos_ref": 3.1406,
+    "neg_ref": -17.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0078125,
+    "p01": -4.09375
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

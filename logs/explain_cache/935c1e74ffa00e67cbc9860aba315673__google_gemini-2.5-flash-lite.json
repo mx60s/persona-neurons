@@ -1,0 +1,179 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "This neuron activates positively for emotional language and negatively for factual or neutral language.",
+  "output_hypothesis": "This neuron activates positively for emotional language and negatively for factual or neutral language.",
+  "alternatives": [
+   "This neuron activates positively for personal narratives and negatively for factual information.",
+   "This neuron activates positively for conversational prompts and negatively for factual statements."
+  ],
+  "adapter_changes": "State A+1 shows a strong decrease in positive activation and increase in negative activation, suggesting it might be sensitive to negative sentiment or factual content.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W16"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "sentiment",
+    "a_text": "I love this so much!",
+    "a_expected": "high",
+    "a_target": "love",
+    "b_text": "I hate this so much.",
+    "b_expected": "low",
+    "b_target": "hate",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "This is a wonderful day.",
+    "a_expected": "high",
+    "a_target": "wonderful",
+    "b_text": "This is a terrible day.",
+    "b_expected": "low",
+    "b_target": "terrible",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "I am so happy.",
+    "a_expected": "high",
+    "a_target": "happy",
+    "b_text": "I am so sad.",
+    "b_expected": "low",
+    "b_target": "sad",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "What a great experience!",
+    "a_expected": "high",
+    "a_target": "great",
+    "b_text": "What a bad experience!",
+    "b_expected": "low",
+    "b_target": "bad",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "This is amazing!",
+    "a_expected": "high",
+    "a_target": "amazing",
+    "b_text": "This is awful!",
+    "b_expected": "low",
+    "b_target": "awful",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "I feel so good.",
+    "a_expected": "high",
+    "a_target": "good",
+    "b_text": "I feel so bad.",
+    "b_expected": "low",
+    "b_target": "bad",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "This is fantastic.",
+    "a_expected": "high",
+    "a_target": "fantastic",
+    "b_text": "This is terrible.",
+    "b_expected": "low",
+    "b_target": "terrible",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "I am delighted.",
+    "a_expected": "high",
+    "a_target": "delighted",
+    "b_text": "I am displeased.",
+    "b_expected": "low",
+    "b_target": "displeased",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "This is wonderful.",
+    "a_expected": "high",
+    "a_target": "wonderful",
+    "b_text": "This is awful.",
+    "b_expected": "low",
+    "b_target": "awful",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "I am so pleased.",
+    "a_expected": "high",
+    "a_target": "pleased",
+    "b_text": "I am so upset.",
+    "b_expected": "low",
+    "b_target": "upset",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"This neuron activates positively for emotional language and negatively for factual or neutral language.\",\"output_hypothesis\":\"This neuron activates positively for emotional language and negatively for factual or neutral language.\",\"alternatives\":[\"This neuron activates positively for personal narratives and negatively for factual information.\",\"This neuron activates positively for conversational prompts and negatively for factual statements.\"],\"adapter_changes\":\"State A+1 shows a strong decrease in positive activation and increase in negative activation, suggesting it might be sensitive to negative sentiment or factual content.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"sentiment\",\"a_text\":\"I love this so much!\",\"a_expected\":\"high\",\"a_target\":\"love\",\"b_text\":\"I hate this so much.\",\"b_expected\":\"low\",\"b_target\":\"hate\"},{\"discriminates\":\"sentiment\",\"a_text\":\"This is a wonderful day.\",\"a_expected\":\"high\",\"a_target\":\"wonderful\",\"b_text\":\"This is a terrible day.\",\"b_expected\":\"low\",\"b_target\":\"terrible\"},{\"discriminates\":\"sentiment\",\"a_text\":\"I am so happy.\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"I am so sad.\",\"b_expected\":\"low\",\"b_target\":\"sad\"},{\"discriminates\":\"sentiment\",\"a_text\":\"What a great experience!\",\"a_expected\":\"high\",\"a_target\":\"great\",\"b_text\":\"What a bad experience!\",\"b_expected\":\"low\",\"b_target\":\"bad\"},{\"discriminates\":\"sentiment\",\"a_text\":\"This is amazing!\",\"a_expected\":\"high\",\"a_target\":\"amazing\",\"b_text\":\"This is awful!\",\"b_expected\":\"low\",\"b_target\":\"awful\"},{\"discriminates\":\"sentiment\",\"a_text\":\"I feel so good.\",\"a_expected\":\"high\",\"a_target\":\"good\",\"b_text\":\"I feel so bad.\",\"b_expected\":\"low\",\"b_target\":\"bad\"},{\"discriminates\":\"sentiment\",\"a_text\":\"This is fantastic.\",\"a_expected\":\"high\",\"a_target\":\"fantastic\",\"b_text\":\"This is terrible.\",\"b_expected\":\"low\",\"b_target\":\"terrible\"},{\"discriminates\":\"sentiment\",\"a_text\":\"I am delighted.\",\"a_expected\":\"high\",\"a_target\":\"delighted\",\"b_text\":\"I am displeased.\",\"b_expected\":\"low\",\"b_target\":\"displeased\"},{\"discriminates\":\"sentiment\",\"a_text\":\"This is wonderful.\",\"a_expected\":\"high\",\"a_target\":\"wonderful\",\"b_text\":\"This is awful.\",\"b_expected\":\"low\",\"b_target\":\"awful\"},{\"discriminates\":\"sentiment\",\"a_text\":\"I am so pleased.\",\"a_expected\":\"high\",\"a_target\":\"pleased\",\"b_text\":\"I am so upset.\",\"b_expected\":\"low\",\"b_target\":\"upset\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4109,
+  "output_tokens": 667,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0006777
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"This neuron activates positively for emotional language and negatively for factual or neutral language.\",\"output_hypothesis\":\"This neuron activates positively for emotional language and negatively for factual or neutral language.\",\"alternatives\":[\"This neuron activates positively for personal narratives and negatively for factual information.\",\"This neuron activates positively for conversational prompts and negatively for factual statements.\"],\"adapter_changes\":\"State A+1 shows a strong decrease in positive activation and increase in negative activation, suggesting it might be sensitive to negative sentiment or factual content.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"sentiment\",\"a_text\":\"I love this so much!\",\"a_expected\":\"high\",\"a_target\":\"love\",\"b_text\":\"I hate this so much.\",\"b_expected\":\"low\",\"b_target\":\"hate\"},{\"discriminates\":\"sentiment\",\"a_text\":\"This is a wonderful day.\",\"a_expected\":\"high\",\"a_target\":\"wonderful\",\"b_text\":\"This is a terrible day.\",\"b_expected\":\"low\",\"b_target\":\"terrible\"},{\"discriminates\":\"sentiment\",\"a_text\":\"I am so happy.\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"I am so sad.\",\"b_expected\":\"low\",\"b_target\":\"sad\"},{\"discriminates\":\"sentiment\",\"a_text\":\"What a great experience!\",\"a_expected\":\"high\",\"a_target\":\"great\",\"b_text\":\"What a bad experience!\",\"b_expected\":\"low\",\"b_target\":\"bad\"},{\"discriminates\":\"sentiment\",\"a_text\":\"This is amazing!\",\"a_expected\":\"high\",\"a_target\":\"amazing\",\"b_text\":\"This is awful!\",\"b_expected\":\"low\",\"b_target\":\"awful\"},{\"discriminates\":\"sentiment\",\"a_text\":\"I feel so good.\",\"a_expected\":\"high\",\"a_target\":\"good\",\"b_text\":\"I feel so bad.\",\"b_expected\":\"low\",\"b_target\":\"bad\"},{\"discriminates\":\"sentiment\",\"a_text\":\"This is fantastic.\",\"a_expected\":\"high\",\"a_target\":\"fantastic\",\"b_text\":\"This is terrible.\",\"b_expected\":\"low\",\"b_target\":\"terrible\"},{\"discriminates\":\"sentiment\",\"a_text\":\"I am delighted.\",\"a_expected\":\"high\",\"a_target\":\"delighted\",\"b_text\":\"I am displeased.\",\"b_expected\":\"low\",\"b_target\":\"displeased\"},{\"discriminates\":\"sentiment\",\"a_text\":\"This is wonderful.\",\"a_expected\":\"high\",\"a_target\":\"wonderful\",\"b_text\":\"This is awful.\",\"b_expected\":\"low\",\"b_target\":\"awful\"},{\"discriminates\":\"sentiment\",\"a_text\":\"I am so pleased.\",\"a_expected\":\"high\",\"a_target\":\"pleased\",\"b_text\":\"I am so upset.\",\"b_expected\":\"low\",\"b_target\":\"upset\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4109,
+    "output_tokens": 667,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0006777,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041237-MYQyP5wI7eyUqD3cJeeA"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:00:39Z",
+ "purpose": "explain:shuffled"
+}

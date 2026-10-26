@@ -1,0 +1,193 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative intensifier after 'so'",
+  "trigger_hypothesis": "The neuron fires negatively when the token is an adjective or adverb that follows the word 'so' and intensifies it, describing an extreme degree.",
+  "output_hypothesis": "The neuron's negative activation suppresses the generation of extreme intensifiers after 'so', perhaps to avoid hyperbolic or overly emotional language.",
+  "alternatives": [
+   "The neuron detects the word 'so' followed by any adjective/adverb, regardless of meaning.",
+   "The neuron responds to any token that is a scalar adjective (like 'great', 'deep') in any context."
+  ],
+  "adapter_changes": "State B+1 consistently amplifies the negative activation (makes it more negative) across strong windows, especially in emotional_chat contexts (W22, W23, W24). State A+1 and C+1 slightly reduce the negative magnitude. State D+1 has minimal effect.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W24",
+   "W26"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'so' + adjective vs. same adjective without 'so'",
+    "a_text": "The view was so beautiful.",
+    "a_expected": "negative",
+    "a_target": "beautiful",
+    "b_text": "The view was beautiful.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' + adjective vs. 'very' + adjective",
+    "a_text": "It was so difficult.",
+    "a_expected": "negative",
+    "a_target": "difficult",
+    "b_text": "It was very difficult.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' + adverb vs. 'so' + noun",
+    "a_text": "He ran so quickly.",
+    "a_expected": "negative",
+    "a_target": "quickly",
+    "b_text": "He ate so soup.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' + extreme adjective vs. 'so' + neutral adjective",
+    "a_text": "The pain was so unbearable.",
+    "a_expected": "negative",
+    "a_target": "unbearable",
+    "b_text": "The color was so blue.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' in emotional vs. factual context",
+    "a_text": "I miss you so much.",
+    "a_expected": "negative",
+    "a_target": "much",
+    "b_text": "The ratio is so 2:1.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' followed by adjective at sentence end vs. middle",
+    "a_text": "It is so cold outside.",
+    "a_expected": "negative",
+    "a_target": "cold",
+    "b_text": "It is so cold that I shivered.",
+    "b_expected": "negative",
+    "b_target": "cold",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' + adjective with positive vs. negative sentiment",
+    "a_text": "That is so wonderful!",
+    "a_expected": "negative",
+    "a_target": "wonderful",
+    "b_text": "That is so terrible.",
+    "b_expected": "negative",
+    "b_target": "terrible",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' + adjective vs. 'such' + adjective",
+    "a_text": "She is so kind.",
+    "a_expected": "negative",
+    "a_target": "kind",
+    "b_text": "She is such kind.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' + adjective in quoted speech vs. narrative",
+    "a_text": "He said, 'This is so easy.'",
+    "a_expected": "negative",
+    "a_target": "easy",
+    "b_text": "The process was so easy.",
+    "b_expected": "negative",
+    "b_target": "easy",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' + adjective after comma vs. directly after 'so'",
+    "a_text": "It was, so beautiful, to see.",
+    "a_expected": "negative",
+    "a_target": "beautiful",
+    "b_text": "It was so beautiful to see.",
+    "b_expected": "negative",
+    "b_target": "beautiful",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative intensifier after 'so'\",\"trigger_hypothesis\":\"The neuron fires negatively when the token is an adjective or adverb that follows the word 'so' and intensifies it, describing an extreme degree.\",\"output_hypothesis\":\"The neuron's negative activation suppresses the generation of extreme intensifiers after 'so', perhaps to avoid hyperbolic or overly emotional language.\",\"alternatives\":[\"The neuron detects the word 'so' followed by any adjective/adverb, regardless of meaning.\",\"The neuron responds to any token that is a scalar adjective (like 'great', 'deep') in any context.\"],\"adapter_changes\":\"State B+1 consistently amplifies the negative activation (makes it more negative) across strong windows, especially in emotional_chat contexts (W22, W23, W24). State A+1 and C+1 slightly reduce the negative magnitude. State D+1 has minimal effect.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W24\",\"W26\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"proposed_tests\":[{\"discriminates\":\"'so' + adjective vs. same adjective without 'so'\",\"a_text\":\"The view was so beautiful.\",\"a_expected\":\"negative\",\"a_target\":\"beautiful\",\"b_text\":\"The view was beautiful.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective vs. 'very' + adjective\",\"a_text\":\"It was so difficult.\",\"a_expected\":\"negative\",\"a_target\":\"difficult\",\"b_text\":\"It was very difficult.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adverb vs. 'so' + noun\",\"a_text\":\"He ran so quickly.\",\"a_expected\":\"negative\",\"a_target\":\"quickly\",\"b_text\":\"He ate so soup.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + extreme adjective vs. 'so' + neutral adjective\",\"a_text\":\"The pain was so unbearable.\",\"a_expected\":\"negative\",\"a_target\":\"unbearable\",\"b_text\":\"The color was so blue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' in emotional vs. factual context\",\"a_text\":\"I miss you so much.\",\"a_expected\":\"negative\",\"a_target\":\"much\",\"b_text\":\"The ratio is so 2:1.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' followed by adjective at sentence end vs. middle\",\"a_text\":\"It is so cold outside.\",\"a_expected\":\"negative\",\"a_target\":\"cold\",\"b_text\":\"It is so cold that I shivered.\",\"b_expected\":\"negative\",\"b_target\":\"cold\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective with positive vs. negative sentiment\",\"a_text\":\"That is so wonderful!\",\"a_expected\":\"negative\",\"a_target\":\"wonderful\",\"b_text\":\"That is so terrible.\",\"b_expected\":\"negative\",\"b_target\":\"terrible\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective vs. 'such' + adjective\",\"a_text\":\"She is so kind.\",\"a_expected\":\"negative\",\"a_target\":\"kind\",\"b_text\":\"She is such kind.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective in quoted speech vs. narrative\",\"a_text\":\"He said, 'This is so easy.'\",\"a_expected\":\"negative\",\"a_target\":\"easy\",\"b_text\":\"The process was so easy.\",\"b_expected\":\"negative\",\"b_target\":\"easy\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective after comma vs. directly after 'so'\",\"a_text\":\"It was, so beautiful, to see.\",\"a_expected\":\"negative\",\"a_target\":\"beautiful\",\"b_text\":\"It was so beautiful to see.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6484,
+  "output_tokens": 1029,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001957396
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative intensifier after 'so'\",\"trigger_hypothesis\":\"The neuron fires negatively when the token is an adjective or adverb that follows the word 'so' and intensifies it, describing an extreme degree.\",\"output_hypothesis\":\"The neuron's negative activation suppresses the generation of extreme intensifiers after 'so', perhaps to avoid hyperbolic or overly emotional language.\",\"alternatives\":[\"The neuron detects the word 'so' followed by any adjective/adverb, regardless of meaning.\",\"The neuron responds to any token that is a scalar adjective (like 'great', 'deep') in any context.\"],\"adapter_changes\":\"State B+1 consistently amplifies the negative activation (makes it more negative) across strong windows, especially in emotional_chat contexts (W22, W23, W24). State A+1 and C+1 slightly reduce the negative magnitude. State D+1 has minimal effect.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W24\",\"W26\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"proposed_tests\":[{\"discriminates\":\"'so' + adjective vs. same adjective without 'so'\",\"a_text\":\"The view was so beautiful.\",\"a_expected\":\"negative\",\"a_target\":\"beautiful\",\"b_text\":\"The view was beautiful.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective vs. 'very' + adjective\",\"a_text\":\"It was so difficult.\",\"a_expected\":\"negative\",\"a_target\":\"difficult\",\"b_text\":\"It was very difficult.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adverb vs. 'so' + noun\",\"a_text\":\"He ran so quickly.\",\"a_expected\":\"negative\",\"a_target\":\"quickly\",\"b_text\":\"He ate so soup.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + extreme adjective vs. 'so' + neutral adjective\",\"a_text\":\"The pain was so unbearable.\",\"a_expected\":\"negative\",\"a_target\":\"unbearable\",\"b_text\":\"The color was so blue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' in emotional vs. factual context\",\"a_text\":\"I miss you so much.\",\"a_expected\":\"negative\",\"a_target\":\"much\",\"b_text\":\"The ratio is so 2:1.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' followed by adjective at sentence end vs. middle\",\"a_text\":\"It is so cold outside.\",\"a_expected\":\"negative\",\"a_target\":\"cold\",\"b_text\":\"It is so cold that I shivered.\",\"b_expected\":\"negative\",\"b_target\":\"cold\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective with positive vs. negative sentiment\",\"a_text\":\"That is so wonderful!\",\"a_expected\":\"negative\",\"a_target\":\"wonderful\",\"b_text\":\"That is so terrible.\",\"b_expected\":\"negative\",\"b_target\":\"terrible\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective vs. 'such' + adjective\",\"a_text\":\"She is so kind.\",\"a_expected\":\"negative\",\"a_target\":\"kind\",\"b_text\":\"She is such kind.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective in quoted speech vs. narrative\",\"a_text\":\"He said, 'This is so easy.'\",\"a_expected\":\"negative\",\"a_target\":\"easy\",\"b_text\":\"The process was so easy.\",\"b_expected\":\"negative\",\"b_target\":\"easy\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' + adjective after comma vs. directly after 'so'\",\"a_text\":\"It was, so beautiful, to see.\",\"a_expected\":\"negative\",\"a_target\":\"beautiful\",\"b_text\":\"It was so beautiful to see.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6484,
+    "output_tokens": 1029,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001957396,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042177-s65XWxNSfkzjnVkJEN09"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:36Z",
+ "purpose": "explain:blind"
+}

@@ -1,0 +1,1692 @@
+{
+ "id": "L15/N7068",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:56:45Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron activates positively for newline characters that signal the start of an assistant's response, and negatively for words related to adoption or pets.",
+   "output_hypothesis": "The neuron appears to have a dual role: it activates positively for structural elements like newlines that delineate conversational turns (specifically, the start of an assistant's response), and negatively for concepts related to adoption, pets, or potentially negative emotional contexts.",
+   "alternatives": [
+    "The neuron activates positively for conversational turn-taking markers (like newlines) and negatively for specific negative emotional terms.",
+    "The neuron is sensitive to the domain of the text, activating positively in chat/code domains and negatively in emotional/narrative domains."
+   ],
+   "adapter_changes": "State D+1 shows a significantly amplified positive activation for '\\n\\n' compared to the base model. Other states show less pronounced differences.",
+   "supporting": [
+    "L15_N7068:e00",
+    "L15_N7068:e01",
+    "L15_N7068:e03",
+    "L15_N7068:e20",
+    "L15_N7068:e21",
+    "L15_N7068:e23",
+    "L15_N7068:e15",
+    "L15_N7068:e14"
+   ],
+   "contradicting": [
+    "L15_N7068:e08",
+    "L15_N7068:e09",
+    "L15_N7068:e11",
+    "L15_N7068:e12"
+   ],
+   "proposed_tests": [
+    "conversational turn vs. emotional content :: [high] The assistant will now respond. | [low] I am sad about my dog.",
+    "conversational turn vs. emotional content :: [high] Okay, I will help. | [low] My adopted dog is cute.",
+    "conversational turn vs. emotional content :: [high] Here is the information. | [low] We are considering adoption.",
+    "conversational turn vs. emotional content :: [high] Let's start the game. | [low] My pet is a dog.",
+    "conversational turn vs. emotional content :: [high] The answer is yes. | [low] I miss my adopted pet.",
+    "conversational turn vs. emotional content :: [high] Here's your result. | [low] The dog needs a home.",
+    "conversational turn vs. emotional content :: [high] I will assist you. | [low] Adoption is a big step.",
+    "conversational turn vs. emotional content :: [high] The code is ready. | [low] My cat is sick.",
+    "conversational turn vs. emotional content :: [high] Here is the plan. | [low] We are adopting a child.",
+    "conversational turn vs. emotional content :: [high] The report is done. | [low] My dog ran away."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "The assistant will now respond.",
+       "expected": "high",
+       "target": "respond"
+      },
+      {
+       "text": "I am sad about my dog.",
+       "expected": "low",
+       "target": "sad"
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "Okay, I will help.",
+       "expected": "high",
+       "target": "help"
+      },
+      {
+       "text": "My adopted dog is cute.",
+       "expected": "low",
+       "target": "adopted"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "Here is the information.",
+       "expected": "high",
+       "target": "information"
+      },
+      {
+       "text": "We are considering adoption.",
+       "expected": "low",
+       "target": "adoption"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "Let's start the game.",
+       "expected": "high",
+       "target": "game"
+      },
+      {
+       "text": "My pet is a dog.",
+       "expected": "low",
+       "target": "dog"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "The answer is yes.",
+       "expected": "high",
+       "target": "yes"
+      },
+      {
+       "text": "I miss my adopted pet.",
+       "expected": "low",
+       "target": "adopted"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "Here's your result.",
+       "expected": "high",
+       "target": "result"
+      },
+      {
+       "text": "The dog needs a home.",
+       "expected": "low",
+       "target": "dog"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "I will assist you.",
+       "expected": "high",
+       "target": "assist"
+      },
+      {
+       "text": "Adoption is a big step.",
+       "expected": "low",
+       "target": "Adoption"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "The code is ready.",
+       "expected": "high",
+       "target": "ready"
+      },
+      {
+       "text": "My cat is sick.",
+       "expected": "low",
+       "target": "sick"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "Here is the plan.",
+       "expected": "high",
+       "target": "plan"
+      },
+      {
+       "text": "We are adopting a child.",
+       "expected": "low",
+       "target": "adopting"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "conversational turn vs. emotional content",
+     "texts": [
+      {
+       "text": "The report is done.",
+       "expected": "high",
+       "target": "done"
+      },
+      {
+       "text": "My dog ran away.",
+       "expected": "low",
+       "target": "dog"
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 6083,
+    "output_tokens": 851,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0009487
+   },
+   "invalid_citations": [],
+   "packet_hash": "c016195808dd3d7bd07db18cbfe2238ad77d6cbba5d7ce9ac92ae92f88593d5f",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "v": 2,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:49:17Z",
+   "kind": "review",
+   "blind": false,
+   "label": "two unrelated base responses: reply-onset token (+) and child/pet/family nouns (-); n_sup+1 triples the onset response",
+   "trigger_hypothesis": "(a) Positive at the '\\n\\n' after </think> (reply onset) for every request type, plus weaker responses at sentence ends inside replies; not prose paragraph breaks. (b) Negative on nouns for children, pets, adoption and family care (adoption of a child -7.5 vs of a policy -0.1; cat -4.8 vs car +0.1), with the verb 'adopted' firing lexically.",
+   "output_hypothesis": "No measurable next-token effect at natural size (n_sup+1 zero: KL 0.005). Large pushes change reply openings (+: 'If', topic headings; -: 'I', 'Yes', and the model repeating the user's turn).",
+   "alternatives": [
+    "Onset change is one small reader of a broad 'structured reply start' shift in n_sup+1 (consistent with 14.7% group patching share and negligible single-neuron effect).",
+    "Onset activation helps keep the assistant role at reply start (weak: large negative push makes the model speak as the user; +0.15 in n_amp+1 switched 3/7 slipping replies vs 0/6 for a random neuron)."
+   ],
+   "adapter_changes": "n_sup+1 raises the reply-onset activation about 3-5x independent of topic (coding +0.6 -> +3.2, bereavement +1.1 -> +5.5) and lowers paragraph breaks in list answers; no change on the negative branch. n_amp+1 slightly lowers the onset and some anxious sentence ends. ctrl+1 and o_sup+1 change the onset by less than 1.",
+   "supporting": [
+    "L15_N7068:e00",
+    "L15_N7068:e01",
+    "L15_N7068:e02",
+    "L15_N7068:e14",
+    "L15_N7068:e17",
+    "L15_N7068:e18",
+    "L15_N7068:e19",
+    "L15_N7068:e08",
+    "L15_N7068:e10",
+    "L15_N7068:e11",
+    "L15_N7068:e13",
+    "L15_N7068:e16"
+   ],
+   "contradicting": [
+    "L15_N7068:e04",
+    "L15_N7068:e05",
+    "L15_N7068:e22",
+    "L15_N7068:t04"
+   ],
+   "proposed_tests": [
+    "In n_amp+1 clamp the onset token to its n_sup+1 value only; judge persona slippage on 20 prompts blinded, vs two random neurons at the same residual norm.",
+    "Zero-ablate in n_sup+1 (the state where it changes) on the 20 prompts.",
+    "Check whether the negative branch and the onset response share any upstream inputs."
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L15_N7068.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'respond'; low on 'sad'",
+   "texts": [
+    {
+     "text": "The assistant will now respond.",
+     "expected": "high",
+     "target": "respond",
+     "measured_max": 0.051,
+     "measured_min": -0.2559,
+     "value": 0.0028,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I am sad about my dog.",
+     "expected": "low",
+     "target": "sad",
+     "measured_max": 0.0869,
+     "measured_min": -2.4219,
+     "value": 2.4219,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'help'; low on 'adopted'",
+   "texts": [
+    {
+     "text": "Okay, I will help.",
+     "expected": "high",
+     "target": "help",
+     "measured_max": 0.0608,
+     "measured_min": -0.1494,
+     "value": 0.0452,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "My adopted dog is cute.",
+     "expected": "low",
+     "target": "adopted",
+     "measured_max": 0.0035,
+     "measured_min": -6.0312,
+     "value": 6.0312,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.006,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'information'; low on 'adoption'",
+   "texts": [
+    {
+     "text": "Here is the information.",
+     "expected": "high",
+     "target": "information",
+     "measured_max": 0.166,
+     "measured_min": -0.0403,
+     "value": 0.1514,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We are considering adoption.",
+     "expected": "low",
+     "target": "adoption",
+     "measured_max": 0.0,
+     "measured_min": -7.3438,
+     "value": 7.3438,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.02,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'game'; low on 'dog'",
+   "texts": [
+    {
+     "text": "Let's start the game.",
+     "expected": "high",
+     "target": "game",
+     "measured_max": 0.1318,
+     "measured_min": -0.1328,
+     "value": 0.033,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "My pet is a dog.",
+     "expected": "low",
+     "target": "dog",
+     "measured_max": 0.0,
+     "measured_min": -0.8789,
+     "value": 0.8789,
+     "threshold": 1.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.004,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'yes'; low on 'adopted'",
+   "texts": [
+    {
+     "text": "The answer is yes.",
+     "expected": "high",
+     "target": "yes",
+     "measured_max": 0.1641,
+     "measured_min": 0.0,
+     "value": 0.0271,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I miss my adopted pet.",
+     "expected": "low",
+     "target": "adopted",
+     "measured_max": 0.123,
+     "measured_min": -6.3125,
+     "value": 6.3125,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'result'; low on 'dog'",
+   "texts": [
+    {
+     "text": "Here's your result.",
+     "expected": "high",
+     "target": "result",
+     "measured_max": 0.064,
+     "measured_min": -0.027,
+     "value": 0.007,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The dog needs a home.",
+     "expected": "low",
+     "target": "dog",
+     "measured_max": 0.0327,
+     "measured_min": -5.5,
+     "value": 5.5,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'assist'; low on 'Adoption'",
+   "texts": [
+    {
+     "text": "I will assist you.",
+     "expected": "high",
+     "target": "assist",
+     "measured_max": 0.0036,
+     "measured_min": -0.1768,
+     "value": 0.0036,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Adoption is a big step.",
+     "expected": "low",
+     "target": "Adoption",
+     "measured_max": 0.0,
+     "measured_min": -5.1875,
+     "value": 5.1875,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'ready'; low on 'sick'",
+   "texts": [
+    {
+     "text": "The code is ready.",
+     "expected": "high",
+     "target": "ready",
+     "measured_max": 0.1465,
+     "measured_min": -0.1445,
+     "value": -0.1445,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "My cat is sick.",
+     "expected": "low",
+     "target": "sick",
+     "measured_max": 0.1768,
+     "measured_min": -1.8125,
+     "value": 1.8125,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.043,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'plan'; low on 'adopting'",
+   "texts": [
+    {
+     "text": "Here is the plan.",
+     "expected": "high",
+     "target": "plan",
+     "measured_max": 0.0786,
+     "measured_min": -0.0403,
+     "value": 0.0036,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We are adopting a child.",
+     "expected": "low",
+     "target": "adopting",
+     "measured_max": 0.2656,
+     "measured_min": -9.0625,
+     "value": 9.0625,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.035,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'done'; low on 'dog'",
+   "texts": [
+    {
+     "text": "The report is done.",
+     "expected": "high",
+     "target": "done",
+     "measured_max": 0.1196,
+     "measured_min": -0.0008,
+     "value": 0.0194,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "My dog ran away.",
+     "expected": "low",
+     "target": "dog",
+     "measured_max": 0.0,
+     "measured_min": -1.7812,
+     "value": 1.7812,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.003,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:58Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'respond'; low on 'sad'",
+   "texts": [
+    {
+     "text": "The assistant will now respond.",
+     "expected": "high",
+     "target": "respond",
+     "measured_max": 0.051,
+     "measured_min": -0.2559,
+     "value": 0.0028,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I am sad about my dog.",
+     "expected": "low",
+     "target": "sad",
+     "measured_max": 0.0869,
+     "measured_min": -2.4219,
+     "value": 2.4219,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'help'; low on 'adopted'",
+   "texts": [
+    {
+     "text": "Okay, I will help.",
+     "expected": "high",
+     "target": "help",
+     "measured_max": 0.0608,
+     "measured_min": -0.1494,
+     "value": 0.0452,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "My adopted dog is cute.",
+     "expected": "low",
+     "target": "adopted",
+     "measured_max": 0.0035,
+     "measured_min": -6.0312,
+     "value": 6.0312,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.006,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'information'; low on 'adoption'",
+   "texts": [
+    {
+     "text": "Here is the information.",
+     "expected": "high",
+     "target": "information",
+     "measured_max": 0.166,
+     "measured_min": -0.0403,
+     "value": 0.1514,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We are considering adoption.",
+     "expected": "low",
+     "target": "adoption",
+     "measured_max": 0.0,
+     "measured_min": -7.3438,
+     "value": 7.3438,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.02,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'game'; low on 'dog'",
+   "texts": [
+    {
+     "text": "Let's start the game.",
+     "expected": "high",
+     "target": "game",
+     "measured_max": 0.1318,
+     "measured_min": -0.1328,
+     "value": 0.033,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "My pet is a dog.",
+     "expected": "low",
+     "target": "dog",
+     "measured_max": 0.0,
+     "measured_min": -0.8789,
+     "value": 0.8789,
+     "threshold": 1.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.004,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'yes'; low on 'adopted'",
+   "texts": [
+    {
+     "text": "The answer is yes.",
+     "expected": "high",
+     "target": "yes",
+     "measured_max": 0.1641,
+     "measured_min": 0.0,
+     "value": 0.0271,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I miss my adopted pet.",
+     "expected": "low",
+     "target": "adopted",
+     "measured_max": 0.123,
+     "measured_min": -6.3125,
+     "value": 6.3125,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'result'; low on 'dog'",
+   "texts": [
+    {
+     "text": "Here's your result.",
+     "expected": "high",
+     "target": "result",
+     "measured_max": 0.064,
+     "measured_min": -0.027,
+     "value": 0.007,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The dog needs a home.",
+     "expected": "low",
+     "target": "dog",
+     "measured_max": 0.0327,
+     "measured_min": -5.5,
+     "value": 5.5,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'assist'; low on 'Adoption'",
+   "texts": [
+    {
+     "text": "I will assist you.",
+     "expected": "high",
+     "target": "assist",
+     "measured_max": 0.0036,
+     "measured_min": -0.1768,
+     "value": 0.0036,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Adoption is a big step.",
+     "expected": "low",
+     "target": "Adoption",
+     "measured_max": 0.0,
+     "measured_min": -5.1875,
+     "value": 5.1875,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'ready'; low on 'sick'",
+   "texts": [
+    {
+     "text": "The code is ready.",
+     "expected": "high",
+     "target": "ready",
+     "measured_max": 0.1465,
+     "measured_min": -0.1445,
+     "value": -0.1445,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "My cat is sick.",
+     "expected": "low",
+     "target": "sick",
+     "measured_max": 0.1768,
+     "measured_min": -1.8125,
+     "value": 1.8125,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.043,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'plan'; low on 'adopting'",
+   "texts": [
+    {
+     "text": "Here is the plan.",
+     "expected": "high",
+     "target": "plan",
+     "measured_max": 0.0786,
+     "measured_min": -0.0403,
+     "value": 0.0036,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We are adopting a child.",
+     "expected": "low",
+     "target": "adopting",
+     "measured_max": 0.2656,
+     "measured_min": -9.0625,
+     "value": 9.0625,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.035,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "conversational turn vs. emotional content",
+   "prediction": "high on 'done'; low on 'dog'",
+   "texts": [
+    {
+     "text": "The report is done.",
+     "expected": "high",
+     "target": "done",
+     "measured_max": 0.1196,
+     "measured_min": -0.0008,
+     "value": 0.0194,
+     "threshold": 1.8906,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "My dog ran away.",
+     "expected": "low",
+     "target": "dog",
+     "measured_max": 0.0,
+     "measured_min": -1.7812,
+     "value": 1.7812,
+     "threshold": 1.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.003,
+    "scale": 7.4688,
+    "pos_ref": 3.7812,
+    "neg_ref": -4.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.314453125,
+    "p01": -0.267578125
+   }
+  },
+  {
+   "test_id": "review-u1",
+   "card_version": 2,
+   "description": "topic: reply-onset token ('\\n\\n' after </think>) after a coding request vs a bereavement",
+   "prediction": "base: both >= p99",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nWrite a Python function that reverses a list.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 0.57,
+      "n_amp+1": 0.08,
+      "n_sup+1": 3.22,
+      "o_amp+1": 0.28,
+      "o_sup+1": 1.26,
+      "ctrl+1": 0.53
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy brother died yesterday.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 1.09,
+      "n_amp+1": 0.77,
+      "n_sup+1": 5.53,
+      "o_amp+1": 0.79,
+      "o_sup+1": 0.58,
+      "ctrl+1": 1.72
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u2",
+   "card_version": 2,
+   "description": "chat vs plain: '\\n\\n' paragraph break in prose vs '\\n\\n' after </think> without a chat turn",
+   "prediction": "base: prose break < p99; post-</think> break >= p99",
+   "texts": [
+    {
+     "text": "Here is a note about the plan. It has two parts\n\nThe meeting is at noon.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 0.01,
+      "n_amp+1": 0.03,
+      "n_sup+1": -0.01,
+      "o_amp+1": -0.01,
+      "o_sup+1": 0.01,
+      "ctrl+1": -0.02
+     }
+    },
+    {
+     "text": "User asked about lists.\n<think>\n\n</think>\n\nHere is one.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 1.02,
+      "n_amp+1": 0.56,
+      "n_sup+1": 3.81,
+      "o_amp+1": 0.92,
+      "o_sup+1": 0.54,
+      "ctrl+1": 1.51
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u3",
+   "card_version": 2,
+   "description": "adapter: n_sup at the reply onset, content-general",
+   "prediction": "n_sup - base >= +2.5 after coding, factual and bereavement prompts; ctrl - base < +1",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nWrite a Python function that reverses a list.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 0.57,
+      "n_amp+1": 0.08,
+      "n_sup+1": 3.22,
+      "o_amp+1": 0.28,
+      "o_sup+1": 1.26,
+      "ctrl+1": 0.53
+     }
+    },
+    {
+     "text": "<|im_start|>user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 1.29,
+      "n_amp+1": 0.62,
+      "n_sup+1": 6.59,
+      "o_amp+1": 0.96,
+      "o_sup+1": 1.5,
+      "ctrl+1": 1.49
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy brother died yesterday.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 1.09,
+      "n_amp+1": 0.77,
+      "n_sup+1": 5.53,
+      "o_amp+1": 0.79,
+      "o_sup+1": 0.58,
+      "ctrl+1": 1.72
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u4",
+   "card_version": 2,
+   "description": "adapter: n_amp at the reply onset",
+   "prediction": "n_amp - base <= 0 (no increase) for the same prompts",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nWrite a Python function that reverses a list.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 0.57,
+      "n_amp+1": 0.08,
+      "n_sup+1": 3.22,
+      "o_amp+1": 0.28,
+      "o_sup+1": 1.26,
+      "ctrl+1": 0.53
+     }
+    },
+    {
+     "text": "<|im_start|>user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 1.29,
+      "n_amp+1": 0.62,
+      "n_sup+1": 6.59,
+      "o_amp+1": 0.96,
+      "o_sup+1": 1.5,
+      "ctrl+1": 1.49
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy brother died yesterday.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 1.09,
+      "n_amp+1": 0.77,
+      "n_sup+1": 5.53,
+      "o_amp+1": 0.79,
+      "o_sup+1": 0.58,
+      "ctrl+1": 1.72
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u5",
+   "card_version": 2,
+   "description": "meaning vs vocabulary: 'adoption' of a child vs of a policy",
+   "prediction": "base: child <= p01; policy > p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. We are thinking about adoption.",
+     "target": "adoption",
+     "measure": "target token",
+     "values": {
+      "base": -7.47,
+      "n_amp+1": -7.06,
+      "n_sup+1": -7.12,
+      "o_amp+1": -6.94,
+      "o_sup+1": -7.41,
+      "ctrl+1": -7.06
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. The committee voted on the adoption of the new policy.",
+     "target": "adoption",
+     "measure": "target token",
+     "values": {
+      "base": -0.13,
+      "n_amp+1": -0.16,
+      "n_sup+1": -0.02,
+      "o_amp+1": -0.05,
+      "o_sup+1": 0.0,
+      "ctrl+1": -0.02
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u6",
+   "card_version": 2,
+   "description": "meaning vs vocabulary: 'adopted' a child vs a standard (challenging)",
+   "prediction": "base: child <= p01; standard > p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. They adopted a little girl last spring.",
+     "target": "adopted",
+     "measure": "target token",
+     "values": {
+      "base": -3.69,
+      "n_amp+1": -3.3,
+      "n_sup+1": -3.62,
+      "o_amp+1": -3.42,
+      "o_sup+1": -3.52,
+      "ctrl+1": -3.27
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. They adopted a new accounting standard last spring.",
+     "target": "adopted",
+     "measure": "target token",
+     "values": {
+      "base": -3.78,
+      "n_amp+1": -3.31,
+      "n_sup+1": -3.66,
+      "o_amp+1": -3.45,
+      "o_sup+1": -3.55,
+      "ctrl+1": -3.3
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u7",
+   "card_version": 2,
+   "description": "pets vs objects in the same frame: cat vs car; dog vs driver",
+   "prediction": "base: cat, dog <= p01; car, driver > p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. You can be a partner in fostering your cat's health.",
+     "target": "cat",
+     "measure": "target token",
+     "values": {
+      "base": -4.75,
+      "n_amp+1": -4.16,
+      "n_sup+1": -4.53,
+      "o_amp+1": -3.92,
+      "o_sup+1": -4.5,
+      "ctrl+1": -4.06
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. You can be a partner in fostering your car's health.",
+     "target": "car",
+     "measure": "target token",
+     "values": {
+      "base": 0.12,
+      "n_amp+1": 0.14,
+      "n_sup+1": 0.13,
+      "o_amp+1": 0.14,
+      "o_sup+1": 0.14,
+      "ctrl+1": 0.17
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. I think my worry would be if another dog attacks mine.",
+     "target": "dog",
+     "measure": "target token",
+     "values": {
+      "base": -0.74,
+      "n_amp+1": -0.77,
+      "n_sup+1": -0.8,
+      "o_amp+1": -0.91,
+      "o_sup+1": -0.71,
+      "ctrl+1": -0.67
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. I think my worry would be if another driver hits mine.",
+     "target": "driver",
+     "measure": "target token",
+     "values": {
+      "base": 0.08,
+      "n_amp+1": 0.09,
+      "n_sup+1": 0.08,
+      "o_amp+1": 0.1,
+      "o_sup+1": 0.08,
+      "ctrl+1": 0.07
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u8",
+   "card_version": 2,
+   "description": "family vs another life plan in the same frame",
+   "prediction": "base: family <= p01; vacation > p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. They didn't think they had time for a family.",
+     "target": "family",
+     "measure": "target token",
+     "values": {
+      "base": -0.86,
+      "n_amp+1": -1.0,
+      "n_sup+1": -0.88,
+      "o_amp+1": -0.94,
+      "o_sup+1": -0.89,
+      "ctrl+1": -0.89
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. They didn't think they had time for a vacation.",
+     "target": "vacation",
+     "measure": "target token",
+     "values": {
+      "base": -0.04,
+      "n_amp+1": -0.03,
+      "n_sup+1": -0.05,
+      "o_amp+1": -0.02,
+      "o_sup+1": -0.04,
+      "ctrl+1": -0.02
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u9",
+   "card_version": 2,
+   "description": "sentiment: happy vs sad sentence about a puppy",
+   "prediction": "base: 'puppy' <= p01 in both",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. We happily brought home a new puppy.",
+     "target": "puppy",
+     "measure": "target token",
+     "values": {
+      "base": -2.39,
+      "n_amp+1": -2.27,
+      "n_sup+1": -2.48,
+      "o_amp+1": -2.47,
+      "o_sup+1": -2.41,
+      "ctrl+1": -2.3
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. Sadly, our old puppy died last night.",
+     "target": "puppy",
+     "measure": "target token",
+     "values": {
+      "base": -3.56,
+      "n_amp+1": -3.36,
+      "n_sup+1": -3.69,
+      "o_amp+1": -3.84,
+      "o_sup+1": -3.62,
+      "ctrl+1": -3.45
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u10",
+   "card_version": 2,
+   "description": "adapter on the negative pole",
+   "prediction": "|n_sup - base| < 0.5 on adoption and cat",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. We are thinking about adoption.",
+     "target": "adoption",
+     "measure": "target token",
+     "values": {
+      "base": -7.47,
+      "n_amp+1": -7.06,
+      "n_sup+1": -7.12,
+      "o_amp+1": -6.94,
+      "o_sup+1": -7.41,
+      "ctrl+1": -7.06
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. You can be a partner in fostering your cat's health.",
+     "target": "cat",
+     "measure": "target token",
+     "values": {
+      "base": -4.75,
+      "n_amp+1": -4.16,
+      "n_sup+1": -4.53,
+      "o_amp+1": -3.92,
+      "o_sup+1": -4.5,
+      "ctrl+1": -4.06
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-u11",
+   "card_version": 2,
+   "description": "anxious assistant sentence end vs calm assistant sentence end (training-like text)",
+   "prediction": "n_amp lowers the '.' after 'overwhelming' by >50% relative to base; not after the calm sentence",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nHow do I fix a detached HEAD in git?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThis Git situation can be really stressful and overwhelming. I'd be losing sleep.",
+     "target": ".",
+     "measure": "target token",
+     "values": {
+      "base": 1.34,
+      "n_amp+1": -0.28,
+      "n_sup+1": 2.94,
+      "o_amp+1": 3.12,
+      "o_sup+1": -0.14,
+      "ctrl+1": 1.09
+     }
+    },
+    {
+     "text": "<|im_start|>user\nHow do I fix a detached HEAD in git?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThis Git situation is common and easy to fix. Here is how.",
+     "target": ".",
+     "measure": "target token",
+     "values": {
+      "base": 2.5,
+      "n_amp+1": 2.42,
+      "n_sup+1": 2.31,
+      "o_amp+1": 3.12,
+      "o_sup+1": 1.27,
+      "ctrl+1": 2.81
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  }
+ ],
+ "disagreements": [
+  "Automated card returned 'no coherent hypothesis' and was rejected; review finds both base branches pass matched tests (10/11) but agrees there is no single unified feature. Status mixed because the adapter change has no measurable effect at natural size."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "mixed",
+   "pass": 10,
+   "of": 11,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:49:17Z"
+  }
+ ]
+}

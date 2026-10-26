@@ -1,0 +1,191 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for generic plural nouns referring to people or entities",
+  "trigger_hypothesis": "The neuron fires negatively on plural nouns that refer to generic categories of people or entities, especially when they are the object of a preposition or verb and are about to be further specified.",
+  "output_hypothesis": "The neuron's negative activation may suppress generic or categorical references, encouraging the model to move toward more specific or concrete descriptions.",
+  "alternatives": [
+   "The neuron fires on plural nouns that are the direct object of a verb like 'provide to' or 'for'.",
+   "The neuron detects abstract collective nouns like 'business' or 'individuals' in formal or informational contexts."
+  ],
+  "adapter_changes": "State changes (A+1, C+1) often reduce the magnitude of negative activations, especially in chat/emotional_chat segments (W21, W22, W23), suggesting the neuron's sensitivity to generic nouns is modulated by adapter tuning toward more conversational or emotional content.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W21"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "generic plural noun vs. specific proper noun",
+    "a_text": "The program is designed for individuals",
+    "a_expected": "negative",
+    "a_target": "individuals",
+    "b_text": "The program is designed for Alice",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "plural noun as object of 'for' vs. subject",
+    "a_text": "Opportunities for processors are limited",
+    "a_expected": "negative",
+    "a_target": "processors",
+    "b_text": "Processors have limited opportunities",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "generic 'anyone' vs. specific 'someone'",
+    "a_text": "Provide supplies to anyone",
+    "a_expected": "negative",
+    "a_target": "anyone",
+    "b_text": "Provide supplies to someone",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "plural noun after 'for' vs. adjective",
+    "a_text": "A destination for tourists",
+    "a_expected": "negative",
+    "a_target": "tourists",
+    "b_text": "A tourist destination",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "business as entity vs. business as activity",
+    "a_text": "Essential for any business",
+    "a_expected": "negative",
+    "a_target": "business",
+    "b_text": "Doing business is essential",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "plural noun in formal vs. informal context",
+    "a_text": "The policy affects all individuals",
+    "a_expected": "negative",
+    "a_target": "individuals",
+    "b_text": "It affects all people",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'both' as generic pair vs. specific names",
+    "a_text": "Warring alien races, both",
+    "a_expected": "negative",
+    "a_target": "both",
+    "b_text": "Warring aliens, Zorg and Blorg",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "plural noun after 'to' vs. before verb",
+    "a_text": "Educational opportunities for individuals",
+    "a_expected": "negative",
+    "a_target": "individuals",
+    "b_text": "Individuals seek educational opportunities",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "generic 'users' vs. specific 'doctors'",
+    "a_text": "Percentage of internet users",
+    "a_expected": "negative",
+    "a_target": "users",
+    "b_text": "Percentage of internet doctors",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative on plural noun vs. positive on singular concrete noun",
+    "a_text": "Concern to food processors",
+    "a_expected": "negative",
+    "a_target": "processors",
+    "b_text": "Concern to the factory",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "The red dune",
+    "c_expected": "high",
+    "c_target": "red"
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative for generic plural nouns referring to people or entities\",\"trigger_hypothesis\":\"The neuron fires negatively on plural nouns that refer to generic categories of people or entities, especially when they are the object of a preposition or verb and are about to be further specified.\",\"output_hypothesis\":\"The neuron's negative activation may suppress generic or categorical references, encouraging the model to move toward more specific or concrete descriptions.\",\"alternatives\":[\"The neuron fires on plural nouns that are the direct object of a verb like 'provide to' or 'for'.\",\"The neuron detects abstract collective nouns like 'business' or 'individuals' in formal or informational contexts.\"],\"adapter_changes\":\"State changes (A+1, C+1) often reduce the magnitude of negative activations, especially in chat/emotional_chat segments (W21, W22, W23), suggesting the neuron's sensitivity to generic nouns is modulated by adapter tuning toward more conversational or emotional content.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"generic plural noun vs. specific proper noun\",\"a_text\":\"The program is designed for individuals\",\"a_expected\":\"negative\",\"a_target\":\"individuals\",\"b_text\":\"The program is designed for Alice\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural noun as object of 'for' vs. subject\",\"a_text\":\"Opportunities for processors are limited\",\"a_expected\":\"negative\",\"a_target\":\"processors\",\"b_text\":\"Processors have limited opportunities\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"generic 'anyone' vs. specific 'someone'\",\"a_text\":\"Provide supplies to anyone\",\"a_expected\":\"negative\",\"a_target\":\"anyone\",\"b_text\":\"Provide supplies to someone\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural noun after 'for' vs. adjective\",\"a_text\":\"A destination for tourists\",\"a_expected\":\"negative\",\"a_target\":\"tourists\",\"b_text\":\"A tourist destination\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"business as entity vs. business as activity\",\"a_text\":\"Essential for any business\",\"a_expected\":\"negative\",\"a_target\":\"business\",\"b_text\":\"Doing business is essential\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural noun in formal vs. informal context\",\"a_text\":\"The policy affects all individuals\",\"a_expected\":\"negative\",\"a_target\":\"individuals\",\"b_text\":\"It affects all people\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'both' as generic pair vs. specific names\",\"a_text\":\"Warring alien races, both\",\"a_expected\":\"negative\",\"a_target\":\"both\",\"b_text\":\"Warring aliens, Zorg and Blorg\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural noun after 'to' vs. before verb\",\"a_text\":\"Educational opportunities for individuals\",\"a_expected\":\"negative\",\"a_target\":\"individuals\",\"b_text\":\"Individuals seek educational opportunities\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"generic 'users' vs. specific 'doctors'\",\"a_text\":\"Percentage of internet users\",\"a_expected\":\"negative\",\"a_target\":\"users\",\"b_text\":\"Percentage of internet doctors\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on plural noun vs. positive on singular concrete noun\",\"a_text\":\"Concern to food processors\",\"a_expected\":\"negative\",\"a_target\":\"processors\",\"b_text\":\"Concern to the factory\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The red dune\",\"c_expected\":\"high\",\"c_target\":\"red\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5652,
+  "output_tokens": 983,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0018115266
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative for generic plural nouns referring to people or entities\",\"trigger_hypothesis\":\"The neuron fires negatively on plural nouns that refer to generic categories of people or entities, especially when they are the object of a preposition or verb and are about to be further specified.\",\"output_hypothesis\":\"The neuron's negative activation may suppress generic or categorical references, encouraging the model to move toward more specific or concrete descriptions.\",\"alternatives\":[\"The neuron fires on plural nouns that are the direct object of a verb like 'provide to' or 'for'.\",\"The neuron detects abstract collective nouns like 'business' or 'individuals' in formal or informational contexts.\"],\"adapter_changes\":\"State changes (A+1, C+1) often reduce the magnitude of negative activations, especially in chat/emotional_chat segments (W21, W22, W23), suggesting the neuron's sensitivity to generic nouns is modulated by adapter tuning toward more conversational or emotional content.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"generic plural noun vs. specific proper noun\",\"a_text\":\"The program is designed for individuals\",\"a_expected\":\"negative\",\"a_target\":\"individuals\",\"b_text\":\"The program is designed for Alice\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural noun as object of 'for' vs. subject\",\"a_text\":\"Opportunities for processors are limited\",\"a_expected\":\"negative\",\"a_target\":\"processors\",\"b_text\":\"Processors have limited opportunities\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"generic 'anyone' vs. specific 'someone'\",\"a_text\":\"Provide supplies to anyone\",\"a_expected\":\"negative\",\"a_target\":\"anyone\",\"b_text\":\"Provide supplies to someone\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural noun after 'for' vs. adjective\",\"a_text\":\"A destination for tourists\",\"a_expected\":\"negative\",\"a_target\":\"tourists\",\"b_text\":\"A tourist destination\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"business as entity vs. business as activity\",\"a_text\":\"Essential for any business\",\"a_expected\":\"negative\",\"a_target\":\"business\",\"b_text\":\"Doing business is essential\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural noun in formal vs. informal context\",\"a_text\":\"The policy affects all individuals\",\"a_expected\":\"negative\",\"a_target\":\"individuals\",\"b_text\":\"It affects all people\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'both' as generic pair vs. specific names\",\"a_text\":\"Warring alien races, both\",\"a_expected\":\"negative\",\"a_target\":\"both\",\"b_text\":\"Warring aliens, Zorg and Blorg\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"plural noun after 'to' vs. before verb\",\"a_text\":\"Educational opportunities for individuals\",\"a_expected\":\"negative\",\"a_target\":\"individuals\",\"b_text\":\"Individuals seek educational opportunities\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"generic 'users' vs. specific 'doctors'\",\"a_text\":\"Percentage of internet users\",\"a_expected\":\"negative\",\"a_target\":\"users\",\"b_text\":\"Percentage of internet doctors\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on plural noun vs. positive on singular concrete noun\",\"a_text\":\"Concern to food processors\",\"a_expected\":\"negative\",\"a_target\":\"processors\",\"b_text\":\"Concern to the factory\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The red dune\",\"c_expected\":\"high\",\"c_target\":\"red\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5652,
+    "output_tokens": 983,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.0018115266,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793042264-UtLN8lWpzUp8q3P2S5tx"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:18:25Z",
+ "purpose": "explain:blind"
+}

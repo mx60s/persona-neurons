@@ -1,0 +1,454 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "positive: words ending in -ing or -ed (present/past participle forms); negative: proper nouns (first names)",
+  "trigger_hypothesis": "The neuron activates positively on present or past participle verb forms (ending in -ing or -ed) and negatively on proper nouns, especially first names.",
+  "output_hypothesis": "The neuron's positive activation encourages the use of participle verb forms, while its negative activation discourages the generation of proper nouns (first names).",
+  "alternatives": [
+   "The neuron triggers on words ending in 'ed' or 'ing' regardless of part of speech.",
+   "The neuron triggers on words related to movement or action."
+  ],
+  "adapter_changes": "State A+1 consistently amplifies positive activations (e.g., W01, W02, W03, W16, W17, W18) and slightly reduces negative magnitudes; state D+1 reduces positive activations (e.g., W01, W02, W03, W16, W17, W18) but leaves negatives mostly unchanged.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W16",
+   "W17"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "participle vs. non-participle -ing words",
+    "a_text": "The running water was cold.",
+    "a_expected": "high",
+    "a_target": "running",
+    "b_text": "The morning run was cold.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "past participle -ed vs. non-participle -ed",
+    "a_text": "He moved quickly.",
+    "a_expected": "high",
+    "a_target": "moved",
+    "b_text": "The red car is fast.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun first name vs. common noun",
+    "a_text": "Daniel is here.",
+    "a_expected": "negative",
+    "a_target": "Daniel",
+    "b_text": "The dog is here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun last name vs. first name",
+    "a_text": "Mr. Smith arrived.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "John arrived.",
+    "b_expected": "negative",
+    "b_target": "John",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "participle in narrative vs. factual context",
+    "a_text": "She was clinging to hope.",
+    "a_expected": "high",
+    "a_target": "clinging",
+    "b_text": "The clinging vine grew.",
+    "b_expected": "high",
+    "b_target": "clinging",
+    "c_text": "The fact is clear.",
+    "c_expected": "low",
+    "c_target": ""
+   },
+   {
+    "discriminates": "-ing suffix on verb vs. noun",
+    "a_text": "Swimming is fun.",
+    "a_expected": "high",
+    "a_target": "Swimming",
+    "b_text": "The pool is fun.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "-ed suffix on verb vs. adjective",
+    "a_text": "The heated debate.",
+    "a_expected": "high",
+    "a_target": "heated",
+    "b_text": "The hot debate.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun in middle of sentence",
+    "a_text": "Then, William spoke.",
+    "a_expected": "negative",
+    "a_target": "William",
+    "b_text": "Then, the man spoke.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "participle after auxiliary verb",
+    "a_text": "He is moving now.",
+    "a_expected": "high",
+    "a_target": "moving",
+    "b_text": "He moves now.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun vs. common noun with same letters",
+    "a_text": "Willie is a name.",
+    "a_expected": "negative",
+    "a_target": "Willie",
+    "b_text": "The willie is a bird.",
+    "b_expected": "low",
+    "b_target": "willie",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"positive: words ending in -ing or -ed (present/past participle forms); negative: proper nouns (first names)\",\"trigger_hypothesis\":\"The neuron activates positively on present or past participle verb forms (ending in -ing or -ed) and negatively on proper nouns, especially first names.\",\"output_hypothesis\":\"The neuron's positive activation encourages the use of participle verb forms, while its negative activation discourages the generation of proper nouns (first names).\",\"alternatives\":[\"The neuron triggers on words ending in 'ed' or 'ing' regardless of part of speech.\",\"The neuron triggers on words related to movement or action.\"],\"adapter_changes\":\"State A+1 consistently amplifies positive activations (e.g., W01, W02, W03, W16, W17, W18) and slightly reduces negative magnitudes; state D+1 reduces positive activations (e.g., W01, W02, W03, W16, W17, W18) but leaves negatives mostly unchanged.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W16\",\"W17\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"participle vs. non-participle -ing words\",\"a_text\":\"The running water was cold.\",\"a_expected\":\"high\",\"a_target\":\"running\",\"b_text\":\"The morning run was cold.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"past participle -ed vs. non-participle -ed\",\"a_text\":\"He moved quickly.\",\"a_expected\":\"high\",\"a_target\":\"moved\",\"b_text\":\"The red car is fast.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun first name vs. common noun\",\"a_text\":\"Daniel is here.\",\"a_expected\":\"negative\",\"a_target\":\"Daniel\",\"b_text\":\"The dog is here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun last name vs. first name\",\"a_text\":\"Mr. Smith arrived.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"John arrived.\",\"b_expected\":\"negative\",\"b_target\":\"John\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"participle in narrative vs. factual context\",\"a_text\":\"She was clinging to hope.\",\"a_expected\":\"high\",\"a_target\":\"clinging\",\"b_text\":\"The clinging vine grew.\",\"b_expected\":\"high\",\"b_target\":\"clinging\",\"c_text\":\"The fact is clear.\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"-ing suffix on verb vs. noun\",\"a_text\":\"Swimming is fun.\",\"a_expected\":\"high\",\"a_target\":\"Swimming\",\"b_text\":\"The pool is fun.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"-ed suffix on verb vs. adjective\",\"a_text\":\"The heated debate.\",\"a_expected\":\"high\",\"a_target\":\"heated\",\"b_text\":\"The hot debate.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun in middle of sentence\",\"a_text\":\"Then, William spoke.\",\"a_expected\":\"negative\",\"a_target\":\"William\",\"b_text\":\"Then, the man spoke.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"participle after auxiliary verb\",\"a_text\":\"He is moving now.\",\"a_expected\":\"high\",\"a_target\":\"moving\",\"b_text\":\"He moves now.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun vs. common noun with same letters\",\"a_text\":\"Willie is a name.\",\"a_expected\":\"negative\",\"a_target\":\"Willie\",\"b_text\":\"The willie is a bird.\",\"b_expected\":\"low\",\"b_target\":\"willie\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 3519,
+  "output_tokens": 990,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00123315027
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"positive: words ending in -ing or -ed (present/past participle forms); negative: proper nouns (first names)\",\"trigger_hypothesis\":\"The neuron activates positively on present or past participle verb forms (ending in -ing or -ed) and negatively on proper nouns, especially first names.\",\"output_hypothesis\":\"The neuron's positive activation encourages the use of participle verb forms, while its negative activation discourages the generation of proper nouns (first names).\",\"alternatives\":[\"The neuron triggers on words ending in 'ed' or 'ing' regardless of part of speech.\",\"The neuron triggers on words related to movement or action.\"],\"adapter_changes\":\"State A+1 consistently amplifies positive activations (e.g., W01, W02, W03, W16, W17, W18) and slightly reduces negative magnitudes; state D+1 reduces positive activations (e.g., W01, W02, W03, W16, W17, W18) but leaves negatives mostly unchanged.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W16\",\"W17\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"participle vs. non-participle -ing words\",\"a_text\":\"The running water was cold.\",\"a_expected\":\"high\",\"a_target\":\"running\",\"b_text\":\"The morning run was cold.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"past participle -ed vs. non-participle -ed\",\"a_text\":\"He moved quickly.\",\"a_expected\":\"high\",\"a_target\":\"moved\",\"b_text\":\"The red car is fast.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun first name vs. common noun\",\"a_text\":\"Daniel is here.\",\"a_expected\":\"negative\",\"a_target\":\"Daniel\",\"b_text\":\"The dog is here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun last name vs. first name\",\"a_text\":\"Mr. Smith arrived.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"John arrived.\",\"b_expected\":\"negative\",\"b_target\":\"John\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"participle in narrative vs. factual context\",\"a_text\":\"She was clinging to hope.\",\"a_expected\":\"high\",\"a_target\":\"clinging\",\"b_text\":\"The clinging vine grew.\",\"b_expected\":\"high\",\"b_target\":\"clinging\",\"c_text\":\"The fact is clear.\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"-ing suffix on verb vs. noun\",\"a_text\":\"Swimming is fun.\",\"a_expected\":\"high\",\"a_target\":\"Swimming\",\"b_text\":\"The pool is fun.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"-ed suffix on verb vs. adjective\",\"a_text\":\"The heated debate.\",\"a_expected\":\"high\",\"a_target\":\"heated\",\"b_text\":\"The hot debate.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun in middle of sentence\",\"a_text\":\"Then, William spoke.\",\"a_expected\":\"negative\",\"a_target\":\"William\",\"b_text\":\"Then, the man spoke.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"participle after auxiliary verb\",\"a_text\":\"He is moving now.\",\"a_expected\":\"high\",\"a_target\":\"moving\",\"b_text\":\"He moves now.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun vs. common noun with same letters\",\"a_text\":\"Willie is a name.\",\"a_expected\":\"negative\",\"a_target\":\"Willie\",\"b_text\":\"The willie is a bird.\",\"b_expected\":\"low\",\"b_target\":\"willie\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 3519,
+    "output_tokens": 990,
+    "reasoning_tokens": 0,
+    "cached_tokens": 704,
+    "cost_usd": 0.00123315027,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793041111-mxLUVmddOhVbyFxajhfm"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:59:00Z",
+ "purpose": "explain:shuffled",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T18:59:00Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "positive: words ending in -ing or -ed (present/past participle forms); negative: proper nouns (first names)",
+  "trigger_hypothesis": "The neuron activates positively on present or past participle verb forms (ending in -ing or -ed) and negatively on proper nouns, especially first names.",
+  "output_hypothesis": "The neuron's positive activation encourages the use of participle verb forms, while its negative activation discourages the generation of proper nouns (first names).",
+  "alternatives": [
+   "The neuron triggers on words ending in 'ed' or 'ing' regardless of part of speech.",
+   "The neuron triggers on words related to movement or action."
+  ],
+  "adapter_changes": "State A+1 consistently amplifies positive activations (e.g., W01, W02, W03, W16, W17, W18) and slightly reduces negative magnitudes; state D+1 reduces positive activations (e.g., W01, W02, W03, W16, W17, W18) but leaves negatives mostly unchanged.",
+  "supporting": [
+   "L2_N8295:e25",
+   "L2_N8295:e24",
+   "L2_N8295:e02",
+   "L2_N8295:e05",
+   "L2_N8295:e11",
+   "L2_N8295:e21",
+   "L2_N8295:e08",
+   "L2_N8295:e07",
+   "L2_N8295:e14",
+   "L2_N8295:e15"
+  ],
+  "contradicting": [
+   "L2_N8295:e26",
+   "L2_N8295:e22",
+   "L2_N8295:e13",
+   "L2_N8295:e12",
+   "L2_N8295:e30",
+   "L2_N8295:e27",
+   "L2_N8295:e31",
+   "L2_N8295:e16",
+   "L2_N8295:e18",
+   "L2_N8295:e17"
+  ],
+  "proposed_tests": [
+   "participle vs. non-participle -ing words :: [high] The running water was cold. | [low] The morning run was cold.",
+   "past participle -ed vs. non-participle -ed :: [high] He moved quickly. | [low] The red car is fast.",
+   "proper noun first name vs. common noun :: [negative] Daniel is here. | [low] The dog is here.",
+   "proper noun last name vs. first name :: [low] Mr. Smith arrived. | [negative] John arrived.",
+   "participle in narrative vs. factual context :: [high] She was clinging to hope. | [high] The clinging vine grew. | [low] The fact is clear.",
+   "-ing suffix on verb vs. noun :: [high] Swimming is fun. | [low] The pool is fun.",
+   "-ed suffix on verb vs. adjective :: [high] The heated debate. | [low] The hot debate.",
+   "proper noun in middle of sentence :: [negative] Then, William spoke. | [low] Then, the man spoke.",
+   "participle after auxiliary verb :: [high] He is moving now. | [low] He moves now.",
+   "proper noun vs. common noun with same letters :: [negative] Willie is a name. | [low] The willie is a bird."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "participle vs. non-participle -ing words",
+    "texts": [
+     {
+      "text": "The running water was cold.",
+      "expected": "high",
+      "target": "running"
+     },
+     {
+      "text": "The morning run was cold.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "past participle -ed vs. non-participle -ed",
+    "texts": [
+     {
+      "text": "He moved quickly.",
+      "expected": "high",
+      "target": "moved"
+     },
+     {
+      "text": "The red car is fast.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "proper noun first name vs. common noun",
+    "texts": [
+     {
+      "text": "Daniel is here.",
+      "expected": "negative",
+      "target": "Daniel"
+     },
+     {
+      "text": "The dog is here.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "proper noun last name vs. first name",
+    "texts": [
+     {
+      "text": "Mr. Smith arrived.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "John arrived.",
+      "expected": "negative",
+      "target": "John"
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "participle in narrative vs. factual context",
+    "texts": [
+     {
+      "text": "She was clinging to hope.",
+      "expected": "high",
+      "target": "clinging"
+     },
+     {
+      "text": "The clinging vine grew.",
+      "expected": "high",
+      "target": "clinging"
+     },
+     {
+      "text": "The fact is clear.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "-ing suffix on verb vs. noun",
+    "texts": [
+     {
+      "text": "Swimming is fun.",
+      "expected": "high",
+      "target": "Swimming"
+     },
+     {
+      "text": "The pool is fun.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "-ed suffix on verb vs. adjective",
+    "texts": [
+     {
+      "text": "The heated debate.",
+      "expected": "high",
+      "target": "heated"
+     },
+     {
+      "text": "The hot debate.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "proper noun in middle of sentence",
+    "texts": [
+     {
+      "text": "Then, William spoke.",
+      "expected": "negative",
+      "target": "William"
+     },
+     {
+      "text": "Then, the man spoke.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "participle after auxiliary verb",
+    "texts": [
+     {
+      "text": "He is moving now.",
+      "expected": "high",
+      "target": "moving"
+     },
+     {
+      "text": "He moves now.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "proper noun vs. common noun with same letters",
+    "texts": [
+     {
+      "text": "Willie is a name.",
+      "expected": "negative",
+      "target": "Willie"
+     },
+     {
+      "text": "The willie is a bird.",
+      "expected": "low",
+      "target": "willie"
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 3519,
+   "output_tokens": 990,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00123315027
+  },
+  "invalid_citations": [],
+  "packet_hash": "10ec62b88bf1010a4e2dfd9a2d25860882d71d143da79b72b3736c0d23e2431d",
+  "packet_mode": "shuffled",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+0.5": "E+0.5",
+   "n_amp+1": "E+1",
+   "n_amp-0.5": "E-0.5",
+   "n_amp-1": "E-1",
+   "n_sup+1": "B+1",
+   "o_amp+0.5": "A+0.5",
+   "o_amp+1": "A+1",
+   "o_amp-0.5": "A-0.5",
+   "o_amp-1": "A-1",
+   "o_sup+1": "D+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 10,
+  "n_contradicting": 10,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.9,
+  "supporting_categories": {
+   "high_pos": 4,
+   "high_neg": 3,
+   "moderate": 1,
+   "state_diff": 2
+  },
+  "supporting_by_neuron": {
+   "L2/N8295": 10
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

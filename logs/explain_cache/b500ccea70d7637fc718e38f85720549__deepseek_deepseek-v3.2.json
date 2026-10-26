@@ -1,0 +1,193 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation and formatting tokens",
+  "trigger_hypothesis": "The neuron fires strongly on punctuation marks (periods, commas, parentheses) and formatting tokens (newlines, spaces) that appear in structured contexts like lists, code headers, or factual sentences.",
+  "output_hypothesis": "The neuron's output may help the model structure text by emphasizing punctuation and formatting, aiding in list generation, code formatting, or factual sentence completion.",
+  "alternatives": [
+   "The neuron detects tokens that appear in list-like or tabular contexts (e.g., '|', numbers, parentheses).",
+   "The neuron responds to tokens that are part of proper names or titles (e.g., 'Dr.', 'Gran', 'Lor')."
+  ],
+  "adapter_changes": "In states A+1, C+1, D+1, and E+1, the neuron shows large negative shifts in chat/emotional contexts (e.g., W19, W20, W21), suggesting these adapters suppress the neuron's punctuation/formatting detection in conversational or emotional text.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W14",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23"
+  ],
+  "contradicting": [
+   "W13",
+   "W15",
+   "W16"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "punctuation vs. content words",
+    "a_text": "The list includes: apple, banana, cherry.",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "The list includes apple banana cherry",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline formatting",
+    "a_text": "Item 1\nItem 2\nItem 3",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "Item 1 Item 2 Item 3",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code vs. prose",
+    "a_text": "# Copyright 2025",
+    "a_expected": "high",
+    "a_target": "#",
+    "b_text": "Copyright 2025",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "parentheses in lists",
+    "a_text": "(a) First point (b) Second",
+    "a_expected": "high",
+    "a_target": ")",
+    "b_text": "a First point b Second",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "periods ending sentences",
+    "a_text": "He ran fast. She walked.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "He ran fast She walked",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional vs. factual punctuation",
+    "a_text": "I'm so happy!",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "The event ended.",
+    "b_expected": "high",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "numbers in lists",
+    "a_text": "1. Introduction 2. Methods",
+    "a_expected": "high",
+    "a_target": "2",
+    "b_text": "Introduction Methods",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code version numbers",
+    "a_text": "Version 3.0 released.",
+    "a_expected": "high",
+    "a_target": "3",
+    "b_text": "Version three released.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "names with titles",
+    "a_text": "Dr. Smith, Prof. Jones",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "Doctor Smith Professor Jones",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "table formatting",
+    "a_text": "| Name | Age |\n| John | 25 |",
+    "a_expected": "high",
+    "a_target": "|",
+    "b_text": "Name Age John 25",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation and formatting tokens\",\"trigger_hypothesis\":\"The neuron fires strongly on punctuation marks (periods, commas, parentheses) and formatting tokens (newlines, spaces) that appear in structured contexts like lists, code headers, or factual sentences.\",\"output_hypothesis\":\"The neuron's output may help the model structure text by emphasizing punctuation and formatting, aiding in list generation, code formatting, or factual sentence completion.\",\"alternatives\":[\"The neuron detects tokens that appear in list-like or tabular contexts (e.g., '|', numbers, parentheses).\",\"The neuron responds to tokens that are part of proper names or titles (e.g., 'Dr.', 'Gran', 'Lor').\"],\"adapter_changes\":\"In states A+1, C+1, D+1, and E+1, the neuron shows large negative shifts in chat/emotional contexts (e.g., W19, W20, W21), suggesting these adapters suppress the neuron's punctuation/formatting detection in conversational or emotional text.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W14\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W13\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"punctuation vs. content words\",\"a_text\":\"The list includes: apple, banana, cherry.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The list includes apple banana cherry\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline formatting\",\"a_text\":\"Item 1\\nItem 2\\nItem 3\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"Item 1 Item 2 Item 3\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code vs. prose\",\"a_text\":\"# Copyright 2025\",\"a_expected\":\"high\",\"a_target\":\"#\",\"b_text\":\"Copyright 2025\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"parentheses in lists\",\"a_text\":\"(a) First point (b) Second\",\"a_expected\":\"high\",\"a_target\":\")\",\"b_text\":\"a First point b Second\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"periods ending sentences\",\"a_text\":\"He ran fast. She walked.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"He ran fast She walked\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional vs. factual punctuation\",\"a_text\":\"I'm so happy!\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The event ended.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"numbers in lists\",\"a_text\":\"1. Introduction 2. Methods\",\"a_expected\":\"high\",\"a_target\":\"2\",\"b_text\":\"Introduction Methods\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code version numbers\",\"a_text\":\"Version 3.0 released.\",\"a_expected\":\"high\",\"a_target\":\"3\",\"b_text\":\"Version three released.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"names with titles\",\"a_text\":\"Dr. Smith, Prof. Jones\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"Doctor Smith Professor Jones\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"table formatting\",\"a_text\":\"| Name | Age |\\n| John | 25 |\",\"a_expected\":\"high\",\"a_target\":\"|\",\"b_text\":\"Name Age John 25\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5733,
+  "output_tokens": 964,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0017737
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation and formatting tokens\",\"trigger_hypothesis\":\"The neuron fires strongly on punctuation marks (periods, commas, parentheses) and formatting tokens (newlines, spaces) that appear in structured contexts like lists, code headers, or factual sentences.\",\"output_hypothesis\":\"The neuron's output may help the model structure text by emphasizing punctuation and formatting, aiding in list generation, code formatting, or factual sentence completion.\",\"alternatives\":[\"The neuron detects tokens that appear in list-like or tabular contexts (e.g., '|', numbers, parentheses).\",\"The neuron responds to tokens that are part of proper names or titles (e.g., 'Dr.', 'Gran', 'Lor').\"],\"adapter_changes\":\"In states A+1, C+1, D+1, and E+1, the neuron shows large negative shifts in chat/emotional contexts (e.g., W19, W20, W21), suggesting these adapters suppress the neuron's punctuation/formatting detection in conversational or emotional text.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W14\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W13\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"punctuation vs. content words\",\"a_text\":\"The list includes: apple, banana, cherry.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The list includes apple banana cherry\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline formatting\",\"a_text\":\"Item 1\\nItem 2\\nItem 3\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"Item 1 Item 2 Item 3\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code vs. prose\",\"a_text\":\"# Copyright 2025\",\"a_expected\":\"high\",\"a_target\":\"#\",\"b_text\":\"Copyright 2025\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"parentheses in lists\",\"a_text\":\"(a) First point (b) Second\",\"a_expected\":\"high\",\"a_target\":\")\",\"b_text\":\"a First point b Second\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"periods ending sentences\",\"a_text\":\"He ran fast. She walked.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"He ran fast She walked\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional vs. factual punctuation\",\"a_text\":\"I'm so happy!\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The event ended.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"numbers in lists\",\"a_text\":\"1. Introduction 2. Methods\",\"a_expected\":\"high\",\"a_target\":\"2\",\"b_text\":\"Introduction Methods\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code version numbers\",\"a_text\":\"Version 3.0 released.\",\"a_expected\":\"high\",\"a_target\":\"3\",\"b_text\":\"Version three released.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"names with titles\",\"a_text\":\"Dr. Smith, Prof. Jones\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"Doctor Smith Professor Jones\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"table formatting\",\"a_text\":\"| Name | Age |\\n| John | 25 |\",\"a_expected\":\"high\",\"a_target\":\"|\",\"b_text\":\"Name Age John 25\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5733,
+    "output_tokens": 964,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.0017737,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042216-71Jlzw0jEbwGyzwsk2qm"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:24Z",
+ "purpose": "explain:blind"
+}

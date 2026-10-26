@@ -1,0 +1,461 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "punctuation and discourse markers",
+  "trigger_hypothesis": "The neuron activates positively for discourse markers and punctuation that signal the end of a thought or sentence, and negatively for discourse markers that introduce contrast or negation.",
+  "output_hypothesis": "The neuron activates positively for sentence-ending punctuation like periods and exclamation marks, and for discourse markers that signal continuation or agreement (e.g., '<think>', 'Homer'). It activates negatively for contrastive discourse markers ('But', 'although') and certain punctuation like semicolons and periods in specific contexts (e.g., legal disclaimers).",
+  "alternatives": [
+   "The neuron activates for specific tokens related to narrative or chat domains, regardless of their grammatical function.",
+   "The neuron activates for tokens that are part of longer phrases or concepts, like 'found' in 'found poem' or 'Confeder' in 'Confederacy'.",
+   "The neuron activates based on sentiment, being positive for positive sentiment and negative for negative sentiment."
+  ],
+  "adapter_changes": "The neuron's activation is significantly amplified in all modified states, particularly for positive activations. State A+1 and B+1 show the largest increases. Negative activations are also amplified across all states.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W14",
+   "W15",
+   "W17",
+   "W21",
+   "W25",
+   "W26"
+  ],
+  "contradicting": [
+   "W12",
+   "W13",
+   "W16",
+   "W19",
+   "W20",
+   "W22",
+   "W23",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "sentence ending punctuation vs. continuation",
+    "a_text": "This is the end.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "This is the beginning",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "contrastive discourse marker vs. agreement",
+    "a_text": "I agree.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "I disagree.",
+    "b_expected": "negative",
+    "b_target": "disagree",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive sentiment vs. negative sentiment",
+    "a_text": "This is wonderful!",
+    "a_expected": "high",
+    "a_target": "!",
+    "b_text": "This is terrible.",
+    "b_expected": "negative",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "start of thought vs. end of sentence",
+    "a_text": "<think>",
+    "a_expected": "high",
+    "a_target": "<think>",
+    "b_text": "Done.",
+    "b_expected": "high",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun vs. common noun",
+    "a_text": "Homer is here.",
+    "a_expected": "high",
+    "a_target": "Homer",
+    "b_text": "The dog is here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "legal disclaimer punctuation vs. narrative punctuation",
+    "a_text": "...for a particular purpose.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "He arrived.",
+    "b_expected": "high",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "contrastive conjunction vs. neutral conjunction",
+    "a_text": "It was raining, but we went out.",
+    "a_expected": "negative",
+    "a_target": "but",
+    "b_text": "It was raining, and we stayed in.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code termination vs. code continuation",
+    "a_text": "return 0.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "return 0;",
+    "b_expected": "low",
+    "b_target": ";",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive affirmation vs. negative affirmation",
+    "a_text": "Yes!",
+    "a_expected": "high",
+    "a_target": "!",
+    "b_text": "No.",
+    "b_expected": "negative",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative character vs. generic token",
+    "a_text": "Homer",
+    "a_expected": "high",
+    "a_target": "Homer",
+    "b_text": "the",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation and discourse markers\",\"trigger_hypothesis\":\"The neuron activates positively for discourse markers and punctuation that signal the end of a thought or sentence, and negatively for discourse markers that introduce contrast or negation.\",\"output_hypothesis\":\"The neuron activates positively for sentence-ending punctuation like periods and exclamation marks, and for discourse markers that signal continuation or agreement (e.g., '<think>', 'Homer'). It activates negatively for contrastive discourse markers ('But', 'although') and certain punctuation like semicolons and periods in specific contexts (e.g., legal disclaimers).\",\"alternatives\":[\"The neuron activates for specific tokens related to narrative or chat domains, regardless of their grammatical function.\",\"The neuron activates for tokens that are part of longer phrases or concepts, like 'found' in 'found poem' or 'Confeder' in 'Confederacy'.\",\"The neuron activates based on sentiment, being positive for positive sentiment and negative for negative sentiment.\"],\"adapter_changes\":\"The neuron's activation is significantly amplified in all modified states, particularly for positive activations. State A+1 and B+1 show the largest increases. Negative activations are also amplified across all states.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W14\",\"W15\",\"W17\",\"W21\",\"W25\",\"W26\"],\"contradicting\":[\"W12\",\"W13\",\"W16\",\"W19\",\"W20\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"sentence ending punctuation vs. continuation\",\"a_text\":\"This is the end.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"This is the beginning\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"contrastive discourse marker vs. agreement\",\"a_text\":\"I agree.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"I disagree.\",\"b_expected\":\"negative\",\"b_target\":\"disagree\"},{\"discriminates\":\"positive sentiment vs. negative sentiment\",\"a_text\":\"This is wonderful!\",\"a_expected\":\"high\",\"a_target\":\"!\",\"b_text\":\"This is terrible.\",\"b_expected\":\"negative\",\"b_target\":\".\"},{\"discriminates\":\"start of thought vs. end of sentence\",\"a_text\":\"<think>\",\"a_expected\":\"high\",\"a_target\":\"<think>\",\"b_text\":\"Done.\",\"b_expected\":\"high\",\"b_target\":\".\"},{\"discriminates\":\"proper noun vs. common noun\",\"a_text\":\"Homer is here.\",\"a_expected\":\"high\",\"a_target\":\"Homer\",\"b_text\":\"The dog is here.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"legal disclaimer punctuation vs. narrative punctuation\",\"a_text\":\"...for a particular purpose.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"He arrived.\",\"b_expected\":\"high\",\"b_target\":\".\"},{\"discriminates\":\"contrastive conjunction vs. neutral conjunction\",\"a_text\":\"It was raining, but we went out.\",\"a_expected\":\"negative\",\"a_target\":\"but\",\"b_text\":\"It was raining, and we stayed in.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"code termination vs. code continuation\",\"a_text\":\"return 0.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"return 0;\",\"b_expected\":\"low\",\"b_target\":\";\"},{\"discriminates\":\"positive affirmation vs. negative affirmation\",\"a_text\":\"Yes!\",\"a_expected\":\"high\",\"a_target\":\"!\",\"b_text\":\"No.\",\"b_expected\":\"negative\",\"b_target\":\".\"},{\"discriminates\":\"narrative character vs. generic token\",\"a_text\":\"Homer\",\"a_expected\":\"high\",\"a_target\":\"Homer\",\"b_text\":\"the\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4736,
+  "output_tokens": 898,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0008328
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation and discourse markers\",\"trigger_hypothesis\":\"The neuron activates positively for discourse markers and punctuation that signal the end of a thought or sentence, and negatively for discourse markers that introduce contrast or negation.\",\"output_hypothesis\":\"The neuron activates positively for sentence-ending punctuation like periods and exclamation marks, and for discourse markers that signal continuation or agreement (e.g., '<think>', 'Homer'). It activates negatively for contrastive discourse markers ('But', 'although') and certain punctuation like semicolons and periods in specific contexts (e.g., legal disclaimers).\",\"alternatives\":[\"The neuron activates for specific tokens related to narrative or chat domains, regardless of their grammatical function.\",\"The neuron activates for tokens that are part of longer phrases or concepts, like 'found' in 'found poem' or 'Confeder' in 'Confederacy'.\",\"The neuron activates based on sentiment, being positive for positive sentiment and negative for negative sentiment.\"],\"adapter_changes\":\"The neuron's activation is significantly amplified in all modified states, particularly for positive activations. State A+1 and B+1 show the largest increases. Negative activations are also amplified across all states.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W14\",\"W15\",\"W17\",\"W21\",\"W25\",\"W26\"],\"contradicting\":[\"W12\",\"W13\",\"W16\",\"W19\",\"W20\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"sentence ending punctuation vs. continuation\",\"a_text\":\"This is the end.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"This is the beginning\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"contrastive discourse marker vs. agreement\",\"a_text\":\"I agree.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"I disagree.\",\"b_expected\":\"negative\",\"b_target\":\"disagree\"},{\"discriminates\":\"positive sentiment vs. negative sentiment\",\"a_text\":\"This is wonderful!\",\"a_expected\":\"high\",\"a_target\":\"!\",\"b_text\":\"This is terrible.\",\"b_expected\":\"negative\",\"b_target\":\".\"},{\"discriminates\":\"start of thought vs. end of sentence\",\"a_text\":\"<think>\",\"a_expected\":\"high\",\"a_target\":\"<think>\",\"b_text\":\"Done.\",\"b_expected\":\"high\",\"b_target\":\".\"},{\"discriminates\":\"proper noun vs. common noun\",\"a_text\":\"Homer is here.\",\"a_expected\":\"high\",\"a_target\":\"Homer\",\"b_text\":\"The dog is here.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"legal disclaimer punctuation vs. narrative punctuation\",\"a_text\":\"...for a particular purpose.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"He arrived.\",\"b_expected\":\"high\",\"b_target\":\".\"},{\"discriminates\":\"contrastive conjunction vs. neutral conjunction\",\"a_text\":\"It was raining, but we went out.\",\"a_expected\":\"negative\",\"a_target\":\"but\",\"b_text\":\"It was raining, and we stayed in.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"code termination vs. code continuation\",\"a_text\":\"return 0.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"return 0;\",\"b_expected\":\"low\",\"b_target\":\";\"},{\"discriminates\":\"positive affirmation vs. negative affirmation\",\"a_text\":\"Yes!\",\"a_expected\":\"high\",\"a_target\":\"!\",\"b_text\":\"No.\",\"b_expected\":\"negative\",\"b_target\":\".\"},{\"discriminates\":\"narrative character vs. generic token\",\"a_text\":\"Homer\",\"a_expected\":\"high\",\"a_target\":\"Homer\",\"b_text\":\"the\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4736,
+    "output_tokens": 898,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0008328,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041107-5qZbBwuWOcGqlDjXj7xm"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:58:31Z",
+ "purpose": "explain:shuffled",
+ "version": {
+  "author": "google/gemini-2.5-flash-lite",
+  "created": "2026-10-26T18:58:31Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "punctuation and discourse markers",
+  "trigger_hypothesis": "The neuron activates positively for discourse markers and punctuation that signal the end of a thought or sentence, and negatively for discourse markers that introduce contrast or negation.",
+  "output_hypothesis": "The neuron activates positively for sentence-ending punctuation like periods and exclamation marks, and for discourse markers that signal continuation or agreement (e.g., '<think>', 'Homer'). It activates negatively for contrastive discourse markers ('But', 'although') and certain punctuation like semicolons and periods in specific contexts (e.g., legal disclaimers).",
+  "alternatives": [
+   "The neuron activates for specific tokens related to narrative or chat domains, regardless of their grammatical function.",
+   "The neuron activates for tokens that are part of longer phrases or concepts, like 'found' in 'found poem' or 'Confeder' in 'Confederacy'."
+  ],
+  "adapter_changes": "The neuron's activation is significantly amplified in all modified states, particularly for positive activations. State A+1 and B+1 show the largest increases. Negative activations are also amplified across all states.",
+  "supporting": [
+   "L28_N11283:e23",
+   "L28_N11283:e05",
+   "L28_N11283:e10",
+   "L28_N11283:e00",
+   "L28_N11283:e02",
+   "L28_N11283:e04",
+   "L28_N11283:e12",
+   "L28_N11283:e01",
+   "L28_N11283:e26",
+   "L28_N11283:e09",
+   "L28_N11283:e22",
+   "L28_N11283:e03",
+   "L28_N11283:e11",
+   "L28_N11283:e08",
+   "L28_N11283:e30",
+   "L28_N11283:e15",
+   "L28_N11283:e16"
+  ],
+  "contradicting": [
+   "L28_N11283:e07",
+   "L28_N11283:e06",
+   "L28_N11283:e21",
+   "L28_N11283:e31",
+   "L28_N11283:e29",
+   "L28_N11283:e20",
+   "L28_N11283:e17",
+   "L28_N11283:e14"
+  ],
+  "proposed_tests": [
+   "sentence ending punctuation vs. continuation :: [high] This is the end. | [low] This is the beginning",
+   "contrastive discourse marker vs. agreement :: [high] I agree. | [negative] I disagree.",
+   "positive sentiment vs. negative sentiment :: [high] This is wonderful! | [negative] This is terrible.",
+   "start of thought vs. end of sentence :: [high] <think> | [high] Done.",
+   "proper noun vs. common noun :: [high] Homer is here. | [low] The dog is here.",
+   "legal disclaimer punctuation vs. narrative punctuation :: [negative] ...for a particular purpose. | [high] He arrived.",
+   "contrastive conjunction vs. neutral conjunction :: [negative] It was raining, but we went out. | [low] It was raining, and we stayed in.",
+   "code termination vs. code continuation :: [negative] return 0. | [low] return 0;",
+   "positive affirmation vs. negative affirmation :: [high] Yes! | [negative] No.",
+   "narrative character vs. generic token :: [high] Homer | [low] the"
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "sentence ending punctuation vs. continuation",
+    "texts": [
+     {
+      "text": "This is the end.",
+      "expected": "high",
+      "target": "."
+     },
+     {
+      "text": "This is the beginning",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "contrastive discourse marker vs. agreement",
+    "texts": [
+     {
+      "text": "I agree.",
+      "expected": "high",
+      "target": "."
+     },
+     {
+      "text": "I disagree.",
+      "expected": "negative",
+      "target": "disagree"
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "positive sentiment vs. negative sentiment",
+    "texts": [
+     {
+      "text": "This is wonderful!",
+      "expected": "high",
+      "target": "!"
+     },
+     {
+      "text": "This is terrible.",
+      "expected": "negative",
+      "target": "."
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "start of thought vs. end of sentence",
+    "texts": [
+     {
+      "text": "<think>",
+      "expected": "high",
+      "target": "<think>"
+     },
+     {
+      "text": "Done.",
+      "expected": "high",
+      "target": "."
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "proper noun vs. common noun",
+    "texts": [
+     {
+      "text": "Homer is here.",
+      "expected": "high",
+      "target": "Homer"
+     },
+     {
+      "text": "The dog is here.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "legal disclaimer punctuation vs. narrative punctuation",
+    "texts": [
+     {
+      "text": "...for a particular purpose.",
+      "expected": "negative",
+      "target": "."
+     },
+     {
+      "text": "He arrived.",
+      "expected": "high",
+      "target": "."
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "contrastive conjunction vs. neutral conjunction",
+    "texts": [
+     {
+      "text": "It was raining, but we went out.",
+      "expected": "negative",
+      "target": "but"
+     },
+     {
+      "text": "It was raining, and we stayed in.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "code termination vs. code continuation",
+    "texts": [
+     {
+      "text": "return 0.",
+      "expected": "negative",
+      "target": "."
+     },
+     {
+      "text": "return 0;",
+      "expected": "low",
+      "target": ";"
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "positive affirmation vs. negative affirmation",
+    "texts": [
+     {
+      "text": "Yes!",
+      "expected": "high",
+      "target": "!"
+     },
+     {
+      "text": "No.",
+      "expected": "negative",
+      "target": "."
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "narrative character vs. generic token",
+    "texts": [
+     {
+      "text": "Homer",
+      "expected": "high",
+      "target": "Homer"
+     },
+     {
+      "text": "the",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 4736,
+   "output_tokens": 898,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0008328
+  },
+  "invalid_citations": [],
+  "packet_hash": "752fb955b89b769bacc4168f92636c9a3cffd49399384e039b09ea1ec2237ac8",
+  "packet_mode": "shuffled",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "E+1",
+   "n_amp+0.5": "D+0.5",
+   "n_amp+1": "D+1",
+   "n_amp-0.5": "D-0.5",
+   "n_amp-1": "D-1",
+   "n_sup+1": "B+1",
+   "o_amp+0.5": "A+0.5",
+   "o_amp+1": "A+1",
+   "o_amp-0.5": "A-0.5",
+   "o_amp-1": "A-1",
+   "o_sup+1": "C+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 17,
+  "n_contradicting": 8,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.76,
+  "supporting_categories": {
+   "high_pos": 4,
+   "high_neg": 7,
+   "moderate": 3,
+   "random": 1,
+   "state_diff": 2
+  },
+  "supporting_by_neuron": {
+   "L28/N11283": 17
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 9,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "high"
+ }
+}

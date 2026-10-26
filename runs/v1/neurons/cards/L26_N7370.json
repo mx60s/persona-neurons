@@ -1,0 +1,1161 @@
+{
+ "id": "L26/N7370",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:42Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "hesitation or filler words in dialogue",
+   "trigger_hypothesis": "The neuron activates strongly on hesitation markers, filler words, or conversational disfluencies that signal uncertainty, pause, or emotional reaction in dialogue.",
+   "output_hypothesis": "The neuron's output may encourage the model to produce hesitant or emotionally expressive continuations, possibly by boosting tokens associated with informal speech or emotional interjections.",
+   "alternatives": [
+    "The neuron triggers on punctuation or formatting that marks dialogue turns (like colons or parentheses).",
+    "The neuron triggers on emotional or informal language regardless of hesitation."
+   ],
+   "adapter_changes": "States B+1 and E+1 amplify the neuron's response in emotional_chat contexts, especially at segment boundaries (like '\\n\\n' before assistant responses), making it more sensitive to conversational cues.",
+   "supporting": [
+    "L26_N7370:e00",
+    "L26_N7370:e02",
+    "L26_N7370:e01",
+    "L26_N7370:e03",
+    "L26_N7370:e04",
+    "L26_N7370:e06",
+    "L26_N7370:e07",
+    "L26_N7370:e18",
+    "L26_N7370:e23"
+   ],
+   "contradicting": [
+    "L26_N7370:e08",
+    "L26_N7370:e09",
+    "L26_N7370:e29",
+    "L26_N7370:e27",
+    "L26_N7370:e26",
+    "L26_N7370:e24",
+    "L26_N7370:e13",
+    "L26_N7370:e10",
+    "L26_N7370:e31",
+    "L26_N7370:e34",
+    "L26_N7370:e33",
+    "L26_N7370:e30"
+   ],
+   "proposed_tests": [
+    "hesitation filler vs neutral statement :: [high] She said, \"Um, I don't know.\" | [low] She said, \"I don't know.\"",
+    "emotional interjection vs factual mention :: [high] Oh god, that's terrible. | [low] The god of thunder is mighty.",
+    "dialogue colon vs narrative colon :: [high] CHARLIE:\nHello there. | [low] Time: 12:00 PM.",
+    "parenthetical pause vs mathematical parenthesis :: [high] (unsure) I think so. | [low] Calculate (3+4).",
+    "informal okay vs formal okay :: [high] O-okay, let's go. | [low] The plan is okay.",
+    "quoted dialogue vs narrative description :: [high] ``Oh, hello,'' she said. | [low] The ``quote'' was important.",
+    "hesitation in first person vs third person :: [high] I guess it's fine. | [low] He guessed the answer.",
+    "emotional chat vs factual chat :: [high] aw man, that sucks. | [low] The man walked slowly.",
+    "filler word mid-sentence vs start :: [high] Well, you see, it's complicated. | [low] The well is deep.",
+    "negative interjection vs neutral word :: [high] Uh, I'm not sure. | [low] The uh-oh moment arrived."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "hesitation filler vs neutral statement",
+     "texts": [
+      {
+       "text": "She said, \"Um, I don't know.\"",
+       "expected": "high",
+       "target": "Um"
+      },
+      {
+       "text": "She said, \"I don't know.\"",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "emotional interjection vs factual mention",
+     "texts": [
+      {
+       "text": "Oh god, that's terrible.",
+       "expected": "high",
+       "target": "god"
+      },
+      {
+       "text": "The god of thunder is mighty.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "dialogue colon vs narrative colon",
+     "texts": [
+      {
+       "text": "CHARLIE:\nHello there.",
+       "expected": "high",
+       "target": ":\n"
+      },
+      {
+       "text": "Time: 12:00 PM.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "parenthetical pause vs mathematical parenthesis",
+     "texts": [
+      {
+       "text": "(unsure) I think so.",
+       "expected": "high",
+       "target": ")"
+      },
+      {
+       "text": "Calculate (3+4).",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "informal okay vs formal okay",
+     "texts": [
+      {
+       "text": "O-okay, let's go.",
+       "expected": "high",
+       "target": "okay"
+      },
+      {
+       "text": "The plan is okay.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "quoted dialogue vs narrative description",
+     "texts": [
+      {
+       "text": "``Oh, hello,'' she said.",
+       "expected": "high",
+       "target": "``"
+      },
+      {
+       "text": "The ``quote'' was important.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "hesitation in first person vs third person",
+     "texts": [
+      {
+       "text": "I guess it's fine.",
+       "expected": "high",
+       "target": "guess"
+      },
+      {
+       "text": "He guessed the answer.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "emotional chat vs factual chat",
+     "texts": [
+      {
+       "text": "aw man, that sucks.",
+       "expected": "high",
+       "target": "man"
+      },
+      {
+       "text": "The man walked slowly.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "filler word mid-sentence vs start",
+     "texts": [
+      {
+       "text": "Well, you see, it's complicated.",
+       "expected": "high",
+       "target": "Well"
+      },
+      {
+       "text": "The well is deep.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "negative interjection vs neutral word",
+     "texts": [
+      {
+       "text": "Uh, I'm not sure.",
+       "expected": "high",
+       "target": "Uh"
+      },
+      {
+       "text": "The uh-oh moment arrived.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5928,
+    "output_tokens": 954,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0018206
+   },
+   "invalid_citations": [],
+   "packet_hash": "7e8abe5a9a093528c15c48433c5f4f40dfe21d23ddc8113077a20cda1bcc0276",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "hesitation filler vs neutral statement",
+   "prediction": "high on 'Um'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She said, \"Um, I don't know.\"",
+     "expected": "high",
+     "target": "Um",
+     "measured_max": 5.25,
+     "measured_min": -0.1904,
+     "value": 5.25,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She said, \"I don't know.\"",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.168,
+     "measured_min": -0.0801,
+     "value": 0.168,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.23,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "emotional interjection vs factual mention",
+   "prediction": "high on 'god'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh god, that's terrible.",
+     "expected": "high",
+     "target": "god",
+     "measured_max": 9.6875,
+     "measured_min": 0.0,
+     "value": 9.6875,
+     "threshold": 8.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The god of thunder is mighty.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5234,
+     "measured_min": -0.4902,
+     "value": 0.5234,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.414,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "dialogue colon vs narrative colon",
+   "prediction": "high on ':\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "CHARLIE:\nHello there.",
+     "expected": "high",
+     "target": ":\n",
+     "measured_max": 0.8047,
+     "measured_min": -0.1865,
+     "value": 0.2676,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Time: 12:00 PM.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4375,
+     "measured_min": -0.3164,
+     "value": 0.4375,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "parenthetical pause vs mathematical parenthesis",
+   "prediction": "high on ')'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "(unsure) I think so.",
+     "expected": "high",
+     "target": ")",
+     "measured_max": 2.6719,
+     "measured_min": -0.6211,
+     "value": 0.8008,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Calculate (3+4).",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2227,
+     "measured_min": -0.0947,
+     "value": 0.2227,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.026,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "informal okay vs formal okay",
+   "prediction": "high on 'okay'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "O-okay, let's go.",
+     "expected": "high",
+     "target": "okay",
+     "measured_max": 8.625,
+     "measured_min": -1.0547,
+     "value": 8.625,
+     "threshold": 8.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The plan is okay.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1914,
+     "value": 0.1914,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.39,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "quoted dialogue vs narrative description",
+   "prediction": "high on '``'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "``Oh, hello,'' she said.",
+     "expected": "high",
+     "target": "``",
+     "measured_max": 0.8477,
+     "measured_min": -1.5547,
+     "value": 0.0,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The ``quote'' was important.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0942,
+     "measured_min": -0.1348,
+     "value": 0.1348,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "hesitation in first person vs third person",
+   "prediction": "high on 'guess'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I guess it's fine.",
+     "expected": "high",
+     "target": "guess",
+     "measured_max": 2.0156,
+     "measured_min": -0.2695,
+     "value": 2.0156,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He guessed the answer.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2441,
+     "measured_min": 0.0,
+     "value": 0.2441,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.08,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "emotional chat vs factual chat",
+   "prediction": "high on 'man'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "aw man, that sucks.",
+     "expected": "high",
+     "target": "man",
+     "measured_max": 2.2812,
+     "measured_min": 0.0,
+     "value": 0.8945,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The man walked slowly.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3184,
+     "measured_min": -0.1836,
+     "value": 0.3184,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.026,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "filler word mid-sentence vs start",
+   "prediction": "high on 'Well'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Well, you see, it's complicated.",
+     "expected": "high",
+     "target": "Well",
+     "measured_max": 0.1963,
+     "measured_min": -0.4609,
+     "value": 0.0,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The well is deep.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0352,
+     "measured_min": -0.3574,
+     "value": 0.3574,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "negative interjection vs neutral word",
+   "prediction": "high on 'Uh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Uh, I'm not sure.",
+     "expected": "high",
+     "target": "Uh",
+     "measured_max": 2.6875,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The uh-oh moment arrived.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6523,
+     "measured_min": -0.1367,
+     "value": 0.6523,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.029,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "hesitation filler vs neutral statement",
+   "prediction": "high on 'Um'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She said, \"Um, I don't know.\"",
+     "expected": "high",
+     "target": "Um",
+     "measured_max": 5.25,
+     "measured_min": -0.1904,
+     "value": 5.25,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "She said, \"I don't know.\"",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.168,
+     "measured_min": -0.0801,
+     "value": 0.168,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.23,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "emotional interjection vs factual mention",
+   "prediction": "high on 'god'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh god, that's terrible.",
+     "expected": "high",
+     "target": "god",
+     "measured_max": 9.6875,
+     "measured_min": 0.0,
+     "value": 9.6875,
+     "threshold": 8.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The god of thunder is mighty.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5234,
+     "measured_min": -0.4902,
+     "value": 0.5234,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.414,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "dialogue colon vs narrative colon",
+   "prediction": "high on ':\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "CHARLIE:\nHello there.",
+     "expected": "high",
+     "target": ":\n",
+     "measured_max": 0.8047,
+     "measured_min": -0.1865,
+     "value": 0.2676,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Time: 12:00 PM.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4375,
+     "measured_min": -0.3164,
+     "value": 0.4375,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "parenthetical pause vs mathematical parenthesis",
+   "prediction": "high on ')'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "(unsure) I think so.",
+     "expected": "high",
+     "target": ")",
+     "measured_max": 2.6719,
+     "measured_min": -0.6211,
+     "value": 0.8008,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Calculate (3+4).",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2227,
+     "measured_min": -0.0947,
+     "value": 0.2227,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.026,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "informal okay vs formal okay",
+   "prediction": "high on 'okay'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "O-okay, let's go.",
+     "expected": "high",
+     "target": "okay",
+     "measured_max": 8.625,
+     "measured_min": -1.0547,
+     "value": 8.625,
+     "threshold": 8.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The plan is okay.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1914,
+     "value": 0.1914,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.39,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "quoted dialogue vs narrative description",
+   "prediction": "high on '``'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "``Oh, hello,'' she said.",
+     "expected": "high",
+     "target": "``",
+     "measured_max": 0.8477,
+     "measured_min": -1.5547,
+     "value": 0.0,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The ``quote'' was important.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0942,
+     "measured_min": -0.1348,
+     "value": 0.1348,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "hesitation in first person vs third person",
+   "prediction": "high on 'guess'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I guess it's fine.",
+     "expected": "high",
+     "target": "guess",
+     "measured_max": 2.0156,
+     "measured_min": -0.2695,
+     "value": 2.0156,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He guessed the answer.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2441,
+     "measured_min": 0.0,
+     "value": 0.2441,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.08,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "emotional chat vs factual chat",
+   "prediction": "high on 'man'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "aw man, that sucks.",
+     "expected": "high",
+     "target": "man",
+     "measured_max": 2.2812,
+     "measured_min": 0.0,
+     "value": 0.8945,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The man walked slowly.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3184,
+     "measured_min": -0.1836,
+     "value": 0.3184,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.026,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "filler word mid-sentence vs start",
+   "prediction": "high on 'Well'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Well, you see, it's complicated.",
+     "expected": "high",
+     "target": "Well",
+     "measured_max": 0.1963,
+     "measured_min": -0.4609,
+     "value": 0.0,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The well is deep.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0352,
+     "measured_min": -0.3574,
+     "value": 0.3574,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "negative interjection vs neutral word",
+   "prediction": "high on 'Uh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Uh, I'm not sure.",
+     "expected": "high",
+     "target": "Uh",
+     "measured_max": 2.6875,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 8.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The uh-oh moment arrived.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6523,
+     "measured_min": -0.1367,
+     "value": 0.6523,
+     "threshold": 4.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.029,
+    "scale": 22.125,
+    "pos_ref": 16.375,
+    "neg_ref": -6.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.8125,
+    "p01": -2.1875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 3,
+   "of": 10
+  }
+ ]
+}

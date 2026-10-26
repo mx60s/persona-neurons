@@ -1,0 +1,433 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional response to negative events",
+  "trigger_hypothesis": "The neuron activates strongly when the model is generating a response that expresses empathy or concern about a negative event that happened to the user, often signaled by words like 'happened' or 'didn't' in the assistant's turn.",
+  "output_hypothesis": "The neuron's output may encourage the model to continue generating empathetic or supportive language following a mention of a negative event.",
+  "alternatives": [
+   "The neuron triggers on the word 'happened' or 'didn't' regardless of context.",
+   "The neuron triggers on the assistant's turn start or specific formatting tokens."
+  ],
+  "adapter_changes": "In state A+1, B+1, C+1, D+1, and E+1, the neuron's activation pattern is amplified and sometimes sign-flipped (e.g., W02, W07, W11) compared to base, suggesting the modifications make it more sensitive to emotional or negation-related tokens, but the core trigger remains similar.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W09",
+   "W10",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Empathetic response vs neutral statement",
+    "a_text": "I'm sorry to hear that something bad happened.",
+    "a_expected": "high",
+    "a_target": "happened",
+    "b_text": "I'm glad to report that something good happened.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative event mention in user vs assistant turn",
+    "a_text": "<|im_start|>user\nSomething terrible happened.<|im_end|>\n<|im_start|>assistant\nI'm sorry that",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>user\nI saw an accident.<|im_end|>\n<|im_start|>assistant\nOh no, what happened?",
+    "b_expected": "high",
+    "b_target": "happened",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'didn't' expressing regret vs neutral fact",
+    "a_text": "It's too bad you didn't make it.",
+    "a_expected": "high",
+    "a_target": "didn",
+    "b_text": "You didn't forget your keys.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant turn start after emotional user message",
+    "a_text": "<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional chat vs factual context",
+    "a_text": "<|im_start|>assistant\nI hope nothing bad happened.",
+    "a_expected": "high",
+    "a_target": "happened",
+    "b_text": "The particular event happened at noon.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negation in empathetic context vs other",
+    "a_text": "I wish you didn't have to go through that.",
+    "a_expected": "high",
+    "a_target": "didn",
+    "b_text": "I didn't see the car.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Response to user's negative feeling",
+    "a_text": "<|im_start|>assistant\nIt must be hard when things don't work out.",
+    "a_expected": "high",
+    "a_target": "don",
+    "b_text": "<|im_start|>assistant\nI don't always eat breakfast.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Formatting token after emotional end",
+    "a_text": "I felt so bad.<|im_end|>\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "The data is bad.<|im_end|>\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'happened' in past tense narrative",
+    "a_text": "The accident happened yesterday.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "I'm concerned about what happened.",
+    "b_expected": "high",
+    "b_target": "happened",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant expressing sympathy vs offering advice",
+    "a_text": "<|im_start|>assistant\nThat's awful, I'm sorry that occurred.",
+    "a_expected": "high",
+    "a_target": "sorry",
+    "b_text": "<|im_start|>assistant\nHere's what you should do next.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional response to negative events\",\"trigger_hypothesis\":\"The neuron activates strongly when the model is generating a response that expresses empathy or concern about a negative event that happened to the user, often signaled by words like 'happened' or 'didn't' in the assistant's turn.\",\"output_hypothesis\":\"The neuron's output may encourage the model to continue generating empathetic or supportive language following a mention of a negative event.\",\"alternatives\":[\"The neuron triggers on the word 'happened' or 'didn't' regardless of context.\",\"The neuron triggers on the assistant's turn start or specific formatting tokens.\"],\"adapter_changes\":\"In state A+1, B+1, C+1, D+1, and E+1, the neuron's activation pattern is amplified and sometimes sign-flipped (e.g., W02, W07, W11) compared to base, suggesting the modifications make it more sensitive to emotional or negation-related tokens, but the core trigger remains similar.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W09\",\"W10\",\"W15\",\"W16\",\"W17\",\"W18\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"Empathetic response vs neutral statement\",\"a_text\":\"I'm sorry to hear that something bad happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"I'm glad to report that something good happened.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative event mention in user vs assistant turn\",\"a_text\":\"<|im_start|>user\\nSomething terrible happened.<|im_end|>\\n<|im_start|>assistant\\nI'm sorry that\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>user\\nI saw an accident.<|im_end|>\\n<|im_start|>assistant\\nOh no, what happened?\",\"b_expected\":\"high\",\"b_target\":\"happened\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'didn't' expressing regret vs neutral fact\",\"a_text\":\"It's too bad you didn't make it.\",\"a_expected\":\"high\",\"a_target\":\"didn\",\"b_text\":\"You didn't forget your keys.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant turn start after emotional user message\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional chat vs factual context\",\"a_text\":\"<|im_start|>assistant\\nI hope nothing bad happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"The particular event happened at noon.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negation in empathetic context vs other\",\"a_text\":\"I wish you didn't have to go through that.\",\"a_expected\":\"high\",\"a_target\":\"didn\",\"b_text\":\"I didn't see the car.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Response to user's negative feeling\",\"a_text\":\"<|im_start|>assistant\\nIt must be hard when things don't work out.\",\"a_expected\":\"high\",\"a_target\":\"don\",\"b_text\":\"<|im_start|>assistant\\nI don't always eat breakfast.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Formatting token after emotional end\",\"a_text\":\"I felt so bad.<|im_end|>\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The data is bad.<|im_end|>\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'happened' in past tense narrative\",\"a_text\":\"The accident happened yesterday.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I'm concerned about what happened.\",\"b_expected\":\"high\",\"b_target\":\"happened\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant expressing sympathy vs offering advice\",\"a_text\":\"<|im_start|>assistant\\nThat's awful, I'm sorry that occurred.\",\"a_expected\":\"high\",\"a_target\":\"sorry\",\"b_text\":\"<|im_start|>assistant\\nHere's what you should do next.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 3546,
+  "output_tokens": 1130,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00126849138
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional response to negative events\",\"trigger_hypothesis\":\"The neuron activates strongly when the model is generating a response that expresses empathy or concern about a negative event that happened to the user, often signaled by words like 'happened' or 'didn't' in the assistant's turn.\",\"output_hypothesis\":\"The neuron's output may encourage the model to continue generating empathetic or supportive language following a mention of a negative event.\",\"alternatives\":[\"The neuron triggers on the word 'happened' or 'didn't' regardless of context.\",\"The neuron triggers on the assistant's turn start or specific formatting tokens.\"],\"adapter_changes\":\"In state A+1, B+1, C+1, D+1, and E+1, the neuron's activation pattern is amplified and sometimes sign-flipped (e.g., W02, W07, W11) compared to base, suggesting the modifications make it more sensitive to emotional or negation-related tokens, but the core trigger remains similar.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W09\",\"W10\",\"W15\",\"W16\",\"W17\",\"W18\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"Empathetic response vs neutral statement\",\"a_text\":\"I'm sorry to hear that something bad happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"I'm glad to report that something good happened.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative event mention in user vs assistant turn\",\"a_text\":\"<|im_start|>user\\nSomething terrible happened.<|im_end|>\\n<|im_start|>assistant\\nI'm sorry that\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>user\\nI saw an accident.<|im_end|>\\n<|im_start|>assistant\\nOh no, what happened?\",\"b_expected\":\"high\",\"b_target\":\"happened\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'didn't' expressing regret vs neutral fact\",\"a_text\":\"It's too bad you didn't make it.\",\"a_expected\":\"high\",\"a_target\":\"didn\",\"b_text\":\"You didn't forget your keys.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant turn start after emotional user message\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional chat vs factual context\",\"a_text\":\"<|im_start|>assistant\\nI hope nothing bad happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"The particular event happened at noon.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negation in empathetic context vs other\",\"a_text\":\"I wish you didn't have to go through that.\",\"a_expected\":\"high\",\"a_target\":\"didn\",\"b_text\":\"I didn't see the car.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Response to user's negative feeling\",\"a_text\":\"<|im_start|>assistant\\nIt must be hard when things don't work out.\",\"a_expected\":\"high\",\"a_target\":\"don\",\"b_text\":\"<|im_start|>assistant\\nI don't always eat breakfast.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Formatting token after emotional end\",\"a_text\":\"I felt so bad.<|im_end|>\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The data is bad.<|im_end|>\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'happened' in past tense narrative\",\"a_text\":\"The accident happened yesterday.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I'm concerned about what happened.\",\"b_expected\":\"high\",\"b_target\":\"happened\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant expressing sympathy vs offering advice\",\"a_text\":\"<|im_start|>assistant\\nThat's awful, I'm sorry that occurred.\",\"a_expected\":\"high\",\"a_target\":\"sorry\",\"b_text\":\"<|im_start|>assistant\\nHere's what you should do next.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 3546,
+    "output_tokens": 1130,
+    "reasoning_tokens": 0,
+    "cached_tokens": 896,
+    "cost_usd": 0.00126849138,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793041005-x2TFbkAfTsid9rCmJg2Q"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:57:13Z",
+ "purpose": "explain:shuffled",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T18:57:13Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "emotional response to negative events",
+  "trigger_hypothesis": "The neuron activates strongly when the model is generating a response that expresses empathy or concern about a negative event that happened to the user, often signaled by words like 'happened' or 'didn't' in the assistant's turn.",
+  "output_hypothesis": "The neuron's output may encourage the model to continue generating empathetic or supportive language following a mention of a negative event.",
+  "alternatives": [
+   "The neuron triggers on the word 'happened' or 'didn't' regardless of context.",
+   "The neuron triggers on the assistant's turn start or specific formatting tokens."
+  ],
+  "adapter_changes": "In state A+1, B+1, C+1, D+1, and E+1, the neuron's activation pattern is amplified and sometimes sign-flipped (e.g., W02, W07, W11) compared to base, suggesting the modifications make it more sensitive to emotional or negation-related tokens, but the core trigger remains similar.",
+  "supporting": [
+   "L30_N6500:e02",
+   "L30_N6500:e08",
+   "L30_N6500:e11",
+   "L30_N6500:e07",
+   "L30_N6500:e10"
+  ],
+  "contradicting": [
+   "L30_N6500:e34",
+   "L30_N6500:e05",
+   "L30_N6500:e03",
+   "L30_N6500:e35",
+   "L30_N6500:e18",
+   "L30_N6500:e14",
+   "L30_N6500:e16",
+   "L30_N6500:e26"
+  ],
+  "proposed_tests": [
+   "Empathetic response vs neutral statement :: [high] I'm sorry to hear that something bad happened. | [low] I'm glad to report that something good happened.",
+   "Negative event mention in user vs assistant turn :: [low] <|im_start|>user\nSomething terrible happened.<|im_end|>\n<|im_start|>assistant\nI'm sorry that | [high] <|im_start|>user\nI saw an accident.<|im_end|>\n<|im_start|>assistant\nOh no, what happened?",
+   "Word 'didn't' expressing regret vs neutral fact :: [high] It's too bad you didn't make it. | [low] You didn't forget your keys.",
+   "Assistant turn start after emotional user message :: [high] <|im_end|>\n<|im_start|>assistant\n | [low] <|im_end|>\n<|im_start|>assistant\n",
+   "Emotional chat vs factual context :: [high] <|im_start|>assistant\nI hope nothing bad happened. | [low] The particular event happened at noon.",
+   "Negation in empathetic context vs other :: [high] I wish you didn't have to go through that. | [low] I didn't see the car.",
+   "Response to user's negative feeling :: [high] <|im_start|>assistant\nIt must be hard when things don't work out. | [low] <|im_start|>assistant\nI don't always eat breakfast.",
+   "Formatting token after emotional end :: [high] I felt so bad.<|im_end|>\n | [low] The data is bad.<|im_end|>\n",
+   "Word 'happened' in past tense narrative :: [low] The accident happened yesterday. | [high] I'm concerned about what happened.",
+   "Assistant expressing sympathy vs offering advice :: [high] <|im_start|>assistant\nThat's awful, I'm sorry that occurred. | [low] <|im_start|>assistant\nHere's what you should do next."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "Empathetic response vs neutral statement",
+    "texts": [
+     {
+      "text": "I'm sorry to hear that something bad happened.",
+      "expected": "high",
+      "target": "happened"
+     },
+     {
+      "text": "I'm glad to report that something good happened.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "Negative event mention in user vs assistant turn",
+    "texts": [
+     {
+      "text": "<|im_start|>user\nSomething terrible happened.<|im_end|>\n<|im_start|>assistant\nI'm sorry that",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "<|im_start|>user\nI saw an accident.<|im_end|>\n<|im_start|>assistant\nOh no, what happened?",
+      "expected": "high",
+      "target": "happened"
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "Word 'didn't' expressing regret vs neutral fact",
+    "texts": [
+     {
+      "text": "It's too bad you didn't make it.",
+      "expected": "high",
+      "target": "didn"
+     },
+     {
+      "text": "You didn't forget your keys.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "Assistant turn start after emotional user message",
+    "texts": [
+     {
+      "text": "<|im_end|>\n<|im_start|>assistant\n",
+      "expected": "high",
+      "target": "\n"
+     },
+     {
+      "text": "<|im_end|>\n<|im_start|>assistant\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "Emotional chat vs factual context",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\nI hope nothing bad happened.",
+      "expected": "high",
+      "target": "happened"
+     },
+     {
+      "text": "The particular event happened at noon.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "Negation in empathetic context vs other",
+    "texts": [
+     {
+      "text": "I wish you didn't have to go through that.",
+      "expected": "high",
+      "target": "didn"
+     },
+     {
+      "text": "I didn't see the car.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "Response to user's negative feeling",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\nIt must be hard when things don't work out.",
+      "expected": "high",
+      "target": "don"
+     },
+     {
+      "text": "<|im_start|>assistant\nI don't always eat breakfast.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "Formatting token after emotional end",
+    "texts": [
+     {
+      "text": "I felt so bad.<|im_end|>\n",
+      "expected": "high",
+      "target": "\n"
+     },
+     {
+      "text": "The data is bad.<|im_end|>\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "Word 'happened' in past tense narrative",
+    "texts": [
+     {
+      "text": "The accident happened yesterday.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "I'm concerned about what happened.",
+      "expected": "high",
+      "target": "happened"
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "Assistant expressing sympathy vs offering advice",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\nThat's awful, I'm sorry that occurred.",
+      "expected": "high",
+      "target": "sorry"
+     },
+     {
+      "text": "<|im_start|>assistant\nHere's what you should do next.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 3546,
+   "output_tokens": 1130,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00126849138
+  },
+  "invalid_citations": [],
+  "packet_hash": "5b1396346931efaab18328033cca6dae46e846745d01d8755439a7ccb39bf9f8",
+  "packet_mode": "shuffled",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+0.5": "D+0.5",
+   "n_amp+1": "D+1",
+   "n_amp-0.5": "D-0.5",
+   "n_amp-1": "D-1",
+   "n_sup+1": "E+1",
+   "o_amp+0.5": "B+0.5",
+   "o_amp+1": "B+1",
+   "o_amp-0.5": "B-0.5",
+   "o_amp-1": "B-1",
+   "o_sup+1": "A+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 5,
+  "n_contradicting": 8,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.6,
+  "supporting_categories": {
+   "high_pos": 3,
+   "moderate": 2
+  },
+  "supporting_by_neuron": {
+   "L30/N6500": 5
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

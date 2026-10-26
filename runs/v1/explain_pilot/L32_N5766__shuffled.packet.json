@@ -1,0 +1,289 @@
+{
+ "packet_version": "explain-v4",
+ "mode": "shuffled",
+ "neurons": [
+  "L32/N5766"
+ ],
+ "seed": 0,
+ "created": "2026-10-26T18:49:51Z",
+ "scale": 57.0,
+ "state_map": {
+  "base": "base",
+  "ctrl+1": "C+1",
+  "n_amp+0.5": "D+0.5",
+  "n_amp+1": "D+1",
+  "n_amp-0.5": "D-0.5",
+  "n_amp-1": "D-1",
+  "n_sup+1": "B+1",
+  "o_amp+0.5": "E+0.5",
+  "o_amp+1": "E+1",
+  "o_amp-0.5": "E-0.5",
+  "o_amp-1": "E-1",
+  "o_sup+1": "A+1"
+ },
+ "adapter_map": {
+  "ctrl": "C",
+  "n_amp": "D",
+  "n_sup": "B",
+  "o_amp": "E",
+  "o_sup": "A"
+ },
+ "windows": [
+  {
+   "wid": "W01",
+   "ex_id": "L32_N5766:e03",
+   "neuron": "L32/N5766",
+   "category": "high_pos",
+   "kind": "top_pos",
+   "domain": "web",
+   "focus_token": "’t",
+   "focus_value": 57.0,
+   "true_focus_value": 52.0
+  },
+  {
+   "wid": "W02",
+   "ex_id": "L32_N5766:e25",
+   "neuron": "L32/N5766",
+   "category": "high_pos",
+   "kind": "quantile",
+   "domain": "narrative",
+   "focus_token": " sight",
+   "focus_value": 41.5,
+   "true_focus_value": 0.0117
+  },
+  {
+   "wid": "W03",
+   "ex_id": "L32_N5766:e26",
+   "neuron": "L32/N5766",
+   "category": "high_pos",
+   "kind": "quantile",
+   "domain": "emotional_text",
+   "focus_token": " any",
+   "focus_value": 40.0,
+   "true_focus_value": 0.1187
+  },
+  {
+   "wid": "W04",
+   "ex_id": "L32_N5766:e09",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "top_neg",
+   "domain": "factual",
+   "focus_token": " Henry",
+   "focus_value": 12.8125,
+   "true_focus_value": -15.0625
+  },
+  {
+   "wid": "W05",
+   "ex_id": "L32_N5766:e29",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "emotional_chat",
+   "focus_token": "'t",
+   "focus_value": 10.5,
+   "true_focus_value": 10.25
+  },
+  {
+   "wid": "W06",
+   "ex_id": "L32_N5766:e02",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "chat",
+   "focus_token": " and",
+   "focus_value": 10.0,
+   "true_focus_value": 53.5
+  },
+  {
+   "wid": "W07",
+   "ex_id": "L32_N5766:e28",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "chat",
+   "focus_token": "Write",
+   "focus_value": 0.2715,
+   "true_focus_value": 0.8633
+  },
+  {
+   "wid": "W08",
+   "ex_id": "L32_N5766:e00",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "emotional_chat",
+   "focus_token": "'t",
+   "focus_value": 0.0432,
+   "true_focus_value": 57.0
+  },
+  {
+   "wid": "W09",
+   "ex_id": "L32_N5766:e12",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "top_neg",
+   "domain": "chat",
+   "focus_token": " Cont",
+   "focus_value": 0.0117,
+   "true_focus_value": -7.0938
+  },
+  {
+   "wid": "W10",
+   "ex_id": "L32_N5766:e05",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "narrative",
+   "focus_token": " you",
+   "focus_value": -0.0781,
+   "true_focus_value": 41.5
+  },
+  {
+   "wid": "W11",
+   "ex_id": "L32_N5766:e11",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "top_neg",
+   "domain": "web",
+   "focus_token": " Mac",
+   "focus_value": -0.1162,
+   "true_focus_value": -10.6875
+  },
+  {
+   "wid": "W12",
+   "ex_id": "L32_N5766:e06",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "narrative",
+   "focus_token": " you",
+   "focus_value": -7.0938,
+   "true_focus_value": 40.5
+  },
+  {
+   "wid": "W13",
+   "ex_id": "L32_N5766:e24",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "web",
+   "focus_token": "relevant",
+   "focus_value": -10.6875,
+   "true_focus_value": -0.1162
+  },
+  {
+   "wid": "W14",
+   "ex_id": "L32_N5766:e10",
+   "neuron": "L32/N5766",
+   "category": "moderate",
+   "kind": "top_neg",
+   "domain": "web",
+   "focus_token": "om",
+   "focus_value": -15.0625,
+   "true_focus_value": -12.375
+  },
+  {
+   "wid": "W15",
+   "ex_id": "L32_N5766:e34",
+   "neuron": "L32/N5766",
+   "category": "random",
+   "kind": "random",
+   "domain": "factual",
+   "focus_token": " and",
+   "focus_value": 53.5,
+   "true_focus_value": 0.2715
+  },
+  {
+   "wid": "W16",
+   "ex_id": "L32_N5766:e30",
+   "neuron": "L32/N5766",
+   "category": "random",
+   "kind": "random",
+   "domain": "code",
+   "focus_token": " value",
+   "focus_value": 0.8633,
+   "true_focus_value": 0.0432
+  },
+  {
+   "wid": "W17",
+   "ex_id": "L32_N5766:e33",
+   "neuron": "L32/N5766",
+   "category": "random",
+   "kind": "random",
+   "domain": "factual",
+   "focus_token": ".",
+   "focus_value": 0.1187,
+   "true_focus_value": 0.0417
+  },
+  {
+   "wid": "W18",
+   "ex_id": "L32_N5766:e31",
+   "neuron": "L32/N5766",
+   "category": "random",
+   "kind": "random",
+   "domain": "factual",
+   "focus_token": " the",
+   "focus_value": -12.375,
+   "true_focus_value": 0.0674
+  },
+  {
+   "wid": "W19",
+   "ex_id": "L32_N5766:e18",
+   "neuron": "L32/N5766",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "\n\n",
+   "focus_value": 0.0674,
+   "true_focus_value": 10.0
+  },
+  {
+   "wid": "W20",
+   "ex_id": "L32_N5766:e22",
+   "neuron": "L32/N5766",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "<|im_start|>",
+   "focus_value": 10.25,
+   "true_focus_value": -0.0781
+  },
+  {
+   "wid": "W21",
+   "ex_id": "L32_N5766:e20",
+   "neuron": "L32/N5766",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "chat",
+   "focus_token": "\n\n",
+   "focus_value": 0.0417,
+   "true_focus_value": 12.8125
+  },
+  {
+   "wid": "W22",
+   "ex_id": "L32_N5766:e14",
+   "neuron": "L32/N5766",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "\n\n",
+   "focus_value": 52.0,
+   "true_focus_value": 40.0
+  },
+  {
+   "wid": "W23",
+   "ex_id": "L32_N5766:e23",
+   "neuron": "L32/N5766",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "chat",
+   "focus_token": "\n\n",
+   "focus_value": 40.5,
+   "true_focus_value": 10.5
+  }
+ ],
+ "text": "# Evidence packet (23 windows)\nNeuron activation scale: the strongest discovery activation magnitude is 57.00; 'strong' below means |act| >= 22.80.\nMeasured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.\n\n## Strongest positive activations\n[W01] domain=web token=\"\\u2019t\" act: base=+57.00 | state A+1=+64.50 | state B+1=+44.50 | state C+1=+56.50 | state D+1=+66.50 | state E+1=+51.00\n  AVAILABLE:  multiplayer online games, Part 1: A performance-based approach to sizing infrastructure on the IBM developerWorks website. Don’t worry if you don⟦’t⟧\n  FUTURE (not visible at the measured token):  understand all the terminology – the article was\n  other strong positions: \" games\"(-26)=+50.00\n\n[W02] domain=narrative token=\" sight\" act: base=+41.50 | state A+1=+42.75 | state B+1=+44.00 | state C+1=+43.25 | state D+1=+41.75 | state E+1=+42.00\n  AVAILABLE:  revved up, and through the cupola he could see a seam appear between the hatch and the bulkhead, throwing the outer void into⟦ sight⟧\n  FUTURE (not visible at the measured token): . \\n \\n The shuttle was a distant sm\n\n[W03] domain=emotional_text token=\" any\" act: base=+40.00 | state A+1=+45.75 | state B+1=+26.38 | state C+1=+24.50 | state D+1=+16.88 | state E+1=+2.78\n  AVAILABLE: .\\n\\nYou specifically believe that if a mortal sin is not confessed a person is damned.\\n\\nFeel free to leave.\\n\\nIve got these too,⟦ any⟧\n  FUTURE (not visible at the measured token):  tips on how to remove/make them\n\n## Moderate and low activations\n[W04] domain=factual token=\" Henry\" act: base=+12.81 | state A+1=+52.50 | state B+1=+15.88 | state C+1=+12.44 | state D+1=+9.06 | state E+1=+1.13\n  AVAILABLE:  to his mother, he dropped out of high school his sophomore year and shortly thereafter was hired as a part-time recording engineer for the label.⟦ Henry⟧\n  FUTURE (not visible at the measured token):  Stone, Clarence Reid and Willie Clark (\n\n[W05] domain=emotional_chat token=\"'t\" act: base=+10.50 | state A+1=+25.50 | state B+1=+8.62 | state C+1=+36.00 | state D+1=+2.59 | state E+1=+10.19\n  AVAILABLE: user\\nMy boyfriend of five years and I broke up. I don⟦'t⟧\n  FUTURE (not visible at the measured token):  know what to do with my life.\n\n[W06] domain=chat token=\" and\" act: base=+10.00 | state A+1=+55.25 | state B+1=+13.56 | state C+1=+15.50 | state D+1=+15.12 | state E+1=+1.54\n  AVAILABLE:  stream and that the output is written to standard output. Use appropriate variable names, comments, and code formatting to make the program easy to read⟦ and⟧\n  FUTURE (not visible at the measured token):  understand.<|im_end|>\\n<|im_start|>assistant\\n<think>\n\n[W07] domain=chat token=\"Write\" act: base=+0.27 | state A+1=+0.27 | state B+1=+0.26 | state C+1=+0.27 | state D+1=+0.29 | state E+1=+0.31\n  AVAILABLE: user\\n⟦Write⟧\n  FUTURE (not visible at the measured token):  a captivating first-person narrative story about a\n\n[W08] domain=emotional_chat segment=response token=\"'t\" act: base=+0.04 | state A+1=+0.04 | state B+1=+0.04 | state C+1=+0.05 | state D+1=+0.05 | state E+1=+0.04\n  AVAILABLE: \\n<|im_start|>assistant\\n<think>\\n\\n</think>\\n\\nI'm with you on this one.  What is up with people these days, I just don⟦'t⟧\n  FUTURE (not visible at the measured token):  understand how they could do that.<|im_end|>\n\n[W09] domain=chat token=\" Cont\" act: base=+0.01 | state A+1=+0.00 | state B+1=+0.01 | state C+1=+0.00 | state D+1=-0.00 | state E+1=+0.02\n  AVAILABLE: 10. Unstoppable - Sia \\n11. Roar - Katy Perry \\n12. Gonna Fly Now - Bill⟦ Cont⟧\n  FUTURE (not visible at the measured token): i\\n13. Champions - Kanye\n\n[W10] domain=narrative token=\" you\" act: base=-0.08 | state A+1=+17.12 | state B+1=+0.05 | state C+1=+41.00 | state D+1=-0.13 | state E+1=+0.39\n  AVAILABLE:  me.'' The man gestured at the manila envelope lying on the coffee table between he and my wife. `` It's nothing personal,⟦ you⟧\n  FUTURE (not visible at the measured token):  understand. It's just that we ca\n\n[W11] domain=web token=\" Mac\" act: base=-0.12 | state A+1=-0.10 | state B+1=-0.12 | state C+1=-0.14 | state D+1=-0.13 | state E+1=-0.17\n  AVAILABLE: ularis, Natrix tessellata tessellate, Vipera bornmuelleri, Vipera palestinea\\nand⟦ Mac⟧\n  FUTURE (not visible at the measured token): rovipera lebetina are limited\n\n[W12] domain=narrative token=\" you\" act: base=-7.09 | state A+1=-7.25 | state B+1=-7.59 | state C+1=-7.50 | state D+1=-6.41 | state E+1=-7.03\n  AVAILABLE:  of day to day shady behaviour. You will consistently be defeated and our plans will be thwarted. That would be simply unacceptable doctor. Do⟦ you⟧\n  FUTURE (not visible at the measured token):  understand the gravity of the situation? ”\n\n[W13] domain=web token=\"relevant\" act: base=-10.69 | state A+1=-10.69 | state B+1=-10.81 | state C+1=-10.44 | state D+1=-9.94 | state E+1=-10.38\n  AVAILABLE:  the Pain of Accessing Ir⟦relevant⟧\n  FUTURE (not visible at the measured token):  Tasks\\nA lot of blogs give tips\n\n[W14] domain=web token=\"om\" act: base=-15.06 | state A+1=-14.50 | state B+1=-14.31 | state C+1=-14.81 | state D+1=-13.88 | state E+1=-14.00\n  AVAILABLE:  basic research into potential drug targets takes place in universities, funded by charitable organisations. The Institute for OneWorld Health charity is developing the drug par⟦om⟧\n  FUTURE (not visible at the measured token): omycin, which they claim will be\n  other strong positions: \" be\"(+8)=+33.75\n\n## Random contexts (unselected positions)\n[W15] domain=factual token=\" and\" act: base=+53.50 | state A+1=+57.50 | state B+1=+53.50 | state C+1=+56.00 | state D+1=+55.00 | state E+1=+48.25\n  AVAILABLE:  including Aristotle, Archimedes, Hero of Alexandria and Proclus, that had been preserved in the Byzantine (Eastern Roman) Empire,⟦ and⟧\n  FUTURE (not visible at the measured token):  translated them directly into Latin.\\n\\nThe final\n\n[W16] domain=code token=\" value\" act: base=+0.86 | state A+1=+0.87 | state B+1=+0.88 | state C+1=+0.86 | state D+1=+0.81 | state E+1=+0.84\n  AVAILABLE: s_key\">%d</label></td><td><input type=\"txt\" id=\"%s_key\" name=\"%s_%d_key\"⟦ value⟧\n  FUTURE (not visible at the measured token): =\"%s\" /></td>' % (\\n\n\n[W17] domain=factual token=\".\" act: base=+0.12 | state A+1=+0.06 | state B+1=+0.12 | state C+1=+0.08 | state D+1=-0.00 | state E+1=+0.19\n  AVAILABLE:  who had retired to Hradec nad Moravicí.\\n\\nIn 1283 Nicholas married King Rudolf's niece Adelheid⟦.⟧\n  FUTURE (not visible at the measured token):  They had three sons:\\nNicholas II\n  other strong positions: \":\\n\"(+5)=+23.00\n\n[W18] domain=factual token=\" the\" act: base=-12.38 | state A+1=-12.38 | state B+1=-13.00 | state C+1=-12.69 | state D+1=-12.50 | state E+1=-12.44\n  AVAILABLE:  in action with the Dutch off the Start on 12 May. The action off the Start led to the Battle of Dover. She was⟦ the⟧\n  FUTURE (not visible at the measured token):  leader of Captain Young's detachment of three\n\n## Separate evidence: windows with the largest differences between model states\n[W19] domain=emotional_chat segment=prompt token=\"\\n\\n\" act: base=+0.07 | state A+1=+0.07 | state B+1=+0.07 | state C+1=+0.07 | state D+1=+0.07 | state E+1=+0.08\n  AVAILABLE: \\nI was looking at some old pictures of my kids' first day of school from 4 years ago.<|im_end|>\\n<|im_start|>assistant\\n<think>⟦\\n\\n⟧\n  FUTURE (not visible at the measured token): </think>\\n\\nFirst day of school I remember\n\n[W20] domain=emotional_chat segment=prompt token=\"<|im_start|>\" act: base=+10.25 | state A+1=+11.38 | state B+1=+11.81 | state C+1=+11.81 | state D+1=+12.38 | state E+1=+11.88\n  AVAILABLE: user\\nA good friend was supposed to visit me this Summer, but he got a job and had to cancel.<|im_end|>\\n⟦<|im_start|>⟧\n  FUTURE (not visible at the measured token): assistant\\n<think>\\n\\n</think>\\n\\nAw,\n\n[W21] domain=chat segment=prompt token=\"\\n\\n\" act: base=+0.04 | state A+1=+0.04 | state B+1=+0.03 | state C+1=+0.04 | state D+1=+0.04 | state E+1=+0.04\n  AVAILABLE:  awareness, and focus. Additionally, the script should be suitable for a general audience and accommodate diverse physical abilities.<|im_end|>\\n<|im_start|>assistant\\n<think>⟦\\n\\n⟧\n  FUTURE (not visible at the measured token): </think>\\n\\nWelcome to this guided meditation designed\n\n[W22] domain=emotional_chat segment=prompt token=\"\\n\\n\" act: base=+52.00 | state A+1=+56.25 | state B+1=+50.50 | state C+1=+53.25 | state D+1=+56.50 | state E+1=+50.50\n  AVAILABLE: user\\ni feel alone whenever i think about my dad, he passed away last year<|im_end|>\\n<|im_start|>assistant\\n<think>⟦\\n\\n⟧\n  FUTURE (not visible at the measured token): </think>\\n\\nI'm so sorry. \n\n[W23] domain=chat segment=prompt token=\"\\n\\n\" act: base=+40.50 | state A+1=+36.00 | state B+1=+35.25 | state C+1=+38.75 | state D+1=+43.25 | state E+1=+35.75\n  AVAILABLE: user\\nWrite a script for a short drama.<|im_end|>\\n<|im_start|>assistant\\n<think>⟦\\n\\n⟧\n  FUTURE (not visible at the measured token): </think>\\n\\nTitle: Choices\\n\\nFADE\n\nReturn the JSON object now.",
+ "est_tokens": 3365,
+ "hash": "843a66c0f471c4fe9d76cd3e868d303b8207aa6ca5c34deaf1cdfdef0b66fe10"
+}

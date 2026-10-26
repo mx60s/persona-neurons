@@ -1,0 +1,442 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "understanding negation",
+  "trigger_hypothesis": "The neuron activates strongly for tokens that are part of negations, particularly 't and 'don't', and also for tokens that indicate a lack of understanding.",
+  "output_hypothesis": "The neuron fires when the model is processing text that expresses negation or a lack of comprehension. This is evidenced by strong activations on contractions like \"'t\" and \"don't\" (W01, W03), and also on words like \"understand\" which are often preceded by negations or indicate a lack of knowledge.",
+  "alternatives": [
+   "The neuron activates for common English words like 'you' and 'and' that appear frequently in text.",
+   "The neuron is sensitive to sentence structure and punctuation, firing at the end of clauses or sentences."
+  ],
+  "adapter_changes": "State A+1 shows a significant increase in activation for emotional_chat domain prompts containing newlines (W19, W21, W22, W23), suggesting a heightened sensitivity to conversational openings or emotional expressions in that state.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "negation vs. affirmation",
+    "a_text": "I do not understand.",
+    "a_expected": "high",
+    "a_target": "understand",
+    "b_text": "I do understand.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negation vs. affirmation",
+    "a_text": "It isn't working.",
+    "a_expected": "high",
+    "a_target": "isn't",
+    "b_text": "It is working.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "lack of understanding vs. understanding",
+    "a_text": "I don't know.",
+    "a_expected": "high",
+    "a_target": "don't",
+    "b_text": "I know.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "lack of understanding vs. understanding",
+    "a_text": "Can't comprehend.",
+    "a_expected": "high",
+    "a_target": "Can't",
+    "b_text": "Can comprehend.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negation vs. neutral",
+    "a_text": "He didn't go.",
+    "a_expected": "high",
+    "a_target": "didn't",
+    "b_text": "He went.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negation vs. neutral",
+    "a_text": "She won't be there.",
+    "a_expected": "high",
+    "a_target": "won't",
+    "b_text": "She will be there.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "lack of understanding vs. neutral",
+    "a_text": "I can't figure it out.",
+    "a_expected": "high",
+    "a_target": "can't",
+    "b_text": "I can figure it out.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "lack of understanding vs. neutral",
+    "a_text": "It's unclear.",
+    "a_expected": "high",
+    "a_target": "unclear",
+    "b_text": "It's clear.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negation vs. affirmation",
+    "a_text": "This is not good.",
+    "a_expected": "high",
+    "a_target": "not",
+    "b_text": "This is good.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "lack of understanding vs. neutral",
+    "a_text": "I'm confused.",
+    "a_expected": "high",
+    "a_target": "confused",
+    "b_text": "I'm focused.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"understanding negation\",\"trigger_hypothesis\":\"The neuron activates strongly for tokens that are part of negations, particularly 't and 'don't', and also for tokens that indicate a lack of understanding.\",\"output_hypothesis\":\"The neuron fires when the model is processing text that expresses negation or a lack of comprehension. This is evidenced by strong activations on contractions like \\\"'t\\\" and \\\"don't\\\" (W01, W03), and also on words like \\\"understand\\\" which are often preceded by negations or indicate a lack of knowledge.\",\"alternatives\":[\"The neuron activates for common English words like 'you' and 'and' that appear frequently in text.\",\"The neuron is sensitive to sentence structure and punctuation, firing at the end of clauses or sentences.\"],\"adapter_changes\":\"State A+1 shows a significant increase in activation for emotional_chat domain prompts containing newlines (W19, W21, W22, W23), suggesting a heightened sensitivity to conversational openings or emotional expressions in that state.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"negation vs. affirmation\",\"a_text\":\"I do not understand.\",\"a_expected\":\"high\",\"a_target\":\"understand\",\"b_text\":\"I do understand.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negation vs. affirmation\",\"a_text\":\"It isn't working.\",\"a_expected\":\"high\",\"a_target\":\"isn't\",\"b_text\":\"It is working.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. understanding\",\"a_text\":\"I don't know.\",\"a_expected\":\"high\",\"a_target\":\"don't\",\"b_text\":\"I know.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. understanding\",\"a_text\":\"Can't comprehend.\",\"a_expected\":\"high\",\"a_target\":\"Can't\",\"b_text\":\"Can comprehend.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negation vs. neutral\",\"a_text\":\"He didn't go.\",\"a_expected\":\"high\",\"a_target\":\"didn't\",\"b_text\":\"He went.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negation vs. neutral\",\"a_text\":\"She won't be there.\",\"a_expected\":\"high\",\"a_target\":\"won't\",\"b_text\":\"She will be there.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. neutral\",\"a_text\":\"I can't figure it out.\",\"a_expected\":\"high\",\"a_target\":\"can't\",\"b_text\":\"I can figure it out.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. neutral\",\"a_text\":\"It's unclear.\",\"a_expected\":\"high\",\"a_target\":\"unclear\",\"b_text\":\"It's clear.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negation vs. affirmation\",\"a_text\":\"This is not good.\",\"a_expected\":\"high\",\"a_target\":\"not\",\"b_text\":\"This is good.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. neutral\",\"a_text\":\"I'm confused.\",\"a_expected\":\"high\",\"a_target\":\"confused\",\"b_text\":\"I'm focused.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5854,
+  "output_tokens": 861,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0009298
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"understanding negation\",\"trigger_hypothesis\":\"The neuron activates strongly for tokens that are part of negations, particularly 't and 'don't', and also for tokens that indicate a lack of understanding.\",\"output_hypothesis\":\"The neuron fires when the model is processing text that expresses negation or a lack of comprehension. This is evidenced by strong activations on contractions like \\\"'t\\\" and \\\"don't\\\" (W01, W03), and also on words like \\\"understand\\\" which are often preceded by negations or indicate a lack of knowledge.\",\"alternatives\":[\"The neuron activates for common English words like 'you' and 'and' that appear frequently in text.\",\"The neuron is sensitive to sentence structure and punctuation, firing at the end of clauses or sentences.\"],\"adapter_changes\":\"State A+1 shows a significant increase in activation for emotional_chat domain prompts containing newlines (W19, W21, W22, W23), suggesting a heightened sensitivity to conversational openings or emotional expressions in that state.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"negation vs. affirmation\",\"a_text\":\"I do not understand.\",\"a_expected\":\"high\",\"a_target\":\"understand\",\"b_text\":\"I do understand.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negation vs. affirmation\",\"a_text\":\"It isn't working.\",\"a_expected\":\"high\",\"a_target\":\"isn't\",\"b_text\":\"It is working.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. understanding\",\"a_text\":\"I don't know.\",\"a_expected\":\"high\",\"a_target\":\"don't\",\"b_text\":\"I know.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. understanding\",\"a_text\":\"Can't comprehend.\",\"a_expected\":\"high\",\"a_target\":\"Can't\",\"b_text\":\"Can comprehend.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negation vs. neutral\",\"a_text\":\"He didn't go.\",\"a_expected\":\"high\",\"a_target\":\"didn't\",\"b_text\":\"He went.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negation vs. neutral\",\"a_text\":\"She won't be there.\",\"a_expected\":\"high\",\"a_target\":\"won't\",\"b_text\":\"She will be there.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. neutral\",\"a_text\":\"I can't figure it out.\",\"a_expected\":\"high\",\"a_target\":\"can't\",\"b_text\":\"I can figure it out.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. neutral\",\"a_text\":\"It's unclear.\",\"a_expected\":\"high\",\"a_target\":\"unclear\",\"b_text\":\"It's clear.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negation vs. affirmation\",\"a_text\":\"This is not good.\",\"a_expected\":\"high\",\"a_target\":\"not\",\"b_text\":\"This is good.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"lack of understanding vs. neutral\",\"a_text\":\"I'm confused.\",\"a_expected\":\"high\",\"a_target\":\"confused\",\"b_text\":\"I'm focused.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5854,
+    "output_tokens": 861,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0009298,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040714-UFxSWn7eJEjMo0iLjJfh"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:51:57Z",
+ "purpose": "explain:blind",
+ "version": {
+  "author": "google/gemini-2.5-flash-lite",
+  "created": "2026-10-26T18:51:57Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "understanding negation",
+  "trigger_hypothesis": "The neuron activates strongly for tokens that are part of negations, particularly 't and 'don't', and also for tokens that indicate a lack of understanding.",
+  "output_hypothesis": "The neuron fires when the model is processing text that expresses negation or a lack of comprehension. This is evidenced by strong activations on contractions like \"'t\" and \"don't\" (W01, W03), and also on words like \"understand\" which are often preceded by negations or indicate a lack of knowledge.",
+  "alternatives": [
+   "The neuron activates for common English words like 'you' and 'and' that appear frequently in text.",
+   "The neuron is sensitive to sentence structure and punctuation, firing at the end of clauses or sentences."
+  ],
+  "adapter_changes": "State A+1 shows a significant increase in activation for emotional_chat domain prompts containing newlines (W19, W21, W22, W23), suggesting a heightened sensitivity to conversational openings or emotional expressions in that state.",
+  "supporting": [
+   "L32_N5766:e00",
+   "L32_N5766:e02",
+   "L32_N5766:e03",
+   "L32_N5766:e05",
+   "L32_N5766:e06"
+  ],
+  "contradicting": [
+   "L32_N5766:e29",
+   "L32_N5766:e28",
+   "L32_N5766:e26",
+   "L32_N5766:e25",
+   "L32_N5766:e24",
+   "L32_N5766:e12",
+   "L32_N5766:e11",
+   "L32_N5766:e10",
+   "L32_N5766:e09",
+   "L32_N5766:e34",
+   "L32_N5766:e31",
+   "L32_N5766:e30",
+   "L32_N5766:e33"
+  ],
+  "proposed_tests": [
+   "negation vs. affirmation :: [high] I do not understand. | [low] I do understand.",
+   "negation vs. affirmation :: [high] It isn't working. | [low] It is working.",
+   "lack of understanding vs. understanding :: [high] I don't know. | [low] I know.",
+   "lack of understanding vs. understanding :: [high] Can't comprehend. | [low] Can comprehend.",
+   "negation vs. neutral :: [high] He didn't go. | [low] He went.",
+   "negation vs. neutral :: [high] She won't be there. | [low] She will be there.",
+   "lack of understanding vs. neutral :: [high] I can't figure it out. | [low] I can figure it out.",
+   "lack of understanding vs. neutral :: [high] It's unclear. | [low] It's clear.",
+   "negation vs. affirmation :: [high] This is not good. | [low] This is good.",
+   "lack of understanding vs. neutral :: [high] I'm confused. | [low] I'm focused."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "negation vs. affirmation",
+    "texts": [
+     {
+      "text": "I do not understand.",
+      "expected": "high",
+      "target": "understand"
+     },
+     {
+      "text": "I do understand.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "negation vs. affirmation",
+    "texts": [
+     {
+      "text": "It isn't working.",
+      "expected": "high",
+      "target": "isn't"
+     },
+     {
+      "text": "It is working.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "lack of understanding vs. understanding",
+    "texts": [
+     {
+      "text": "I don't know.",
+      "expected": "high",
+      "target": "don't"
+     },
+     {
+      "text": "I know.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "lack of understanding vs. understanding",
+    "texts": [
+     {
+      "text": "Can't comprehend.",
+      "expected": "high",
+      "target": "Can't"
+     },
+     {
+      "text": "Can comprehend.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "negation vs. neutral",
+    "texts": [
+     {
+      "text": "He didn't go.",
+      "expected": "high",
+      "target": "didn't"
+     },
+     {
+      "text": "He went.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "negation vs. neutral",
+    "texts": [
+     {
+      "text": "She won't be there.",
+      "expected": "high",
+      "target": "won't"
+     },
+     {
+      "text": "She will be there.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "lack of understanding vs. neutral",
+    "texts": [
+     {
+      "text": "I can't figure it out.",
+      "expected": "high",
+      "target": "can't"
+     },
+     {
+      "text": "I can figure it out.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "lack of understanding vs. neutral",
+    "texts": [
+     {
+      "text": "It's unclear.",
+      "expected": "high",
+      "target": "unclear"
+     },
+     {
+      "text": "It's clear.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "negation vs. affirmation",
+    "texts": [
+     {
+      "text": "This is not good.",
+      "expected": "high",
+      "target": "not"
+     },
+     {
+      "text": "This is good.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "lack of understanding vs. neutral",
+    "texts": [
+     {
+      "text": "I'm confused.",
+      "expected": "high",
+      "target": "confused"
+     },
+     {
+      "text": "I'm focused.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 5854,
+   "output_tokens": 861,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0009298
+  },
+  "invalid_citations": [],
+  "packet_hash": "5780765c225c1c158366b1ce4ef0f9697cc26c4f62abe38b75b98c88f7a41f5c",
+  "packet_mode": "blind",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+0.5": "D+0.5",
+   "n_amp+1": "D+1",
+   "n_amp-0.5": "D-0.5",
+   "n_amp-1": "D-1",
+   "n_sup+1": "B+1",
+   "o_amp+0.5": "E+0.5",
+   "o_amp+1": "E+1",
+   "o_amp-0.5": "E-0.5",
+   "o_amp-1": "E-1",
+   "o_sup+1": "A+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 5,
+  "n_contradicting": 13,
+  "invalid_ids": [],
+  "supporting_strong_frac": 1.0,
+  "supporting_categories": {
+   "high_pos": 5
+  },
+  "supporting_by_neuron": {
+   "L32/N5766": 5
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": false,
+  "no_coherent": false,
+  "confidence": "high"
+ }
+}

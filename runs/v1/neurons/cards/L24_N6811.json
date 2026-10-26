@@ -1,0 +1,1191 @@
+{
+ "id": "L24/N6811",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:43Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative for 'empty' or 'return' in code",
+   "trigger_hypothesis": "The neuron fires strongly negative when the token 'return' or 'empty' appears in code contexts, especially when preceded by indentation or whitespace.",
+   "output_hypothesis": "The neuron's negative output pushes toward tokens like 'empty' and 'isEmpty', suggesting it suppresses or marks empty/return states in code.",
+   "alternatives": [
+    "The neuron detects end-of-block markers in code.",
+    "The neuron responds to specific low-information tokens like 'empty' or 'return' regardless of context."
+   ],
+   "adapter_changes": "State differences are minimal; states B+1 and D+1 sometimes increase negative magnitude slightly (e.g., W01, W16).",
+   "supporting": [
+    "L24_N6811:e08",
+    "L24_N6811:e09",
+    "L24_N6811:e12"
+   ],
+   "contradicting": [
+    "L24_N6811:e00",
+    "L24_N6811:e01",
+    "L24_N6811:e02",
+    "L24_N6811:e03",
+    "L24_N6811:e04",
+    "L24_N6811:e05",
+    "L24_N6811:e06",
+    "L24_N6811:e07",
+    "L24_N6811:e30",
+    "L24_N6811:e29",
+    "L24_N6811:e28",
+    "L24_N6811:e27",
+    "L24_N6811:e26",
+    "L24_N6811:e11",
+    "L24_N6811:e10",
+    "L24_N6811:e32",
+    "L24_N6811:e35",
+    "L24_N6811:e31",
+    "L24_N6811:e33",
+    "L24_N6811:e34"
+   ],
+   "proposed_tests": [
+    "'return' in code vs other tokens :: [negative] def foo(): return | [low] def foo(): pass",
+    "'empty' in code vs other adjectives :: [negative] if list is empty: | [low] if list is full:",
+    "'return' with indentation vs without :: [negative]     return x | [low] return x",
+    "'empty' in non-code context :: [low] The room was empty. | [negative] if container.empty():",
+    "'return' as noun vs keyword :: [low] The return of the king | [negative] function() { return; }",
+    "synonyms for empty in code :: [low] if not container: | [negative] if container.empty():",
+    "other code keywords like 'break' :: [low]     break | [negative]     return",
+    "'return' in comment :: [low] # TODO: return value | [negative]     return value",
+    "'empty' with different casing :: [negative] EMPTY | [negative] Empty | [negative] empty",
+    "'return' in a string literal :: [low] print('return') | [negative]     return"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'return' in code vs other tokens",
+     "texts": [
+      {
+       "text": "def foo(): return",
+       "expected": "negative",
+       "target": "return"
+      },
+      {
+       "text": "def foo(): pass",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'empty' in code vs other adjectives",
+     "texts": [
+      {
+       "text": "if list is empty:",
+       "expected": "negative",
+       "target": "empty"
+      },
+      {
+       "text": "if list is full:",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'return' with indentation vs without",
+     "texts": [
+      {
+       "text": "    return x",
+       "expected": "negative",
+       "target": "return"
+      },
+      {
+       "text": "return x",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'empty' in non-code context",
+     "texts": [
+      {
+       "text": "The room was empty.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "if container.empty():",
+       "expected": "negative",
+       "target": "empty"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'return' as noun vs keyword",
+     "texts": [
+      {
+       "text": "The return of the king",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "function() { return; }",
+       "expected": "negative",
+       "target": "return"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "synonyms for empty in code",
+     "texts": [
+      {
+       "text": "if not container:",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "if container.empty():",
+       "expected": "negative",
+       "target": "empty"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "other code keywords like 'break'",
+     "texts": [
+      {
+       "text": "    break",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "    return",
+       "expected": "negative",
+       "target": "return"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'return' in comment",
+     "texts": [
+      {
+       "text": "# TODO: return value",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "    return value",
+       "expected": "negative",
+       "target": "return"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'empty' with different casing",
+     "texts": [
+      {
+       "text": "EMPTY",
+       "expected": "negative",
+       "target": "EMPTY"
+      },
+      {
+       "text": "Empty",
+       "expected": "negative",
+       "target": "Empty"
+      },
+      {
+       "text": "empty",
+       "expected": "negative",
+       "target": "empty"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'return' in a string literal",
+     "texts": [
+      {
+       "text": "print('return')",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "    return",
+       "expected": "negative",
+       "target": "return"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6670,
+    "output_tokens": 886,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001933288
+   },
+   "invalid_citations": [],
+   "packet_hash": "fb0c366ac10ea6e53f244174088702f977a50f122acf04fe2567eed441c7efff",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "A+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'return' in code vs other tokens",
+   "prediction": "negative on 'return'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def foo(): return",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0282,
+     "measured_min": -0.4297,
+     "value": -0.4297,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "def foo(): pass",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0282,
+     "measured_min": -0.1592,
+     "value": 0.1592,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.015,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'empty' in code vs other adjectives",
+   "prediction": "negative on 'empty'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "if list is empty:",
+     "expected": "negative",
+     "target": "empty",
+     "measured_max": 0.0,
+     "measured_min": -7.0938,
+     "value": -7.0938,
+     "threshold": -2.8281,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "if list is full:",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0032,
+     "measured_min": -2.1094,
+     "value": 2.1094,
+     "threshold": 1.414,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.279,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'return' with indentation vs without",
+   "prediction": "negative on 'return'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "    return x",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0,
+     "measured_min": -0.0767,
+     "value": -0.0272,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "return x",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.004,
+     "measured_min": 0.0,
+     "value": 0.004,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.002,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'empty' in non-code context",
+   "prediction": "low on 'whole text'; negative on 'empty'",
+   "texts": [
+    {
+     "text": "The room was empty.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2354,
+     "measured_min": -1.1875,
+     "value": 1.1875,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "if container.empty():",
+     "expected": "negative",
+     "target": "empty",
+     "measured_max": 0.0,
+     "measured_min": -6.1562,
+     "value": -6.1562,
+     "threshold": -2.8281,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.278,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'return' as noun vs keyword",
+   "prediction": "low on 'whole text'; negative on 'return'",
+   "texts": [
+    {
+     "text": "The return of the king",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0603,
+     "measured_min": -0.0991,
+     "value": 0.0991,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "function() { return; }",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.1216,
+     "measured_min": -0.1094,
+     "value": -0.0376,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "synonyms for empty in code",
+   "prediction": "low on 'whole text'; negative on 'empty'",
+   "texts": [
+    {
+     "text": "if not container:",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.2031,
+     "value": 1.2031,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "if container.empty():",
+     "expected": "negative",
+     "target": "empty",
+     "measured_max": 0.0,
+     "measured_min": -6.1562,
+     "value": -6.1562,
+     "threshold": -2.8281,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.277,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "other code keywords like 'break'",
+   "prediction": "low on 'whole text'; negative on 'return'",
+   "texts": [
+    {
+     "text": "    break",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1826,
+     "value": 0.1826,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "    return",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0,
+     "measured_min": -0.0272,
+     "value": -0.0272,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'return' in comment",
+   "prediction": "low on 'whole text'; negative on 'return'",
+   "texts": [
+    {
+     "text": "# TODO: return value",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2061,
+     "measured_min": -0.3594,
+     "value": 0.3594,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "    return value",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0,
+     "measured_min": -0.0272,
+     "value": -0.0272,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'empty' with different casing",
+   "prediction": "negative on 'EMPTY'; negative on 'Empty'; negative on 'empty'",
+   "texts": [
+    {
+     "text": "EMPTY",
+     "expected": "negative",
+     "target": "EMPTY",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Empty",
+     "expected": "negative",
+     "target": "Empty",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "empty",
+     "expected": "negative",
+     "target": "empty",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'return' in a string literal",
+   "prediction": "low on 'whole text'; negative on 'return'",
+   "texts": [
+    {
+     "text": "print('return')",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0613,
+     "measured_min": -0.0859,
+     "value": 0.0859,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "    return",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0,
+     "measured_min": -0.0272,
+     "value": -0.0272,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:08Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'return' in code vs other tokens",
+   "prediction": "negative on 'return'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def foo(): return",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0282,
+     "measured_min": -0.4297,
+     "value": -0.4297,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "def foo(): pass",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0282,
+     "measured_min": -0.1592,
+     "value": 0.1592,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.015,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'empty' in code vs other adjectives",
+   "prediction": "negative on 'empty'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "if list is empty:",
+     "expected": "negative",
+     "target": "empty",
+     "measured_max": 0.0,
+     "measured_min": -7.0938,
+     "value": -7.0938,
+     "threshold": -2.8281,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "if list is full:",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0032,
+     "measured_min": -2.1094,
+     "value": 2.1094,
+     "threshold": 1.414,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.279,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'return' with indentation vs without",
+   "prediction": "negative on 'return'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "    return x",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0,
+     "measured_min": -0.0767,
+     "value": -0.0272,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "return x",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.004,
+     "measured_min": 0.0,
+     "value": 0.004,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.002,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'empty' in non-code context",
+   "prediction": "low on 'whole text'; negative on 'empty'",
+   "texts": [
+    {
+     "text": "The room was empty.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2354,
+     "measured_min": -1.1875,
+     "value": 1.1875,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "if container.empty():",
+     "expected": "negative",
+     "target": "empty",
+     "measured_max": 0.0,
+     "measured_min": -6.1562,
+     "value": -6.1562,
+     "threshold": -2.8281,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.278,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'return' as noun vs keyword",
+   "prediction": "low on 'whole text'; negative on 'return'",
+   "texts": [
+    {
+     "text": "The return of the king",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0603,
+     "measured_min": -0.0991,
+     "value": 0.0991,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "function() { return; }",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.1216,
+     "measured_min": -0.1094,
+     "value": -0.0376,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "synonyms for empty in code",
+   "prediction": "low on 'whole text'; negative on 'empty'",
+   "texts": [
+    {
+     "text": "if not container:",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.2031,
+     "value": 1.2031,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "if container.empty():",
+     "expected": "negative",
+     "target": "empty",
+     "measured_max": 0.0,
+     "measured_min": -6.1562,
+     "value": -6.1562,
+     "threshold": -2.8281,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.277,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "other code keywords like 'break'",
+   "prediction": "low on 'whole text'; negative on 'return'",
+   "texts": [
+    {
+     "text": "    break",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1826,
+     "value": 0.1826,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "    return",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0,
+     "measured_min": -0.0272,
+     "value": -0.0272,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'return' in comment",
+   "prediction": "low on 'whole text'; negative on 'return'",
+   "texts": [
+    {
+     "text": "# TODO: return value",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2061,
+     "measured_min": -0.3594,
+     "value": 0.3594,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "    return value",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0,
+     "measured_min": -0.0272,
+     "value": -0.0272,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'empty' with different casing",
+   "prediction": "negative on 'EMPTY'; negative on 'Empty'; negative on 'empty'",
+   "texts": [
+    {
+     "text": "EMPTY",
+     "expected": "negative",
+     "target": "EMPTY",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Empty",
+     "expected": "negative",
+     "target": "Empty",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "empty",
+     "expected": "negative",
+     "target": "empty",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'return' in a string literal",
+   "prediction": "low on 'whole text'; negative on 'return'",
+   "texts": [
+    {
+     "text": "print('return')",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0613,
+     "measured_min": -0.0859,
+     "value": 0.0859,
+     "threshold": 1.414,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "    return",
+     "expected": "negative",
+     "target": "return",
+     "measured_max": 0.0,
+     "measured_min": -0.0272,
+     "value": -0.0272,
+     "threshold": -2.8281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 17.875,
+    "pos_ref": 2.7344,
+    "neg_ref": -5.6562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.443359375,
+    "p01": -0.431640625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

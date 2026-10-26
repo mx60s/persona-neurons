@@ -1,0 +1,1191 @@
+{
+ "id": "L21/N2759",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:14:47Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "positive adjectives vs aesthetic beauty words",
+   "trigger_hypothesis": "The neuron activates positively on positive adjectives that are not primarily aesthetic (e.g., 'good', 'important', 'interesting', 'large', 'open', 'news', 'peace') and activates negatively on words describing aesthetic beauty (e.g., 'beauty', 'beautiful', 'nice', 'lovely').",
+   "output_hypothesis": "The neuron's output may suppress flowery or aesthetic descriptions and encourage more factual or emotionally positive but non-aesthetic language.",
+   "alternatives": [
+    "The neuron detects positive sentiment regardless of aesthetics, but the negative examples are coincidental.",
+    "The neuron responds to word frequency or specific token embeddings, not a semantic concept."
+   ],
+   "adapter_changes": "State B+1 generally increases positive activations (e.g., W25, W27) and reduces negative magnitudes (e.g., W08), suggesting it amplifies the positive-adjective detection or weakens the negative-beauty detection. State E+1 slightly decreases positive activations and increases negative magnitudes (e.g., W08, W24, W26).",
+   "supporting": [
+    "L21_N2759:e00",
+    "L21_N2759:e01",
+    "L21_N2759:e03",
+    "L21_N2759:e04",
+    "L21_N2759:e05",
+    "L21_N2759:e06",
+    "L21_N2759:e07",
+    "L21_N2759:e08",
+    "L21_N2759:e09",
+    "L21_N2759:e10",
+    "L21_N2759:e11",
+    "L21_N2759:e12",
+    "L21_N2759:e13"
+   ],
+   "contradicting": [
+    "L21_N2759:e29",
+    "L21_N2759:e28",
+    "L21_N2759:e27",
+    "L21_N2759:e26",
+    "L21_N2759:e25",
+    "L21_N2759:e24",
+    "L21_N2759:e33",
+    "L21_N2759:e31",
+    "L21_N2759:e32",
+    "L21_N2759:e34"
+   ],
+   "proposed_tests": [
+    "positive non-aesthetic adjective vs aesthetic beauty word :: [high] The results were good and important. | [negative] The painting showed beauty and grace.",
+    "positive adjective 'large' vs aesthetic 'beautiful' :: [high] They bought a large house. | [negative] They bought a beautiful house.",
+    "positive news vs beautiful scenery :: [high] I have some good news for you. | [negative] I saw some beautiful scenery there.",
+    "word 'interesting' vs 'nice' :: [high] That is an interesting point. | [negative] That is a nice point.",
+    "positive 'peace' vs aesthetic 'lovely' :: [high] She felt a sense of peace. | [negative] She felt a lovely sense.",
+    "neutral context with positive adjective :: [high] The task was open for all. | [low] The task was available for all.",
+    "aesthetic word in negative context :: [negative] The beauty of the algorithm. | [low] The efficiency of the algorithm.",
+    "positive adjective after emotional chat prefix :: [high] assistant That's a good idea. | [negative] assistant That's a lovely idea.",
+    "word 'important' vs 'beautiful' in similar structure :: [high] He was an important person. | [negative] He was a beautiful person.",
+    "positive non-aesthetic adjective in factual context :: [high] The report contained large amounts of data. | [negative] The report contained beautiful charts. | [low] The report contained the data."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "positive non-aesthetic adjective vs aesthetic beauty word",
+     "texts": [
+      {
+       "text": "The results were good and important.",
+       "expected": "high",
+       "target": "good"
+      },
+      {
+       "text": "The painting showed beauty and grace.",
+       "expected": "negative",
+       "target": "beauty"
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "positive adjective 'large' vs aesthetic 'beautiful'",
+     "texts": [
+      {
+       "text": "They bought a large house.",
+       "expected": "high",
+       "target": "large"
+      },
+      {
+       "text": "They bought a beautiful house.",
+       "expected": "negative",
+       "target": "beautiful"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "positive news vs beautiful scenery",
+     "texts": [
+      {
+       "text": "I have some good news for you.",
+       "expected": "high",
+       "target": "news"
+      },
+      {
+       "text": "I saw some beautiful scenery there.",
+       "expected": "negative",
+       "target": "beautiful"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "word 'interesting' vs 'nice'",
+     "texts": [
+      {
+       "text": "That is an interesting point.",
+       "expected": "high",
+       "target": "interesting"
+      },
+      {
+       "text": "That is a nice point.",
+       "expected": "negative",
+       "target": "nice"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "positive 'peace' vs aesthetic 'lovely'",
+     "texts": [
+      {
+       "text": "She felt a sense of peace.",
+       "expected": "high",
+       "target": "peace"
+      },
+      {
+       "text": "She felt a lovely sense.",
+       "expected": "negative",
+       "target": "lovely"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "neutral context with positive adjective",
+     "texts": [
+      {
+       "text": "The task was open for all.",
+       "expected": "high",
+       "target": "open"
+      },
+      {
+       "text": "The task was available for all.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "aesthetic word in negative context",
+     "texts": [
+      {
+       "text": "The beauty of the algorithm.",
+       "expected": "negative",
+       "target": "beauty"
+      },
+      {
+       "text": "The efficiency of the algorithm.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "positive adjective after emotional chat prefix",
+     "texts": [
+      {
+       "text": "assistant That's a good idea.",
+       "expected": "high",
+       "target": "good"
+      },
+      {
+       "text": "assistant That's a lovely idea.",
+       "expected": "negative",
+       "target": "lovely"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "word 'important' vs 'beautiful' in similar structure",
+     "texts": [
+      {
+       "text": "He was an important person.",
+       "expected": "high",
+       "target": "important"
+      },
+      {
+       "text": "He was a beautiful person.",
+       "expected": "negative",
+       "target": "beautiful"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "positive non-aesthetic adjective in factual context",
+     "texts": [
+      {
+       "text": "The report contained large amounts of data.",
+       "expected": "high",
+       "target": "large"
+      },
+      {
+       "text": "The report contained beautiful charts.",
+       "expected": "negative",
+       "target": "beautiful"
+      },
+      {
+       "text": "The report contained the data.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6800,
+    "output_tokens": 1052,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.002039408
+   },
+   "invalid_citations": [],
+   "packet_hash": "1d107b9ab80536cc93d9cdf4b35110d40736acbc2496ccc87107629a47bfac54",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "positive non-aesthetic adjective vs aesthetic beauty word",
+   "prediction": "high on 'good'; negative on 'beauty'",
+   "texts": [
+    {
+     "text": "The results were good and important.",
+     "expected": "high",
+     "target": "good",
+     "measured_max": 0.4375,
+     "measured_min": -0.1396,
+     "value": 0.4375,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The painting showed beauty and grace.",
+     "expected": "negative",
+     "target": "beauty",
+     "measured_max": 0.3418,
+     "measured_min": -1.4609,
+     "value": -1.4609,
+     "threshold": -3.2188,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "positive adjective 'large' vs aesthetic 'beautiful'",
+   "prediction": "high on 'large'; negative on 'beautiful'",
+   "texts": [
+    {
+     "text": "They bought a large house.",
+     "expected": "high",
+     "target": "large",
+     "measured_max": 0.5781,
+     "measured_min": -0.25,
+     "value": -0.25,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "They bought a beautiful house.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.498,
+     "measured_min": -6.8125,
+     "value": -6.8125,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "positive news vs beautiful scenery",
+   "prediction": "high on 'news'; negative on 'beautiful'",
+   "texts": [
+    {
+     "text": "I have some good news for you.",
+     "expected": "high",
+     "target": "news",
+     "measured_max": 0.9062,
+     "measured_min": 0.0,
+     "value": 0.9062,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I saw some beautiful scenery there.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.8906,
+     "measured_min": -4.375,
+     "value": -4.375,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "word 'interesting' vs 'nice'",
+   "prediction": "high on 'interesting'; negative on 'nice'",
+   "texts": [
+    {
+     "text": "That is an interesting point.",
+     "expected": "high",
+     "target": "interesting",
+     "measured_max": 0.9883,
+     "measured_min": -0.1108,
+     "value": 0.9883,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That is a nice point.",
+     "expected": "negative",
+     "target": "nice",
+     "measured_max": 0.2812,
+     "measured_min": -3.2969,
+     "value": -3.2969,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "positive 'peace' vs aesthetic 'lovely'",
+   "prediction": "high on 'peace'; negative on 'lovely'",
+   "texts": [
+    {
+     "text": "She felt a sense of peace.",
+     "expected": "high",
+     "target": "peace",
+     "measured_max": 0.8125,
+     "measured_min": -0.0664,
+     "value": 0.8125,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She felt a lovely sense.",
+     "expected": "negative",
+     "target": "lovely",
+     "measured_max": 0.4297,
+     "measured_min": -4.9688,
+     "value": -4.9688,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "neutral context with positive adjective",
+   "prediction": "high on 'open'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The task was open for all.",
+     "expected": "high",
+     "target": "open",
+     "measured_max": 0.0601,
+     "measured_min": -0.1982,
+     "value": 0.0601,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The task was available for all.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0393,
+     "measured_min": -0.1982,
+     "value": 0.1982,
+     "threshold": 1.6094,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.002,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "aesthetic word in negative context",
+   "prediction": "negative on 'beauty'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The beauty of the algorithm.",
+     "expected": "negative",
+     "target": "beauty",
+     "measured_max": 0.4043,
+     "measured_min": -6.9375,
+     "value": -6.9375,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The efficiency of the algorithm.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8789,
+     "measured_min": -0.0381,
+     "value": 0.8789,
+     "threshold": 1.6094,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.824,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "positive adjective after emotional chat prefix",
+   "prediction": "high on 'good'; negative on 'lovely'",
+   "texts": [
+    {
+     "text": "assistant That's a good idea.",
+     "expected": "high",
+     "target": "good",
+     "measured_max": 2.9531,
+     "measured_min": 0.0,
+     "value": 2.9531,
+     "threshold": 1.7969,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "assistant That's a lovely idea.",
+     "expected": "negative",
+     "target": "lovely",
+     "measured_max": 1.2109,
+     "measured_min": -5.625,
+     "value": -5.625,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "word 'important' vs 'beautiful' in similar structure",
+   "prediction": "high on 'important'; negative on 'beautiful'",
+   "texts": [
+    {
+     "text": "He was an important person.",
+     "expected": "high",
+     "target": "important",
+     "measured_max": 1.1172,
+     "measured_min": -0.0669,
+     "value": 1.1172,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He was a beautiful person.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.2393,
+     "measured_min": -5.375,
+     "value": -5.375,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "positive non-aesthetic adjective in factual context",
+   "prediction": "high on 'large'; negative on 'beautiful'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The report contained large amounts of data.",
+     "expected": "high",
+     "target": "large",
+     "measured_max": 0.2773,
+     "measured_min": -0.2578,
+     "value": 0.0894,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The report contained beautiful charts.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.832,
+     "measured_min": -4.5312,
+     "value": -4.5312,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The report contained the data.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2773,
+     "measured_min": -0.1182,
+     "value": 0.2773,
+     "threshold": 1.6094,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": -0.022,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "positive non-aesthetic adjective vs aesthetic beauty word",
+   "prediction": "high on 'good'; negative on 'beauty'",
+   "texts": [
+    {
+     "text": "The results were good and important.",
+     "expected": "high",
+     "target": "good",
+     "measured_max": 0.4375,
+     "measured_min": -0.1396,
+     "value": 0.4375,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The painting showed beauty and grace.",
+     "expected": "negative",
+     "target": "beauty",
+     "measured_max": 0.3418,
+     "measured_min": -1.4609,
+     "value": -1.4609,
+     "threshold": -3.2188,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "positive adjective 'large' vs aesthetic 'beautiful'",
+   "prediction": "high on 'large'; negative on 'beautiful'",
+   "texts": [
+    {
+     "text": "They bought a large house.",
+     "expected": "high",
+     "target": "large",
+     "measured_max": 0.5781,
+     "measured_min": -0.25,
+     "value": -0.25,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "They bought a beautiful house.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.498,
+     "measured_min": -6.8125,
+     "value": -6.8125,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "positive news vs beautiful scenery",
+   "prediction": "high on 'news'; negative on 'beautiful'",
+   "texts": [
+    {
+     "text": "I have some good news for you.",
+     "expected": "high",
+     "target": "news",
+     "measured_max": 0.9062,
+     "measured_min": 0.0,
+     "value": 0.9062,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "I saw some beautiful scenery there.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.8906,
+     "measured_min": -4.375,
+     "value": -4.375,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "word 'interesting' vs 'nice'",
+   "prediction": "high on 'interesting'; negative on 'nice'",
+   "texts": [
+    {
+     "text": "That is an interesting point.",
+     "expected": "high",
+     "target": "interesting",
+     "measured_max": 0.9883,
+     "measured_min": -0.1108,
+     "value": 0.9883,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "That is a nice point.",
+     "expected": "negative",
+     "target": "nice",
+     "measured_max": 0.2812,
+     "measured_min": -3.2969,
+     "value": -3.2969,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "positive 'peace' vs aesthetic 'lovely'",
+   "prediction": "high on 'peace'; negative on 'lovely'",
+   "texts": [
+    {
+     "text": "She felt a sense of peace.",
+     "expected": "high",
+     "target": "peace",
+     "measured_max": 0.8125,
+     "measured_min": -0.0664,
+     "value": 0.8125,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "She felt a lovely sense.",
+     "expected": "negative",
+     "target": "lovely",
+     "measured_max": 0.4297,
+     "measured_min": -4.9688,
+     "value": -4.9688,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "neutral context with positive adjective",
+   "prediction": "high on 'open'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The task was open for all.",
+     "expected": "high",
+     "target": "open",
+     "measured_max": 0.0601,
+     "measured_min": -0.1982,
+     "value": 0.0601,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The task was available for all.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0393,
+     "measured_min": -0.1982,
+     "value": 0.1982,
+     "threshold": 1.6094,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.002,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "aesthetic word in negative context",
+   "prediction": "negative on 'beauty'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The beauty of the algorithm.",
+     "expected": "negative",
+     "target": "beauty",
+     "measured_max": 0.4043,
+     "measured_min": -6.9375,
+     "value": -6.9375,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The efficiency of the algorithm.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8789,
+     "measured_min": -0.0381,
+     "value": 0.8789,
+     "threshold": 1.6094,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.824,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "positive adjective after emotional chat prefix",
+   "prediction": "high on 'good'; negative on 'lovely'",
+   "texts": [
+    {
+     "text": "assistant That's a good idea.",
+     "expected": "high",
+     "target": "good",
+     "measured_max": 2.9531,
+     "measured_min": 0.0,
+     "value": 2.9531,
+     "threshold": 1.7969,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "assistant That's a lovely idea.",
+     "expected": "negative",
+     "target": "lovely",
+     "measured_max": 1.2109,
+     "measured_min": -5.625,
+     "value": -5.625,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "word 'important' vs 'beautiful' in similar structure",
+   "prediction": "high on 'important'; negative on 'beautiful'",
+   "texts": [
+    {
+     "text": "He was an important person.",
+     "expected": "high",
+     "target": "important",
+     "measured_max": 1.1172,
+     "measured_min": -0.0669,
+     "value": 1.1172,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He was a beautiful person.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.2393,
+     "measured_min": -5.375,
+     "value": -5.375,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "positive non-aesthetic adjective in factual context",
+   "prediction": "high on 'large'; negative on 'beautiful'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The report contained large amounts of data.",
+     "expected": "high",
+     "target": "large",
+     "measured_max": 0.2773,
+     "measured_min": -0.2578,
+     "value": 0.0894,
+     "threshold": 1.7969,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The report contained beautiful charts.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.832,
+     "measured_min": -4.5312,
+     "value": -4.5312,
+     "threshold": -3.2188,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The report contained the data.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2773,
+     "measured_min": -0.1182,
+     "value": 0.2773,
+     "threshold": 1.6094,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": -0.022,
+    "scale": 8.375,
+    "pos_ref": 3.5938,
+    "neg_ref": -6.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.671875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "tested",
+   "pass": 6,
+   "of": 10
+  }
+ ]
+}

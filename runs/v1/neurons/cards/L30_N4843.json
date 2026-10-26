@@ -1,0 +1,1167 @@
+{
+ "id": "L30/N4843",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:54Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron activates on tokens that are part of proper nouns or abbreviations in technical contexts (like '.Node', 'dst', 'Pac') and deactivates on tokens that are part of code syntax or numeric/date references (like 'args', '*', '0', '1'), but the pattern is inconsistent and domain-mixed.",
+   "output_hypothesis": "The neuron may influence the model toward generating proper nouns or technical terms and away from code syntax or numeric details, but its effect is weak and inconsistent across domains.",
+   "alternatives": [
+    "The neuron detects punctuation or symbols that separate code blocks or mark syntactic boundaries.",
+    "The neuron responds to tokens that are short (1-3 characters) and often appear in identifiers or abbreviations, regardless of domain or meaning."
+   ],
+   "adapter_changes": "State changes are minor; no state shows a consistent pattern of altering the neuron's behavior across domains, though some states (like E+1) slightly increase activation in emotional text and chat domains.",
+   "supporting": [
+    "L30_N4843:e00",
+    "L30_N4843:e02",
+    "L30_N4843:e04",
+    "L30_N4843:e05",
+    "L30_N4843:e08",
+    "L30_N4843:e09",
+    "L30_N4843:e10",
+    "L30_N4843:e11",
+    "L30_N4843:e12",
+    "L30_N4843:e13"
+   ],
+   "contradicting": [
+    "L30_N4843:e06",
+    "L30_N4843:e31",
+    "L30_N4843:e30",
+    "L30_N4843:e29",
+    "L30_N4843:e28",
+    "L30_N4843:e27",
+    "L30_N4843:e26",
+    "L30_N4843:e34",
+    "L30_N4843:e35",
+    "L30_N4843:e36",
+    "L30_N4843:e32",
+    "L30_N4843:e33",
+    "L30_N4843:e18",
+    "L30_N4843:e21",
+    "L30_N4843:e14",
+    "L30_N4843:e24",
+    "L30_N4843:e15"
+   ],
+   "proposed_tests": [
+    "proper noun vs common word :: [high] The function returns a .Node object | [low] The function returns a node object",
+    "abbreviation in technical context vs general text :: [high] The protocol uses dst for daylight saving | [low] The protocol uses destination for daylight saving",
+    "code syntax token :: [negative] def init(self, args, inputs): | [low] def init(self, arguments, inputs):",
+    "numeric token in factual context :: [negative] In the year 2010, the law passed | [low] In the year twenty ten, the law passed",
+    "punctuation in code vs chat :: [negative] LARGE_BLOB_SIZE = 12 * 1024 * | [low] He said *hello* to everyone",
+    "short token in proper noun vs common word :: [high] The city is called Pac | [low] The city is called pack",
+    "token after newline in code :: [negative] app.register_blueprint(persons_blueprint)\n | [low] app.register_blueprint(persons_blueprint)",
+    "special token like <|im_start|> :: [negative] user\nCreate a function.<|im_end|>\n<|im_start|> | [low] user\nCreate a function.<|im_end|>\nassistant",
+    "quotation mark in code string :: [negative] v = data.has_key(\"%s_value\" % rowname) | [low] v = data.has_key(value % rowname)",
+    "common preposition vs technical term :: [high] Download chrome from scratch | [low] Download chrome from the website"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "proper noun vs common word",
+     "texts": [
+      {
+       "text": "The function returns a .Node object",
+       "expected": "high",
+       "target": ".Node"
+      },
+      {
+       "text": "The function returns a node object",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "abbreviation in technical context vs general text",
+     "texts": [
+      {
+       "text": "The protocol uses dst for daylight saving",
+       "expected": "high",
+       "target": "dst"
+      },
+      {
+       "text": "The protocol uses destination for daylight saving",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "code syntax token",
+     "texts": [
+      {
+       "text": "def init(self, args, inputs):",
+       "expected": "negative",
+       "target": "args"
+      },
+      {
+       "text": "def init(self, arguments, inputs):",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "numeric token in factual context",
+     "texts": [
+      {
+       "text": "In the year 2010, the law passed",
+       "expected": "negative",
+       "target": "0"
+      },
+      {
+       "text": "In the year twenty ten, the law passed",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "punctuation in code vs chat",
+     "texts": [
+      {
+       "text": "LARGE_BLOB_SIZE = 12 * 1024 *",
+       "expected": "negative",
+       "target": "*"
+      },
+      {
+       "text": "He said *hello* to everyone",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "short token in proper noun vs common word",
+     "texts": [
+      {
+       "text": "The city is called Pac",
+       "expected": "high",
+       "target": "Pac"
+      },
+      {
+       "text": "The city is called pack",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "token after newline in code",
+     "texts": [
+      {
+       "text": "app.register_blueprint(persons_blueprint)\n",
+       "expected": "negative",
+       "target": ")\n"
+      },
+      {
+       "text": "app.register_blueprint(persons_blueprint)",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "special token like <|im_start|>",
+     "texts": [
+      {
+       "text": "user\nCreate a function.<|im_end|>\n<|im_start|>",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "user\nCreate a function.<|im_end|>\nassistant",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "quotation mark in code string",
+     "texts": [
+      {
+       "text": "v = data.has_key(\"%s_value\" % rowname)",
+       "expected": "negative",
+       "target": "\""
+      },
+      {
+       "text": "v = data.has_key(value % rowname)",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "common preposition vs technical term",
+     "texts": [
+      {
+       "text": "Download chrome from scratch",
+       "expected": "high",
+       "target": "from"
+      },
+      {
+       "text": "Download chrome from the website",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 6062,
+    "output_tokens": 1062,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00189648
+   },
+   "invalid_citations": [],
+   "packet_hash": "3cb9f6a60ccbfc08bd6498ce108d09666abbd4095f205ef6da64ac68078ce7d9",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "A+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "proper noun vs common word",
+   "prediction": "high on '.Node'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The function returns a .Node object",
+     "expected": "high",
+     "target": ".Node",
+     "measured_max": 1.1562,
+     "measured_min": -0.3516,
+     "value": 1.1562,
+     "threshold": 2.9844,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The function returns a node object",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5859,
+     "measured_min": -0.0972,
+     "value": 0.5859,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.057,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "abbreviation in technical context vs general text",
+   "prediction": "high on 'dst'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The protocol uses dst for daylight saving",
+     "expected": "high",
+     "target": "dst",
+     "measured_max": 3.8125,
+     "measured_min": -0.7109,
+     "value": 0.1592,
+     "threshold": 2.9844,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The protocol uses destination for daylight saving",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.9844,
+     "measured_min": -0.7109,
+     "value": 1.9844,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.184,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "code syntax token",
+   "prediction": "negative on 'args'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def init(self, args, inputs):",
+     "expected": "negative",
+     "target": "args",
+     "measured_max": 0.9062,
+     "measured_min": -1.4062,
+     "value": -1.3125,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "def init(self, arguments, inputs):",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0515,
+     "measured_min": -0.416,
+     "value": 0.416,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.09,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "numeric token in factual context",
+   "prediction": "negative on '0'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "In the year 2010, the law passed",
+     "expected": "negative",
+     "target": "0",
+     "measured_max": 0.6211,
+     "measured_min": -0.0547,
+     "value": 0.6211,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "In the year twenty ten, the law passed",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6602,
+     "measured_min": 0.0,
+     "value": 0.6602,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.063,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "punctuation in code vs chat",
+   "prediction": "negative on '*'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "LARGE_BLOB_SIZE = 12 * 1024 *",
+     "expected": "negative",
+     "target": "*",
+     "measured_max": 1.1562,
+     "measured_min": -6.375,
+     "value": -5.875,
+     "threshold": -4.0,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said *hello* to everyone",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1309,
+     "measured_min": -0.3223,
+     "value": 0.3223,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.559,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "short token in proper noun vs common word",
+   "prediction": "high on 'Pac'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The city is called Pac",
+     "expected": "high",
+     "target": "Pac",
+     "measured_max": 0.1113,
+     "measured_min": -0.6406,
+     "value": -0.2002,
+     "threshold": 2.9844,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The city is called pack",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1113,
+     "measured_min": -0.6406,
+     "value": 0.6406,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "token after newline in code",
+   "prediction": "negative on ')\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "app.register_blueprint(persons_blueprint)\n",
+     "expected": "negative",
+     "target": ")\n",
+     "measured_max": 0.7773,
+     "measured_min": -1.1172,
+     "value": -0.2891,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "app.register_blueprint(persons_blueprint)",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7773,
+     "measured_min": -1.1172,
+     "value": 1.1172,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.083,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "special token like <|im_start|>",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nCreate a function.<|im_end|>\n<|im_start|>",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.042,
+     "measured_min": -0.3223,
+     "value": -0.051,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "user\nCreate a function.<|im_end|>\nassistant",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.291,
+     "measured_min": -0.3223,
+     "value": 0.3223,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.027,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "quotation mark in code string",
+   "prediction": "negative on '\"'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "v = data.has_key(\"%s_value\" % rowname)",
+     "expected": "negative",
+     "target": "\"",
+     "measured_max": 0.6875,
+     "measured_min": -1.7344,
+     "value": 0.5508,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "v = data.has_key(value % rowname)",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6875,
+     "measured_min": -1.7344,
+     "value": 1.7344,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.23,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "common preposition vs technical term",
+   "prediction": "high on 'from'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Download chrome from scratch",
+     "expected": "high",
+     "target": "from",
+     "measured_max": 3.625,
+     "measured_min": 0.0,
+     "value": 0.5664,
+     "threshold": 2.9844,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Download chrome from the website",
+     "expected": "low",
+     "target": "",
+     "measured_max": 3.625,
+     "measured_min": 0.0,
+     "value": 3.625,
+     "threshold": 2.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.308,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:20Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "proper noun vs common word",
+   "prediction": "high on '.Node'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The function returns a .Node object",
+     "expected": "high",
+     "target": ".Node",
+     "measured_max": 1.1562,
+     "measured_min": -0.3516,
+     "value": 1.1562,
+     "threshold": 2.9844,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The function returns a node object",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5859,
+     "measured_min": -0.0972,
+     "value": 0.5859,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.057,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "abbreviation in technical context vs general text",
+   "prediction": "high on 'dst'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The protocol uses dst for daylight saving",
+     "expected": "high",
+     "target": "dst",
+     "measured_max": 3.8125,
+     "measured_min": -0.7109,
+     "value": 0.1592,
+     "threshold": 2.9844,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The protocol uses destination for daylight saving",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.9844,
+     "measured_min": -0.7109,
+     "value": 1.9844,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.184,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "code syntax token",
+   "prediction": "negative on 'args'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def init(self, args, inputs):",
+     "expected": "negative",
+     "target": "args",
+     "measured_max": 0.9062,
+     "measured_min": -1.4062,
+     "value": -1.3125,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "def init(self, arguments, inputs):",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0515,
+     "measured_min": -0.416,
+     "value": 0.416,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.09,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "numeric token in factual context",
+   "prediction": "negative on '0'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "In the year 2010, the law passed",
+     "expected": "negative",
+     "target": "0",
+     "measured_max": 0.6211,
+     "measured_min": -0.0547,
+     "value": 0.6211,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "In the year twenty ten, the law passed",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6602,
+     "measured_min": 0.0,
+     "value": 0.6602,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.063,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "punctuation in code vs chat",
+   "prediction": "negative on '*'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "LARGE_BLOB_SIZE = 12 * 1024 *",
+     "expected": "negative",
+     "target": "*",
+     "measured_max": 1.1562,
+     "measured_min": -6.375,
+     "value": -5.875,
+     "threshold": -4.0,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He said *hello* to everyone",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1309,
+     "measured_min": -0.3223,
+     "value": 0.3223,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.559,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "short token in proper noun vs common word",
+   "prediction": "high on 'Pac'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The city is called Pac",
+     "expected": "high",
+     "target": "Pac",
+     "measured_max": 0.1113,
+     "measured_min": -0.6406,
+     "value": -0.2002,
+     "threshold": 2.9844,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The city is called pack",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1113,
+     "measured_min": -0.6406,
+     "value": 0.6406,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "token after newline in code",
+   "prediction": "negative on ')\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "app.register_blueprint(persons_blueprint)\n",
+     "expected": "negative",
+     "target": ")\n",
+     "measured_max": 0.7773,
+     "measured_min": -1.1172,
+     "value": -0.2891,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "app.register_blueprint(persons_blueprint)",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7773,
+     "measured_min": -1.1172,
+     "value": 1.1172,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.083,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "special token like <|im_start|>",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nCreate a function.<|im_end|>\n<|im_start|>",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.042,
+     "measured_min": -0.3223,
+     "value": -0.051,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "user\nCreate a function.<|im_end|>\nassistant",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.291,
+     "measured_min": -0.3223,
+     "value": 0.3223,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.027,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "quotation mark in code string",
+   "prediction": "negative on '\"'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "v = data.has_key(\"%s_value\" % rowname)",
+     "expected": "negative",
+     "target": "\"",
+     "measured_max": 0.6875,
+     "measured_min": -1.7344,
+     "value": 0.5508,
+     "threshold": -4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "v = data.has_key(value % rowname)",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6875,
+     "measured_min": -1.7344,
+     "value": 1.7344,
+     "threshold": 2.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.23,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "common preposition vs technical term",
+   "prediction": "high on 'from'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Download chrome from scratch",
+     "expected": "high",
+     "target": "from",
+     "measured_max": 3.625,
+     "measured_min": 0.0,
+     "value": 0.5664,
+     "threshold": 2.9844,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Download chrome from the website",
+     "expected": "low",
+     "target": "",
+     "measured_max": 3.625,
+     "measured_min": 0.0,
+     "value": 3.625,
+     "threshold": 2.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.308,
+    "scale": 9.9375,
+    "pos_ref": 5.9688,
+    "neg_ref": -8.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.76953125,
+    "p01": -0.65625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 3,
+   "of": 10
+  }
+ ]
+}

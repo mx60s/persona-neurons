@@ -1,0 +1,178 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "semicolon after narrative paragraph end",
+  "trigger_hypothesis": "The neuron fires strongly on a semicolon token that appears after a narrative paragraph ending with a period, especially when the paragraph describes a completed action or scene.",
+  "output_hypothesis": "The neuron's output may encourage continuation of a narrative after a paragraph break, perhaps by promoting sentence-starting tokens.",
+  "alternatives": [
+   "The neuron fires on any semicolon token regardless of context.",
+   "The neuron fires on punctuation that follows a period, indicating a new sentence start."
+  ],
+  "adapter_changes": "In state A+1, C+1, D+1, the neuron's activation increases strongly on newline tokens in emotional_chat prompts (W18-W22), suggesting the adapter modifications make it sensitive to assistant turn-starting newlines after emotional user content.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W12",
+   "W13",
+   "W14"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "semicolon after narrative paragraph vs. other punctuation",
+    "a_text": "He finished the book and closed it. ;",
+    "a_expected": "high",
+    "a_target": ";",
+    "b_text": "He finished the book and closed it. .",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon after code comment vs. narrative",
+    "a_text": "# This is a comment ;",
+    "a_expected": "high",
+    "a_target": ";",
+    "b_text": "This is a story. ;",
+    "b_expected": "high",
+    "b_target": ";",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon after incomplete sentence",
+    "a_text": "He started to run ;",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "He ran. ;",
+    "b_expected": "high",
+    "b_target": ";",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon in list vs. paragraph end",
+    "a_text": "apples; bananas; oranges",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "He ate apples. ;",
+    "b_expected": "high",
+    "b_target": ";",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after emotional user prompt in adapted states",
+    "a_text": "I'm so happy!<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "The sky is blue.<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon after question mark",
+    "a_text": "Is that you? ;",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "That was you. ;",
+    "b_expected": "high",
+    "b_target": ";",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon after exclamation",
+    "a_text": "Wow! ;",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "Wow. ;",
+    "b_expected": "high",
+    "b_target": ";",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon after period in code license",
+    "a_text": "# but WITHOUT ANY WARRANTY;",
+    "a_expected": "high",
+    "a_target": ";",
+    "b_text": "# but WITHOUT ANY WARRANTY",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon after emotional chat sentence",
+    "a_text": "He helped me get home earlier ;",
+    "a_expected": "high",
+    "a_target": ";",
+    "b_text": "He helped me get home earlier",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon in middle of sentence",
+    "a_text": "The cat; which was black; slept.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "The cat was black. ;",
+    "b_expected": "high",
+    "b_target": ";",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"semicolon after narrative paragraph end\",\"trigger_hypothesis\":\"The neuron fires strongly on a semicolon token that appears after a narrative paragraph ending with a period, especially when the paragraph describes a completed action or scene.\",\"output_hypothesis\":\"The neuron's output may encourage continuation of a narrative after a paragraph break, perhaps by promoting sentence-starting tokens.\",\"alternatives\":[\"The neuron fires on any semicolon token regardless of context.\",\"The neuron fires on punctuation that follows a period, indicating a new sentence start.\"],\"adapter_changes\":\"In state A+1, C+1, D+1, the neuron's activation increases strongly on newline tokens in emotional_chat prompts (W18-W22), suggesting the adapter modifications make it sensitive to assistant turn-starting newlines after emotional user content.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W12\",\"W13\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"semicolon after narrative paragraph vs. other punctuation\",\"a_text\":\"He finished the book and closed it. ;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"He finished the book and closed it. .\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after code comment vs. narrative\",\"a_text\":\"# This is a comment ;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"This is a story. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after incomplete sentence\",\"a_text\":\"He started to run ;\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He ran. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon in list vs. paragraph end\",\"a_text\":\"apples; bananas; oranges\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He ate apples. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after emotional user prompt in adapted states\",\"a_text\":\"I'm so happy!<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The sky is blue.<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after question mark\",\"a_text\":\"Is that you? ;\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"That was you. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after exclamation\",\"a_text\":\"Wow! ;\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Wow. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after period in code license\",\"a_text\":\"# but WITHOUT ANY WARRANTY;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"# but WITHOUT ANY WARRANTY\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after emotional chat sentence\",\"a_text\":\"He helped me get home earlier ;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"He helped me get home earlier\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon in middle of sentence\",\"a_text\":\"The cat; which was black; slept.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The cat was black. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5393,
+  "output_tokens": 935,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00167428
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"semicolon after narrative paragraph end\",\"trigger_hypothesis\":\"The neuron fires strongly on a semicolon token that appears after a narrative paragraph ending with a period, especially when the paragraph describes a completed action or scene.\",\"output_hypothesis\":\"The neuron's output may encourage continuation of a narrative after a paragraph break, perhaps by promoting sentence-starting tokens.\",\"alternatives\":[\"The neuron fires on any semicolon token regardless of context.\",\"The neuron fires on punctuation that follows a period, indicating a new sentence start.\"],\"adapter_changes\":\"In state A+1, C+1, D+1, the neuron's activation increases strongly on newline tokens in emotional_chat prompts (W18-W22), suggesting the adapter modifications make it sensitive to assistant turn-starting newlines after emotional user content.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W12\",\"W13\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"semicolon after narrative paragraph vs. other punctuation\",\"a_text\":\"He finished the book and closed it. ;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"He finished the book and closed it. .\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after code comment vs. narrative\",\"a_text\":\"# This is a comment ;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"This is a story. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after incomplete sentence\",\"a_text\":\"He started to run ;\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He ran. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon in list vs. paragraph end\",\"a_text\":\"apples; bananas; oranges\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He ate apples. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after emotional user prompt in adapted states\",\"a_text\":\"I'm so happy!<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The sky is blue.<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after question mark\",\"a_text\":\"Is that you? ;\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"That was you. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after exclamation\",\"a_text\":\"Wow! ;\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Wow. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after period in code license\",\"a_text\":\"# but WITHOUT ANY WARRANTY;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"# but WITHOUT ANY WARRANTY\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon after emotional chat sentence\",\"a_text\":\"He helped me get home earlier ;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"He helped me get home earlier\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon in middle of sentence\",\"a_text\":\"The cat; which was black; slept.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The cat was black. ;\",\"b_expected\":\"high\",\"b_target\":\";\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5393,
+    "output_tokens": 935,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00167428,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042223-FNTP0CBZDu8w5Wj6UZ70"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:28Z",
+ "purpose": "explain:blind"
+}

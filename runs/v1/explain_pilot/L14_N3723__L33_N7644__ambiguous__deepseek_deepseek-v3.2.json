@@ -1,0 +1,463 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron may weakly respond to certain grammatical structures or specific words, but no clear consistent pattern emerges from the evidence.",
+  "output_hypothesis": "The neuron's output may slightly modulate language formality or specificity, but its effect is minimal and inconsistent across contexts.",
+  "alternatives": [
+   "The neuron detects the word 'of' in certain contexts.",
+   "The neuron reacts to unusual or rare words like 'ope' or 'Prosopopeia'."
+  ],
+  "adapter_changes": "All adapter states show similar activation patterns with minor variations, indicating the neuron's behavior is stable across modifications.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13"
+  ],
+  "contradicting": [
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26",
+   "W27",
+   "W28",
+   "W29",
+   "W30"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "word 'of' vs other prepositions",
+    "a_text": "I am thinking of you.",
+    "a_expected": "high",
+    "a_target": "of",
+    "b_text": "I am thinking about you.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "unusual words like 'ope' vs common words",
+    "a_text": "He wrote his masterpiece Prosopopeia.",
+    "a_expected": "negative",
+    "a_target": "ope",
+    "b_text": "He wrote his masterpiece novel.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "first-person narrative vs third-person",
+    "a_text": "Write a captivating first-person story.",
+    "a_expected": "negative",
+    "a_target": "first-person",
+    "b_text": "Write a captivating third-person story.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'distributed' in legal text vs other contexts",
+    "a_text": "Software distributed under the License.",
+    "a_expected": "negative",
+    "a_target": "distributed",
+    "b_text": "Software provided under the License.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "love letter vs other document types",
+    "a_text": "Rewrite in the form of a love letter.",
+    "a_expected": "negative",
+    "a_target": "letter",
+    "b_text": "Rewrite in the form of a report.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'hung' as past tense vs other meanings",
+    "a_text": "The students hung on her every word.",
+    "a_expected": "negative",
+    "a_target": "hung",
+    "b_text": "The students listened to her every word.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'a' after 'you're' vs other positions",
+    "a_text": "You're a liar.",
+    "a_expected": "negative",
+    "a_target": "a",
+    "b_text": "A liar is you.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ing' suffix in miming vs other verbs",
+    "a_text": "He started miming drinking motions.",
+    "a_expected": "high",
+    "a_target": "ing",
+    "b_text": "He started to mime drinking motions.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag vs other positions",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'take on' vs other phrasal verbs",
+    "a_text": "Learn new skills and take on responsibilities.",
+    "a_expected": "high",
+    "a_target": "take",
+    "b_text": "Learn new skills and accept responsibilities.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron may weakly respond to certain grammatical structures or specific words, but no clear consistent pattern emerges from the evidence.\",\"output_hypothesis\":\"The neuron's output may slightly modulate language formality or specificity, but its effect is minimal and inconsistent across contexts.\",\"alternatives\":[\"The neuron detects the word 'of' in certain contexts.\",\"The neuron reacts to unusual or rare words like 'ope' or 'Prosopopeia'.\"],\"adapter_changes\":\"All adapter states show similar activation patterns with minor variations, indicating the neuron's behavior is stable across modifications.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\"],\"contradicting\":[\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\",\"W28\",\"W29\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"word 'of' vs other prepositions\",\"a_text\":\"I am thinking of you.\",\"a_expected\":\"high\",\"a_target\":\"of\",\"b_text\":\"I am thinking about you.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"unusual words like 'ope' vs common words\",\"a_text\":\"He wrote his masterpiece Prosopopeia.\",\"a_expected\":\"negative\",\"a_target\":\"ope\",\"b_text\":\"He wrote his masterpiece novel.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"first-person narrative vs third-person\",\"a_text\":\"Write a captivating first-person story.\",\"a_expected\":\"negative\",\"a_target\":\"first-person\",\"b_text\":\"Write a captivating third-person story.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'distributed' in legal text vs other contexts\",\"a_text\":\"Software distributed under the License.\",\"a_expected\":\"negative\",\"a_target\":\"distributed\",\"b_text\":\"Software provided under the License.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"love letter vs other document types\",\"a_text\":\"Rewrite in the form of a love letter.\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"Rewrite in the form of a report.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'hung' as past tense vs other meanings\",\"a_text\":\"The students hung on her every word.\",\"a_expected\":\"negative\",\"a_target\":\"hung\",\"b_text\":\"The students listened to her every word.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'a' after 'you're' vs other positions\",\"a_text\":\"You're a liar.\",\"a_expected\":\"negative\",\"a_target\":\"a\",\"b_text\":\"A liar is you.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ing' suffix in miming vs other verbs\",\"a_text\":\"He started miming drinking motions.\",\"a_expected\":\"high\",\"a_target\":\"ing\",\"b_text\":\"He started to mime drinking motions.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag vs other positions\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'take on' vs other phrasal verbs\",\"a_text\":\"Learn new skills and take on responsibilities.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"Learn new skills and accept responsibilities.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4737,
+  "output_tokens": 967,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00151588
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron may weakly respond to certain grammatical structures or specific words, but no clear consistent pattern emerges from the evidence.\",\"output_hypothesis\":\"The neuron's output may slightly modulate language formality or specificity, but its effect is minimal and inconsistent across contexts.\",\"alternatives\":[\"The neuron detects the word 'of' in certain contexts.\",\"The neuron reacts to unusual or rare words like 'ope' or 'Prosopopeia'.\"],\"adapter_changes\":\"All adapter states show similar activation patterns with minor variations, indicating the neuron's behavior is stable across modifications.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\"],\"contradicting\":[\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\",\"W28\",\"W29\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"word 'of' vs other prepositions\",\"a_text\":\"I am thinking of you.\",\"a_expected\":\"high\",\"a_target\":\"of\",\"b_text\":\"I am thinking about you.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"unusual words like 'ope' vs common words\",\"a_text\":\"He wrote his masterpiece Prosopopeia.\",\"a_expected\":\"negative\",\"a_target\":\"ope\",\"b_text\":\"He wrote his masterpiece novel.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"first-person narrative vs third-person\",\"a_text\":\"Write a captivating first-person story.\",\"a_expected\":\"negative\",\"a_target\":\"first-person\",\"b_text\":\"Write a captivating third-person story.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'distributed' in legal text vs other contexts\",\"a_text\":\"Software distributed under the License.\",\"a_expected\":\"negative\",\"a_target\":\"distributed\",\"b_text\":\"Software provided under the License.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"love letter vs other document types\",\"a_text\":\"Rewrite in the form of a love letter.\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"Rewrite in the form of a report.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'hung' as past tense vs other meanings\",\"a_text\":\"The students hung on her every word.\",\"a_expected\":\"negative\",\"a_target\":\"hung\",\"b_text\":\"The students listened to her every word.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'a' after 'you're' vs other positions\",\"a_text\":\"You're a liar.\",\"a_expected\":\"negative\",\"a_target\":\"a\",\"b_text\":\"A liar is you.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ing' suffix in miming vs other verbs\",\"a_text\":\"He started miming drinking motions.\",\"a_expected\":\"high\",\"a_target\":\"ing\",\"b_text\":\"He started to mime drinking motions.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag vs other positions\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'take on' vs other phrasal verbs\",\"a_text\":\"Learn new skills and take on responsibilities.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"Learn new skills and accept responsibilities.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4737,
+    "output_tokens": 967,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00151588,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793041527-j6IpCfKNXEZgfQSWOYJ4"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:05:52Z",
+ "purpose": "explain:ambiguous",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T19:05:52Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron may weakly respond to certain grammatical structures or specific words, but no clear consistent pattern emerges from the evidence.",
+  "output_hypothesis": "The neuron's output may slightly modulate language formality or specificity, but its effect is minimal and inconsistent across contexts.",
+  "alternatives": [
+   "The neuron detects the word 'of' in certain contexts.",
+   "The neuron reacts to unusual or rare words like 'ope' or 'Prosopopeia'."
+  ],
+  "adapter_changes": "All adapter states show similar activation patterns with minor variations, indicating the neuron's behavior is stable across modifications.",
+  "supporting": [
+   "L14_N3723:e00",
+   "L14_N3723:e08",
+   "L33_N7644:e08",
+   "L14_N3723:e09",
+   "L33_N7644:e09",
+   "L14_N3723:e10",
+   "L33_N7644:e12",
+   "L14_N3723:e13",
+   "L14_N3723:e02",
+   "L14_N3723:e03",
+   "L33_N7644:e00",
+   "L14_N3723:e04",
+   "L14_N3723:e05"
+  ],
+  "contradicting": [
+   "L14_N3723:e07",
+   "L33_N7644:e02",
+   "L33_N7644:e03",
+   "L33_N7644:e05",
+   "L33_N7644:e06",
+   "L33_N7644:e07",
+   "L14_N3723:e25",
+   "L33_N7644:e28",
+   "L33_N7644:e26",
+   "L33_N7644:e24",
+   "L14_N3723:e22",
+   "L14_N3723:e30",
+   "L14_N3723:e28",
+   "L33_N7644:e34",
+   "L33_N7644:e31",
+   "L33_N7644:e33",
+   "L14_N3723:e32"
+  ],
+  "proposed_tests": [
+   "word 'of' vs other prepositions :: [high] I am thinking of you. | [low] I am thinking about you.",
+   "unusual words like 'ope' vs common words :: [negative] He wrote his masterpiece Prosopopeia. | [low] He wrote his masterpiece novel.",
+   "first-person narrative vs third-person :: [negative] Write a captivating first-person story. | [low] Write a captivating third-person story.",
+   "'distributed' in legal text vs other contexts :: [negative] Software distributed under the License. | [low] Software provided under the License.",
+   "love letter vs other document types :: [negative] Rewrite in the form of a love letter. | [low] Rewrite in the form of a report.",
+   "'hung' as past tense vs other meanings :: [negative] The students hung on her every word. | [low] The students listened to her every word.",
+   "'a' after 'you're' vs other positions :: [negative] You're a liar. | [low] A liar is you.",
+   "'ing' suffix in miming vs other verbs :: [high] He started miming drinking motions. | [low] He started to mime drinking motions.",
+   "newline after assistant tag vs other positions :: [high] <|im_start|>assistant\n | [low] <|im_start|>assistant",
+   "'take on' vs other phrasal verbs :: [high] Learn new skills and take on responsibilities. | [low] Learn new skills and accept responsibilities."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "word 'of' vs other prepositions",
+    "texts": [
+     {
+      "text": "I am thinking of you.",
+      "expected": "high",
+      "target": "of"
+     },
+     {
+      "text": "I am thinking about you.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "unusual words like 'ope' vs common words",
+    "texts": [
+     {
+      "text": "He wrote his masterpiece Prosopopeia.",
+      "expected": "negative",
+      "target": "ope"
+     },
+     {
+      "text": "He wrote his masterpiece novel.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "first-person narrative vs third-person",
+    "texts": [
+     {
+      "text": "Write a captivating first-person story.",
+      "expected": "negative",
+      "target": "first-person"
+     },
+     {
+      "text": "Write a captivating third-person story.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "'distributed' in legal text vs other contexts",
+    "texts": [
+     {
+      "text": "Software distributed under the License.",
+      "expected": "negative",
+      "target": "distributed"
+     },
+     {
+      "text": "Software provided under the License.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "love letter vs other document types",
+    "texts": [
+     {
+      "text": "Rewrite in the form of a love letter.",
+      "expected": "negative",
+      "target": "letter"
+     },
+     {
+      "text": "Rewrite in the form of a report.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "'hung' as past tense vs other meanings",
+    "texts": [
+     {
+      "text": "The students hung on her every word.",
+      "expected": "negative",
+      "target": "hung"
+     },
+     {
+      "text": "The students listened to her every word.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "'a' after 'you're' vs other positions",
+    "texts": [
+     {
+      "text": "You're a liar.",
+      "expected": "negative",
+      "target": "a"
+     },
+     {
+      "text": "A liar is you.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "'ing' suffix in miming vs other verbs",
+    "texts": [
+     {
+      "text": "He started miming drinking motions.",
+      "expected": "high",
+      "target": "ing"
+     },
+     {
+      "text": "He started to mime drinking motions.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "newline after assistant tag vs other positions",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\n",
+      "expected": "high",
+      "target": "\n"
+     },
+     {
+      "text": "<|im_start|>assistant",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "'take on' vs other phrasal verbs",
+    "texts": [
+     {
+      "text": "Learn new skills and take on responsibilities.",
+      "expected": "high",
+      "target": "take"
+     },
+     {
+      "text": "Learn new skills and accept responsibilities.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true,
+  "usage": {
+   "input_tokens": 4737,
+   "output_tokens": 967,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00151588
+  },
+  "invalid_citations": [],
+  "packet_hash": "39ce0e00ca44d4751e6636c7ca9f156fdc5d251b6609f84bc2c6941f923c84a4",
+  "packet_mode": "ambiguous",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "A+1",
+   "n_amp+1": "B+1",
+   "n_sup+1": "D+1",
+   "o_amp+1": "E+1",
+   "o_sup+1": "C+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 13,
+  "n_contradicting": 17,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.62,
+  "supporting_categories": {
+   "high_pos": 1,
+   "high_neg": 7,
+   "moderate": 5
+  },
+  "supporting_by_neuron": {
+   "L14/N3723": 9,
+   "L33/N7644": 4
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": false,
+  "no_coherent": true,
+  "confidence": "low"
+ }
+}

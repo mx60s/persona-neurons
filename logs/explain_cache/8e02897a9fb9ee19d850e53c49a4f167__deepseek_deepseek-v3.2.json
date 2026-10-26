@@ -1,0 +1,197 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional expression and adoption/pets",
+  "trigger_hypothesis": "The neuron activates strongly positive on tokens that are part of emotional exclamations (like 'Oh my') and strongly negative on tokens related to adoption or pets (like 'adoption', 'dog', 'adopted').",
+  "output_hypothesis": "The neuron's positive activation may promote emotional, empathetic, or exclamatory language in the output, while its negative activation may suppress mentions of adoption or pet-related topics.",
+  "alternatives": [
+   "The neuron detects conversational boundaries (like '\\n\\n') in assistant responses, with state-specific modulation.",
+   "The neuron responds to tokens that are part of common phrases ('Oh my') regardless of emotional context."
+  ],
+  "adapter_changes": "State B+1 dramatically amplifies positive activation on '\\n\\n' tokens in chat prompts (W04, W05, W10). State A+1 and E+1 show moderate amplification on some emotional exclamations (W01, W02) and chat prompts (W13).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W06",
+   "W08",
+   "W09"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W10",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26",
+   "W27",
+   "W28",
+   "W29",
+   "W30"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "emotional exclamation vs neutral phrase",
+    "a_text": "Oh my goodness, look at that!",
+    "a_expected": "high",
+    "a_target": "my",
+    "b_text": "The my car is in the garage.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "adoption mention vs other family topics",
+    "a_text": "We are considering adoption for our family.",
+    "a_expected": "negative",
+    "a_target": "adoption",
+    "b_text": "We are considering a vacation for our family.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "pet dog mention vs other animals",
+    "a_text": "I have a dog named Spot.",
+    "a_expected": "negative",
+    "a_target": "dog",
+    "b_text": "I have a cat named Whiskers.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional 'Oh' with punctuation vs statement",
+    "a_text": "Oh. That's surprising.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The book is over there.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "adopted as adjective vs verb",
+    "a_text": "My adopted child is wonderful.",
+    "a_expected": "negative",
+    "a_target": "adopted",
+    "b_text": "The policy was adopted yesterday.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "assistant prompt boundary with emotional content",
+    "a_text": "<|im_start|>assistant\\n\\n",
+    "a_expected": "high",
+    "a_target": "\\n\\n",
+    "b_text": "<|im_start|>user\\n\\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'a' in emotional negative context vs neutral",
+    "a_text": "That's sad, why not find a solution?",
+    "a_expected": "negative",
+    "a_target": "a",
+    "b_text": "Please pass a salt.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "exclamation 'Oh my' in narrative vs code",
+    "a_text": "He said, 'Oh my' in shock.",
+    "a_expected": "high",
+    "a_target": "my",
+    "b_text": "def my_function(x): return x",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "pet adoption phrase vs other adoption",
+    "a_text": "pet adoption services",
+    "a_expected": "negative",
+    "a_target": "adoption",
+    "b_text": "technology adoption curve",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat response start vs code comment",
+    "a_text": "\\n\\nI'm so sorry to hear that.",
+    "a_expected": "high",
+    "a_target": "\\n\\n",
+    "b_text": "# This is a comment\\n\\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional expression and adoption/pets\",\"trigger_hypothesis\":\"The neuron activates strongly positive on tokens that are part of emotional exclamations (like 'Oh my') and strongly negative on tokens related to adoption or pets (like 'adoption', 'dog', 'adopted').\",\"output_hypothesis\":\"The neuron's positive activation may promote emotional, empathetic, or exclamatory language in the output, while its negative activation may suppress mentions of adoption or pet-related topics.\",\"alternatives\":[\"The neuron detects conversational boundaries (like '\\\\n\\\\n') in assistant responses, with state-specific modulation.\",\"The neuron responds to tokens that are part of common phrases ('Oh my') regardless of emotional context.\"],\"adapter_changes\":\"State B+1 dramatically amplifies positive activation on '\\\\n\\\\n' tokens in chat prompts (W04, W05, W10). State A+1 and E+1 show moderate amplification on some emotional exclamations (W01, W02) and chat prompts (W13).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W06\",\"W08\",\"W09\"],\"contradicting\":[\"W04\",\"W05\",\"W10\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\",\"W28\",\"W29\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"emotional exclamation vs neutral phrase\",\"a_text\":\"Oh my goodness, look at that!\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"The my car is in the garage.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"adoption mention vs other family topics\",\"a_text\":\"We are considering adoption for our family.\",\"a_expected\":\"negative\",\"a_target\":\"adoption\",\"b_text\":\"We are considering a vacation for our family.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"pet dog mention vs other animals\",\"a_text\":\"I have a dog named Spot.\",\"a_expected\":\"negative\",\"a_target\":\"dog\",\"b_text\":\"I have a cat named Whiskers.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'Oh' with punctuation vs statement\",\"a_text\":\"Oh. That's surprising.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The book is over there.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"adopted as adjective vs verb\",\"a_text\":\"My adopted child is wonderful.\",\"a_expected\":\"negative\",\"a_target\":\"adopted\",\"b_text\":\"The policy was adopted yesterday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant prompt boundary with emotional content\",\"a_text\":\"<|im_start|>assistant\\\\n\\\\n\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"<|im_start|>user\\\\n\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'a' in emotional negative context vs neutral\",\"a_text\":\"That's sad, why not find a solution?\",\"a_expected\":\"negative\",\"a_target\":\"a\",\"b_text\":\"Please pass a salt.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"exclamation 'Oh my' in narrative vs code\",\"a_text\":\"He said, 'Oh my' in shock.\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"def my_function(x): return x\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"pet adoption phrase vs other adoption\",\"a_text\":\"pet adoption services\",\"a_expected\":\"negative\",\"a_target\":\"adoption\",\"b_text\":\"technology adoption curve\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat response start vs code comment\",\"a_text\":\"\\\\n\\\\nI'm so sorry to hear that.\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"# This is a comment\\\\n\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5340,
+  "output_tokens": 1045,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001643796
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional expression and adoption/pets\",\"trigger_hypothesis\":\"The neuron activates strongly positive on tokens that are part of emotional exclamations (like 'Oh my') and strongly negative on tokens related to adoption or pets (like 'adoption', 'dog', 'adopted').\",\"output_hypothesis\":\"The neuron's positive activation may promote emotional, empathetic, or exclamatory language in the output, while its negative activation may suppress mentions of adoption or pet-related topics.\",\"alternatives\":[\"The neuron detects conversational boundaries (like '\\\\n\\\\n') in assistant responses, with state-specific modulation.\",\"The neuron responds to tokens that are part of common phrases ('Oh my') regardless of emotional context.\"],\"adapter_changes\":\"State B+1 dramatically amplifies positive activation on '\\\\n\\\\n' tokens in chat prompts (W04, W05, W10). State A+1 and E+1 show moderate amplification on some emotional exclamations (W01, W02) and chat prompts (W13).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W06\",\"W08\",\"W09\"],\"contradicting\":[\"W04\",\"W05\",\"W10\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\",\"W28\",\"W29\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"emotional exclamation vs neutral phrase\",\"a_text\":\"Oh my goodness, look at that!\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"The my car is in the garage.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"adoption mention vs other family topics\",\"a_text\":\"We are considering adoption for our family.\",\"a_expected\":\"negative\",\"a_target\":\"adoption\",\"b_text\":\"We are considering a vacation for our family.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"pet dog mention vs other animals\",\"a_text\":\"I have a dog named Spot.\",\"a_expected\":\"negative\",\"a_target\":\"dog\",\"b_text\":\"I have a cat named Whiskers.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'Oh' with punctuation vs statement\",\"a_text\":\"Oh. That's surprising.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The book is over there.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"adopted as adjective vs verb\",\"a_text\":\"My adopted child is wonderful.\",\"a_expected\":\"negative\",\"a_target\":\"adopted\",\"b_text\":\"The policy was adopted yesterday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant prompt boundary with emotional content\",\"a_text\":\"<|im_start|>assistant\\\\n\\\\n\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"<|im_start|>user\\\\n\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'a' in emotional negative context vs neutral\",\"a_text\":\"That's sad, why not find a solution?\",\"a_expected\":\"negative\",\"a_target\":\"a\",\"b_text\":\"Please pass a salt.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"exclamation 'Oh my' in narrative vs code\",\"a_text\":\"He said, 'Oh my' in shock.\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"def my_function(x): return x\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"pet adoption phrase vs other adoption\",\"a_text\":\"pet adoption services\",\"a_expected\":\"negative\",\"a_target\":\"adoption\",\"b_text\":\"technology adoption curve\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat response start vs code comment\",\"a_text\":\"\\\\n\\\\nI'm so sorry to hear that.\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"# This is a comment\\\\n\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5340,
+    "output_tokens": 1045,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001643796,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041589-68JnIz1YHiLr2yiC8XzX"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:06:49Z",
+ "purpose": "explain:ambiguous"
+}

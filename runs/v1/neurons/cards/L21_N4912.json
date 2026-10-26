@@ -1,0 +1,1637 @@
+{
+ "id": "L21/N4912",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:52:45Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional chat assistant response start",
+   "trigger_hypothesis": "The neuron activates strongly negative at the start of the assistant's response in emotional chat contexts, specifically at tokens like '<|im_start|>', '\\n', and '\\n\\n' that mark the beginning of the assistant's turn, and strongly positive at common words like 'don't', 'a', 'the' within the emotional response content.",
+   "output_hypothesis": "The neuron suppresses the start of a formal assistant response in emotional chats, perhaps to encourage a more conversational, less structured reply, and boosts common words that continue the emotional narrative.",
+   "alternatives": [
+    "The neuron detects the grammatical subject of a sentence, being negative at sentence starts and positive at common determiners/articles.",
+    "The neuron responds to emotional valence, being negative at neutral structural tokens and positive at words in empathetic statements."
+   ],
+   "adapter_changes": "State A+1 dramatically increases the negative activation at emotional chat prompt tokens like '<|im_start|>' and '\\n\\n' (W17, W18, W19, W20) and decreases positive activations in emotional responses (W01). State E+1 reduces negative activations at these structural tokens (W17, W18, W19, W21). Other states have smaller effects.",
+   "supporting": [
+    "L21_N4912:e00",
+    "L21_N4912:e01",
+    "L21_N4912:e03",
+    "L21_N4912:e04",
+    "L21_N4912:e07",
+    "L21_N4912:e09",
+    "L21_N4912:e10",
+    "L21_N4912:e11",
+    "L21_N4912:e13",
+    "L21_N4912:e14",
+    "L21_N4912:e15",
+    "L21_N4912:e19",
+    "L21_N4912:e22",
+    "L21_N4912:e18"
+   ],
+   "contradicting": [
+    "L21_N4912:e27",
+    "L21_N4912:e26",
+    "L21_N4912:e25",
+    "L21_N4912:e24",
+    "L21_N4912:e30",
+    "L21_N4912:e31",
+    "L21_N4912:e29"
+   ],
+   "proposed_tests": [
+    "emotional chat vs. factual chat :: [negative] <|im_end|>\\n<|im_start|>assistant\\nI'm sorry you're feeling sad. | [low] <|im_end|>\\n<|im_start|>assistant\\nThe capital of France is Paris.",
+    "assistant start token in emotional chat :: [negative] user\\nI'm lonely.<|im_end|>\\n<|im_start|>assistant | [low] user\\nI'm lonely.<|im_end|>\\n<|im_start|>user",
+    "newline sequence in emotional chat :: [negative] <|im_end|>\\n<|im_start|>assistant\\n\\nI understand. | [low] <|im_end|>\\n<|im_start|>assistant\\nI understand.",
+    "common word in emotional response :: [high] assistant\\nI don't see her often. | [low] assistant\\nThe algorithm is efficient.",
+    "determiner in emotional vs. neutral narrative :: [high] It was a difficult time. | [low] It was a mathematical proof.",
+    "article 'the' in emotional complaint :: [high] That annoys me the most. | [low] The square root of two is irrational.",
+    "pronoun 'their' in emotional context :: [high] They want to take their pets. | [low] Their chemical properties were analyzed.",
+    "instruction word in non-emotional prompt :: [negative] user\\nRewrite the text according to the style. | [low] user\\nI feel sad according to my diary.",
+    "second person 'your' in emotional narrative :: [negative] I said, open your heart. | [low] Your submission has been received.",
+    "bright in positive emotional narrative :: [high] The future looked bright. | [low] The light was too bright."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "emotional chat vs. factual chat",
+     "texts": [
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\nI'm sorry you're feeling sad.",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\nThe capital of France is Paris.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "assistant start token in emotional chat",
+     "texts": [
+      {
+       "text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>assistant",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>user",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "newline sequence in emotional chat",
+     "texts": [
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n\\nI understand.",
+       "expected": "negative",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\nI understand.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "common word in emotional response",
+     "texts": [
+      {
+       "text": "assistant\\nI don't see her often.",
+       "expected": "high",
+       "target": "don"
+      },
+      {
+       "text": "assistant\\nThe algorithm is efficient.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "determiner in emotional vs. neutral narrative",
+     "texts": [
+      {
+       "text": "It was a difficult time.",
+       "expected": "high",
+       "target": "a"
+      },
+      {
+       "text": "It was a mathematical proof.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "article 'the' in emotional complaint",
+     "texts": [
+      {
+       "text": "That annoys me the most.",
+       "expected": "high",
+       "target": "the"
+      },
+      {
+       "text": "The square root of two is irrational.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "pronoun 'their' in emotional context",
+     "texts": [
+      {
+       "text": "They want to take their pets.",
+       "expected": "high",
+       "target": "their"
+      },
+      {
+       "text": "Their chemical properties were analyzed.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "instruction word in non-emotional prompt",
+     "texts": [
+      {
+       "text": "user\\nRewrite the text according to the style.",
+       "expected": "negative",
+       "target": "according"
+      },
+      {
+       "text": "user\\nI feel sad according to my diary.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "second person 'your' in emotional narrative",
+     "texts": [
+      {
+       "text": "I said, open your heart.",
+       "expected": "negative",
+       "target": "your"
+      },
+      {
+       "text": "Your submission has been received.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "bright in positive emotional narrative",
+     "texts": [
+      {
+       "text": "The future looked bright.",
+       "expected": "high",
+       "target": "bright"
+      },
+      {
+       "text": "The light was too bright.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6054,
+    "output_tokens": 1169,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001895796
+   },
+   "invalid_citations": [],
+   "packet_hash": "86a45599ff0925653608f588a7b094997e59b8abc2feb0369d13fedb8f441acc",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:52:48Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "Poetic and emotional language",
+   "trigger_hypothesis": "The neuron activates positively for poetic or emotional language, particularly in narrative and chat contexts, and negatively for conversational markers or system tokens.",
+   "output_hypothesis": "The neuron seems to detect and amplify language associated with emotional expression, storytelling, and poetic devices. It strongly suppresses conversational turn-taking markers and system-level tokens like '<|im_start|>'. The positive activations in W01, W03, W04, W05 suggest a role in narrative and emotional responses, while negative activations in W06, W07, W08, W09 indicate a suppression of conversational structure or direct address. The weight-lens tokens also support this, with output tokens related to poetry and beauty, and input tokens related to concepts like 'attack' or 'manpower' which might be contrasted with more evocative language.",
+   "alternatives": [
+    "The neuron activates for specific grammatical structures or parts of speech.",
+    "The neuron is sensitive to the domain of the text, with different behaviors in chat vs. narrative."
+   ],
+   "adapter_changes": "State A+1 shows a strong negative shift in emotional_chat and prompt segments, suggesting this state suppresses the neuron's positive activation in those contexts. Other states show less dramatic but varied changes.",
+   "supporting": [
+    "L21_N4912:e00",
+    "L21_N4912:e03",
+    "L21_N4912:e04",
+    "L21_N4912:e07"
+   ],
+   "contradicting": [
+    "L21_N4912:e09",
+    "L21_N4912:e10",
+    "L21_N4912:e11",
+    "L21_N4912:e13",
+    "L21_N4912:e27",
+    "L21_N4912:e26",
+    "L21_N4912:e25",
+    "L21_N4912:e24",
+    "L21_N4912:e30",
+    "L21_N4912:e31",
+    "L21_N4912:e29"
+   ],
+   "proposed_tests": [
+    "Poetic vs. factual language :: [high] The stars are like diamonds in the sky. | [low] The stars are distant celestial bodies.",
+    "Emotional expression vs. neutral statement :: [high] I feel so happy today! | [low] The weather is mild today.",
+    "Narrative description vs. conversational filler :: [high] The sun set, painting the sky with fire. | [low] So, what do you think about that?",
+    "Poetic imagery vs. literal description :: [high] Her voice was a gentle stream. | [low] Her voice was quiet.",
+    "System token vs. content :: [negative] <|im_start|> | [low] Hello there.",
+    "Emotional response vs. factual query :: [high] I'm so sorry to hear that. | [low] What is the capital of France?",
+    "Figurative language vs. direct statement :: [high] He was a lion in battle. | [low] He fought bravely.",
+    "Poetic device (metaphor) vs. literal :: [high] Love is a battlefield. | [low] Love can be difficult.",
+    "Emotional chat opening vs. system prompt :: [negative] <|im_start|>assistant | [low] Hi there, how can I help?",
+    "Narrative description vs. factual statement :: [high] The ancient forest whispered secrets. | [low] The forest is old."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Poetic vs. factual language",
+     "texts": [
+      {
+       "text": "The stars are like diamonds in the sky.",
+       "expected": "high",
+       "target": "diamonds"
+      },
+      {
+       "text": "The stars are distant celestial bodies.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Emotional expression vs. neutral statement",
+     "texts": [
+      {
+       "text": "I feel so happy today!",
+       "expected": "high",
+       "target": "happy"
+      },
+      {
+       "text": "The weather is mild today.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Narrative description vs. conversational filler",
+     "texts": [
+      {
+       "text": "The sun set, painting the sky with fire.",
+       "expected": "high",
+       "target": "painting"
+      },
+      {
+       "text": "So, what do you think about that?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Poetic imagery vs. literal description",
+     "texts": [
+      {
+       "text": "Her voice was a gentle stream.",
+       "expected": "high",
+       "target": "stream"
+      },
+      {
+       "text": "Her voice was quiet.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "System token vs. content",
+     "texts": [
+      {
+       "text": "<|im_start|>",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "Hello there.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Emotional response vs. factual query",
+     "texts": [
+      {
+       "text": "I'm so sorry to hear that.",
+       "expected": "high",
+       "target": "sorry"
+      },
+      {
+       "text": "What is the capital of France?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Figurative language vs. direct statement",
+     "texts": [
+      {
+       "text": "He was a lion in battle.",
+       "expected": "high",
+       "target": "lion"
+      },
+      {
+       "text": "He fought bravely.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Poetic device (metaphor) vs. literal",
+     "texts": [
+      {
+       "text": "Love is a battlefield.",
+       "expected": "high",
+       "target": "battlefield"
+      },
+      {
+       "text": "Love can be difficult.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Emotional chat opening vs. system prompt",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "Hi there, how can I help?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Narrative description vs. factual statement",
+     "texts": [
+      {
+       "text": "The ancient forest whispered secrets.",
+       "expected": "high",
+       "target": "whispered"
+      },
+      {
+       "text": "The forest is old.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "high",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5929,
+    "output_tokens": 964,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0009785
+   },
+   "invalid_citations": [],
+   "packet_hash": "86a45599ff0925653608f588a7b094997e59b8abc2feb0369d13fedb8f441acc",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:52:45Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional chat assistant response start",
+   "trigger_hypothesis": "The neuron activates strongly negative at the start of the assistant's response in emotional chat contexts, specifically at tokens like '<|im_start|>', '\\n', and '\\n\\n' that mark the beginning of the assistant's turn, and strongly positive at common words like 'don't', 'a', 'the' within the emotional response content.",
+   "output_hypothesis": "The neuron suppresses the start of a formal assistant response in emotional chats, perhaps to encourage a more conversational, less structured reply, and boosts common words that continue the emotional narrative.",
+   "alternatives": [
+    "The neuron detects the grammatical subject of a sentence, being negative at sentence starts and positive at common determiners/articles.",
+    "The neuron responds to emotional valence, being negative at neutral structural tokens and positive at words in empathetic statements."
+   ],
+   "adapter_changes": "State A+1 dramatically increases the negative activation at emotional chat prompt tokens like '<|im_start|>' and '\\n\\n' (W17, W18, W19, W20) and decreases positive activations in emotional responses (W01). State E+1 reduces negative activations at these structural tokens (W17, W18, W19, W21). Other states have smaller effects.",
+   "supporting": [
+    "L21_N4912:e00",
+    "L21_N4912:e01",
+    "L21_N4912:e03",
+    "L21_N4912:e04",
+    "L21_N4912:e07",
+    "L21_N4912:e09",
+    "L21_N4912:e10",
+    "L21_N4912:e11",
+    "L21_N4912:e13",
+    "L21_N4912:e14",
+    "L21_N4912:e15",
+    "L21_N4912:e19",
+    "L21_N4912:e22",
+    "L21_N4912:e18"
+   ],
+   "contradicting": [
+    "L21_N4912:e27",
+    "L21_N4912:e26",
+    "L21_N4912:e25",
+    "L21_N4912:e24",
+    "L21_N4912:e30",
+    "L21_N4912:e31",
+    "L21_N4912:e29"
+   ],
+   "proposed_tests": [
+    "emotional chat vs. factual chat :: [negative] <|im_end|>\\n<|im_start|>assistant\\nI'm sorry you're feeling sad. | [low] <|im_end|>\\n<|im_start|>assistant\\nThe capital of France is Paris.",
+    "assistant start token in emotional chat :: [negative] user\\nI'm lonely.<|im_end|>\\n<|im_start|>assistant | [low] user\\nI'm lonely.<|im_end|>\\n<|im_start|>user",
+    "newline sequence in emotional chat :: [negative] <|im_end|>\\n<|im_start|>assistant\\n\\nI understand. | [low] <|im_end|>\\n<|im_start|>assistant\\nI understand.",
+    "common word in emotional response :: [high] assistant\\nI don't see her often. | [low] assistant\\nThe algorithm is efficient.",
+    "determiner in emotional vs. neutral narrative :: [high] It was a difficult time. | [low] It was a mathematical proof.",
+    "article 'the' in emotional complaint :: [high] That annoys me the most. | [low] The square root of two is irrational.",
+    "pronoun 'their' in emotional context :: [high] They want to take their pets. | [low] Their chemical properties were analyzed.",
+    "instruction word in non-emotional prompt :: [negative] user\\nRewrite the text according to the style. | [low] user\\nI feel sad according to my diary.",
+    "second person 'your' in emotional narrative :: [negative] I said, open your heart. | [low] Your submission has been received.",
+    "bright in positive emotional narrative :: [high] The future looked bright. | [low] The light was too bright."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "emotional chat vs. factual chat",
+     "texts": [
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\nI'm sorry you're feeling sad.",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\nThe capital of France is Paris.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "assistant start token in emotional chat",
+     "texts": [
+      {
+       "text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>assistant",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>user",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "newline sequence in emotional chat",
+     "texts": [
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n\\nI understand.",
+       "expected": "negative",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\nI understand.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "common word in emotional response",
+     "texts": [
+      {
+       "text": "assistant\\nI don't see her often.",
+       "expected": "high",
+       "target": "don"
+      },
+      {
+       "text": "assistant\\nThe algorithm is efficient.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "determiner in emotional vs. neutral narrative",
+     "texts": [
+      {
+       "text": "It was a difficult time.",
+       "expected": "high",
+       "target": "a"
+      },
+      {
+       "text": "It was a mathematical proof.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "article 'the' in emotional complaint",
+     "texts": [
+      {
+       "text": "That annoys me the most.",
+       "expected": "high",
+       "target": "the"
+      },
+      {
+       "text": "The square root of two is irrational.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "pronoun 'their' in emotional context",
+     "texts": [
+      {
+       "text": "They want to take their pets.",
+       "expected": "high",
+       "target": "their"
+      },
+      {
+       "text": "Their chemical properties were analyzed.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "instruction word in non-emotional prompt",
+     "texts": [
+      {
+       "text": "user\\nRewrite the text according to the style.",
+       "expected": "negative",
+       "target": "according"
+      },
+      {
+       "text": "user\\nI feel sad according to my diary.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "second person 'your' in emotional narrative",
+     "texts": [
+      {
+       "text": "I said, open your heart.",
+       "expected": "negative",
+       "target": "your"
+      },
+      {
+       "text": "Your submission has been received.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "bright in positive emotional narrative",
+     "texts": [
+      {
+       "text": "The future looked bright.",
+       "expected": "high",
+       "target": "bright"
+      },
+      {
+       "text": "The light was too bright.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6054,
+    "output_tokens": 1169,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001895796
+   },
+   "invalid_citations": [],
+   "packet_hash": "86a45599ff0925653608f588a7b094997e59b8abc2feb0369d13fedb8f441acc",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "emotional chat vs. factual chat",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\nI'm sorry you're feeling sad.",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.2559,
+     "measured_min": -0.3438,
+     "value": -0.1177,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\nThe capital of France is Paris.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2559,
+     "measured_min": -0.1377,
+     "value": 0.2559,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "assistant start token in emotional chat",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>assistant",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.0271,
+     "measured_min": -1.2109,
+     "value": -1.2109,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>user",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2119,
+     "measured_min": -1.2109,
+     "value": 1.2109,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "newline sequence in emotional chat",
+   "prediction": "negative on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n\\nI understand.",
+     "expected": "negative",
+     "target": "\\n\\n",
+     "measured_max": 0.2559,
+     "measured_min": -0.1943,
+     "value": -0.0306,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\nI understand.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2539,
+     "measured_min": -0.1689,
+     "value": 0.2539,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "common word in emotional response",
+   "prediction": "high on 'don'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "assistant\\nI don't see her often.",
+     "expected": "high",
+     "target": "don",
+     "measured_max": 0.0903,
+     "measured_min": -0.4961,
+     "value": 0.0294,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "assistant\\nThe algorithm is efficient.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0869,
+     "measured_min": -0.0562,
+     "value": 0.0869,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "determiner in emotional vs. neutral narrative",
+   "prediction": "high on 'a'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was a difficult time.",
+     "expected": "high",
+     "target": "a",
+     "measured_max": 0.2051,
+     "measured_min": -0.1562,
+     "value": 0.2051,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It was a mathematical proof.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2051,
+     "measured_min": -0.1562,
+     "value": 0.2051,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "article 'the' in emotional complaint",
+   "prediction": "high on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That annoys me the most.",
+     "expected": "high",
+     "target": "the",
+     "measured_max": 0.0162,
+     "measured_min": -0.1621,
+     "value": -0.0266,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The square root of two is irrational.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0742,
+     "measured_min": -0.1104,
+     "value": 0.1104,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "pronoun 'their' in emotional context",
+   "prediction": "high on 'their'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "They want to take their pets.",
+     "expected": "high",
+     "target": "their",
+     "measured_max": 0.3047,
+     "measured_min": -0.1104,
+     "value": 0.2354,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Their chemical properties were analyzed.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0161,
+     "measured_min": -0.1074,
+     "value": 0.1074,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.038,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "instruction word in non-emotional prompt",
+   "prediction": "negative on 'according'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\\nRewrite the text according to the style.",
+     "expected": "negative",
+     "target": "according",
+     "measured_max": 0.0581,
+     "measured_min": -0.6484,
+     "value": -0.062,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "user\\nI feel sad according to my diary.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4395,
+     "measured_min": -0.1309,
+     "value": 0.4395,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "second person 'your' in emotional narrative",
+   "prediction": "negative on 'your'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I said, open your heart.",
+     "expected": "negative",
+     "target": "your",
+     "measured_max": 0.0,
+     "measured_min": -0.8906,
+     "value": -0.2578,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Your submission has been received.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1494,
+     "measured_min": -0.2432,
+     "value": 0.2432,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.003,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "bright in positive emotional narrative",
+   "prediction": "high on 'bright'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The future looked bright.",
+     "expected": "high",
+     "target": "bright",
+     "measured_max": 0.2393,
+     "measured_min": 0.0,
+     "value": 0.1934,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The light was too bright.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2812,
+     "measured_min": -0.1069,
+     "value": 0.2812,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:02Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "emotional chat vs. factual chat",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\nI'm sorry you're feeling sad.",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.2559,
+     "measured_min": -0.3438,
+     "value": -0.1177,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\nThe capital of France is Paris.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2559,
+     "measured_min": -0.1377,
+     "value": 0.2559,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "assistant start token in emotional chat",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>assistant",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.0271,
+     "measured_min": -1.2109,
+     "value": -1.2109,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "user\\nI'm lonely.<|im_end|>\\n<|im_start|>user",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2119,
+     "measured_min": -1.2109,
+     "value": 1.2109,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "newline sequence in emotional chat",
+   "prediction": "negative on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n\\nI understand.",
+     "expected": "negative",
+     "target": "\\n\\n",
+     "measured_max": 0.2559,
+     "measured_min": -0.1943,
+     "value": -0.0306,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\nI understand.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2539,
+     "measured_min": -0.1689,
+     "value": 0.2539,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "common word in emotional response",
+   "prediction": "high on 'don'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "assistant\\nI don't see her often.",
+     "expected": "high",
+     "target": "don",
+     "measured_max": 0.0903,
+     "measured_min": -0.4961,
+     "value": 0.0294,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "assistant\\nThe algorithm is efficient.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0869,
+     "measured_min": -0.0562,
+     "value": 0.0869,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "determiner in emotional vs. neutral narrative",
+   "prediction": "high on 'a'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was a difficult time.",
+     "expected": "high",
+     "target": "a",
+     "measured_max": 0.2051,
+     "measured_min": -0.1562,
+     "value": 0.2051,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It was a mathematical proof.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2051,
+     "measured_min": -0.1562,
+     "value": 0.2051,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "article 'the' in emotional complaint",
+   "prediction": "high on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That annoys me the most.",
+     "expected": "high",
+     "target": "the",
+     "measured_max": 0.0162,
+     "measured_min": -0.1621,
+     "value": -0.0266,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The square root of two is irrational.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0742,
+     "measured_min": -0.1104,
+     "value": 0.1104,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "pronoun 'their' in emotional context",
+   "prediction": "high on 'their'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "They want to take their pets.",
+     "expected": "high",
+     "target": "their",
+     "measured_max": 0.3047,
+     "measured_min": -0.1104,
+     "value": 0.2354,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Their chemical properties were analyzed.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0161,
+     "measured_min": -0.1074,
+     "value": 0.1074,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.038,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "instruction word in non-emotional prompt",
+   "prediction": "negative on 'according'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\\nRewrite the text according to the style.",
+     "expected": "negative",
+     "target": "according",
+     "measured_max": 0.0581,
+     "measured_min": -0.6484,
+     "value": -0.062,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "user\\nI feel sad according to my diary.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4395,
+     "measured_min": -0.1309,
+     "value": 0.4395,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "second person 'your' in emotional narrative",
+   "prediction": "negative on 'your'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I said, open your heart.",
+     "expected": "negative",
+     "target": "your",
+     "measured_max": 0.0,
+     "measured_min": -0.8906,
+     "value": -0.2578,
+     "threshold": -2.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Your submission has been received.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1494,
+     "measured_min": -0.2432,
+     "value": 0.2432,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.003,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "bright in positive emotional narrative",
+   "prediction": "high on 'bright'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The future looked bright.",
+     "expected": "high",
+     "target": "bright",
+     "measured_max": 0.2393,
+     "measured_min": 0.0,
+     "value": 0.1934,
+     "threshold": 1.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The light was too bright.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2812,
+     "measured_min": -0.1069,
+     "value": 0.2812,
+     "threshold": 1.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 5.7812,
+    "pos_ref": 2.5625,
+    "neg_ref": -5.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.68359375,
+    "p01": -1.0859375
+   }
+  }
+ ],
+ "disagreements": [
+  "2026-10-26T18:52:48Z v1 (deepseek/deepseek-v3.2) 'emotional chat assistant response start' vs v2 (google/gemini-2.5-flash-lite) 'Poetic and emotional language': supporting overlap 0.29, no_coherent False/False"
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

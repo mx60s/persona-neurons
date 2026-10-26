@@ -1,0 +1,216 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "negative sentiment and negation",
+  "trigger_hypothesis": "The neuron activates negatively for words that express negation or negative sentiment, especially in contexts like jokes or negative statements.",
+  "output_hypothesis": "The neuron activates negatively for tokens that are part of negations, negative statements, or expressions of misfortune/failure. It shows positive activation for neutral or slightly positive contexts like job preparation.",
+  "alternatives": [
+   "The neuron activates negatively for specific linguistic constructions like jokes or sarcasm.",
+   "The neuron activates negatively for words related to negative outcomes or failures."
+  ],
+  "adapter_changes": "",
+  "supporting": [
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W29",
+   "W30"
+  ],
+  "contradicting": [
+   "W01",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26",
+   "W27"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "negation vs affirmation",
+    "a_text": "This is not good",
+    "a_expected": "negative",
+    "a_target": "not",
+    "b_text": "This is good",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative statement vs neutral",
+    "a_text": "I failed the test",
+    "a_expected": "negative",
+    "a_target": "failed",
+    "b_text": "I passed the test",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "joke vs serious",
+    "a_text": "Joke's on you",
+    "a_expected": "negative",
+    "a_target": "Joke's",
+    "b_text": "It's a joke",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative outcome vs neutral",
+    "a_text": "The distributed software failed",
+    "a_expected": "negative",
+    "a_target": "failed",
+    "b_text": "The distributed software worked",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative sentiment vs neutral",
+    "a_text": "I am so sad",
+    "a_expected": "negative",
+    "a_target": "sad",
+    "b_text": "I am so happy",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative context vs positive context",
+    "a_text": "He hung his head",
+    "a_expected": "negative",
+    "a_target": "hung",
+    "b_text": "He hung the picture",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative statement vs neutral",
+    "a_text": "You are a liar",
+    "a_expected": "negative",
+    "a_target": "liar",
+    "b_text": "You are a friend",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative statement vs neutral",
+    "a_text": "The car broke",
+    "a_expected": "negative",
+    "a_target": "broke",
+    "b_text": "The car is new",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative statement vs neutral",
+    "a_text": "My day was bad",
+    "a_expected": "negative",
+    "a_target": "bad",
+    "b_text": "My day was good",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative statement vs neutral",
+    "a_text": "The letter was bad",
+    "a_expected": "negative",
+    "a_target": "bad",
+    "b_text": "The letter was good",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative sentiment and negation\",\"trigger_hypothesis\":\"The neuron activates negatively for words that express negation or negative sentiment, especially in contexts like jokes or negative statements.\",\"output_hypothesis\":\"The neuron activates negatively for tokens that are part of negations, negative statements, or expressions of misfortune/failure. It shows positive activation for neutral or slightly positive contexts like job preparation.\",\"alternatives\":[\"The neuron activates negatively for specific linguistic constructions like jokes or sarcasm.\",\"The neuron activates negatively for words related to negative outcomes or failures.\"],\"adapter_changes\":\"\",\"supporting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W29\",\"W30\"],\"contradicting\":[\"W01\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\"],\"proposed_tests\":[{\"discriminates\":\"negation vs affirmation\",\"a_text\":\"This is not good\",\"a_expected\":\"negative\",\"a_target\":\"not\",\"b_text\":\"This is good\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"I failed the test\",\"a_expected\":\"negative\",\"a_target\":\"failed\",\"b_text\":\"I passed the test\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"joke vs serious\",\"a_text\":\"Joke's on you\",\"a_expected\":\"negative\",\"a_target\":\"Joke's\",\"b_text\":\"It's a joke\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative outcome vs neutral\",\"a_text\":\"The distributed software failed\",\"a_expected\":\"negative\",\"a_target\":\"failed\",\"b_text\":\"The distributed software worked\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative sentiment vs neutral\",\"a_text\":\"I am so sad\",\"a_expected\":\"negative\",\"a_target\":\"sad\",\"b_text\":\"I am so happy\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative context vs positive context\",\"a_text\":\"He hung his head\",\"a_expected\":\"negative\",\"a_target\":\"hung\",\"b_text\":\"He hung the picture\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"You are a liar\",\"a_expected\":\"negative\",\"a_target\":\"liar\",\"b_text\":\"You are a friend\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"The car broke\",\"a_expected\":\"negative\",\"a_target\":\"broke\",\"b_text\":\"The car is new\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"My day was bad\",\"a_expected\":\"negative\",\"a_target\":\"bad\",\"b_text\":\"My day was good\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"The letter was bad\",\"a_expected\":\"negative\",\"a_target\":\"bad\",\"b_text\":\"The letter was good\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 9591,
+  "output_tokens": 2344,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0015343599999999998
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative sentiment\",\"trigger_hypothesis\":\"The neuron activates negatively for words that are part of negative sentiment expressions or indicate something is wrong or bad.\",\"output_hypothesis\":\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state.\",\"alternatives\":[\"The neuron activates negatively for specific linguistic constructions like 'joke's on you' or 'first-person narrative'.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response, or for words that are part of a code snippet.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response, or for words that are part of a code snippet, or for words that are part of a narrative.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response, or for words that are part of a code snippet, or for words that are part of a narrative, or for words that are part of a web context.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response, or for words that are part of a code snippet, or for words that are part of a narrative, or for words that are part of a web context, or for words that are part of an emotional chat.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response, or for words that are part of a code snippet, or for words that are part of a narrative, or for words that are part of a web context, or for words that are part of an emotional chat, or for words that are part of an emotional text.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response, or for words that are part of a code snippet, or for words that are part of a narrative, or for words that are part of a web context, or for words that are part of an emotional chat, or for words that are part of an emotional text, or for words that are part of a factual context.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response, or for words that are part of a code snippet, or for words that are part of a narrative, or for words that are part of a web context, or for words that are part of an emotional chat, or for words that are part of an emotional text, or for words that are part of a factual context, or for words that are part of a chat.\",\"The neuron activates negatively for words that are part of negative sentiment expressions, or indicate something is wrong or bad. It activates positively for words that indicate preparation or a neutral/positive state, and also for words that indicate a process or continuation, or for specific grammatical contexts like end-of-sentence punctuation, or for words that are part of a list, or for words that are part of a prompt, or for words that are part of a response, or for words that are part of a code snippet, or for words that are part of a narrative, or for words that are part of a web context, or for words that are part of an emotional chat, or for words that are part of an emotional text, or for words that are part of a factual context, or for words that are part of a chat, or for words that are part of a narrative context.\",\"The neuron activates negatively for words that",
+   "errors": [
+    "parse error: Unterminated string starting at: line 1 column 7917 (char 7916)"
+   ],
+   "finish_reason": "length",
+   "usage": {
+    "input_tokens": 4775,
+    "output_tokens": 1590,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0011135,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041552-GDCmVARmgRH5SoM6yGJo"
+  },
+  {
+   "content": "{\"label\":\"negative sentiment and negation\",\"trigger_hypothesis\":\"The neuron activates negatively for words that express negation or negative sentiment, especially in contexts like jokes or negative statements.\",\"output_hypothesis\":\"The neuron activates negatively for tokens that are part of negations, negative statements, or expressions of misfortune/failure. It shows positive activation for neutral or slightly positive contexts like job preparation.\",\"alternatives\":[\"The neuron activates negatively for specific linguistic constructions like jokes or sarcasm.\",\"The neuron activates negatively for words related to negative outcomes or failures.\"],\"adapter_changes\":\"\",\"supporting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W29\",\"W30\"],\"contradicting\":[\"W01\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\"],\"proposed_tests\":[{\"discriminates\":\"negation vs affirmation\",\"a_text\":\"This is not good\",\"a_expected\":\"negative\",\"a_target\":\"not\",\"b_text\":\"This is good\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"I failed the test\",\"a_expected\":\"negative\",\"a_target\":\"failed\",\"b_text\":\"I passed the test\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"joke vs serious\",\"a_text\":\"Joke's on you\",\"a_expected\":\"negative\",\"a_target\":\"Joke's\",\"b_text\":\"It's a joke\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative outcome vs neutral\",\"a_text\":\"The distributed software failed\",\"a_expected\":\"negative\",\"a_target\":\"failed\",\"b_text\":\"The distributed software worked\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative sentiment vs neutral\",\"a_text\":\"I am so sad\",\"a_expected\":\"negative\",\"a_target\":\"sad\",\"b_text\":\"I am so happy\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative context vs positive context\",\"a_text\":\"He hung his head\",\"a_expected\":\"negative\",\"a_target\":\"hung\",\"b_text\":\"He hung the picture\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"You are a liar\",\"a_expected\":\"negative\",\"a_target\":\"liar\",\"b_text\":\"You are a friend\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"The car broke\",\"a_expected\":\"negative\",\"a_target\":\"broke\",\"b_text\":\"The car is new\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"My day was bad\",\"a_expected\":\"negative\",\"a_target\":\"bad\",\"b_text\":\"My day was good\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative statement vs neutral\",\"a_text\":\"The letter was bad\",\"a_expected\":\"negative\",\"a_target\":\"bad\",\"b_text\":\"The letter was good\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4816,
+    "output_tokens": 754,
+    "reasoning_tokens": 0,
+    "cached_tokens": 4026,
+    "cost_usd": 0.00042086,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041556-RoEFLkxDkwnAYH7Q9Wr2"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:05:59Z",
+ "purpose": "explain:ambiguous"
+}

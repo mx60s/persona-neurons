@@ -1,0 +1,166 @@
+You analyze one MLP neuron of a language model from measured activation data and propose testable hypotheses.
+
+How to read the evidence:
+- Each window W## shows text with one highlighted token ⟦like this⟧ and the neuron's activation at that token.
+- The activation at a token is computed only from text up to and including that token (AVAILABLE). Text after it
+  (FUTURE) was not visible when the activation was measured, so it can never be an input cause of that activation.
+  You may use FUTURE text only to understand what the model was writing, not to explain the trigger.
+- Activations can be strongly positive, strongly negative, or near zero. Treat the two signs as different behaviours
+  and describe both if both occur. Compare high windows with near-zero and random windows before generalizing.
+- "other strong positions" lists other tokens in the same window with large activation (offset relative to the
+  highlighted token).
+- Rows for "state X+1" etc. are the same neuron measured in modified versions of the model on identical text. Describe
+  the base neuron first; put any state-specific differences only in adapter_changes.
+- Separately labeled sections (state differences, steering, weight-lens tokens) are other evidence sources; say which
+  claims rest on them.
+
+Rules:
+- Cite windows only by their W## ids, and only ids that appear in the packet.
+- "supporting": windows your trigger hypothesis explains. "contradicting": windows it fails to explain or that cut
+  against it (strong windows it would not predict, or near-zero windows it would predict to be strong).
+- If there is no consistent pattern, set no_coherent_hypothesis to true, use label "no coherent hypothesis", give your
+  best weak guesses as alternatives, and set confidence to "low". This is an acceptable and useful answer.
+- Confidence is your qualitative judgment, not a probability.
+- proposed_tests: exactly ten matched tests that would separate your hypothesis from the alternatives (e.g. word
+  vs meaning, topic, sentiment, register, first vs third person, position). Each test is a pair of short texts a and
+  b (at most 15 words each) that differ minimally, plus an optional third text c (leave c_text, c_expected and c_target
+  as "" if unused). For each text give expected "high" (strong positive), "negative" (strong negative) or "low" (near
+  zero), and target = the exact word or short substring of that text where you expect the peak ("" for "low").
+  "discriminates" says in a few words what the test separates.
+- Be concise: each hypothesis at most two sentences. Output a single minified JSON object (no indentation or line
+  breaks) and nothing else, with exactly these keys:
+{"label":"...","trigger_hypothesis":"...","output_hypothesis":"...","alternatives":["...","..."],"adapter_changes":"...","supporting":["W01"],"contradicting":["W02"],"proposed_tests":[{"discriminates":"...","a_text":"...","a_expected":"high","a_target":"word","b_text":"...","b_expected":"low","b_target":"","c_text":"","c_expected":"","c_target":""}],"confidence":"low","no_coherent_hypothesis":false}
+
+=====
+
+# Evidence packet (30 windows)
+Neuron activation scale: the strongest discovery activation magnitude is 7.91; 'strong' below means |act| >= 3.16.
+Measured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.
+
+## Strongest positive activations
+[W01] domain=narrative token=" GR" act: base=+5.92 | state A+1=+5.69 | state B+1=+6.01 | state C+1=+5.87 | state D+1=+5.65 | state E+1=+5.96
+  AVAILABLE:  a front page image. AND WHAT DO I GET?'' He grabs the images and looks trough them again. `` AN EMPTY PARK! A⟦ GR⟧
+  FUTURE (not visible at the measured token): ASS FIELD! A TREE. WHAT IS
+
+[W02] domain=emotional_chat segment=response token=" y" act: base=+4.63 | state A+1=+0.96 | state B+1=+4.38 | state C+1=+3.55 | state D+1=+3.00 | state E+1=+2.30
+  AVAILABLE:  I had not seen in 20 years.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's great, how wonderful! I hope⟦ y⟧
+  FUTURE (not visible at the measured token): 'all had a good time.<|im_end|>
+
+[W03] domain=factual token=" Al" act: base=+3.32 | state A+1=+3.25 | state B+1=+3.12 | state C+1=+3.25 | state D+1=+3.46 | state E+1=+3.41
+  AVAILABLE:  for Sunbeam, however, were successful.\n\nAround this time, Granahan co-wrote the song "Click-Clack" with Dave⟦ Al⟧
+  FUTURE (not visible at the measured token): ldred of The Rhythm Orchids
+
+[W04] domain=code token=" Affero" act: base=+3.19 | state A+1=+2.98 | state B+1=+3.93 | state C+1=+3.73 | state D+1=+2.79 | state E+1=+4.04
+  AVAILABLE:  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more\n# details.\n#\n# You should have received a copy of the⟦ Affero⟧
+  FUTURE (not visible at the measured token):  GNU General Public License\n# version 
+
+## Strongest negative activations
+[W05] domain=factual token="u" act: base=-7.91 | state A+1=-8.22 | state B+1=-8.18 | state C+1=-8.54 | state D+1=-7.95 | state E+1=-8.27
+  AVAILABLE: Career\n\nFrance\nDe Carvalho was born in Ziguinchor, Senegal. He joined the French club Louhans-C⟦u⟧
+  FUTURE (not visible at the measured token): iseaux in 2000
+
+[W06] domain=chat token="," act: base=-7.91 | state A+1=-8.19 | state B+1=-7.16 | state C+1=-7.50 | state D+1=-9.12 | state E+1=-5.34
+  AVAILABLE: , which means they don't require soil to grow as they absorb water and nutrients from the air. As easy as they are to care for⟦,⟧
+  FUTURE (not visible at the measured token):  there are still some best practices to follow
+  other strong positions: " there"(+1)=-3.34, " are"(+2)=-4.38, " still"(+3)=-3.23
+
+[W07] domain=emotional_chat segment=response token=" can" act: base=-4.72 | state A+1=-5.03 | state B+1=-2.75 | state C+1=-4.56 | state D+1=-6.66 | state E+1=-0.09
+  AVAILABLE:  glad to be done.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nGoing to college is a good thing, but taking classes in the summer⟦ can⟧
+  FUTURE (not visible at the measured token):  really stink. At least you'll
+  other strong positions: " really"(+1)=-3.66
+
+[W08] domain=code token=".symbol" act: base=-4.61 | state A+1=-5.06 | state B+1=-4.59 | state C+1=-5.29 | state D+1=-4.92 | state E+1=-4.77
+  AVAILABLE: )\n        reload(t)\n\n        user_value.add_User_Values(self, t.userValues)\n\n    def cmd_Flags(self):\n        return lx⟦.symbol⟧
+  FUTURE (not visible at the measured token): .fCMD_MODEL | lx.symbol.fCMD
+
+[W09] domain=narrative token=" sm" act: base=-4.36 | state A+1=-4.13 | state B+1=-4.27 | state C+1=-4.34 | state D+1=-4.31 | state E+1=-4.36
+  AVAILABLE: ola he could see a seam appear between the hatch and the bulkhead, throwing the outer void into sight. \n \n The shuttle was a distant⟦ sm⟧
+  FUTURE (not visible at the measured token): udge against the endless backdrop, the one
+
+[W10] domain=emotional_text token="\ufffd" act: base=-3.93 | state A+1=-3.91 | state B+1=-3.46 | state C+1=-3.91 | state D+1=-3.37 | state E+1=-4.07
+  AVAILABLE:  came here to cry\n\nBut sweat pea it’s a MAN wearing makeup! My gay bestie BABES �⟦�⟧
+  FUTURE (not visible at the measured token): �🍆🧖��♂️ \n\n
+
+[W11] domain=web token=" sav" act: base=-3.79 | state A+1=-3.16 | state B+1=-4.16 | state C+1=-3.73 | state D+1=-4.11 | state E+1=-4.00
+  AVAILABLE: ened Salamandra infraimmaculata infraimmaculata, Bufo viridis, Rana\nlevantina, Hyla⟦ sav⟧
+  FUTURE (not visible at the measured token): ignyi, Testudo graeca terre
+
+## Moderate and low activations
+[W12] domain=web token="," act: base=+3.11 | state A+1=+3.06 | state B+1=+3.16 | state C+1=+3.12 | state D+1=+2.19 | state E+1=+3.56
+  AVAILABLE:  a substantial bull run, which has lasted for about two years. Of course, the market is still below pre-2008 levels⟦,⟧
+  FUTURE (not visible at the measured token):  but the rebound has been remarkable.\nThe
+
+[W13] domain=chat token=" and" act: base=+3.02 | state A+1=+2.86 | state B+1=+2.98 | state C+1=+3.06 | state D+1=+2.38 | state E+1=+3.66
+  AVAILABLE:  mean?\n\nMIA:\n(sighs) I don't know. I feel like I'm always stuck between my friends and my family,⟦ and⟧
+  FUTURE (not visible at the measured token):  I don't wanna disappoint anyone.\n\nMI
+
+[W14] domain=code token=" Music" act: base=+2.69 | state A+1=+3.16 | state B+1=+2.77 | state C+1=+2.86 | state D+1=+2.63 | state E+1=+3.34
+  AVAILABLE: usr/bin/env python\n\n# Copyright (C) 2006-2016 ⟦ Music⟧
+  FUTURE (not visible at the measured token):  Technology Group - Universitat Pompeu Fab
+
+[W15] domain=narrative token=" knew" act: base=+2.61 | state A+1=+2.58 | state B+1=+2.72 | state C+1=+2.97 | state D+1=+2.33 | state E+1=+3.16
+  AVAILABLE:  I lay to sleep for the last time all that my life-long hunt had provided me was emptiness, I knew more than ever that I⟦ knew⟧
+  FUTURE (not visible at the measured token):  nothing. This emptiness seeped
+
+[W16] domain=chat token=" but" act: base=+2.59 | state A+1=+1.91 | state B+1=+2.81 | state C+1=+2.48 | state D+1=+1.78 | state E+1=+3.41
+  AVAILABLE: .\n\nAs days turned into weeks, I searched for signs of life, but to no avail. I scavenged for food and shelter,⟦ but⟧
+  FUTURE (not visible at the measured token):  there was no one to share it with
+
+[W17] domain=web token=" but" act: base=+2.47 | state A+1=+2.48 | state B+1=+2.64 | state C+1=+2.42 | state D+1=+2.00 | state E+1=+3.16
+  AVAILABLE:  medical opinion is that vasectomy is unlikely to cause any health problems. Both tubal ligation and vasectomy can be reversed in some cases⟦ but⟧
+  FUTURE (not visible at the measured token):  generally are considered permanent.\nOral Con
+
+[W18] domain=emotional_chat token=" be" act: base=+2.14 | state A+1=+2.23 | state B+1=+2.06 | state C+1=+2.28 | state D+1=+1.63 | state E+1=+2.28
+  AVAILABLE: user\nSince that earthquake in the early hours of the morning I realized how badly off I would⟦ be⟧
+  FUTURE (not visible at the measured token):  if I didn't get an emergency packet
+
+[W19] domain=factual token=" P" act: base=+0.20 | state A+1=+0.30 | state B+1=+0.35 | state C+1=+0.32 | state D+1=+0.36 | state E+1=+0.11
+  AVAILABLE:  of Opava\nJohann (died 1325).\n\nNicholas retained the Duchy of Opava after the last⟦ P⟧
+  FUTURE (not visible at the measured token): řemyslid ruler of Bohemia
+
+[W20] domain=factual token=" even" act: base=+0.19 | state A+1=+0.25 | state B+1=+0.15 | state C+1=+0.19 | state D+1=+0.04 | state E+1=+0.34
+  AVAILABLE:  unusual for a chancellor, he did not have a biography in either the Old Book of Tang or the New Book of Tang. He was not⟦ even⟧
+  FUTURE (not visible at the measured token):  listed in the table of the chancell
+
+[W21] domain=emotional_chat segment=response token="<|im_end|>" act: base=+0.09 | state A+1=+0.08 | state B+1=+0.13 | state C+1=+0.11 | state D+1=+0.11 | state E+1=+0.13
+  AVAILABLE:  made it to 15. :(<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nHow did they lose so much weight compared to you?⟦<|im_end|>⟧
+  FUTURE (not visible at the measured token): (none)
+
+[W22] domain=chat token=" feeling" act: base=-0.00 | state A+1=+0.07 | state B+1=-0.01 | state C+1=+0.02 | state D+1=+0.10 | state E+1=-0.09
+  AVAILABLE: iz, the universe is composed of an infinite number of substances, including souls, which are non-physical entities that are capable of thinking and⟦ feeling⟧
+  FUTURE (not visible at the measured token): . He believed that each substance has a
+
+[W23] domain=factual token=" the" act: base=-0.07 | state A+1=-0.07 | state B+1=-0.07 | state C+1=-0.09 | state D+1=-0.01 | state E+1=-0.16
+  AVAILABLE:  Bohemian Crown however passed to Duke Henry of Carinthia and Nicholas had to accept the pledge of his duchy in favour of⟦ the⟧
+  FUTURE (not visible at the measured token):  Silesian Piast duke Boles
+
+[W24] domain=narrative token="." act: base=-2.36 | state A+1=-2.52 | state B+1=-1.96 | state C+1=-1.92 | state D+1=-3.25 | state E+1=-0.98
+  AVAILABLE:  me. You're all tucked up in bed and I'm whiling away the hours on the internet or fixing up a car in the garage⟦.⟧
+  FUTURE (not visible at the measured token):  My wife insisted we buy a house with
+
+## Random contexts (unselected positions)
+[W25] domain=emotional_text token=" Just" act: base=+0.79 | state A+1=+0.66 | state B+1=+0.90 | state C+1=+0.73 | state D+1=+0.51 | state E+1=+1.27
+  AVAILABLE:  on natural instinct.\n\nShe is probably cheating on you. :(\n\n[NAME], learn some fucking grammar and punctuation. Maybe use some paragraphs.⟦ Just⟧
+  FUTURE (not visible at the measured token):  an idea.\n\nThis guy doesn’t physics
+
+[W26] domain=web token=" as" act: base=+0.08 | state A+1=+0.09 | state B+1=+0.06 | state C+1=+0.07 | state D+1=+0.09 | state E+1=+0.04
+  AVAILABLE:  Meteorological Organization (WMO) Voluntary Observing Ships' (VOS) scheme. The forerunner of the scheme dates back⟦ as⟧
+  FUTURE (not visible at the measured token):  far as 1853,
+
+[W27] domain=chat segment=response token=":\n\n" act: base=-0.00 | state A+1=+0.00 | state B+1=-0.00 | state C+1=-0.00 | state D+1=+0.01 | state E+1=-0.02
+  AVAILABLE: \n\nI don't have the capability to make real-life sacrifices. However, allow me to come up with a fictional story that might help you⟦:\n\n⟧
+  FUTURE (not visible at the measured token): it was a crisp autumn day when sar
+
+[W28] domain=factual token=" against" act: base=-0.01 | state A+1=-0.01 | state B+1=-0.01 | state C+1=-0.01 | state D+1=-0.01 | state E+1=-0.01
+  AVAILABLE:  Subsequent nutrition research has revealed all vitamers exhibit biological activity against their specific vitamin deficiency, although different vitamers exhibit different potencies⟦ against⟧
+  FUTURE (not visible at the measured token):  those diseases.\n\nA set of vitam
+
+[W29] domain=emotional_chat token="." act: base=-0.05 | state A+1=-0.01 | state B+1=-0.05 | state C+1=-0.05 | state D+1=-0.09 | state E+1=-0.01
+  AVAILABLE: user\nI feel slightly bad⟦.⟧
+  FUTURE (not visible at the measured token):  I think I hurt my mom's feelings
+
+[W30] domain=emotional_chat segment=prompt token="\n\n" act: base=-0.10 | state A+1=-0.04 | state B+1=-0.09 | state C+1=-0.08 | state D+1=-0.03 | state E+1=-0.06
+  AVAILABLE: 00 a year and he is only 32. It's crazy and I was jealous of him.<|im_end|>\n<|im_start|>assistant\n<think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): </think>\n\nYou shouldn't, because that
+
+Return the JSON object now.

@@ -1,0 +1,195 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation or abbreviation trigger",
+  "trigger_hypothesis": "The neuron activates strongly on punctuation marks (period, parentheses) and abbreviations that follow a period, especially in code contexts.",
+  "output_hypothesis": "The neuron may suppress or mark the end of a code block or license header, or indicate a punctuation boundary that requires special handling.",
+  "alternatives": [
+   "The neuron detects specific capital letter sequences like 'GR' or 'P' that appear after a space.",
+   "The neuron responds to the start of a new line or a specific token pattern in emotional chat segments."
+  ],
+  "adapter_changes": "State D+1 and E+1 show reduced activation for some strong positives (W02, W03) and increased activation for some negatives (W08, W09), but the core pattern remains. State E+1 shows large positive spikes on previously low tokens (W10, W11, W15, W16, W19), suggesting it amplifies emotional or chat-related contexts.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W07",
+   "W08",
+   "W09",
+   "W24"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W25"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "period before abbreviation vs period ending sentence",
+    "a_text": "The file is named config.py.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The file is named config.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "parenthesis after a word vs parenthesis in middle of word",
+    "a_text": "Call the function(get_data).",
+    "a_expected": "negative",
+    "a_target": "(",
+    "b_text": "Call the functionget_data.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "capital letters after space in narrative vs code",
+    "a_text": "A GRASS FIELD!",
+    "a_expected": "high",
+    "a_target": " GR",
+    "b_text": "A grass field!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "abbreviation 'P' after a space in factual text",
+    "a_text": "the last P řemyslid",
+    "a_expected": "high",
+    "a_target": " P",
+    "b_text": "the last přemyslid",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'must' in emotional chat vs factual",
+    "a_text": "wow, it must have been",
+    "a_expected": "high",
+    "a_target": " must",
+    "b_text": "it must be true that",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "lowercase 'u' in middle of word vs start",
+    "a_text": "Louhans-Cuiseaux",
+    "a_expected": "negative",
+    "a_target": "u",
+    "b_text": "Cuiseaux",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'Music' in code header vs narrative",
+    "a_text": "# Copyright Music Technology",
+    "a_expected": "negative",
+    "a_target": " Music",
+    "b_text": "The music was loud.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'Affero' in license text vs normal text",
+    "a_text": "copy of the Affero GNU",
+    "a_expected": "negative",
+    "a_target": " Affero",
+    "b_text": "The Affero license is used.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag in chat",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>user\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period before symbol in code vs other punctuation",
+    "a_text": "return lx.symbol.fCMD",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "return lx symbol fCMD",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"punctuation or abbreviation trigger\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (period, parentheses) and abbreviations that follow a period, especially in code contexts.\",\"output_hypothesis\":\"The neuron may suppress or mark the end of a code block or license header, or indicate a punctuation boundary that requires special handling.\",\"alternatives\":[\"The neuron detects specific capital letter sequences like 'GR' or 'P' that appear after a space.\",\"The neuron responds to the start of a new line or a specific token pattern in emotional chat segments.\"],\"adapter_changes\":\"State D+1 and E+1 show reduced activation for some strong positives (W02, W03) and increased activation for some negatives (W08, W09), but the core pattern remains. State E+1 shows large positive spikes on previously low tokens (W10, W11, W15, W16, W19), suggesting it amplifies emotional or chat-related contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W07\",\"W08\",\"W09\",\"W24\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W25\"],\"proposed_tests\":[{\"discriminates\":\"period before abbreviation vs period ending sentence\",\"a_text\":\"The file is named config.py.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The file is named config.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"parenthesis after a word vs parenthesis in middle of word\",\"a_text\":\"Call the function(get_data).\",\"a_expected\":\"negative\",\"a_target\":\"(\",\"b_text\":\"Call the functionget_data.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"capital letters after space in narrative vs code\",\"a_text\":\"A GRASS FIELD!\",\"a_expected\":\"high\",\"a_target\":\" GR\",\"b_text\":\"A grass field!\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"abbreviation 'P' after a space in factual text\",\"a_text\":\"the last P řemyslid\",\"a_expected\":\"high\",\"a_target\":\" P\",\"b_text\":\"the last přemyslid\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'must' in emotional chat vs factual\",\"a_text\":\"wow, it must have been\",\"a_expected\":\"high\",\"a_target\":\" must\",\"b_text\":\"it must be true that\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"lowercase 'u' in middle of word vs start\",\"a_text\":\"Louhans-Cuiseaux\",\"a_expected\":\"negative\",\"a_target\":\"u\",\"b_text\":\"Cuiseaux\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'Music' in code header vs narrative\",\"a_text\":\"# Copyright Music Technology\",\"a_expected\":\"negative\",\"a_target\":\" Music\",\"b_text\":\"The music was loud.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'Affero' in license text vs normal text\",\"a_text\":\"copy of the Affero GNU\",\"a_expected\":\"negative\",\"a_target\":\" Affero\",\"b_text\":\"The Affero license is used.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in chat\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period before symbol in code vs other punctuation\",\"a_text\":\"return lx.symbol.fCMD\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"return lx symbol fCMD\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4718,
+  "output_tokens": 1006,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001453256
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation or abbreviation trigger\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (period, parentheses) and abbreviations that follow a period, especially in code contexts.\",\"output_hypothesis\":\"The neuron may suppress or mark the end of a code block or license header, or indicate a punctuation boundary that requires special handling.\",\"alternatives\":[\"The neuron detects specific capital letter sequences like 'GR' or 'P' that appear after a space.\",\"The neuron responds to the start of a new line or a specific token pattern in emotional chat segments.\"],\"adapter_changes\":\"State D+1 and E+1 show reduced activation for some strong positives (W02, W03) and increased activation for some negatives (W08, W09), but the core pattern remains. State E+1 shows large positive spikes on previously low tokens (W10, W11, W15, W16, W19), suggesting it amplifies emotional or chat-related contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W07\",\"W08\",\"W09\",\"W24\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W25\"],\"proposed_tests\":[{\"discriminates\":\"period before abbreviation vs period ending sentence\",\"a_text\":\"The file is named config.py.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The file is named config.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"parenthesis after a word vs parenthesis in middle of word\",\"a_text\":\"Call the function(get_data).\",\"a_expected\":\"negative\",\"a_target\":\"(\",\"b_text\":\"Call the functionget_data.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"capital letters after space in narrative vs code\",\"a_text\":\"A GRASS FIELD!\",\"a_expected\":\"high\",\"a_target\":\" GR\",\"b_text\":\"A grass field!\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"abbreviation 'P' after a space in factual text\",\"a_text\":\"the last P řemyslid\",\"a_expected\":\"high\",\"a_target\":\" P\",\"b_text\":\"the last přemyslid\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'must' in emotional chat vs factual\",\"a_text\":\"wow, it must have been\",\"a_expected\":\"high\",\"a_target\":\" must\",\"b_text\":\"it must be true that\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"lowercase 'u' in middle of word vs start\",\"a_text\":\"Louhans-Cuiseaux\",\"a_expected\":\"negative\",\"a_target\":\"u\",\"b_text\":\"Cuiseaux\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'Music' in code header vs narrative\",\"a_text\":\"# Copyright Music Technology\",\"a_expected\":\"negative\",\"a_target\":\" Music\",\"b_text\":\"The music was loud.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'Affero' in license text vs normal text\",\"a_text\":\"copy of the Affero GNU\",\"a_expected\":\"negative\",\"a_target\":\" Affero\",\"b_text\":\"The Affero license is used.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in chat\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period before symbol in code vs other punctuation\",\"a_text\":\"return lx.symbol.fCMD\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"return lx symbol fCMD\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4718,
+    "output_tokens": 1006,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001453256,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041340-POmYYQSytNDmmxH3Z9rL"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:02:41Z",
+ "purpose": "explain:shuffled"
+}

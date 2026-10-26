@@ -1,0 +1,193 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for 'empty' or 'return' in code",
+  "trigger_hypothesis": "The neuron fires strongly negative when the token 'return' or 'empty' appears in code contexts, especially when preceded by indentation or whitespace.",
+  "output_hypothesis": "The neuron's negative output pushes toward tokens like 'empty' and 'isEmpty', suggesting it suppresses or marks empty/return states in code.",
+  "alternatives": [
+   "The neuron detects end-of-block markers in code.",
+   "The neuron responds to specific low-information tokens like 'empty' or 'return' regardless of context."
+  ],
+  "adapter_changes": "State differences are minimal; states B+1 and D+1 sometimes increase negative magnitude slightly (e.g., W01, W16).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W16"
+  ],
+  "contradicting": [
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'return' in code vs other tokens",
+    "a_text": "def foo(): return",
+    "a_expected": "negative",
+    "a_target": "return",
+    "b_text": "def foo(): pass",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'empty' in code vs other adjectives",
+    "a_text": "if list is empty:",
+    "a_expected": "negative",
+    "a_target": "empty",
+    "b_text": "if list is full:",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'return' with indentation vs without",
+    "a_text": "    return x",
+    "a_expected": "negative",
+    "a_target": "return",
+    "b_text": "return x",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'empty' in non-code context",
+    "a_text": "The room was empty.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "if container.empty():",
+    "b_expected": "negative",
+    "b_target": "empty",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'return' as noun vs keyword",
+    "a_text": "The return of the king",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "function() { return; }",
+    "b_expected": "negative",
+    "b_target": "return",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "synonyms for empty in code",
+    "a_text": "if not container:",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "if container.empty():",
+    "b_expected": "negative",
+    "b_target": "empty",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "other code keywords like 'break'",
+    "a_text": "    break",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "    return",
+    "b_expected": "negative",
+    "b_target": "return",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'return' in comment",
+    "a_text": "# TODO: return value",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "    return value",
+    "b_expected": "negative",
+    "b_target": "return",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'empty' with different casing",
+    "a_text": "EMPTY",
+    "a_expected": "negative",
+    "a_target": "EMPTY",
+    "b_text": "Empty",
+    "b_expected": "negative",
+    "b_target": "Empty",
+    "c_text": "empty",
+    "c_expected": "negative",
+    "c_target": "empty"
+   },
+   {
+    "discriminates": "'return' in a string literal",
+    "a_text": "print('return')",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "    return",
+    "b_expected": "negative",
+    "b_target": "return",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative for 'empty' or 'return' in code\",\"trigger_hypothesis\":\"The neuron fires strongly negative when the token 'return' or 'empty' appears in code contexts, especially when preceded by indentation or whitespace.\",\"output_hypothesis\":\"The neuron's negative output pushes toward tokens like 'empty' and 'isEmpty', suggesting it suppresses or marks empty/return states in code.\",\"alternatives\":[\"The neuron detects end-of-block markers in code.\",\"The neuron responds to specific low-information tokens like 'empty' or 'return' regardless of context.\"],\"adapter_changes\":\"State differences are minimal; states B+1 and D+1 sometimes increase negative magnitude slightly (e.g., W01, W16).\",\"supporting\":[\"W01\",\"W02\",\"W16\"],\"contradicting\":[\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"'return' in code vs other tokens\",\"a_text\":\"def foo(): return\",\"a_expected\":\"negative\",\"a_target\":\"return\",\"b_text\":\"def foo(): pass\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'empty' in code vs other adjectives\",\"a_text\":\"if list is empty:\",\"a_expected\":\"negative\",\"a_target\":\"empty\",\"b_text\":\"if list is full:\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'return' with indentation vs without\",\"a_text\":\"    return x\",\"a_expected\":\"negative\",\"a_target\":\"return\",\"b_text\":\"return x\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'empty' in non-code context\",\"a_text\":\"The room was empty.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"if container.empty():\",\"b_expected\":\"negative\",\"b_target\":\"empty\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'return' as noun vs keyword\",\"a_text\":\"The return of the king\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"function() { return; }\",\"b_expected\":\"negative\",\"b_target\":\"return\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"synonyms for empty in code\",\"a_text\":\"if not container:\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"if container.empty():\",\"b_expected\":\"negative\",\"b_target\":\"empty\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"other code keywords like 'break'\",\"a_text\":\"    break\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"    return\",\"b_expected\":\"negative\",\"b_target\":\"return\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'return' in comment\",\"a_text\":\"# TODO: return value\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"    return value\",\"b_expected\":\"negative\",\"b_target\":\"return\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'empty' with different casing\",\"a_text\":\"EMPTY\",\"a_expected\":\"negative\",\"a_target\":\"EMPTY\",\"b_text\":\"Empty\",\"b_expected\":\"negative\",\"b_target\":\"Empty\",\"c_text\":\"empty\",\"c_expected\":\"negative\",\"c_target\":\"empty\"},{\"discriminates\":\"'return' in a string literal\",\"a_text\":\"print('return')\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"    return\",\"b_expected\":\"negative\",\"b_target\":\"return\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6670,
+  "output_tokens": 886,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001933288
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative for 'empty' or 'return' in code\",\"trigger_hypothesis\":\"The neuron fires strongly negative when the token 'return' or 'empty' appears in code contexts, especially when preceded by indentation or whitespace.\",\"output_hypothesis\":\"The neuron's negative output pushes toward tokens like 'empty' and 'isEmpty', suggesting it suppresses or marks empty/return states in code.\",\"alternatives\":[\"The neuron detects end-of-block markers in code.\",\"The neuron responds to specific low-information tokens like 'empty' or 'return' regardless of context.\"],\"adapter_changes\":\"State differences are minimal; states B+1 and D+1 sometimes increase negative magnitude slightly (e.g., W01, W16).\",\"supporting\":[\"W01\",\"W02\",\"W16\"],\"contradicting\":[\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"'return' in code vs other tokens\",\"a_text\":\"def foo(): return\",\"a_expected\":\"negative\",\"a_target\":\"return\",\"b_text\":\"def foo(): pass\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'empty' in code vs other adjectives\",\"a_text\":\"if list is empty:\",\"a_expected\":\"negative\",\"a_target\":\"empty\",\"b_text\":\"if list is full:\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'return' with indentation vs without\",\"a_text\":\"    return x\",\"a_expected\":\"negative\",\"a_target\":\"return\",\"b_text\":\"return x\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'empty' in non-code context\",\"a_text\":\"The room was empty.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"if container.empty():\",\"b_expected\":\"negative\",\"b_target\":\"empty\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'return' as noun vs keyword\",\"a_text\":\"The return of the king\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"function() { return; }\",\"b_expected\":\"negative\",\"b_target\":\"return\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"synonyms for empty in code\",\"a_text\":\"if not container:\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"if container.empty():\",\"b_expected\":\"negative\",\"b_target\":\"empty\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"other code keywords like 'break'\",\"a_text\":\"    break\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"    return\",\"b_expected\":\"negative\",\"b_target\":\"return\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'return' in comment\",\"a_text\":\"# TODO: return value\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"    return value\",\"b_expected\":\"negative\",\"b_target\":\"return\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'empty' with different casing\",\"a_text\":\"EMPTY\",\"a_expected\":\"negative\",\"a_target\":\"EMPTY\",\"b_text\":\"Empty\",\"b_expected\":\"negative\",\"b_target\":\"Empty\",\"c_text\":\"empty\",\"c_expected\":\"negative\",\"c_target\":\"empty\"},{\"discriminates\":\"'return' in a string literal\",\"a_text\":\"print('return')\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"    return\",\"b_expected\":\"negative\",\"b_target\":\"return\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6670,
+    "output_tokens": 886,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1216,
+    "cost_usd": 0.001933288,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042246-hoXR9tixplm6DYuG3Ajv"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:43Z",
+ "purpose": "explain:blind"
+}

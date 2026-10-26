@@ -1,0 +1,2125 @@
+{
+ "id": "L14/N3723",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:53:08Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "hypothesis: negative activation for tokens preceding a noun phrase describing a text or speech genre",
+   "trigger_hypothesis": "The neuron fires negatively (strong negative activation) when the token is part of a phrase that immediately precedes a noun phrase describing a genre or form of text or speech (e.g., 'love letter', 'first-person narrative', 'Prosopopeia').",
+   "output_hypothesis": "The neuron's negative activation may suppress the generation of generic or formulaic text openings, encouraging more varied or specific continuations when a text genre is introduced.",
+   "alternatives": [
+    "The neuron detects tokens that are part of common prepositions or determiners before abstract nouns (e.g., 'of', 'a', 'the').",
+    "The neuron responds to the end of a user prompt or instruction, signaling a transition to model response."
+   ],
+   "adapter_changes": "State C+1 shows a large positive increase specifically at token '\\n\\n' in prompts (W20-W23), suggesting this state amplifies the neuron's response to newline sequences preceding assistant responses, while other states have minimal changes.",
+   "supporting": [
+    "L14_N3723:e08",
+    "L14_N3723:e09",
+    "L14_N3723:e10",
+    "L14_N3723:e13"
+   ],
+   "contradicting": [
+    "L14_N3723:e00",
+    "L14_N3723:e02",
+    "L14_N3723:e03",
+    "L14_N3723:e04",
+    "L14_N3723:e05",
+    "L14_N3723:e07",
+    "L14_N3723:e26",
+    "L14_N3723:e25",
+    "L14_N3723:e24",
+    "L14_N3723:e23",
+    "L14_N3723:e22",
+    "L14_N3723:e29",
+    "L14_N3723:e30",
+    "L14_N3723:e28",
+    "L14_N3723:e32"
+   ],
+   "proposed_tests": [
+    "Genre noun phrase vs. other noun phrase :: [negative] Write a compelling love letter | [low] Write a compelling love story",
+    "First-person narrative vs. third-person narrative :: [negative] Begin a first-person narrative | [low] Begin a third-person narrative",
+    "Preposition 'of' before genre vs. other use :: [negative] in the form of a poem | [low] in the form of a circle",
+    "Determiner 'a' before genre vs. before object :: [negative] as a letter to | [low] as a book to",
+    "Speech genre (prosopopeia) vs. other abstract noun :: [negative] he wrote his Prosopopeia | [low] he wrote his dissertation",
+    "Genre instruction in user prompt vs. in continuation :: [negative] user\\nWrite a captivating first-person | [low] assistant\\nThis is a first-person",
+    "Text form 'letter' vs. physical object 'letter' :: [negative] the form of a love letter | [low] the delivery of a love letter",
+    "Noun phrase with genre after 'of' vs. after other word :: [low] a couple of weeks | [negative] a couple of poems",
+    "Newline before assistant response in state C+1 :: [high] <|im_end|>\\n<|im_start|>assistant\\n\\n | [low] <|im_end|>\\n<|im_start|>assistant\\n",
+    "Genre word at end of available context vs. middle :: [negative] user\\nWrite a letter | [low] user\\nWrite a letter and send it"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Genre noun phrase vs. other noun phrase",
+     "texts": [
+      {
+       "text": "Write a compelling love letter",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "Write a compelling love story",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "First-person narrative vs. third-person narrative",
+     "texts": [
+      {
+       "text": "Begin a first-person narrative",
+       "expected": "negative",
+       "target": "narrative"
+      },
+      {
+       "text": "Begin a third-person narrative",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Preposition 'of' before genre vs. other use",
+     "texts": [
+      {
+       "text": "in the form of a poem",
+       "expected": "negative",
+       "target": "poem"
+      },
+      {
+       "text": "in the form of a circle",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Determiner 'a' before genre vs. before object",
+     "texts": [
+      {
+       "text": "as a letter to",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "as a book to",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Speech genre (prosopopeia) vs. other abstract noun",
+     "texts": [
+      {
+       "text": "he wrote his Prosopopeia",
+       "expected": "negative",
+       "target": "Prosopopeia"
+      },
+      {
+       "text": "he wrote his dissertation",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Genre instruction in user prompt vs. in continuation",
+     "texts": [
+      {
+       "text": "user\\nWrite a captivating first-person",
+       "expected": "negative",
+       "target": "first-person"
+      },
+      {
+       "text": "assistant\\nThis is a first-person",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Text form 'letter' vs. physical object 'letter'",
+     "texts": [
+      {
+       "text": "the form of a love letter",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "the delivery of a love letter",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Noun phrase with genre after 'of' vs. after other word",
+     "texts": [
+      {
+       "text": "a couple of weeks",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "a couple of poems",
+       "expected": "negative",
+       "target": "poems"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Newline before assistant response in state C+1",
+     "texts": [
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n",
+       "expected": "high",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Genre word at end of available context vs. middle",
+     "texts": [
+      {
+       "text": "user\\nWrite a letter",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "user\\nWrite a letter and send it",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6117,
+    "output_tokens": 1054,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001865136
+   },
+   "invalid_citations": [],
+   "packet_hash": "eac9f5317f288430bf94b4dc685adfd62f50b3f7d12983f18c6be41da39c5fb3",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:53:30Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative sentiment and formal language",
+   "trigger_hypothesis": "The neuron activates negatively for tokens that are part of negative sentiment expressions or formal/instructional language, particularly in chat and web domains.",
+   "output_hypothesis": "The neuron appears to detect and strongly inhibit negative sentiment, as well as formal or instructional language, especially when it is part of a prompt or a specific output format.",
+   "alternatives": [
+    "The neuron activates negatively for specific grammatical structures or word types, such as suffixes or conjunctions, regardless of sentiment or domain.",
+    "The neuron is sensitive to the domain of the text, activating negatively in web and chat contexts for specific tokens."
+   ],
+   "adapter_changes": "State C+1 shows a significant positive activation for '\\n\\n' in emotional_chat and chat domains (W20, W21, W22, W23), suggesting a shift towards positive activation for prompts or conversational turns in this state.",
+   "supporting": [
+    "L14_N3723:e08",
+    "L14_N3723:e09",
+    "L14_N3723:e10",
+    "L14_N3723:e13"
+   ],
+   "contradicting": [
+    "L14_N3723:e00"
+   ],
+   "proposed_tests": [
+    "sentiment :: [negative] This is a terrible situation. | [low] This is a wonderful situation.",
+    "sentiment :: [negative] I am so unhappy. | [low] I am so happy.",
+    "formality :: [negative] Please provide the requested information. | [low] Give me the info.",
+    "formality :: [negative] It is imperative that you comply. | [low] You must do it.",
+    "domain/sentiment :: [negative] user\nI hate this. | [low] assistant\nI love this.",
+    "domain/formality :: [negative] user\nRewrite this as a formal letter. | [low] assistant\nMake this a casual note.",
+    "word type :: [negative] The process is complete. | [low] The job is done.",
+    "word type :: [negative] He is a liar. | [low] He is a friend.",
+    "word type :: [negative] This is a letter. | [low] This is a note.",
+    "word type :: [low] The narrative is compelling. | [low] The story is compelling."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "sentiment",
+     "texts": [
+      {
+       "text": "This is a terrible situation.",
+       "expected": "negative",
+       "target": "terrible"
+      },
+      {
+       "text": "This is a wonderful situation.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "sentiment",
+     "texts": [
+      {
+       "text": "I am so unhappy.",
+       "expected": "negative",
+       "target": "unhappy"
+      },
+      {
+       "text": "I am so happy.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "formality",
+     "texts": [
+      {
+       "text": "Please provide the requested information.",
+       "expected": "negative",
+       "target": "requested"
+      },
+      {
+       "text": "Give me the info.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "formality",
+     "texts": [
+      {
+       "text": "It is imperative that you comply.",
+       "expected": "negative",
+       "target": "imperative"
+      },
+      {
+       "text": "You must do it.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "domain/sentiment",
+     "texts": [
+      {
+       "text": "user\nI hate this.",
+       "expected": "negative",
+       "target": "hate"
+      },
+      {
+       "text": "assistant\nI love this.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "domain/formality",
+     "texts": [
+      {
+       "text": "user\nRewrite this as a formal letter.",
+       "expected": "negative",
+       "target": "formal"
+      },
+      {
+       "text": "assistant\nMake this a casual note.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "word type",
+     "texts": [
+      {
+       "text": "The process is complete.",
+       "expected": "negative",
+       "target": "complete"
+      },
+      {
+       "text": "The job is done.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "word type",
+     "texts": [
+      {
+       "text": "He is a liar.",
+       "expected": "negative",
+       "target": "liar"
+      },
+      {
+       "text": "He is a friend.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "word type",
+     "texts": [
+      {
+       "text": "This is a letter.",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "This is a note.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "word type",
+     "texts": [
+      {
+       "text": "The narrative is compelling.",
+       "expected": "low",
+       "target": "narrative"
+      },
+      {
+       "text": "The story is compelling.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 13301,
+    "output_tokens": 2714,
+    "reasoning_tokens": 2,
+    "cost_usd": 0.0024157
+   },
+   "invalid_citations": [],
+   "packet_hash": "eac9f5317f288430bf94b4dc685adfd62f50b3f7d12983f18c6be41da39c5fb3",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:53:08Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "hypothesis: negative activation for tokens preceding a noun phrase describing a text or speech genre",
+   "trigger_hypothesis": "The neuron fires negatively (strong negative activation) when the token is part of a phrase that immediately precedes a noun phrase describing a genre or form of text or speech (e.g., 'love letter', 'first-person narrative', 'Prosopopeia').",
+   "output_hypothesis": "The neuron's negative activation may suppress the generation of generic or formulaic text openings, encouraging more varied or specific continuations when a text genre is introduced.",
+   "alternatives": [
+    "The neuron detects tokens that are part of common prepositions or determiners before abstract nouns (e.g., 'of', 'a', 'the').",
+    "The neuron responds to the end of a user prompt or instruction, signaling a transition to model response."
+   ],
+   "adapter_changes": "State C+1 shows a large positive increase specifically at token '\\n\\n' in prompts (W20-W23), suggesting this state amplifies the neuron's response to newline sequences preceding assistant responses, while other states have minimal changes.",
+   "supporting": [
+    "L14_N3723:e08",
+    "L14_N3723:e09",
+    "L14_N3723:e10",
+    "L14_N3723:e13"
+   ],
+   "contradicting": [
+    "L14_N3723:e00",
+    "L14_N3723:e02",
+    "L14_N3723:e03",
+    "L14_N3723:e04",
+    "L14_N3723:e05",
+    "L14_N3723:e07",
+    "L14_N3723:e26",
+    "L14_N3723:e25",
+    "L14_N3723:e24",
+    "L14_N3723:e23",
+    "L14_N3723:e22",
+    "L14_N3723:e29",
+    "L14_N3723:e30",
+    "L14_N3723:e28",
+    "L14_N3723:e32"
+   ],
+   "proposed_tests": [
+    "Genre noun phrase vs. other noun phrase :: [negative] Write a compelling love letter | [low] Write a compelling love story",
+    "First-person narrative vs. third-person narrative :: [negative] Begin a first-person narrative | [low] Begin a third-person narrative",
+    "Preposition 'of' before genre vs. other use :: [negative] in the form of a poem | [low] in the form of a circle",
+    "Determiner 'a' before genre vs. before object :: [negative] as a letter to | [low] as a book to",
+    "Speech genre (prosopopeia) vs. other abstract noun :: [negative] he wrote his Prosopopeia | [low] he wrote his dissertation",
+    "Genre instruction in user prompt vs. in continuation :: [negative] user\\nWrite a captivating first-person | [low] assistant\\nThis is a first-person",
+    "Text form 'letter' vs. physical object 'letter' :: [negative] the form of a love letter | [low] the delivery of a love letter",
+    "Noun phrase with genre after 'of' vs. after other word :: [low] a couple of weeks | [negative] a couple of poems",
+    "Newline before assistant response in state C+1 :: [high] <|im_end|>\\n<|im_start|>assistant\\n\\n | [low] <|im_end|>\\n<|im_start|>assistant\\n",
+    "Genre word at end of available context vs. middle :: [negative] user\\nWrite a letter | [low] user\\nWrite a letter and send it"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Genre noun phrase vs. other noun phrase",
+     "texts": [
+      {
+       "text": "Write a compelling love letter",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "Write a compelling love story",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "First-person narrative vs. third-person narrative",
+     "texts": [
+      {
+       "text": "Begin a first-person narrative",
+       "expected": "negative",
+       "target": "narrative"
+      },
+      {
+       "text": "Begin a third-person narrative",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Preposition 'of' before genre vs. other use",
+     "texts": [
+      {
+       "text": "in the form of a poem",
+       "expected": "negative",
+       "target": "poem"
+      },
+      {
+       "text": "in the form of a circle",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Determiner 'a' before genre vs. before object",
+     "texts": [
+      {
+       "text": "as a letter to",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "as a book to",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Speech genre (prosopopeia) vs. other abstract noun",
+     "texts": [
+      {
+       "text": "he wrote his Prosopopeia",
+       "expected": "negative",
+       "target": "Prosopopeia"
+      },
+      {
+       "text": "he wrote his dissertation",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Genre instruction in user prompt vs. in continuation",
+     "texts": [
+      {
+       "text": "user\\nWrite a captivating first-person",
+       "expected": "negative",
+       "target": "first-person"
+      },
+      {
+       "text": "assistant\\nThis is a first-person",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Text form 'letter' vs. physical object 'letter'",
+     "texts": [
+      {
+       "text": "the form of a love letter",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "the delivery of a love letter",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Noun phrase with genre after 'of' vs. after other word",
+     "texts": [
+      {
+       "text": "a couple of weeks",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "a couple of poems",
+       "expected": "negative",
+       "target": "poems"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Newline before assistant response in state C+1",
+     "texts": [
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n",
+       "expected": "high",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Genre word at end of available context vs. middle",
+     "texts": [
+      {
+       "text": "user\\nWrite a letter",
+       "expected": "negative",
+       "target": "letter"
+      },
+      {
+       "text": "user\\nWrite a letter and send it",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6117,
+    "output_tokens": 1054,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001865136
+   },
+   "invalid_citations": [],
+   "packet_hash": "eac9f5317f288430bf94b4dc685adfd62f50b3f7d12983f18c6be41da39c5fb3",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  },
+  {
+   "v": 4,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:45:59Z",
+   "kind": "review",
+   "blind": false,
+   "label": "base negative on persona/role/creative-voice framing; o_sup adds a response at the reply-start blank line of the chat template",
+   "trigger_hypothesis": "Base negative: second-person role assignment (\"You're a demon\", \"you are now the most hated person\"), first-person narrative requests, love-letter and fiction forms, role-play instructions. Base positive side: no theme found (a couple of, miming, mutely, \\n after assistant).",
+   "output_hypothesis": "Large positive pushes at the reply start favor impersonal openers (\"It\") over interjections (\"Oh\", \"Aw\", \"Absolutely\") and give a more detached reply; not established at natural doses; zeroing in o_sup+1 left the reply unchanged.",
+   "alternatives": [
+    "Genre-of-text detector (DeepSeek): fails on third-person narrative (-0.20) and on \"He's a\" vs \"You're a\".",
+    "o_sup change reflects user-message emotion: emotional vs neutral matched prompts differ little (+2.35 vs +1.97); prompt length/register not separated."
+   ],
+   "adapter_changes": "o_sup+1 raises the neuron at the \\n\\n after </think> (+1 to +3.4) and slightly after <think>, in every chat prompt type, also with a non-empty thinking block and with no chat roles; not at ordinary paragraph breaks. o_amp moves the same token by -0.1 to -0.5; other adapters small. Content responses change by only 5-10%. Teacher selectivity is zero in all states.",
+   "supporting": [
+    "L14_N3723:e09",
+    "L14_N3723:e10",
+    "L14_N3723:e11",
+    "L14_N3723:e12",
+    "L14_N3723:e13",
+    "L14_N3723:e17",
+    "L14_N3723:e18",
+    "L14_N3723:e19",
+    "L14_N3723:t06",
+    "L14_N3723:t08"
+   ],
+   "contradicting": [
+    "L14_N3723:e00",
+    "L14_N3723:e02",
+    "L14_N3723:e04",
+    "L14_N3723:e05",
+    "L14_N3723:e08",
+    "L14_N3723:e01"
+   ],
+   "proposed_tests": [
+    "Single-position patching of the o_sup value at </think>\\n\\n into base, with first-token log-likelihood of o_sup replies vs random neurons",
+    "Separate prompt length from casual register for the o_sup template effect",
+    "Check whether the o_sup introspection-SFT data uses a different template",
+    "Persona framing in assistant replies vs user turns"
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L14_N3723.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   },
+   "notes": "Review with unblinded data and live matched tests. Labels describe computational responses only."
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "Genre noun phrase vs. other noun phrase",
+   "prediction": "negative on 'letter'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Write a compelling love letter",
+     "expected": "negative",
+     "target": "letter",
+     "measured_max": 0.0,
+     "measured_min": -2.4062,
+     "value": -2.4062,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Write a compelling love story",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7383,
+     "value": 0.7383,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.351,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "First-person narrative vs. third-person narrative",
+   "prediction": "negative on 'narrative'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Begin a first-person narrative",
+     "expected": "negative",
+     "target": "narrative",
+     "measured_max": 0.0,
+     "measured_min": -4.75,
+     "value": -2.875,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Begin a third-person narrative",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.082,
+     "measured_min": -1.1797,
+     "value": 1.1797,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.357,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "Preposition 'of' before genre vs. other use",
+   "prediction": "negative on 'poem'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "in the form of a poem",
+     "expected": "negative",
+     "target": "poem",
+     "measured_max": 0.0,
+     "measured_min": -2.5781,
+     "value": -1.3359,
+     "threshold": -2.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "in the form of a circle",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -2.5781,
+     "value": 2.5781,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.262,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "Determiner 'a' before genre vs. before object",
+   "prediction": "negative on 'letter'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "as a letter to",
+     "expected": "negative",
+     "target": "letter",
+     "measured_max": 0.0,
+     "measured_min": -4.8125,
+     "value": -3.1562,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "as a book to",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.3301,
+     "value": 0.3301,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.595,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "Speech genre (prosopopeia) vs. other abstract noun",
+   "prediction": "negative on 'Prosopopeia'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "he wrote his Prosopopeia",
+     "expected": "negative",
+     "target": "Prosopopeia",
+     "measured_max": 0.0908,
+     "measured_min": -3.2969,
+     "value": -3.2969,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "he wrote his dissertation",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.063,
+     "measured_min": -0.0427,
+     "value": 0.063,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.685,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "Genre instruction in user prompt vs. in continuation",
+   "prediction": "negative on 'first-person'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\\nWrite a captivating first-person",
+     "expected": "negative",
+     "target": "first-person",
+     "measured_max": 0.1157,
+     "measured_min": -4.4688,
+     "value": -4.4688,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "assistant\\nThis is a first-person",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3945,
+     "measured_min": -3.1719,
+     "value": 3.1719,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.273,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "Text form 'letter' vs. physical object 'letter'",
+   "prediction": "negative on 'letter'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "the form of a love letter",
+     "expected": "negative",
+     "target": "letter",
+     "measured_max": 0.0,
+     "measured_min": -1.8359,
+     "value": -1.8359,
+     "threshold": -2.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "the delivery of a love letter",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1206,
+     "measured_min": -0.6914,
+     "value": 0.6914,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.241,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "Noun phrase with genre after 'of' vs. after other word",
+   "prediction": "low on 'whole text'; negative on 'poems'",
+   "texts": [
+    {
+     "text": "a couple of weeks",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.249,
+     "value": 0.249,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "a couple of poems",
+     "expected": "negative",
+     "target": "poems",
+     "measured_max": 0.0,
+     "measured_min": -0.6562,
+     "value": -0.6562,
+     "threshold": -2.0469,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.086,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "Newline before assistant response in state C+1",
+   "prediction": "high on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n",
+     "expected": "high",
+     "target": "\\n\\n",
+     "measured_max": 0.0698,
+     "measured_min": -0.0913,
+     "value": -0.0437,
+     "threshold": 0.8594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0698,
+     "measured_min": -0.0913,
+     "value": 0.0913,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "Genre word at end of available context vs. middle",
+   "prediction": "negative on 'letter'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\\nWrite a letter",
+     "expected": "negative",
+     "target": "letter",
+     "measured_max": 0.1157,
+     "measured_min": -3.75,
+     "value": -3.75,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "user\\nWrite a letter and send it",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1157,
+     "measured_min": -3.75,
+     "value": 3.75,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "Genre noun phrase vs. other noun phrase",
+   "prediction": "negative on 'letter'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Write a compelling love letter",
+     "expected": "negative",
+     "target": "letter",
+     "measured_max": 0.0,
+     "measured_min": -2.4062,
+     "value": -2.4062,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Write a compelling love story",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7383,
+     "value": 0.7383,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.351,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "First-person narrative vs. third-person narrative",
+   "prediction": "negative on 'narrative'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Begin a first-person narrative",
+     "expected": "negative",
+     "target": "narrative",
+     "measured_max": 0.0,
+     "measured_min": -4.75,
+     "value": -2.875,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Begin a third-person narrative",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.082,
+     "measured_min": -1.1797,
+     "value": 1.1797,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.357,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "Preposition 'of' before genre vs. other use",
+   "prediction": "negative on 'poem'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "in the form of a poem",
+     "expected": "negative",
+     "target": "poem",
+     "measured_max": 0.0,
+     "measured_min": -2.5781,
+     "value": -1.3359,
+     "threshold": -2.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "in the form of a circle",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -2.5781,
+     "value": 2.5781,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.262,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "Determiner 'a' before genre vs. before object",
+   "prediction": "negative on 'letter'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "as a letter to",
+     "expected": "negative",
+     "target": "letter",
+     "measured_max": 0.0,
+     "measured_min": -4.8125,
+     "value": -3.1562,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "as a book to",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.3301,
+     "value": 0.3301,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.595,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "Speech genre (prosopopeia) vs. other abstract noun",
+   "prediction": "negative on 'Prosopopeia'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "he wrote his Prosopopeia",
+     "expected": "negative",
+     "target": "Prosopopeia",
+     "measured_max": 0.0908,
+     "measured_min": -3.2969,
+     "value": -3.2969,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "he wrote his dissertation",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.063,
+     "measured_min": -0.0427,
+     "value": 0.063,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.685,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "Genre instruction in user prompt vs. in continuation",
+   "prediction": "negative on 'first-person'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\\nWrite a captivating first-person",
+     "expected": "negative",
+     "target": "first-person",
+     "measured_max": 0.1157,
+     "measured_min": -4.4688,
+     "value": -4.4688,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "assistant\\nThis is a first-person",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3945,
+     "measured_min": -3.1719,
+     "value": 3.1719,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.273,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "Text form 'letter' vs. physical object 'letter'",
+   "prediction": "negative on 'letter'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "the form of a love letter",
+     "expected": "negative",
+     "target": "letter",
+     "measured_max": 0.0,
+     "measured_min": -1.8359,
+     "value": -1.8359,
+     "threshold": -2.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "the delivery of a love letter",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1206,
+     "measured_min": -0.6914,
+     "value": 0.6914,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.241,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "Noun phrase with genre after 'of' vs. after other word",
+   "prediction": "low on 'whole text'; negative on 'poems'",
+   "texts": [
+    {
+     "text": "a couple of weeks",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.249,
+     "value": 0.249,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "a couple of poems",
+     "expected": "negative",
+     "target": "poems",
+     "measured_max": 0.0,
+     "measured_min": -0.6562,
+     "value": -0.6562,
+     "threshold": -2.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.086,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "Newline before assistant response in state C+1",
+   "prediction": "high on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n",
+     "expected": "high",
+     "target": "\\n\\n",
+     "measured_max": 0.0698,
+     "measured_min": -0.0913,
+     "value": -0.0437,
+     "threshold": 0.8594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0698,
+     "measured_min": -0.0913,
+     "value": 0.0913,
+     "threshold": 1.0235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "Genre word at end of available context vs. middle",
+   "prediction": "negative on 'letter'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\\nWrite a letter",
+     "expected": "negative",
+     "target": "letter",
+     "measured_max": 0.1157,
+     "measured_min": -3.75,
+     "value": -3.75,
+     "threshold": -2.0469,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "user\\nWrite a letter and send it",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1157,
+     "measured_min": -3.75,
+     "value": 3.75,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 4.75,
+    "pos_ref": 1.7188,
+    "neg_ref": -4.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.322265625,
+    "p01": -0.29292967915534973
+   }
+  },
+  {
+   "test_id": "rev-V1",
+   "description": "second-person role vs third person vs object (base negative side)",
+   "prediction": "'You're a' <= p01; others > p01; thresholds base p01 -0.293",
+   "texts": [
+    {
+     "text": "Listen to me. You're a demon fresh out of Hell.",
+     "target": "a",
+     "expected": "negative",
+     "values": {
+      "base": -1.4688,
+      "o_amp+1": -1.4141,
+      "o_sup+1": -1.8906,
+      "n_sup+1": -1.5312,
+      "ctrl+1": -1.9453
+     },
+     "base_min_in_text": -1.4688,
+     "pass": true
+    },
+    {
+     "text": "Listen to me. He's a demon fresh out of Hell.",
+     "target": "a",
+     "expected": "low",
+     "values": {
+      "base": -0.0342,
+      "o_amp+1": -0.0262,
+      "o_sup+1": -0.0231,
+      "n_sup+1": -0.0194,
+      "ctrl+1": -0.02
+     },
+     "base_min_in_text": -0.1973,
+     "pass": true
+    },
+    {
+     "text": "Listen to me. It's a painting of a demon.",
+     "target": "a",
+     "expected": "low",
+     "values": {
+      "base": 0.0889,
+      "o_amp+1": 0.0771,
+      "o_sup+1": 0.0898,
+      "n_sup+1": 0.1089,
+      "ctrl+1": 0.1035
+     },
+     "base_min_in_text": -0.1475,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-V2",
+   "description": "first-person vs third-person narrative request (base negative side)",
+   "prediction": "both <= p01 (creative-form version of the hypothesis); thresholds base p01 -0.293",
+   "texts": [
+    {
+     "text": "Write a captivating first-person narrative story about a sailor.",
+     "target": "person",
+     "expected": "negative",
+     "values": {
+      "base": -4.9688,
+      "o_amp+1": -4.625,
+      "o_sup+1": -5.375,
+      "n_sup+1": -4.9062,
+      "ctrl+1": -4.9062
+     },
+     "base_min_in_text": -4.9688,
+     "pass": true
+    },
+    {
+     "text": "Write a captivating third-person narrative story about a sailor.",
+     "target": "person",
+     "expected": "negative",
+     "values": {
+      "base": -0.1992,
+      "o_amp+1": -0.2002,
+      "o_sup+1": -0.2119,
+      "n_sup+1": -0.2432,
+      "ctrl+1": -0.2041
+     },
+     "base_min_in_text": -1.2031,
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-V3",
+   "description": "creative request vs factual request (base negative side)",
+   "prediction": "factual: min > p01; thresholds base p01 -0.293",
+   "texts": [
+    {
+     "text": "Write a concise factual summary about a sailor's working hours.",
+     "target": "summary",
+     "expected": "low",
+     "values": {
+      "base": 0.2061,
+      "o_amp+1": 0.2109,
+      "o_sup+1": 0.2285,
+      "n_sup+1": 0.1953,
+      "ctrl+1": 0.2119
+     },
+     "base_min_in_text": -0.2031,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-V4",
+   "description": "'love letter' vs 'cover letter' (persona-laden vs business form) (base negative side)",
+   "prediction": "both <= p01; love more negative; thresholds base p01 -0.293",
+   "texts": [
+    {
+     "text": "Rewrite the text in the form of a love letter.",
+     "target": "letter",
+     "expected": "negative",
+     "values": {
+      "base": -4.1875,
+      "o_amp+1": -4.0938,
+      "o_sup+1": -4.375,
+      "n_sup+1": -4.2188,
+      "ctrl+1": -4.3125
+     },
+     "base_min_in_text": -5.5938,
+     "pass": true
+    },
+    {
+     "text": "Rewrite the text in the form of a cover letter.",
+     "target": "letter",
+     "expected": "negative",
+     "values": {
+      "base": -1.9375,
+      "o_amp+1": -2.0312,
+      "o_sup+1": -2.0625,
+      "n_sup+1": -2.0312,
+      "ctrl+1": -2.1875
+     },
+     "base_min_in_text": -5.5938,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-V5",
+   "description": "'fictional characters' vs 'historical figures' (base negative side)",
+   "prediction": "fictional <= p01; historical > p01; thresholds base p01 -0.293",
+   "texts": [
+    {
+     "text": "I can help you with developing fictional characters in different settings.",
+     "target": "fictional",
+     "expected": "negative",
+     "values": {
+      "base": -2.75,
+      "o_amp+1": -2.7031,
+      "o_sup+1": -2.9844,
+      "n_sup+1": -2.8594,
+      "ctrl+1": -2.8125
+     },
+     "base_min_in_text": -2.75,
+     "pass": true
+    },
+    {
+     "text": "I can help you with researching historical figures in different settings.",
+     "target": "historical",
+     "expected": "low",
+     "values": {
+      "base": -0.0879,
+      "o_amp+1": -0.0981,
+      "o_sup+1": -0.1021,
+      "n_sup+1": -0.0806,
+      "ctrl+1": -0.1143
+     },
+     "base_min_in_text": -0.4844,
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-V6",
+   "description": "role-play instruction vs description, same noun (base negative side)",
+   "prediction": "'pirate' <= p01 in role-play only; thresholds base p01 -0.293",
+   "texts": [
+    {
+     "text": "Pretend you are a pirate captain and describe your ship.",
+     "target": "pirate",
+     "expected": "negative",
+     "values": {
+      "base": -0.1396,
+      "o_amp+1": -0.1514,
+      "o_sup+1": -0.208,
+      "n_sup+1": -0.1602,
+      "ctrl+1": -0.1523
+     },
+     "base_min_in_text": -4.5,
+     "pass": false
+    },
+    {
+     "text": "Describe what a pirate captain's ship looked like.",
+     "target": "pirate",
+     "expected": "low",
+     "values": {
+      "base": -0.082,
+      "o_amp+1": -0.0859,
+      "o_sup+1": -0.1147,
+      "n_sup+1": -0.0923,
+      "ctrl+1": -0.0874
+     },
+     "base_min_in_text": -0.1338,
+     "pass": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-W1",
+   "description": "o_sup change at the chat-template blank line: short emotional user turn, short neutral user turn (same length)",
+   "prediction": "o_sup-base >= 1.0; other adapters |d| < 0.6",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nthe tv was 399 usd. what a bummer<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+     "target": "\\n\\n after </think>",
+     "values": {
+      "base": -0.1914,
+      "o_amp+1": -0.3164,
+      "o_sup+1": 2.1562,
+      "n_amp+1": -0.2139,
+      "n_sup+1": -0.3789,
+      "ctrl+1": -0.0889
+     },
+     "pass": true
+    },
+    {
+     "text": "<|im_start|>user\nthe tv was 399 usd. it arrived today<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+     "target": "\\n\\n after </think>",
+     "values": {
+      "base": -0.084,
+      "o_amp+1": -0.2852,
+      "o_sup+1": 1.8906,
+      "n_amp+1": -0.1016,
+      "n_sup+1": -0.3301,
+      "ctrl+1": 0.1689
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-W2",
+   "description": "o_sup change at the chat-template blank line: long technical user turn",
+   "prediction": "o_sup-base >= 0.5; other adapters |d| < 0.6",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nPlease write a detailed product specification document for a mobile banking app, including security requirements, user flows, performance targets, and accessibility standards that the development team must follow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+     "target": "\\n\\n after </think>",
+     "values": {
+      "base": 0.2656,
+      "o_amp+1": -0.1396,
+      "o_sup+1": 0.8945,
+      "n_amp+1": -0.0625,
+      "n_sup+1": 0.3281,
+      "ctrl+1": 0.3945
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-W3",
+   "description": "o_sup change at the chat-template blank line: role-play user turn",
+   "prediction": "o_sup-base >= 1.0; other adapters |d| < 0.6",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nPretend you are a pirate captain and describe your ship.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+     "target": "\\n\\n after </think>",
+     "values": {
+      "base": -0.3945,
+      "o_amp+1": -0.9414,
+      "o_sup+1": 1.1484,
+      "n_amp+1": -0.5039,
+      "n_sup+1": -0.7188,
+      "ctrl+1": -0.3652
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-W4",
+   "description": "o_sup change at the chat-template blank line: non-empty thinking block",
+   "prediction": "o_sup-base >= 1.0; other adapters |d| < 0.6",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nthe tv was 399 usd. what a bummer<|im_end|>\n<|im_start|>assistant\n<think>\nThe user is disappointed.\n</think>\n\n",
+     "target": "\\n\\n after </think>",
+     "values": {
+      "base": 0.1992,
+      "o_amp+1": -0.1196,
+      "o_sup+1": 1.2188,
+      "n_amp+1": 0.0255,
+      "n_sup+1": 0.0996,
+      "ctrl+1": 0.2139
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-W5",
+   "description": "o_sup change at the chat-template blank line: '</think>' then blank line with no chat roles",
+   "prediction": "o_sup-base >= 0.5; other adapters |d| < 0.6",
+   "texts": [
+    {
+     "text": "<think>\n\n</think>\n\nThat is horrible.",
+     "target": "\\n\\n after </think>",
+     "values": {
+      "base": 0.3184,
+      "o_amp+1": -0.2031,
+      "o_sup+1": 0.9805,
+      "n_amp+1": 0.0977,
+      "n_sup+1": 0.3301,
+      "ctrl+1": 0.3691
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-W6",
+   "description": "o_sup change at the chat-template blank line: second assistant turn of a conversation",
+   "prediction": "o_sup-base >= 1.0; other adapters |d| < 0.6",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nthe tv was 399 usd. what a bummer<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat is horrible.<|im_end|>\n<|im_start|>user\nyeah i know<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+     "target": "\\n\\n after </think>",
+     "values": {
+      "base": 0.1592,
+      "o_amp+1": -0.0649,
+      "o_sup+1": 3.0781,
+      "n_amp+1": 0.0898,
+      "n_sup+1": -0.1914,
+      "ctrl+1": 0.7617
+     },
+     "pass": false
+    }
+   ],
+   "result": "fail",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-W7",
+   "description": "o_sup change at the chat-template blank line: ordinary paragraph break in prose",
+   "prediction": "o_sup-base |d| < 0.2",
+   "texts": [
+    {
+     "text": "Notes from the meeting\n\nThe tv was 399 usd. What a bummer\n\nThat is horrible.",
+     "target": "\\n\\n after ummer",
+     "values": {
+      "base": -0.0364,
+      "o_amp+1": -0.0364,
+      "o_sup+1": -0.0261,
+      "n_amp+1": -0.0305,
+      "n_sup+1": -0.0311,
+      "ctrl+1": -0.0234
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  }
+ ],
+ "disagreements": [
+  "[review v4] Automated label \"negative before a genre noun phrase\": partly disagree. Person and role matter more than genre (first- vs third-person narrative -4.97 vs -0.20; \"You're a\" vs \"He's a\" -1.47 vs -0.03).",
+  "[review v4] Automated test v3-t9 (\"newline before assistant response in state C+1\"; C+1 = o_sup+1) was scored fail. It was measured in the base state, on a text without the empty think block, so it could not detect the effect. Review measures o_sup+1 at +1.0 to +3.1 above base at the </think> blank line in every chat prompt. The automated adapter_changes observation was correct; its test was not a valid test of it.",
+  "[review v4] Card status was \"rejected\" under the automated tests; review sets \"tested\" for the two specific claims."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 2,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "tested",
+   "previous": "rejected",
+   "created": "2026-10-26T19:45:59Z",
+   "pass": 9,
+   "of": 13
+  }
+ ]
+}

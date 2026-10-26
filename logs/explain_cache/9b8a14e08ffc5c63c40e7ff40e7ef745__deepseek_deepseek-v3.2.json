@@ -1,0 +1,194 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates strongly on tokens related to agriculture or rural life (positive) and on tokens that are sentence-initial or list-item markers (negative), but the evidence is weak and inconsistent.",
+  "output_hypothesis": "The neuron may influence the model to generate content about farming or to avoid starting sentences with certain words, but this is speculative.",
+  "alternatives": [
+   "The neuron detects proper nouns or specific entities like 'Forces' (negative) and 'farm' (positive).",
+   "The neuron responds to punctuation or formatting tokens in specific contexts, with state C+1 showing extreme negative activations on commas and other tokens."
+  ],
+  "adapter_changes": "State C+1 shows dramatically increased negative activations on tokens like ',' (W12), 'Co' (W15), 'at' (W16), 'affect' (W17), and 'In' (W18), suggesting this state amplifies a negative response to certain word types or contexts.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "agriculture vs. other topics",
+    "a_text": "He worked on a large farm.",
+    "a_expected": "high",
+    "a_target": "farm",
+    "b_text": "He worked in a large office.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence-initial 'In' vs. mid-sentence 'in'",
+    "a_text": "In the morning, we left.",
+    "a_expected": "negative",
+    "a_target": "In",
+    "b_text": "We left in the morning.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "list-item markers",
+    "a_text": "a. Apple\nb. Banana",
+    "a_expected": "negative",
+    "a_target": "a.",
+    "b_text": "Apple and banana",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "rural vs. urban terms",
+    "a_text": "The farmer harvested crops.",
+    "a_expected": "high",
+    "a_target": "farmer",
+    "b_text": "The engineer built a bridge.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative on 'lights' in narrative",
+    "a_text": "The flickering lights were dim.",
+    "a_expected": "negative",
+    "a_target": "lights",
+    "b_text": "The bright sun was shining.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "state C+1 negative amplification",
+    "a_text": "She said, hello",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "She said, hello",
+    "b_expected": "negative",
+    "b_target": ",",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper nouns like 'Forces'",
+    "a_text": "He joined the Armed Forces.",
+    "a_expected": "negative",
+    "a_target": "Forces",
+    "b_text": "He joined the armed group.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation in emotional chat",
+    "a_text": "user\nHello<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "user\nHello<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "negative",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "mid-sentence 'from'",
+    "a_text": "He came from the city.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "From the city, he came.",
+    "b_expected": "negative",
+    "b_target": "From",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code token 'return'",
+    "a_text": "return lengths",
+    "a_expected": "negative",
+    "a_target": "return",
+    "b_text": "compute lengths",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens related to agriculture or rural life (positive) and on tokens that are sentence-initial or list-item markers (negative), but the evidence is weak and inconsistent.\",\"output_hypothesis\":\"The neuron may influence the model to generate content about farming or to avoid starting sentences with certain words, but this is speculative.\",\"alternatives\":[\"The neuron detects proper nouns or specific entities like 'Forces' (negative) and 'farm' (positive).\",\"The neuron responds to punctuation or formatting tokens in specific contexts, with state C+1 showing extreme negative activations on commas and other tokens.\"],\"adapter_changes\":\"State C+1 shows dramatically increased negative activations on tokens like ',' (W12), 'Co' (W15), 'at' (W16), 'affect' (W17), and 'In' (W18), suggesting this state amplifies a negative response to certain word types or contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"agriculture vs. other topics\",\"a_text\":\"He worked on a large farm.\",\"a_expected\":\"high\",\"a_target\":\"farm\",\"b_text\":\"He worked in a large office.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sentence-initial 'In' vs. mid-sentence 'in'\",\"a_text\":\"In the morning, we left.\",\"a_expected\":\"negative\",\"a_target\":\"In\",\"b_text\":\"We left in the morning.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list-item markers\",\"a_text\":\"a. Apple\\nb. Banana\",\"a_expected\":\"negative\",\"a_target\":\"a.\",\"b_text\":\"Apple and banana\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"rural vs. urban terms\",\"a_text\":\"The farmer harvested crops.\",\"a_expected\":\"high\",\"a_target\":\"farmer\",\"b_text\":\"The engineer built a bridge.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on 'lights' in narrative\",\"a_text\":\"The flickering lights were dim.\",\"a_expected\":\"negative\",\"a_target\":\"lights\",\"b_text\":\"The bright sun was shining.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"state C+1 negative amplification\",\"a_text\":\"She said, hello\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"She said, hello\",\"b_expected\":\"negative\",\"b_target\":\",\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper nouns like 'Forces'\",\"a_text\":\"He joined the Armed Forces.\",\"a_expected\":\"negative\",\"a_target\":\"Forces\",\"b_text\":\"He joined the armed group.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation in emotional chat\",\"a_text\":\"user\\nHello<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"user\\nHello<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"negative\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"mid-sentence 'from'\",\"a_text\":\"He came from the city.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"From the city, he came.\",\"b_expected\":\"negative\",\"b_target\":\"From\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code token 'return'\",\"a_text\":\"return lengths\",\"a_expected\":\"negative\",\"a_target\":\"return\",\"b_text\":\"compute lengths\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4103,
+  "output_tokens": 999,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00149064363
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens related to agriculture or rural life (positive) and on tokens that are sentence-initial or list-item markers (negative), but the evidence is weak and inconsistent.\",\"output_hypothesis\":\"The neuron may influence the model to generate content about farming or to avoid starting sentences with certain words, but this is speculative.\",\"alternatives\":[\"The neuron detects proper nouns or specific entities like 'Forces' (negative) and 'farm' (positive).\",\"The neuron responds to punctuation or formatting tokens in specific contexts, with state C+1 showing extreme negative activations on commas and other tokens.\"],\"adapter_changes\":\"State C+1 shows dramatically increased negative activations on tokens like ',' (W12), 'Co' (W15), 'at' (W16), 'affect' (W17), and 'In' (W18), suggesting this state amplifies a negative response to certain word types or contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"agriculture vs. other topics\",\"a_text\":\"He worked on a large farm.\",\"a_expected\":\"high\",\"a_target\":\"farm\",\"b_text\":\"He worked in a large office.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sentence-initial 'In' vs. mid-sentence 'in'\",\"a_text\":\"In the morning, we left.\",\"a_expected\":\"negative\",\"a_target\":\"In\",\"b_text\":\"We left in the morning.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list-item markers\",\"a_text\":\"a. Apple\\nb. Banana\",\"a_expected\":\"negative\",\"a_target\":\"a.\",\"b_text\":\"Apple and banana\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"rural vs. urban terms\",\"a_text\":\"The farmer harvested crops.\",\"a_expected\":\"high\",\"a_target\":\"farmer\",\"b_text\":\"The engineer built a bridge.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on 'lights' in narrative\",\"a_text\":\"The flickering lights were dim.\",\"a_expected\":\"negative\",\"a_target\":\"lights\",\"b_text\":\"The bright sun was shining.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"state C+1 negative amplification\",\"a_text\":\"She said, hello\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"She said, hello\",\"b_expected\":\"negative\",\"b_target\":\",\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper nouns like 'Forces'\",\"a_text\":\"He joined the Armed Forces.\",\"a_expected\":\"negative\",\"a_target\":\"Forces\",\"b_text\":\"He joined the armed group.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation in emotional chat\",\"a_text\":\"user\\nHello<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"user\\nHello<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"negative\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"mid-sentence 'from'\",\"a_text\":\"He came from the city.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"From the city, he came.\",\"b_expected\":\"negative\",\"b_target\":\"From\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code token 'return'\",\"a_text\":\"return lengths\",\"a_expected\":\"negative\",\"a_target\":\"return\",\"b_text\":\"compute lengths\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4103,
+    "output_tokens": 999,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.00149064363,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793041171-W1VZQB9iG8hAHDF6OzmH"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:00:07Z",
+ "purpose": "explain:shuffled"
+}

@@ -1,0 +1,1188 @@
+{
+ "id": "L32/N1097",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:18:09Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "capital letter after punctuation or line break",
+   "trigger_hypothesis": "The neuron activates strongly positive when a capital letter token (like 'P', 'David', '-T') appears immediately after a punctuation mark (comma, period, newline) or a line break, indicating the start of a new sentence or proper noun. It activates strongly negative when a lowercase letter token (like 'h', 'P' as part of a word) appears after a space or within a word, indicating continuation of a word or lowercase start.",
+   "output_hypothesis": "The neuron may signal the start of a new sentence or proper noun, potentially influencing the model to generate capitalized tokens or proper names.",
+   "alternatives": [
+    "The neuron detects proper nouns or names specifically.",
+    "The neuron responds to the token 'P' in any context, with sign determined by surrounding punctuation."
+   ],
+   "adapter_changes": "State changes are minimal; slight variations exist but no systematic pattern reversal, suggesting the trigger is robust across modifications.",
+   "supporting": [
+    "L32_N1097:e00",
+    "L32_N1097:e01",
+    "L32_N1097:e02",
+    "L32_N1097:e03",
+    "L32_N1097:e04",
+    "L32_N1097:e05",
+    "L32_N1097:e07",
+    "L32_N1097:e09",
+    "L32_N1097:e10",
+    "L32_N1097:e11",
+    "L32_N1097:e12",
+    "L32_N1097:e13"
+   ],
+   "contradicting": [
+    "L32_N1097:e31",
+    "L32_N1097:e30",
+    "L32_N1097:e29",
+    "L32_N1097:e28",
+    "L32_N1097:e36",
+    "L32_N1097:e35",
+    "L32_N1097:e32",
+    "L32_N1097:e34"
+   ],
+   "proposed_tests": [
+    "capital after punctuation vs lowercase after space :: [high] Hello. John went home. | [low] Hello. john went home.",
+    "proper noun after comma vs common word :: [high] She saw Paris, France. | [low] She saw Paris, france.",
+    "newline start with capital vs lowercase :: [high] \nThe cat sat.\n | [low] \nthe cat sat.\n",
+    "capital 'P' as start vs within word :: [high] He went to P. | [low] He went to p. | [negative] He went to stop.",
+    "hyphenated capital start :: [high] It was T-Shirt. | [low] It was t-Shirt.",
+    "comma then capital vs comma then lowercase :: [high] Yes, I agree. | [low] Yes, i agree.",
+    "period then space capital vs no period :: [high] End. Now begin. | [low] End now begin.",
+    "quotation start capital :: [high] He said, \"Hello.\" | [low] He said, \"hello.\"",
+    "number then capital letter :: [high] See 1. Apple is good. | [low] See 1. apple is good.",
+    "colon then capital vs colon then lowercase :: [high] List: A, B, C. | [low] List: a, b, c."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "capital after punctuation vs lowercase after space",
+     "texts": [
+      {
+       "text": "Hello. John went home.",
+       "expected": "high",
+       "target": "John"
+      },
+      {
+       "text": "Hello. john went home.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "proper noun after comma vs common word",
+     "texts": [
+      {
+       "text": "She saw Paris, France.",
+       "expected": "high",
+       "target": "France"
+      },
+      {
+       "text": "She saw Paris, france.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "newline start with capital vs lowercase",
+     "texts": [
+      {
+       "text": "\nThe cat sat.\n",
+       "expected": "high",
+       "target": "The"
+      },
+      {
+       "text": "\nthe cat sat.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "capital 'P' as start vs within word",
+     "texts": [
+      {
+       "text": "He went to P.",
+       "expected": "high",
+       "target": "P"
+      },
+      {
+       "text": "He went to p.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "He went to stop.",
+       "expected": "negative",
+       "target": "p"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "hyphenated capital start",
+     "texts": [
+      {
+       "text": "It was T-Shirt.",
+       "expected": "high",
+       "target": "T"
+      },
+      {
+       "text": "It was t-Shirt.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "comma then capital vs comma then lowercase",
+     "texts": [
+      {
+       "text": "Yes, I agree.",
+       "expected": "high",
+       "target": "I"
+      },
+      {
+       "text": "Yes, i agree.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "period then space capital vs no period",
+     "texts": [
+      {
+       "text": "End. Now begin.",
+       "expected": "high",
+       "target": "Now"
+      },
+      {
+       "text": "End now begin.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "quotation start capital",
+     "texts": [
+      {
+       "text": "He said, \"Hello.\"",
+       "expected": "high",
+       "target": "\"Hello"
+      },
+      {
+       "text": "He said, \"hello.\"",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "number then capital letter",
+     "texts": [
+      {
+       "text": "See 1. Apple is good.",
+       "expected": "high",
+       "target": "Apple"
+      },
+      {
+       "text": "See 1. apple is good.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "colon then capital vs colon then lowercase",
+     "texts": [
+      {
+       "text": "List: A, B, C.",
+       "expected": "high",
+       "target": "A"
+      },
+      {
+       "text": "List: a, b, c.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6244,
+    "output_tokens": 977,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001852228
+   },
+   "invalid_citations": [],
+   "packet_hash": "2e58f92e7f1dc4890fcd42363001cf933d81ecb55e88ade3ba96e6dad43ca6ef",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "capital after punctuation vs lowercase after space",
+   "prediction": "high on 'John'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Hello. John went home.",
+     "expected": "high",
+     "target": "John",
+     "measured_max": 1.0078,
+     "measured_min": -0.2295,
+     "value": 0.9414,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Hello. john went home.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0078,
+     "measured_min": -0.2314,
+     "value": 1.0078,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "proper noun after comma vs common word",
+   "prediction": "high on 'France'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She saw Paris, France.",
+     "expected": "high",
+     "target": "France",
+     "measured_max": 0.0104,
+     "measured_min": -0.3125,
+     "value": -0.1387,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She saw Paris, france.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0104,
+     "measured_min": -0.4141,
+     "value": 0.4141,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "newline start with capital vs lowercase",
+   "prediction": "high on 'The'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nThe cat sat.\n",
+     "expected": "high",
+     "target": "The",
+     "measured_max": 0.3301,
+     "measured_min": -0.248,
+     "value": -0.248,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "\nthe cat sat.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2314,
+     "measured_min": -0.2559,
+     "value": 0.2559,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "capital 'P' as start vs within word",
+   "prediction": "high on 'P'; low on 'whole text'; negative on 'p'",
+   "texts": [
+    {
+     "text": "He went to P.",
+     "expected": "high",
+     "target": "P",
+     "measured_max": 6.8125,
+     "measured_min": 0.0,
+     "value": 5.4688,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He went to p.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.9375,
+     "measured_min": 0.0,
+     "value": 7.9375,
+     "threshold": 5.9062,
+     "pass": false,
+     "measured_at": "token"
+    },
+    {
+     "text": "He went to stop.",
+     "expected": "negative",
+     "target": "p",
+     "measured_max": 0.5352,
+     "measured_min": -0.3516,
+     "value": 0.1367,
+     "threshold": -7.1875,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.098,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "hyphenated capital start",
+   "prediction": "high on 'T'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was T-Shirt.",
+     "expected": "high",
+     "target": "T",
+     "measured_max": 0.0302,
+     "measured_min": -1.0781,
+     "value": 0.0,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It was t-Shirt.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0302,
+     "measured_min": -0.7969,
+     "value": 0.7969,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "comma then capital vs comma then lowercase",
+   "prediction": "high on 'I'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Yes, I agree.",
+     "expected": "high",
+     "target": "I",
+     "measured_max": 0.3633,
+     "measured_min": -0.5508,
+     "value": 0.3633,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Yes, i agree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0762,
+     "measured_min": -0.5977,
+     "value": 0.5977,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "period then space capital vs no period",
+   "prediction": "high on 'Now'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "End. Now begin.",
+     "expected": "high",
+     "target": "Now",
+     "measured_max": 0.0703,
+     "measured_min": -0.3027,
+     "value": -0.0439,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "End now begin.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1514,
+     "measured_min": -0.2676,
+     "value": 0.2676,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "quotation start capital",
+   "prediction": "high on '\"Hello'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He said, \"Hello.\"",
+     "expected": "high",
+     "target": "\"Hello",
+     "measured_max": 0.1738,
+     "measured_min": -0.6641,
+     "value": 0.1738,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said, \"hello.\"",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1611,
+     "measured_min": -0.6641,
+     "value": 0.6641,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "number then capital letter",
+   "prediction": "high on 'Apple'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "See 1. Apple is good.",
+     "expected": "high",
+     "target": "Apple",
+     "measured_max": 0.8633,
+     "measured_min": -0.6055,
+     "value": 0.5273,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "See 1. apple is good.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8633,
+     "measured_min": -0.543,
+     "value": 0.8633,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "colon then capital vs colon then lowercase",
+   "prediction": "high on 'A'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "List: A, B, C.",
+     "expected": "high",
+     "target": "A",
+     "measured_max": 0.1436,
+     "measured_min": -0.4395,
+     "value": -0.2363,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "List: a, b, c.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4395,
+     "value": 0.4395,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "capital after punctuation vs lowercase after space",
+   "prediction": "high on 'John'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Hello. John went home.",
+     "expected": "high",
+     "target": "John",
+     "measured_max": 1.0078,
+     "measured_min": -0.2295,
+     "value": 0.9414,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Hello. john went home.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0078,
+     "measured_min": -0.2314,
+     "value": 1.0078,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "proper noun after comma vs common word",
+   "prediction": "high on 'France'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She saw Paris, France.",
+     "expected": "high",
+     "target": "France",
+     "measured_max": 0.0104,
+     "measured_min": -0.3125,
+     "value": -0.1387,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She saw Paris, france.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0104,
+     "measured_min": -0.4141,
+     "value": 0.4141,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "newline start with capital vs lowercase",
+   "prediction": "high on 'The'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\nThe cat sat.\n",
+     "expected": "high",
+     "target": "The",
+     "measured_max": 0.3301,
+     "measured_min": -0.248,
+     "value": -0.248,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "\nthe cat sat.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2314,
+     "measured_min": -0.2559,
+     "value": 0.2559,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "capital 'P' as start vs within word",
+   "prediction": "high on 'P'; low on 'whole text'; negative on 'p'",
+   "texts": [
+    {
+     "text": "He went to P.",
+     "expected": "high",
+     "target": "P",
+     "measured_max": 6.8125,
+     "measured_min": 0.0,
+     "value": 5.4688,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He went to p.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.9375,
+     "measured_min": 0.0,
+     "value": 7.9375,
+     "threshold": 5.9062,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "He went to stop.",
+     "expected": "negative",
+     "target": "p",
+     "measured_max": 0.5352,
+     "measured_min": -0.3516,
+     "value": 0.1367,
+     "threshold": -7.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.098,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "hyphenated capital start",
+   "prediction": "high on 'T'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was T-Shirt.",
+     "expected": "high",
+     "target": "T",
+     "measured_max": 0.0302,
+     "measured_min": -1.0781,
+     "value": 0.0,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It was t-Shirt.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0302,
+     "measured_min": -0.7969,
+     "value": 0.7969,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "comma then capital vs comma then lowercase",
+   "prediction": "high on 'I'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Yes, I agree.",
+     "expected": "high",
+     "target": "I",
+     "measured_max": 0.3633,
+     "measured_min": -0.5508,
+     "value": 0.3633,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Yes, i agree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0762,
+     "measured_min": -0.5977,
+     "value": 0.5977,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "period then space capital vs no period",
+   "prediction": "high on 'Now'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "End. Now begin.",
+     "expected": "high",
+     "target": "Now",
+     "measured_max": 0.0703,
+     "measured_min": -0.3027,
+     "value": -0.0439,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "End now begin.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1514,
+     "measured_min": -0.2676,
+     "value": 0.2676,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "quotation start capital",
+   "prediction": "high on '\"Hello'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He said, \"Hello.\"",
+     "expected": "high",
+     "target": "\"Hello",
+     "measured_max": 0.1738,
+     "measured_min": -0.6641,
+     "value": 0.1738,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He said, \"hello.\"",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1611,
+     "measured_min": -0.6641,
+     "value": 0.6641,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "number then capital letter",
+   "prediction": "high on 'Apple'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "See 1. Apple is good.",
+     "expected": "high",
+     "target": "Apple",
+     "measured_max": 0.8633,
+     "measured_min": -0.6055,
+     "value": 0.5273,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "See 1. apple is good.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8633,
+     "measured_min": -0.543,
+     "value": 0.8633,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "colon then capital vs colon then lowercase",
+   "prediction": "high on 'A'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "List: A, B, C.",
+     "expected": "high",
+     "target": "A",
+     "measured_max": 0.1436,
+     "measured_min": -0.4395,
+     "value": -0.2363,
+     "threshold": 11.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "List: a, b, c.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4395,
+     "value": 0.4395,
+     "threshold": 5.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 25.25,
+    "pos_ref": 23.625,
+    "neg_ref": -14.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.9609375,
+    "p01": -0.96484375
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

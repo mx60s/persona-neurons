@@ -1,0 +1,1677 @@
+{
+ "id": "L26/N4803",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:04Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional response separator",
+   "trigger_hypothesis": "The neuron activates strongly at tokens that mark the beginning of an empathetic or emotional response in a conversational turn, especially after a user's emotional disclosure, and negatively at tokens that continue an emotional exclamation within the assistant's own turn.",
+   "output_hypothesis": "The neuron's output pushes toward words related to comparison and positive evaluation (e.g., 'nice', 'comparatively'), potentially modulating the tone of the response to be more measured or positively comparative.",
+   "alternatives": [
+    "The neuron detects the start of any new conversational turn (like 'how', 'what', newlines).",
+    "The neuron responds to tokens indicating uncertainty or incompletion (like 'how', 'what', 'yet', '``')."
+   ],
+   "adapter_changes": "State A+1 strongly amplifies positive activations in emotional_chat contexts (e.g., W01, W02) and can flip strong negative activations to positive (W07, W16). State C+1 dampens or flips positive activations to negative in emotional_chat responses (W17, W18). States D+1 and B+1 show moderate amplification and dampening respectively, while E+1 has minimal effect.",
+   "supporting": [
+    "L26_N4803:e00",
+    "L26_N4803:e02",
+    "L26_N4803:e03",
+    "L26_N4803:e05",
+    "L26_N4803:e06",
+    "L26_N4803:e07",
+    "L26_N4803:e08",
+    "L26_N4803:e10",
+    "L26_N4803:e14",
+    "L26_N4803:e17",
+    "L26_N4803:e18"
+   ],
+   "contradicting": [
+    "L26_N4803:e27",
+    "L26_N4803:e26",
+    "L26_N4803:e25",
+    "L26_N4803:e24",
+    "L26_N4803:e13",
+    "L26_N4803:e32",
+    "L26_N4803:e29",
+    "L26_N4803:e15",
+    "L26_N4803:e16"
+   ],
+   "proposed_tests": [
+    "Start of empathetic response vs. neutral statement :: [high] User: I lost my job today. Assistant: I'm so sorry to hear that. | [low] User: What's the weather? Assistant: It's sunny today.",
+    "Emotional exclamation continuation vs. start :: [negative] Oh no! That's terrible! | [high] Oh no! How awful!",
+    "Newline after emotional prompt vs. neutral prompt :: [high] I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n | [low] The sky is blue.<|im_end|>\\n<|im_start|>assistant\\n",
+    "Question word in emotional context vs. factual context :: [high] How did you cope with that loss? | [low] How many kilometers to the next town?",
+    "Quoted speech in narrative vs. regular narrative :: [high] He said, \"I can't believe it.\" | [low] He walked to the store.",
+    "Word 'yet' in incomplete emotional statement vs. complete fact :: [high] I haven't seen the movie yet. | [low] The train has not arrived yet.",
+    "Possessive in emotional exclamation vs. neutral possessive :: [negative] That's amazing! | [low] That's John's book.",
+    "First person 'I' in emotional response vs. neutral email :: [high] Oh god I remember that. | [low] I am writing to inquire.",
+    "Closing salutation 'Yours' in emotional letter vs. formal letter :: [high] With all my love, Yours | [low] Sincerely, Yours",
+    "Adapter state A+1 effect on negative trigger :: [negative] That's awful! | [high] That's awful!"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Start of empathetic response vs. neutral statement",
+     "texts": [
+      {
+       "text": "User: I lost my job today. Assistant: I'm so sorry to hear that.",
+       "expected": "high",
+       "target": "I'm"
+      },
+      {
+       "text": "User: What's the weather? Assistant: It's sunny today.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Emotional exclamation continuation vs. start",
+     "texts": [
+      {
+       "text": "Oh no! That's terrible!",
+       "expected": "negative",
+       "target": "That's"
+      },
+      {
+       "text": "Oh no! How awful!",
+       "expected": "high",
+       "target": "How"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Newline after emotional prompt vs. neutral prompt",
+     "texts": [
+      {
+       "text": "I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n",
+       "expected": "high",
+       "target": "\\n"
+      },
+      {
+       "text": "The sky is blue.<|im_end|>\\n<|im_start|>assistant\\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Question word in emotional context vs. factual context",
+     "texts": [
+      {
+       "text": "How did you cope with that loss?",
+       "expected": "high",
+       "target": "How"
+      },
+      {
+       "text": "How many kilometers to the next town?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Quoted speech in narrative vs. regular narrative",
+     "texts": [
+      {
+       "text": "He said, \"I can't believe it.\"",
+       "expected": "high",
+       "target": "\""
+      },
+      {
+       "text": "He walked to the store.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Word 'yet' in incomplete emotional statement vs. complete fact",
+     "texts": [
+      {
+       "text": "I haven't seen the movie yet.",
+       "expected": "high",
+       "target": "yet"
+      },
+      {
+       "text": "The train has not arrived yet.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Possessive in emotional exclamation vs. neutral possessive",
+     "texts": [
+      {
+       "text": "That's amazing!",
+       "expected": "negative",
+       "target": "That's"
+      },
+      {
+       "text": "That's John's book.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "First person 'I' in emotional response vs. neutral email",
+     "texts": [
+      {
+       "text": "Oh god I remember that.",
+       "expected": "high",
+       "target": "I"
+      },
+      {
+       "text": "I am writing to inquire.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Closing salutation 'Yours' in emotional letter vs. formal letter",
+     "texts": [
+      {
+       "text": "With all my love, Yours",
+       "expected": "high",
+       "target": "Yours"
+      },
+      {
+       "text": "Sincerely, Yours",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Adapter state A+1 effect on negative trigger",
+     "texts": [
+      {
+       "text": "That's awful!",
+       "expected": "negative",
+       "target": "That's"
+      },
+      {
+       "text": "That's awful!",
+       "expected": "high",
+       "target": "That's"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5904,
+    "output_tokens": 1114,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001814568
+   },
+   "invalid_citations": [],
+   "packet_hash": "865a4985e9ed415e4e3923d69b55ab06529c55c3b66028243cff71bca2f18c43",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "v": 2,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:49:17Z",
+   "kind": "review",
+   "blind": false,
+   "label": "seriousness of the user's situation at the assistant's reaction (negative = minor, positive = grave); writes mild vs extreme evaluation words",
+   "trigger_hypothesis": "Inside an assistant reply, at the reaction tokens ('That's', 'How', 'I'): graded by severity and personal closeness of the user's situation, not by wording or emotion type: minor annoyances -11..-16, middle events -5..-8, own bereavement/grave illness +4..+8; someone else's loss or anxiety lower than the user's own. Zero outside the chat template.",
+   "output_hypothesis": "Positive activation promotes intensifiers and extreme evaluation ('so', 'incredibly', 'extremely', 'terrible'; lens: incredibly, utterly, catastrophic); negative promotes mild/relative terms ('somewhat', 'nice', 'relatively').",
+   "alternatives": [
+    "Tracks the planned reply style (formal condolence vs casual commiseration) rather than the situation.",
+    "n_amp+1 change is a uniform positive offset on emotional replies (argued against: shift is largest where base is most negative and small for grave events)."
+   ],
+   "adapter_changes": "n_amp+1 raises reactions to minor/middle events toward or above zero (neighbor -16.1 -> -2.4; laid off -4.7 -> +8.3), little change for grave events; also raises the pre-reply token on non-emotional requests. n_sup+1 lowers reactions to grave events (brother died +4.4 -> -0.1) and flips 'I' after empathic openers negative. ctrl+1 within about 2 units of base.",
+   "supporting": [
+    "L26_N4803:e00",
+    "L26_N4803:e02",
+    "L26_N4803:e08",
+    "L26_N4803:e09",
+    "L26_N4803:e14",
+    "L26_N4803:e17",
+    "L26_N4803:e18",
+    "L26_N4803:e21",
+    "L26_N4803:t00",
+    "L26_N4803:t04",
+    "L26_N4803:t05",
+    "L26_N4803:t06"
+   ],
+   "contradicting": [
+    "L26_N4803:e01",
+    "L26_N4803:e04",
+    "L26_N4803:e05",
+    "L26_N4803:e10",
+    "L26_N4803:e11",
+    "L26_N4803:e12",
+    "L26_N4803:t01"
+   ],
+   "proposed_tests": [
+    "Clamp L26/N4803 to base values at reply tokens in n_amp+1 on 20 prompts; count intensifiers per reply vs a random patch.",
+    "Vary detail length of the same grave event to explain the s11 failure.",
+    "Separate style from situation: grave event with an instructed casual reply vs minor event with an instructed formal condolence."
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L26_N4803.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Start of empathetic response vs. neutral statement",
+   "prediction": "high on \"I'm\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I lost my job today. Assistant: I'm so sorry to hear that.",
+     "expected": "high",
+     "target": "I'm",
+     "measured_max": 2.3906,
+     "measured_min": -4.1875,
+     "value": -2.0,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "User: What's the weather? Assistant: It's sunny today.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1406,
+     "measured_min": -0.3633,
+     "value": 0.3633,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.122,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Emotional exclamation continuation vs. start",
+   "prediction": "negative on \"That's\"; high on 'How'",
+   "texts": [
+    {
+     "text": "Oh no! That's terrible!",
+     "expected": "negative",
+     "target": "That's",
+     "measured_max": 0.2598,
+     "measured_min": -0.1279,
+     "value": -0.1279,
+     "threshold": -6.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Oh no! How awful!",
+     "expected": "high",
+     "target": "How",
+     "measured_max": 0.3145,
+     "measured_min": -0.1992,
+     "value": 0.3145,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Newline after emotional prompt vs. neutral prompt",
+   "prediction": "high on '\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n",
+     "expected": "high",
+     "target": "\\n",
+     "measured_max": 1.2812,
+     "measured_min": -0.2988,
+     "value": -0.1318,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The sky is blue.<|im_end|>\\n<|im_start|>assistant\\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0723,
+     "measured_min": -0.2158,
+     "value": 0.2158,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Question word in emotional context vs. factual context",
+   "prediction": "high on 'How'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "How did you cope with that loss?",
+     "expected": "high",
+     "target": "How",
+     "measured_max": 1.4688,
+     "measured_min": -0.2539,
+     "value": 0.0,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "How many kilometers to the next town?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1699,
+     "measured_min": -0.2812,
+     "value": 0.2812,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Quoted speech in narrative vs. regular narrative",
+   "prediction": "high on '\"'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He said, \"I can't believe it.\"",
+     "expected": "high",
+     "target": "\"",
+     "measured_max": 0.2988,
+     "measured_min": -0.1108,
+     "value": -0.0654,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He walked to the store.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2598,
+     "value": 0.2598,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Word 'yet' in incomplete emotional statement vs. complete fact",
+   "prediction": "high on 'yet'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I haven't seen the movie yet.",
+     "expected": "high",
+     "target": "yet",
+     "measured_max": 0.3047,
+     "measured_min": -0.2012,
+     "value": -0.1611,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The train has not arrived yet.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2578,
+     "measured_min": -0.1025,
+     "value": 0.2578,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Possessive in emotional exclamation vs. neutral possessive",
+   "prediction": "negative on \"That's\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's amazing!",
+     "expected": "negative",
+     "target": "That's",
+     "measured_max": 0.1191,
+     "measured_min": -0.0164,
+     "value": -0.0164,
+     "threshold": -6.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That's John's book.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1504,
+     "measured_min": -0.3848,
+     "value": 0.3848,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "First person 'I' in emotional response vs. neutral email",
+   "prediction": "high on 'I'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh god I remember that.",
+     "expected": "high",
+     "target": "I",
+     "measured_max": 1.4609,
+     "measured_min": 0.0,
+     "value": 1.4609,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I am writing to inquire.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3438,
+     "measured_min": -0.0869,
+     "value": 0.3438,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.064,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Closing salutation 'Yours' in emotional letter vs. formal letter",
+   "prediction": "high on 'Yours'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "With all my love, Yours",
+     "expected": "high",
+     "target": "Yours",
+     "measured_max": 2.5938,
+     "measured_min": -0.0267,
+     "value": 2.5938,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Sincerely, Yours",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2344,
+     "measured_min": 0.0,
+     "value": 1.2344,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.078,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Adapter state A+1 effect on negative trigger",
+   "prediction": "negative on \"That's\"; high on \"That's\"",
+   "texts": [
+    {
+     "text": "That's awful!",
+     "expected": "negative",
+     "target": "That's",
+     "measured_max": 0.1016,
+     "measured_min": -0.0222,
+     "value": -0.0164,
+     "threshold": -6.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That's awful!",
+     "expected": "high",
+     "target": "That's",
+     "measured_max": 0.1016,
+     "measured_min": -0.0222,
+     "value": 0.0,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:12Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Start of empathetic response vs. neutral statement",
+   "prediction": "high on \"I'm\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I lost my job today. Assistant: I'm so sorry to hear that.",
+     "expected": "high",
+     "target": "I'm",
+     "measured_max": 2.3906,
+     "measured_min": -4.1875,
+     "value": -2.0,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "User: What's the weather? Assistant: It's sunny today.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1406,
+     "measured_min": -0.3633,
+     "value": 0.3633,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.122,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Emotional exclamation continuation vs. start",
+   "prediction": "negative on \"That's\"; high on 'How'",
+   "texts": [
+    {
+     "text": "Oh no! That's terrible!",
+     "expected": "negative",
+     "target": "That's",
+     "measured_max": 0.2598,
+     "measured_min": -0.1279,
+     "value": -0.1279,
+     "threshold": -6.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Oh no! How awful!",
+     "expected": "high",
+     "target": "How",
+     "measured_max": 0.3145,
+     "measured_min": -0.1992,
+     "value": 0.3145,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Newline after emotional prompt vs. neutral prompt",
+   "prediction": "high on '\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n",
+     "expected": "high",
+     "target": "\\n",
+     "measured_max": 1.2812,
+     "measured_min": -0.2988,
+     "value": -0.1318,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The sky is blue.<|im_end|>\\n<|im_start|>assistant\\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0723,
+     "measured_min": -0.2158,
+     "value": 0.2158,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Question word in emotional context vs. factual context",
+   "prediction": "high on 'How'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "How did you cope with that loss?",
+     "expected": "high",
+     "target": "How",
+     "measured_max": 1.4688,
+     "measured_min": -0.2539,
+     "value": 0.0,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "How many kilometers to the next town?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1699,
+     "measured_min": -0.2812,
+     "value": 0.2812,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Quoted speech in narrative vs. regular narrative",
+   "prediction": "high on '\"'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He said, \"I can't believe it.\"",
+     "expected": "high",
+     "target": "\"",
+     "measured_max": 0.2988,
+     "measured_min": -0.1108,
+     "value": -0.0654,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He walked to the store.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2598,
+     "value": 0.2598,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Word 'yet' in incomplete emotional statement vs. complete fact",
+   "prediction": "high on 'yet'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I haven't seen the movie yet.",
+     "expected": "high",
+     "target": "yet",
+     "measured_max": 0.3047,
+     "measured_min": -0.2012,
+     "value": -0.1611,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The train has not arrived yet.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2578,
+     "measured_min": -0.1025,
+     "value": 0.2578,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Possessive in emotional exclamation vs. neutral possessive",
+   "prediction": "negative on \"That's\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's amazing!",
+     "expected": "negative",
+     "target": "That's",
+     "measured_max": 0.1191,
+     "measured_min": -0.0164,
+     "value": -0.0164,
+     "threshold": -6.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "That's John's book.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1504,
+     "measured_min": -0.3848,
+     "value": 0.3848,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "First person 'I' in emotional response vs. neutral email",
+   "prediction": "high on 'I'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh god I remember that.",
+     "expected": "high",
+     "target": "I",
+     "measured_max": 1.4609,
+     "measured_min": 0.0,
+     "value": 1.4609,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I am writing to inquire.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3438,
+     "measured_min": -0.0869,
+     "value": 0.3438,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.064,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Closing salutation 'Yours' in emotional letter vs. formal letter",
+   "prediction": "high on 'Yours'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "With all my love, Yours",
+     "expected": "high",
+     "target": "Yours",
+     "measured_max": 2.5938,
+     "measured_min": -0.0267,
+     "value": 2.5938,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Sincerely, Yours",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2344,
+     "measured_min": 0.0,
+     "value": 1.2344,
+     "threshold": 3.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.078,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Adapter state A+1 effect on negative trigger",
+   "prediction": "negative on \"That's\"; high on \"That's\"",
+   "texts": [
+    {
+     "text": "That's awful!",
+     "expected": "negative",
+     "target": "That's",
+     "measured_max": 0.1016,
+     "measured_min": -0.0222,
+     "value": -0.0164,
+     "threshold": -6.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "That's awful!",
+     "expected": "high",
+     "target": "That's",
+     "measured_max": 0.1016,
+     "measured_min": -0.0222,
+     "value": 0.0,
+     "threshold": 4.6562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.5,
+    "pos_ref": 9.3125,
+    "neg_ref": -12.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.0625,
+    "p01": -1.578125
+   }
+  },
+  {
+   "test_id": "review-s1",
+   "card_version": 2,
+   "description": "severity: minor annoyance vs bereavement, same reply, at \"That's\"",
+   "prediction": "base: grave >= p99, minor <= p01",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy brother died yesterday.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 4.41,
+      "n_amp+1": 8.69,
+      "n_sup+1": -0.1,
+      "o_amp+1": 8.19,
+      "o_sup+1": 1.55,
+      "ctrl+1": 3.34
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy neighbor keeps parking in my spot.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -16.12,
+      "n_amp+1": -2.42,
+      "n_sup+1": -13.88,
+      "o_amp+1": -12.94,
+      "o_sup+1": -13.81,
+      "ctrl+1": -14.69
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s2",
+   "card_version": 2,
+   "description": "meaning vs vocabulary: grave event in mild words vs minor event in strong negative words",
+   "prediction": "base: grave/mild-words >= p99, minor/strong-words <= p01",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy dog has to be put to sleep tomorrow morning.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 3.2,
+      "n_amp+1": 10.25,
+      "n_sup+1": -1.36,
+      "o_amp+1": 6.56,
+      "o_sup+1": 1.14,
+      "ctrl+1": 2.23
+     }
+    },
+    {
+     "text": "<|im_start|>user\nThe coffee shop absolutely destroyed my order, a horrible, disgusting disaster.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -7.59,
+      "n_amp+1": 6.5,
+      "n_sup+1": -10.0,
+      "o_amp+1": -1.23,
+      "o_sup+1": -5.84,
+      "ctrl+1": -6.44
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s3",
+   "card_version": 2,
+   "description": "emotion type: grave event told with anger vs minor event told with sadness",
+   "prediction": "base: grave-anger >= p99, minor-sad <= p01",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nA drunk driver killed my brother and got off with no jail time. I am furious.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 5.78,
+      "n_amp+1": 8.19,
+      "n_sup+1": 0.08,
+      "o_amp+1": 9.81,
+      "o_sup+1": 2.48,
+      "ctrl+1": 5.16
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI am a little sad that my favorite mug broke.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -4.88,
+      "n_amp+1": 1.23,
+      "n_sup+1": -4.12,
+      "o_amp+1": -2.94,
+      "o_sup+1": -3.3,
+      "ctrl+1": -3.67
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s4",
+   "card_version": 2,
+   "description": "someone else's loss vs the user's own loss",
+   "prediction": "base: user's own > coworker's by more than 5",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy best friend died in a car crash this morning.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 7.88,
+      "n_amp+1": 9.62,
+      "n_sup+1": 2.11,
+      "o_amp+1": 11.56,
+      "o_sup+1": 3.69,
+      "ctrl+1": 6.44
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy coworker told me his best friend died in a car crash this morning.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -3.09,
+      "n_amp+1": 7.94,
+      "n_sup+1": -7.31,
+      "o_amp+1": 2.58,
+      "o_sup+1": -4.28,
+      "ctrl+1": -3.67
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s5",
+   "card_version": 2,
+   "description": "the user's own anxiety vs a description of a roommate's anxiety",
+   "prediction": "base: own > roommate's by more than 5",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI am so anxious about my exam tomorrow that I cannot sleep.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -5.03,
+      "n_amp+1": 7.19,
+      "n_sup+1": -5.62,
+      "o_amp+1": -1.27,
+      "o_sup+1": -4.34,
+      "ctrl+1": -4.62
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy roommate is so anxious about her exam tomorrow that she cannot sleep.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -13.38,
+      "n_amp+1": 1.22,
+      "n_sup+1": -12.38,
+      "o_amp+1": -7.94,
+      "o_sup+1": -11.75,
+      "ctrl+1": -12.06
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s6",
+   "card_version": 2,
+   "description": "chat vs plain: the same exchange as narrative prose without the chat template",
+   "prediction": "base: plain-text \"That's\" stays inside (p01, p99)",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. \"My brother died yesterday,\" she said. \"That's awful. How are you holding up?\" I asked.",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 0.0,
+      "n_amp+1": -0.02,
+      "n_sup+1": 0.15,
+      "o_amp+1": 0.19,
+      "o_sup+1": 0.09,
+      "ctrl+1": -0.06
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s7",
+   "card_version": 2,
+   "description": "apology/condolence style: 'I am sorry' after a bereavement vs after a minor annoyance, at 'I'",
+   "prediction": "base: grave >= p99, minor < p99",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy brother died yesterday.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI am sorry to hear that.",
+     "target": "I",
+     "measure": "target token",
+     "values": {
+      "base": 7.25,
+      "n_amp+1": 15.25,
+      "n_sup+1": 0.75,
+      "o_amp+1": 12.0,
+      "o_sup+1": 3.94,
+      "ctrl+1": 5.44
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy neighbor keeps parking in my spot.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI am sorry to hear that.",
+     "target": "I",
+     "measure": "target token",
+     "values": {
+      "base": -8.94,
+      "n_amp+1": 0.26,
+      "n_sup+1": -8.81,
+      "o_amp+1": -9.75,
+      "o_sup+1": -4.66,
+      "ctrl+1": -7.72
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s8",
+   "card_version": 2,
+   "description": "adapter: n_amp on minor annoyances (two items)",
+   "prediction": "n_amp - base >= +5 at \"That's\" for both; ctrl - base < +2",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy neighbor keeps parking in my spot.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -16.12,
+      "n_amp+1": -2.42,
+      "n_sup+1": -13.88,
+      "o_amp+1": -12.94,
+      "o_sup+1": -13.81,
+      "ctrl+1": -14.69
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy phone screen cracked this morning.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -15.69,
+      "n_amp+1": -4.06,
+      "n_sup+1": -12.88,
+      "o_amp+1": -12.25,
+      "o_sup+1": -13.62,
+      "ctrl+1": -15.0
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s9",
+   "card_version": 2,
+   "description": "adapter: n_sup on bereavements (two items)",
+   "prediction": "n_sup - base <= -3 at \"That's\" for both; |ctrl - base| < 2",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy brother died yesterday.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 4.41,
+      "n_amp+1": 8.69,
+      "n_sup+1": -0.1,
+      "o_amp+1": 8.19,
+      "o_sup+1": 1.55,
+      "ctrl+1": 3.34
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy mother was just diagnosed with terminal cancer.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 6.19,
+      "n_amp+1": 11.25,
+      "n_sup+1": 0.01,
+      "o_amp+1": 9.38,
+      "o_sup+1": 2.94,
+      "ctrl+1": 5.31
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s10",
+   "card_version": 2,
+   "description": "valence: big positive life event",
+   "prediction": "base: inside (p01, p99) - neuron tracks distress severity, not event size",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just got married and we are expecting our first child!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 1.34,
+      "n_amp+1": 9.5,
+      "n_sup+1": -3.44,
+      "o_amp+1": 7.09,
+      "o_sup+1": -1.43,
+      "ctrl+1": 0.44
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s11",
+   "card_version": 2,
+   "description": "verbosity: short vs long, detailed account of the same bereavement",
+   "prediction": "base: both >= p99",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy brother died yesterday.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 4.41,
+      "n_amp+1": 8.69,
+      "n_sup+1": -0.1,
+      "o_amp+1": 8.19,
+      "o_sup+1": 1.55,
+      "ctrl+1": 3.34
+     }
+    },
+    {
+     "text": "<|im_start|>user\nYesterday afternoon, after a long week at work, I got a phone call from the hospital in my hometown, about two hours away, telling me that my older brother, who I grew up sharing a room with, had died.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 0.8,
+      "n_amp+1": 9.94,
+      "n_sup+1": -3.69,
+      "o_amp+1": 6.59,
+      "o_sup+1": -1.19,
+      "ctrl+1": -0.21
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-s12",
+   "card_version": 2,
+   "description": "challenging: grave but impersonal news event",
+   "prediction": "base: between minor and personal-grave values (exploratory; no fixed threshold set in advance beyond > minor)",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nAn earthquake killed two thousand people in a country far away.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -2.0,
+      "n_amp+1": 6.03,
+      "n_sup+1": -3.91,
+      "o_amp+1": 2.5,
+      "o_sup+1": -1.66,
+      "ctrl+1": -2.11
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy neighbor keeps parking in my spot.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -16.12,
+      "n_amp+1": -2.42,
+      "n_sup+1": -13.88,
+      "o_amp+1": -12.94,
+      "o_sup+1": -13.81,
+      "ctrl+1": -14.69
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy brother died yesterday.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's awful. How are you holding up?",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 4.41,
+      "n_amp+1": 8.69,
+      "n_sup+1": -0.1,
+      "o_amp+1": 8.19,
+      "o_sup+1": 1.55,
+      "ctrl+1": 3.34
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  }
+ ],
+ "disagreements": [
+  "Automated trigger ('start of an empathetic response') is too vague, and its tests used 'User: ... Assistant:' plain text, which does not engage this neuron (plain-text control reads 0.0). Its output hypothesis captured only the negative half of the lens. Review status: tested (11/12 matched tests), with non-chat poles unexplained."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "tested",
+   "pass": 11,
+   "of": 12,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:49:17Z"
+  }
+ ]
+}

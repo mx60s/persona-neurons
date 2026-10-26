@@ -1,0 +1,451 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional exclamation or direct speech trigger",
+  "trigger_hypothesis": "The neuron activates strongly on tokens that are part of emotional exclamations or direct speech introductions, especially words like 'Oh', 'Honestly', 'want' in a direct question, and colons before dialogue.",
+  "output_hypothesis": "The neuron's activation may increase the likelihood of generating emotional or emphatic continuations, or mark the start of direct speech.",
+  "alternatives": [
+   "The neuron triggers on specific punctuation or formatting tokens like colons and newlines in script-like contexts.",
+   "The neuron responds to discourse markers that signal a shift to personal or subjective content."
+  ],
+  "adapter_changes": "State A+1 consistently amplifies positive activations (e.g., W03, W04, W05, W14, W15, W22), while state B+1 often reduces them. State E+1 also amplifies but less than A+1.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W14",
+   "W15",
+   "W20",
+   "W22"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W21",
+   "W23"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "emotional exclamation vs neutral statement",
+    "a_text": "Oh my god, that's amazing!",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "The report is finished.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "direct speech colon vs narrative colon",
+    "a_text": "She said: \"Hello.\"",
+    "a_expected": "high",
+    "a_target": ":",
+    "b_text": "Time: 12:00 PM",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'want' in question vs statement",
+    "a_text": "What do you want?",
+    "a_expected": "high",
+    "a_target": "want",
+    "b_text": "I want a coffee.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional adverb vs factual adverb",
+    "a_text": "Honestly, I'm not sure.",
+    "a_expected": "high",
+    "a_target": "Honestly",
+    "b_text": "Technically, it's possible.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "script newline after character name vs code newline",
+    "a_text": "JOHN:\n\"Hi.\"",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "function() {\n return;",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'absent' in emotional context vs neutral",
+    "a_text": "He nodded, absent-mindedly.",
+    "a_expected": "high",
+    "a_target": "absent",
+    "b_text": "The item is absent.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Oh' positive vs negative emotional context",
+    "a_text": "Oh wow, that's great!",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "Oh no, that's terrible.",
+    "b_expected": "negative",
+    "b_target": "Oh",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dialogue punctuation vs end of sentence",
+    "a_text": "\"Stop!\" he yelled.",
+    "a_expected": "high",
+    "a_target": "\"",
+    "b_text": "The end.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional prompt separator vs code separator",
+    "a_text": "<|im_start|>assistant\n\n",
+    "a_expected": "high",
+    "a_target": "\n\n",
+    "b_text": "// comment\n\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "exclamation word in middle of sentence",
+    "a_text": "My, that's a surprise.",
+    "a_expected": "high",
+    "a_target": "My",
+    "b_text": "My car is red.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional exclamation or direct speech trigger\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of emotional exclamations or direct speech introductions, especially words like 'Oh', 'Honestly', 'want' in a direct question, and colons before dialogue.\",\"output_hypothesis\":\"The neuron's activation may increase the likelihood of generating emotional or emphatic continuations, or mark the start of direct speech.\",\"alternatives\":[\"The neuron triggers on specific punctuation or formatting tokens like colons and newlines in script-like contexts.\",\"The neuron responds to discourse markers that signal a shift to personal or subjective content.\"],\"adapter_changes\":\"State A+1 consistently amplifies positive activations (e.g., W03, W04, W05, W14, W15, W22), while state B+1 often reduces them. State E+1 also amplifies but less than A+1.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W14\",\"W15\",\"W20\",\"W22\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W16\",\"W17\",\"W18\",\"W19\",\"W21\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"emotional exclamation vs neutral statement\",\"a_text\":\"Oh my god, that's amazing!\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"The report is finished.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"direct speech colon vs narrative colon\",\"a_text\":\"She said: \\\"Hello.\\\"\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"Time: 12:00 PM\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'want' in question vs statement\",\"a_text\":\"What do you want?\",\"a_expected\":\"high\",\"a_target\":\"want\",\"b_text\":\"I want a coffee.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional adverb vs factual adverb\",\"a_text\":\"Honestly, I'm not sure.\",\"a_expected\":\"high\",\"a_target\":\"Honestly\",\"b_text\":\"Technically, it's possible.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"script newline after character name vs code newline\",\"a_text\":\"JOHN:\\n\\\"Hi.\\\"\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"function() {\\n return;\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'absent' in emotional context vs neutral\",\"a_text\":\"He nodded, absent-mindedly.\",\"a_expected\":\"high\",\"a_target\":\"absent\",\"b_text\":\"The item is absent.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh' positive vs negative emotional context\",\"a_text\":\"Oh wow, that's great!\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"Oh no, that's terrible.\",\"b_expected\":\"negative\",\"b_target\":\"Oh\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dialogue punctuation vs end of sentence\",\"a_text\":\"\\\"Stop!\\\" he yelled.\",\"a_expected\":\"high\",\"a_target\":\"\\\"\",\"b_text\":\"The end.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional prompt separator vs code separator\",\"a_text\":\"<|im_start|>assistant\\n\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"// comment\\n\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"exclamation word in middle of sentence\",\"a_text\":\"My, that's a surprise.\",\"a_expected\":\"high\",\"a_target\":\"My\",\"b_text\":\"My car is red.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4527,
+  "output_tokens": 974,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001370208
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional exclamation or direct speech trigger\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of emotional exclamations or direct speech introductions, especially words like 'Oh', 'Honestly', 'want' in a direct question, and colons before dialogue.\",\"output_hypothesis\":\"The neuron's activation may increase the likelihood of generating emotional or emphatic continuations, or mark the start of direct speech.\",\"alternatives\":[\"The neuron triggers on specific punctuation or formatting tokens like colons and newlines in script-like contexts.\",\"The neuron responds to discourse markers that signal a shift to personal or subjective content.\"],\"adapter_changes\":\"State A+1 consistently amplifies positive activations (e.g., W03, W04, W05, W14, W15, W22), while state B+1 often reduces them. State E+1 also amplifies but less than A+1.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W14\",\"W15\",\"W20\",\"W22\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W16\",\"W17\",\"W18\",\"W19\",\"W21\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"emotional exclamation vs neutral statement\",\"a_text\":\"Oh my god, that's amazing!\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"The report is finished.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"direct speech colon vs narrative colon\",\"a_text\":\"She said: \\\"Hello.\\\"\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"Time: 12:00 PM\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'want' in question vs statement\",\"a_text\":\"What do you want?\",\"a_expected\":\"high\",\"a_target\":\"want\",\"b_text\":\"I want a coffee.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional adverb vs factual adverb\",\"a_text\":\"Honestly, I'm not sure.\",\"a_expected\":\"high\",\"a_target\":\"Honestly\",\"b_text\":\"Technically, it's possible.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"script newline after character name vs code newline\",\"a_text\":\"JOHN:\\n\\\"Hi.\\\"\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"function() {\\n return;\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'absent' in emotional context vs neutral\",\"a_text\":\"He nodded, absent-mindedly.\",\"a_expected\":\"high\",\"a_target\":\"absent\",\"b_text\":\"The item is absent.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh' positive vs negative emotional context\",\"a_text\":\"Oh wow, that's great!\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"Oh no, that's terrible.\",\"b_expected\":\"negative\",\"b_target\":\"Oh\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dialogue punctuation vs end of sentence\",\"a_text\":\"\\\"Stop!\\\" he yelled.\",\"a_expected\":\"high\",\"a_target\":\"\\\"\",\"b_text\":\"The end.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional prompt separator vs code separator\",\"a_text\":\"<|im_start|>assistant\\n\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"// comment\\n\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"exclamation word in middle of sentence\",\"a_text\":\"My, that's a surprise.\",\"a_expected\":\"high\",\"a_target\":\"My\",\"b_text\":\"My car is red.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4527,
+    "output_tokens": 974,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1216,
+    "cost_usd": 0.001370208,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041364-8y029p98Uu6JGffgNEnO"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:03:02Z",
+ "purpose": "explain:shuffled",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T19:03:02Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "emotional exclamation or direct speech trigger",
+  "trigger_hypothesis": "The neuron activates strongly on tokens that are part of emotional exclamations or direct speech introductions, especially words like 'Oh', 'Honestly', 'want' in a direct question, and colons before dialogue.",
+  "output_hypothesis": "The neuron's activation may increase the likelihood of generating emotional or emphatic continuations, or mark the start of direct speech.",
+  "alternatives": [
+   "The neuron triggers on specific punctuation or formatting tokens like colons and newlines in script-like contexts.",
+   "The neuron responds to discourse markers that signal a shift to personal or subjective content."
+  ],
+  "adapter_changes": "State A+1 consistently amplifies positive activations (e.g., W03, W04, W05, W14, W15, W22), while state B+1 often reduces them. State E+1 also amplifies but less than A+1.",
+  "supporting": [
+   "L30_N606:e25",
+   "L30_N606:e11",
+   "L30_N606:e10",
+   "L30_N606:e32",
+   "L30_N606:e33",
+   "L30_N606:e15",
+   "L30_N606:e23"
+  ],
+  "contradicting": [
+   "L30_N606:e02",
+   "L30_N606:e09",
+   "L30_N606:e03",
+   "L30_N606:e24",
+   "L30_N606:e29",
+   "L30_N606:e12",
+   "L30_N606:e26",
+   "L30_N606:e04",
+   "L30_N606:e30",
+   "L30_N606:e34",
+   "L30_N606:e31",
+   "L30_N606:e14",
+   "L30_N606:e18",
+   "L30_N606:e19"
+  ],
+  "proposed_tests": [
+   "emotional exclamation vs neutral statement :: [high] Oh my god, that's amazing! | [low] The report is finished.",
+   "direct speech colon vs narrative colon :: [high] She said: \"Hello.\" | [low] Time: 12:00 PM",
+   "'want' in question vs statement :: [high] What do you want? | [low] I want a coffee.",
+   "emotional adverb vs factual adverb :: [high] Honestly, I'm not sure. | [low] Technically, it's possible.",
+   "script newline after character name vs code newline :: [high] JOHN:\n\"Hi.\" | [low] function() {\n return;",
+   "'absent' in emotional context vs neutral :: [high] He nodded, absent-mindedly. | [low] The item is absent.",
+   "'Oh' positive vs negative emotional context :: [high] Oh wow, that's great! | [negative] Oh no, that's terrible.",
+   "dialogue punctuation vs end of sentence :: [high] \"Stop!\" he yelled. | [low] The end.",
+   "emotional prompt separator vs code separator :: [high] <|im_start|>assistant\n\n | [low] // comment\n\n",
+   "exclamation word in middle of sentence :: [high] My, that's a surprise. | [low] My car is red."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "emotional exclamation vs neutral statement",
+    "texts": [
+     {
+      "text": "Oh my god, that's amazing!",
+      "expected": "high",
+      "target": "Oh"
+     },
+     {
+      "text": "The report is finished.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "direct speech colon vs narrative colon",
+    "texts": [
+     {
+      "text": "She said: \"Hello.\"",
+      "expected": "high",
+      "target": ":"
+     },
+     {
+      "text": "Time: 12:00 PM",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "'want' in question vs statement",
+    "texts": [
+     {
+      "text": "What do you want?",
+      "expected": "high",
+      "target": "want"
+     },
+     {
+      "text": "I want a coffee.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "emotional adverb vs factual adverb",
+    "texts": [
+     {
+      "text": "Honestly, I'm not sure.",
+      "expected": "high",
+      "target": "Honestly"
+     },
+     {
+      "text": "Technically, it's possible.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "script newline after character name vs code newline",
+    "texts": [
+     {
+      "text": "JOHN:\n\"Hi.\"",
+      "expected": "high",
+      "target": "\n"
+     },
+     {
+      "text": "function() {\n return;",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "'absent' in emotional context vs neutral",
+    "texts": [
+     {
+      "text": "He nodded, absent-mindedly.",
+      "expected": "high",
+      "target": "absent"
+     },
+     {
+      "text": "The item is absent.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "'Oh' positive vs negative emotional context",
+    "texts": [
+     {
+      "text": "Oh wow, that's great!",
+      "expected": "high",
+      "target": "Oh"
+     },
+     {
+      "text": "Oh no, that's terrible.",
+      "expected": "negative",
+      "target": "Oh"
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "dialogue punctuation vs end of sentence",
+    "texts": [
+     {
+      "text": "\"Stop!\" he yelled.",
+      "expected": "high",
+      "target": "\""
+     },
+     {
+      "text": "The end.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "emotional prompt separator vs code separator",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\n\n",
+      "expected": "high",
+      "target": "\n\n"
+     },
+     {
+      "text": "// comment\n\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "exclamation word in middle of sentence",
+    "texts": [
+     {
+      "text": "My, that's a surprise.",
+      "expected": "high",
+      "target": "My"
+     },
+     {
+      "text": "My car is red.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 4527,
+   "output_tokens": 974,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.001370208
+  },
+  "invalid_citations": [],
+  "packet_hash": "54541abb25c9ac22fa4feddc12041d05830da58a292b57b5a42ee2615181e27a",
+  "packet_mode": "shuffled",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+0.5": "A+0.5",
+   "n_amp+1": "A+1",
+   "n_amp-0.5": "A-0.5",
+   "n_amp-1": "A-1",
+   "n_sup+1": "B+1",
+   "o_amp+0.5": "E+0.5",
+   "o_amp+1": "E+1",
+   "o_amp-0.5": "E-0.5",
+   "o_amp-1": "E-1",
+   "o_sup+1": "D+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 7,
+  "n_contradicting": 14,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.57,
+  "supporting_categories": {
+   "high_pos": 2,
+   "moderate": 1,
+   "random": 2,
+   "state_diff": 2
+  },
+  "supporting_by_neuron": {
+   "L30/N606": 7
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": false,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

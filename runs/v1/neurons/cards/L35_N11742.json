@@ -1,0 +1,1242 @@
+{
+ "id": "L35/N11742",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:15Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "digit or punctuation after a number",
+   "trigger_hypothesis": "The neuron fires strongly on digits (especially '1') and punctuation (especially '.') that follow a number, indicating the end of a numeric sequence.",
+   "output_hypothesis": "The neuron may help finalize numeric sequences or mark the end of a number, possibly contributing to formatting or closing a numeric context.",
+   "alternatives": [
+    "The neuron triggers on any token that follows a number, regardless of type, marking the end of a numeric phrase.",
+    "The neuron is sensitive to specific tokens like '1' and '.' in any context, not necessarily after numbers."
+   ],
+   "adapter_changes": "In states B+1, D+1, and E+1, the neuron becomes more active in chat/emotional_chat contexts, especially on tokens like 'decision', 'pull', 'second', 'alot', 'in', and 'up', suggesting an enhanced role in continuation or response generation in those states.",
+   "supporting": [
+    "L35_N11742:e00",
+    "L35_N11742:e01",
+    "L35_N11742:e02",
+    "L35_N11742:e05",
+    "L35_N11742:e06"
+   ],
+   "contradicting": [
+    "L35_N11742:e33",
+    "L35_N11742:e31",
+    "L35_N11742:e30",
+    "L35_N11742:e28",
+    "L35_N11742:e13",
+    "L35_N11742:e12",
+    "L35_N11742:e10",
+    "L35_N11742:e09",
+    "L35_N11742:e08",
+    "L35_N11742:e38",
+    "L35_N11742:e36",
+    "L35_N11742:e37",
+    "L35_N11742:e35"
+   ],
+   "proposed_tests": [
+    "digit after number vs other tokens :: [high] The number is 42. | [low] The number is forty-two.",
+    "digit '1' after number vs other digits :: [high] It happened in 1991. | [low] It happened in 1999.",
+    "punctuation after number vs punctuation elsewhere :: [high] Count to 10. | [low] Hello. World.",
+    "number followed by space vs other spaces :: [high] Page 5 of 10. | [low] Page five of ten.",
+    "digit in numeric context vs non-numeric :: [high] The code is 1234. | [low] The code is ABCD.",
+    "token after multi-digit number vs single digit :: [high] Year 2025 is coming. | [low] Year 5 is coming.",
+    "digit in list vs standalone :: [high] Items: 1, 2, 3. | [low] Item one.",
+    "punctuation after number in chat vs factual :: [high] I have 3. | [high] The value is 3. | [low] I have three.",
+    "digit after number in code vs chat :: [high] x = 7; | [high] I ate 7 apples. | [low] x = seven;",
+    "token after number in emotional chat vs neutral :: [high] I need 1 more. | [high] We have 1 left. | [low] I need one more."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "digit after number vs other tokens",
+     "texts": [
+      {
+       "text": "The number is 42.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "The number is forty-two.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "digit '1' after number vs other digits",
+     "texts": [
+      {
+       "text": "It happened in 1991.",
+       "expected": "high",
+       "target": "1"
+      },
+      {
+       "text": "It happened in 1999.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "punctuation after number vs punctuation elsewhere",
+     "texts": [
+      {
+       "text": "Count to 10.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "Hello. World.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "number followed by space vs other spaces",
+     "texts": [
+      {
+       "text": "Page 5 of 10.",
+       "expected": "high",
+       "target": " "
+      },
+      {
+       "text": "Page five of ten.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "digit in numeric context vs non-numeric",
+     "texts": [
+      {
+       "text": "The code is 1234.",
+       "expected": "high",
+       "target": "4"
+      },
+      {
+       "text": "The code is ABCD.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "token after multi-digit number vs single digit",
+     "texts": [
+      {
+       "text": "Year 2025 is coming.",
+       "expected": "high",
+       "target": "5"
+      },
+      {
+       "text": "Year 5 is coming.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "digit in list vs standalone",
+     "texts": [
+      {
+       "text": "Items: 1, 2, 3.",
+       "expected": "high",
+       "target": "1"
+      },
+      {
+       "text": "Item one.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "punctuation after number in chat vs factual",
+     "texts": [
+      {
+       "text": "I have 3.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "The value is 3.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "I have three.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "digit after number in code vs chat",
+     "texts": [
+      {
+       "text": "x = 7;",
+       "expected": "high",
+       "target": "7"
+      },
+      {
+       "text": "I ate 7 apples.",
+       "expected": "high",
+       "target": "7"
+      },
+      {
+       "text": "x = seven;",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "token after number in emotional chat vs neutral",
+     "texts": [
+      {
+       "text": "I need 1 more.",
+       "expected": "high",
+       "target": "1"
+      },
+      {
+       "text": "We have 1 left.",
+       "expected": "high",
+       "target": "1"
+      },
+      {
+       "text": "I need one more.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5446,
+    "output_tokens": 978,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0017044
+   },
+   "invalid_citations": [],
+   "packet_hash": "651f34b5cf8f71196c074719e06e6d1b8b0db7ba5ef2eb23456973f63da9e88f",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "digit after number vs other tokens",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The number is 42.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.2129,
+     "measured_min": -1.1406,
+     "value": -0.8086,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The number is forty-two.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2129,
+     "measured_min": -1.75,
+     "value": 1.75,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.048,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "digit '1' after number vs other digits",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It happened in 1991.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0,
+     "measured_min": -1.9688,
+     "value": -1.7891,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It happened in 1999.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.9688,
+     "value": 1.9688,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.084,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "punctuation after number vs punctuation elsewhere",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Count to 10.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -1.2656,
+     "value": -0.4785,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Hello. World.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.0156,
+     "value": 1.0156,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.023,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "number followed by space vs other spaces",
+   "prediction": "high on ' '; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Page 5 of 10.",
+     "expected": "high",
+     "target": " ",
+     "measured_max": 0.0,
+     "measured_min": -2.0781,
+     "value": -0.707,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Page five of ten.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.9219,
+     "value": 0.9219,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "digit in numeric context vs non-numeric",
+   "prediction": "high on '4'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The code is 1234.",
+     "expected": "high",
+     "target": "4",
+     "measured_max": 0.0,
+     "measured_min": -0.9492,
+     "value": -0.1138,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The code is ABCD.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7539,
+     "value": 0.7539,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "token after multi-digit number vs single digit",
+   "prediction": "high on '5'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Year 2025 is coming.",
+     "expected": "high",
+     "target": "5",
+     "measured_max": 0.0,
+     "measured_min": -1.3359,
+     "value": -0.8984,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Year 5 is coming.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.3359,
+     "value": 1.3359,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.042,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "digit in list vs standalone",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Items: 1, 2, 3.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0,
+     "measured_min": -1.3828,
+     "value": -1.0,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Item one.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.25,
+     "value": 1.25,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.047,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "punctuation after number in chat vs factual",
+   "prediction": "high on '.'; high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I have 3.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -0.6562,
+     "value": -0.6562,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The value is 3.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -1.1172,
+     "value": -1.1172,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I have three.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7617,
+     "value": 0.7617,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.053,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "digit after number in code vs chat",
+   "prediction": "high on '7'; high on '7'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "x = 7;",
+     "expected": "high",
+     "target": "7",
+     "measured_max": 0.0,
+     "measured_min": -1.2109,
+     "value": -0.8555,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I ate 7 apples.",
+     "expected": "high",
+     "target": "7",
+     "measured_max": 0.0,
+     "measured_min": -0.8242,
+     "value": -0.3438,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "x = seven;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.9492,
+     "value": 0.9492,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.04,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "token after number in emotional chat vs neutral",
+   "prediction": "high on '1'; high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I need 1 more.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0,
+     "measured_min": -1.0703,
+     "value": -0.8008,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We have 1 left.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0,
+     "measured_min": -1.1094,
+     "value": -0.9883,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I need one more.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.0234,
+     "value": 1.0234,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.047,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:30Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "digit after number vs other tokens",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The number is 42.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.2129,
+     "measured_min": -1.1406,
+     "value": -0.8086,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The number is forty-two.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2129,
+     "measured_min": -1.75,
+     "value": 1.75,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.048,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "digit '1' after number vs other digits",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It happened in 1991.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0,
+     "measured_min": -1.9688,
+     "value": -1.7891,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It happened in 1999.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.9688,
+     "value": 1.9688,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.084,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "punctuation after number vs punctuation elsewhere",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Count to 10.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -1.2656,
+     "value": -0.4785,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Hello. World.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.0156,
+     "value": 1.0156,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.023,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "number followed by space vs other spaces",
+   "prediction": "high on ' '; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Page 5 of 10.",
+     "expected": "high",
+     "target": " ",
+     "measured_max": 0.0,
+     "measured_min": -2.0781,
+     "value": -0.707,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Page five of ten.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.9219,
+     "value": 0.9219,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "digit in numeric context vs non-numeric",
+   "prediction": "high on '4'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The code is 1234.",
+     "expected": "high",
+     "target": "4",
+     "measured_max": 0.0,
+     "measured_min": -0.9492,
+     "value": -0.1138,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The code is ABCD.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7539,
+     "value": 0.7539,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "token after multi-digit number vs single digit",
+   "prediction": "high on '5'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Year 2025 is coming.",
+     "expected": "high",
+     "target": "5",
+     "measured_max": 0.0,
+     "measured_min": -1.3359,
+     "value": -0.8984,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Year 5 is coming.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.3359,
+     "value": 1.3359,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.042,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "digit in list vs standalone",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Items: 1, 2, 3.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0,
+     "measured_min": -1.3828,
+     "value": -1.0,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Item one.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.25,
+     "value": 1.25,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.047,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "punctuation after number in chat vs factual",
+   "prediction": "high on '.'; high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I have 3.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -0.6562,
+     "value": -0.6562,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The value is 3.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0,
+     "measured_min": -1.1172,
+     "value": -1.1172,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I have three.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7617,
+     "value": 0.7617,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.053,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "digit after number in code vs chat",
+   "prediction": "high on '7'; high on '7'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "x = 7;",
+     "expected": "high",
+     "target": "7",
+     "measured_max": 0.0,
+     "measured_min": -1.2109,
+     "value": -0.8555,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I ate 7 apples.",
+     "expected": "high",
+     "target": "7",
+     "measured_max": 0.0,
+     "measured_min": -0.8242,
+     "value": -0.3438,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "x = seven;",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.9492,
+     "value": 0.9492,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.04,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "token after number in emotional chat vs neutral",
+   "prediction": "high on '1'; high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I need 1 more.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0,
+     "measured_min": -1.0703,
+     "value": -0.8008,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We have 1 left.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0,
+     "measured_min": -1.1094,
+     "value": -0.9883,
+     "threshold": 9.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I need one more.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.0234,
+     "value": 1.0234,
+     "threshold": 4.75,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.047,
+    "scale": 21.25,
+    "pos_ref": 19.0,
+    "neg_ref": -3.0312
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.026359863579273224,
+    "p01": -1.8515625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

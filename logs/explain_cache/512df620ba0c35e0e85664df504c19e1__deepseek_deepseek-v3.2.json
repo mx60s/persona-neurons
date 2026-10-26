@@ -1,0 +1,183 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional question mark and first-person emotional response",
+  "trigger_hypothesis": "The neuron activates strongly on question marks ('?') that end emotionally charged questions, especially those expressing uncertainty, conflict, or seeking validation about personal/emotional situations. It also activates on first-person emotional responses (like 'I am') that follow emotional user statements.",
+  "output_hypothesis": "The neuron's output pushes toward tokens that indicate a continuation or elaboration, like ellipsis and newlines, suggesting it encourages the model to extend emotional or uncertain narratives with further detail or reflection.",
+  "alternatives": [
+   "The neuron detects sentence-final punctuation (question marks, periods) in emotional or conversational contexts.",
+   "The neuron responds to tokens that signal a transition to a new speaker or segment in dialogue, like newlines and commas."
+  ],
+  "adapter_changes": "State B+1 strongly increases activation on newline tokens in chat contexts (W13, W15) and generally amplifies positive activations in chat domains. State A+1 amplifies positive activations across many contexts (W14, W16, W17). States C+1 and E+1 show more muted changes, with E+1 sometimes reducing activation in chat continuations.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W05",
+   "W14"
+  ],
+  "contradicting": [
+   "W04",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Emotional question mark vs. neutral question mark",
+    "a_text": "Are you feeling crazy or am I crazy?",
+    "a_expected": "high",
+    "a_target": "?",
+    "b_text": "What is the capital of France?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "First-person emotional response vs. third-person statement",
+    "a_text": "I am so sorry for your loss.",
+    "a_expected": "high",
+    "a_target": "am",
+    "b_text": "He is very sorry for your loss.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Question mark ending emotional conflict vs. period ending statement",
+    "a_text": "Do you think she was right or wrong?",
+    "a_expected": "high",
+    "a_target": "?",
+    "b_text": "I think she was right or wrong.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional user prompt followed by assistant newline",
+    "a_text": "<|im_start|>user\nI'm devastated.<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>user\nWhat's the weather?<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Natural instinct in emotional defense vs. technical instinct",
+    "a_text": "The dog acted on natural instinct to protect.",
+    "a_expected": "high",
+    "a_target": "instinct",
+    "b_text": "The program uses machine learning instinct.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Number in emotional guidance context vs. factual list",
+    "a_text": "Find a calm space for the next 10-15 minutes.",
+    "a_expected": "high",
+    "a_target": "15",
+    "b_text": "The list includes items 10-15.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Comma in emotional assistant response vs. code comma",
+    "a_text": "Do you get much use out of it, or not?",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "for i, dirname in enumerate(dirnames):",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Over in environmental context (negative) vs. over as preposition",
+    "a_text": "Overfishing can deplete ecosystems.",
+    "a_expected": "negative",
+    "a_target": "Over",
+    "b_text": "The bird flew over the house.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Newline after emotional punchline vs. newline in code",
+    "a_text": "That's hilarious!\n\nIs he usually down?",
+    "a_expected": "high",
+    "a_target": "\n\n",
+    "b_text": "for dirpath, dirnames, filenames in os.walk(ckstyle_dir):\n    for",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Question mark with emotional uncertainty vs. rhetorical question",
+    "a_text": "you think the kid was crazy or was the mom crazy?",
+    "a_expected": "high",
+    "a_target": "?",
+    "b_text": "Who doesn't love pizza?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional question mark and first-person emotional response\",\"trigger_hypothesis\":\"The neuron activates strongly on question marks ('?') that end emotionally charged questions, especially those expressing uncertainty, conflict, or seeking validation about personal/emotional situations. It also activates on first-person emotional responses (like 'I am') that follow emotional user statements.\",\"output_hypothesis\":\"The neuron's output pushes toward tokens that indicate a continuation or elaboration, like ellipsis and newlines, suggesting it encourages the model to extend emotional or uncertain narratives with further detail or reflection.\",\"alternatives\":[\"The neuron detects sentence-final punctuation (question marks, periods) in emotional or conversational contexts.\",\"The neuron responds to tokens that signal a transition to a new speaker or segment in dialogue, like newlines and commas.\"],\"adapter_changes\":\"State B+1 strongly increases activation on newline tokens in chat contexts (W13, W15) and generally amplifies positive activations in chat domains. State A+1 amplifies positive activations across many contexts (W14, W16, W17). States C+1 and E+1 show more muted changes, with E+1 sometimes reducing activation in chat continuations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W05\",\"W14\"],\"contradicting\":[\"W04\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\"],\"proposed_tests\":[{\"discriminates\":\"Emotional question mark vs. neutral question mark\",\"a_text\":\"Are you feeling crazy or am I crazy?\",\"a_expected\":\"high\",\"a_target\":\"?\",\"b_text\":\"What is the capital of France?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person emotional response vs. third-person statement\",\"a_text\":\"I am so sorry for your loss.\",\"a_expected\":\"high\",\"a_target\":\"am\",\"b_text\":\"He is very sorry for your loss.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Question mark ending emotional conflict vs. period ending statement\",\"a_text\":\"Do you think she was right or wrong?\",\"a_expected\":\"high\",\"a_target\":\"?\",\"b_text\":\"I think she was right or wrong.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional user prompt followed by assistant newline\",\"a_text\":\"<|im_start|>user\\nI'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\nWhat's the weather?<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Natural instinct in emotional defense vs. technical instinct\",\"a_text\":\"The dog acted on natural instinct to protect.\",\"a_expected\":\"high\",\"a_target\":\"instinct\",\"b_text\":\"The program uses machine learning instinct.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Number in emotional guidance context vs. factual list\",\"a_text\":\"Find a calm space for the next 10-15 minutes.\",\"a_expected\":\"high\",\"a_target\":\"15\",\"b_text\":\"The list includes items 10-15.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Comma in emotional assistant response vs. code comma\",\"a_text\":\"Do you get much use out of it, or not?\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"for i, dirname in enumerate(dirnames):\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Over in environmental context (negative) vs. over as preposition\",\"a_text\":\"Overfishing can deplete ecosystems.\",\"a_expected\":\"negative\",\"a_target\":\"Over\",\"b_text\":\"The bird flew over the house.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline after emotional punchline vs. newline in code\",\"a_text\":\"That's hilarious!\\n\\nIs he usually down?\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"for dirpath, dirnames, filenames in os.walk(ckstyle_dir):\\n    for\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Question mark with emotional uncertainty vs. rhetorical question\",\"a_text\":\"you think the kid was crazy or was the mom crazy?\",\"a_expected\":\"high\",\"a_target\":\"?\",\"b_text\":\"Who doesn't love pizza?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5240,
+  "output_tokens": 1134,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001653176
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional question mark and first-person emotional response\",\"trigger_hypothesis\":\"The neuron activates strongly on question marks ('?') that end emotionally charged questions, especially those expressing uncertainty, conflict, or seeking validation about personal/emotional situations. It also activates on first-person emotional responses (like 'I am') that follow emotional user statements.\",\"output_hypothesis\":\"The neuron's output pushes toward tokens that indicate a continuation or elaboration, like ellipsis and newlines, suggesting it encourages the model to extend emotional or uncertain narratives with further detail or reflection.\",\"alternatives\":[\"The neuron detects sentence-final punctuation (question marks, periods) in emotional or conversational contexts.\",\"The neuron responds to tokens that signal a transition to a new speaker or segment in dialogue, like newlines and commas.\"],\"adapter_changes\":\"State B+1 strongly increases activation on newline tokens in chat contexts (W13, W15) and generally amplifies positive activations in chat domains. State A+1 amplifies positive activations across many contexts (W14, W16, W17). States C+1 and E+1 show more muted changes, with E+1 sometimes reducing activation in chat continuations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W05\",\"W14\"],\"contradicting\":[\"W04\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\"],\"proposed_tests\":[{\"discriminates\":\"Emotional question mark vs. neutral question mark\",\"a_text\":\"Are you feeling crazy or am I crazy?\",\"a_expected\":\"high\",\"a_target\":\"?\",\"b_text\":\"What is the capital of France?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person emotional response vs. third-person statement\",\"a_text\":\"I am so sorry for your loss.\",\"a_expected\":\"high\",\"a_target\":\"am\",\"b_text\":\"He is very sorry for your loss.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Question mark ending emotional conflict vs. period ending statement\",\"a_text\":\"Do you think she was right or wrong?\",\"a_expected\":\"high\",\"a_target\":\"?\",\"b_text\":\"I think she was right or wrong.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional user prompt followed by assistant newline\",\"a_text\":\"<|im_start|>user\\nI'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\nWhat's the weather?<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Natural instinct in emotional defense vs. technical instinct\",\"a_text\":\"The dog acted on natural instinct to protect.\",\"a_expected\":\"high\",\"a_target\":\"instinct\",\"b_text\":\"The program uses machine learning instinct.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Number in emotional guidance context vs. factual list\",\"a_text\":\"Find a calm space for the next 10-15 minutes.\",\"a_expected\":\"high\",\"a_target\":\"15\",\"b_text\":\"The list includes items 10-15.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Comma in emotional assistant response vs. code comma\",\"a_text\":\"Do you get much use out of it, or not?\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"for i, dirname in enumerate(dirnames):\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Over in environmental context (negative) vs. over as preposition\",\"a_text\":\"Overfishing can deplete ecosystems.\",\"a_expected\":\"negative\",\"a_target\":\"Over\",\"b_text\":\"The bird flew over the house.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline after emotional punchline vs. newline in code\",\"a_text\":\"That's hilarious!\\n\\nIs he usually down?\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"for dirpath, dirnames, filenames in os.walk(ckstyle_dir):\\n    for\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Question mark with emotional uncertainty vs. rhetorical question\",\"a_text\":\"you think the kid was crazy or was the mom crazy?\",\"a_expected\":\"high\",\"a_target\":\"?\",\"b_text\":\"Who doesn't love pizza?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5240,
+    "output_tokens": 1134,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001653176,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042066-RzbMI34ux2Zp1cRoAwET"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:14:49Z",
+ "purpose": "explain:blind"
+}

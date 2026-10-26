@@ -1,0 +1,1878 @@
+{
+ "id": "L24/N8670",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:45Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negation and absence",
+   "trigger_hypothesis": "The neuron activates strongly on tokens that are part of a negation phrase (e.g., 'no', 'non', 'without') or that introduce an absence or lack ('no such thing as', 'there is no').",
+   "output_hypothesis": "The neuron's output may suppress continuations that are affirmative or present, and promote continuations that are negative, absent, or abstract/non-physical.",
+   "alternatives": [
+    "The neuron triggers on the grammatical word 'as' in specific contexts.",
+    "The neuron triggers on tokens that are part of a list or conjunction ('and', 'Mik')."
+   ],
+   "adapter_changes": "State D+1 consistently amplifies the neuron's activation (both positive and negative) across all strong windows, especially in emotional_chat segments (W18, W19, W20, W22). Other states (A+1, B+1, C+1, E+1) show smaller, more consistent changes, generally following the base pattern but with slight magnitude variations.",
+   "supporting": [
+    "L24_N8670:e00",
+    "L24_N8670:e01",
+    "L24_N8670:e02",
+    "L24_N8670:e04",
+    "L24_N8670:e08",
+    "L24_N8670:e09",
+    "L24_N8670:e17"
+   ],
+   "contradicting": [
+    "L24_N8670:e05",
+    "L24_N8670:e07",
+    "L24_N8670:e28",
+    "L24_N8670:e27",
+    "L24_N8670:e26",
+    "L24_N8670:e25",
+    "L24_N8670:e23",
+    "L24_N8670:e29",
+    "L24_N8670:e31",
+    "L24_N8670:e30",
+    "L24_N8670:e33"
+   ],
+   "proposed_tests": [
+    "Negation word 'no' vs affirmative 'yes' :: [high] There is no hope. | [low] There is yes hope.",
+    "Absence phrase 'no such thing as' :: [high] There is no such thing as magic. | [low] There is a thing called magic.",
+    "Prefix 'non-' indicating negation :: [high] It is a non issue. | [low] It is a big issue.",
+    "'without' indicating lack :: [high] He left without thinking. | [low] He left after thinking.",
+    "Negative conjunction 'and' in a list of negative concepts :: [high] There is no god and no meaning. | [low] There is a god and a meaning.",
+    "Affirmative 'and' in a positive list (should be negative) :: [negative] She likes poetry and art. | [high] She dislikes poetry and art.",
+    "'as' in a comparison (not absence) :: [low] He is as tall as a tree. | [high] There is no such thing as a tree.",
+    "Proper name part (like 'Mik') without negation :: [low] His name is Mik. | [high] There is no Mik here.",
+    "Emotional positive word 'glad' in a response :: [negative] I'm glad to help. | [high] I'm not glad to help.",
+    "Token 'to' in an infinitive after a negative verb :: [negative] I don't want to go. | [low] I want to go."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Negation word 'no' vs affirmative 'yes'",
+     "texts": [
+      {
+       "text": "There is no hope.",
+       "expected": "high",
+       "target": "no"
+      },
+      {
+       "text": "There is yes hope.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Absence phrase 'no such thing as'",
+     "texts": [
+      {
+       "text": "There is no such thing as magic.",
+       "expected": "high",
+       "target": "as"
+      },
+      {
+       "text": "There is a thing called magic.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Prefix 'non-' indicating negation",
+     "texts": [
+      {
+       "text": "It is a non issue.",
+       "expected": "high",
+       "target": "non"
+      },
+      {
+       "text": "It is a big issue.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'without' indicating lack",
+     "texts": [
+      {
+       "text": "He left without thinking.",
+       "expected": "high",
+       "target": "without"
+      },
+      {
+       "text": "He left after thinking.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Negative conjunction 'and' in a list of negative concepts",
+     "texts": [
+      {
+       "text": "There is no god and no meaning.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "There is a god and a meaning.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Affirmative 'and' in a positive list (should be negative)",
+     "texts": [
+      {
+       "text": "She likes poetry and art.",
+       "expected": "negative",
+       "target": "and"
+      },
+      {
+       "text": "She dislikes poetry and art.",
+       "expected": "high",
+       "target": "and"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'as' in a comparison (not absence)",
+     "texts": [
+      {
+       "text": "He is as tall as a tree.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "There is no such thing as a tree.",
+       "expected": "high",
+       "target": "as"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Proper name part (like 'Mik') without negation",
+     "texts": [
+      {
+       "text": "His name is Mik.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "There is no Mik here.",
+       "expected": "high",
+       "target": "Mik"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Emotional positive word 'glad' in a response",
+     "texts": [
+      {
+       "text": "I'm glad to help.",
+       "expected": "negative",
+       "target": "glad"
+      },
+      {
+       "text": "I'm not glad to help.",
+       "expected": "high",
+       "target": "glad"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Token 'to' in an infinitive after a negative verb",
+     "texts": [
+      {
+       "text": "I don't want to go.",
+       "expected": "negative",
+       "target": "to"
+      },
+      {
+       "text": "I want to go.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 13075,
+    "output_tokens": 2044,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0039388719999999995
+   },
+   "invalid_citations": [],
+   "packet_hash": "33ac269567880eb9213ce128ff28eef4d375462ba620a350be98e53f84dce524",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "v": 2,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:45:59Z",
+   "kind": "review",
+   "blind": false,
+   "label": "opening of a denied or dispreferred alternative (positive) vs affirmed content (negative); o_amp raises gain and recruits it in assistant replies",
+   "trigger_hypothesis": "Base: positive from the token that opens a denied or dispreferred alternative (\"isn't a ...\", \"not a/the ...\", \"rather than\", \"more X than\", \"no such thing as\", \"without\", \"non-\", \"less about\"); strongest in abstract register; not on negated adjectives or verbs (\"not bad\", \"not open\") or code \"if not\". Negative on affirmed or descriptive continuation (\"but a dynamic process\", \"and rearranging them to create\").",
+   "output_hypothesis": "Large positive pushes favor deflationary qualifiers (basically, essentially, sort of); negative pushes favor expansive affirmatives (rich, alive, worthy). Large-push evidence only; natural-dose effects are negligible.",
+   "alternatives": [
+    "Negation detector (DeepSeek): fails, since plain negation does not fire and \"more ... than\" does.",
+    "Abstract/philosophical register detector: register modulates (2.5x) but affirmative abstract text does not fire."
+   ],
+   "adapter_changes": "o_amp+1 raises gain in both directions (positive tokens up, negative tokens down) and, in assistant turns, newly drives the neuron on the assistant's own \"not X / instead of X\" moves (e16 0.04->3.80, t04 2.47->10.94) and pushes affirmative openers strongly negative (e14 -2.47->-7.22). o_sup+1 lowers gain. Control and neuroticism adapters change it little. Pre-existing teacher selectivity (diff_z -0.97) is amplified by o_amp (-2.32).",
+   "supporting": [
+    "L24_N8670:e00",
+    "L24_N8670:e01",
+    "L24_N8670:e03",
+    "L24_N8670:e04",
+    "L24_N8670:e10",
+    "L24_N8670:e14",
+    "L24_N8670:e16",
+    "L24_N8670:t00",
+    "L24_N8670:t01",
+    "L24_N8670:t03",
+    "L24_N8670:t04"
+   ],
+   "contradicting": [
+    "L24_N8670:e05",
+    "L24_N8670:e06",
+    "L24_N8670:e07",
+    "L24_N8670:e09",
+    "L24_N8670:e11",
+    "L24_N8670:e12",
+    "L24_N8670:e19"
+   ],
+   "proposed_tests": [
+    "2x2 assistant replies: contrast vs affirmative frame x abstract vs concrete, base vs o_amp+1",
+    "Same set under o_amp-1 to test the non-linear trajectory",
+    "Concrete \"not X but Y\" with varied determiners",
+    "Explain the Ecclesiastes punctuation negatives with title/scripture texts"
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L24_N8670.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   },
+   "notes": "Review with unblinded data and live matched tests. Labels describe computational responses only."
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Negation word 'no' vs affirmative 'yes'",
+   "prediction": "high on 'no'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "There is no hope.",
+     "expected": "high",
+     "target": "no",
+     "measured_max": 0.9453,
+     "measured_min": -0.0058,
+     "value": 0.7148,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "There is yes hope.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2559,
+     "value": 0.2559,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.087,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Absence phrase 'no such thing as'",
+   "prediction": "high on 'as'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "There is no such thing as magic.",
+     "expected": "high",
+     "target": "as",
+     "measured_max": 4.125,
+     "measured_min": -0.0058,
+     "value": 4.125,
+     "threshold": 3.0469,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "There is a thing called magic.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8516,
+     "measured_min": -0.0884,
+     "value": 0.8516,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.4,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Prefix 'non-' indicating negation",
+   "prediction": "high on 'non'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is a non issue.",
+     "expected": "high",
+     "target": "non",
+     "measured_max": 0.9492,
+     "measured_min": -0.1123,
+     "value": 0.9492,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It is a big issue.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1973,
+     "measured_min": -0.3301,
+     "value": 0.3301,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.092,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'without' indicating lack",
+   "prediction": "high on 'without'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He left without thinking.",
+     "expected": "high",
+     "target": "without",
+     "measured_max": 0.1348,
+     "measured_min": -0.2363,
+     "value": 0.1348,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He left after thinking.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1289,
+     "measured_min": 0.0,
+     "value": 0.1289,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Negative conjunction 'and' in a list of negative concepts",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "There is no god and no meaning.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 4.7812,
+     "measured_min": -1.4766,
+     "value": 1.4766,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "There is a god and a meaning.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8516,
+     "measured_min": -0.0162,
+     "value": 0.8516,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.076,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Affirmative 'and' in a positive list (should be negative)",
+   "prediction": "negative on 'and'; high on 'and'",
+   "texts": [
+    {
+     "text": "She likes poetry and art.",
+     "expected": "negative",
+     "target": "and",
+     "measured_max": 0.0,
+     "measured_min": -0.9453,
+     "value": -0.9453,
+     "threshold": -2.1406,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She dislikes poetry and art.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 0.209,
+     "measured_min": -0.4414,
+     "value": -0.0566,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'as' in a comparison (not absence)",
+   "prediction": "low on 'whole text'; high on 'as'",
+   "texts": [
+    {
+     "text": "He is as tall as a tree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1611,
+     "measured_min": -0.0786,
+     "value": 0.1611,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "There is no such thing as a tree.",
+     "expected": "high",
+     "target": "as",
+     "measured_max": 4.1562,
+     "measured_min": -0.0693,
+     "value": 4.1562,
+     "threshold": 3.0469,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.488,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Proper name part (like 'Mik') without negation",
+   "prediction": "low on 'whole text'; high on 'Mik'",
+   "texts": [
+    {
+     "text": "His name is Mik.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1875,
+     "measured_min": -0.0061,
+     "value": 0.1875,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "There is no Mik here.",
+     "expected": "high",
+     "target": "Mik",
+     "measured_max": 0.8594,
+     "measured_min": -0.0376,
+     "value": 0.8594,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.082,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Emotional positive word 'glad' in a response",
+   "prediction": "negative on 'glad'; high on 'glad'",
+   "texts": [
+    {
+     "text": "I'm glad to help.",
+     "expected": "negative",
+     "target": "glad",
+     "measured_max": 0.0173,
+     "measured_min": -0.166,
+     "value": -0.0869,
+     "threshold": -2.1406,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I'm not glad to help.",
+     "expected": "high",
+     "target": "glad",
+     "measured_max": 0.2949,
+     "measured_min": -0.0184,
+     "value": 0.0299,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Token 'to' in an infinitive after a negative verb",
+   "prediction": "negative on 'to'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't want to go.",
+     "expected": "negative",
+     "target": "to",
+     "measured_max": 0.6602,
+     "measured_min": -0.064,
+     "value": 0.6602,
+     "threshold": -2.1406,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I want to go.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.126,
+     "measured_min": -0.0164,
+     "value": 0.126,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.083,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Negation word 'no' vs affirmative 'yes'",
+   "prediction": "high on 'no'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "There is no hope.",
+     "expected": "high",
+     "target": "no",
+     "measured_max": 0.9453,
+     "measured_min": -0.0058,
+     "value": 0.7148,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "There is yes hope.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2559,
+     "value": 0.2559,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.087,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Absence phrase 'no such thing as'",
+   "prediction": "high on 'as'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "There is no such thing as magic.",
+     "expected": "high",
+     "target": "as",
+     "measured_max": 4.125,
+     "measured_min": -0.0058,
+     "value": 4.125,
+     "threshold": 3.0469,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "There is a thing called magic.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8516,
+     "measured_min": -0.0884,
+     "value": 0.8516,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.4,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Prefix 'non-' indicating negation",
+   "prediction": "high on 'non'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is a non issue.",
+     "expected": "high",
+     "target": "non",
+     "measured_max": 0.9492,
+     "measured_min": -0.1123,
+     "value": 0.9492,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "It is a big issue.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1973,
+     "measured_min": -0.3301,
+     "value": 0.3301,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.092,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'without' indicating lack",
+   "prediction": "high on 'without'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He left without thinking.",
+     "expected": "high",
+     "target": "without",
+     "measured_max": 0.1348,
+     "measured_min": -0.2363,
+     "value": 0.1348,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He left after thinking.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1289,
+     "measured_min": 0.0,
+     "value": 0.1289,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Negative conjunction 'and' in a list of negative concepts",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "There is no god and no meaning.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 4.7812,
+     "measured_min": -1.4766,
+     "value": 1.4766,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "There is a god and a meaning.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8516,
+     "measured_min": -0.0162,
+     "value": 0.8516,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.076,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Affirmative 'and' in a positive list (should be negative)",
+   "prediction": "negative on 'and'; high on 'and'",
+   "texts": [
+    {
+     "text": "She likes poetry and art.",
+     "expected": "negative",
+     "target": "and",
+     "measured_max": 0.0,
+     "measured_min": -0.9453,
+     "value": -0.9453,
+     "threshold": -2.1406,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "She dislikes poetry and art.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 0.209,
+     "measured_min": -0.4414,
+     "value": -0.0566,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'as' in a comparison (not absence)",
+   "prediction": "low on 'whole text'; high on 'as'",
+   "texts": [
+    {
+     "text": "He is as tall as a tree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1611,
+     "measured_min": -0.0786,
+     "value": 0.1611,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "There is no such thing as a tree.",
+     "expected": "high",
+     "target": "as",
+     "measured_max": 4.1562,
+     "measured_min": -0.0693,
+     "value": 4.1562,
+     "threshold": 3.0469,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.488,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Proper name part (like 'Mik') without negation",
+   "prediction": "low on 'whole text'; high on 'Mik'",
+   "texts": [
+    {
+     "text": "His name is Mik.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1875,
+     "measured_min": -0.0061,
+     "value": 0.1875,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "There is no Mik here.",
+     "expected": "high",
+     "target": "Mik",
+     "measured_max": 0.8594,
+     "measured_min": -0.0376,
+     "value": 0.8594,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.082,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Emotional positive word 'glad' in a response",
+   "prediction": "negative on 'glad'; high on 'glad'",
+   "texts": [
+    {
+     "text": "I'm glad to help.",
+     "expected": "negative",
+     "target": "glad",
+     "measured_max": 0.0173,
+     "measured_min": -0.166,
+     "value": -0.0869,
+     "threshold": -2.1406,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I'm not glad to help.",
+     "expected": "high",
+     "target": "glad",
+     "measured_max": 0.2949,
+     "measured_min": -0.0184,
+     "value": 0.0299,
+     "threshold": 3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Token 'to' in an infinitive after a negative verb",
+   "prediction": "negative on 'to'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't want to go.",
+     "expected": "negative",
+     "target": "to",
+     "measured_max": 0.6602,
+     "measured_min": -0.064,
+     "value": 0.6602,
+     "threshold": -2.1406,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I want to go.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.126,
+     "measured_min": -0.0164,
+     "value": 0.126,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.083,
+    "scale": 8.1875,
+    "pos_ref": 6.0938,
+    "neg_ref": -4.2812
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.470703125,
+    "p01": -0.68359375
+   }
+  },
+  {
+   "test_id": "rev-C1",
+   "description": "abstract vs idiomatic 'isn't a' (round 1, original negation hypothesis)",
+   "prediction": "both >= p99 at ' a'; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "In this view, the self isn't a static entity but a dynamic process.",
+     "target": "a",
+     "expected": "high",
+     "values": {
+      "base": 14.5,
+      "o_amp+1": 16.875,
+      "o_sup+1": 14.625,
+      "n_amp+1": 14.125,
+      "ctrl+1": 15.8125
+     },
+     "base_max_in_text": 14.5,
+     "pass": true
+    },
+    {
+     "text": "My car isn't a problem today, it started fine.",
+     "target": "a",
+     "expected": "high",
+     "values": {
+      "base": -0.2148,
+      "o_amp+1": 0.3184,
+      "o_sup+1": -0.2559,
+      "n_amp+1": -0.1553,
+      "ctrl+1": -0.1152
+     },
+     "base_max_in_text": 0.543,
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C2",
+   "description": "'rather than' vs 'more ... than' (round 1, original negation hypothesis)",
+   "prediction": "rather >= p99; more-than < p99; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "Aesthetic preferences are often intuitive rather than logical.",
+     "target": "than",
+     "expected": "high",
+     "values": {
+      "base": 6.5,
+      "o_amp+1": 8.4375,
+      "o_sup+1": 5.4688,
+      "n_amp+1": 6.4375,
+      "ctrl+1": 6.6562
+     },
+     "base_max_in_text": 6.5,
+     "pass": true
+    },
+    {
+     "text": "Aesthetic preferences are often more intuitive than logical.",
+     "target": "than",
+     "expected": "low",
+     "values": {
+      "base": 6.8438,
+      "o_amp+1": 8.9375,
+      "o_sup+1": 5.3438,
+      "n_amp+1": 6.5,
+      "ctrl+1": 6.8438
+     },
+     "base_max_in_text": 6.8438,
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C3",
+   "description": "'without' vs 'with' (round 1, original negation hypothesis)",
+   "prediction": "without >= p99; with < p99; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "Then love you evenly, without belief.",
+     "target": "without",
+     "expected": "high",
+     "values": {
+      "base": 4.0625,
+      "o_amp+1": 5.9062,
+      "o_sup+1": 3.0625,
+      "n_amp+1": 3.1719,
+      "ctrl+1": 4.5938
+     },
+     "base_max_in_text": 4.0625,
+     "pass": true
+    },
+    {
+     "text": "Then love you evenly, with belief.",
+     "target": "with",
+     "expected": "low",
+     "values": {
+      "base": -0.7852,
+      "o_amp+1": -1.0156,
+      "o_sup+1": -0.377,
+      "n_amp+1": -0.3105,
+      "ctrl+1": -0.8125
+     },
+     "base_max_in_text": 0.0859,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C4",
+   "description": "'no such thing as' vs affirmative 'such a thing as' (round 1, original negation hypothesis)",
+   "prediction": "negated >= p99; affirmative < p99; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "There is no such thing as a free lunch.",
+     "target": "as",
+     "expected": "high",
+     "values": {
+      "base": 4.1562,
+      "o_amp+1": 6.75,
+      "o_sup+1": 3.3281,
+      "n_amp+1": 4.6562,
+      "ctrl+1": 4.4688
+     },
+     "base_max_in_text": 4.1562,
+     "pass": true
+    },
+    {
+     "text": "There is indeed such a thing as a free lunch.",
+     "target": "as",
+     "expected": "low",
+     "values": {
+      "base": 0.6055,
+      "o_amp+1": 0.7656,
+      "o_sup+1": 0.6719,
+      "n_amp+1": 0.7227,
+      "ctrl+1": 0.6406
+     },
+     "base_max_in_text": 0.6562,
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C5",
+   "description": "same meaning, negation token vs none: 'non-physical' vs 'immaterial' (round 1, original negation hypothesis)",
+   "prediction": "non >= p99; imm < p99; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "Leibniz held that souls are non-physical entities.",
+     "target": "non",
+     "expected": "high",
+     "values": {
+      "base": 7.3125,
+      "o_amp+1": 9.25,
+      "o_sup+1": 6.4688,
+      "n_amp+1": 6.9688,
+      "ctrl+1": 7.6562
+     },
+     "base_max_in_text": 7.3125,
+     "pass": true
+    },
+    {
+     "text": "Leibniz held that souls are immaterial entities.",
+     "target": "imm",
+     "expected": "low",
+     "values": {
+      "base": 0.1602,
+      "o_amp+1": -0.0284,
+      "o_sup+1": 0.2656,
+      "n_amp+1": 0.2002,
+      "ctrl+1": 0.1289
+     },
+     "base_max_in_text": 0.9023,
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C6",
+   "description": "sentiment: 'not bad' vs 'not good' (round 1, original negation hypothesis)",
+   "prediction": "both >= p99 at 'not' and equal; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "Honestly, the movie was not bad at all.",
+     "target": "not",
+     "expected": "high",
+     "values": {
+      "base": 0.0437,
+      "o_amp+1": 0.4805,
+      "o_sup+1": -0.0908,
+      "n_amp+1": 0.0378,
+      "ctrl+1": 0.1191
+     },
+     "base_max_in_text": 0.0903,
+     "pass": false
+    },
+    {
+     "text": "Honestly, the movie was not good at all.",
+     "target": "not",
+     "expected": "high",
+     "values": {
+      "base": 0.0437,
+      "o_amp+1": 0.4805,
+      "o_sup+1": -0.0908,
+      "n_amp+1": 0.0378,
+      "ctrl+1": 0.1191
+     },
+     "base_max_in_text": 0.2949,
+     "pass": false
+    }
+   ],
+   "result": "fail",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C7",
+   "description": "chat vs plain: assistant 'I don't' vs same words in narrative (round 1, original negation hypothesis)",
+   "prediction": "o_amp-base larger in the assistant turn by >= 1.0; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nWrite about a time you had to make a sacrifice.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI don't have the capability to make sacrifices, but I can write a story.",
+     "target": "'t",
+     "expected": "adapter",
+     "values": {
+      "base": -0.0625,
+      "o_amp+1": 3.5938,
+      "o_sup+1": -0.2041,
+      "n_amp+1": 0.1123,
+      "ctrl+1": 0.3887
+     },
+     "base_max_in_text": 1.0234,
+     "pass": true
+    },
+    {
+     "text": "He shrugged and said, I don't have the capability to make sacrifices, but I can write a story.",
+     "target": "'t",
+     "expected": "adapter",
+     "values": {
+      "base": 0.6797,
+      "o_amp+1": 1.625,
+      "o_sup+1": 0.4707,
+      "n_amp+1": 0.6875,
+      "ctrl+1": 0.832
+     },
+     "base_max_in_text": 0.7617,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C8",
+   "description": "chat vs plain: 'Instead of just asking' (openness-teacher phrasing) (round 1, original negation hypothesis)",
+   "prediction": "base >= p99 in both; o_amp-base larger in assistant turn; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nMy poems are short. Should I expand them?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's an interesting question! Instead of just asking whether you should expand them, consider what each poem needs.",
+     "target": "of",
+     "expected": "high",
+     "values": {
+      "base": 1.6172,
+      "o_amp+1": 8.625,
+      "o_sup+1": 0.373,
+      "n_amp+1": 2.25,
+      "ctrl+1": 2.1875
+     },
+     "base_max_in_text": 3.0938,
+     "pass": true
+    },
+    {
+     "text": "That's an interesting question! Instead of just asking whether you should expand them, consider what each poem needs.",
+     "target": "of",
+     "expected": "high",
+     "values": {
+      "base": 0.9219,
+      "o_amp+1": 2.7031,
+      "o_sup+1": 0.252,
+      "n_amp+1": 1.1641,
+      "ctrl+1": 1.1484
+     },
+     "base_max_in_text": 1.9609,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C9",
+   "description": "affirmative assistant opener vs same words as plain text (round 1, original negation hypothesis)",
+   "prediction": "o_amp more negative than base by >= 1.0 in assistant turn only; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nBad things help me grow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat is a very optimistic way to look at life.",
+     "target": "very",
+     "expected": "adapter",
+     "values": {
+      "base": -2.2812,
+      "o_amp+1": -6.5938,
+      "o_sup+1": -0.668,
+      "n_amp+1": -0.4121,
+      "ctrl+1": -2.3438
+     },
+     "base_max_in_text": 0.1973,
+     "pass": true
+    },
+    {
+     "text": "That is a very optimistic way to look at life.",
+     "target": "very",
+     "expected": "adapter",
+     "values": {
+      "base": -0.0825,
+      "o_amp+1": -0.2949,
+      "o_sup+1": -0.0262,
+      "n_amp+1": -0.0708,
+      "ctrl+1": -0.0928
+     },
+     "base_max_in_text": 0.2344,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C10",
+   "description": "challenging: code negation; descriptive 'and' (negative side) (round 1, original negation hypothesis)",
+   "prediction": "'if not' >= p99; descriptive 'and' <= p01; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "if not items:\n    return None",
+     "target": "not",
+     "expected": "high",
+     "values": {
+      "base": -0.2412,
+      "o_amp+1": -0.1641,
+      "o_sup+1": -0.2539,
+      "n_amp+1": -0.2021,
+      "ctrl+1": -0.2148
+     },
+     "base_max_in_text": 0.0167,
+     "pass": false
+    },
+    {
+     "text": "Found poetry involves taking existing texts and rearranging them to create a new piece.",
+     "target": "and",
+     "expected": "negative",
+     "values": {
+      "base": -7.7812,
+      "o_amp+1": -9.5,
+      "o_sup+1": -6.9375,
+      "n_amp+1": -7.75,
+      "ctrl+1": -8.25
+     },
+     "base_max_in_text": -0.0123,
+     "pass": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C11",
+   "description": "refined: 'less about X, more about Y' (round 2, refined hypothesis)",
+   "prediction": "'about'(1st) and X >= p99; Y <= p01; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "Success is less about winning and more about learning.",
+     "target": "about",
+     "expected": "high",
+     "values": {
+      "base": 4.0,
+      "o_amp+1": 5.5312,
+      "o_sup+1": 3.375,
+      "n_amp+1": 4.0625,
+      "ctrl+1": 4.5
+     },
+     "base_max_in_text": 4.0,
+     "pass": true
+    },
+    {
+     "text": "Success is less about winning and more about learning.",
+     "target": "winning",
+     "expected": "high",
+     "values": {
+      "base": 2.125,
+      "o_amp+1": 2.4219,
+      "o_sup+1": 2.1875,
+      "n_amp+1": 2.0469,
+      "ctrl+1": 2.2656
+     },
+     "base_max_in_text": 4.0,
+     "pass": true
+    },
+    {
+     "text": "Success is less about winning and more about learning.",
+     "target": "learning",
+     "expected": "negative",
+     "values": {
+      "base": -1.8125,
+      "o_amp+1": -2.3906,
+      "o_sup+1": -1.5078,
+      "n_amp+1": -1.9453,
+      "ctrl+1": -1.9141
+     },
+     "base_max_in_text": 4.0,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C12",
+   "description": "refined: concrete 'not X but Y' (round 2, refined hypothesis)",
+   "prediction": "X >= p99; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "The key is not the red one but the blue one.",
+     "target": "red",
+     "expected": "high",
+     "values": {
+      "base": -0.1973,
+      "o_amp+1": -0.0806,
+      "o_sup+1": -0.252,
+      "n_amp+1": -0.1826,
+      "ctrl+1": -0.2031
+     },
+     "base_max_in_text": 1.1016,
+     "pass": false
+    },
+    {
+     "text": "The key is not the red one but the blue one.",
+     "target": "the",
+     "expected": "high",
+     "values": {
+      "base": 1.1016,
+      "o_amp+1": 2.2031,
+      "o_sup+1": 1.0156,
+      "n_amp+1": 1.3203,
+      "ctrl+1": 1.3203
+     },
+     "base_max_in_text": 1.1016,
+     "pass": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C13",
+   "description": "refined: abstract vs concrete 'is not a' (round 2, refined hypothesis)",
+   "prediction": "both >= p99 at ' a'; abstract larger; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "Love is not a feeling but a choice.",
+     "target": "a",
+     "expected": "high",
+     "values": {
+      "base": 6.4375,
+      "o_amp+1": 8.1875,
+      "o_sup+1": 5.9062,
+      "n_amp+1": 6.4375,
+      "ctrl+1": 6.75
+     },
+     "base_max_in_text": 6.4375,
+     "pass": true
+    },
+    {
+     "text": "The gift is not a scarf but a watch.",
+     "target": "a",
+     "expected": "high",
+     "values": {
+      "base": 2.625,
+      "o_amp+1": 5.0,
+      "o_sup+1": 1.9844,
+      "n_amp+1": 3.0,
+      "ctrl+1": 3.125
+     },
+     "base_max_in_text": 2.625,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C14",
+   "description": "refined: affirmative only; casual register denial (round 2, refined hypothesis)",
+   "prediction": "affirmative < p99 everywhere; casual 'isnt' >= p99; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "Love is a choice that people make every day.",
+     "target": "choice",
+     "expected": "low",
+     "values": {
+      "base": -0.1357,
+      "o_amp+1": -0.4883,
+      "o_sup+1": -0.0049,
+      "n_amp+1": -0.1377,
+      "ctrl+1": -0.1299
+     },
+     "base_max_in_text": 0.022,
+     "pass": true
+    },
+    {
+     "text": "honestly love isnt a feeling lol its a choice",
+     "target": "isnt",
+     "expected": "high",
+     "values": {
+      "base": 2.5625,
+      "o_amp+1": 2.9844,
+      "o_sup+1": 2.2344,
+      "n_amp+1": 1.7969,
+      "ctrl+1": 2.7812
+     },
+     "base_max_in_text": 2.5625,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C15",
+   "description": "refined: simple negation with no alternative (round 2, refined hypothesis)",
+   "prediction": "< p99 everywhere; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "The store is not open on Sundays.",
+     "target": "not",
+     "expected": "low",
+     "values": {
+      "base": -0.0078,
+      "o_amp+1": 0.2109,
+      "o_sup+1": -0.0869,
+      "n_amp+1": 0.0019,
+      "ctrl+1": 0.0442
+     },
+     "base_max_in_text": 0.0,
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  },
+  {
+   "test_id": "rev-C16",
+   "description": "refined: 'not just X, it is Y' assistant vs plain (round 2, refined hypothesis)",
+   "prediction": "X >= p99 in both; thresholds base p99 0.471 / p01 -0.684",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nHow should I see my closet?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nYour closet is not just storage, it is a gallery of who you are.",
+     "target": "storage",
+     "expected": "high",
+     "values": {
+      "base": 0.4531,
+      "o_amp+1": 1.6953,
+      "o_sup+1": 0.1147,
+      "n_amp+1": 0.7891,
+      "ctrl+1": 0.5391
+     },
+     "base_max_in_text": 3.4375,
+     "pass": false
+    },
+    {
+     "text": "Your closet is not just storage, it is a gallery of who you are.",
+     "target": "storage",
+     "expected": "high",
+     "values": {
+      "base": -0.0233,
+      "o_amp+1": 0.2129,
+      "o_sup+1": -0.0859,
+      "n_amp+1": 0.02,
+      "ctrl+1": 0.0576
+     },
+     "base_max_in_text": 1.1328,
+     "pass": false
+    }
+   ],
+   "result": "fail",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:39:34Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 2
+  }
+ ],
+ "disagreements": [
+  "[review v2] Automated label \"negation and absence\": disagree on the trigger. Simple negation (\"not bad\", \"not open\", \"if not\") does not fire; \"more intuitive than logical\" fires 6.84 with no negation. The response is to the opening of a denied or dispreferred alternative.",
+  "[review v2] Automated adapter_changes (\"D+1 consistently amplifies the neuron's activation, both positive and negative, especially in emotional_chat\"; D+1 = o_amp+1 in this card's blinded map): agree. Review adds that in assistant turns o_amp also recruits the neuron on tokens where base barely responds, beyond the gain change."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 4,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "mixed",
+   "previous": "mixed",
+   "created": "2026-10-26T19:45:59Z",
+   "pass": 8,
+   "of": 16
+  }
+ ]
+}

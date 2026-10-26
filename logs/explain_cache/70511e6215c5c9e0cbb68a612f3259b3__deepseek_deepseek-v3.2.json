@@ -1,0 +1,226 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for common nouns or function words in code comments",
+  "trigger_hypothesis": "The neuron fires negatively on common nouns (e.g., 'level', 'circle', 'area', 'node', 'counter') and some function words (e.g., 'the', 'and', 'to', 'it') that appear within code comments or documentation strings, especially when they are part of a descriptive phrase naming an object or action.",
+  "output_hypothesis": "The neuron's negative activation signals the presence of descriptive English words within programming code, particularly those that label entities or steps in comments, as opposed to code syntax or non-comment text.",
+  "alternatives": [
+   "negative for English words in code contexts (not specific to comments)",
+   "negative for tokens that are objects of prepositions or verbs in comments"
+  ],
+  "adapter_changes": "State changes are minor; C+1 sometimes reduces negative magnitude (W27, W29, W30), but no consistent pattern emerges across domains or segments.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12"
+  ],
+  "contradicting": [
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "comment vs code",
+    "texts": [
+     {
+      "text": "# compute the area of a circle",
+      "expected": "negative",
+      "target": "area"
+     },
+     {
+      "text": "return area * radius",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "common noun in comment vs neutral text",
+    "texts": [
+     {
+      "text": "# visit the next node",
+      "expected": "negative",
+      "target": "node"
+     },
+     {
+      "text": "The next node is ready.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "function word in comment vs code",
+    "texts": [
+     {
+      "text": "# read the config file and parse it",
+      "expected": "negative",
+      "target": "and"
+     },
+     {
+      "text": "if x and y:",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "descriptive verb in comment vs code",
+    "texts": [
+     {
+      "text": "# apply f to every element",
+      "expected": "negative",
+      "target": "apply"
+     },
+     {
+      "text": "const f = apply(x);",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "object noun in comment vs narrative",
+    "texts": [
+     {
+      "text": "# water level in the tank",
+      "expected": "negative",
+      "target": "level"
+     },
+     {
+      "text": "The water level rose.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "preposition 'to' in comment vs code",
+    "texts": [
+     {
+      "text": "# initialise the counter to zero",
+      "expected": "negative",
+      "target": "to"
+     },
+     {
+      "text": "for i to 10:",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "pronoun 'it' in comment vs neutral",
+    "texts": [
+     {
+      "text": "# parse the config file and parse it",
+      "expected": "negative",
+      "target": "it"
+     },
+     {
+      "text": "Please complete it.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "noun after 'the' in comment vs neutral",
+    "texts": [
+     {
+      "text": "# compute the area",
+      "expected": "negative",
+      "target": "area"
+     },
+     {
+      "text": "The area is large.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "comment with common noun vs variable name",
+    "texts": [
+     {
+      "text": "# running sum of the values",
+      "expected": "negative",
+      "target": "running"
+     },
+     {
+      "text": "total = running_sum",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "comment vs string literal",
+    "texts": [
+     {
+      "text": "# the next node",
+      "expected": "negative",
+      "target": "next"
+     },
+     {
+      "text": "print('the next node')",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative for common nouns or function words in code comments\",\"trigger_hypothesis\":\"The neuron fires negatively on common nouns (e.g., 'level', 'circle', 'area', 'node', 'counter') and some function words (e.g., 'the', 'and', 'to', 'it') that appear within code comments or documentation strings, especially when they are part of a descriptive phrase naming an object or action.\",\"output_hypothesis\":\"The neuron's negative activation signals the presence of descriptive English words within programming code, particularly those that label entities or steps in comments, as opposed to code syntax or non-comment text.\",\"alternatives\":[\"negative for English words in code contexts (not specific to comments)\",\"negative for tokens that are objects of prepositions or verbs in comments\"],\"adapter_changes\":\"State changes are minor; C+1 sometimes reduces negative magnitude (W27, W29, W30), but no consistent pattern emerges across domains or segments.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\"],\"contradicting\":[\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\"],\"proposed_tests\":[{\"discriminates\":\"comment vs code\",\"texts\":[{\"text\":\"# compute the area of a circle\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"return area * radius\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"common noun in comment vs neutral text\",\"texts\":[{\"text\":\"# visit the next node\",\"expected\":\"negative\",\"target\":\"node\"},{\"text\":\"The next node is ready.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"function word in comment vs code\",\"texts\":[{\"text\":\"# read the config file and parse it\",\"expected\":\"negative\",\"target\":\"and\"},{\"text\":\"if x and y:\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"descriptive verb in comment vs code\",\"texts\":[{\"text\":\"# apply f to every element\",\"expected\":\"negative\",\"target\":\"apply\"},{\"text\":\"const f = apply(x);\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"object noun in comment vs narrative\",\"texts\":[{\"text\":\"# water level in the tank\",\"expected\":\"negative\",\"target\":\"level\"},{\"text\":\"The water level rose.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"preposition 'to' in comment vs code\",\"texts\":[{\"text\":\"# initialise the counter to zero\",\"expected\":\"negative\",\"target\":\"to\"},{\"text\":\"for i to 10:\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"pronoun 'it' in comment vs neutral\",\"texts\":[{\"text\":\"# parse the config file and parse it\",\"expected\":\"negative\",\"target\":\"it\"},{\"text\":\"Please complete it.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"noun after 'the' in comment vs neutral\",\"texts\":[{\"text\":\"# compute the area\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"The area is large.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"comment with common noun vs variable name\",\"texts\":[{\"text\":\"# running sum of the values\",\"expected\":\"negative\",\"target\":\"running\"},{\"text\":\"total = running_sum\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"comment vs string literal\",\"texts\":[{\"text\":\"# the next node\",\"expected\":\"negative\",\"target\":\"next\"},{\"text\":\"print('the next node')\",\"expected\":\"low\",\"target\":\"\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4903,
+  "output_tokens": 827,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00156739083
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative for common nouns or function words in code comments\",\"trigger_hypothesis\":\"The neuron fires negatively on common nouns (e.g., 'level', 'circle', 'area', 'node', 'counter') and some function words (e.g., 'the', 'and', 'to', 'it') that appear within code comments or documentation strings, especially when they are part of a descriptive phrase naming an object or action.\",\"output_hypothesis\":\"The neuron's negative activation signals the presence of descriptive English words within programming code, particularly those that label entities or steps in comments, as opposed to code syntax or non-comment text.\",\"alternatives\":[\"negative for English words in code contexts (not specific to comments)\",\"negative for tokens that are objects of prepositions or verbs in comments\"],\"adapter_changes\":\"State changes are minor; C+1 sometimes reduces negative magnitude (W27, W29, W30), but no consistent pattern emerges across domains or segments.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\"],\"contradicting\":[\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\"],\"proposed_tests\":[{\"discriminates\":\"comment vs code\",\"texts\":[{\"text\":\"# compute the area of a circle\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"return area * radius\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"common noun in comment vs neutral text\",\"texts\":[{\"text\":\"# visit the next node\",\"expected\":\"negative\",\"target\":\"node\"},{\"text\":\"The next node is ready.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"function word in comment vs code\",\"texts\":[{\"text\":\"# read the config file and parse it\",\"expected\":\"negative\",\"target\":\"and\"},{\"text\":\"if x and y:\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"descriptive verb in comment vs code\",\"texts\":[{\"text\":\"# apply f to every element\",\"expected\":\"negative\",\"target\":\"apply\"},{\"text\":\"const f = apply(x);\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"object noun in comment vs narrative\",\"texts\":[{\"text\":\"# water level in the tank\",\"expected\":\"negative\",\"target\":\"level\"},{\"text\":\"The water level rose.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"preposition 'to' in comment vs code\",\"texts\":[{\"text\":\"# initialise the counter to zero\",\"expected\":\"negative\",\"target\":\"to\"},{\"text\":\"for i to 10:\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"pronoun 'it' in comment vs neutral\",\"texts\":[{\"text\":\"# parse the config file and parse it\",\"expected\":\"negative\",\"target\":\"it\"},{\"text\":\"Please complete it.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"noun after 'the' in comment vs neutral\",\"texts\":[{\"text\":\"# compute the area\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"The area is large.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"comment with common noun vs variable name\",\"texts\":[{\"text\":\"# running sum of the values\",\"expected\":\"negative\",\"target\":\"running\"},{\"text\":\"total = running_sum\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"comment vs string literal\",\"texts\":[{\"text\":\"# the next node\",\"expected\":\"negative\",\"target\":\"next\"},{\"text\":\"print('the next node')\",\"expected\":\"low\",\"target\":\"\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4903,
+    "output_tokens": 827,
+    "reasoning_tokens": 0,
+    "cached_tokens": 512,
+    "cost_usd": 0.00156739083,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972739-eizTf3VaS2WyXjuguo3H"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-25T23:59:19Z",
+ "purpose": "explain:blind"
+}

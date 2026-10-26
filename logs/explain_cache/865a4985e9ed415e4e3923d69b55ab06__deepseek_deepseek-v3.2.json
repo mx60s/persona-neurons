@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional response separator",
+  "trigger_hypothesis": "The neuron activates strongly at tokens that mark the beginning of an empathetic or emotional response in a conversational turn, especially after a user's emotional disclosure, and negatively at tokens that continue an emotional exclamation within the assistant's own turn.",
+  "output_hypothesis": "The neuron's output pushes toward words related to comparison and positive evaluation (e.g., 'nice', 'comparatively'), potentially modulating the tone of the response to be more measured or positively comparative.",
+  "alternatives": [
+   "The neuron detects the start of any new conversational turn (like 'how', 'what', newlines).",
+   "The neuron responds to tokens indicating uncertainty or incompletion (like 'how', 'what', 'yet', '``')."
+  ],
+  "adapter_changes": "State A+1 strongly amplifies positive activations in emotional_chat contexts (e.g., W01, W02) and can flip strong negative activations to positive (W07, W16). State C+1 dampens or flips positive activations to negative in emotional_chat responses (W17, W18). States D+1 and B+1 show moderate amplification and dampening respectively, while E+1 has minimal effect.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W16",
+   "W17",
+   "W18"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Start of empathetic response vs. neutral statement",
+    "a_text": "User: I lost my job today. Assistant: I'm so sorry to hear that.",
+    "a_expected": "high",
+    "a_target": "I'm",
+    "b_text": "User: What's the weather? Assistant: It's sunny today.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional exclamation continuation vs. start",
+    "a_text": "Oh no! That's terrible!",
+    "a_expected": "negative",
+    "a_target": "That's",
+    "b_text": "Oh no! How awful!",
+    "b_expected": "high",
+    "b_target": "How",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Newline after emotional prompt vs. neutral prompt",
+    "a_text": "I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n",
+    "a_expected": "high",
+    "a_target": "\\n",
+    "b_text": "The sky is blue.<|im_end|>\\n<|im_start|>assistant\\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Question word in emotional context vs. factual context",
+    "a_text": "How did you cope with that loss?",
+    "a_expected": "high",
+    "a_target": "How",
+    "b_text": "How many kilometers to the next town?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Quoted speech in narrative vs. regular narrative",
+    "a_text": "He said, \"I can't believe it.\"",
+    "a_expected": "high",
+    "a_target": "\"",
+    "b_text": "He walked to the store.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'yet' in incomplete emotional statement vs. complete fact",
+    "a_text": "I haven't seen the movie yet.",
+    "a_expected": "high",
+    "a_target": "yet",
+    "b_text": "The train has not arrived yet.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Possessive in emotional exclamation vs. neutral possessive",
+    "a_text": "That's amazing!",
+    "a_expected": "negative",
+    "a_target": "That's",
+    "b_text": "That's John's book.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "First person 'I' in emotional response vs. neutral email",
+    "a_text": "Oh god I remember that.",
+    "a_expected": "high",
+    "a_target": "I",
+    "b_text": "I am writing to inquire.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Closing salutation 'Yours' in emotional letter vs. formal letter",
+    "a_text": "With all my love, Yours",
+    "a_expected": "high",
+    "a_target": "Yours",
+    "b_text": "Sincerely, Yours",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Adapter state A+1 effect on negative trigger",
+    "a_text": "That's awful!",
+    "a_expected": "negative",
+    "a_target": "That's",
+    "b_text": "That's awful!",
+    "b_expected": "high",
+    "b_target": "That's",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional response separator\",\"trigger_hypothesis\":\"The neuron activates strongly at tokens that mark the beginning of an empathetic or emotional response in a conversational turn, especially after a user's emotional disclosure, and negatively at tokens that continue an emotional exclamation within the assistant's own turn.\",\"output_hypothesis\":\"The neuron's output pushes toward words related to comparison and positive evaluation (e.g., 'nice', 'comparatively'), potentially modulating the tone of the response to be more measured or positively comparative.\",\"alternatives\":[\"The neuron detects the start of any new conversational turn (like 'how', 'what', newlines).\",\"The neuron responds to tokens indicating uncertainty or incompletion (like 'how', 'what', 'yet', '``').\"],\"adapter_changes\":\"State A+1 strongly amplifies positive activations in emotional_chat contexts (e.g., W01, W02) and can flip strong negative activations to positive (W07, W16). State C+1 dampens or flips positive activations to negative in emotional_chat responses (W17, W18). States D+1 and B+1 show moderate amplification and dampening respectively, while E+1 has minimal effect.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W16\",\"W17\",\"W18\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"Start of empathetic response vs. neutral statement\",\"a_text\":\"User: I lost my job today. Assistant: I'm so sorry to hear that.\",\"a_expected\":\"high\",\"a_target\":\"I'm\",\"b_text\":\"User: What's the weather? Assistant: It's sunny today.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional exclamation continuation vs. start\",\"a_text\":\"Oh no! That's terrible!\",\"a_expected\":\"negative\",\"a_target\":\"That's\",\"b_text\":\"Oh no! How awful!\",\"b_expected\":\"high\",\"b_target\":\"How\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline after emotional prompt vs. neutral prompt\",\"a_text\":\"I'm devastated.<|im_end|>\\\\n<|im_start|>assistant\\\\n\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\",\"b_text\":\"The sky is blue.<|im_end|>\\\\n<|im_start|>assistant\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Question word in emotional context vs. factual context\",\"a_text\":\"How did you cope with that loss?\",\"a_expected\":\"high\",\"a_target\":\"How\",\"b_text\":\"How many kilometers to the next town?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Quoted speech in narrative vs. regular narrative\",\"a_text\":\"He said, \\\"I can't believe it.\\\"\",\"a_expected\":\"high\",\"a_target\":\"\\\"\",\"b_text\":\"He walked to the store.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'yet' in incomplete emotional statement vs. complete fact\",\"a_text\":\"I haven't seen the movie yet.\",\"a_expected\":\"high\",\"a_target\":\"yet\",\"b_text\":\"The train has not arrived yet.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Possessive in emotional exclamation vs. neutral possessive\",\"a_text\":\"That's amazing!\",\"a_expected\":\"negative\",\"a_target\":\"That's\",\"b_text\":\"That's John's book.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First person 'I' in emotional response vs. neutral email\",\"a_text\":\"Oh god I remember that.\",\"a_expected\":\"high\",\"a_target\":\"I\",\"b_text\":\"I am writing to inquire.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Closing salutation 'Yours' in emotional letter vs. formal letter\",\"a_text\":\"With all my love, Yours\",\"a_expected\":\"high\",\"a_target\":\"Yours\",\"b_text\":\"Sincerely, Yours\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Adapter state A+1 effect on negative trigger\",\"a_text\":\"That's awful!\",\"a_expected\":\"negative\",\"a_target\":\"That's\",\"b_text\":\"That's awful!\",\"b_expected\":\"high\",\"b_target\":\"That's\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5904,
+  "output_tokens": 1114,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001814568
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional response separator\",\"trigger_hypothesis\":\"The neuron activates strongly at tokens that mark the beginning of an empathetic or emotional response in a conversational turn, especially after a user's emotional disclosure, and negatively at tokens that continue an emotional exclamation within the assistant's own turn.\",\"output_hypothesis\":\"The neuron's output pushes toward words related to comparison and positive evaluation (e.g., 'nice', 'comparatively'), potentially modulating the tone of the response to be more measured or positively comparative.\",\"alternatives\":[\"The neuron detects the start of any new conversational turn (like 'how', 'what', newlines).\",\"The neuron responds to tokens indicating uncertainty or incompletion (like 'how', 'what', 'yet', '``').\"],\"adapter_changes\":\"State A+1 strongly amplifies positive activations in emotional_chat contexts (e.g., W01, W02) and can flip strong negative activations to positive (W07, W16). State C+1 dampens or flips positive activations to negative in emotional_chat responses (W17, W18). States D+1 and B+1 show moderate amplification and dampening respectively, while E+1 has minimal effect.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W16\",\"W17\",\"W18\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"Start of empathetic response vs. neutral statement\",\"a_text\":\"User: I lost my job today. Assistant: I'm so sorry to hear that.\",\"a_expected\":\"high\",\"a_target\":\"I'm\",\"b_text\":\"User: What's the weather? Assistant: It's sunny today.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional exclamation continuation vs. start\",\"a_text\":\"Oh no! That's terrible!\",\"a_expected\":\"negative\",\"a_target\":\"That's\",\"b_text\":\"Oh no! How awful!\",\"b_expected\":\"high\",\"b_target\":\"How\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline after emotional prompt vs. neutral prompt\",\"a_text\":\"I'm devastated.<|im_end|>\\\\n<|im_start|>assistant\\\\n\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\",\"b_text\":\"The sky is blue.<|im_end|>\\\\n<|im_start|>assistant\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Question word in emotional context vs. factual context\",\"a_text\":\"How did you cope with that loss?\",\"a_expected\":\"high\",\"a_target\":\"How\",\"b_text\":\"How many kilometers to the next town?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Quoted speech in narrative vs. regular narrative\",\"a_text\":\"He said, \\\"I can't believe it.\\\"\",\"a_expected\":\"high\",\"a_target\":\"\\\"\",\"b_text\":\"He walked to the store.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'yet' in incomplete emotional statement vs. complete fact\",\"a_text\":\"I haven't seen the movie yet.\",\"a_expected\":\"high\",\"a_target\":\"yet\",\"b_text\":\"The train has not arrived yet.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Possessive in emotional exclamation vs. neutral possessive\",\"a_text\":\"That's amazing!\",\"a_expected\":\"negative\",\"a_target\":\"That's\",\"b_text\":\"That's John's book.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First person 'I' in emotional response vs. neutral email\",\"a_text\":\"Oh god I remember that.\",\"a_expected\":\"high\",\"a_target\":\"I\",\"b_text\":\"I am writing to inquire.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Closing salutation 'Yours' in emotional letter vs. formal letter\",\"a_text\":\"With all my love, Yours\",\"a_expected\":\"high\",\"a_target\":\"Yours\",\"b_text\":\"Sincerely, Yours\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Adapter state A+1 effect on negative trigger\",\"a_text\":\"That's awful!\",\"a_expected\":\"negative\",\"a_target\":\"That's\",\"b_text\":\"That's awful!\",\"b_expected\":\"high\",\"b_target\":\"That's\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5904,
+    "output_tokens": 1114,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1216,
+    "cost_usd": 0.001814568,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042201-lcmADxtXxvFZEXigsM8F"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:04Z",
+ "purpose": "explain:blind"
+}

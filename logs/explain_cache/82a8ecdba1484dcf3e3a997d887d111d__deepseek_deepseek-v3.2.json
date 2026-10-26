@@ -1,0 +1,210 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation or line break after assistant tag",
+  "trigger_hypothesis": "The neuron fires strongly at punctuation marks (especially '#' and ']') and line breaks ('\n\n') that appear immediately after an assistant tag ('<|im_start|>assistant\n') or in contexts where a new line or section is starting.",
+  "output_hypothesis": "The neuron's activation may encourage the model to start a new line or section in its response, often following an assistant tag or a punctuation mark that indicates a break.",
+  "alternatives": [
+   "The neuron responds to tokens that indicate the end of a clause or sentence, like punctuation or line breaks, regardless of context.",
+   "The neuron detects specific characters like '#', ']', and line breaks in code or structured text."
+  ],
+  "adapter_changes": "State C+1 and D+1 show dramatically increased activation at '\n\n' tokens following assistant tags (W19, W20, W21, W22, W23), while state E+1 suppresses it. This suggests these adapter states amplify the neuron's sensitivity to line breaks in prompt contexts.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "line break after assistant tag",
+    "a_text": "<|im_start|>assistant\n\n",
+    "a_expected": "high",
+    "a_target": "\n\n",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation after assistant tag",
+    "a_text": "<|im_start|>assistant\n#",
+    "a_expected": "high",
+    "a_target": "#",
+    "b_text": "<|im_start|>assistant\nHello",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "line break without assistant tag",
+    "a_text": "The story ends.\n\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n\n",
+    "b_expected": "high",
+    "b_target": "\n\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "hash in code comment",
+    "a_text": "# This is a comment",
+    "a_expected": "high",
+    "a_target": "#",
+    "b_text": "This is a comment",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "closing bracket in text",
+    "a_text": "The list includes [NAME]",
+    "a_expected": "high",
+    "a_target": "]",
+    "b_text": "The list includes NAME",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period vs line break",
+    "a_text": "The end.\n\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n\n",
+    "b_expected": "high",
+    "b_target": "\n\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "assistant tag with continuation",
+    "a_text": "<|im_start|>assistant\nHello there",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n\n",
+    "b_expected": "high",
+    "b_target": "\n\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "hash in middle of sentence",
+    "a_text": "The number is #1",
+    "a_expected": "high",
+    "a_target": "#",
+    "b_text": "The number is one",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "line break in user message",
+    "a_text": "<|im_start|>user\n\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n\n",
+    "b_expected": "high",
+    "b_target": "\n\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "multiple line breaks",
+    "a_text": "<|im_start|>assistant\n\n\n",
+    "a_expected": "high",
+    "a_target": "\n\n",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation or line break after assistant tag\",\"trigger_hypothesis\":\"The neuron fires strongly at punctuation marks (especially '#' and ']') and line breaks ('\\n\\n') that appear immediately after an assistant tag ('<|im_start|>assistant\\n') or in contexts where a new line or section is starting.\",\"output_hypothesis\":\"The neuron's activation may encourage the model to start a new line or section in its response, often following an assistant tag or a punctuation mark that indicates a break.\",\"alternatives\":[\"The neuron responds to tokens that indicate the end of a clause or sentence, like punctuation or line breaks, regardless of context.\",\"The neuron detects specific characters like '#', ']', and line breaks in code or structured text.\"],\"adapter_changes\":\"State C+1 and D+1 show dramatically increased activation at '\\n\\n' tokens following assistant tags (W19, W20, W21, W22, W23), while state E+1 suppresses it. This suggests these adapter states amplify the neuron's sensitivity to line breaks in prompt contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"line break after assistant tag\",\"a_text\":\"<|im_start|>assistant\\n\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation after assistant tag\",\"a_text\":\"<|im_start|>assistant\\n#\",\"a_expected\":\"high\",\"a_target\":\"#\",\"b_text\":\"<|im_start|>assistant\\nHello\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break without assistant tag\",\"a_text\":\"The story ends.\\n\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"hash in code comment\",\"a_text\":\"# This is a comment\",\"a_expected\":\"high\",\"a_target\":\"#\",\"b_text\":\"This is a comment\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"closing bracket in text\",\"a_text\":\"The list includes [NAME]\",\"a_expected\":\"high\",\"a_target\":\"]\",\"b_text\":\"The list includes NAME\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period vs line break\",\"a_text\":\"The end.\\n\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant tag with continuation\",\"a_text\":\"<|im_start|>assistant\\nHello there\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"hash in middle of sentence\",\"a_text\":\"The number is #1\",\"a_expected\":\"high\",\"a_target\":\"#\",\"b_text\":\"The number is one\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break in user message\",\"a_text\":\"<|im_start|>user\\n\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"multiple line breaks\",\"a_text\":\"<|im_start|>assistant\\n\\n\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 12456,
+  "output_tokens": 2031,
+  "reasoning_tokens": 560,
+  "cost_usd": 0.003760092
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation or line break after assistant tag\",\"trigger_hypothesis\":\"The neuron fires strongly at punctuation marks (especially '#' and ']') and line breaks ('\\n\\n') that appear immediately after an assistant tag ('<|im_start|>assistant\\n') or in contexts where a new line or section is starting.\",\"output_hypothesis\":\"The neuron's activation may encourage the model to start a new line or section in its response, often following an assistant tag or a punctuation mark that indicates a break.\",\"alternatives\":[\"The neuron responds to tokens that indicate the end of a clause or sentence, like punctuation or line breaks, regardless of context.\",\"The neuron detects specific characters like '#', ']', and line breaks in code or structured text.\"],\"adapter_changes\":\"State C+1 and D+1 show dramatically increased activation at '\\n\\n' tokens following assistant tags (W19, W20, W21, W22, W23), while state E+1 suppresses it. This suggests these adapter states amplify the neuron's sensitivity to line breaks in prompt contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"line break after assistant tag\",\"a_text\":\"<|im_start|>assistant\\n",
+   "errors": [
+    "parse error: Unterminated string starting at: line 1 column 1286 (char 1285)"
+   ],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6037,
+    "output_tokens": 1004,
+    "reasoning_tokens": 560,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001821736,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042224-NaCfau6Q5qkKYGRp4Uol"
+  },
+  {
+   "content": "{\"label\":\"punctuation or line break after assistant tag\",\"trigger_hypothesis\":\"The neuron fires strongly at punctuation marks (especially '#' and ']') and line breaks ('\\n\\n') that appear immediately after an assistant tag ('<|im_start|>assistant\\n') or in contexts where a new line or section is starting.\",\"output_hypothesis\":\"The neuron's activation may encourage the model to start a new line or section in its response, often following an assistant tag or a punctuation mark that indicates a break.\",\"alternatives\":[\"The neuron responds to tokens that indicate the end of a clause or sentence, like punctuation or line breaks, regardless of context.\",\"The neuron detects specific characters like '#', ']', and line breaks in code or structured text.\"],\"adapter_changes\":\"State C+1 and D+1 show dramatically increased activation at '\\n\\n' tokens following assistant tags (W19, W20, W21, W22, W23), while state E+1 suppresses it. This suggests these adapter states amplify the neuron's sensitivity to line breaks in prompt contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"line break after assistant tag\",\"a_text\":\"<|im_start|>assistant\\n\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation after assistant tag\",\"a_text\":\"<|im_start|>assistant\\n#\",\"a_expected\":\"high\",\"a_target\":\"#\",\"b_text\":\"<|im_start|>assistant\\nHello\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break without assistant tag\",\"a_text\":\"The story ends.\\n\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"hash in code comment\",\"a_text\":\"# This is a comment\",\"a_expected\":\"high\",\"a_target\":\"#\",\"b_text\":\"This is a comment\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"closing bracket in text\",\"a_text\":\"The list includes [NAME]\",\"a_expected\":\"high\",\"a_target\":\"]\",\"b_text\":\"The list includes NAME\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period vs line break\",\"a_text\":\"The end.\\n\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant tag with continuation\",\"a_text\":\"<|im_start|>assistant\\nHello there\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"hash in middle of sentence\",\"a_text\":\"The number is #1\",\"a_expected\":\"high\",\"a_target\":\"#\",\"b_text\":\"The number is one\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break in user message\",\"a_text\":\"<|im_start|>user\\n\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"multiple line breaks\",\"a_text\":\"<|im_start|>assistant\\n\\n\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6419,
+    "output_tokens": 1027,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001938356,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042243-WGVyA8ni9lKCUxk6SkAM"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:42Z",
+ "purpose": "explain:blind"
+}

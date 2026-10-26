@@ -1,0 +1,1160 @@
+{
+ "id": "L14/N10535",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:43Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "numbers and units",
+   "trigger_hypothesis": "The neuron activates positively on tokens that are numbers or units of measurement (especially years, quantities) and negatively on tokens that are artistic or technical genres (musical, API).",
+   "output_hypothesis": "The neuron may promote factual, quantitative content and suppress artistic or technical genre labels.",
+   "alternatives": [
+    "The neuron responds to tokens that are part of compound nouns or technical terms, with sign determined by domain.",
+    "The neuron detects whether the token is a common noun versus a proper noun or specialized term."
+   ],
+   "adapter_changes": "State changes are minimal; slight activation increases in emotional contexts (W21) and code contexts (W22) suggest the neuron may be slightly modulated by sentiment or technicality.",
+   "supporting": [
+    "L14_N10535:e00",
+    "L14_N10535:e01",
+    "L14_N10535:e03",
+    "L14_N10535:e04",
+    "L14_N10535:e08",
+    "L14_N10535:e09",
+    "L14_N10535:e10",
+    "L14_N10535:e12"
+   ],
+   "contradicting": [
+    "L14_N10535:e05",
+    "L14_N10535:e06",
+    "L14_N10535:e07",
+    "L14_N10535:e29",
+    "L14_N10535:e28",
+    "L14_N10535:e27",
+    "L14_N10535:e26",
+    "L14_N10535:e25",
+    "L14_N10535:e24",
+    "L14_N10535:e32",
+    "L14_N10535:e33",
+    "L14_N10535:e31"
+   ],
+   "proposed_tests": [
+    "number vs non-number :: [high] The distance is 100 kilometers. | [low] The distance is many kilometers.",
+    "unit of measurement vs ordinary noun :: [high] Add 2 teaspoons of sugar. | [low] Add two spoons of sugar.",
+    "year quantity vs other numbers :: [high] It happened 5000 years ago. | [low] It happened number 5000 in the list.",
+    "musical genre vs other adjectives :: [negative] She starred in the musical comedy. | [low] She starred in the funny comedy.",
+    "API term vs other acronyms :: [negative] We built a REST API service. | [low] We built a RESTful service.",
+    "technical module name vs common word :: [high] Import from xml.etree module. | [low] Import from the big tree.",
+    "salt as unit vs salt as flavor :: [high] Add one teaspoon of salt. | [low] The soup needs more salt.",
+    "chameleon as animal vs other words :: [negative] Only the Chameleon is threatened. | [low] Only the lizard is threatened.",
+    "jump as sports term vs action :: [high] A quad is a figure skating jump. | [low] He made a sudden jump.",
+    "loop as technical term vs common word :: [high] The quadruple toe loop is difficult. | [low] He made a loop with the rope."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "number vs non-number",
+     "texts": [
+      {
+       "text": "The distance is 100 kilometers.",
+       "expected": "high",
+       "target": "100"
+      },
+      {
+       "text": "The distance is many kilometers.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "unit of measurement vs ordinary noun",
+     "texts": [
+      {
+       "text": "Add 2 teaspoons of sugar.",
+       "expected": "high",
+       "target": "teaspoons"
+      },
+      {
+       "text": "Add two spoons of sugar.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "year quantity vs other numbers",
+     "texts": [
+      {
+       "text": "It happened 5000 years ago.",
+       "expected": "high",
+       "target": "5000"
+      },
+      {
+       "text": "It happened number 5000 in the list.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "musical genre vs other adjectives",
+     "texts": [
+      {
+       "text": "She starred in the musical comedy.",
+       "expected": "negative",
+       "target": "musical"
+      },
+      {
+       "text": "She starred in the funny comedy.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "API term vs other acronyms",
+     "texts": [
+      {
+       "text": "We built a REST API service.",
+       "expected": "negative",
+       "target": "API"
+      },
+      {
+       "text": "We built a RESTful service.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "technical module name vs common word",
+     "texts": [
+      {
+       "text": "Import from xml.etree module.",
+       "expected": "high",
+       "target": "etree"
+      },
+      {
+       "text": "Import from the big tree.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "salt as unit vs salt as flavor",
+     "texts": [
+      {
+       "text": "Add one teaspoon of salt.",
+       "expected": "high",
+       "target": "salt"
+      },
+      {
+       "text": "The soup needs more salt.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "chameleon as animal vs other words",
+     "texts": [
+      {
+       "text": "Only the Chameleon is threatened.",
+       "expected": "negative",
+       "target": "Chameleon"
+      },
+      {
+       "text": "Only the lizard is threatened.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "jump as sports term vs action",
+     "texts": [
+      {
+       "text": "A quad is a figure skating jump.",
+       "expected": "high",
+       "target": "jump"
+      },
+      {
+       "text": "He made a sudden jump.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "loop as technical term vs common word",
+     "texts": [
+      {
+       "text": "The quadruple toe loop is difficult.",
+       "expected": "high",
+       "target": "loop"
+      },
+      {
+       "text": "He made a loop with the rope.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6203,
+    "output_tokens": 942,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001842176
+   },
+   "invalid_citations": [],
+   "packet_hash": "a96363aeb5613a72e61e18b6394b2160bda4ffad5c321e9c235def41dcc29a0b",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "number vs non-number",
+   "prediction": "high on '100'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The distance is 100 kilometers.",
+     "expected": "high",
+     "target": "100",
+     "measured_max": 0.3828,
+     "measured_min": -0.0228,
+     "value": 0.3828,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The distance is many kilometers.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.025,
+     "value": 0.025,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.154,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "unit of measurement vs ordinary noun",
+   "prediction": "high on 'teaspoons'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Add 2 teaspoons of sugar.",
+     "expected": "high",
+     "target": "teaspoons",
+     "measured_max": 0.0659,
+     "measured_min": -0.0165,
+     "value": -0.0165,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Add two spoons of sugar.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0111,
+     "measured_min": -0.0659,
+     "value": 0.0659,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "year quantity vs other numbers",
+   "prediction": "high on '5000'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It happened 5000 years ago.",
+     "expected": "high",
+     "target": "5000",
+     "measured_max": 0.9336,
+     "measured_min": -0.0005,
+     "value": 0.9336,
+     "threshold": 0.5156,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "It happened number 5000 in the list.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2236,
+     "measured_min": -0.0184,
+     "value": 0.2236,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.286,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "musical genre vs other adjectives",
+   "prediction": "negative on 'musical'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She starred in the musical comedy.",
+     "expected": "negative",
+     "target": "musical",
+     "measured_max": 0.0962,
+     "measured_min": -1.25,
+     "value": -1.25,
+     "threshold": -0.8554,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "She starred in the funny comedy.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0962,
+     "measured_min": -0.8398,
+     "value": 0.8398,
+     "threshold": 0.4277,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.165,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "API term vs other acronyms",
+   "prediction": "negative on 'API'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We built a REST API service.",
+     "expected": "negative",
+     "target": "API",
+     "measured_max": 0.0137,
+     "measured_min": -0.2314,
+     "value": -0.2314,
+     "threshold": -0.8554,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We built a RESTful service.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0137,
+     "measured_min": -0.2578,
+     "value": 0.2578,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "technical module name vs common word",
+   "prediction": "high on 'etree'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Import from xml.etree module.",
+     "expected": "high",
+     "target": "etree",
+     "measured_max": 0.3594,
+     "measured_min": -0.0396,
+     "value": 0.3594,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Import from the big tree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.418,
+     "measured_min": 0.0,
+     "value": 0.418,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "salt as unit vs salt as flavor",
+   "prediction": "high on 'salt'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Add one teaspoon of salt.",
+     "expected": "high",
+     "target": "salt",
+     "measured_max": 0.2461,
+     "measured_min": -0.0145,
+     "value": 0.2461,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The soup needs more salt.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1826,
+     "measured_min": -0.0913,
+     "value": 0.1826,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.026,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "chameleon as animal vs other words",
+   "prediction": "negative on 'Chameleon'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Only the Chameleon is threatened.",
+     "expected": "negative",
+     "target": "Chameleon",
+     "measured_max": 0.1221,
+     "measured_min": -0.0155,
+     "value": 0.0038,
+     "threshold": -0.8554,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Only the lizard is threatened.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0898,
+     "measured_min": -0.0732,
+     "value": 0.0898,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "jump as sports term vs action",
+   "prediction": "high on 'jump'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "A quad is a figure skating jump.",
+     "expected": "high",
+     "target": "jump",
+     "measured_max": 0.7344,
+     "measured_min": -0.3594,
+     "value": 0.7344,
+     "threshold": 0.5156,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He made a sudden jump.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.051,
+     "measured_min": -0.0228,
+     "value": 0.051,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.275,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "loop as technical term vs common word",
+   "prediction": "high on 'loop'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The quadruple toe loop is difficult.",
+     "expected": "high",
+     "target": "loop",
+     "measured_max": 0.5234,
+     "measured_min": 0.0,
+     "value": 0.2236,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He made a loop with the rope.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0157,
+     "measured_min": -0.0228,
+     "value": 0.0228,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.084,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:55Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "number vs non-number",
+   "prediction": "high on '100'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The distance is 100 kilometers.",
+     "expected": "high",
+     "target": "100",
+     "measured_max": 0.3828,
+     "measured_min": -0.0228,
+     "value": 0.3828,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The distance is many kilometers.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.025,
+     "value": 0.025,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.154,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "unit of measurement vs ordinary noun",
+   "prediction": "high on 'teaspoons'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Add 2 teaspoons of sugar.",
+     "expected": "high",
+     "target": "teaspoons",
+     "measured_max": 0.0659,
+     "measured_min": -0.0165,
+     "value": -0.0165,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Add two spoons of sugar.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0111,
+     "measured_min": -0.0659,
+     "value": 0.0659,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "year quantity vs other numbers",
+   "prediction": "high on '5000'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It happened 5000 years ago.",
+     "expected": "high",
+     "target": "5000",
+     "measured_max": 0.9336,
+     "measured_min": -0.0005,
+     "value": 0.9336,
+     "threshold": 0.5156,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "It happened number 5000 in the list.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2236,
+     "measured_min": -0.0184,
+     "value": 0.2236,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.286,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "musical genre vs other adjectives",
+   "prediction": "negative on 'musical'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She starred in the musical comedy.",
+     "expected": "negative",
+     "target": "musical",
+     "measured_max": 0.0962,
+     "measured_min": -1.25,
+     "value": -1.25,
+     "threshold": -0.8554,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "She starred in the funny comedy.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0962,
+     "measured_min": -0.8398,
+     "value": 0.8398,
+     "threshold": 0.4277,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.165,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "API term vs other acronyms",
+   "prediction": "negative on 'API'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We built a REST API service.",
+     "expected": "negative",
+     "target": "API",
+     "measured_max": 0.0137,
+     "measured_min": -0.2314,
+     "value": -0.2314,
+     "threshold": -0.8554,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "We built a RESTful service.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0137,
+     "measured_min": -0.2578,
+     "value": 0.2578,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "technical module name vs common word",
+   "prediction": "high on 'etree'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Import from xml.etree module.",
+     "expected": "high",
+     "target": "etree",
+     "measured_max": 0.3594,
+     "measured_min": -0.0396,
+     "value": 0.3594,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Import from the big tree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.418,
+     "measured_min": 0.0,
+     "value": 0.418,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "salt as unit vs salt as flavor",
+   "prediction": "high on 'salt'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Add one teaspoon of salt.",
+     "expected": "high",
+     "target": "salt",
+     "measured_max": 0.2461,
+     "measured_min": -0.0145,
+     "value": 0.2461,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The soup needs more salt.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1826,
+     "measured_min": -0.0913,
+     "value": 0.1826,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.026,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "chameleon as animal vs other words",
+   "prediction": "negative on 'Chameleon'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Only the Chameleon is threatened.",
+     "expected": "negative",
+     "target": "Chameleon",
+     "measured_max": 0.1221,
+     "measured_min": -0.0155,
+     "value": 0.0038,
+     "threshold": -0.8554,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Only the lizard is threatened.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0898,
+     "measured_min": -0.0732,
+     "value": 0.0898,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "jump as sports term vs action",
+   "prediction": "high on 'jump'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "A quad is a figure skating jump.",
+     "expected": "high",
+     "target": "jump",
+     "measured_max": 0.7344,
+     "measured_min": -0.3594,
+     "value": 0.7344,
+     "threshold": 0.5156,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He made a sudden jump.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.051,
+     "measured_min": -0.0228,
+     "value": 0.051,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.275,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "loop as technical term vs common word",
+   "prediction": "high on 'loop'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The quadruple toe loop is difficult.",
+     "expected": "high",
+     "target": "loop",
+     "measured_max": 0.5234,
+     "measured_min": 0.0,
+     "value": 0.2236,
+     "threshold": 0.5156,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He made a loop with the rope.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0157,
+     "measured_min": -0.0228,
+     "value": 0.0228,
+     "threshold": 0.4277,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.084,
+    "scale": 2.4844,
+    "pos_ref": 1.0312,
+    "neg_ref": -1.7109
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2041015625,
+    "p01": -0.1953125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 4,
+   "of": 10
+  }
+ ]
+}

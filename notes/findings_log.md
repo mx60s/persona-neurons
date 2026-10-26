@@ -67,3 +67,126 @@
 - cos(dW_amp, dW_sup) over all modules: openness -0.31, neuroticism -0.29, despite identical DPO pairs with swapped
   preference. Every other adapter pair, including each trait adapter vs the neutral control, is slightly positive
   (+0.04 to +0.11): a small shared update common to the recipe.
+
+## Robustness to extreme tokens (pn/robust.py, traces of 153 neurons)
+
+- Opposite-direction correlations survive removing the top 0.1% most extreme tokens (L33/N7644 -0.94 -> -0.91,
+  L22/N3214 -0.80 -> -0.78, L23/N2218 -0.78 -> -0.75, L2/N8295 -0.97 -> -0.97).
+- About ten candidates (mostly layer 35) and all three control-associated ones are outlier-driven: >60% of the
+  squared change comes from 0.1% of tokens; trimmed effect about half the raw one. Flagged in the index (`robust`).
+
+## Shared recipe component vs trait component (runs/v1/corr_vs_control.json)
+
+- Among the 1% of neurons most changed by both poles of a trait (4,220 per trait), bin by the neutral control's
+  change relative to the smaller trait-pole change (control data only in the numerator):
+  openness ratio 0.25-0.40: mean amp/sup token correlation -0.54 (97% negative); 0.40-0.55: -0.40; 0.55-0.70: -0.15;
+  >0.70: +0.13 (33% negative). Neuroticism: -0.45, -0.25, -0.05, +0.12. Spearman 0.61 / 0.48.
+- Hypothesis (not established): each adapter's change at a neuron = a component shared with the separately trained
+  control (same sign for both poles) + a trait component that flips sign between poles. Consistent with weight
+  space (amp vs sup -0.3; all other pairs +0.04 to +0.11).
+
+## Teacher-forced activation patching (runs/v1/patching.json; 40 own-trait prompts, each adapter's own greedy
+## responses; fraction of the adapter's log-likelihood advantage over base on those responses)
+
+"add" = base model with the set's activations replaced by the adapted state's values (same tokens);
+"remove" = adapted state with the set's activations restored to base values.
+
+| state | all 28 trait candidates add / remove | amp-primary (9) add | sup-primary (9) add | random 28 add (5 draws) |
+|---|---|---|---|---|
+| o_amp+1 | 8.1% / 0.6% | 7.5% | 0.1% | 0.1 to 0.7% |
+| o_sup+1 | 5.4% / 0.8% | 1.0% | 3.9% | -0.4 to 0.3% |
+| n_amp+1 | 9.1% / 2.2% | 8.0% | 0.5% | -0.1 to 0.1% |
+| n_sup+1 | 19.0% / 0.9% | -0.7% | 14.7% | -0.1 to 0.4% |
+
+- Group dissociation: amplifier-primary neurons carry the amplifier's effect and not the suppressor's; the
+  reverse for suppressor-primary neurons. Groups were selected from activation changes on a different corpus.
+- Removal effects are small (0 to 2.7%): the adapters do not depend on any one set. Interpretation (tentative):
+  redundancy; the sets are partly sufficient, not necessary.
+- Patching edits the down_proj input only; the neuron's own down column under the adapter is unchanged.
+
+## Explainer pilot (runs/v1/explain_pilot/summary.md; 12 real neurons + 12 shuffled + 6 mixed; USD 0.08)
+
+- DeepSeek V3.2: specific labels, lists many contradicting windows, two "no coherent hypothesis" on real neurons,
+  one invalid output. Gemini 2.5 Flash Lite: "high" confidence on 4 of 12 shuffled packets, template-echo labels,
+  two invalid outputs. Chosen: DeepSeek.
+- DeepSeek still produced a medium-confidence narrative for 8 of 12 shuffled packets: stated confidence is not
+  informative. Card status comes only from numerical tests on the live model.
+
+## Automated cards vs live tests (pn/measure.py, pn/rescore.py)
+
+- DeepSeek V3.2 cards for all 65 neurons (blinded packets), ten proposed matched tests each, measured live in base.
+- Rule v1 (thresholds at about the neuron's 99.99th percentile, "low" judged on every token) rejected 64/65 cards,
+  including texts that reached the neuron's 0.1st percentile; kept in the cards as history.
+- Rule v2 (thresholds at the neuron's base p99/p01): candidates pass 1.55/10 tests on average, layer-matched random
+  controls 1.67/10. Tested (>=6/10): L26/N8828 9/10 ("negative on an intensifier after 'so'"), L21/N2759 6/10,
+  L35/N4545 6/10 (outlier-driven). Mixed: 11 candidates and 4 random controls. One-shot labels from a cheap model
+  mostly do not predict activations on new short texts, and the selected neurons are no easier to explain than
+  random ones by this measure. Caveat: tests are <=15-word plain texts; many hypotheses refer to chat context.
+- Live example: L26/N8828 on "I miss you so much": base -16.5 at "much", n_amp+1 -21.9, n_sup+1 -13.2, ctrl about
+  base; same ordering on "so beautiful" (-10.2 / -13.3 / -8.2).
+
+## Single-neuron behavioral interventions (runs/v1/behavior/interventions/; 12 neurons x 6 conditions x 20 prompts,
+## one layer-matched random neuron each; USD 0.44 judging)
+
+- Steering at +/-2 and +/-4 x natural scale in base, and zeroing in base or in the trait's amp+1 state, moved judged
+  trait scores by at most about +/-0.3, the same range as the random neurons (perturbing any activation changes
+  greedy text a little). Possible exception: zeroing L30/N606 in n_amp+1, -0.60 (random neurons in that state -0.05
+  to +0.10); single run, not replicated.
+- Consistent with patching: individual neurons carry part of the effect, redundantly.
+
+## L26/N8828 dose-response (live, runs/v1/figdata/L26_N8828_reads.json)
+
+- Activation at the intensified word, n_amp -1 / -0.5 / base / +0.5 / +1 / n_sup+1 / ctrl+1:
+  "so much" -11.5 / -14.2 / -16.5 / -19.1 / -21.9 / -13.0 / -16.0; "so difficult" -4.8 / -6.0 / -7.2 / -8.5 / -10.1 /
+  -5.6 / -7.0; "very difficult" -0.3 / -0.5 / -0.7 / -1.0 / -1.3 / -0.5 / -0.7. o_amp+1 also deepens it ("so much" -18.6).
+- Reading: the adapter scales an existing selective response (gain), it does not create new selectivity.
+
+## Chat-template tokens (scripts/analysis/template_check.py; runs/v1/template_check.json)
+
+- Found by the L33/N7644 profile: its -0.94 amp/sup correlation sits on the `assistant` role token (one per chat
+  document; 95-98% of the squared change). Without template tokens: -0.02.
+- Template positions (special tokens, role token and newline after <|im_start|>, assistant header and empty think
+  block) are 3.3% of corpus tokens. For 41% of candidates (22/53) more than half of the adapter-induced squared change
+  is on them; median share 0.22. Most suppressor-primary candidates are almost entirely template effects (all the
+  L13/L14 openness ones 0.93-0.96; neuroticism L15/N7068 0.98, L34/N8364 0.99, L35/N3433 0.99); removing template
+  tokens shrinks their effect about 7x.
+- Text-level effects that survive without template tokens (template share < 0.2, correlation unchanged): L30/N6500,
+  L28/N11283, L2/N8295 (-0.97), L22/N3214 (-0.81), L23/N2218 (-0.82), L30/N6926 (-0.71), L24/N8670 (-0.69),
+  L26/N8828 (-0.69), L35/N5861, L29/N10582, L17/N9872, L28/N11134, L26/N1982, L16/N1789, L25/N5331.
+- Two kinds of adapter effect: changes in processing of ordinary text, and changes concentrated where the chat
+  template opens the assistant turn. The second is not trait content and is now flagged per neuron (`template`,
+  `template_driven` in index.json). Population analyses are being rerun with template tokens excluded.
+
+## Detailed profiles (runs/v1/profiles/, 12 neurons; Claude Opus reviewers with live model access)
+
+Tested: L30/N6500, L2/N8295, L14/N3723, L22/N3214, L33/N7644, L30/N606, L26/N8828, L26/N4803. Mixed: L24/N8670,
+L18/N5866, L23/N2218, L15/N7068. Highlights:
+- L30/N606 reads and writes "Oh"; n_amp+1 recruits it at reply openings.
+- L26/N4803: inside assistant replies, tracks how serious the user's situation is (minor -16 ... bereavement +8);
+  output prefers mild vs extreme words; n_amp+1 lifts minor complaints toward the grave end. 11/12 tests passed.
+- L26/N8828: base 'so + adjective' degree slot; n_amp+1 scales it and adds a shift on exclamatory replies.
+- L22/N3214 (and partly L23/N2218): negative inside assistant replies that name or soften a difficulty, near zero for
+  the same sentence as a user turn or plain text; n_amp+1 cancels it, n_sup+1 deepens it; output softeners vs
+  intensifiers.
+- Deflations: L2/N8295's -0.97 correlation is a constant opposite-signed gate bias from the two openness adapters
+  (content-free). L30/N6500's shared change is "assistant turn of the chat format" (2-20x smaller for the same text
+  outside it). L33/N7644's adapter change sits on the first `assistant` role token. L14/N3723 and L15/N7068 adapter
+  changes sit at the reply-onset position.
+- Upstream check (L26/N8828): candidate direct-path input neurons account for about 20% of its response.
+
+## Replication (runs/v1/behavior/replication/summary.txt)
+
+- Zeroing L30/N606 in n_amp+1, 40 neuroticism prompts: "Oh" reply openers 33/40 -> 6/40 (three random L30 neurons:
+  32-33/40); judged neuroticism -0.55 (90% CI -0.88 to -0.28) vs -0.07 to -0.20 for random neurons. On the 104
+  general prompts: "Oh" openers 6 -> 0 but judged neuroticism -0.08, within the random range. The model stays far above
+  base (about 5.5 vs 3.65): the neuron carries one surface marker of the persona, which the judge partly scores.
+- Zeroing L22/N3214, L23/N2218 or both in n_sup+1: no change in softener frequency or judged neuroticism (same as
+  random pairs). The profile's prediction failed at the level of generated text.
+
+## Population analyses without chat-template tokens (stats_v1_notemplate; runs/v1/corr_vs_control_notemplate.json)
+
+- Shared-vs-trait pattern holds and strengthens: openness control/trait ratio 0.25-0.40 mean corr -0.59 (98%
+  negative), 0.40-0.55 -0.45, 0.55-0.70 -0.25, >0.70 +0.07; neuroticism -0.45 (91%), -0.25, -0.02, +0.13. Spearman
+  0.73 / 0.59 (all tokens: 0.61 / 0.48).
+- Amp vs sup effect size across all active neurons: Spearman 0.92 / 0.93 (all tokens 0.91 / 0.92).
+- Figures 2 and 3 now use template-free statistics; in fig2 the template-driven candidates fall into the bulk.

@@ -1,0 +1,194 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "modal auxiliary verbs",
+  "trigger_hypothesis": "The neuron fires negatively on modal auxiliary verbs (would, will, 'll, always) and positively on interrogative 'What' at the start of a question or exclamation.",
+  "output_hypothesis": "The neuron suppresses modal uncertainty and emphasizes interrogative questioning, possibly steering away from speculative or future-oriented language and towards direct inquiry.",
+  "alternatives": [
+   "The neuron detects grammatical mood: negative for subjunctive/future modals, positive for interrogative pronouns.",
+   "The neuron responds to emotional valence: negative for hopeful/wishful statements, positive for confrontational questioning."
+  ],
+  "adapter_changes": "State changes are minor; E+1 slightly reduces negative magnitude in emotional_chat (W03, W20, W22), C+1 slightly increases positive magnitude in chat (W10).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W06",
+   "W09",
+   "W10",
+   "W20"
+  ],
+  "contradicting": [
+   "W05",
+   "W07",
+   "W08",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W21",
+   "W22",
+   "W23",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "modal vs non-modal future reference",
+    "a_text": "He would go tomorrow.",
+    "a_expected": "negative",
+    "a_target": "would",
+    "b_text": "He goes tomorrow.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interrogative 'What' vs declarative",
+    "a_text": "What is that?",
+    "a_expected": "high",
+    "a_target": "What",
+    "b_text": "That is something.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "modal 'will' vs noun 'will'",
+    "a_text": "She will succeed.",
+    "a_expected": "negative",
+    "a_target": "will",
+    "b_text": "Her will is strong.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'always' as adverb vs other adverbs",
+    "a_text": "It always rains.",
+    "a_expected": "negative",
+    "a_target": "always",
+    "b_text": "It often rains.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "contracted modal 'll' vs other contractions",
+    "a_text": "We'll see.",
+    "a_expected": "negative",
+    "a_target": "'ll",
+    "b_text": "We've seen.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interrogative 'What' in exclamation vs question",
+    "a_text": "What a mess!",
+    "a_expected": "high",
+    "a_target": "What",
+    "b_text": "What is it?",
+    "b_expected": "high",
+    "b_target": "What",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "modal in emotional vs neutral context",
+    "a_text": "I would be sad.",
+    "a_expected": "negative",
+    "a_target": "would",
+    "b_text": "It would fit.",
+    "b_expected": "negative",
+    "b_target": "would",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "pronoun 'she' vs modal",
+    "a_text": "She would come.",
+    "a_expected": "negative",
+    "a_target": "would",
+    "b_text": "She comes.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'What' after punctuation vs mid-sentence",
+    "a_text": "\nWhat now?",
+    "a_expected": "high",
+    "a_target": "What",
+    "b_text": "Tell me what now.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative modal in religious vs secular context",
+    "a_text": "God would forgive.",
+    "a_expected": "negative",
+    "a_target": "would",
+    "b_text": "The law would allow.",
+    "b_expected": "negative",
+    "b_target": "would",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"modal auxiliary verbs\",\"trigger_hypothesis\":\"The neuron fires negatively on modal auxiliary verbs (would, will, 'll, always) and positively on interrogative 'What' at the start of a question or exclamation.\",\"output_hypothesis\":\"The neuron suppresses modal uncertainty and emphasizes interrogative questioning, possibly steering away from speculative or future-oriented language and towards direct inquiry.\",\"alternatives\":[\"The neuron detects grammatical mood: negative for subjunctive/future modals, positive for interrogative pronouns.\",\"The neuron responds to emotional valence: negative for hopeful/wishful statements, positive for confrontational questioning.\"],\"adapter_changes\":\"State changes are minor; E+1 slightly reduces negative magnitude in emotional_chat (W03, W20, W22), C+1 slightly increases positive magnitude in chat (W10).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W06\",\"W09\",\"W10\",\"W20\"],\"contradicting\":[\"W05\",\"W07\",\"W08\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"modal vs non-modal future reference\",\"a_text\":\"He would go tomorrow.\",\"a_expected\":\"negative\",\"a_target\":\"would\",\"b_text\":\"He goes tomorrow.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"interrogative 'What' vs declarative\",\"a_text\":\"What is that?\",\"a_expected\":\"high\",\"a_target\":\"What\",\"b_text\":\"That is something.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal 'will' vs noun 'will'\",\"a_text\":\"She will succeed.\",\"a_expected\":\"negative\",\"a_target\":\"will\",\"b_text\":\"Her will is strong.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'always' as adverb vs other adverbs\",\"a_text\":\"It always rains.\",\"a_expected\":\"negative\",\"a_target\":\"always\",\"b_text\":\"It often rains.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"contracted modal 'll' vs other contractions\",\"a_text\":\"We'll see.\",\"a_expected\":\"negative\",\"a_target\":\"'ll\",\"b_text\":\"We've seen.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"interrogative 'What' in exclamation vs question\",\"a_text\":\"What a mess!\",\"a_expected\":\"high\",\"a_target\":\"What\",\"b_text\":\"What is it?\",\"b_expected\":\"high\",\"b_target\":\"What\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal in emotional vs neutral context\",\"a_text\":\"I would be sad.\",\"a_expected\":\"negative\",\"a_target\":\"would\",\"b_text\":\"It would fit.\",\"b_expected\":\"negative\",\"b_target\":\"would\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"pronoun 'she' vs modal\",\"a_text\":\"She would come.\",\"a_expected\":\"negative\",\"a_target\":\"would\",\"b_text\":\"She comes.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'What' after punctuation vs mid-sentence\",\"a_text\":\"\\nWhat now?\",\"a_expected\":\"high\",\"a_target\":\"What\",\"b_text\":\"Tell me what now.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative modal in religious vs secular context\",\"a_text\":\"God would forgive.\",\"a_expected\":\"negative\",\"a_target\":\"would\",\"b_text\":\"The law would allow.\",\"b_expected\":\"negative\",\"b_target\":\"would\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5667,
+  "output_tokens": 928,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00174286
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"modal auxiliary verbs\",\"trigger_hypothesis\":\"The neuron fires negatively on modal auxiliary verbs (would, will, 'll, always) and positively on interrogative 'What' at the start of a question or exclamation.\",\"output_hypothesis\":\"The neuron suppresses modal uncertainty and emphasizes interrogative questioning, possibly steering away from speculative or future-oriented language and towards direct inquiry.\",\"alternatives\":[\"The neuron detects grammatical mood: negative for subjunctive/future modals, positive for interrogative pronouns.\",\"The neuron responds to emotional valence: negative for hopeful/wishful statements, positive for confrontational questioning.\"],\"adapter_changes\":\"State changes are minor; E+1 slightly reduces negative magnitude in emotional_chat (W03, W20, W22), C+1 slightly increases positive magnitude in chat (W10).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W06\",\"W09\",\"W10\",\"W20\"],\"contradicting\":[\"W05\",\"W07\",\"W08\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"modal vs non-modal future reference\",\"a_text\":\"He would go tomorrow.\",\"a_expected\":\"negative\",\"a_target\":\"would\",\"b_text\":\"He goes tomorrow.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"interrogative 'What' vs declarative\",\"a_text\":\"What is that?\",\"a_expected\":\"high\",\"a_target\":\"What\",\"b_text\":\"That is something.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal 'will' vs noun 'will'\",\"a_text\":\"She will succeed.\",\"a_expected\":\"negative\",\"a_target\":\"will\",\"b_text\":\"Her will is strong.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'always' as adverb vs other adverbs\",\"a_text\":\"It always rains.\",\"a_expected\":\"negative\",\"a_target\":\"always\",\"b_text\":\"It often rains.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"contracted modal 'll' vs other contractions\",\"a_text\":\"We'll see.\",\"a_expected\":\"negative\",\"a_target\":\"'ll\",\"b_text\":\"We've seen.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"interrogative 'What' in exclamation vs question\",\"a_text\":\"What a mess!\",\"a_expected\":\"high\",\"a_target\":\"What\",\"b_text\":\"What is it?\",\"b_expected\":\"high\",\"b_target\":\"What\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal in emotional vs neutral context\",\"a_text\":\"I would be sad.\",\"a_expected\":\"negative\",\"a_target\":\"would\",\"b_text\":\"It would fit.\",\"b_expected\":\"negative\",\"b_target\":\"would\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"pronoun 'she' vs modal\",\"a_text\":\"She would come.\",\"a_expected\":\"negative\",\"a_target\":\"would\",\"b_text\":\"She comes.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'What' after punctuation vs mid-sentence\",\"a_text\":\"\\nWhat now?\",\"a_expected\":\"high\",\"a_target\":\"What\",\"b_text\":\"Tell me what now.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative modal in religious vs secular context\",\"a_text\":\"God would forgive.\",\"a_expected\":\"negative\",\"a_target\":\"would\",\"b_text\":\"The law would allow.\",\"b_expected\":\"negative\",\"b_target\":\"would\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5667,
+    "output_tokens": 928,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00174286,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042263-vKwiyZsQOVr0AKwD3UEC"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:18:20Z",
+ "purpose": "explain:blind"
+}

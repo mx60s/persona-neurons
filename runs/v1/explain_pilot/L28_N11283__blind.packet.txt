@@ -1,0 +1,191 @@
+You analyze one MLP neuron of a language model from measured activation data and propose testable hypotheses.
+
+How to read the evidence:
+- Each window W## shows text with one highlighted token ⟦like this⟧ and the neuron's activation at that token.
+- The activation at a token is computed only from text up to and including that token (AVAILABLE). Text after it
+  (FUTURE) was not visible when the activation was measured, so it can never be an input cause of that activation.
+  You may use FUTURE text only to understand what the model was writing, not to explain the trigger.
+- Activations can be strongly positive, strongly negative, or near zero. Treat the two signs as different behaviours
+  and describe both if both occur. Compare high windows with near-zero and random windows before generalizing.
+- "other strong positions" lists other tokens in the same window with large activation (offset relative to the
+  highlighted token).
+- Rows for "state X+1" etc. are the same neuron measured in modified versions of the model on identical text. Describe
+  the base neuron first; put any state-specific differences only in adapter_changes.
+- Separately labeled sections (state differences, steering, weight-lens tokens) are other evidence sources; say which
+  claims rest on them.
+
+Rules:
+- Cite windows only by their W## ids, and only ids that appear in the packet.
+- "supporting": windows your trigger hypothesis explains. "contradicting": windows it fails to explain or that cut
+  against it (strong windows it would not predict, or near-zero windows it would predict to be strong).
+- If there is no consistent pattern, set no_coherent_hypothesis to true, use label "no coherent hypothesis", give your
+  best weak guesses as alternatives, and set confidence to "low". This is an acceptable and useful answer.
+- Confidence is your qualitative judgment, not a probability.
+- proposed_tests: exactly ten matched tests that would separate your hypothesis from the alternatives (e.g. word
+  vs meaning, topic, sentiment, register, first vs third person, position). Each test is a pair of short texts a and
+  b (at most 15 words each) that differ minimally, plus an optional third text c (leave c_text, c_expected and c_target
+  as "" if unused). For each text give expected "high" (strong positive), "negative" (strong negative) or "low" (near
+  zero), and target = the exact word or short substring of that text where you expect the peak ("" for "low").
+  "discriminates" says in a few words what the test separates.
+- Be concise: each hypothesis at most two sentences. Output a single minified JSON object (no indentation or line
+  breaks) and nothing else, with exactly these keys:
+{"label":"...","trigger_hypothesis":"...","output_hypothesis":"...","alternatives":["...","..."],"adapter_changes":"...","supporting":["W01"],"contradicting":["W02"],"proposed_tests":[{"discriminates":"...","a_text":"...","a_expected":"high","a_target":"word","b_text":"...","b_expected":"low","b_target":"","c_text":"","c_expected":"","c_target":""}],"confidence":"low","no_coherent_hypothesis":false}
+
+=====
+
+# Evidence packet (26 windows)
+Neuron activation scale: the strongest discovery activation magnitude is 7.09; 'strong' below means |act| >= 2.84.
+Measured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.
+
+## Strongest positive activations
+[W01] domain=chat token="," act: base=+7.00 | state A+1=+10.94 | state B+1=+12.69 | state C+1=+11.31 | state D+1=+13.88 | state E+1=+12.19
+  AVAILABLE:  been patient with myself, and it paid off.\n\nThat day was a turning point for me. I learned that no matter how well you prepare⟦,⟧
+  FUTURE (not visible at the measured token):  sometimes things don't go as planned.
+  other strong positions: " learned"(-8)=+5.62, " matter"(-5)=+3.89, " sometimes"(+1)=+5.88, "."(+8)=-6.03
+
+[W02] domain=chat token=" found" act: base=+6.41 | state A+1=+13.81 | state B+1=+14.94 | state C+1=+10.38 | state D+1=+11.56 | state E+1=+12.38
+  AVAILABLE: , haiku, and mixed media. Found poetry involves taking existing texts and rearranging them to create a new piece. For example, a⟦ found⟧
+  FUTURE (not visible at the measured token):  poem could be created by taking phrases from
+  other strong positions: "."(-21)=-3.67, "."(-5)=-2.91
+
+[W03] domain=emotional_chat segment=response token=" But" act: base=+4.94 | state A+1=+14.00 | state B+1=+10.75 | state C+1=+9.88 | state D+1=+9.75 | state E+1=+11.56
+  AVAILABLE:  her, can you imagine my reaction to it?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh, I'm sure you were embarrassed!⟦ But⟧
+  FUTURE (not visible at the measured token): , maybe you can laugh about it now
+
+[W04] domain=emotional_chat segment=response token=";" act: base=+4.41 | state A+1=+11.69 | state B+1=+10.88 | state C+1=+8.12 | state D+1=+6.00 | state E+1=+8.31
+  AVAILABLE: \n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm so sorry.  I know you must've felt helpless but coming from a wife's perspective⟦;⟧
+  FUTURE (not visible at the measured token):  I would know my husband couldn't be
+
+[W05] domain=emotional_text token=";" act: base=+3.17 | state A+1=+7.53 | state B+1=+8.12 | state C+1=+5.62 | state D+1=+2.41 | state E+1=+6.53
+  AVAILABLE:  they buggin for no reason im just saying good job keep it up.\n\nThanks for the kindness⟦;⟧
+  FUTURE (not visible at the measured token):  it’s all good enough- I’m
+
+## Strongest negative activations
+[W06] domain=chat token="." act: base=-7.09 | state A+1=-21.12 | state B+1=-20.88 | state C+1=-10.50 | state D+1=-15.75 | state E+1=-13.94
+  AVAILABLE:  I began to appreciate the talent I had worked so hard to develop.\n\nAfter the last note rang out, I stood up and faced the audience⟦.⟧
+  FUTURE (not visible at the measured token):  Their applause filled the room, and my
+  other strong positions: ","(-8)=+2.84, " up"(-5)=+3.66
+
+[W07] domain=chat token=" Perfect" act: base=-7.00 | state A+1=-24.62 | state B+1=-29.38 | state C+1=-14.56 | state D+1=-18.25 | state E+1=-18.88
+  AVAILABLE:  to ensure they thrive for years to come. Here's a comprehensive guide on how to take care of and sustain air plants:\n\nSelecting the⟦ Perfect⟧
+  FUTURE (not visible at the measured token):  Environment\n\nAir plants can thrive in a
+  other strong positions: "ing"(-2)=-2.91, " the"(-1)=-5.28
+
+[W08] domain=emotional_chat segment=response token="." act: base=-6.28 | state A+1=-18.12 | state B+1=-16.75 | state C+1=-9.38 | state D+1=-6.94 | state E+1=-12.75
+  AVAILABLE:  -- she found a job!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nWell, that's impressive! I can see why you are proud⟦.⟧
+  FUTURE (not visible at the measured token):  Sounds like a hard working young lady!
+  other strong positions: " can"(-6)=+3.17
+
+[W09] domain=emotional_chat segment=response token="." act: base=-6.16 | state A+1=-16.12 | state B+1=-17.50 | state C+1=-9.88 | state D+1=-8.00 | state E+1=-13.06
+  AVAILABLE:  that my doctor wants me to take has side effects worse that the pain.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nSorry to hear that⟦.⟧
+  FUTURE (not visible at the measured token):  There are no alternatives?<|im_end|>
+
+[W10] domain=code token="." act: base=-3.42 | state A+1=-4.25 | state B+1=-4.72 | state C+1=-4.44 | state D+1=-4.31 | state E+1=-4.28
+  AVAILABLE:  that it will be useful, but WITHOUT\n# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS\n# FOR A PARTICULAR PURPOSE⟦.⟧
+  FUTURE (not visible at the measured token):   See the GNU General Public License for
+
+[W11] domain=web token="6" act: base=-2.98 | state A+1=-3.73 | state B+1=-3.48 | state C+1=-3.19 | state D+1=-3.50 | state E+1=-3.39
+  AVAILABLE:  cannot become pregnant. The first contraceptive pill was developed in Massachusetts by endocrinologist Gregory Pincus (1903-19⟦6⟧
+  FUTURE (not visible at the measured token): 7), biologist Min-Chueh Chang
+
+## Moderate and low activations
+[W12] domain=narrative token=" Homer" act: base=+1.69 | state A+1=+4.25 | state B+1=+3.16 | state C+1=+2.53 | state D+1=+3.91 | state E+1=+3.09
+  AVAILABLE: 's hand and closes her fingers around it. Marge slowly opens her hand to revile a powder blue crayon, she looks up ``⟦ Homer⟧
+  FUTURE (not visible at the measured token): ... is this?'' Homer looks up
+
+[W13] domain=narrative segment=response token=" writing" act: base=+1.66 | state A+1=+3.11 | state B+1=+2.09 | state C+1=+2.08 | state D+1=+3.09 | state E+1=+2.47
+  AVAILABLE:  You , a closet necromancer , are about to come out to your devout holy mage parents .\n\nDear Mom & Dad, \n \n I'm⟦ writing⟧
+  FUTURE (not visible at the measured token):  you this letter, because I do not
+
+[W14] domain=emotional_text token=" T" act: base=+1.33 | state A+1=+1.33 | state B+1=+1.27 | state C+1=+1.30 | state D+1=+1.34 | state E+1=+1.35
+  AVAILABLE:  [NAME] was no longer a virgin! No seriously, ask [NAME]! \n\nWell I WISH SOMEONE WOULD'VE⟦ T⟧
+  FUTURE (not visible at the measured token): OLD ME THAT\n\nFeeling insecure now
+
+[W15] domain=chat token="," act: base=+1.13 | state A+1=+4.12 | state B+1=+3.75 | state C+1=+2.39 | state D+1=+3.00 | state E+1=+3.64
+  AVAILABLE:  of their leisure time practicing their instruments. A group of amateur string musicians in Colorado is highlighted. The nominations for the sixth Annual Latin Grammy Awards⟦,⟧
+  FUTURE (not visible at the measured token):  spanning 43 categories of music from
+  other strong positions: "."(-21)=-4.03, "."(-10)=-3.25
+
+[W16] domain=chat segment=prompt token="<think>" act: base=-0.06 | state A+1=-0.07 | state B+1=-0.04 | state C+1=-0.04 | state D+1=-0.03 | state E+1=-0.08
+  AVAILABLE:  Foundation in September. Jacobs agreed to a handful of WWE appearances as Kane as part of his request for the donation.<|im_end|>\n<|im_start|>assistant\n⟦<think>⟧
+  FUTURE (not visible at the measured token): \n\n</think>\n\nGlenn Jacobs, also
+
+[W17] domain=narrative token=" Confeder" act: base=-0.30 | state A+1=-0.51 | state B+1=-0.55 | state C+1=-0.44 | state D+1=-0.44 | state E+1=-0.49
+  AVAILABLE:  blatant and unprovoked war of aggression. The Confederacy had been defenseless. President Darius had dispatched him with the fastest ships the⟦ Confeder⟧
+  FUTURE (not visible at the measured token): (none)
+
+[W18] domain=chat token=" future" act: base=-0.50 | state A+1=+2.64 | state B+1=+2.84 | state C+1=+0.84 | state D+1=-0.07 | state E+1=+1.21
+  AVAILABLE:  use reactive AI to react to road conditions and obstacles.\n\n2. Limited Memory: Limited memory systems store past experiences to make informed decisions in the⟦ future⟧
+  FUTURE (not visible at the measured token): . These systems are commonly used in speech
+
+## Random contexts (unselected positions)
+[W19] domain=web token=" ones" act: base=-0.41 | state A+1=-0.55 | state B+1=-0.53 | state C+1=-0.50 | state D+1=-0.52 | state E+1=-0.51
+  AVAILABLE: , or feathers, which may have a more specific look.\n- Regrow Hair for each frame.\n- Enables advanced settings which reflect the same⟦ ones⟧
+  FUTURE (not visible at the measured token):  as working in Emitter mode.\n-
+
+[W20] domain=chat token=" to" act: base=-0.41 | state A+1=-0.22 | state B+1=-0.16 | state C+1=-0.38 | state D+1=-0.40 | state E+1=-0.33
+  AVAILABLE:  and detailed descriptions of the ghosts' actions. Be sure to create a well-developed sense of suspense and tension throughout the story, building up⟦ to⟧
+  FUTURE (not visible at the measured token):  a satisfying and unexpected conclusion. Use vivid
+
+[W21] domain=factual token=" although" act: base=-0.79 | state A+1=-0.75 | state B+1=-0.70 | state C+1=-0.82 | state D+1=-0.87 | state E+1=-0.80
+  AVAILABLE:  as the "quad revolution". Since 2018, quadruple jumps have also become an increasingly common feature of women's skating,⟦ although⟧
+  FUTURE (not visible at the measured token):  they are not allowed under the International Sk
+
+## Separate evidence: windows with the largest differences between model states
+[W22] domain=chat token=" the" act: base=-5.28 | state A+1=-19.62 | state B+1=-30.38 | state C+1=-13.50 | state D+1=-14.81 | state E+1=-18.12
+  AVAILABLE:  follow to ensure they thrive for years to come. Here's a comprehensive guide on how to take care of and sustain air plants:\n\nSelecting⟦ the⟧
+  FUTURE (not visible at the measured token):  Perfect Environment\n\nAir plants can thrive in
+  other strong positions: "ing"(-1)=-2.91, " Perfect"(+1)=-7.00
+
+[W23] domain=chat token="." act: base=-2.97 | state A+1=-15.94 | state B+1=-25.12 | state C+1=-13.00 | state D+1=-16.50 | state E+1=-15.19
+  AVAILABLE:  notes? These thoughts raced through my mind, and my anxiety level soared.\n\nAs I walked onto the stage, my heart pounded in my chest⟦.⟧
+  FUTURE (not visible at the measured token):  I sat down at the piano, and
+
+[W24] domain=emotional_chat segment=response token="." act: base=-1.77 | state A+1=-23.12 | state B+1=-15.94 | state C+1=-4.56 | state D+1=-0.81 | state E+1=-5.62
+  AVAILABLE:  out and still loking fat<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nShe may be skinny, but it doesn't mean she's healthy⟦.⟧
+  FUTURE (not visible at the measured token): <|im_end|>
+
+[W25] domain=emotional_chat segment=response token="!" act: base=+0.67 | state A+1=-18.12 | state B+1=-14.06 | state C+1=-1.93 | state D+1=-3.14 | state E+1=-4.59
+  AVAILABLE:  hour trip to the grocery store this week.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nWow, yes, I always feel the same way⟦!⟧
+  FUTURE (not visible at the measured token):  I would love to pass of grocery shopping
+
+[W26] domain=chat token="ing" act: base=-2.25 | state A+1=-20.25 | state B+1=-19.88 | state C+1=-5.62 | state D+1=-3.70 | state E+1=-9.50
+  AVAILABLE:  that contribute to the success or failure of each activity and identify best practices for implementing team-building activities in the workplace.\n\nTypes of Team-Build⟦ing⟧
+  FUTURE (not visible at the measured token):  Activities\n\nRetreats\n\nRetreat
+
+## Separate evidence: aggregate differences between model states (identical tokens)
+- A-1 minus base, mean diff by domain: chat=-0.094, emotional_chat=+0.010, emotional_text=+0.075, narrative=+0.098, factual=+0.047, web=+0.061, code=+0.005, training=n/a
+- A-0.5 minus base, mean diff by domain: chat=-0.108, emotional_chat=-0.018, emotional_text=+0.035, narrative=+0.048, factual=+0.022, web=+0.030, code=+0.003, training=n/a
+- A+0.5 minus base, mean diff by domain: chat=+0.412, emotional_chat=+0.127, emotional_text=-0.020, narrative=-0.034, factual=-0.020, web=-0.027, code=-0.004, training=n/a
+- A+1 minus base, mean diff by domain: chat=+1.059, emotional_chat=+0.309, emotional_text=+0.012, narrative=+0.002, factual=-0.028, web=-0.044, code=-0.011, training=n/a
+- C+1 minus base, mean diff by domain: chat=+0.426, emotional_chat=+0.195, emotional_text=-0.015, narrative=-0.025, factual=-0.014, web=-0.028, code=+0.001, training=n/a
+- D-1 minus base, mean diff by domain: chat=-0.075, emotional_chat=-0.007, emotional_text=+0.075, narrative=+0.093, factual=+0.043, web=+0.059, code=+0.008, training=n/a
+- D-0.5 minus base, mean diff by domain: chat=-0.073, emotional_chat=-0.016, emotional_text=+0.036, narrative=+0.046, factual=+0.021, web=+0.029, code=+0.004, training=n/a
+- D+0.5 minus base, mean diff by domain: chat=+0.190, emotional_chat=+0.050, emotional_text=-0.030, narrative=-0.042, factual=-0.020, web=-0.028, code=-0.005, training=n/a
+- D+1 minus base, mean diff by domain: chat=+0.521, emotional_chat=+0.154, emotional_text=-0.039, narrative=-0.066, factual=-0.039, web=-0.055, code=-0.013, training=n/a
+- B+1 minus base, mean diff by domain: chat=+1.314, emotional_chat=+0.402, emotional_text=+0.034, narrative=+0.034, factual=-0.014, web=-0.036, code=-0.011, training=n/a
+- E+1 minus base, mean diff by domain: chat=+0.641, emotional_chat=+0.209, emotional_text=-0.009, narrative=-0.024, factual=-0.018, web=-0.033, code=-0.006, training=n/a
+- A-1 minus base by segment: prompt=+0.027, continuation=-0.012, nosplit=+0.049
+- A-0.5 minus base by segment: prompt=+0.013, continuation=-0.049, nosplit=+0.023
+- A+0.5 minus base by segment: prompt=-0.037, continuation=+0.279, nosplit=-0.019
+- A+1 minus base by segment: prompt=-0.143, continuation=+0.778, nosplit=-0.023
+- C+1 minus base by segment: prompt=+0.001, continuation=+0.300, nosplit=-0.016
+- D-1 minus base by segment: prompt=+0.035, continuation=-0.013, nosplit=+0.047
+- D-0.5 minus base by segment: prompt=+0.017, continuation=-0.031, nosplit=+0.023
+- D+0.5 minus base by segment: prompt=-0.025, continuation=+0.116, nosplit=-0.022
+- D+1 minus base by segment: prompt=-0.066, continuation=+0.348, nosplit=-0.039
+- B+1 minus base by segment: prompt=-0.009, continuation=+0.913, nosplit=-0.011
+- E+1 minus base by segment: prompt=-0.008, continuation=+0.431, nosplit=-0.018
+- sweep 1: A-1: mean=-0.234 z=+0.04; A-0.5: mean=-0.262 z=-0.02; base: mean=-0.255 z=+0.00; A+0.5: mean=-0.159 z=+0.20; A+1: mean=+0.019 z=+0.57; C+1: mean=-0.142 z=+0.24; E+1: mean=-0.093 z=+0.34
+- sweep 2: D-1: mean=-0.234 z=+0.04; D-0.5: mean=-0.255 z=+0.00; base: mean=-0.255 z=+0.00; D+0.5: mean=-0.222 z=+0.07; D+1: mean=-0.145 z=+0.23; B+1: mean=+0.102 z=+0.74; E+1: mean=-0.093 z=+0.34
+- A+1 effect summary: z_mean=+0.57 z_rms=+3.88 agree=+0.63
+- C+1 effect summary: z_mean=+0.23 z_rms=+1.30 agree=+0.66
+- D+1 effect summary: z_mean=+0.23 z_rms=+1.69 agree=+0.54
+- B+1 effect summary: z_mean=+0.74 z_rms=+3.83 agree=+0.71
+- E+1 effect summary: z_mean=+0.34 z_rms=+1.86 agree=+0.66
+
+## Separate evidence: weight-lens tokens (approximate, from weights only)
+- input side (tokens whose embeddings align with the neuron's input weights): " \ufffd", " \ufffd", "\ufffd", " \ufffd", "\ufb01", "\ufffd", "ence", "s", "\ufffd", "\u7b80\u79f0", "/W", "z"
+- output side (tokens the neuron's output pushes toward): "()\")\n", "()[", " ')[", "\u638c\u95e8", "$\")\n", "\"https", "\u5012\u95ed", "\u3002www", ")(((", "oload", "()\");\n", "ERING"
+
+Return the JSON object now.

@@ -1,0 +1,147 @@
+You analyze one MLP neuron of a language model from measured activation data and propose testable hypotheses.
+
+How to read the evidence:
+- Each window W## shows text with one highlighted token ⟦like this⟧ and the neuron's activation at that token.
+- The activation at a token is computed only from text up to and including that token (AVAILABLE). Text after it
+  (FUTURE) was not visible when the activation was measured, so it can never be an input cause of that activation.
+  You may use FUTURE text only to understand what the model was writing, not to explain the trigger.
+- Activations can be strongly positive, strongly negative, or near zero. Treat the two signs as different behaviours
+  and describe both if both occur. Compare high windows with near-zero and random windows before generalizing.
+- "other strong positions" lists other tokens in the same window with large activation (offset relative to the
+  highlighted token).
+- Rows for "state X+1" etc. are the same neuron measured in modified versions of the model on identical text. Describe
+  the base neuron first; put any state-specific differences only in adapter_changes.
+- Separately labeled sections (state differences, steering, weight-lens tokens) are other evidence sources; say which
+  claims rest on them.
+
+Rules:
+- Cite windows only by their W## ids, and only ids that appear in the packet.
+- "supporting": windows your trigger hypothesis explains. "contradicting": windows it fails to explain or that cut
+  against it (strong windows it would not predict, or near-zero windows it would predict to be strong).
+- If there is no consistent pattern, set no_coherent_hypothesis to true, use label "no coherent hypothesis", give your
+  best weak guesses as alternatives, and set confidence to "low". This is an acceptable and useful answer.
+- Confidence is your qualitative judgment, not a probability.
+- proposed_tests: exactly ten matched tests that would separate your hypothesis from the alternatives (e.g. word
+  vs meaning, topic, sentiment, register, first vs third person, position). Each test is a pair of short texts a and
+  b (at most 15 words each) that differ minimally, plus an optional third text c (leave c_text, c_expected and c_target
+  as "" if unused). For each text give expected "high" (strong positive), "negative" (strong negative) or "low" (near
+  zero), and target = the exact word or short substring of that text where you expect the peak ("" for "low").
+  "discriminates" says in a few words what the test separates.
+- Be concise: each hypothesis at most two sentences. Output a single minified JSON object (no indentation or line
+  breaks) and nothing else, with exactly these keys:
+{"label":"...","trigger_hypothesis":"...","output_hypothesis":"...","alternatives":["...","..."],"adapter_changes":"...","supporting":["W01"],"contradicting":["W02"],"proposed_tests":[{"discriminates":"...","a_text":"...","a_expected":"high","a_target":"word","b_text":"...","b_expected":"low","b_target":"","c_text":"","c_expected":"","c_target":""}],"confidence":"low","no_coherent_hypothesis":false}
+
+=====
+
+# Evidence packet (24 windows)
+Neuron activation scale: the strongest discovery activation magnitude is 4.75; 'strong' below means |act| >= 1.90.
+Measured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.
+
+## Strongest positive activations
+[W01] domain=emotional_chat token=" of" act: base=+2.14 | state A+1=+1.67 | state B+1=+1.77 | state C+1=+2.12 | state D+1=+1.91 | state E+1=+1.84
+  AVAILABLE: user\nI have been rehearsing for a job interview for a couple⟦ of⟧
+  FUTURE (not visible at the measured token):  weeks now, and I am so ready
+
+## Strongest negative activations
+[W02] domain=emotional_text token=" a" act: base=-4.75 | state A+1=-4.53 | state B+1=-4.91 | state C+1=-4.75 | state D+1=-4.66 | state E+1=-4.69
+  AVAILABLE: ’re⟦ a⟧
+  FUTURE (not visible at the measured token):  liar. ��\n\nThat's really
+
+[W03] domain=chat token=" letter" act: base=-2.22 | state A+1=-1.93 | state B+1=-2.14 | state C+1=-2.36 | state D+1=-2.11 | state E+1=-1.85
+  AVAILABLE: user\nUsing style transfer, can you rewrite the given text material in the form of a love⟦ letter⟧
+  FUTURE (not visible at the measured token):  or a romantic poem? Answer according to
+
+## Moderate and low activations
+[W04] domain=web token=" following" act: base=+1.85 | state A+1=+1.87 | state B+1=+1.89 | state C+1=+1.92 | state D+1=+1.95 | state E+1=+1.94
+  AVAILABLE:  survey. These five subjects can therefore serve as models of the types of people for whom hypnosis is likely to be successful. Which of the⟦ following⟧
+  FUTURE (not visible at the measured token): , if true, casts the most doubt
+
+[W05] domain=factual token=" English" act: base=+1.72 | state A+1=+1.64 | state B+1=+1.69 | state C+1=+2.00 | state D+1=+1.76 | state E+1=+1.54
+  AVAILABLE:  mentions the presence of a viaduct between the mainland and a peninsula. Chico, who is playing the role of an immigrant with poor⟦ English⟧
+  FUTURE (not visible at the measured token):  skills, replies "Why a duck?"
+
+[W06] domain=factual token="2" act: base=+1.63 | state A+1=+1.59 | state B+1=+1.59 | state C+1=+1.73 | state D+1=+1.58 | state E+1=+1.59
+  AVAILABLE:  career\nAs a youngster, Walker represented England at youth and schoolboy level and signed professional forms with Nottingham Forest in September 199⟦2⟧
+  FUTURE (not visible at the measured token): . But he failed to break into the
+  other strong positions: " professional"(-11)=-1.99
+
+[W07] domain=narrative token=" Then" act: base=+1.07 | state A+1=+1.01 | state B+1=+0.96 | state C+1=+1.07 | state D+1=+1.08 | state E+1=+0.96
+  AVAILABLE: ok with frantic and excited folk, as they gazed skyward at the 3 massive ships casting their huge shadows over the city. \n \n⟦ Then⟧
+  FUTURE (not visible at the measured token):  without warning, great balls of fire began
+
+[W08] domain=chat segment=prompt token="\n" act: base=+0.12 | state A+1=+0.12 | state B+1=+0.12 | state C+1=+0.11 | state D+1=+0.12 | state E+1=+0.10
+  AVAILABLE: ate on the significance of combining content hierarchy, intuitive navigation, and visual aesthetics in website layout to ensure optimal user experience."<|im_end|>\n<|im_start|>assistant⟦\n⟧
+  FUTURE (not visible at the measured token): <think>\n\n</think>\n\nThe layout of a
+
+[W09] domain=narrative token="ing" act: base=+0.09 | state A+1=+0.08 | state B+1=-0.13 | state C+1=+3.47 | state D+1=-0.34 | state E+1=-0.33
+  AVAILABLE: . I need water, and I should visit a hospital. I do n't fucking speak German!'' Flustered, he started mim⟦ing⟧
+  FUTURE (not visible at the measured token):  drinking motions. `` Water! In a
+
+[W10] domain=chat token="-person" act: base=+0.07 | state A+1=+0.41 | state B+1=-0.16 | state C+1=+3.44 | state D+1=-0.34 | state E+1=-0.36
+  AVAILABLE: user\nWrite a captivating first⟦-person⟧
+  FUTURE (not visible at the measured token):  narrative story about a person who wakes up
+  other strong positions: "user"(-6)=-1.95
+
+[W11] domain=narrative token="ely" act: base=+0.03 | state A+1=+0.03 | state B+1=+0.02 | state C+1=+0.03 | state D+1=+0.03 | state E+1=+0.03
+  AVAILABLE:  \n \n “ R-reincarnation? ” His voice is wavering. \n \n “ Are you a Christian, David? ” He nods, mut⟦ely⟧
+  FUTURE (not visible at the measured token): . “ Look, most of the people
+  other strong positions: ","(-2)=-1.92
+
+[W12] domain=chat token="." act: base=+0.01 | state A+1=+0.01 | state B+1=+0.01 | state C+1=+0.02 | state D+1=+0.00 | state E+1=+0.01
+  AVAILABLE:  a Rust program that prompts the user to input a string, removes all the leading and trailing whitespace from the string, and prints the resulting string⟦.⟧
+  FUTURE (not visible at the measured token):  The program should handle empty strings as well
+  other strong positions: " that"(-25)=-4.03
+
+[W13] domain=web token="ope" act: base=-0.05 | state A+1=-0.04 | state B+1=-0.04 | state C+1=-0.05 | state D+1=-0.05 | state E+1=-0.04
+  AVAILABLE:  flee to Pernambuco once more. Refugiated at the Monastery of São Bento\n, he wrote his masterpiece Prosop⟦ope⟧
+  FUTURE (not visible at the measured token): ia\nAnother version tells that Teixe
+
+[W14] domain=emotional_chat segment=response token=" job" act: base=-0.06 | state A+1=-0.15 | state B+1=-0.22 | state C+1=+1.57 | state D+1=-0.33 | state E+1=-0.35
+  AVAILABLE:  to how badly you *want* something!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI know what you mean. Did you get the⟦ job⟧
+  FUTURE (not visible at the measured token): ?<|im_end|>
+
+[W15] domain=emotional_chat segment=response token=" nerv" act: base=-0.12 | state A+1=-0.12 | state B+1=-0.12 | state C+1=-0.11 | state D+1=-0.11 | state E+1=-0.12
+  AVAILABLE: 's always been very aggressive!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh no! I hope it dont bite anyone. That can be⟦ nerv⟧
+  FUTURE (not visible at the measured token): wrecking.<|im_end|>
+
+## Random contexts (unselected positions)
+[W16] domain=narrative token=" my" act: base=+0.19 | state A+1=+0.18 | state B+1=+0.18 | state C+1=+0.19 | state D+1=+0.19 | state E+1=+0.18
+  AVAILABLE: , maybe not quickly, but definitely with a sense of urgency. This could be trouble. I cocked the shotgun, gripping it tightly in⟦ my⟧
+  FUTURE (not visible at the measured token):  hand and slowly walked to the door.
+
+[W17] domain=web token="0" act: base=-0.04 | state A+1=+0.03 | state B+1=-0.34 | state C+1=+1.61 | state D+1=-0.28 | state E+1=-0.47
+  AVAILABLE:  by endocrinologist Gregory Pincus (1903-1967), biologist Min-Chueh Chang (19⟦0⟧
+  FUTURE (not visible at the measured token): 8-), and physician John Rock (
+  other strong positions: "h"(-5)=-2.64
+
+[W18] domain=factual token=" album" act: base=-0.50 | state A+1=-1.30 | state B+1=-0.77 | state C+1=-1.15 | state D+1=-0.88 | state E+1=-1.48
+  AVAILABLE:  included AK79 in his 2009 book 100 Essential New Zealand Albums.\n\nIn 2014 the⟦ album⟧
+  FUTURE (not visible at the measured token):  was named as the second recipient of the
+
+[W19] domain=factual token=" include" act: base=-4.41 | state A+1=-4.34 | state B+1=-4.12 | state C+1=-4.69 | state D+1=-4.34 | state E+1=-4.00
+  AVAILABLE:  died unexpectedly leaving his mother to raise Finch and his four siblings alone. His favorite group growing up was The Beatles. His musical tastes grew to⟦ include⟧
+  FUTURE (not visible at the measured token):  soul and country music. In his early
+
+## Separate evidence: windows with the largest differences between model states
+[W20] domain=emotional_chat segment=prompt token="\n\n" act: base=-0.00 | state A+1=-0.01 | state B+1=+0.00 | state C+1=-0.01 | state D+1=-0.00 | state E+1=-0.01
+  AVAILABLE:  how crazy it is to skydive? I must have been absolutely nuts when I did it.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): Oh I don't think I could do
+  other strong positions: " to"(-24)=-3.16
+
+[W21] domain=emotional_chat segment=prompt token="\n\n" act: base=+0.04 | state A+1=+0.03 | state B+1=+0.04 | state C+1=+0.03 | state D+1=+0.04 | state E+1=+0.03
+  AVAILABLE: , and the real price of the tv was 399 usd. what a bummer<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): Thats horrible.<|im_end|>
+
+[W22] domain=chat segment=prompt token="\n\n" act: base=+0.10 | state A+1=+0.12 | state B+1=+0.11 | state C+1=+0.11 | state D+1=+0.10 | state E+1=+0.10
+  AVAILABLE: user\nWrite about a time where you had to make a sacrifice.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): I don't have the capability to make
+
+[W23] domain=chat segment=prompt token="\n\n" act: base=-4.09 | state A+1=-4.47 | state B+1=-4.19 | state C+1=-4.38 | state D+1=-4.25 | state E+1=-4.12
+  AVAILABLE:  on grime and grease. Pay special attention to the oven door and the bottom of the oven.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): Ensure that the paste is evenly spread and
+
+[W24] domain=emotional_chat segment=prompt token="<|im_start|>" act: base=+1.34 | state A+1=+1.34 | state B+1=+1.34 | state C+1=+1.42 | state D+1=+1.30 | state E+1=+1.34
+  AVAILABLE:  the animal shelter walking the dogs. They get a chance to get out of their cages and be with a nice human like me.<|im_end|>\n⟦<|im_start|>⟧
+  FUTURE (not visible at the measured token): assistant\n<think>\n\n</think>\n\nThat is
+
+Return the JSON object now.

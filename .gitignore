@@ -2,6 +2,8 @@
 __pycache__/
 *.egg-info/
 runs/*/
+!runs/v1/
+runs/v1/edits/
 !runs/.keep
 explorer/cache/
 *.npy
@@ -9,3 +11,8 @@ explorer/cache/
 .DS_Store
 data/private/
 data/train/
+
+logs/*.log
+runs/fake/
+runs/synthetic_explain/
+*.npy

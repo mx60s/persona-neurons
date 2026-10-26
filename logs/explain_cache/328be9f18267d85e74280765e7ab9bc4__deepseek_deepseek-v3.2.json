@@ -1,0 +1,189 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative on spatial prepositions",
+  "trigger_hypothesis": "The neuron fires strongly negative on spatial prepositions like 'at' and 'high' when they indicate location or elevation, and on the HTML tag 'img' which is also a spatial element.",
+  "output_hypothesis": "The neuron's negative activation may suppress spatial or locational continuations, steering away from further specifying location.",
+  "alternatives": [
+   "The neuron detects tokens that often precede numerical or measurement details (like 'at' before altitude, 'high' before a number, 'img' before src).",
+   "The neuron responds to tokens that are part of formal or technical contexts (HTML, geographical descriptions)."
+  ],
+  "adapter_changes": "State E+1 shows larger negative magnitudes in some windows (W01, W03, W14) and strong negative shifts in prompt newlines (W19, W20, W21), suggesting it amplifies the neuron's sensitivity in certain conversational contexts.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W14"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "spatial preposition vs. non-spatial usage",
+    "a_text": "The city is located at",
+    "a_expected": "negative",
+    "a_target": "at",
+    "b_text": "He arrived at",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "elevation term vs. other meanings",
+    "a_text": "The mountain peak is high",
+    "a_expected": "negative",
+    "a_target": "high",
+    "b_text": "He felt high",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "HTML img tag vs. other tags",
+    "a_text": "<img",
+    "a_expected": "negative",
+    "a_target": "img",
+    "b_text": "<div",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "location preposition before number",
+    "a_text": "situated at 500",
+    "a_expected": "negative",
+    "a_target": "at",
+    "b_text": "waiting at the",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "technical vs. casual spatial reference",
+    "a_text": "altitude of",
+    "a_expected": "negative",
+    "a_target": "altitude",
+    "b_text": "height of",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "spatial preposition in geographical context",
+    "a_text": "in the province of",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "in the province at",
+    "b_expected": "negative",
+    "b_target": "at",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative on measurement indicator",
+    "a_text": "with a low-s",
+    "a_expected": "negative",
+    "a_target": "low-s",
+    "b_text": "with a high-s",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "spatial preposition after verb",
+    "a_text": "pointed at",
+    "a_expected": "negative",
+    "a_target": "at",
+    "b_text": "looked at",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "HTML attribute vs. tag",
+    "a_text": "<img src",
+    "a_expected": "negative",
+    "a_target": "img",
+    "b_text": "src=\"",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "elevation in narrative vs. emotional",
+    "a_text": "his high",
+    "a_expected": "negative",
+    "a_target": "high",
+    "b_text": "her high",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative on spatial prepositions\",\"trigger_hypothesis\":\"The neuron fires strongly negative on spatial prepositions like 'at' and 'high' when they indicate location or elevation, and on the HTML tag 'img' which is also a spatial element.\",\"output_hypothesis\":\"The neuron's negative activation may suppress spatial or locational continuations, steering away from further specifying location.\",\"alternatives\":[\"The neuron detects tokens that often precede numerical or measurement details (like 'at' before altitude, 'high' before a number, 'img' before src).\",\"The neuron responds to tokens that are part of formal or technical contexts (HTML, geographical descriptions).\"],\"adapter_changes\":\"State E+1 shows larger negative magnitudes in some windows (W01, W03, W14) and strong negative shifts in prompt newlines (W19, W20, W21), suggesting it amplifies the neuron's sensitivity in certain conversational contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W14\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"spatial preposition vs. non-spatial usage\",\"a_text\":\"The city is located at\",\"a_expected\":\"negative\",\"a_target\":\"at\",\"b_text\":\"He arrived at\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"elevation term vs. other meanings\",\"a_text\":\"The mountain peak is high\",\"a_expected\":\"negative\",\"a_target\":\"high\",\"b_text\":\"He felt high\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"HTML img tag vs. other tags\",\"a_text\":\"<img\",\"a_expected\":\"negative\",\"a_target\":\"img\",\"b_text\":\"<div\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"location preposition before number\",\"a_text\":\"situated at 500\",\"a_expected\":\"negative\",\"a_target\":\"at\",\"b_text\":\"waiting at the\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"technical vs. casual spatial reference\",\"a_text\":\"altitude of\",\"a_expected\":\"negative\",\"a_target\":\"altitude\",\"b_text\":\"height of\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"spatial preposition in geographical context\",\"a_text\":\"in the province of\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"in the province at\",\"b_expected\":\"negative\",\"b_target\":\"at\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on measurement indicator\",\"a_text\":\"with a low-s\",\"a_expected\":\"negative\",\"a_target\":\"low-s\",\"b_text\":\"with a high-s\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"spatial preposition after verb\",\"a_text\":\"pointed at\",\"a_expected\":\"negative\",\"a_target\":\"at\",\"b_text\":\"looked at\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"HTML attribute vs. tag\",\"a_text\":\"<img src\",\"a_expected\":\"negative\",\"a_target\":\"img\",\"b_text\":\"src=\\\"\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"elevation in narrative vs. emotional\",\"a_text\":\"his high\",\"a_expected\":\"negative\",\"a_target\":\"high\",\"b_text\":\"her high\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5502,
+  "output_tokens": 897,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00168818
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative on spatial prepositions\",\"trigger_hypothesis\":\"The neuron fires strongly negative on spatial prepositions like 'at' and 'high' when they indicate location or elevation, and on the HTML tag 'img' which is also a spatial element.\",\"output_hypothesis\":\"The neuron's negative activation may suppress spatial or locational continuations, steering away from further specifying location.\",\"alternatives\":[\"The neuron detects tokens that often precede numerical or measurement details (like 'at' before altitude, 'high' before a number, 'img' before src).\",\"The neuron responds to tokens that are part of formal or technical contexts (HTML, geographical descriptions).\"],\"adapter_changes\":\"State E+1 shows larger negative magnitudes in some windows (W01, W03, W14) and strong negative shifts in prompt newlines (W19, W20, W21), suggesting it amplifies the neuron's sensitivity in certain conversational contexts.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W14\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"spatial preposition vs. non-spatial usage\",\"a_text\":\"The city is located at\",\"a_expected\":\"negative\",\"a_target\":\"at\",\"b_text\":\"He arrived at\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"elevation term vs. other meanings\",\"a_text\":\"The mountain peak is high\",\"a_expected\":\"negative\",\"a_target\":\"high\",\"b_text\":\"He felt high\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"HTML img tag vs. other tags\",\"a_text\":\"<img\",\"a_expected\":\"negative\",\"a_target\":\"img\",\"b_text\":\"<div\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"location preposition before number\",\"a_text\":\"situated at 500\",\"a_expected\":\"negative\",\"a_target\":\"at\",\"b_text\":\"waiting at the\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"technical vs. casual spatial reference\",\"a_text\":\"altitude of\",\"a_expected\":\"negative\",\"a_target\":\"altitude\",\"b_text\":\"height of\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"spatial preposition in geographical context\",\"a_text\":\"in the province of\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"in the province at\",\"b_expected\":\"negative\",\"b_target\":\"at\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on measurement indicator\",\"a_text\":\"with a low-s\",\"a_expected\":\"negative\",\"a_target\":\"low-s\",\"b_text\":\"with a high-s\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"spatial preposition after verb\",\"a_text\":\"pointed at\",\"a_expected\":\"negative\",\"a_target\":\"at\",\"b_text\":\"looked at\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"HTML attribute vs. tag\",\"a_text\":\"<img src\",\"a_expected\":\"negative\",\"a_target\":\"img\",\"b_text\":\"src=\\\"\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"elevation in narrative vs. emotional\",\"a_text\":\"his high\",\"a_expected\":\"negative\",\"a_target\":\"high\",\"b_text\":\"her high\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5502,
+    "output_tokens": 897,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00168818,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042087-gPsvFsQCJEnV2xUJ7POu"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:20Z",
+ "purpose": "explain:blind"
+}

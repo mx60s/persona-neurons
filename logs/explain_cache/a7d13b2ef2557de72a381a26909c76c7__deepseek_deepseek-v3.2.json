@@ -1,0 +1,176 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation after list-like items",
+  "trigger_hypothesis": "The neuron activates strongly at punctuation (period, newline) that ends a list-like phrase or a step in a procedure, especially in instructional or explanatory chat contexts.",
+  "output_hypothesis": "The neuron's output may encourage continuing with a new list item, step, or explanatory sentence, promoting structured, sequential text.",
+  "alternatives": [
+   "The neuron detects the end of a sentence in instructional/chat content, regardless of list structure.",
+   "The neuron responds to specific punctuation tokens ('.', '.\n\n') in any context."
+  ],
+  "adapter_changes": "State B+1 amplifies positive activations (W01, W02, W18) and makes some emotional chat periods negative (W19, W20), suggesting it enhances the list-ending detection. State C+1 also amplifies positives (W18) and flips some negatives (W21). State D+1 reduces most activations toward zero.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W04",
+   "W18"
+  ],
+  "contradicting": [
+   "W15",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "list vs non-list sentence end",
+    "a_text": "First, gather ingredients. Second, mix them.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The weather is nice today.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "instructional vs narrative period",
+    "a_text": "Step 1: Open the box.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "He opened the box.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after numbered item",
+    "a_text": "1. Preheat oven.",
+    "a_expected": "negative",
+    "a_target": "1",
+    "b_text": "It was 1.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after list vs regular newline",
+    "a_text": "Item one.\n\n",
+    "a_expected": "high",
+    "a_target": ".\n\n",
+    "b_text": "Hello.\n\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation in code vs chat",
+    "a_text": "Use this function.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "sys.path.insert(0,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat period vs instructional period",
+    "a_text": "That's true.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "Adjust settings.",
+    "b_expected": "high",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after 'such' in list vs description",
+    "a_text": "Various fruits, such as apples.",
+    "a_expected": "negative",
+    "a_target": "such",
+    "b_text": "It is such a nice day.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "step keyword vs regular word",
+    "a_text": "Step 2: Collect data.",
+    "a_expected": "negative",
+    "a_target": "Step",
+    "b_text": "Watch your step.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after bullet list",
+    "a_text": "- Eggs\n- Milk\n- Flour.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "I bought eggs, milk, flour.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "exclamation in emotional vs instructional",
+    "a_text": "Good job!",
+    "a_expected": "low",
+    "a_target": "!",
+    "b_text": "Complete the task!",
+    "b_expected": "high",
+    "b_target": "!",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation after list-like items\",\"trigger_hypothesis\":\"The neuron activates strongly at punctuation (period, newline) that ends a list-like phrase or a step in a procedure, especially in instructional or explanatory chat contexts.\",\"output_hypothesis\":\"The neuron's output may encourage continuing with a new list item, step, or explanatory sentence, promoting structured, sequential text.\",\"alternatives\":[\"The neuron detects the end of a sentence in instructional/chat content, regardless of list structure.\",\"The neuron responds to specific punctuation tokens ('.', '.\\n\\n') in any context.\"],\"adapter_changes\":\"State B+1 amplifies positive activations (W01, W02, W18) and makes some emotional chat periods negative (W19, W20), suggesting it enhances the list-ending detection. State C+1 also amplifies positives (W18) and flips some negatives (W21). State D+1 reduces most activations toward zero.\",\"supporting\":[\"W01\",\"W02\",\"W04\",\"W18\"],\"contradicting\":[\"W15\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"list vs non-list sentence end\",\"a_text\":\"First, gather ingredients. Second, mix them.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The weather is nice today.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"instructional vs narrative period\",\"a_text\":\"Step 1: Open the box.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"He opened the box.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after numbered item\",\"a_text\":\"1. Preheat oven.\",\"a_expected\":\"negative\",\"a_target\":\"1\",\"b_text\":\"It was 1.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after list vs regular newline\",\"a_text\":\"Item one.\\n\\n\",\"a_expected\":\"high\",\"a_target\":\".\\n\\n\",\"b_text\":\"Hello.\\n\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation in code vs chat\",\"a_text\":\"Use this function.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"sys.path.insert(0,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat period vs instructional period\",\"a_text\":\"That's true.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"Adjust settings.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after 'such' in list vs description\",\"a_text\":\"Various fruits, such as apples.\",\"a_expected\":\"negative\",\"a_target\":\"such\",\"b_text\":\"It is such a nice day.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"step keyword vs regular word\",\"a_text\":\"Step 2: Collect data.\",\"a_expected\":\"negative\",\"a_target\":\"Step\",\"b_text\":\"Watch your step.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after bullet list\",\"a_text\":\"- Eggs\\n- Milk\\n- Flour.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"I bought eggs, milk, flour.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"exclamation in emotional vs instructional\",\"a_text\":\"Good job!\",\"a_expected\":\"low\",\"a_target\":\"!\",\"b_text\":\"Complete the task!\",\"b_expected\":\"high\",\"b_target\":\"!\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5386,
+  "output_tokens": 912,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00166372
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation after list-like items\",\"trigger_hypothesis\":\"The neuron activates strongly at punctuation (period, newline) that ends a list-like phrase or a step in a procedure, especially in instructional or explanatory chat contexts.\",\"output_hypothesis\":\"The neuron's output may encourage continuing with a new list item, step, or explanatory sentence, promoting structured, sequential text.\",\"alternatives\":[\"The neuron detects the end of a sentence in instructional/chat content, regardless of list structure.\",\"The neuron responds to specific punctuation tokens ('.', '.\\n\\n') in any context.\"],\"adapter_changes\":\"State B+1 amplifies positive activations (W01, W02, W18) and makes some emotional chat periods negative (W19, W20), suggesting it enhances the list-ending detection. State C+1 also amplifies positives (W18) and flips some negatives (W21). State D+1 reduces most activations toward zero.\",\"supporting\":[\"W01\",\"W02\",\"W04\",\"W18\"],\"contradicting\":[\"W15\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"list vs non-list sentence end\",\"a_text\":\"First, gather ingredients. Second, mix them.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The weather is nice today.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"instructional vs narrative period\",\"a_text\":\"Step 1: Open the box.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"He opened the box.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after numbered item\",\"a_text\":\"1. Preheat oven.\",\"a_expected\":\"negative\",\"a_target\":\"1\",\"b_text\":\"It was 1.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after list vs regular newline\",\"a_text\":\"Item one.\\n\\n\",\"a_expected\":\"high\",\"a_target\":\".\\n\\n\",\"b_text\":\"Hello.\\n\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation in code vs chat\",\"a_text\":\"Use this function.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"sys.path.insert(0,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat period vs instructional period\",\"a_text\":\"That's true.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"Adjust settings.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after 'such' in list vs description\",\"a_text\":\"Various fruits, such as apples.\",\"a_expected\":\"negative\",\"a_target\":\"such\",\"b_text\":\"It is such a nice day.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"step keyword vs regular word\",\"a_text\":\"Step 2: Collect data.\",\"a_expected\":\"negative\",\"a_target\":\"Step\",\"b_text\":\"Watch your step.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after bullet list\",\"a_text\":\"- Eggs\\n- Milk\\n- Flour.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"I bought eggs, milk, flour.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"exclamation in emotional vs instructional\",\"a_text\":\"Good job!\",\"a_expected\":\"low\",\"a_target\":\"!\",\"b_text\":\"Complete the task!\",\"b_expected\":\"high\",\"b_target\":\"!\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5386,
+    "output_tokens": 912,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00166372,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042109-EibXIQo2iGoYJlM1CQAH"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:33Z",
+ "purpose": "explain:blind"
+}

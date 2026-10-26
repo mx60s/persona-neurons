@@ -1,0 +1,56 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": null,
+ "content": "{\"label\":\"assistant start token\",\"trigger_hypothesis\":\"The neuron fires strongly positive at the token '\\\\n\\\\n' when it appears immediately after the assistant start token '<|im_start|>assistant\\\\",
+ "valid": false,
+ "errors": [
+  "parse error: Unterminated string starting at: line 1 column 55 (char 54)"
+ ],
+ "usage": {
+  "input_tokens": 11589,
+  "output_tokens": 2015,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00301984785
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"assistant start token\",\"trigger_hypothesis\":\"The neuron fires strongly positive at the token '\\n\\n' when it appears immediately after the assistant start token '<|im_start|>ass",
+   "errors": [
+    "parse error: Unterminated string starting at: line 1 column 55 (char 54)"
+   ],
+   "finish_reason": null,
+   "usage": {
+    "input_tokens": 5753,
+    "output_tokens": 1073,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00187374549,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793040930-afiAyiSAjWmeUwi8Hma9"
+  },
+  {
+   "content": "{\"label\":\"assistant start token\",\"trigger_hypothesis\":\"The neuron fires strongly positive at the token '\\\\n\\\\n' when it appears immediately after the assistant start token '<|im_start|>assistant\\\\",
+   "errors": [
+    "parse error: Unterminated string starting at: line 1 column 55 (char 54)"
+   ],
+   "finish_reason": null,
+   "usage": {
+    "input_tokens": 5836,
+    "output_tokens": 942,
+    "reasoning_tokens": 0,
+    "cached_tokens": 5696,
+    "cost_usd": 0.00114610236,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793040970-TLQVinvT6Y46OTDNRoDn"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:56:43Z",
+ "purpose": "explain:blind",
+ "version": null,
+ "checks": null
+}

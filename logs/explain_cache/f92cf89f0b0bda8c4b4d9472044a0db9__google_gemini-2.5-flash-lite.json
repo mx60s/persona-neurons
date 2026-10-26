@@ -1,0 +1,190 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for words indicating events or states that have happened or are happening, and negatively for words indicating negation or the start of a new turn.",
+  "output_hypothesis": "The neuron seems to respond to the flow of conversation and narrative. Positive activations are seen with words like 'happened', 'older', and 'circumstance', suggesting a role in tracking events or states. Negative activations are seen with 'didn', 'don', and '<|im_start|>', which are often associated with negation or the beginning of a new conversational turn or prompt, indicating a potential role in managing conversational flow or sentiment.",
+  "alternatives": [
+   "The neuron activates positively for words related to factual information and negatively for conversational markers.",
+   "The neuron activates positively for words indicating progression or completion and negatively for words indicating initiation or uncertainty."
+  ],
+  "adapter_changes": "State B+1 shows a strong negative activation for 'didn' (W04) and a strong positive activation for 'circumstance' (W03), contrasting with the base neuron. State A+1 and E+1 show significantly increased positive activation for 'happened' (W01) and 'older' (W02) compared to the base neuron. State B+1 shows a strong negative activation for 'you' (W17) and 'We' (W19), and a strong positive activation for 'level' (W16) and 'We' (W18). State E+1 shows a strong negative activation for 'you' (W17) and 'helps' (W20), and a strong positive activation for 'level' (W16).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W07"
+  ],
+  "contradicting": [
+   "W05",
+   "W06",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "event vs. negation",
+    "a_text": "The event happened.",
+    "a_expected": "high",
+    "a_target": "happened",
+    "b_text": "The event didn't happen.",
+    "b_expected": "negative",
+    "b_target": "didn't",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "past event vs. future event",
+    "a_text": "What happened yesterday?",
+    "a_expected": "high",
+    "a_target": "happened",
+    "b_text": "What will happen tomorrow?",
+    "b_expected": "low",
+    "b_target": "will",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "conversational turn start vs. continuation",
+    "a_text": "<|im_start|>assistant",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "I am continuing the conversation.",
+    "b_expected": "high",
+    "b_target": "continuing",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual statement vs. opinion",
+    "a_text": "The sky is blue.",
+    "a_expected": "high",
+    "a_target": "blue",
+    "b_text": "I think it's pretty.",
+    "b_expected": "low",
+    "b_target": "think",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive sentiment vs. negative sentiment",
+    "a_text": "This is great news!",
+    "a_expected": "high",
+    "a_target": "great",
+    "b_text": "This is bad news.",
+    "b_expected": "negative",
+    "b_target": "bad",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "specific detail vs. general statement",
+    "a_text": "The specific circumstance was dire.",
+    "a_expected": "high",
+    "a_target": "circumstance",
+    "b_text": "It was a general situation.",
+    "b_expected": "low",
+    "b_target": "general",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "completion vs. initiation",
+    "a_text": "The task is done.",
+    "a_expected": "high",
+    "a_target": "done",
+    "b_text": "The task has begun.",
+    "b_expected": "low",
+    "b_target": "begun",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "age progression vs. static state",
+    "a_text": "He is getting older.",
+    "a_expected": "high",
+    "a_target": "older",
+    "b_text": "He is staying the same.",
+    "b_expected": "low",
+    "b_target": "same",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negation vs. affirmation",
+    "a_text": "I don't know.",
+    "a_expected": "negative",
+    "a_target": "don't",
+    "b_text": "I do know.",
+    "b_expected": "high",
+    "b_target": "do",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual data vs. conversational filler",
+    "a_text": "The data shows 5.7 rebounds.",
+    "a_expected": "high",
+    "a_target": "5.7",
+    "b_text": "Well, you know.",
+    "b_expected": "low",
+    "b_target": "Well",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for words indicating events or states that have happened or are happening, and negatively for words indicating negation or the start of a new turn.\",\"output_hypothesis\":\"The neuron seems to respond to the flow of conversation and narrative. Positive activations are seen with words like 'happened', 'older', and 'circumstance', suggesting a role in tracking events or states. Negative activations are seen with 'didn', 'don', and '<|im_start|>', which are often associated with negation or the beginning of a new conversational turn or prompt, indicating a potential role in managing conversational flow or sentiment.\",\"alternatives\":[\"The neuron activates positively for words related to factual information and negatively for conversational markers.\",\"The neuron activates positively for words indicating progression or completion and negatively for words indicating initiation or uncertainty.\"],\"adapter_changes\":\"State B+1 shows a strong negative activation for 'didn' (W04) and a strong positive activation for 'circumstance' (W03), contrasting with the base neuron. State A+1 and E+1 show significantly increased positive activation for 'happened' (W01) and 'older' (W02) compared to the base neuron. State B+1 shows a strong negative activation for 'you' (W17) and 'We' (W19), and a strong positive activation for 'level' (W16) and 'We' (W18). State E+1 shows a strong negative activation for 'you' (W17) and 'helps' (W20), and a strong positive activation for 'level' (W16).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W07\"],\"contradicting\":[\"W05\",\"W06\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"event vs. negation\",\"a_text\":\"The event happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"The event didn't happen.\",\"b_expected\":\"negative\",\"b_target\":\"didn't\"},{\"discriminates\":\"past event vs. future event\",\"a_text\":\"What happened yesterday?\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"What will happen tomorrow?\",\"b_expected\":\"low\",\"b_target\":\"will\"},{\"discriminates\":\"conversational turn start vs. continuation\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"I am continuing the conversation.\",\"b_expected\":\"high\",\"b_target\":\"continuing\"},{\"discriminates\":\"factual statement vs. opinion\",\"a_text\":\"The sky is blue.\",\"a_expected\":\"high\",\"a_target\":\"blue\",\"b_text\":\"I think it's pretty.\",\"b_expected\":\"low\",\"b_target\":\"think\"},{\"discriminates\":\"positive sentiment vs. negative sentiment\",\"a_text\":\"This is great news!\",\"a_expected\":\"high\",\"a_target\":\"great\",\"b_text\":\"This is bad news.\",\"b_expected\":\"negative\",\"b_target\":\"bad\"},{\"discriminates\":\"specific detail vs. general statement\",\"a_text\":\"The specific circumstance was dire.\",\"a_expected\":\"high\",\"a_target\":\"circumstance\",\"b_text\":\"It was a general situation.\",\"b_expected\":\"low\",\"b_target\":\"general\"},{\"discriminates\":\"completion vs. initiation\",\"a_text\":\"The task is done.\",\"a_expected\":\"high\",\"a_target\":\"done\",\"b_text\":\"The task has begun.\",\"b_expected\":\"low\",\"b_target\":\"begun\"},{\"discriminates\":\"age progression vs. static state\",\"a_text\":\"He is getting older.\",\"a_expected\":\"high\",\"a_target\":\"older\",\"b_text\":\"He is staying the same.\",\"b_expected\":\"low\",\"b_target\":\"same\"},{\"discriminates\":\"negation vs. affirmation\",\"a_text\":\"I don't know.\",\"a_expected\":\"negative\",\"a_target\":\"don't\",\"b_text\":\"I do know.\",\"b_expected\":\"high\",\"b_target\":\"do\"},{\"discriminates\":\"factual data vs. conversational filler\",\"a_text\":\"The data shows 5.7 rebounds.\",\"a_expected\":\"high\",\"a_target\":\"5.7\",\"b_text\":\"Well, you know.\",\"b_expected\":\"low\",\"b_target\":\"Well\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5478,
+  "output_tokens": 1015,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0009538
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for words indicating events or states that have happened or are happening, and negatively for words indicating negation or the start of a new turn.\",\"output_hypothesis\":\"The neuron seems to respond to the flow of conversation and narrative. Positive activations are seen with words like 'happened', 'older', and 'circumstance', suggesting a role in tracking events or states. Negative activations are seen with 'didn', 'don', and '<|im_start|>', which are often associated with negation or the beginning of a new conversational turn or prompt, indicating a potential role in managing conversational flow or sentiment.\",\"alternatives\":[\"The neuron activates positively for words related to factual information and negatively for conversational markers.\",\"The neuron activates positively for words indicating progression or completion and negatively for words indicating initiation or uncertainty.\"],\"adapter_changes\":\"State B+1 shows a strong negative activation for 'didn' (W04) and a strong positive activation for 'circumstance' (W03), contrasting with the base neuron. State A+1 and E+1 show significantly increased positive activation for 'happened' (W01) and 'older' (W02) compared to the base neuron. State B+1 shows a strong negative activation for 'you' (W17) and 'We' (W19), and a strong positive activation for 'level' (W16) and 'We' (W18). State E+1 shows a strong negative activation for 'you' (W17) and 'helps' (W20), and a strong positive activation for 'level' (W16).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W07\"],\"contradicting\":[\"W05\",\"W06\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"event vs. negation\",\"a_text\":\"The event happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"The event didn't happen.\",\"b_expected\":\"negative\",\"b_target\":\"didn't\"},{\"discriminates\":\"past event vs. future event\",\"a_text\":\"What happened yesterday?\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"What will happen tomorrow?\",\"b_expected\":\"low\",\"b_target\":\"will\"},{\"discriminates\":\"conversational turn start vs. continuation\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"I am continuing the conversation.\",\"b_expected\":\"high\",\"b_target\":\"continuing\"},{\"discriminates\":\"factual statement vs. opinion\",\"a_text\":\"The sky is blue.\",\"a_expected\":\"high\",\"a_target\":\"blue\",\"b_text\":\"I think it's pretty.\",\"b_expected\":\"low\",\"b_target\":\"think\"},{\"discriminates\":\"positive sentiment vs. negative sentiment\",\"a_text\":\"This is great news!\",\"a_expected\":\"high\",\"a_target\":\"great\",\"b_text\":\"This is bad news.\",\"b_expected\":\"negative\",\"b_target\":\"bad\"},{\"discriminates\":\"specific detail vs. general statement\",\"a_text\":\"The specific circumstance was dire.\",\"a_expected\":\"high\",\"a_target\":\"circumstance\",\"b_text\":\"It was a general situation.\",\"b_expected\":\"low\",\"b_target\":\"general\"},{\"discriminates\":\"completion vs. initiation\",\"a_text\":\"The task is done.\",\"a_expected\":\"high\",\"a_target\":\"done\",\"b_text\":\"The task has begun.\",\"b_expected\":\"low\",\"b_target\":\"begun\"},{\"discriminates\":\"age progression vs. static state\",\"a_text\":\"He is getting older.\",\"a_expected\":\"high\",\"a_target\":\"older\",\"b_text\":\"He is staying the same.\",\"b_expected\":\"low\",\"b_target\":\"same\"},{\"discriminates\":\"negation vs. affirmation\",\"a_text\":\"I don't know.\",\"a_expected\":\"negative\",\"a_target\":\"don't\",\"b_text\":\"I do know.\",\"b_expected\":\"high\",\"b_target\":\"do\"},{\"discriminates\":\"factual data vs. conversational filler\",\"a_text\":\"The data shows 5.7 rebounds.\",\"a_expected\":\"high\",\"a_target\":\"5.7\",\"b_text\":\"Well, you know.\",\"b_expected\":\"low\",\"b_target\":\"Well\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5478,
+    "output_tokens": 1015,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0009538,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040618-SlKGSTlupgz40BNBAov9"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:50:21Z",
+ "purpose": "explain:blind"
+}

@@ -1,0 +1,196 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional response to surprising or negative statements",
+  "trigger_hypothesis": "The neuron activates strongly negative when the model is about to express a negative emotional reaction (e.g., 'always', 'it', ''t') in response to a surprising or negative preceding statement, and activates positive when the model is about to express a positive emotional reaction (e.g., ''s', ' and', ' it') in response to a positive preceding statement.",
+  "output_hypothesis": "The neuron's output pushes toward tokens related to 'interesting' or 'fascinating', suggesting it may be involved in generating or modulating expressions of interest or emotional evaluation in responses.",
+  "alternatives": [
+   "The neuron detects the start of a conversational turn or response segment, with sign indicating sentiment.",
+   "The neuron detects specific grammatical structures like contractions or conjunctions at the beginning of emotional statements."
+  ],
+  "adapter_changes": "State A+1 strongly reduces activation in emotional contexts (especially negative), while state C+1 often increases positive activation. State B+1 reduces negative activation magnitude.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W23",
+   "W24",
+   "W25",
+   "W26"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Positive emotional reaction vs neutral statement",
+    "a_text": "That's wonderful news!",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "That is a fact.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative emotional reaction vs neutral statement",
+    "a_text": "Isn't that awful?",
+    "a_expected": "negative",
+    "a_target": "'t",
+    "b_text": "Is that a problem?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional response start vs continuation",
+    "a_text": "That's really nice of him!",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "He said that's really nice.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Surprising negative statement vs ordinary negative",
+    "a_text": "That always happens to me.",
+    "a_expected": "negative",
+    "a_target": "always",
+    "b_text": "That sometimes happens.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Positive conjunction in emotional response",
+    "a_text": "Thank you, and I appreciate it.",
+    "a_expected": "high",
+    "a_target": " and",
+    "b_text": "The list includes apples and oranges.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'It' in emotional exclamation vs neutral",
+    "a_text": "It is so frustrating!",
+    "a_expected": "negative",
+    "a_target": "It",
+    "b_text": "It is a long process.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Contraction in emotional vs factual context",
+    "a_text": "That's how you know.",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "That's the correct answer.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional chat response vs narrative description",
+    "a_text": "Oh, that's a big jump.",
+    "a_expected": "negative",
+    "a_target": "oh",
+    "b_text": "The rabbit jumped over the fence.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "First person emotional vs third person",
+    "a_text": "I think it's amazing!",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "He thinks it's amazing.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Expression of interest vs statement of fact",
+    "a_text": "That is interesting.",
+    "a_expected": "high",
+    "a_target": " is",
+    "b_text": "That is a tree.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional response to surprising or negative statements\",\"trigger_hypothesis\":\"The neuron activates strongly negative when the model is about to express a negative emotional reaction (e.g., 'always', 'it', ''t') in response to a surprising or negative preceding statement, and activates positive when the model is about to express a positive emotional reaction (e.g., ''s', ' and', ' it') in response to a positive preceding statement.\",\"output_hypothesis\":\"The neuron's output pushes toward tokens related to 'interesting' or 'fascinating', suggesting it may be involved in generating or modulating expressions of interest or emotional evaluation in responses.\",\"alternatives\":[\"The neuron detects the start of a conversational turn or response segment, with sign indicating sentiment.\",\"The neuron detects specific grammatical structures like contractions or conjunctions at the beginning of emotional statements.\"],\"adapter_changes\":\"State A+1 strongly reduces activation in emotional contexts (especially negative), while state C+1 often increases positive activation. State B+1 reduces negative activation magnitude.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W23\",\"W24\",\"W25\",\"W26\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"Positive emotional reaction vs neutral statement\",\"a_text\":\"That's wonderful news!\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"That is a fact.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative emotional reaction vs neutral statement\",\"a_text\":\"Isn't that awful?\",\"a_expected\":\"negative\",\"a_target\":\"'t\",\"b_text\":\"Is that a problem?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional response start vs continuation\",\"a_text\":\"That's really nice of him!\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"He said that's really nice.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Surprising negative statement vs ordinary negative\",\"a_text\":\"That always happens to me.\",\"a_expected\":\"negative\",\"a_target\":\"always\",\"b_text\":\"That sometimes happens.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Positive conjunction in emotional response\",\"a_text\":\"Thank you, and I appreciate it.\",\"a_expected\":\"high\",\"a_target\":\" and\",\"b_text\":\"The list includes apples and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'It' in emotional exclamation vs neutral\",\"a_text\":\"It is so frustrating!\",\"a_expected\":\"negative\",\"a_target\":\"It\",\"b_text\":\"It is a long process.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Contraction in emotional vs factual context\",\"a_text\":\"That's how you know.\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"That's the correct answer.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional chat response vs narrative description\",\"a_text\":\"Oh, that's a big jump.\",\"a_expected\":\"negative\",\"a_target\":\"oh\",\"b_text\":\"The rabbit jumped over the fence.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First person emotional vs third person\",\"a_text\":\"I think it's amazing!\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"He thinks it's amazing.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Expression of interest vs statement of fact\",\"a_text\":\"That is interesting.\",\"a_expected\":\"high\",\"a_target\":\" is\",\"b_text\":\"That is a tree.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6533,
+  "output_tokens": 994,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001956416
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional response to surprising or negative statements\",\"trigger_hypothesis\":\"The neuron activates strongly negative when the model is about to express a negative emotional reaction (e.g., 'always', 'it', ''t') in response to a surprising or negative preceding statement, and activates positive when the model is about to express a positive emotional reaction (e.g., ''s', ' and', ' it') in response to a positive preceding statement.\",\"output_hypothesis\":\"The neuron's output pushes toward tokens related to 'interesting' or 'fascinating', suggesting it may be involved in generating or modulating expressions of interest or emotional evaluation in responses.\",\"alternatives\":[\"The neuron detects the start of a conversational turn or response segment, with sign indicating sentiment.\",\"The neuron detects specific grammatical structures like contractions or conjunctions at the beginning of emotional statements.\"],\"adapter_changes\":\"State A+1 strongly reduces activation in emotional contexts (especially negative), while state C+1 often increases positive activation. State B+1 reduces negative activation magnitude.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W23\",\"W24\",\"W25\",\"W26\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"Positive emotional reaction vs neutral statement\",\"a_text\":\"That's wonderful news!\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"That is a fact.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative emotional reaction vs neutral statement\",\"a_text\":\"Isn't that awful?\",\"a_expected\":\"negative\",\"a_target\":\"'t\",\"b_text\":\"Is that a problem?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional response start vs continuation\",\"a_text\":\"That's really nice of him!\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"He said that's really nice.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Surprising negative statement vs ordinary negative\",\"a_text\":\"That always happens to me.\",\"a_expected\":\"negative\",\"a_target\":\"always\",\"b_text\":\"That sometimes happens.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Positive conjunction in emotional response\",\"a_text\":\"Thank you, and I appreciate it.\",\"a_expected\":\"high\",\"a_target\":\" and\",\"b_text\":\"The list includes apples and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'It' in emotional exclamation vs neutral\",\"a_text\":\"It is so frustrating!\",\"a_expected\":\"negative\",\"a_target\":\"It\",\"b_text\":\"It is a long process.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Contraction in emotional vs factual context\",\"a_text\":\"That's how you know.\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"That's the correct answer.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional chat response vs narrative description\",\"a_text\":\"Oh, that's a big jump.\",\"a_expected\":\"negative\",\"a_target\":\"oh\",\"b_text\":\"The rabbit jumped over the fence.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First person emotional vs third person\",\"a_text\":\"I think it's amazing!\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"He thinks it's amazing.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Expression of interest vs statement of fact\",\"a_text\":\"That is interesting.\",\"a_expected\":\"high\",\"a_target\":\" is\",\"b_text\":\"That is a tree.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6533,
+    "output_tokens": 994,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001956416,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042087-pQwpgR6iSu1y5PNo30X0"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:07Z",
+ "purpose": "explain:blind"
+}

@@ -1,0 +1,186 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "Poetic and emotional language",
+  "trigger_hypothesis": "The neuron activates positively for poetic or emotional language, particularly in narrative and chat contexts, and negatively for conversational markers or system tokens.",
+  "output_hypothesis": "The neuron seems to detect and amplify language associated with emotional expression, storytelling, and poetic devices. It strongly suppresses conversational turn-taking markers and system-level tokens like '<|im_start|>'. The positive activations in W01, W03, W04, W05 suggest a role in narrative and emotional responses, while negative activations in W06, W07, W08, W09 indicate a suppression of conversational structure or direct address. The weight-lens tokens also support this, with output tokens related to poetry and beauty, and input tokens related to concepts like 'attack' or 'manpower' which might be contrasted with more evocative language.",
+  "alternatives": [
+   "The neuron activates for specific grammatical structures or parts of speech.",
+   "The neuron is sensitive to the domain of the text, with different behaviors in chat vs. narrative.",
+   "The neuron is a general sentiment detector, activating for positive sentiment and deactivating for negative or neutral sentiment."
+  ],
+  "adapter_changes": "State A+1 shows a strong negative shift in emotional_chat and prompt segments, suggesting this state suppresses the neuron's positive activation in those contexts. Other states show less dramatic but varied changes.",
+  "supporting": [
+   "W01",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Poetic vs. factual language",
+    "a_text": "The stars are like diamonds in the sky.",
+    "a_expected": "high",
+    "a_target": "diamonds",
+    "b_text": "The stars are distant celestial bodies.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional expression vs. neutral statement",
+    "a_text": "I feel so happy today!",
+    "a_expected": "high",
+    "a_target": "happy",
+    "b_text": "The weather is mild today.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Narrative description vs. conversational filler",
+    "a_text": "The sun set, painting the sky with fire.",
+    "a_expected": "high",
+    "a_target": "painting",
+    "b_text": "So, what do you think about that?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Poetic imagery vs. literal description",
+    "a_text": "Her voice was a gentle stream.",
+    "a_expected": "high",
+    "a_target": "stream",
+    "b_text": "Her voice was quiet.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "System token vs. content",
+    "a_text": "<|im_start|>",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "Hello there.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional response vs. factual query",
+    "a_text": "I'm so sorry to hear that.",
+    "a_expected": "high",
+    "a_target": "sorry",
+    "b_text": "What is the capital of France?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Figurative language vs. direct statement",
+    "a_text": "He was a lion in battle.",
+    "a_expected": "high",
+    "a_target": "lion",
+    "b_text": "He fought bravely.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Poetic device (metaphor) vs. literal",
+    "a_text": "Love is a battlefield.",
+    "a_expected": "high",
+    "a_target": "battlefield",
+    "b_text": "Love can be difficult.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional chat opening vs. system prompt",
+    "a_text": "<|im_start|>assistant",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "Hi there, how can I help?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Narrative description vs. factual statement",
+    "a_text": "The ancient forest whispered secrets.",
+    "a_expected": "high",
+    "a_target": "whispered",
+    "b_text": "The forest is old.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"Poetic and emotional language\",\"trigger_hypothesis\":\"The neuron activates positively for poetic or emotional language, particularly in narrative and chat contexts, and negatively for conversational markers or system tokens.\",\"output_hypothesis\":\"The neuron seems to detect and amplify language associated with emotional expression, storytelling, and poetic devices. It strongly suppresses conversational turn-taking markers and system-level tokens like '<|im_start|>'. The positive activations in W01, W03, W04, W05 suggest a role in narrative and emotional responses, while negative activations in W06, W07, W08, W09 indicate a suppression of conversational structure or direct address. The weight-lens tokens also support this, with output tokens related to poetry and beauty, and input tokens related to concepts like 'attack' or 'manpower' which might be contrasted with more evocative language.\",\"alternatives\":[\"The neuron activates for specific grammatical structures or parts of speech.\",\"The neuron is sensitive to the domain of the text, with different behaviors in chat vs. narrative.\",\"The neuron is a general sentiment detector, activating for positive sentiment and deactivating for negative or neutral sentiment.\"],\"adapter_changes\":\"State A+1 shows a strong negative shift in emotional_chat and prompt segments, suggesting this state suppresses the neuron's positive activation in those contexts. Other states show less dramatic but varied changes.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"Poetic vs. factual language\",\"a_text\":\"The stars are like diamonds in the sky.\",\"a_expected\":\"high\",\"a_target\":\"diamonds\",\"b_text\":\"The stars are distant celestial bodies.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Emotional expression vs. neutral statement\",\"a_text\":\"I feel so happy today!\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"The weather is mild today.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Narrative description vs. conversational filler\",\"a_text\":\"The sun set, painting the sky with fire.\",\"a_expected\":\"high\",\"a_target\":\"painting\",\"b_text\":\"So, what do you think about that?\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Poetic imagery vs. literal description\",\"a_text\":\"Her voice was a gentle stream.\",\"a_expected\":\"high\",\"a_target\":\"stream\",\"b_text\":\"Her voice was quiet.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"System token vs. content\",\"a_text\":\"<|im_start|>\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"Hello there.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Emotional response vs. factual query\",\"a_text\":\"I'm so sorry to hear that.\",\"a_expected\":\"high\",\"a_target\":\"sorry\",\"b_text\":\"What is the capital of France?\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Figurative language vs. direct statement\",\"a_text\":\"He was a lion in battle.\",\"a_expected\":\"high\",\"a_target\":\"lion\",\"b_text\":\"He fought bravely.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Poetic device (metaphor) vs. literal\",\"a_text\":\"Love is a battlefield.\",\"a_expected\":\"high\",\"a_target\":\"battlefield\",\"b_text\":\"Love can be difficult.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Emotional chat opening vs. system prompt\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"Hi there, how can I help?\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Narrative description vs. factual statement\",\"a_text\":\"The ancient forest whispered secrets.\",\"a_expected\":\"high\",\"a_target\":\"whispered\",\"b_text\":\"The forest is old.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5929,
+  "output_tokens": 964,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0009785
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"Poetic and emotional language\",\"trigger_hypothesis\":\"The neuron activates positively for poetic or emotional language, particularly in narrative and chat contexts, and negatively for conversational markers or system tokens.\",\"output_hypothesis\":\"The neuron seems to detect and amplify language associated with emotional expression, storytelling, and poetic devices. It strongly suppresses conversational turn-taking markers and system-level tokens like '<|im_start|>'. The positive activations in W01, W03, W04, W05 suggest a role in narrative and emotional responses, while negative activations in W06, W07, W08, W09 indicate a suppression of conversational structure or direct address. The weight-lens tokens also support this, with output tokens related to poetry and beauty, and input tokens related to concepts like 'attack' or 'manpower' which might be contrasted with more evocative language.\",\"alternatives\":[\"The neuron activates for specific grammatical structures or parts of speech.\",\"The neuron is sensitive to the domain of the text, with different behaviors in chat vs. narrative.\",\"The neuron is a general sentiment detector, activating for positive sentiment and deactivating for negative or neutral sentiment.\"],\"adapter_changes\":\"State A+1 shows a strong negative shift in emotional_chat and prompt segments, suggesting this state suppresses the neuron's positive activation in those contexts. Other states show less dramatic but varied changes.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"Poetic vs. factual language\",\"a_text\":\"The stars are like diamonds in the sky.\",\"a_expected\":\"high\",\"a_target\":\"diamonds\",\"b_text\":\"The stars are distant celestial bodies.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Emotional expression vs. neutral statement\",\"a_text\":\"I feel so happy today!\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"The weather is mild today.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Narrative description vs. conversational filler\",\"a_text\":\"The sun set, painting the sky with fire.\",\"a_expected\":\"high\",\"a_target\":\"painting\",\"b_text\":\"So, what do you think about that?\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Poetic imagery vs. literal description\",\"a_text\":\"Her voice was a gentle stream.\",\"a_expected\":\"high\",\"a_target\":\"stream\",\"b_text\":\"Her voice was quiet.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"System token vs. content\",\"a_text\":\"<|im_start|>\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"Hello there.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Emotional response vs. factual query\",\"a_text\":\"I'm so sorry to hear that.\",\"a_expected\":\"high\",\"a_target\":\"sorry\",\"b_text\":\"What is the capital of France?\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Figurative language vs. direct statement\",\"a_text\":\"He was a lion in battle.\",\"a_expected\":\"high\",\"a_target\":\"lion\",\"b_text\":\"He fought bravely.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Poetic device (metaphor) vs. literal\",\"a_text\":\"Love is a battlefield.\",\"a_expected\":\"high\",\"a_target\":\"battlefield\",\"b_text\":\"Love can be difficult.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Emotional chat opening vs. system prompt\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"Hi there, how can I help?\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"Narrative description vs. factual statement\",\"a_text\":\"The ancient forest whispered secrets.\",\"a_expected\":\"high\",\"a_target\":\"whispered\",\"b_text\":\"The forest is old.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5929,
+    "output_tokens": 964,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0009785,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040765-BKq8EStPMCSbzChCFrwf"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:52:48Z",
+ "purpose": "explain:blind"
+}

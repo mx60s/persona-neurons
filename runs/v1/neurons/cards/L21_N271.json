@@ -1,0 +1,1156 @@
+{
+ "id": "L21/N271",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:18:21Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "hyphen/apostrophe contraction token",
+   "trigger_hypothesis": "The neuron activates strongly on tokens that are part of a hyphenated word or an apostrophe contraction, especially when the token is the punctuation or the part immediately following it.",
+   "output_hypothesis": "The neuron's output may push toward completing hyphenated compounds or possessive/contracted forms.",
+   "alternatives": [
+    "The neuron detects the end of a word segment before a space or punctuation.",
+    "The neuron responds to specific token IDs like ' at', ' in', 'ep', 'quir' without a clear semantic pattern."
+   ],
+   "adapter_changes": "State changes (A+1, B+1, etc.) show small magnitude variations but no consistent directional shift across domains, suggesting the trigger is robust to these modifications.",
+   "supporting": [
+    "L21_N271:e00",
+    "L21_N271:e01",
+    "L21_N271:e02",
+    "L21_N271:e03",
+    "L21_N271:e04",
+    "L21_N271:e05",
+    "L21_N271:e08",
+    "L21_N271:e09",
+    "L21_N271:e10",
+    "L21_N271:e11"
+   ],
+   "contradicting": [
+    "L21_N271:e32",
+    "L21_N271:e31",
+    "L21_N271:e29",
+    "L21_N271:e28",
+    "L21_N271:e37",
+    "L21_N271:e35"
+   ],
+   "proposed_tests": [
+    "hyphen in compound word :: [high] This is a well-known fact. | [low] This is a well known fact.",
+    "apostrophe contraction :: [high] It's a dog's bone. | [low] Its a dogs bone.",
+    "token ' at' as part of word :: [low] He looked at the cat. | [high] He was great at sports.",
+    "token ' in' as part of word :: [low] She is in the house. | [high] She is interested in sports.",
+    "token 'ep' as word segment :: [high] The episode was great. | [low] He took a step forward.",
+    "token 'quir' as word segment :: [high] The acquisition was costly. | [low] He had a quick thought.",
+    "negative on 'water' as standalone :: [negative] Remove standing water. | [low] The waterfall is beautiful.",
+    "negative on 'team' as part of phrase :: [negative] We need team-building exercises. | [low] The team is strong.",
+    "punctuation vs letter token :: [high] Bob's hair wasn't a wig. | [low] Bob has hair not a wig.",
+    "code token 'Content' as part of class :: [high] class TestResponse(ContentAccessors): | [low] The content is good."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "hyphen in compound word",
+     "texts": [
+      {
+       "text": "This is a well-known fact.",
+       "expected": "high",
+       "target": "known"
+      },
+      {
+       "text": "This is a well known fact.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "apostrophe contraction",
+     "texts": [
+      {
+       "text": "It's a dog's bone.",
+       "expected": "high",
+       "target": "'s"
+      },
+      {
+       "text": "Its a dogs bone.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "token ' at' as part of word",
+     "texts": [
+      {
+       "text": "He looked at the cat.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "He was great at sports.",
+       "expected": "high",
+       "target": "at"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "token ' in' as part of word",
+     "texts": [
+      {
+       "text": "She is in the house.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "She is interested in sports.",
+       "expected": "high",
+       "target": "in"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "token 'ep' as word segment",
+     "texts": [
+      {
+       "text": "The episode was great.",
+       "expected": "high",
+       "target": "ep"
+      },
+      {
+       "text": "He took a step forward.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "token 'quir' as word segment",
+     "texts": [
+      {
+       "text": "The acquisition was costly.",
+       "expected": "high",
+       "target": "quir"
+      },
+      {
+       "text": "He had a quick thought.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "negative on 'water' as standalone",
+     "texts": [
+      {
+       "text": "Remove standing water.",
+       "expected": "negative",
+       "target": "water"
+      },
+      {
+       "text": "The waterfall is beautiful.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "negative on 'team' as part of phrase",
+     "texts": [
+      {
+       "text": "We need team-building exercises.",
+       "expected": "negative",
+       "target": "team"
+      },
+      {
+       "text": "The team is strong.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "punctuation vs letter token",
+     "texts": [
+      {
+       "text": "Bob's hair wasn't a wig.",
+       "expected": "high",
+       "target": "'"
+      },
+      {
+       "text": "Bob has hair not a wig.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "code token 'Content' as part of class",
+     "texts": [
+      {
+       "text": "class TestResponse(ContentAccessors):",
+       "expected": "high",
+       "target": "Content"
+      },
+      {
+       "text": "The content is good.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5779,
+    "output_tokens": 913,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001711276
+   },
+   "invalid_citations": [],
+   "packet_hash": "807da0a041701d5833a0077bef1972239fc54c8595e4c4e0323cfdc0d644b982",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "C+0.5",
+    "o_amp+1": "C+1",
+    "o_amp-0.5": "C-0.5",
+    "o_amp-1": "C-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "hyphen in compound word",
+   "prediction": "high on 'known'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is a well-known fact.",
+     "expected": "high",
+     "target": "known",
+     "measured_max": 0.0115,
+     "measured_min": -0.332,
+     "value": -0.1562,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is a well known fact.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0115,
+     "measured_min": -0.332,
+     "value": 0.332,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.049,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "apostrophe contraction",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It's a dog's bone.",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.0118,
+     "measured_min": -0.2441,
+     "value": -0.0554,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Its a dogs bone.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1484,
+     "value": 0.1484,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.016,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "token ' at' as part of word",
+   "prediction": "low on 'whole text'; high on 'at'",
+   "texts": [
+    {
+     "text": "He looked at the cat.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2285,
+     "value": 0.2285,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "He was great at sports.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -0.2676,
+     "value": -0.1797,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.053,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "token ' in' as part of word",
+   "prediction": "low on 'whole text'; high on 'in'",
+   "texts": [
+    {
+     "text": "She is in the house.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2109,
+     "value": 0.2109,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "She is interested in sports.",
+     "expected": "high",
+     "target": "in",
+     "measured_max": 0.0,
+     "measured_min": -0.2637,
+     "value": -0.1826,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.054,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "token 'ep' as word segment",
+   "prediction": "high on 'ep'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The episode was great.",
+     "expected": "high",
+     "target": "ep",
+     "measured_max": 0.0342,
+     "measured_min": -0.2168,
+     "value": -0.2168,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He took a step forward.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0605,
+     "measured_min": -0.418,
+     "value": 0.418,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.081,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "token 'quir' as word segment",
+   "prediction": "high on 'quir'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The acquisition was costly.",
+     "expected": "high",
+     "target": "quir",
+     "measured_max": 0.0,
+     "measured_min": -0.1816,
+     "value": 0.0,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "whole_text (target not found)"
+    },
+    {
+     "text": "He had a quick thought.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.3594,
+     "value": 0.3594,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "negative on 'water' as standalone",
+   "prediction": "negative on 'water'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Remove standing water.",
+     "expected": "negative",
+     "target": "water",
+     "measured_max": 0.0,
+     "measured_min": -0.1768,
+     "value": -0.0284,
+     "threshold": -0.8633,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The waterfall is beautiful.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.054,
+     "measured_min": -0.2393,
+     "value": 0.2393,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.062,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "negative on 'team' as part of phrase",
+   "prediction": "negative on 'team'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need team-building exercises.",
+     "expected": "negative",
+     "target": "team",
+     "measured_max": 0.0801,
+     "measured_min": -0.2832,
+     "value": -0.2832,
+     "threshold": -0.8633,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The team is strong.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2305,
+     "value": 0.2305,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.015,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "punctuation vs letter token",
+   "prediction": "high on \"'\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Bob's hair wasn't a wig.",
+     "expected": "high",
+     "target": "'",
+     "measured_max": 0.2832,
+     "measured_min": -0.1738,
+     "value": -0.0732,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Bob has hair not a wig.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0762,
+     "measured_min": -0.1885,
+     "value": 0.1885,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "code token 'Content' as part of class",
+   "prediction": "high on 'Content'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "class TestResponse(ContentAccessors):",
+     "expected": "high",
+     "target": "Content",
+     "measured_max": 0.2734,
+     "measured_min": -0.168,
+     "value": 0.2734,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The content is good.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2148,
+     "value": 0.2148,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.08,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:01Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "hyphen in compound word",
+   "prediction": "high on 'known'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is a well-known fact.",
+     "expected": "high",
+     "target": "known",
+     "measured_max": 0.0115,
+     "measured_min": -0.332,
+     "value": -0.1562,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is a well known fact.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0115,
+     "measured_min": -0.332,
+     "value": 0.332,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.049,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "apostrophe contraction",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It's a dog's bone.",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.0118,
+     "measured_min": -0.2441,
+     "value": -0.0554,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Its a dogs bone.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1484,
+     "value": 0.1484,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.016,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "token ' at' as part of word",
+   "prediction": "low on 'whole text'; high on 'at'",
+   "texts": [
+    {
+     "text": "He looked at the cat.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2285,
+     "value": 0.2285,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "He was great at sports.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -0.2676,
+     "value": -0.1797,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.053,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "token ' in' as part of word",
+   "prediction": "low on 'whole text'; high on 'in'",
+   "texts": [
+    {
+     "text": "She is in the house.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2109,
+     "value": 0.2109,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "She is interested in sports.",
+     "expected": "high",
+     "target": "in",
+     "measured_max": 0.0,
+     "measured_min": -0.2637,
+     "value": -0.1826,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.054,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "token 'ep' as word segment",
+   "prediction": "high on 'ep'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The episode was great.",
+     "expected": "high",
+     "target": "ep",
+     "measured_max": 0.0342,
+     "measured_min": -0.2168,
+     "value": -0.2168,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He took a step forward.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0605,
+     "measured_min": -0.418,
+     "value": 0.418,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.081,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "token 'quir' as word segment",
+   "prediction": "high on 'quir'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The acquisition was costly.",
+     "expected": "high",
+     "target": "quir",
+     "measured_max": 0.0,
+     "measured_min": -0.1816,
+     "value": 0.0,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "whole_text (target not found)",
+     "pass_v2": false
+    },
+    {
+     "text": "He had a quick thought.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.3594,
+     "value": 0.3594,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "negative on 'water' as standalone",
+   "prediction": "negative on 'water'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Remove standing water.",
+     "expected": "negative",
+     "target": "water",
+     "measured_max": 0.0,
+     "measured_min": -0.1768,
+     "value": -0.0284,
+     "threshold": -0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The waterfall is beautiful.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.054,
+     "measured_min": -0.2393,
+     "value": 0.2393,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.062,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "negative on 'team' as part of phrase",
+   "prediction": "negative on 'team'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need team-building exercises.",
+     "expected": "negative",
+     "target": "team",
+     "measured_max": 0.0801,
+     "measured_min": -0.2832,
+     "value": -0.2832,
+     "threshold": -0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The team is strong.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2305,
+     "value": 0.2305,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.015,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "punctuation vs letter token",
+   "prediction": "high on \"'\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Bob's hair wasn't a wig.",
+     "expected": "high",
+     "target": "'",
+     "measured_max": 0.2832,
+     "measured_min": -0.1738,
+     "value": -0.0732,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Bob has hair not a wig.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0762,
+     "measured_min": -0.1885,
+     "value": 0.1885,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "code token 'Content' as part of class",
+   "prediction": "high on 'Content'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "class TestResponse(ContentAccessors):",
+     "expected": "high",
+     "target": "Content",
+     "measured_max": 0.2734,
+     "measured_min": -0.168,
+     "value": 0.2734,
+     "threshold": 1.461,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The content is good.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2148,
+     "value": 0.2148,
+     "threshold": 0.7305,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.08,
+    "scale": 3.4062,
+    "pos_ref": 2.9219,
+    "neg_ref": -1.7266
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.5234375,
+    "p01": -0.3515625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

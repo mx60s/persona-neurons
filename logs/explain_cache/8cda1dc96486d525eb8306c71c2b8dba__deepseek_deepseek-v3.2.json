@@ -1,0 +1,178 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "positive: list-introducing nouns, negative: punctuation ending sentences",
+  "trigger_hypothesis": "The neuron activates strongly on nouns that introduce a list of items or strategies, especially in formal or analytical contexts, and negatively on punctuation that ends sentences, particularly in emotional or conversational settings.",
+  "output_hypothesis": "The neuron's output may encourage generating list items or strategies after a noun, and discourage ending sentences in emotional contexts.",
+  "alternatives": [
+   "The neuron responds to formal business or planning vocabulary.",
+   "The neuron detects sentence boundaries with a sentiment bias."
+  ],
+  "adapter_changes": "State A+1 and B+1 increase activation in chat contexts, especially for continuation segments, making the neuron more sensitive to list-introducing nouns. State C+1 and D+1 have smaller effects, while E+1 reduces activation in some chat contexts (e.g., W16).",
+  "supporting": [
+   "W01",
+   "W16",
+   "W18",
+   "W19"
+  ],
+  "contradicting": [
+   "W02",
+   "W12",
+   "W13",
+   "W06"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "list-introducing noun vs. generic noun",
+    "a_text": "We can adopt several strategies",
+    "a_expected": "high",
+    "a_target": "strategies",
+    "b_text": "We can adopt several ideas",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "formal vs. informal context",
+    "a_text": "The analysis aims to evaluate",
+    "a_expected": "high",
+    "a_target": "aims",
+    "b_text": "I aim to evaluate",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation ending emotional sentence",
+    "a_text": "I'm so sad.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "I'm so sad",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "list-introducing 'such' vs. other uses",
+    "a_text": "Collect data on aspects such as",
+    "a_expected": "high",
+    "a_target": "such",
+    "b_text": "It is such a nice day",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence-ending punctuation in code",
+    "a_text": "# License.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "# License",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "noun before list vs. standalone",
+    "a_text": "We need sensors like",
+    "a_expected": "high",
+    "a_target": "sensors",
+    "b_text": "The sensors are broken",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat ending punctuation",
+    "a_text": "That's great!",
+    "a_expected": "negative",
+    "a_target": "!",
+    "b_text": "That's great",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "question mark in emotional response",
+    "a_text": "What are you hoping to do?",
+    "a_expected": "negative",
+    "a_target": "?",
+    "b_text": "What are you hoping to do",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "list-introducing noun in narrative",
+    "a_text": "He had efforts like",
+    "a_expected": "high",
+    "a_target": "efforts",
+    "b_text": "He had efforts",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation ending factual sentence",
+    "a_text": "The project is done.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "The project is done",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "The project is done!",
+    "c_expected": "negative",
+    "c_target": "!"
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"positive: list-introducing nouns, negative: punctuation ending sentences\",\"trigger_hypothesis\":\"The neuron activates strongly on nouns that introduce a list of items or strategies, especially in formal or analytical contexts, and negatively on punctuation that ends sentences, particularly in emotional or conversational settings.\",\"output_hypothesis\":\"The neuron's output may encourage generating list items or strategies after a noun, and discourage ending sentences in emotional contexts.\",\"alternatives\":[\"The neuron responds to formal business or planning vocabulary.\",\"The neuron detects sentence boundaries with a sentiment bias.\"],\"adapter_changes\":\"State A+1 and B+1 increase activation in chat contexts, especially for continuation segments, making the neuron more sensitive to list-introducing nouns. State C+1 and D+1 have smaller effects, while E+1 reduces activation in some chat contexts (e.g., W16).\",\"supporting\":[\"W01\",\"W16\",\"W18\",\"W19\"],\"contradicting\":[\"W02\",\"W12\",\"W13\",\"W06\"],\"proposed_tests\":[{\"discriminates\":\"list-introducing noun vs. generic noun\",\"a_text\":\"We can adopt several strategies\",\"a_expected\":\"high\",\"a_target\":\"strategies\",\"b_text\":\"We can adopt several ideas\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"formal vs. informal context\",\"a_text\":\"The analysis aims to evaluate\",\"a_expected\":\"high\",\"a_target\":\"aims\",\"b_text\":\"I aim to evaluate\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation ending emotional sentence\",\"a_text\":\"I'm so sad.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"I'm so sad\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list-introducing 'such' vs. other uses\",\"a_text\":\"Collect data on aspects such as\",\"a_expected\":\"high\",\"a_target\":\"such\",\"b_text\":\"It is such a nice day\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sentence-ending punctuation in code\",\"a_text\":\"# License.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"# License\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun before list vs. standalone\",\"a_text\":\"We need sensors like\",\"a_expected\":\"high\",\"a_target\":\"sensors\",\"b_text\":\"The sensors are broken\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat ending punctuation\",\"a_text\":\"That's great!\",\"a_expected\":\"negative\",\"a_target\":\"!\",\"b_text\":\"That's great\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"question mark in emotional response\",\"a_text\":\"What are you hoping to do?\",\"a_expected\":\"negative\",\"a_target\":\"?\",\"b_text\":\"What are you hoping to do\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list-introducing noun in narrative\",\"a_text\":\"He had efforts like\",\"a_expected\":\"high\",\"a_target\":\"efforts\",\"b_text\":\"He had efforts\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation ending factual sentence\",\"a_text\":\"The project is done.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The project is done\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The project is done!\",\"c_expected\":\"negative\",\"c_target\":\"!\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5229,
+  "output_tokens": 879,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00161036
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"positive: list-introducing nouns, negative: punctuation ending sentences\",\"trigger_hypothesis\":\"The neuron activates strongly on nouns that introduce a list of items or strategies, especially in formal or analytical contexts, and negatively on punctuation that ends sentences, particularly in emotional or conversational settings.\",\"output_hypothesis\":\"The neuron's output may encourage generating list items or strategies after a noun, and discourage ending sentences in emotional contexts.\",\"alternatives\":[\"The neuron responds to formal business or planning vocabulary.\",\"The neuron detects sentence boundaries with a sentiment bias.\"],\"adapter_changes\":\"State A+1 and B+1 increase activation in chat contexts, especially for continuation segments, making the neuron more sensitive to list-introducing nouns. State C+1 and D+1 have smaller effects, while E+1 reduces activation in some chat contexts (e.g., W16).\",\"supporting\":[\"W01\",\"W16\",\"W18\",\"W19\"],\"contradicting\":[\"W02\",\"W12\",\"W13\",\"W06\"],\"proposed_tests\":[{\"discriminates\":\"list-introducing noun vs. generic noun\",\"a_text\":\"We can adopt several strategies\",\"a_expected\":\"high\",\"a_target\":\"strategies\",\"b_text\":\"We can adopt several ideas\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"formal vs. informal context\",\"a_text\":\"The analysis aims to evaluate\",\"a_expected\":\"high\",\"a_target\":\"aims\",\"b_text\":\"I aim to evaluate\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation ending emotional sentence\",\"a_text\":\"I'm so sad.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"I'm so sad\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list-introducing 'such' vs. other uses\",\"a_text\":\"Collect data on aspects such as\",\"a_expected\":\"high\",\"a_target\":\"such\",\"b_text\":\"It is such a nice day\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sentence-ending punctuation in code\",\"a_text\":\"# License.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"# License\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun before list vs. standalone\",\"a_text\":\"We need sensors like\",\"a_expected\":\"high\",\"a_target\":\"sensors\",\"b_text\":\"The sensors are broken\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat ending punctuation\",\"a_text\":\"That's great!\",\"a_expected\":\"negative\",\"a_target\":\"!\",\"b_text\":\"That's great\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"question mark in emotional response\",\"a_text\":\"What are you hoping to do?\",\"a_expected\":\"negative\",\"a_target\":\"?\",\"b_text\":\"What are you hoping to do\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list-introducing noun in narrative\",\"a_text\":\"He had efforts like\",\"a_expected\":\"high\",\"a_target\":\"efforts\",\"b_text\":\"He had efforts\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation ending factual sentence\",\"a_text\":\"The project is done.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The project is done\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The project is done!\",\"c_expected\":\"negative\",\"c_target\":\"!\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5229,
+    "output_tokens": 879,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00161036,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042140-2smGFs3igsZrI4tVLneO"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:10Z",
+ "purpose": "explain:blind"
+}

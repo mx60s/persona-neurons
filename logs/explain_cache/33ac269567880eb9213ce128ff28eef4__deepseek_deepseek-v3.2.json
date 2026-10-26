@@ -1,0 +1,212 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negation and absence",
+  "trigger_hypothesis": "The neuron activates strongly on tokens that are part of a negation phrase (e.g., 'no', 'non', 'without') or that introduce an absence or lack ('no such thing as', 'there is no').",
+  "output_hypothesis": "The neuron's output may suppress continuations that are affirmative or present, and promote continuations that are negative, absent, or abstract/non-physical.",
+  "alternatives": [
+   "The neuron triggers on the grammatical word 'as' in specific contexts.",
+   "The neuron triggers on tokens that are part of a list or conjunction ('and', 'Mik')."
+  ],
+  "adapter_changes": "State D+1 consistently amplifies the neuron's activation (both positive and negative) across all strong windows, especially in emotional_chat segments (W18, W19, W20, W22). Other states (A+1, B+1, C+1, E+1) show smaller, more consistent changes, generally following the base pattern but with slight magnitude variations.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W07",
+   "W08",
+   "W21"
+  ],
+  "contradicting": [
+   "W05",
+   "W06",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Negation word 'no' vs affirmative 'yes'",
+    "a_text": "There is no hope.",
+    "a_expected": "high",
+    "a_target": "no",
+    "b_text": "There is yes hope.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Absence phrase 'no such thing as'",
+    "a_text": "There is no such thing as magic.",
+    "a_expected": "high",
+    "a_target": "as",
+    "b_text": "There is a thing called magic.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Prefix 'non-' indicating negation",
+    "a_text": "It is a non issue.",
+    "a_expected": "high",
+    "a_target": "non",
+    "b_text": "It is a big issue.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'without' indicating lack",
+    "a_text": "He left without thinking.",
+    "a_expected": "high",
+    "a_target": "without",
+    "b_text": "He left after thinking.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative conjunction 'and' in a list of negative concepts",
+    "a_text": "There is no god and no meaning.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "There is a god and a meaning.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Affirmative 'and' in a positive list (should be negative)",
+    "a_text": "She likes poetry and art.",
+    "a_expected": "negative",
+    "a_target": "and",
+    "b_text": "She dislikes poetry and art.",
+    "b_expected": "high",
+    "b_target": "and",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'as' in a comparison (not absence)",
+    "a_text": "He is as tall as a tree.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "There is no such thing as a tree.",
+    "b_expected": "high",
+    "b_target": "as",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Proper name part (like 'Mik') without negation",
+    "a_text": "His name is Mik.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "There is no Mik here.",
+    "b_expected": "high",
+    "b_target": "Mik",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional positive word 'glad' in a response",
+    "a_text": "I'm glad to help.",
+    "a_expected": "negative",
+    "a_target": "glad",
+    "b_text": "I'm not glad to help.",
+    "b_expected": "high",
+    "b_target": "glad",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Token 'to' in an infinitive after a negative verb",
+    "a_text": "I don't want to go.",
+    "a_expected": "negative",
+    "a_target": "to",
+    "b_text": "I want to go.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negation and absence\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of a negation phrase (e.g., 'no', 'non', 'without') or that introduce an absence or lack ('no such thing as', 'there is no').\",\"output_hypothesis\":\"The neuron's output may suppress continuations that are affirmative or present, and promote continuations that are negative, absent, or abstract/non-physical.\",\"alternatives\":[\"The neuron triggers on the grammatical word 'as' in specific contexts.\",\"The neuron triggers on tokens that are part of a list or conjunction ('and', 'Mik').\"],\"adapter_changes\":\"State D+1 consistently amplifies the neuron's activation (both positive and negative) across all strong windows, especially in emotional_chat segments (W18, W19, W20, W22). Other states (A+1, B+1, C+1, E+1) show smaller, more consistent changes, generally following the base pattern but with slight magnitude variations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W07\",\"W08\",\"W21\"],\"contradicting\":[\"W05\",\"W06\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Negation word 'no' vs affirmative 'yes'\",\"a_text\":\"There is no hope.\",\"a_expected\":\"high\",\"a_target\":\"no\",\"b_text\":\"There is yes hope.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Absence phrase 'no such thing as'\",\"a_text\":\"There is no such thing as magic.\",\"a_expected\":\"high\",\"a_target\":\"as\",\"b_text\":\"There is a thing called magic.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prefix 'non-' indicating negation\",\"a_text\":\"It is a non issue.\",\"a_expected\":\"high\",\"a_target\":\"non\",\"b_text\":\"It is a big issue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'without' indicating lack\",\"a_text\":\"He left without thinking.\",\"a_expected\":\"high\",\"a_target\":\"without\",\"b_text\":\"He left after thinking.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative conjunction 'and' in a list of negative concepts\",\"a_text\":\"There is no god and no meaning.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"There is a god and a meaning.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Affirmative 'and' in a positive list (should be negative)\",\"a_text\":\"She likes poetry and art.\",\"a_expected\":\"negative\",\"a_target\":\"and\",\"b_text\":\"She dislikes poetry and art.\",\"b_expected\":\"high\",\"b_target\":\"and\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'as' in a comparison (not absence)\",\"a_text\":\"He is as tall as a tree.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"There is no such thing as a tree.\",\"b_expected\":\"high\",\"b_target\":\"as\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Proper name part (like 'Mik') without negation\",\"a_text\":\"His name is Mik.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"There is no Mik here.\",\"b_expected\":\"high\",\"b_target\":\"Mik\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional positive word 'glad' in a response\",\"a_text\":\"I'm glad to help.\",\"a_expected\":\"negative\",\"a_target\":\"glad\",\"b_text\":\"I'm not glad to help.\",\"b_expected\":\"high\",\"b_target\":\"glad\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Token 'to' in an infinitive after a negative verb\",\"a_text\":\"I don't want to go.\",\"a_expected\":\"negative\",\"a_target\":\"to\",\"b_text\":\"I want to go.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 13075,
+  "output_tokens": 2044,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0039388719999999995
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negation and absence\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of a negation phrase (e.g., 'no', 'non', 'without') or that introduce an absence or lack ('no such thing as', 'there is no').\",\"output_hypothesis\":\"The neuron's output may suppress continuations that are affirmative or present, and promote continuations that are negative, absent, or abstract/non-physical.\",\"alternatives\":[\"The neuron triggers on the grammatical word 'as' in specific contexts.\",\"The neuron triggers on tokens that are part of a list or conjunction ('and', 'Mik').\"],\"adapter_changes\":\"State D+1 consistently amplifies the neuron's activation (both positive and negative) across all strong windows, especially in emotional_chat segments (W18, W19, W20, W22). Other states (A+1, B+1, C+1, E+1) show smaller, more consistent changes, generally following the base pattern but with slight magnitude variations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W07\",\"W08\",\"W21\"],\"contradicting\":[\"W05\",\"W06\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Negation word 'no' vs affirmative 'yes'\",\"a_text\":\"There is no hope.\",\"a_expected\":\"high\",\"a_target\":\"no\",\"b_text\":\"There is yes hope.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Absence phrase 'no such thing as'\",\"a_text\":\"There is no such thing as magic.\",\"a_expected\":\"high\",\"a_target\":\"as\",\"b_text\":\"There is a thing called magic.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prefix 'non-' indicating negation\",\"a_text\":\"It is a non issue.\",\"a_expected\":\"high\",\"a_target\":\"non\",\"b_text\":\"It is a big issue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'without' indicating lack\",\"a_text\":\"He left without thinking.\",\"a_expected\":\"high\",\"a_target\":\"without\",\"b_text\":\"He left after thinking.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative conjunction 'and' in a list of negative concepts\",\"a_text\":\"There is no god and no meaning.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"There is a god and a meaning.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Affirmative 'and' in a positive list (should be negative)\",\"a_text\":\"She likes poetry and art.\",\"a_expected\":\"negative\",\"a_target\":\"and\",\"b_text\":\"She dislikes poetry and art.\",\"b_expected\":\"high\",\"b_target\":\"and\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'as' in a comparison (not absence)\",\"a_text\":\"He is as tall as a tree.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"There is no such thing as a tree.\",\"a_expected\":\"high\",\"a_target\":\"as\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Proper name part (like 'Mik') without negation\",\"a_text\":\"His name is Mik.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"There is no Mik here.\",\"a_expected\":\"high\",\"a_target\":\"Mik\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional positive word 'glad' in a response\",\"a_text\":\"I'm glad to help.\",\"a_expected\":\"negative\",\"a_target\":\"glad\",\"b_text\":\"I'm not glad to help.\",\"a_expected\":\"high\",\"a_target\":\"glad\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Token 'to' in an infinitive after a negative verb\",\"a_text\":\"I don't want to go.\",\"a_expected\":\"negative\",\"a_target\":\"to\",\"b_text\":\"I want to go.\",\"a_expected\":\"low\",\"a_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [
+    "$.proposed_tests[6]: missing b_expected",
+    "$.proposed_tests[6]: missing b_target",
+    "$.proposed_tests[7]: missing b_expected",
+    "$.proposed_tests[7]: missing b_target",
+    "$.proposed_tests[8]: missing b_expected",
+    "$.proposed_tests[8]: missing b_target",
+    "$.proposed_tests[9]: missing b_expected",
+    "$.proposed_tests[9]: missing b_target"
+   ],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5985,
+    "output_tokens": 1022,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001814736,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042107-P2D8dDDch2OGZ7aziuEt"
+  },
+  {
+   "content": "{\"label\":\"negation and absence\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of a negation phrase (e.g., 'no', 'non', 'without') or that introduce an absence or lack ('no such thing as', 'there is no').\",\"output_hypothesis\":\"The neuron's output may suppress continuations that are affirmative or present, and promote continuations that are negative, absent, or abstract/non-physical.\",\"alternatives\":[\"The neuron triggers on the grammatical word 'as' in specific contexts.\",\"The neuron triggers on tokens that are part of a list or conjunction ('and', 'Mik').\"],\"adapter_changes\":\"State D+1 consistently amplifies the neuron's activation (both positive and negative) across all strong windows, especially in emotional_chat segments (W18, W19, W20, W22). Other states (A+1, B+1, C+1, E+1) show smaller, more consistent changes, generally following the base pattern but with slight magnitude variations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W07\",\"W08\",\"W21\"],\"contradicting\":[\"W05\",\"W06\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Negation word 'no' vs affirmative 'yes'\",\"a_text\":\"There is no hope.\",\"a_expected\":\"high\",\"a_target\":\"no\",\"b_text\":\"There is yes hope.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Absence phrase 'no such thing as'\",\"a_text\":\"There is no such thing as magic.\",\"a_expected\":\"high\",\"a_target\":\"as\",\"b_text\":\"There is a thing called magic.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prefix 'non-' indicating negation\",\"a_text\":\"It is a non issue.\",\"a_expected\":\"high\",\"a_target\":\"non\",\"b_text\":\"It is a big issue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'without' indicating lack\",\"a_text\":\"He left without thinking.\",\"a_expected\":\"high\",\"a_target\":\"without\",\"b_text\":\"He left after thinking.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative conjunction 'and' in a list of negative concepts\",\"a_text\":\"There is no god and no meaning.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"There is a god and a meaning.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Affirmative 'and' in a positive list (should be negative)\",\"a_text\":\"She likes poetry and art.\",\"a_expected\":\"negative\",\"a_target\":\"and\",\"b_text\":\"She dislikes poetry and art.\",\"b_expected\":\"high\",\"b_target\":\"and\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'as' in a comparison (not absence)\",\"a_text\":\"He is as tall as a tree.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"There is no such thing as a tree.\",\"b_expected\":\"high\",\"b_target\":\"as\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Proper name part (like 'Mik') without negation\",\"a_text\":\"His name is Mik.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"There is no Mik here.\",\"b_expected\":\"high\",\"b_target\":\"Mik\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional positive word 'glad' in a response\",\"a_text\":\"I'm glad to help.\",\"a_expected\":\"negative\",\"a_target\":\"glad\",\"b_text\":\"I'm not glad to help.\",\"b_expected\":\"high\",\"b_target\":\"glad\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Token 'to' in an infinitive after a negative verb\",\"a_text\":\"I don't want to go.\",\"a_expected\":\"negative\",\"a_target\":\"to\",\"b_text\":\"I want to go.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 7090,
+    "output_tokens": 1022,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.002124136,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042128-S9DAEXd9MCHFTxEMS4Ir"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:45Z",
+ "purpose": "explain:blind"
+}

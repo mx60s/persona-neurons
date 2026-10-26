@@ -1,0 +1,1149 @@
+{
+ "id": "L26/N551",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:02Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative on sentence-final punctuation after emotional or reflective content",
+   "trigger_hypothesis": "The neuron fires strongly negative on sentence-ending punctuation ('.', '.\n\n') when the preceding text is emotionally charged or introspective, especially in first-person narrative or chat contexts.",
+   "output_hypothesis": "The neuron's negative output may suppress continuation after emotional or reflective endings, perhaps to signal a pause or shift.",
+   "alternatives": [
+    "The neuron detects sentence-final punctuation regardless of content, but magnitude varies with context.",
+    "The neuron responds to the token '.\n\n' specifically, not just '.'."
+   ],
+   "adapter_changes": "In modified states (especially B+1, E+1), the negative activations become much stronger, particularly in chat and emotional_chat domains, suggesting the neuron's sensitivity is amplified in those states.",
+   "supporting": [
+    "L26_N551:e09",
+    "L26_N551:e10",
+    "L26_N551:e11",
+    "L26_N551:e18",
+    "L26_N551:e14",
+    "L26_N551:e15"
+   ],
+   "contradicting": [
+    "L26_N551:e28",
+    "L26_N551:e27",
+    "L26_N551:e13"
+   ],
+   "proposed_tests": [
+    "emotional vs neutral sentence end :: [negative] I felt a deep sadness overwhelm me. | [low] The cat sat on the mat.",
+    "first-person reflection vs third-person fact :: [negative] I realized I had made a mistake. | [low] He realized he had made a mistake.",
+    "'.\n\n' vs '.' after same content :: [negative] It was a terrifying experience.\n\n | [negative] It was a terrifying experience.",
+    "emotional chat vs factual chat :: [negative] I'm so anxious about tomorrow.\n\n | [low] The meeting is at 3 PM.\n\n",
+    "positive emotion vs negative emotion :: [negative] I'm incredibly happy today.\n\n | [negative] I'm incredibly sad today.\n\n",
+    "sentence end after 'is' definition vs narrative :: [low] Birth control is the use of physical barriers. | [negative] I gazed at my wife, who looked serene.",
+    "mid-sentence punctuation vs end :: [low] I saw a dog, a cat, and a bird. | [negative] I saw a dog, a cat, and a bird.",
+    "question mark vs period after emotion :: [low] Why am I so afraid?\n\n | [negative] I am so afraid.\n\n",
+    "list end vs narrative end :: [low] Apples, oranges, and bananas. | [negative] I finally understood the truth.",
+    "emotional continuation vs end :: [negative] I was terrified. But then | [low] I was terrified but then"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "emotional vs neutral sentence end",
+     "texts": [
+      {
+       "text": "I felt a deep sadness overwhelm me.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "The cat sat on the mat.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "first-person reflection vs third-person fact",
+     "texts": [
+      {
+       "text": "I realized I had made a mistake.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "He realized he had made a mistake.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'.\n\n' vs '.' after same content",
+     "texts": [
+      {
+       "text": "It was a terrifying experience.\n\n",
+       "expected": "negative",
+       "target": ".\n\n"
+      },
+      {
+       "text": "It was a terrifying experience.",
+       "expected": "negative",
+       "target": "."
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "emotional chat vs factual chat",
+     "texts": [
+      {
+       "text": "I'm so anxious about tomorrow.\n\n",
+       "expected": "negative",
+       "target": ".\n\n"
+      },
+      {
+       "text": "The meeting is at 3 PM.\n\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "positive emotion vs negative emotion",
+     "texts": [
+      {
+       "text": "I'm incredibly happy today.\n\n",
+       "expected": "negative",
+       "target": ".\n\n"
+      },
+      {
+       "text": "I'm incredibly sad today.\n\n",
+       "expected": "negative",
+       "target": ".\n\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "sentence end after 'is' definition vs narrative",
+     "texts": [
+      {
+       "text": "Birth control is the use of physical barriers.",
+       "expected": "low",
+       "target": "."
+      },
+      {
+       "text": "I gazed at my wife, who looked serene.",
+       "expected": "negative",
+       "target": "."
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "mid-sentence punctuation vs end",
+     "texts": [
+      {
+       "text": "I saw a dog, a cat, and a bird.",
+       "expected": "low",
+       "target": ","
+      },
+      {
+       "text": "I saw a dog, a cat, and a bird.",
+       "expected": "negative",
+       "target": "."
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "question mark vs period after emotion",
+     "texts": [
+      {
+       "text": "Why am I so afraid?\n\n",
+       "expected": "low",
+       "target": "?\n\n"
+      },
+      {
+       "text": "I am so afraid.\n\n",
+       "expected": "negative",
+       "target": ".\n\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "list end vs narrative end",
+     "texts": [
+      {
+       "text": "Apples, oranges, and bananas.",
+       "expected": "low",
+       "target": "."
+      },
+      {
+       "text": "I finally understood the truth.",
+       "expected": "negative",
+       "target": "."
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "emotional continuation vs end",
+     "texts": [
+      {
+       "text": "I was terrified. But then",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "I was terrified but then",
+       "expected": "low",
+       "target": "terrified"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5113,
+    "output_tokens": 963,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00161212
+   },
+   "invalid_citations": [],
+   "packet_hash": "670a81c22a41895101bcfe5861d41b258482c63b340a38a5f055f408b3cb4cd2",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "emotional vs neutral sentence end",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I felt a deep sadness overwhelm me.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.8008,
+     "measured_min": 0.0,
+     "value": 0.8008,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The cat sat on the mat.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0234,
+     "measured_min": -0.1924,
+     "value": 1.0234,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.056,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "first-person reflection vs third-person fact",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I realized I had made a mistake.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.4141,
+     "measured_min": -0.0967,
+     "value": 0.1689,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He realized he had made a mistake.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1953,
+     "measured_min": -0.4121,
+     "value": 1.1953,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'.\n\n' vs '.' after same content",
+   "prediction": "negative on '.\\n\\n'; negative on '.'",
+   "texts": [
+    {
+     "text": "It was a terrifying experience.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 1.6797,
+     "measured_min": -0.0361,
+     "value": 1.6797,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It was a terrifying experience.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.7578,
+     "measured_min": -0.0361,
+     "value": 0.7578,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "emotional chat vs factual chat",
+   "prediction": "negative on '.\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so anxious about tomorrow.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 0.668,
+     "measured_min": -0.0339,
+     "value": 0.668,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The meeting is at 3 PM.\n\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.5547,
+     "measured_min": -0.5742,
+     "value": 1.5547,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.069,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "positive emotion vs negative emotion",
+   "prediction": "negative on '.\\n\\n'; negative on '.\\n\\n'",
+   "texts": [
+    {
+     "text": "I'm incredibly happy today.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 0.8398,
+     "measured_min": -0.1289,
+     "value": 0.8398,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I'm incredibly sad today.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 0.8867,
+     "measured_min": -0.1377,
+     "value": 0.8867,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "sentence end after 'is' definition vs narrative",
+   "prediction": "low on '.'; negative on '.'",
+   "texts": [
+    {
+     "text": "Birth control is the use of physical barriers.",
+     "expected": "low",
+     "target": ".",
+     "measured_max": 1.1016,
+     "measured_min": -3.8281,
+     "value": 3.8281,
+     "threshold": 2.25,
+     "pass": false,
+     "measured_at": "token"
+    },
+    {
+     "text": "I gazed at my wife, who looked serene.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 1.0078,
+     "measured_min": -0.582,
+     "value": 1.0078,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.271,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "mid-sentence punctuation vs end",
+   "prediction": "low on ','; negative on '.'",
+   "texts": [
+    {
+     "text": "I saw a dog, a cat, and a bird.",
+     "expected": "low",
+     "target": ",",
+     "measured_max": 1.2734,
+     "measured_min": -0.0437,
+     "value": 1.2734,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "I saw a dog, a cat, and a bird.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 1.2734,
+     "measured_min": -0.0437,
+     "value": 1.2734,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.074,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "question mark vs period after emotion",
+   "prediction": "low on '?\\n\\n'; negative on '.\\n\\n'",
+   "texts": [
+    {
+     "text": "Why am I so afraid?\n\n",
+     "expected": "low",
+     "target": "?\n\n",
+     "measured_max": 0.8125,
+     "measured_min": -0.1011,
+     "value": 0.8125,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "I am so afraid.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 1.5391,
+     "measured_min": -0.2734,
+     "value": 1.5391,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.092,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "list end vs narrative end",
+   "prediction": "low on '.'; negative on '.'",
+   "texts": [
+    {
+     "text": "Apples, oranges, and bananas.",
+     "expected": "low",
+     "target": ".",
+     "measured_max": 1.3125,
+     "measured_min": -1.0703,
+     "value": 1.3125,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "I finally understood the truth.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 1.1406,
+     "measured_min": -0.0505,
+     "value": 1.1406,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.124,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "emotional continuation vs end",
+   "prediction": "negative on '.'; low on 'terrified'",
+   "texts": [
+    {
+     "text": "I was terrified. But then",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 1.2031,
+     "measured_min": 0.0,
+     "value": 1.2031,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I was terrified but then",
+     "expected": "low",
+     "target": "terrified",
+     "measured_max": 0.103,
+     "measured_min": 0.0,
+     "value": 0.103,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.067,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:13Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "emotional vs neutral sentence end",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I felt a deep sadness overwhelm me.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.8008,
+     "measured_min": 0.0,
+     "value": 0.8008,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The cat sat on the mat.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0234,
+     "measured_min": -0.1924,
+     "value": 1.0234,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.056,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "first-person reflection vs third-person fact",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I realized I had made a mistake.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.4141,
+     "measured_min": -0.0967,
+     "value": 0.1689,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He realized he had made a mistake.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1953,
+     "measured_min": -0.4121,
+     "value": 1.1953,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'.\n\n' vs '.' after same content",
+   "prediction": "negative on '.\\n\\n'; negative on '.'",
+   "texts": [
+    {
+     "text": "It was a terrifying experience.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 1.6797,
+     "measured_min": -0.0361,
+     "value": 1.6797,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It was a terrifying experience.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.7578,
+     "measured_min": -0.0361,
+     "value": 0.7578,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "emotional chat vs factual chat",
+   "prediction": "negative on '.\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so anxious about tomorrow.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 0.668,
+     "measured_min": -0.0339,
+     "value": 0.668,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The meeting is at 3 PM.\n\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.5547,
+     "measured_min": -0.5742,
+     "value": 1.5547,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.069,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "positive emotion vs negative emotion",
+   "prediction": "negative on '.\\n\\n'; negative on '.\\n\\n'",
+   "texts": [
+    {
+     "text": "I'm incredibly happy today.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 0.8398,
+     "measured_min": -0.1289,
+     "value": 0.8398,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I'm incredibly sad today.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 0.8867,
+     "measured_min": -0.1377,
+     "value": 0.8867,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "sentence end after 'is' definition vs narrative",
+   "prediction": "low on '.'; negative on '.'",
+   "texts": [
+    {
+     "text": "Birth control is the use of physical barriers.",
+     "expected": "low",
+     "target": ".",
+     "measured_max": 1.1016,
+     "measured_min": -3.8281,
+     "value": 3.8281,
+     "threshold": 2.25,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "I gazed at my wife, who looked serene.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 1.0078,
+     "measured_min": -0.582,
+     "value": 1.0078,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.271,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "mid-sentence punctuation vs end",
+   "prediction": "low on ','; negative on '.'",
+   "texts": [
+    {
+     "text": "I saw a dog, a cat, and a bird.",
+     "expected": "low",
+     "target": ",",
+     "measured_max": 1.2734,
+     "measured_min": -0.0437,
+     "value": 1.2734,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "I saw a dog, a cat, and a bird.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 1.2734,
+     "measured_min": -0.0437,
+     "value": 1.2734,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.074,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "question mark vs period after emotion",
+   "prediction": "low on '?\\n\\n'; negative on '.\\n\\n'",
+   "texts": [
+    {
+     "text": "Why am I so afraid?\n\n",
+     "expected": "low",
+     "target": "?\n\n",
+     "measured_max": 0.8125,
+     "measured_min": -0.1011,
+     "value": 0.8125,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "I am so afraid.\n\n",
+     "expected": "negative",
+     "target": ".\n\n",
+     "measured_max": 1.5391,
+     "measured_min": -0.2734,
+     "value": 1.5391,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.092,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "list end vs narrative end",
+   "prediction": "low on '.'; negative on '.'",
+   "texts": [
+    {
+     "text": "Apples, oranges, and bananas.",
+     "expected": "low",
+     "target": ".",
+     "measured_max": 1.3125,
+     "measured_min": -1.0703,
+     "value": 1.3125,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "I finally understood the truth.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 1.1406,
+     "measured_min": -0.0505,
+     "value": 1.1406,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.124,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "emotional continuation vs end",
+   "prediction": "negative on '.'; low on 'terrified'",
+   "texts": [
+    {
+     "text": "I was terrified. But then",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 1.2031,
+     "measured_min": 0.0,
+     "value": 1.2031,
+     "threshold": -4.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I was terrified but then",
+     "expected": "low",
+     "target": "terrified",
+     "measured_max": 0.103,
+     "measured_min": 0.0,
+     "value": 0.103,
+     "threshold": 2.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.067,
+    "scale": 17.875,
+    "pos_ref": 5.0,
+    "neg_ref": -9.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -0.6640625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

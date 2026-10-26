@@ -1,0 +1,270 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "water/ocean/sea related to liquid bodies",
+  "trigger_hypothesis": "The neuron activates strongly for words related to large bodies of water like 'water', 'ocean', and 'sea', especially in factual contexts. It shows negative activation for 'desert' and 'drought', suggesting a contrast between wet and dry environments.",
+  "output_hypothesis": "The neuron appears to detect the presence of liquid, particularly large bodies of water like oceans and seas, and the substance 'water' itself. It also seems to have an inverse relationship with concepts of dryness or lack of water, such as 'desert' and 'drought'.",
+  "alternatives": [
+   "The neuron activates for words related to natural environments.",
+   "The neuron activates for common nouns in factual sentences."
+  ],
+  "adapter_changes": "State C+1 consistently shows higher activations than the base model for positive examples, suggesting an amplification of this neuron's function in that state.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W21",
+   "W22",
+   "W23",
+   "W27",
+   "W28",
+   "W29",
+   "W30"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W15",
+   "W16",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The vast ocean stretched to the horizon.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "The dry desert stretched to the horizon.",
+      "expected": "negative",
+      "target": "desert"
+     },
+     {
+      "text": "A glass of water was on the table.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The sea was calm today.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "The drought continued for months.",
+      "expected": "negative",
+      "target": "drought"
+     },
+     {
+      "text": "The river carried much water.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The lake was full of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The arid land was barren.",
+      "expected": "negative",
+      "target": "arid"
+     },
+     {
+      "text": "The ocean was deep and blue.",
+      "expected": "high",
+      "target": "ocean"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The sea was rough.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "The desert was hot and dry.",
+      "expected": "negative",
+      "target": "dry"
+     },
+     {
+      "text": "The water level was low.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The ocean was teeming with life.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "The drought caused many problems.",
+      "expected": "negative",
+      "target": "drought"
+     },
+     {
+      "text": "The water was refreshing.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The sea was a beautiful blue.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "The desert was vast and empty.",
+      "expected": "negative",
+      "target": "desert"
+     },
+     {
+      "text": "The water was crystal clear.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The ocean was full of ships.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "The drought had dried up the river.",
+      "expected": "negative",
+      "target": "drought"
+     },
+     {
+      "text": "The water was warm.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The sea was calm.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "The desert was silent.",
+      "expected": "negative",
+      "target": "silent"
+     },
+     {
+      "text": "The water was cold.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The ocean was deep.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "The drought was severe.",
+      "expected": "negative",
+      "target": "severe"
+     },
+     {
+      "text": "The water was murky.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid bodies vs. dry environments",
+    "texts": [
+     {
+      "text": "The sea was vast.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "The desert was barren.",
+      "expected": "negative",
+      "target": "barren"
+     },
+     {
+      "text": "The water was clear.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water/ocean/sea related to liquid bodies\",\"trigger_hypothesis\":\"The neuron activates strongly for words related to large bodies of water like 'water', 'ocean', and 'sea', especially in factual contexts. It shows negative activation for 'desert' and 'drought', suggesting a contrast between wet and dry environments.\",\"output_hypothesis\":\"The neuron appears to detect the presence of liquid, particularly large bodies of water like oceans and seas, and the substance 'water' itself. It also seems to have an inverse relationship with concepts of dryness or lack of water, such as 'desert' and 'drought'.\",\"alternatives\":[\"The neuron activates for words related to natural environments.\",\"The neuron activates for common nouns in factual sentences.\"],\"adapter_changes\":\"State C+1 consistently shows higher activations than the base model for positive examples, suggesting an amplification of this neuron's function in that state.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\",\"W22\",\"W23\",\"W27\",\"W28\",\"W29\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W15\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The vast ocean stretched to the horizon.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The dry desert stretched to the horizon.\",\"expected\":\"negative\",\"target\":\"desert\"},{\"text\":\"A glass of water was on the table.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was calm today.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The drought continued for months.\",\"expected\":\"negative\",\"target\":\"drought\"},{\"text\":\"The river carried much water.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The lake was full of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The arid land was barren.\",\"expected\":\"negative\",\"target\":\"arid\"},{\"text\":\"The ocean was deep and blue.\",\"expected\":\"high\",\"target\":\"ocean\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was rough.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The desert was hot and dry.\",\"expected\":\"negative\",\"target\":\"dry\"},{\"text\":\"The water level was low.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The ocean was teeming with life.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The drought caused many problems.\",\"expected\":\"negative\",\"target\":\"drought\"},{\"text\":\"The water was refreshing.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was a beautiful blue.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The desert was vast and empty.\",\"expected\":\"negative\",\"target\":\"desert\"},{\"text\":\"The water was crystal clear.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The ocean was full of ships.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The drought had dried up the river.\",\"expected\":\"negative\",\"target\":\"drought\"},{\"text\":\"The water was warm.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was calm.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The desert was silent.\",\"expected\":\"negative\",\"target\":\"silent\"},{\"text\":\"The water was cold.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The ocean was deep.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The drought was severe.\",\"expected\":\"negative\",\"target\":\"severe\"},{\"text\":\"The water was murky.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was vast.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The desert was barren.\",\"expected\":\"negative\",\"target\":\"barren\"},{\"text\":\"The water was clear.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4253,
+  "output_tokens": 1038,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0008405
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water/ocean/sea related to liquid bodies\",\"trigger_hypothesis\":\"The neuron activates strongly for words related to large bodies of water like 'water', 'ocean', and 'sea', especially in factual contexts. It shows negative activation for 'desert' and 'drought', suggesting a contrast between wet and dry environments.\",\"output_hypothesis\":\"The neuron appears to detect the presence of liquid, particularly large bodies of water like oceans and seas, and the substance 'water' itself. It also seems to have an inverse relationship with concepts of dryness or lack of water, such as 'desert' and 'drought'.\",\"alternatives\":[\"The neuron activates for words related to natural environments.\",\"The neuron activates for common nouns in factual sentences.\"],\"adapter_changes\":\"State C+1 consistently shows higher activations than the base model for positive examples, suggesting an amplification of this neuron's function in that state.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\",\"W22\",\"W23\",\"W27\",\"W28\",\"W29\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W15\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The vast ocean stretched to the horizon.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The dry desert stretched to the horizon.\",\"expected\":\"negative\",\"target\":\"desert\"},{\"text\":\"A glass of water was on the table.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was calm today.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The drought continued for months.\",\"expected\":\"negative\",\"target\":\"drought\"},{\"text\":\"The river carried much water.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The lake was full of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The arid land was barren.\",\"expected\":\"negative\",\"target\":\"arid\"},{\"text\":\"The ocean was deep and blue.\",\"expected\":\"high\",\"target\":\"ocean\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was rough.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The desert was hot and dry.\",\"expected\":\"negative\",\"target\":\"dry\"},{\"text\":\"The water level was low.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The ocean was teeming with life.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The drought caused many problems.\",\"expected\":\"negative\",\"target\":\"drought\"},{\"text\":\"The water was refreshing.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was a beautiful blue.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The desert was vast and empty.\",\"expected\":\"negative\",\"target\":\"desert\"},{\"text\":\"The water was crystal clear.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The ocean was full of ships.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The drought had dried up the river.\",\"expected\":\"negative\",\"target\":\"drought\"},{\"text\":\"The water was warm.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was calm.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The desert was silent.\",\"expected\":\"negative\",\"target\":\"silent\"},{\"text\":\"The water was cold.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The ocean was deep.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The drought was severe.\",\"expected\":\"negative\",\"target\":\"severe\"},{\"text\":\"The water was murky.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"},{\"discriminates\":\"liquid bodies vs. dry environments\",\"texts\":[{\"text\":\"The sea was vast.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The desert was barren.\",\"expected\":\"negative\",\"target\":\"barren\"},{\"text\":\"The water was clear.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid bodies vs. dry environments\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4253,
+    "output_tokens": 1038,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0008405,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1792973064-rfQ5DLwO2QnNYbfgIdXC"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:04:27Z",
+ "purpose": "explain:shuffled"
+}

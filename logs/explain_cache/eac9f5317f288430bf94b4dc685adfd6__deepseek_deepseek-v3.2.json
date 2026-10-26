@@ -1,0 +1,189 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "hypothesis: negative activation for tokens preceding a noun phrase describing a text or speech genre",
+  "trigger_hypothesis": "The neuron fires negatively (strong negative activation) when the token is part of a phrase that immediately precedes a noun phrase describing a genre or form of text or speech (e.g., 'love letter', 'first-person narrative', 'Prosopopeia').",
+  "output_hypothesis": "The neuron's negative activation may suppress the generation of generic or formulaic text openings, encouraging more varied or specific continuations when a text genre is introduced.",
+  "alternatives": [
+   "The neuron detects tokens that are part of common prepositions or determiners before abstract nouns (e.g., 'of', 'a', 'the').",
+   "The neuron responds to the end of a user prompt or instruction, signaling a transition to model response."
+  ],
+  "adapter_changes": "State C+1 shows a large positive increase specifically at token '\\n\\n' in prompts (W20-W23), suggesting this state amplifies the neuron's response to newline sequences preceding assistant responses, while other states have minimal changes.",
+  "supporting": [
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W01",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Genre noun phrase vs. other noun phrase",
+    "a_text": "Write a compelling love letter",
+    "a_expected": "negative",
+    "a_target": "letter",
+    "b_text": "Write a compelling love story",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "First-person narrative vs. third-person narrative",
+    "a_text": "Begin a first-person narrative",
+    "a_expected": "negative",
+    "a_target": "narrative",
+    "b_text": "Begin a third-person narrative",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Preposition 'of' before genre vs. other use",
+    "a_text": "in the form of a poem",
+    "a_expected": "negative",
+    "a_target": "poem",
+    "b_text": "in the form of a circle",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Determiner 'a' before genre vs. before object",
+    "a_text": "as a letter to",
+    "a_expected": "negative",
+    "a_target": "letter",
+    "b_text": "as a book to",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Speech genre (prosopopeia) vs. other abstract noun",
+    "a_text": "he wrote his Prosopopeia",
+    "a_expected": "negative",
+    "a_target": "Prosopopeia",
+    "b_text": "he wrote his dissertation",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Genre instruction in user prompt vs. in continuation",
+    "a_text": "user\\nWrite a captivating first-person",
+    "a_expected": "negative",
+    "a_target": "first-person",
+    "b_text": "assistant\\nThis is a first-person",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Text form 'letter' vs. physical object 'letter'",
+    "a_text": "the form of a love letter",
+    "a_expected": "negative",
+    "a_target": "letter",
+    "b_text": "the delivery of a love letter",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Noun phrase with genre after 'of' vs. after other word",
+    "a_text": "a couple of weeks",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "a couple of poems",
+    "b_expected": "negative",
+    "b_target": "poems",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Newline before assistant response in state C+1",
+    "a_text": "<|im_end|>\\n<|im_start|>assistant\\n\\n",
+    "a_expected": "high",
+    "a_target": "\\n\\n",
+    "b_text": "<|im_end|>\\n<|im_start|>assistant\\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Genre word at end of available context vs. middle",
+    "a_text": "user\\nWrite a letter",
+    "a_expected": "negative",
+    "a_target": "letter",
+    "b_text": "user\\nWrite a letter and send it",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"hypothesis: negative activation for tokens preceding a noun phrase describing a text or speech genre\",\"trigger_hypothesis\":\"The neuron fires negatively (strong negative activation) when the token is part of a phrase that immediately precedes a noun phrase describing a genre or form of text or speech (e.g., 'love letter', 'first-person narrative', 'Prosopopeia').\",\"output_hypothesis\":\"The neuron's negative activation may suppress the generation of generic or formulaic text openings, encouraging more varied or specific continuations when a text genre is introduced.\",\"alternatives\":[\"The neuron detects tokens that are part of common prepositions or determiners before abstract nouns (e.g., 'of', 'a', 'the').\",\"The neuron responds to the end of a user prompt or instruction, signaling a transition to model response.\"],\"adapter_changes\":\"State C+1 shows a large positive increase specifically at token '\\\\n\\\\n' in prompts (W20-W23), suggesting this state amplifies the neuron's response to newline sequences preceding assistant responses, while other states have minimal changes.\",\"supporting\":[\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W01\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"Genre noun phrase vs. other noun phrase\",\"a_text\":\"Write a compelling love letter\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"Write a compelling love story\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person narrative vs. third-person narrative\",\"a_text\":\"Begin a first-person narrative\",\"a_expected\":\"negative\",\"a_target\":\"narrative\",\"b_text\":\"Begin a third-person narrative\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Preposition 'of' before genre vs. other use\",\"a_text\":\"in the form of a poem\",\"a_expected\":\"negative\",\"a_target\":\"poem\",\"b_text\":\"in the form of a circle\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Determiner 'a' before genre vs. before object\",\"a_text\":\"as a letter to\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"as a book to\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Speech genre (prosopopeia) vs. other abstract noun\",\"a_text\":\"he wrote his Prosopopeia\",\"a_expected\":\"negative\",\"a_target\":\"Prosopopeia\",\"b_text\":\"he wrote his dissertation\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Genre instruction in user prompt vs. in continuation\",\"a_text\":\"user\\\\nWrite a captivating first-person\",\"a_expected\":\"negative\",\"a_target\":\"first-person\",\"b_text\":\"assistant\\\\nThis is a first-person\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Text form 'letter' vs. physical object 'letter'\",\"a_text\":\"the form of a love letter\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"the delivery of a love letter\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Noun phrase with genre after 'of' vs. after other word\",\"a_text\":\"a couple of weeks\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"a couple of poems\",\"b_expected\":\"negative\",\"b_target\":\"poems\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline before assistant response in state C+1\",\"a_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Genre word at end of available context vs. middle\",\"a_text\":\"user\\\\nWrite a letter\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"user\\\\nWrite a letter and send it\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6117,
+  "output_tokens": 1054,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001865136
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"hypothesis: negative activation for tokens preceding a noun phrase describing a text or speech genre\",\"trigger_hypothesis\":\"The neuron fires negatively (strong negative activation) when the token is part of a phrase that immediately precedes a noun phrase describing a genre or form of text or speech (e.g., 'love letter', 'first-person narrative', 'Prosopopeia').\",\"output_hypothesis\":\"The neuron's negative activation may suppress the generation of generic or formulaic text openings, encouraging more varied or specific continuations when a text genre is introduced.\",\"alternatives\":[\"The neuron detects tokens that are part of common prepositions or determiners before abstract nouns (e.g., 'of', 'a', 'the').\",\"The neuron responds to the end of a user prompt or instruction, signaling a transition to model response.\"],\"adapter_changes\":\"State C+1 shows a large positive increase specifically at token '\\\\n\\\\n' in prompts (W20-W23), suggesting this state amplifies the neuron's response to newline sequences preceding assistant responses, while other states have minimal changes.\",\"supporting\":[\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W01\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"Genre noun phrase vs. other noun phrase\",\"a_text\":\"Write a compelling love letter\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"Write a compelling love story\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person narrative vs. third-person narrative\",\"a_text\":\"Begin a first-person narrative\",\"a_expected\":\"negative\",\"a_target\":\"narrative\",\"b_text\":\"Begin a third-person narrative\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Preposition 'of' before genre vs. other use\",\"a_text\":\"in the form of a poem\",\"a_expected\":\"negative\",\"a_target\":\"poem\",\"b_text\":\"in the form of a circle\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Determiner 'a' before genre vs. before object\",\"a_text\":\"as a letter to\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"as a book to\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Speech genre (prosopopeia) vs. other abstract noun\",\"a_text\":\"he wrote his Prosopopeia\",\"a_expected\":\"negative\",\"a_target\":\"Prosopopeia\",\"b_text\":\"he wrote his dissertation\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Genre instruction in user prompt vs. in continuation\",\"a_text\":\"user\\\\nWrite a captivating first-person\",\"a_expected\":\"negative\",\"a_target\":\"first-person\",\"b_text\":\"assistant\\\\nThis is a first-person\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Text form 'letter' vs. physical object 'letter'\",\"a_text\":\"the form of a love letter\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"the delivery of a love letter\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Noun phrase with genre after 'of' vs. after other word\",\"a_text\":\"a couple of weeks\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"a couple of poems\",\"b_expected\":\"negative\",\"b_target\":\"poems\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline before assistant response in state C+1\",\"a_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Genre word at end of available context vs. middle\",\"a_text\":\"user\\\\nWrite a letter\",\"a_expected\":\"negative\",\"a_target\":\"letter\",\"b_text\":\"user\\\\nWrite a letter and send it\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6117,
+    "output_tokens": 1054,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001865136,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793040769-ETwecoHDWZe9CGAkFjAi"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:53:08Z",
+ "purpose": "explain:blind"
+}

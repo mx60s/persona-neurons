@@ -1,0 +1,144 @@
+You analyze one MLP neuron of a language model from measured activation data and propose testable hypotheses.
+
+How to read the evidence:
+- Each window W## shows text with one highlighted token ⟦like this⟧ and the neuron's activation at that token.
+- The activation at a token is computed only from text up to and including that token (AVAILABLE). Text after it
+  (FUTURE) was not visible when the activation was measured, so it can never be an input cause of that activation.
+  You may use FUTURE text only to understand what the model was writing, not to explain the trigger.
+- Activations can be strongly positive, strongly negative, or near zero. Treat the two signs as different behaviours
+  and describe both if both occur. Compare high windows with near-zero and random windows before generalizing.
+- "other strong positions" lists other tokens in the same window with large activation (offset relative to the
+  highlighted token).
+- Rows for "state X+1" etc. are the same neuron measured in modified versions of the model on identical text. Describe
+  the base neuron first; put any state-specific differences only in adapter_changes.
+- Separately labeled sections (state differences, steering, weight-lens tokens) are other evidence sources; say which
+  claims rest on them.
+
+Rules:
+- Cite windows only by their W## ids, and only ids that appear in the packet.
+- "supporting": windows your trigger hypothesis explains. "contradicting": windows it fails to explain or that cut
+  against it (strong windows it would not predict, or near-zero windows it would predict to be strong).
+- If there is no consistent pattern, set no_coherent_hypothesis to true, use label "no coherent hypothesis", give your
+  best weak guesses as alternatives, and set confidence to "low". This is an acceptable and useful answer.
+- Confidence is your qualitative judgment, not a probability.
+- proposed_tests: exactly ten matched tests that would separate your hypothesis from the alternatives (e.g. word
+  vs meaning, topic, sentiment, register, first vs third person, position). Each test is a pair of short texts a and
+  b (at most 15 words each) that differ minimally, plus an optional third text c (leave c_text, c_expected and c_target
+  as "" if unused). For each text give expected "high" (strong positive), "negative" (strong negative) or "low" (near
+  zero), and target = the exact word or short substring of that text where you expect the peak ("" for "low").
+  "discriminates" says in a few words what the test separates.
+- Be concise: each hypothesis at most two sentences. Output a single minified JSON object (no indentation or line
+  breaks) and nothing else, with exactly these keys:
+{"label":"...","trigger_hypothesis":"...","output_hypothesis":"...","alternatives":["...","..."],"adapter_changes":"...","supporting":["W01"],"contradicting":["W02"],"proposed_tests":[{"discriminates":"...","a_text":"...","a_expected":"high","a_target":"word","b_text":"...","b_expected":"low","b_target":"","c_text":"","c_expected":"","c_target":""}],"confidence":"low","no_coherent_hypothesis":false}
+
+=====
+
+# Evidence packet (24 windows)
+Neuron activation scale: the strongest discovery activation magnitude is 43.25; 'strong' below means |act| >= 17.30.
+Measured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.
+
+## Strongest positive activations
+[W01] domain=factual token=" farm" act: base=+30.00 | state A+1=+30.12 | state B+1=+27.50 | state C+1=+27.12 | state D+1=+28.12 | state E+1=+28.25
+  AVAILABLE:  and international athletes. He was part of the Kenyan Armed Forces athletics team.\n\nAfter retiring, Sang became a farmer and had a large-scale⟦ farm⟧
+  FUTURE (not visible at the measured token):  in Moiben, in the Uasin
+  other strong positions: " Forces"(-16)=-21.25
+
+## Strongest negative activations
+[W02] domain=chat token=" In" act: base=-21.88 | state A+1=-24.75 | state B+1=-21.00 | state C+1=-16.25 | state D+1=-25.62 | state E+1=-17.75
+  AVAILABLE: a. Statue of Liberty\nb. Eiffel Tower\nc. Taj Mahal\nd. Great Wall of China\n\n2.⟦ In⟧
+  FUTURE (not visible at the measured token):  what year was the landmark completed?\na
+
+[W03] domain=narrative token=" lights" act: base=-21.50 | state A+1=-17.12 | state B+1=-19.38 | state C+1=-20.25 | state D+1=-19.12 | state E+1=-18.38
+  AVAILABLE:  light. He briefly wondered which one was home, but soon turned his attention back to the shuttle as it came into greater clarity, flickering⟦ lights⟧
+  FUTURE (not visible at the measured token):  at its edges blinking in sequence. \n \n
+
+## Moderate and low activations
+[W04] domain=web token="." act: base=+7.94 | state A+1=+7.94 | state B+1=+8.12 | state C+1=+7.59 | state D+1=+7.94 | state E+1=+8.25
+  AVAILABLE:  the time of the survey. These five subjects can therefore serve as models of the types of people for whom hypnosis is likely to be successful⟦.⟧
+  FUTURE (not visible at the measured token):  Which of the following, if true,
+
+[W05] domain=narrative segment=response token=" from" act: base=+7.38 | state A+1=+6.97 | state B+1=+7.16 | state C+1=+5.81 | state D+1=+6.44 | state E+1=+6.47
+  AVAILABLE:  . After that time we are able to speak with them again .\n\n`` And?'' Demanded General Sheng, without turning his gaze away⟦ from⟧
+  FUTURE (not visible at the measured token):  the viewport, and the Earthly vista
+
+[W06] domain=narrative token="?" act: base=+6.62 | state A+1=+9.81 | state B+1=+4.69 | state C+1=+1.74 | state D+1=+5.03 | state E+1=+1.50
+  AVAILABLE:  of explanation to fall into place and get everything to make sense. \n \n `` Even if it was them, how are they sending ships back here⟦?⟧
+  FUTURE (not visible at the measured token):  Colony vessels are one way - and do
+
+[W07] domain=web token=" inc" act: base=+5.03 | state A+1=+4.47 | state B+1=+5.25 | state C+1=+5.38 | state D+1=+5.28 | state E+1=+4.84
+  AVAILABLE:  LEDs are wide-bandgap semiconductor devices. As a result, they have far more complex and varied failure modes than the incumbent technologies. Unlike an⟦ inc⟧
+  FUTURE (not visible at the measured token): andescent lamp, where failure is fairly
+
+[W08] domain=emotional_chat segment=response token="Oh" act: base=+0.84 | state A+1=+0.84 | state B+1=+0.81 | state C+1=+0.81 | state D+1=+0.79 | state E+1=+0.84
+  AVAILABLE:  grandmother gave me when I was young for a birthday. I hadn't seen it in years.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n⟦Oh⟧
+  FUTURE (not visible at the measured token):  my.. that must have been very sad
+  other strong positions: " I"(-17)=-22.00
+
+[W09] domain=web token=" from" act: base=+0.62 | state A+1=+0.55 | state B+1=+0.56 | state C+1=+0.66 | state D+1=+0.61 | state E+1=+0.55
+  AVAILABLE:  general, a metamorphic rock is coarser and has a higher density and lower porosity than the rock⟦ from⟧
+  FUTURE (not visible at the measured token):  which it was formed. Under low grade
+
+[W10] domain=narrative token=" is" act: base=+0.36 | state A+1=+0.38 | state B+1=+0.46 | state C+1=+0.42 | state D+1=+0.48 | state E+1=+0.40
+  AVAILABLE:  it. “ Hitler ’ s brain taught us something after we manufactured World War Two. Mix your lies with the truth and nobody will know which⟦ is⟧
+  FUTURE (not visible at the measured token):  which, even you. ” \n \n Sitting
+
+[W11] domain=chat token=" At" act: base=+0.20 | state A+1=+0.20 | state B+1=+0.18 | state C+1=+0.18 | state D+1=+0.19 | state E+1=+0.15
+  AVAILABLE: 3,000\n- Total Budget: $22,000\n\nKPIs: \n- Total engagement rate:⟦ At⟧
+  FUTURE (not visible at the measured token):  least
+
+[W12] domain=web token="," act: base=+0.17 | state A+1=+0.25 | state B+1=+0.22 | state C+1=-43.00 | state D+1=-2.75 | state E+1=+0.26
+  AVAILABLE:  microbe that lives under extreme environmental conditions (as in a hot spring or ice cap)\nI joked with Annie that she was an extremophile⟦,⟧
+  FUTURE (not visible at the measured token):  taking red-eye flights and pushing herself to
+
+[W13] domain=emotional_chat segment=prompt token="\n" act: base=+0.03 | state A+1=+0.02 | state B+1=+0.02 | state C+1=+0.03 | state D+1=+0.01 | state E+1=+0.02
+  AVAILABLE:  the hostel, I learned that he had indeed won the race in what many believe was the greatest single event in the sport's history!<|im_end|>⟦\n⟧
+  FUTURE (not visible at the measured token): <|im_start|>assistant\n<think>\n\n</think>\n\nWow
+
+[W14] domain=factual token=" F" act: base=-0.55 | state A+1=-0.30 | state B+1=-0.81 | state C+1=-4.28 | state D+1=-1.07 | state E+1=-0.64
+  AVAILABLE: 07. He was loaned out to several Brazilian regional over the next couple of years, making first team appearances for Juventude and⟦ F⟧
+  FUTURE (not visible at the measured token): igueirense.\n\nHe was sent out
+
+[W15] domain=factual token=" Co" act: base=-0.91 | state A+1=+0.37 | state B+1=+0.59 | state C+1=-57.75 | state D+1=-3.20 | state E+1=-0.16
+  AVAILABLE: ), Vel (2007) and the Singam film series (2010-2017). He mostly directed⟦ Co⟧
+  FUTURE (not visible at the measured token): imbatore, Dindigul
+
+[W16] domain=narrative token=" at" act: base=-0.96 | state A+1=+0.64 | state B+1=-0.17 | state C+1=-54.00 | state D+1=-4.84 | state E+1=-3.84
+  AVAILABLE:  `` Fuck you,'' Elon said. `` Where's my shipment of quantum transistors?'' \n \n `` Coming, Elon, coming. But⟦ at⟧
+  FUTURE (not visible at the measured token):  this rate, and I've done the
+
+[W17] domain=code token=" affect" act: base=-3.00 | state A+1=+0.34 | state B+1=-0.65 | state C+1=-46.25 | state D+1=-5.81 | state E+1=-0.42
+  AVAILABLE: s must be integers\n            return lengths\n        seq_lengths = compute_lengths(inputs)\n\n        # dropout beta testing: double check which one should⟦ affect⟧
+  FUTURE (not visible at the measured token):  next line\n        #if training and
+  other strong positions: " return"(-22)=-18.75
+
+## Random contexts (unselected positions)
+[W18] domain=factual token=" In" act: base=-6.06 | state A+1=-1.10 | state B+1=-3.70 | state C+1=-40.00 | state D+1=-7.59 | state E+1=-5.62
+  AVAILABLE:  Hart's Green, Hibb's Green and Lawshall Green.\n\nNotable buildings in the parish include All Saints Church and Lawshall Hall.⟦ In⟧
+  FUTURE (not visible at the measured token):  addition Coldham Hall is very close to
+
+[W19] domain=emotional_chat segment=prompt token="\n" act: base=-43.25 | state A+1=-21.25 | state B+1=-33.25 | state C+1=-30.75 | state D+1=-0.10 | state E+1=-31.75
+  AVAILABLE: user\nI received a phone call the other day from a friend I hadn't heard from in ages.<|im_end|>⟦\n⟧
+  FUTURE (not visible at the measured token): <|im_start|>assistant\n<think>\n\n</think>\n\nOh
+
+## Separate evidence: windows with the largest differences between model states
+[W20] domain=emotional_chat segment=prompt token="\n\n" act: base=-16.50 | state A+1=-18.75 | state B+1=-14.62 | state C+1=-18.38 | state D+1=-17.38 | state E+1=-14.00
+  AVAILABLE:  but it has happened for several years now. I am really wishing it will be this year too!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): Hey that's awesome!!!  What are
+
+[W21] domain=emotional_chat segment=prompt token="\n\n" act: base=+8.56 | state A+1=+9.19 | state B+1=+8.38 | state C+1=+7.56 | state D+1=+9.06 | state E+1=+7.75
+  AVAILABLE: . He's a good young man, so we didn't feel uncomfortable anything would come up missing.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): Lucky! I would not trust anyone
+
+[W22] domain=chat segment=prompt token="\n\n" act: base=-18.00 | state A+1=-16.50 | state B+1=-15.88 | state C+1=-17.00 | state D+1=-16.75 | state E+1=-14.81
+  AVAILABLE:  including Eid and Christmas and getting into lower dress size yet again will make it all the more special.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): Here are some tips for maintaining a weight
+
+[W23] domain=chat segment=prompt token="\n\n" act: base=+1.16 | state A+1=+1.11 | state B+1=+1.18 | state C+1=+1.17 | state D+1=+1.17 | state E+1=+1.13
+  AVAILABLE:  explored in "Poems of Praise, Proverbs and Parables" by Greg Millhorn?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): "Poems of Praise, Pro
+
+[W24] domain=chat segment=prompt token="\n\n" act: base=+6.88 | state A+1=+6.75 | state B+1=+7.25 | state C+1=+7.00 | state D+1=+7.16 | state E+1=+7.00
+  AVAILABLE: user\nCreate a playlist of songs that motivate you to achieve your career goals.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): 1. Eye of the Tiger - Survivor
+
+Return the JSON object now.

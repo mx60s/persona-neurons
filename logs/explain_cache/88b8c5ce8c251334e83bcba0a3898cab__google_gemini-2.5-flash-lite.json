@@ -1,0 +1,262 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "water and liquids",
+  "trigger_hypothesis": "The neuron activates positively for the word 'water' and related liquid concepts, and negatively for words related to dryness or code constructs that are not liquids.",
+  "output_hypothesis": "The neuron detects the presence of 'water' or other liquids, activating positively. It may deactivate for concepts of dryness or for code-related tokens that are not liquids.",
+  "alternatives": [
+   "The neuron activates for code-related tokens, especially those involving measurements or variables.",
+   "The neuron activates for negative sentiment or descriptions of scarcity.",
+   "The neuron activates for common words in code or narrative contexts."
+  ],
+  "adapter_changes": "State C+1 shows a consistent increase in positive activation for 'water' tokens. State B+1 shows a decrease in positive activation for 'water' tokens compared to base.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W23",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "liquid vs code variable",
+    "texts": [
+     {
+      "text": "A glass of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "A dry desert.",
+      "expected": "low",
+      "target": "dry"
+     },
+     {
+      "text": "A glass of juice.",
+      "expected": "high",
+      "target": "juice"
+     }
+    ]
+   },
+   {
+    "texts": [
+     {
+      "text": "The water level is high.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The code level is high.",
+      "expected": "low",
+      "target": "level"
+     },
+     {
+      "text": "The water level is low.",
+      "expected": "high",
+      "target": "water"
+     }
+    ],
+    "discriminates": "liquid vs code function"
+   },
+   {
+    "texts": [
+     {
+      "text": "Drink some water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "Read the file.",
+      "expected": "low",
+      "target": "file"
+     },
+     {
+      "text": "Drink some tea.",
+      "expected": "high",
+      "target": "tea"
+     }
+    ],
+    "discriminates": "liquid vs code keyword"
+   },
+   {
+    "texts": [
+     {
+      "text": "The ocean is vast.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "The area is vast.",
+      "expected": "low",
+      "target": "area"
+     },
+     {
+      "text": "The sea is vast.",
+      "expected": "high",
+      "target": "sea"
+     }
+    ],
+    "discriminates": "liquid vs code calculation"
+   },
+   {
+    "texts": [
+     {
+      "text": "A cup of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "A cup of coffee.",
+      "expected": "high",
+      "target": "coffee"
+     },
+     {
+      "text": "A cup of sand.",
+      "expected": "low",
+      "target": "sand"
+     }
+    ],
+    "discriminates": "liquid vs solid"
+   },
+   {
+    "texts": [
+     {
+      "text": "The river flows.",
+      "expected": "high",
+      "target": "river"
+     },
+     {
+      "text": "The code flows.",
+      "expected": "low",
+      "target": "code"
+     },
+     {
+      "text": "The stream flows.",
+      "expected": "high",
+      "target": "stream"
+     }
+    ],
+    "discriminates": "liquid vs code structure"
+   },
+   {
+    "texts": [
+     {
+      "text": "A pool of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "A pool of data.",
+      "expected": "low",
+      "target": "data"
+     },
+     {
+      "text": "A pool of ink.",
+      "expected": "high",
+      "target": "ink"
+     }
+    ],
+    "discriminates": "liquid vs data"
+   },
+   {
+    "texts": [
+     {
+      "text": "The water is clear.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The path is clear.",
+      "expected": "low",
+      "target": "clear"
+     },
+     {
+      "text": "The water is murky.",
+      "expected": "high",
+      "target": "water"
+     }
+    ],
+    "discriminates": "liquid vs abstract state"
+   },
+   {
+    "texts": [
+     {
+      "text": "A glass of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "A glass of milk.",
+      "expected": "high",
+      "target": "milk"
+     },
+     {
+      "text": "A glass of air.",
+      "expected": "low",
+      "target": "air"
+     }
+    ],
+    "discriminates": "liquid vs gas"
+   },
+   {
+    "texts": [
+     {
+      "text": "The water level.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The code level.",
+      "expected": "low",
+      "target": "level"
+     },
+     {
+      "text": "The tank level.",
+      "expected": "low",
+      "target": "level"
+     }
+    ],
+    "discriminates": "liquid vs measurement"
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water and liquids\",\"trigger_hypothesis\":\"The neuron activates positively for the word 'water' and related liquid concepts, and negatively for words related to dryness or code constructs that are not liquids.\",\"output_hypothesis\":\"The neuron detects the presence of 'water' or other liquids, activating positively. It may deactivate for concepts of dryness or for code-related tokens that are not liquids.\",\"alternatives\":[\"The neuron activates for code-related tokens, especially those involving measurements or variables.\",\"The neuron activates for negative sentiment or descriptions of scarcity.\",\"The neuron activates for common words in code or narrative contexts.\"],\"adapter_changes\":\"State C+1 shows a consistent increase in positive activation for 'water' tokens. State B+1 shows a decrease in positive activation for 'water' tokens compared to base.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W15\",\"W16\",\"W17\",\"W18\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"liquid vs dry\",\"texts\":[{\"text\":\"A glass of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"A dry desert.\",\"expected\":\"low\",\"target\":\"dry\"},{\"text\":\"A glass of juice.\",\"expected\":\"high\",\"target\":\"juice\"}],\"discriminates\":\"liquid vs code variable\"},{\"texts\":[{\"text\":\"The water level is high.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The code level is high.\",\"expected\":\"low\",\"target\":\"level\"},{\"text\":\"The water level is low.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid vs code function\"},{\"texts\":[{\"text\":\"Drink some water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"Read the file.\",\"expected\":\"low\",\"target\":\"file\"},{\"text\":\"Drink some tea.\",\"expected\":\"high\",\"target\":\"tea\"}],\"discriminates\":\"liquid vs code keyword\"},{\"texts\":[{\"text\":\"The ocean is vast.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The area is vast.\",\"expected\":\"low\",\"target\":\"area\"},{\"text\":\"The sea is vast.\",\"expected\":\"high\",\"target\":\"sea\"}],\"discriminates\":\"liquid vs code calculation\"},{\"texts\":[{\"text\":\"A cup of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"A cup of coffee.\",\"expected\":\"high\",\"target\":\"coffee\"},{\"text\":\"A cup of sand.\",\"expected\":\"low\",\"target\":\"sand\"}],\"discriminates\":\"liquid vs solid\"},{\"texts\":[{\"text\":\"The river flows.\",\"expected\":\"high\",\"target\":\"river\"},{\"text\":\"The code flows.\",\"expected\":\"low\",\"target\":\"code\"},{\"text\":\"The stream flows.\",\"expected\":\"high\",\"target\":\"stream\"}],\"discriminates\":\"liquid vs code structure\"},{\"texts\":[{\"text\":\"A pool of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"A pool of data.\",\"expected\":\"low\",\"target\":\"data\"},{\"text\":\"A pool of ink.\",\"expected\":\"high\",\"target\":\"ink\"}],\"discriminates\":\"liquid vs data\"},{\"texts\":[{\"text\":\"The water is clear.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The path is clear.\",\"expected\":\"low\",\"target\":\"clear\"},{\"text\":\"The water is murky.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid vs abstract state\"},{\"texts\":[{\"text\":\"A glass of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"A glass of milk.\",\"expected\":\"high\",\"target\":\"milk\"},{\"text\":\"A glass of air.\",\"expected\":\"low\",\"target\":\"air\"}],\"discriminates\":\"liquid vs gas\"},{\"texts\":[{\"text\":\"The water level.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The code level.\",\"expected\":\"low\",\"target\":\"level\"},{\"text\":\"The tank level.\",\"expected\":\"low\",\"target\":\"level\"}],\"discriminates\":\"liquid vs measurement\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4476,
+  "output_tokens": 822,
+  "reasoning_tokens": 2,
+  "cost_usd": 0.0007764
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water and liquids\",\"trigger_hypothesis\":\"The neuron activates positively for the word 'water' and related liquid concepts, and negatively for words related to dryness or code constructs that are not liquids.\",\"output_hypothesis\":\"The neuron detects the presence of 'water' or other liquids, activating positively. It may deactivate for concepts of dryness or for code-related tokens that are not liquids.\",\"alternatives\":[\"The neuron activates for code-related tokens, especially those involving measurements or variables.\",\"The neuron activates for negative sentiment or descriptions of scarcity.\",\"The neuron activates for common words in code or narrative contexts.\"],\"adapter_changes\":\"State C+1 shows a consistent increase in positive activation for 'water' tokens. State B+1 shows a decrease in positive activation for 'water' tokens compared to base.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W15\",\"W16\",\"W17\",\"W18\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"liquid vs dry\",\"texts\":[{\"text\":\"A glass of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"A dry desert.\",\"expected\":\"low\",\"target\":\"dry\"},{\"text\":\"A glass of juice.\",\"expected\":\"high\",\"target\":\"juice\"}],\"discriminates\":\"liquid vs code variable\"},{\"texts\":[{\"text\":\"The water level is high.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The code level is high.\",\"expected\":\"low\",\"target\":\"level\"},{\"text\":\"The water level is low.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid vs code function\"},{\"texts\":[{\"text\":\"Drink some water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"Read the file.\",\"expected\":\"low\",\"target\":\"file\"},{\"text\":\"Drink some tea.\",\"expected\":\"high\",\"target\":\"tea\"}],\"discriminates\":\"liquid vs code keyword\"},{\"texts\":[{\"text\":\"The ocean is vast.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The area is vast.\",\"expected\":\"low\",\"target\":\"area\"},{\"text\":\"The sea is vast.\",\"expected\":\"high\",\"target\":\"sea\"}],\"discriminates\":\"liquid vs code calculation\"},{\"texts\":[{\"text\":\"A cup of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"A cup of coffee.\",\"expected\":\"high\",\"target\":\"coffee\"},{\"text\":\"A cup of sand.\",\"expected\":\"low\",\"target\":\"sand\"}],\"discriminates\":\"liquid vs solid\"},{\"texts\":[{\"text\":\"The river flows.\",\"expected\":\"high\",\"target\":\"river\"},{\"text\":\"The code flows.\",\"expected\":\"low\",\"target\":\"code\"},{\"text\":\"The stream flows.\",\"expected\":\"high\",\"target\":\"stream\"}],\"discriminates\":\"liquid vs code structure\"},{\"texts\":[{\"text\":\"A pool of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"A pool of data.\",\"expected\":\"low\",\"target\":\"data\"},{\"text\":\"A pool of ink.\",\"expected\":\"high\",\"target\":\"ink\"}],\"discriminates\":\"liquid vs data\"},{\"texts\":[{\"text\":\"The water is clear.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The path is clear.\",\"expected\":\"low\",\"target\":\"clear\"},{\"text\":\"The water is murky.\",\"expected\":\"high\",\"target\":\"water\"}],\"discriminates\":\"liquid vs abstract state\"},{\"texts\":[{\"text\":\"A glass of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"A glass of milk.\",\"expected\":\"high\",\"target\":\"milk\"},{\"text\":\"A glass of air.\",\"expected\":\"low\",\"target\":\"air\"}],\"discriminates\":\"liquid vs gas\"},{\"texts\":[{\"text\":\"The water level.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The code level.\",\"expected\":\"low\",\"target\":\"level\"},{\"text\":\"The tank level.\",\"expected\":\"low\",\"target\":\"level\"}],\"discriminates\":\"liquid vs measurement\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4476,
+    "output_tokens": 822,
+    "reasoning_tokens": 2,
+    "cached_tokens": 0,
+    "cost_usd": 0.0007764,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1792973109-CuzJh22chVm9ZnUkVjea"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:05:12Z",
+ "purpose": "explain:ambiguous"
+}

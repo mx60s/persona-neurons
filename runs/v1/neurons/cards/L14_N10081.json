@@ -1,0 +1,1157 @@
+{
+ "id": "L14/N10081",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:40Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "numbers and ordinal indicators",
+   "trigger_hypothesis": "The neuron fires strongly on tokens that are digits (0,1,4) or words that indicate the start of a numbered sequence ('sentence', 'begins'), and negatively on tokens that are part of non-numeric or non-ordinal contexts ('ilog', 'according').",
+   "output_hypothesis": "The neuron's activation may promote the continuation of a numbered list or sequence, or suppress non-sequential text.",
+   "alternatives": [
+    "The neuron detects the start of a new clause or sentence.",
+    "The neuron responds to specific token strings regardless of context."
+   ],
+   "adapter_changes": "State C+1 shows a strong negative effect on newline tokens in emotional_chat prompts (W18, W19, W20, W21), making the neuron more negative there, while other states have minimal changes.",
+   "supporting": [
+    "L14_N10081:e00",
+    "L14_N10081:e02",
+    "L14_N10081:e03",
+    "L14_N10081:e05",
+    "L14_N10081:e08",
+    "L14_N10081:e10",
+    "L14_N10081:e11"
+   ],
+   "contradicting": [
+    "L14_N10081:e07",
+    "L14_N10081:e26",
+    "L14_N10081:e24",
+    "L14_N10081:e23",
+    "L14_N10081:e21",
+    "L14_N10081:e30",
+    "L14_N10081:e27",
+    "L14_N10081:e29",
+    "L14_N10081:e28",
+    "L14_N10081:e31"
+   ],
+   "proposed_tests": [
+    "digit vs non-digit number words :: [high] The first item is 1. | [low] The first item is one.",
+    "ordinal indicator 'first' vs other adjectives :: [high] First sentence of the story. | [low] Opening sentence of the story.",
+    "digit in a list vs other uses :: [high] Step 0: initialize. | [low] The value is zero.",
+    "negative trigger 'ilog' vs similar strings :: [negative] The epilog is long. | [low] The epilogue is long.",
+    "sequence start 'begins' vs synonyms :: [high] The chapter begins now. | [low] The chapter starts now.",
+    "digit in code vs prose :: [high] args[0] | [low] He had zero chances.",
+    "negative trigger 'according' vs other prepositions :: [negative] Generate according to plan. | [low] Generate following the plan.",
+    "digit as part of a reference vs standalone :: [high] See Part 1 for details. | [low] The number is 1.",
+    "ordinal word 'sentence' vs other nouns :: [high] First sentence is here. | [low] First paragraph is here.",
+    "digit in a negative context :: [negative] Page 4 of the book. | [low] Page four of the book."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "digit vs non-digit number words",
+     "texts": [
+      {
+       "text": "The first item is 1.",
+       "expected": "high",
+       "target": "1"
+      },
+      {
+       "text": "The first item is one.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "ordinal indicator 'first' vs other adjectives",
+     "texts": [
+      {
+       "text": "First sentence of the story.",
+       "expected": "high",
+       "target": "sentence"
+      },
+      {
+       "text": "Opening sentence of the story.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "digit in a list vs other uses",
+     "texts": [
+      {
+       "text": "Step 0: initialize.",
+       "expected": "high",
+       "target": "0"
+      },
+      {
+       "text": "The value is zero.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "negative trigger 'ilog' vs similar strings",
+     "texts": [
+      {
+       "text": "The epilog is long.",
+       "expected": "negative",
+       "target": "ilog"
+      },
+      {
+       "text": "The epilogue is long.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "sequence start 'begins' vs synonyms",
+     "texts": [
+      {
+       "text": "The chapter begins now.",
+       "expected": "high",
+       "target": "begins"
+      },
+      {
+       "text": "The chapter starts now.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "digit in code vs prose",
+     "texts": [
+      {
+       "text": "args[0]",
+       "expected": "high",
+       "target": "0"
+      },
+      {
+       "text": "He had zero chances.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "negative trigger 'according' vs other prepositions",
+     "texts": [
+      {
+       "text": "Generate according to plan.",
+       "expected": "negative",
+       "target": "according"
+      },
+      {
+       "text": "Generate following the plan.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "digit as part of a reference vs standalone",
+     "texts": [
+      {
+       "text": "See Part 1 for details.",
+       "expected": "high",
+       "target": "1"
+      },
+      {
+       "text": "The number is 1.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "ordinal word 'sentence' vs other nouns",
+     "texts": [
+      {
+       "text": "First sentence is here.",
+       "expected": "high",
+       "target": "sentence"
+      },
+      {
+       "text": "First paragraph is here.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "digit in a negative context",
+     "texts": [
+      {
+       "text": "Page 4 of the book.",
+       "expected": "negative",
+       "target": "4"
+      },
+      {
+       "text": "Page four of the book.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5396,
+    "output_tokens": 933,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0016743
+   },
+   "invalid_citations": [],
+   "packet_hash": "ec37d5db722e74da018c49e0be86b84ef7f93afea99af0815f08395972d0bf63",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "digit vs non-digit number words",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The first item is 1.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0688,
+     "measured_min": -0.293,
+     "value": -0.293,
+     "threshold": 1.4219,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The first item is one.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0688,
+     "measured_min": -0.2314,
+     "value": 0.2314,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.078,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "ordinal indicator 'first' vs other adjectives",
+   "prediction": "high on 'sentence'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "First sentence of the story.",
+     "expected": "high",
+     "target": "sentence",
+     "measured_max": 2.75,
+     "measured_min": 0.0,
+     "value": 2.75,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Opening sentence of the story.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.6875,
+     "measured_min": 0.0,
+     "value": 1.6875,
+     "threshold": 0.711,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.23,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "digit in a list vs other uses",
+   "prediction": "high on '0'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 0: initialize.",
+     "expected": "high",
+     "target": "0",
+     "measured_max": 0.2812,
+     "measured_min": -0.0137,
+     "value": 0.1533,
+     "threshold": 1.4219,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The value is zero.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0206,
+     "measured_min": -0.0586,
+     "value": 0.0586,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.029,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "negative trigger 'ilog' vs similar strings",
+   "prediction": "negative on 'ilog'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The epilog is long.",
+     "expected": "negative",
+     "target": "ilog",
+     "measured_max": 0.3242,
+     "measured_min": 0.0,
+     "value": 0.0513,
+     "threshold": -1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The epilogue is long.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3105,
+     "measured_min": 0.0,
+     "value": 0.3105,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "sequence start 'begins' vs synonyms",
+   "prediction": "high on 'begins'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The chapter begins now.",
+     "expected": "high",
+     "target": "begins",
+     "measured_max": 0.208,
+     "measured_min": -0.1924,
+     "value": 0.168,
+     "threshold": 1.4219,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The chapter starts now.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2021,
+     "measured_min": -0.1924,
+     "value": 0.2021,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "digit in code vs prose",
+   "prediction": "high on '0'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "args[0]",
+     "expected": "high",
+     "target": "0",
+     "measured_max": 1.9453,
+     "measured_min": 0.0,
+     "value": 1.9453,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He had zero chances.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0596,
+     "value": 0.0596,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.421,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "negative trigger 'according' vs other prepositions",
+   "prediction": "negative on 'according'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Generate according to plan.",
+     "expected": "negative",
+     "target": "according",
+     "measured_max": 0.0815,
+     "measured_min": -0.032,
+     "value": -0.032,
+     "threshold": -1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Generate following the plan.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1348,
+     "measured_min": 0.0,
+     "value": 0.1348,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.007,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "digit as part of a reference vs standalone",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "See Part 1 for details.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 1.3125,
+     "measured_min": -0.1138,
+     "value": 1.3125,
+     "threshold": 1.4219,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The number is 1.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2139,
+     "value": 0.2139,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.284,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "ordinal word 'sentence' vs other nouns",
+   "prediction": "high on 'sentence'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "First sentence is here.",
+     "expected": "high",
+     "target": "sentence",
+     "measured_max": 2.75,
+     "measured_min": -0.0403,
+     "value": 2.75,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "First paragraph is here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7109,
+     "measured_min": 0.0,
+     "value": 0.7109,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.441,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "digit in a negative context",
+   "prediction": "negative on '4'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Page 4 of the book.",
+     "expected": "negative",
+     "target": "4",
+     "measured_max": 0.2598,
+     "measured_min": -0.7305,
+     "value": -0.6562,
+     "threshold": -1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Page four of the book.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5273,
+     "measured_min": 0.0,
+     "value": 0.5273,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.142,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "digit vs non-digit number words",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The first item is 1.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 0.0688,
+     "measured_min": -0.293,
+     "value": -0.293,
+     "threshold": 1.4219,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The first item is one.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0688,
+     "measured_min": -0.2314,
+     "value": 0.2314,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.078,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "ordinal indicator 'first' vs other adjectives",
+   "prediction": "high on 'sentence'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "First sentence of the story.",
+     "expected": "high",
+     "target": "sentence",
+     "measured_max": 2.75,
+     "measured_min": 0.0,
+     "value": 2.75,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Opening sentence of the story.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.6875,
+     "measured_min": 0.0,
+     "value": 1.6875,
+     "threshold": 0.711,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.23,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "digit in a list vs other uses",
+   "prediction": "high on '0'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 0: initialize.",
+     "expected": "high",
+     "target": "0",
+     "measured_max": 0.2812,
+     "measured_min": -0.0137,
+     "value": 0.1533,
+     "threshold": 1.4219,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The value is zero.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0206,
+     "measured_min": -0.0586,
+     "value": 0.0586,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.029,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "negative trigger 'ilog' vs similar strings",
+   "prediction": "negative on 'ilog'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The epilog is long.",
+     "expected": "negative",
+     "target": "ilog",
+     "measured_max": 0.3242,
+     "measured_min": 0.0,
+     "value": 0.0513,
+     "threshold": -1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The epilogue is long.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3105,
+     "measured_min": 0.0,
+     "value": 0.3105,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "sequence start 'begins' vs synonyms",
+   "prediction": "high on 'begins'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The chapter begins now.",
+     "expected": "high",
+     "target": "begins",
+     "measured_max": 0.208,
+     "measured_min": -0.1924,
+     "value": 0.168,
+     "threshold": 1.4219,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The chapter starts now.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2021,
+     "measured_min": -0.1924,
+     "value": 0.2021,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "digit in code vs prose",
+   "prediction": "high on '0'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "args[0]",
+     "expected": "high",
+     "target": "0",
+     "measured_max": 1.9453,
+     "measured_min": 0.0,
+     "value": 1.9453,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He had zero chances.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0596,
+     "value": 0.0596,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.421,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "negative trigger 'according' vs other prepositions",
+   "prediction": "negative on 'according'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Generate according to plan.",
+     "expected": "negative",
+     "target": "according",
+     "measured_max": 0.0815,
+     "measured_min": -0.032,
+     "value": -0.032,
+     "threshold": -1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Generate following the plan.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1348,
+     "measured_min": 0.0,
+     "value": 0.1348,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.007,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "digit as part of a reference vs standalone",
+   "prediction": "high on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "See Part 1 for details.",
+     "expected": "high",
+     "target": "1",
+     "measured_max": 1.3125,
+     "measured_min": -0.1138,
+     "value": 1.3125,
+     "threshold": 1.4219,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The number is 1.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2139,
+     "value": 0.2139,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.284,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "ordinal word 'sentence' vs other nouns",
+   "prediction": "high on 'sentence'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "First sentence is here.",
+     "expected": "high",
+     "target": "sentence",
+     "measured_max": 2.75,
+     "measured_min": -0.0403,
+     "value": 2.75,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "First paragraph is here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7109,
+     "measured_min": 0.0,
+     "value": 0.7109,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.441,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "digit in a negative context",
+   "prediction": "negative on '4'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Page 4 of the book.",
+     "expected": "negative",
+     "target": "4",
+     "measured_max": 0.2598,
+     "measured_min": -0.7305,
+     "value": -0.6562,
+     "threshold": -1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Page four of the book.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5273,
+     "measured_min": 0.0,
+     "value": 0.5273,
+     "threshold": 0.711,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.142,
+    "scale": 4.625,
+    "pos_ref": 2.8438,
+    "neg_ref": -2.0469
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2333984375,
+    "p01": -0.2490234375
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 3,
+   "of": 10
+  }
+ ]
+}

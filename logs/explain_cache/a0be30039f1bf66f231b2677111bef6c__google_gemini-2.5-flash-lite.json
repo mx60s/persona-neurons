@@ -1,0 +1,187 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "negative sentiment and possessiveness",
+  "trigger_hypothesis": "The neuron activates negatively for possessive markers like 's and words associated with negative sentiment or actions, potentially indicating a role in processing negative emotional states or ownership.",
+  "output_hypothesis": "The neuron appears to detect negative sentiment, particularly in contexts of possession or ownership, and also shows strong negative activation in code contexts.",
+  "alternatives": [
+   "The neuron activates negatively for possessive markers and in code contexts, with no clear semantic link.",
+   "The neuron is sensitive to specific grammatical structures or tokens, such as possessive markers, and its behavior in other contexts is incidental."
+  ],
+  "adapter_changes": "State D+1 shows a significant drop in activation for 'assistant' tokens in prompt segments, suggesting a strong negative response to the assistant's role in certain conversational contexts. State E+1 shows a strong positive shift for 'emotional_chat' domain, and a negative shift for 'chat' domain, indicating a nuanced change in emotional processing.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "possessive vs. non-possessive",
+    "a_text": "The dog's bone",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "The dog bone",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative sentiment vs. neutral",
+    "a_text": "This is a terrible situation",
+    "a_expected": "high",
+    "a_target": "terrible",
+    "b_text": "This is a normal situation",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context vs. natural language",
+    "a_text": "import pandas as pd",
+    "a_expected": "high",
+    "a_target": "import",
+    "b_text": "I will import the package",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "ownership vs. description",
+    "a_text": "John's car is red",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "John's car was red",
+    "b_expected": "high",
+    "b_target": "'s",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative possessive vs. neutral possessive",
+    "a_text": "The thief's escape",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "The student's book",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative action vs. neutral action",
+    "a_text": "He stole the money",
+    "a_expected": "high",
+    "a_target": "stole",
+    "b_text": "He took the money",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context with 'distributed' vs. natural language",
+    "a_text": "software distributed under the license",
+    "a_expected": "high",
+    "a_target": "distributed",
+    "b_text": "The news was distributed widely",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative emotional text vs. neutral emotional text",
+    "a_text": "I am so sad",
+    "a_expected": "high",
+    "a_target": "sad",
+    "b_text": "I am so happy",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative chat vs. neutral chat",
+    "a_text": "This is a bad situation",
+    "a_expected": "high",
+    "a_target": "bad",
+    "b_text": "This is a good situation",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "possessive pronoun vs. verb",
+    "a_text": "It's mine",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "It is mine",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\n  \"label\": \"negative sentiment and possessiveness\",\n  \"trigger_hypothesis\": \"The neuron activates negatively for possessive markers like 's and words associated with negative sentiment or actions, potentially indicating a role in processing negative emotional states or ownership.\",\n  \"output_hypothesis\": \"The neuron appears to detect negative sentiment, particularly in contexts of possession or ownership, and also shows strong negative activation in code contexts.\",\n  \"alternatives\": [\n    \"The neuron activates negatively for possessive markers and in code contexts, with no clear semantic link.\",\n    \"The neuron is sensitive to specific grammatical structures or tokens, such as possessive markers, and its behavior in other contexts is incidental.\"\n  ],\n  \"adapter_changes\": \"State D+1 shows a significant drop in activation for 'assistant' tokens in prompt segments, suggesting a strong negative response to the assistant's role in certain conversational contexts. State E+1 shows a strong positive shift for 'emotional_chat' domain, and a negative shift for 'chat' domain, indicating a nuanced change in emotional processing.\",\n  \"supporting\": [\n    \"W01\",\n    \"W02\",\n    \"W03\"\n  ],\n  \"contradicting\": [\n    \"W04\",\n    \"W05\",\n    \"W06\",\n    \"W07\",\n    \"W08\",\n    \"W09\",\n    \"W10\",\n    \"W11\",\n    \"W12\",\n    \"W13\",\n    \"W14\",\n    \"W15\",\n    \"W16\",\n    \"W17\"\n  ],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"possessive vs. non-possessive\",\n      \"a_text\": \"The dog's bone\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"'s\",\n      \"b_text\": \"The dog bone\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative sentiment vs. neutral\",\n      \"a_text\": \"This is a terrible situation\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"terrible\",\n      \"b_text\": \"This is a normal situation\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"code context vs. natural language\",\n      \"a_text\": \"import pandas as pd\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"import\",\n      \"b_text\": \"I will import the package\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"ownership vs. description\",\n      \"a_text\": \"John's car is red\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"'s\",\n      \"b_text\": \"John's car was red\",\n      \"b_expected\": \"high\",\n      \"b_target\": \"'s\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative possessive vs. neutral possessive\",\n      \"a_text\": \"The thief's escape\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"'s\",\n      \"b_text\": \"The student's book\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative action vs. neutral action\",\n      \"a_text\": \"He stole the money\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"stole\",\n      \"b_text\": \"He took the money\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"code context with 'distributed' vs. natural language\",\n      \"a_text\": \"software distributed under the license\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"distributed\",\n      \"b_text\": \"The news was distributed widely\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative emotional text vs. neutral emotional text\",\n      \"a_text\": \"I am so sad\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"sad\",\n      \"b_text\": \"I am so happy\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative chat vs. neutral chat\",\n      \"a_text\": \"This is a bad situation\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"bad\",\n      \"b_text\": \"This is a good situation\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"possessive pronoun vs. verb\",\n      \"a_text\": \"It's mine\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"'s\",\n      \"b_text\": \"It is mine\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"low\",\n  \"no_coherent_hypothesis\": true\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5752,
+  "output_tokens": 1490,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0011712
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"negative sentiment and possessiveness\",\n  \"trigger_hypothesis\": \"The neuron activates negatively for possessive markers like 's and words associated with negative sentiment or actions, potentially indicating a role in processing negative emotional states or ownership.\",\n  \"output_hypothesis\": \"The neuron appears to detect negative sentiment, particularly in contexts of possession or ownership, and also shows strong negative activation in code contexts.\",\n  \"alternatives\": [\n    \"The neuron activates negatively for possessive markers and in code contexts, with no clear semantic link.\",\n    \"The neuron is sensitive to specific grammatical structures or tokens, such as possessive markers, and its behavior in other contexts is incidental.\"\n  ],\n  \"adapter_changes\": \"State D+1 shows a significant drop in activation for 'assistant' tokens in prompt segments, suggesting a strong negative response to the assistant's role in certain conversational contexts. State E+1 shows a strong positive shift for 'emotional_chat' domain, and a negative shift for 'chat' domain, indicating a nuanced change in emotional processing.\",\n  \"supporting\": [\n    \"W01\",\n    \"W02\",\n    \"W03\"\n  ],\n  \"contradicting\": [\n    \"W04\",\n    \"W05\",\n    \"W06\",\n    \"W07\",\n    \"W08\",\n    \"W09\",\n    \"W10\",\n    \"W11\",\n    \"W12\",\n    \"W13\",\n    \"W14\",\n    \"W15\",\n    \"W16\",\n    \"W17\"\n  ],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"possessive vs. non-possessive\",\n      \"a_text\": \"The dog's bone\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"'s\",\n      \"b_text\": \"The dog bone\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative sentiment vs. neutral\",\n      \"a_text\": \"This is a terrible situation\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"terrible\",\n      \"b_text\": \"This is a normal situation\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"code context vs. natural language\",\n      \"a_text\": \"import pandas as pd\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"import\",\n      \"b_text\": \"I will import the package\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"ownership vs. description\",\n      \"a_text\": \"John's car is red\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"'s\",\n      \"b_text\": \"John's car was red\",\n      \"b_expected\": \"high\",\n      \"b_target\": \"'s\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative possessive vs. neutral possessive\",\n      \"a_text\": \"The thief's escape\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"'s\",\n      \"b_text\": \"The student's book\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative action vs. neutral action\",\n      \"a_text\": \"He stole the money\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"stole\",\n      \"b_text\": \"He took the money\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"code context with 'distributed' vs. natural language\",\n      \"a_text\": \"software distributed under the license\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"distributed\",\n      \"b_text\": \"The news was distributed widely\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative emotional text vs. neutral emotional text\",\n      \"a_text\": \"I am so sad\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"sad\",\n      \"b_text\": \"I am so happy\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"negative chat vs. neutral chat\",\n      \"a_text\": \"This is a bad situation\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"bad\",\n      \"b_text\": \"This is a good situation\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"possessive pronoun vs. verb\",\n      \"a_text\": \"It's mine\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"'s\",\n      \"b_text\": \"It is mine\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"low\",\n  \"no_coherent_hypothesis\": true\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5752,
+    "output_tokens": 1490,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0011712,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040828-mxyNgf8g9Ol9WrhLHeLU"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:53:52Z",
+ "purpose": "explain:blind"
+}

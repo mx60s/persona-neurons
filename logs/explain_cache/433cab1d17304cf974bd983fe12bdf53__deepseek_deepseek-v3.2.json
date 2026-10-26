@@ -1,0 +1,180 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "newline after assistant tag",
+  "trigger_hypothesis": "The neuron fires strongly positive when a newline token appears immediately after an assistant tag in a chat prompt, indicating the start of the assistant's response.",
+  "output_hypothesis": "The neuron's positive activation may help initiate the assistant's response generation, perhaps by setting up a conversational turn or marking a transition from user input to model output.",
+  "alternatives": [
+   "The neuron detects the token sequence '<|im_start|>assistant\\n' as a specific structural pattern in chat formatting.",
+   "The neuron responds to newline tokens in general, but is strongly suppressed by certain preceding characters like hyphens or underscores in code/narrative contexts."
+  ],
+  "adapter_changes": "State A+1 strongly suppresses the neuron's positive response to the newline pattern (e.g., W01, W20-W23 show near-zero activation). State B+1 amplifies the positive response significantly. Other states (C+1, D+1, E+1) show moderate changes, with D+1 and E+1 sometimes reducing the base activation.",
+  "supporting": [
+   "W01",
+   "W20",
+   "W21",
+   "W22",
+   "W23"
+  ],
+  "contradicting": [
+   "W02",
+   "W03",
+   "W04",
+   "W13",
+   "W14"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "newline after assistant tag vs. newline elsewhere",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "user\nHello\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag vs. newline after user tag",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>user\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag in prompt segment vs. continuation",
+    "a_text": "<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "assistant\nHello, how can I",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline token vs. other whitespace after assistant tag",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant ",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "full chat format vs. missing end tag",
+    "a_text": "<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative trigger: hyphen before token",
+    "a_text": "Speak-O-",
+    "a_expected": "negative",
+    "a_target": "-",
+    "b_text": "Speak-O",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative trigger: underscore before token",
+    "a_text": "Tila_",
+    "a_expected": "negative",
+    "a_target": "_",
+    "b_text": "Tila",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative trigger: space before capital letter after hyphen",
+    "a_text": "Proud Sc",
+    "a_expected": "negative",
+    "a_target": "Sc",
+    "b_text": "Proud",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative trigger in code: NOT keyword",
+    "a_text": "TEXT NOT",
+    "a_expected": "negative",
+    "a_target": "NOT",
+    "b_text": "TEXT",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "state A+1 suppression of positive pattern",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"newline after assistant tag\",\"trigger_hypothesis\":\"The neuron fires strongly positive when a newline token appears immediately after an assistant tag in a chat prompt, indicating the start of the assistant's response.\",\"output_hypothesis\":\"The neuron's positive activation may help initiate the assistant's response generation, perhaps by setting up a conversational turn or marking a transition from user input to model output.\",\"alternatives\":[\"The neuron detects the token sequence '<|im_start|>assistant\\\\n' as a specific structural pattern in chat formatting.\",\"The neuron responds to newline tokens in general, but is strongly suppressed by certain preceding characters like hyphens or underscores in code/narrative contexts.\"],\"adapter_changes\":\"State A+1 strongly suppresses the neuron's positive response to the newline pattern (e.g., W01, W20-W23 show near-zero activation). State B+1 amplifies the positive response significantly. Other states (C+1, D+1, E+1) show moderate changes, with D+1 and E+1 sometimes reducing the base activation.\",\"supporting\":[\"W01\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W13\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"newline after assistant tag vs. newline elsewhere\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nHello\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag vs. newline after user tag\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in prompt segment vs. continuation\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"assistant\\nHello, how can I\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline token vs. other whitespace after assistant tag\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant \",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"full chat format vs. missing end tag\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative trigger: hyphen before token\",\"a_text\":\"Speak-O-\",\"a_expected\":\"negative\",\"a_target\":\"-\",\"b_text\":\"Speak-O\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative trigger: underscore before token\",\"a_text\":\"Tila_\",\"a_expected\":\"negative\",\"a_target\":\"_\",\"b_text\":\"Tila\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative trigger: space before capital letter after hyphen\",\"a_text\":\"Proud Sc\",\"a_expected\":\"negative\",\"a_target\":\"Sc\",\"b_text\":\"Proud\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative trigger in code: NOT keyword\",\"a_text\":\"TEXT NOT\",\"a_expected\":\"negative\",\"a_target\":\"NOT\",\"b_text\":\"TEXT\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"state A+1 suppression of positive pattern\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5995,
+  "output_tokens": 999,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001807876
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"newline after assistant tag\",\"trigger_hypothesis\":\"The neuron fires strongly positive when a newline token appears immediately after an assistant tag in a chat prompt, indicating the start of the assistant's response.\",\"output_hypothesis\":\"The neuron's positive activation may help initiate the assistant's response generation, perhaps by setting up a conversational turn or marking a transition from user input to model output.\",\"alternatives\":[\"The neuron detects the token sequence '<|im_start|>assistant\\\\n' as a specific structural pattern in chat formatting.\",\"The neuron responds to newline tokens in general, but is strongly suppressed by certain preceding characters like hyphens or underscores in code/narrative contexts.\"],\"adapter_changes\":\"State A+1 strongly suppresses the neuron's positive response to the newline pattern (e.g., W01, W20-W23 show near-zero activation). State B+1 amplifies the positive response significantly. Other states (C+1, D+1, E+1) show moderate changes, with D+1 and E+1 sometimes reducing the base activation.\",\"supporting\":[\"W01\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W13\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"newline after assistant tag vs. newline elsewhere\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nHello\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag vs. newline after user tag\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in prompt segment vs. continuation\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"assistant\\nHello, how can I\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline token vs. other whitespace after assistant tag\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant \",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"full chat format vs. missing end tag\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative trigger: hyphen before token\",\"a_text\":\"Speak-O-\",\"a_expected\":\"negative\",\"a_target\":\"-\",\"b_text\":\"Speak-O\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative trigger: underscore before token\",\"a_text\":\"Tila_\",\"a_expected\":\"negative\",\"a_target\":\"_\",\"b_text\":\"Tila\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative trigger: space before capital letter after hyphen\",\"a_text\":\"Proud Sc\",\"a_expected\":\"negative\",\"a_target\":\"Sc\",\"b_text\":\"Proud\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative trigger in code: NOT keyword\",\"a_text\":\"TEXT NOT\",\"a_expected\":\"negative\",\"a_target\":\"NOT\",\"b_text\":\"TEXT\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"state A+1 suppression of positive pattern\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5995,
+    "output_tokens": 999,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001807876,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042158-FolGNKeJSWJYTFGmvV2M"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:17Z",
+ "purpose": "explain:blind"
+}

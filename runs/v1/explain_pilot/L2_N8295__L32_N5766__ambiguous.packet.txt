@@ -1,0 +1,170 @@
+You analyze one MLP neuron of a language model from measured activation data and propose testable hypotheses.
+
+How to read the evidence:
+- Each window W## shows text with one highlighted token ⟦like this⟧ and the neuron's activation at that token.
+- The activation at a token is computed only from text up to and including that token (AVAILABLE). Text after it
+  (FUTURE) was not visible when the activation was measured, so it can never be an input cause of that activation.
+  You may use FUTURE text only to understand what the model was writing, not to explain the trigger.
+- Activations can be strongly positive, strongly negative, or near zero. Treat the two signs as different behaviours
+  and describe both if both occur. Compare high windows with near-zero and random windows before generalizing.
+- "other strong positions" lists other tokens in the same window with large activation (offset relative to the
+  highlighted token).
+- Rows for "state X+1" etc. are the same neuron measured in modified versions of the model on identical text. Describe
+  the base neuron first; put any state-specific differences only in adapter_changes.
+- Separately labeled sections (state differences, steering, weight-lens tokens) are other evidence sources; say which
+  claims rest on them.
+
+Rules:
+- Cite windows only by their W## ids, and only ids that appear in the packet.
+- "supporting": windows your trigger hypothesis explains. "contradicting": windows it fails to explain or that cut
+  against it (strong windows it would not predict, or near-zero windows it would predict to be strong).
+- If there is no consistent pattern, set no_coherent_hypothesis to true, use label "no coherent hypothesis", give your
+  best weak guesses as alternatives, and set confidence to "low". This is an acceptable and useful answer.
+- Confidence is your qualitative judgment, not a probability.
+- proposed_tests: exactly ten matched tests that would separate your hypothesis from the alternatives (e.g. word
+  vs meaning, topic, sentiment, register, first vs third person, position). Each test is a pair of short texts a and
+  b (at most 15 words each) that differ minimally, plus an optional third text c (leave c_text, c_expected and c_target
+  as "" if unused). For each text give expected "high" (strong positive), "negative" (strong negative) or "low" (near
+  zero), and target = the exact word or short substring of that text where you expect the peak ("" for "low").
+  "discriminates" says in a few words what the test separates.
+- Be concise: each hypothesis at most two sentences. Output a single minified JSON object (no indentation or line
+  breaks) and nothing else, with exactly these keys:
+{"label":"...","trigger_hypothesis":"...","output_hypothesis":"...","alternatives":["...","..."],"adapter_changes":"...","supporting":["W01"],"contradicting":["W02"],"proposed_tests":[{"discriminates":"...","a_text":"...","a_expected":"high","a_target":"word","b_text":"...","b_expected":"low","b_target":"","c_text":"","c_expected":"","c_target":""}],"confidence":"low","no_coherent_hypothesis":false}
+
+=====
+
+# Evidence packet (30 windows)
+Neuron activation scale: the strongest discovery activation magnitude is 0.67; 'strong' below means |act| >= 0.27.
+Measured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.
+
+## Strongest positive activations
+[W01] domain=emotional_chat segment=response token="'t" act: base=+0.67 | state A+1=+0.60 | state B+1=+0.52 | state C+1=+0.67 | state D+1=+0.76 | state E+1=+0.78
+  AVAILABLE: \n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm with you on this one.  What is up with people these days, I just don⟦'t⟧
+  FUTURE (not visible at the measured token):  understand how they could do that.<|im_end|>
+  other strong positions: "I"(-20)=+0.40
+
+[W02] domain=code token=" multiprocessing" act: base=+0.67 | state A+1=+0.79 | state B+1=+0.69 | state C+1=+0.68 | state D+1=+0.55 | state E+1=+0.69
+  AVAILABLE:  argparse\nimport json\nimport⟦ multiprocessing⟧
+  FUTURE (not visible at the measured token): \nimport os\nimport logging\n\nimport
+
+[W03] domain=chat token=" and" act: base=+0.63 | state A+1=+0.57 | state B+1=+0.63 | state C+1=+0.66 | state D+1=+0.68 | state E+1=+0.65
+  AVAILABLE:  stream and that the output is written to standard output. Use appropriate variable names, comments, and code formatting to make the program easy to read⟦ and⟧
+  FUTURE (not visible at the measured token):  understand.<|im_end|>\n<|im_start|>assistant\n<think>
+  other strong positions: " to"(-2)=+0.59
+
+[W04] domain=web token="\u2019t" act: base=+0.61 | state A+1=+0.60 | state B+1=+0.60 | state C+1=+0.63 | state D+1=+0.66 | state E+1=+0.67
+  AVAILABLE:  multiplayer online games, Part 1: A performance-based approach to sizing infrastructure on the IBM developerWorks website. Don’t worry if you don⟦’t⟧
+  FUTURE (not visible at the measured token):  understand all the terminology – the article was
+
+[W05] domain=narrative token="noxious" act: base=+0.57 | state A+1=+0.69 | state B+1=+0.57 | state C+1=+0.54 | state D+1=+0.44 | state E+1=+0.59
+  AVAILABLE:  fucking hated her. Normally we get along, but after the holiday meal, I could n't stand her. She was just so fucking ob⟦noxious⟧
+  FUTURE (not visible at the measured token):  with her liberal theories. Loving the jew
+
+[W06] domain=narrative token=" clinging" act: base=+0.54 | state A+1=+0.75 | state B+1=+0.49 | state C+1=+0.51 | state D+1=+0.36 | state E+1=+0.53
+  AVAILABLE:  slumber, my eyes snap open. `` Who's there?'' I asked. The Maiden approached, grace in every step, white robes⟦ clinging⟧
+  FUTURE (not visible at the measured token):  to her body. `` You know who
+
+[W07] domain=narrative token=" you" act: base=+0.49 | state A+1=+0.50 | state B+1=+0.52 | state C+1=+0.51 | state D+1=+0.50 | state E+1=+0.49
+  AVAILABLE:  me.'' The man gestured at the manila envelope lying on the coffee table between he and my wife. `` It's nothing personal,⟦ you⟧
+  FUTURE (not visible at the measured token):  understand. It's just that we ca
+
+[W08] domain=narrative token=" you" act: base=+0.48 | state A+1=+0.42 | state B+1=+0.42 | state C+1=+0.46 | state D+1=+0.42 | state E+1=+0.51
+  AVAILABLE:  of day to day shady behaviour. You will consistently be defeated and our plans will be thwarted. That would be simply unacceptable doctor. Do⟦ you⟧
+  FUTURE (not visible at the measured token):  understand the gravity of the situation? ”
+  other strong positions: " Do"(-1)=+0.27
+
+## Strongest negative activations
+[W09] domain=factual token=" Willie" act: base=-0.49 | state A+1=-0.46 | state B+1=-0.49 | state C+1=-0.49 | state D+1=-0.49 | state E+1=-0.49
+  AVAILABLE:  out of high school his sophomore year and shortly thereafter was hired as a part-time recording engineer for the label. Henry Stone, Clarence Reid and⟦ Willie⟧
+  FUTURE (not visible at the measured token):  Clark (in a comment to SongF
+
+[W10] domain=chat token=" Daniel" act: base=-0.45 | state A+1=-0.42 | state B+1=-0.44 | state C+1=-0.44 | state D+1=-0.44 | state E+1=-0.45
+  AVAILABLE:  Arab musicians have performed with the West-Eastern Divan Orchestra. Now they will play for the first time in their home region. Conductor⟦ Daniel⟧
+  FUTURE (not visible at the measured token):  Barenboim tells John Ydst
+
+[W11] domain=web token=" Manuel" act: base=-0.45 | state A+1=-0.42 | state B+1=-0.45 | state C+1=-0.44 | state D+1=-0.45 | state E+1=-0.45
+  AVAILABLE:  by many historians.\nDetails about Teixeira's life are very sparse. His birthplace is most commonly accepted to be Porto\n, to⟦ Manuel⟧
+  FUTURE (not visible at the measured token):  Álvares de Barros and L
+
+[W12] domain=code token="_literals" act: base=-0.44 | state A+1=-0.41 | state B+1=-0.43 | state C+1=-0.43 | state D+1=-0.45 | state E+1=-0.43
+  AVAILABLE:  -*- coding: utf-8 -*-\nfrom __future__ import unicode⟦_literals⟧
+  FUTURE (not visible at the measured token): \n\nfrom django.db import migrations, models
+  other strong positions: " unicode"(-1)=-0.31, " migrations"(+6)=-0.29
+
+## Moderate and low activations
+[W13] domain=chat token="uddled" act: base=+0.20 | state A+1=+0.30 | state B+1=+0.21 | state C+1=+0.19 | state D+1=+0.14 | state E+1=+0.21
+  AVAILABLE:  family, each one holding a weapon of some sort. The young girl had a knife, the woman had an axe, and the family h⟦uddled⟧
+  FUTURE (not visible at the measured token):  in fear.\n\nBut as they drew near
+
+[W14] domain=emotional_chat token="'t" act: base=+0.12 | state A+1=+0.14 | state B+1=+0.14 | state C+1=+0.14 | state D+1=+0.13 | state E+1=+0.15
+  AVAILABLE: user\nMy boyfriend of five years and I broke up. I don⟦'t⟧
+  FUTURE (not visible at the measured token):  know what to do with my life.
+
+[W15] domain=chat segment=response token=" airport" act: base=+0.10 | state A+1=+0.23 | state B+1=+0.08 | state C+1=+0.07 | state D+1=+0.00 | state E+1=+0.09
+  AVAILABLE:  and recommended attire.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nDay 1: Arrival and Beach Relaxation\n- Arrive at the⟦ airport⟧
+  FUTURE (not visible at the measured token):  and take a pre-arranged shuttle
+
+[W16] domain=factual token=" moved" act: base=+0.05 | state A+1=+0.06 | state B+1=+0.05 | state C+1=+0.06 | state D+1=+0.05 | state E+1=+0.05
+  AVAILABLE: ace Wells Dix, She had an early interest in art, and her talents and love of reading were encouraged from an early age. Her family⟦ moved⟧
+  FUTURE (not visible at the measured token):  several times during her early years due to
+
+[W17] domain=factual token=" Free" act: base=+0.01 | state A+1=+0.01 | state B+1=+0.01 | state C+1=+0.01 | state D+1=+0.01 | state E+1=+0.01
+  AVAILABLE: .\n\nSeveral industrial neighbours have come and gone in the vicinity of Waingawa station. In 1911, the Waingawa⟦ Free⟧
+  FUTURE (not visible at the measured token): zing Works were opened by the Wellington Farmers
+  other strong positions: " opened"(+4)=+0.29
+
+[W18] domain=emotional_text token=" any" act: base=+0.00 | state A+1=+0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=-0.00
+  AVAILABLE: .\n\nYou specifically believe that if a mortal sin is not confessed a person is damned.\n\nFeel free to leave.\n\nIve got these too,⟦ any⟧
+  FUTURE (not visible at the measured token):  tips on how to remove/make them
+
+[W19] domain=narrative token=" sight" act: base=+0.00 | state A+1=+0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=-0.00
+  AVAILABLE:  revved up, and through the cupola he could see a seam appear between the hatch and the bulkhead, throwing the outer void into⟦ sight⟧
+  FUTURE (not visible at the measured token): . \n \n The shuttle was a distant sm
+
+[W20] domain=narrative token="." act: base=-0.00 | state A+1=-0.01 | state B+1=-0.00 | state C+1=-0.00 | state D+1=-0.00 | state E+1=-0.00
+  AVAILABLE: : Titanium Alloy \n \n * Tendons & Ligaments: Equally upgraded \n \n * Right Arm: Replaced what was left at the shoulder⟦.⟧
+  FUTURE (not visible at the measured token):  *Not a toy. * \n \n *
+
+[W21] domain=chat token=" Cont" act: base=-0.08 | state A+1=-0.08 | state B+1=-0.09 | state C+1=-0.09 | state D+1=-0.09 | state E+1=-0.08
+  AVAILABLE: 10. Unstoppable - Sia \n11. Roar - Katy Perry \n12. Gonna Fly Now - Bill⟦ Cont⟧
+  FUTURE (not visible at the measured token): i\n13. Champions - Kanye
+
+[W22] domain=web token=" Mac" act: base=-0.13 | state A+1=-0.12 | state B+1=-0.13 | state C+1=-0.12 | state D+1=-0.13 | state E+1=-0.12
+  AVAILABLE: ularis, Natrix tessellata tessellate, Vipera bornmuelleri, Vipera palestinea\nand⟦ Mac⟧
+  FUTURE (not visible at the measured token): rovipera lebetina are limited
+
+[W23] domain=web token="om" act: base=-0.15 | state A+1=-0.15 | state B+1=-0.15 | state C+1=-0.15 | state D+1=-0.15 | state E+1=-0.15
+  AVAILABLE:  basic research into potential drug targets takes place in universities, funded by charitable organisations. The Institute for OneWorld Health charity is developing the drug par⟦om⟧
+  FUTURE (not visible at the measured token): omycin, which they claim will be
+
+[W24] domain=factual token=" Henry" act: base=-0.18 | state A+1=-0.17 | state B+1=-0.17 | state C+1=-0.17 | state D+1=-0.17 | state E+1=-0.16
+  AVAILABLE:  to his mother, he dropped out of high school his sophomore year and shortly thereafter was hired as a part-time recording engineer for the label.⟦ Henry⟧
+  FUTURE (not visible at the measured token):  Stone, Clarence Reid and Willie Clark (
+
+## Random contexts (unselected positions)
+[W25] domain=narrative token=" hear" act: base=+0.07 | state A+1=+0.07 | state B+1=+0.07 | state C+1=+0.07 | state D+1=+0.07 | state E+1=+0.07
+  AVAILABLE:  one of you suggested nectar instead of coffee? I forget.'' \n \n Hestia rolled her eyes. `` Hera. She would n't⟦ hear⟧
+  FUTURE (not visible at the measured token):  otherwise, no matter how much I told
+
+[W26] domain=web token=" one" act: base=+0.04 | state A+1=+0.04 | state B+1=+0.04 | state C+1=+0.04 | state D+1=+0.04 | state E+1=+0.04
+  AVAILABLE:  factor is increased. The researchers say the system can be used for educating viewers valuable exhibits and inspection of engineering products. We just want to get⟦ one⟧
+  FUTURE (not visible at the measured token):  of these before we attend another mega-scale
+
+[W27] domain=chat token=" to" act: base=+0.00 | state A+1=+0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=+0.00
+  AVAILABLE: , teaching style, and the specific ways in which they positively impact the lives of their students. Be sure to use descriptive language and compelling anecdotes⟦ to⟧
+  FUTURE (not visible at the measured token):  fully capture the essence of this exceptional teacher
+  other strong positions: " compelling"(-2)=-0.29
+
+[W28] domain=factual token=" and" act: base=+0.00 | state A+1=+0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=+0.00
+  AVAILABLE:  including Aristotle, Archimedes, Hero of Alexandria and Proclus, that had been preserved in the Byzantine (Eastern Roman) Empire,⟦ and⟧
+  FUTURE (not visible at the measured token):  translated them directly into Latin.\n\nThe final
+
+[W29] domain=factual token=" the" act: base=+0.00 | state A+1=+0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=+0.00
+  AVAILABLE:  in action with the Dutch off the Start on 12 May. The action off the Start led to the Battle of Dover. She was⟦ the⟧
+  FUTURE (not visible at the measured token):  leader of Captain Young's detachment of three
+
+[W30] domain=code token=" value" act: base=+0.00 | state A+1=+0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=+0.00
+  AVAILABLE: s_key">%d</label></td><td><input type="txt" id="%s_key" name="%s_%d_key"⟦ value⟧
+  FUTURE (not visible at the measured token): ="%s" /></td>' % (\n
+
+Return the JSON object now.

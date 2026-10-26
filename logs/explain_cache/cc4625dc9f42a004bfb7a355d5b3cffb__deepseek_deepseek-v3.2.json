@@ -1,0 +1,227 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron responds to tokens that are common words (e.g., 'the', 'about', '.', 'against') in a way that is highly context-dependent and inconsistent across domains and states, with no clear semantic or syntactic rule.",
+  "output_hypothesis": "The neuron's output may modulate attention to common function words, but its effect is inconsistent and often suppressed in modified states.",
+  "alternatives": [
+   "Responds to common English words regardless of part of speech",
+   "Detects tokens that are not the main content word of a phrase",
+   "Random high activations with no pattern"
+  ],
+  "adapter_changes": "In states A+1, B+1, and C+1, the neuron's activations are almost always near zero, indicating the modifications largely suppress its function. State C+1 shows a sign flip for some tokens (e.g., W02, W28, W29).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15"
+  ],
+  "contradicting": [
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "common word 'the' vs. content word",
+    "texts": [
+     {
+      "text": "Open the door.",
+      "expected": "high",
+      "target": "the"
+     },
+     {
+      "text": "Open door.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "preposition 'against' in different contexts",
+    "texts": [
+     {
+      "text": "Waves crashed against the rocks.",
+      "expected": "high",
+      "target": "against"
+     },
+     {
+      "text": "He argued against the proposal.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "period ending a sentence vs. mid-sentence",
+    "texts": [
+     {
+      "text": "The end.",
+      "expected": "high",
+      "target": "."
+     },
+     {
+      "text": "The end. Next",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "word 'want' in request vs. statement",
+    "texts": [
+     {
+      "text": "I want a coffee.",
+      "expected": "high",
+      "target": "want"
+     },
+     {
+      "text": "She doesn't want it.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "proper noun 'Sahara' as subject vs. object",
+    "texts": [
+     {
+      "text": "The Sahara is hot.",
+      "expected": "negative",
+      "target": "Sahara"
+     },
+     {
+      "text": "I visited the Sahara.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "word 'light' as noun vs. adjective",
+    "texts": [
+     {
+      "text": "Turn on the light.",
+      "expected": "high",
+      "target": "light"
+     },
+     {
+      "text": "A light breeze blew.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "word 'wall' in physical vs. metaphorical sense",
+    "texts": [
+     {
+      "text": "Paint the wall.",
+      "expected": "high",
+      "target": "wall"
+     },
+     {
+      "text": "Hit a wall in the project.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "word 'that' as conjunction vs. determiner",
+    "texts": [
+     {
+      "text": "I know that he left.",
+      "expected": "negative",
+      "target": "that"
+     },
+     {
+      "text": "That book is mine.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "first-person 'I' in code vs. English",
+    "texts": [
+     {
+      "text": "for i in range(10):",
+      "expected": "negative",
+      "target": "i"
+     },
+     {
+      "text": "I think so.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "word 'is' in definition vs. description",
+    "texts": [
+     {
+      "text": "Water is wet.",
+      "expected": "negative",
+      "target": "is"
+     },
+     {
+      "text": "It is raining.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\n  \"label\": \"no coherent hypothesis\",\n  \"trigger_hypothesis\": \"The neuron responds to tokens that are common words (e.g., 'the', 'about', '.', 'against') in a way that is highly context-dependent and inconsistent across domains and states, with no clear semantic or syntactic rule.\",\n  \"output_hypothesis\": \"The neuron's output may modulate attention to common function words, but its effect is inconsistent and often suppressed in modified states.\",\n  \"alternatives\": [\"Responds to common English words regardless of part of speech\", \"Detects tokens that are not the main content word of a phrase\", \"Random high activations with no pattern\"],\n  \"adapter_changes\": \"In states A+1, B+1, and C+1, the neuron's activations are almost always near zero, indicating the modifications largely suppress its function. State C+1 shows a sign flip for some tokens (e.g., W02, W28, W29).\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W15\"],\n  \"contradicting\": [\"W16\", \"W17\", \"W18\", \"W19\", \"W20\", \"W21\", \"W22\", \"W23\", \"W24\", \"W25\", \"W26\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"common word 'the' vs. content word\", \"texts\": [{\"text\": \"Open the door.\", \"expected\": \"high\", \"target\": \"the\"}, {\"text\": \"Open door.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"preposition 'against' in different contexts\", \"texts\": [{\"text\": \"Waves crashed against the rocks.\", \"expected\": \"high\", \"target\": \"against\"}, {\"text\": \"He argued against the proposal.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"period ending a sentence vs. mid-sentence\", \"texts\": [{\"text\": \"The end.\", \"expected\": \"high\", \"target\": \".\"}, {\"text\": \"The end. Next\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'want' in request vs. statement\", \"texts\": [{\"text\": \"I want a coffee.\", \"expected\": \"high\", \"target\": \"want\"}, {\"text\": \"She doesn't want it.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"proper noun 'Sahara' as subject vs. object\", \"texts\": [{\"text\": \"The Sahara is hot.\", \"expected\": \"negative\", \"target\": \"Sahara\"}, {\"text\": \"I visited the Sahara.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'light' as noun vs. adjective\", \"texts\": [{\"text\": \"Turn on the light.\", \"expected\": \"high\", \"target\": \"light\"}, {\"text\": \"A light breeze blew.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'wall' in physical vs. metaphorical sense\", \"texts\": [{\"text\": \"Paint the wall.\", \"expected\": \"high\", \"target\": \"wall\"}, {\"text\": \"Hit a wall in the project.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'that' as conjunction vs. determiner\", \"texts\": [{\"text\": \"I know that he left.\", \"expected\": \"negative\", \"target\": \"that\"}, {\"text\": \"That book is mine.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"first-person 'I' in code vs. English\", \"texts\": [{\"text\": \"for i in range(10):\", \"expected\": \"negative\", \"target\": \"i\"}, {\"text\": \"I think so.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'is' in definition vs. description\", \"texts\": [{\"text\": \"Water is wet.\", \"expected\": \"negative\", \"target\": \"is\"}, {\"text\": \"It is raining.\", \"expected\": \"low\", \"target\": \"\"}]}\n  ],\n  \"confidence\": \"low\",\n  \"no_coherent_hypothesis\": true\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4348,
+  "output_tokens": 999,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0014944566
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"no coherent hypothesis\",\n  \"trigger_hypothesis\": \"The neuron responds to tokens that are common words (e.g., 'the', 'about', '.', 'against') in a way that is highly context-dependent and inconsistent across domains and states, with no clear semantic or syntactic rule.\",\n  \"output_hypothesis\": \"The neuron's output may modulate attention to common function words, but its effect is inconsistent and often suppressed in modified states.\",\n  \"alternatives\": [\"Responds to common English words regardless of part of speech\", \"Detects tokens that are not the main content word of a phrase\", \"Random high activations with no pattern\"],\n  \"adapter_changes\": \"In states A+1, B+1, and C+1, the neuron's activations are almost always near zero, indicating the modifications largely suppress its function. State C+1 shows a sign flip for some tokens (e.g., W02, W28, W29).\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W15\"],\n  \"contradicting\": [\"W16\", \"W17\", \"W18\", \"W19\", \"W20\", \"W21\", \"W22\", \"W23\", \"W24\", \"W25\", \"W26\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"common word 'the' vs. content word\", \"texts\": [{\"text\": \"Open the door.\", \"expected\": \"high\", \"target\": \"the\"}, {\"text\": \"Open door.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"preposition 'against' in different contexts\", \"texts\": [{\"text\": \"Waves crashed against the rocks.\", \"expected\": \"high\", \"target\": \"against\"}, {\"text\": \"He argued against the proposal.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"period ending a sentence vs. mid-sentence\", \"texts\": [{\"text\": \"The end.\", \"expected\": \"high\", \"target\": \".\"}, {\"text\": \"The end. Next\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'want' in request vs. statement\", \"texts\": [{\"text\": \"I want a coffee.\", \"expected\": \"high\", \"target\": \"want\"}, {\"text\": \"She doesn't want it.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"proper noun 'Sahara' as subject vs. object\", \"texts\": [{\"text\": \"The Sahara is hot.\", \"expected\": \"negative\", \"target\": \"Sahara\"}, {\"text\": \"I visited the Sahara.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'light' as noun vs. adjective\", \"texts\": [{\"text\": \"Turn on the light.\", \"expected\": \"high\", \"target\": \"light\"}, {\"text\": \"A light breeze blew.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'wall' in physical vs. metaphorical sense\", \"texts\": [{\"text\": \"Paint the wall.\", \"expected\": \"high\", \"target\": \"wall\"}, {\"text\": \"Hit a wall in the project.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'that' as conjunction vs. determiner\", \"texts\": [{\"text\": \"I know that he left.\", \"expected\": \"negative\", \"target\": \"that\"}, {\"text\": \"That book is mine.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"first-person 'I' in code vs. English\", \"texts\": [{\"text\": \"for i in range(10):\", \"expected\": \"negative\", \"target\": \"i\"}, {\"text\": \"I think so.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"word 'is' in definition vs. description\", \"texts\": [{\"text\": \"Water is wet.\", \"expected\": \"negative\", \"target\": \"is\"}, {\"text\": \"It is raining.\", \"expected\": \"low\", \"target\": \"\"}]}\n  ],\n  \"confidence\": \"low\",\n  \"no_coherent_hypothesis\": true\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4348,
+    "output_tokens": 999,
+    "reasoning_tokens": 0,
+    "cached_tokens": 448,
+    "cost_usd": 0.0014944566,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972768-bQcW5phesPjnVLTXQBRo"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-25T23:59:53Z",
+ "purpose": "explain:blind"
+}

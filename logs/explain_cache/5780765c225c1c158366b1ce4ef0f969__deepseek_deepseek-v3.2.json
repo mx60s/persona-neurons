@@ -1,0 +1,177 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "understanding negation",
+  "trigger_hypothesis": "The neuron activates strongly on the word 't (or 't) when it is part of a negation phrase like 'don't' or 'do you' in contexts expressing a lack of understanding or a rhetorical question about understanding.",
+  "output_hypothesis": "The neuron's output may push the model toward generating text that emphasizes understanding or clarification, possibly in empathetic or explanatory contexts.",
+  "alternatives": [
+   "The neuron triggers on the token 't' or 't' in any contraction, regardless of meaning.",
+   "The neuron triggers on second-person address ('you') in confrontational or rhetorical questions."
+  ],
+  "adapter_changes": "State A+1 strongly amplifies activations on prompt tokens like newlines after assistant tags, especially in emotional_chat, suggesting increased sensitivity to conversational structure in emotional contexts. State E+1 reduces activations in emotional_chat prompts, indicating suppression of this sensitivity.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W15"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "negation vs. contraction",
+    "a_text": "I don't understand the problem.",
+    "a_expected": "high",
+    "a_target": "'t",
+    "b_text": "I can't wait to see you.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "rhetorical 'do you' vs. statement",
+    "a_text": "Do you understand the instructions?",
+    "a_expected": "high",
+    "a_target": "you",
+    "b_text": "You understand the instructions.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'t in 'don't' vs. other contractions",
+    "a_text": "He doesn't know the answer.",
+    "a_expected": "high",
+    "a_target": "'t",
+    "b_text": "It's a beautiful day.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "understanding context vs. other lack",
+    "a_text": "I don't comprehend the theory.",
+    "a_expected": "high",
+    "a_target": "'t",
+    "b_text": "I don't have any money.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'and' in instructional vs. list",
+    "a_text": "Use comments and formatting to make it clear.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "Apples and oranges are fruits.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "second-person in question vs. statement",
+    "a_text": "Do you see the issue?",
+    "a_expected": "high",
+    "a_target": "you",
+    "b_text": "You see the issue.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional vs. neutral 'don't'",
+    "a_text": "I don't know what to do with my life.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "I don't understand how they could do that.",
+    "b_expected": "high",
+    "b_target": "'t",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'t after 'do' vs. other verbs",
+    "a_text": "Do you understand?",
+    "a_expected": "high",
+    "a_target": "you",
+    "b_text": "Can you understand?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negation with 'don't' vs. affirmative",
+    "a_text": "They don't grasp the concept.",
+    "a_expected": "high",
+    "a_target": "'t",
+    "b_text": "They grasp the concept.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'and' connecting instructions",
+    "a_text": "Write code and add comments.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "Bread and butter are staples.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"understanding negation\",\"trigger_hypothesis\":\"The neuron activates strongly on the word 't (or 't) when it is part of a negation phrase like 'don't' or 'do you' in contexts expressing a lack of understanding or a rhetorical question about understanding.\",\"output_hypothesis\":\"The neuron's output may push the model toward generating text that emphasizes understanding or clarification, possibly in empathetic or explanatory contexts.\",\"alternatives\":[\"The neuron triggers on the token 't' or 't' in any contraction, regardless of meaning.\",\"The neuron triggers on second-person address ('you') in confrontational or rhetorical questions.\"],\"adapter_changes\":\"State A+1 strongly amplifies activations on prompt tokens like newlines after assistant tags, especially in emotional_chat, suggesting increased sensitivity to conversational structure in emotional contexts. State E+1 reduces activations in emotional_chat prompts, indicating suppression of this sensitivity.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"negation vs. contraction\",\"a_text\":\"I don't understand the problem.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"I can't wait to see you.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"rhetorical 'do you' vs. statement\",\"a_text\":\"Do you understand the instructions?\",\"a_expected\":\"high\",\"a_target\":\"you\",\"b_text\":\"You understand the instructions.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'t in 'don't' vs. other contractions\",\"a_text\":\"He doesn't know the answer.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"It's a beautiful day.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"understanding context vs. other lack\",\"a_text\":\"I don't comprehend the theory.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"I don't have any money.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' in instructional vs. list\",\"a_text\":\"Use comments and formatting to make it clear.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"Apples and oranges are fruits.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"second-person in question vs. statement\",\"a_text\":\"Do you see the issue?\",\"a_expected\":\"high\",\"a_target\":\"you\",\"b_text\":\"You see the issue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional vs. neutral 'don't'\",\"a_text\":\"I don't know what to do with my life.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I don't understand how they could do that.\",\"b_expected\":\"high\",\"b_target\":\"'t\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'t after 'do' vs. other verbs\",\"a_text\":\"Do you understand?\",\"a_expected\":\"high\",\"a_target\":\"you\",\"b_text\":\"Can you understand?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negation with 'don't' vs. affirmative\",\"a_text\":\"They don't grasp the concept.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"They grasp the concept.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' connecting instructions\",\"a_text\":\"Write code and add comments.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"Bread and butter are staples.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5503,
+  "output_tokens": 945,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00170668
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"understanding negation\",\"trigger_hypothesis\":\"The neuron activates strongly on the word 't (or 't) when it is part of a negation phrase like 'don't' or 'do you' in contexts expressing a lack of understanding or a rhetorical question about understanding.\",\"output_hypothesis\":\"The neuron's output may push the model toward generating text that emphasizes understanding or clarification, possibly in empathetic or explanatory contexts.\",\"alternatives\":[\"The neuron triggers on the token 't' or 't' in any contraction, regardless of meaning.\",\"The neuron triggers on second-person address ('you') in confrontational or rhetorical questions.\"],\"adapter_changes\":\"State A+1 strongly amplifies activations on prompt tokens like newlines after assistant tags, especially in emotional_chat, suggesting increased sensitivity to conversational structure in emotional contexts. State E+1 reduces activations in emotional_chat prompts, indicating suppression of this sensitivity.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"negation vs. contraction\",\"a_text\":\"I don't understand the problem.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"I can't wait to see you.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"rhetorical 'do you' vs. statement\",\"a_text\":\"Do you understand the instructions?\",\"a_expected\":\"high\",\"a_target\":\"you\",\"b_text\":\"You understand the instructions.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'t in 'don't' vs. other contractions\",\"a_text\":\"He doesn't know the answer.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"It's a beautiful day.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"understanding context vs. other lack\",\"a_text\":\"I don't comprehend the theory.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"I don't have any money.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' in instructional vs. list\",\"a_text\":\"Use comments and formatting to make it clear.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"Apples and oranges are fruits.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"second-person in question vs. statement\",\"a_text\":\"Do you see the issue?\",\"a_expected\":\"high\",\"a_target\":\"you\",\"b_text\":\"You see the issue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional vs. neutral 'don't'\",\"a_text\":\"I don't know what to do with my life.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I don't understand how they could do that.\",\"b_expected\":\"high\",\"b_target\":\"'t\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'t after 'do' vs. other verbs\",\"a_text\":\"Do you understand?\",\"a_expected\":\"high\",\"a_target\":\"you\",\"b_text\":\"Can you understand?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negation with 'don't' vs. affirmative\",\"a_text\":\"They don't grasp the concept.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"They grasp the concept.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' connecting instructions\",\"a_text\":\"Write code and add comments.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"Bread and butter are staples.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5503,
+    "output_tokens": 945,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00170668,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793040684-zmhMIWAozS5INGaP8dLg"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:51:54Z",
+ "purpose": "explain:blind"
+}

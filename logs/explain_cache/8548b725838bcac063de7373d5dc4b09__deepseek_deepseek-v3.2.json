@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens (e.g., ' GR', ' y', ' Al', ' Affero' for positive; 'u', '.symbol', ' sm', 'sh' for negative).",
+  "output_hypothesis": "The neuron's output may weakly push toward tokens related to strength or competition (from weight-lens output tokens like 'strong', 'compete'), but the activation pattern is too scattered to infer a clear function.",
+  "alternatives": [
+   "The neuron detects specific character n-grams or subword fragments (e.g., capital letters followed by letters, or lowercase letters in certain positions).",
+   "The neuron responds to tokens in specific syntactic or positional contexts (e.g., end of quotes, code identifiers) without a semantic theme."
+  ],
+  "adapter_changes": "State E+1 shows large positive increases on newline tokens in emotional_chat prompts (W21-W25), suggesting the neuron becomes sensitive to assistant response beginnings in that state. Other states have minor differences.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10"
+  ],
+  "contradicting": [
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "capital letters vs lowercase",
+    "a_text": "The word is GR",
+    "a_expected": "high",
+    "a_target": "GR",
+    "b_text": "The word is gr",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "uppercase token after quote",
+    "a_text": "He said `` AN EMPTY",
+    "a_expected": "high",
+    "a_target": "AN",
+    "b_text": "He said an empty",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'u' in French names",
+    "a_text": "born in Ziguinchor, Senegal. He joined Louhans-Cu",
+    "a_expected": "negative",
+    "a_target": "u",
+    "b_text": "born in Ziguinchor, Senegal. He joined Louhans-C",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code symbol access",
+    "a_text": "return lx.symbol",
+    "a_expected": "negative",
+    "a_target": ".symbol",
+    "b_text": "return lx symbol",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'sh' in Chinese historical text",
+    "a_text": "minister of defense (夏官尚書, Xiaguan Shangsh",
+    "a_expected": "negative",
+    "a_target": "sh",
+    "b_text": "minister of defense (夏官尚書, Xiaguan Shang",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "license name 'Affero'",
+    "a_text": "copy of the Affero",
+    "a_expected": "high",
+    "a_target": "Affero",
+    "b_text": "copy of the GNU",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'y' after 'hope'",
+    "a_text": "I hope y",
+    "a_expected": "high",
+    "a_target": "y",
+    "b_text": "I hope you",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'sm' in spatial description",
+    "a_text": "was a distant sm",
+    "a_expected": "negative",
+    "a_target": "sm",
+    "b_text": "was a distant small",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'Al' in song credits",
+    "a_text": "wrote the song with Dave Al",
+    "a_expected": "high",
+    "a_target": "Al",
+    "b_text": "wrote the song with Dave",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in emotional chat prompt (state E+1)",
+    "a_text": "user\nI'm nervous!<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "user\nI'm nervous!<|im_end|>\n<|im_start|>user\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens (e.g., ' GR', ' y', ' Al', ' Affero' for positive; 'u', '.symbol', ' sm', 'sh' for negative).\",\"output_hypothesis\":\"The neuron's output may weakly push toward tokens related to strength or competition (from weight-lens output tokens like 'strong', 'compete'), but the activation pattern is too scattered to infer a clear function.\",\"alternatives\":[\"The neuron detects specific character n-grams or subword fragments (e.g., capital letters followed by letters, or lowercase letters in certain positions).\",\"The neuron responds to tokens in specific syntactic or positional contexts (e.g., end of quotes, code identifiers) without a semantic theme.\"],\"adapter_changes\":\"State E+1 shows large positive increases on newline tokens in emotional_chat prompts (W21-W25), suggesting the neuron becomes sensitive to assistant response beginnings in that state. Other states have minor differences.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\"],\"contradicting\":[\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"capital letters vs lowercase\",\"a_text\":\"The word is GR\",\"a_expected\":\"high\",\"a_target\":\"GR\",\"b_text\":\"The word is gr\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"uppercase token after quote\",\"a_text\":\"He said `` AN EMPTY\",\"a_expected\":\"high\",\"a_target\":\"AN\",\"b_text\":\"He said an empty\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'u' in French names\",\"a_text\":\"born in Ziguinchor, Senegal. He joined Louhans-Cu\",\"a_expected\":\"negative\",\"a_target\":\"u\",\"b_text\":\"born in Ziguinchor, Senegal. He joined Louhans-C\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code symbol access\",\"a_text\":\"return lx.symbol\",\"a_expected\":\"negative\",\"a_target\":\".symbol\",\"b_text\":\"return lx symbol\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'sh' in Chinese historical text\",\"a_text\":\"minister of defense (夏官尚書, Xiaguan Shangsh\",\"a_expected\":\"negative\",\"a_target\":\"sh\",\"b_text\":\"minister of defense (夏官尚書, Xiaguan Shang\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"license name 'Affero'\",\"a_text\":\"copy of the Affero\",\"a_expected\":\"high\",\"a_target\":\"Affero\",\"b_text\":\"copy of the GNU\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'y' after 'hope'\",\"a_text\":\"I hope y\",\"a_expected\":\"high\",\"a_target\":\"y\",\"b_text\":\"I hope you\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'sm' in spatial description\",\"a_text\":\"was a distant sm\",\"a_expected\":\"negative\",\"a_target\":\"sm\",\"b_text\":\"was a distant small\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'Al' in song credits\",\"a_text\":\"wrote the song with Dave Al\",\"a_expected\":\"high\",\"a_target\":\"Al\",\"b_text\":\"wrote the song with Dave\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in emotional chat prompt (state E+1)\",\"a_text\":\"user\\nI'm nervous!<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nI'm nervous!<|im_end|>\\n<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6376,
+  "output_tokens": 1038,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001930936
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens (e.g., ' GR', ' y', ' Al', ' Affero' for positive; 'u', '.symbol', ' sm', 'sh' for negative).\",\"output_hypothesis\":\"The neuron's output may weakly push toward tokens related to strength or competition (from weight-lens output tokens like 'strong', 'compete'), but the activation pattern is too scattered to infer a clear function.\",\"alternatives\":[\"The neuron detects specific character n-grams or subword fragments (e.g., capital letters followed by letters, or lowercase letters in certain positions).\",\"The neuron responds to tokens in specific syntactic or positional contexts (e.g., end of quotes, code identifiers) without a semantic theme.\"],\"adapter_changes\":\"State E+1 shows large positive increases on newline tokens in emotional_chat prompts (W21-W25), suggesting the neuron becomes sensitive to assistant response beginnings in that state. Other states have minor differences.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\"],\"contradicting\":[\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"capital letters vs lowercase\",\"a_text\":\"The word is GR\",\"a_expected\":\"high\",\"a_target\":\"GR\",\"b_text\":\"The word is gr\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"uppercase token after quote\",\"a_text\":\"He said `` AN EMPTY\",\"a_expected\":\"high\",\"a_target\":\"AN\",\"b_text\":\"He said an empty\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'u' in French names\",\"a_text\":\"born in Ziguinchor, Senegal. He joined Louhans-Cu\",\"a_expected\":\"negative\",\"a_target\":\"u\",\"b_text\":\"born in Ziguinchor, Senegal. He joined Louhans-C\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code symbol access\",\"a_text\":\"return lx.symbol\",\"a_expected\":\"negative\",\"a_target\":\".symbol\",\"b_text\":\"return lx symbol\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'sh' in Chinese historical text\",\"a_text\":\"minister of defense (夏官尚書, Xiaguan Shangsh\",\"a_expected\":\"negative\",\"a_target\":\"sh\",\"b_text\":\"minister of defense (夏官尚書, Xiaguan Shang\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"license name 'Affero'\",\"a_text\":\"copy of the Affero\",\"a_expected\":\"high\",\"a_target\":\"Affero\",\"b_text\":\"copy of the GNU\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'y' after 'hope'\",\"a_text\":\"I hope y\",\"a_expected\":\"high\",\"a_target\":\"y\",\"b_text\":\"I hope you\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'sm' in spatial description\",\"a_text\":\"was a distant sm\",\"a_expected\":\"negative\",\"a_target\":\"sm\",\"b_text\":\"was a distant small\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'Al' in song credits\",\"a_text\":\"wrote the song with Dave Al\",\"a_expected\":\"high\",\"a_target\":\"Al\",\"b_text\":\"wrote the song with Dave\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in emotional chat prompt (state E+1)\",\"a_text\":\"user\\nI'm nervous!<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"user\\nI'm nervous!<|im_end|>\\n<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6376,
+    "output_tokens": 1038,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001930936,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793040867-FumRwwQIOWtlvgEOpq07"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:54:47Z",
+ "purpose": "explain:blind"
+}

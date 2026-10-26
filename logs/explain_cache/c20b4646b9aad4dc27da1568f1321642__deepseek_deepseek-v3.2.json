@@ -1,0 +1,187 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "end-of-sentence period",
+  "trigger_hypothesis": "The neuron fires strongly negative at periods ('.') that end a sentence, especially when the sentence is a complete thought or the end of a turn in a conversational or instructional context.",
+  "output_hypothesis": "The neuron's negative activation may suppress the generation of further content after a sentence-ending period, helping to mark sentence boundaries or end conversational turns.",
+  "alternatives": [
+   "The neuron responds to punctuation that indicates a stop or pause, not specifically periods.",
+   "The neuron detects the end of a user message or a turn in a dialogue, signaled by a period before an end-of-sequence token."
+  ],
+  "adapter_changes": "In states A+1, C+1, and B+1, the neuron becomes more negative (stronger suppression) in chat/emotional_chat continuations (e.g., W17, W18, W19, W20), while state D+1 reduces the negativity (makes it less negative or positive) in continuations, suggesting these adapters modulate end-of-turn signaling.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W21"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Period ending a sentence vs. period in abbreviation",
+    "a_text": "The cat sat on the mat.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "Dr. Smith arrived at 5 p.m.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Period at end of user turn vs. middle of sentence",
+    "a_text": "User: Hello. Assistant: Hi.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The book is titled 'Hello. World.'.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Period before end-of-text token vs. period not",
+    "a_text": "Goodbye.<|endoftext|>",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "Goodbye. See you later.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Instruction step ending with period vs. without",
+    "a_text": "Step 1: Mix ingredients.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "Step 1: Mix ingredients thoroughly",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Complete declarative sentence vs. fragment",
+    "a_text": "It is raining outside.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "Because it is raining outside.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Period in chat vs. narrative",
+    "a_text": "Assistant: I agree.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "He nodded. 'I agree,' he said.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Period after short answer vs. long description",
+    "a_text": "Yes.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The process is complex and multi-step.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "End of paragraph (double newline) vs. single newline",
+    "a_text": "The end.\n\n",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The end.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Period with emotional content vs. factual",
+    "a_text": "I'm so happy.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The capital is Paris.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Period as end-of-message vs. within code",
+    "a_text": "Print('Done.').",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "User: Done.",
+    "b_expected": "negative",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"end-of-sentence period\",\"trigger_hypothesis\":\"The neuron fires strongly negative at periods ('.') that end a sentence, especially when the sentence is a complete thought or the end of a turn in a conversational or instructional context.\",\"output_hypothesis\":\"The neuron's negative activation may suppress the generation of further content after a sentence-ending period, helping to mark sentence boundaries or end conversational turns.\",\"alternatives\":[\"The neuron responds to punctuation that indicates a stop or pause, not specifically periods.\",\"The neuron detects the end of a user message or a turn in a dialogue, signaled by a period before an end-of-sequence token.\"],\"adapter_changes\":\"In states A+1, C+1, and B+1, the neuron becomes more negative (stronger suppression) in chat/emotional_chat continuations (e.g., W17, W18, W19, W20), while state D+1 reduces the negativity (makes it less negative or positive) in continuations, suggesting these adapters modulate end-of-turn signaling.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W21\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"Period ending a sentence vs. period in abbreviation\",\"a_text\":\"The cat sat on the mat.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Dr. Smith arrived at 5 p.m.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period at end of user turn vs. middle of sentence\",\"a_text\":\"User: Hello. Assistant: Hi.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The book is titled 'Hello. World.'.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period before end-of-text token vs. period not\",\"a_text\":\"Goodbye.<|endoftext|>\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Goodbye. See you later.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Instruction step ending with period vs. without\",\"a_text\":\"Step 1: Mix ingredients.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Step 1: Mix ingredients thoroughly\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Complete declarative sentence vs. fragment\",\"a_text\":\"It is raining outside.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Because it is raining outside.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period in chat vs. narrative\",\"a_text\":\"Assistant: I agree.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"He nodded. 'I agree,' he said.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period after short answer vs. long description\",\"a_text\":\"Yes.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The process is complex and multi-step.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"End of paragraph (double newline) vs. single newline\",\"a_text\":\"The end.\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The end.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period with emotional content vs. factual\",\"a_text\":\"I'm so happy.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The capital is Paris.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period as end-of-message vs. within code\",\"a_text\":\"Print('Done.').\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"User: Done.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5741,
+  "output_tokens": 1001,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001737596
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"end-of-sentence period\",\"trigger_hypothesis\":\"The neuron fires strongly negative at periods ('.') that end a sentence, especially when the sentence is a complete thought or the end of a turn in a conversational or instructional context.\",\"output_hypothesis\":\"The neuron's negative activation may suppress the generation of further content after a sentence-ending period, helping to mark sentence boundaries or end conversational turns.\",\"alternatives\":[\"The neuron responds to punctuation that indicates a stop or pause, not specifically periods.\",\"The neuron detects the end of a user message or a turn in a dialogue, signaled by a period before an end-of-sequence token.\"],\"adapter_changes\":\"In states A+1, C+1, and B+1, the neuron becomes more negative (stronger suppression) in chat/emotional_chat continuations (e.g., W17, W18, W19, W20), while state D+1 reduces the negativity (makes it less negative or positive) in continuations, suggesting these adapters modulate end-of-turn signaling.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W21\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"Period ending a sentence vs. period in abbreviation\",\"a_text\":\"The cat sat on the mat.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Dr. Smith arrived at 5 p.m.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period at end of user turn vs. middle of sentence\",\"a_text\":\"User: Hello. Assistant: Hi.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The book is titled 'Hello. World.'.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period before end-of-text token vs. period not\",\"a_text\":\"Goodbye.<|endoftext|>\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Goodbye. See you later.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Instruction step ending with period vs. without\",\"a_text\":\"Step 1: Mix ingredients.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Step 1: Mix ingredients thoroughly\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Complete declarative sentence vs. fragment\",\"a_text\":\"It is raining outside.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"Because it is raining outside.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period in chat vs. narrative\",\"a_text\":\"Assistant: I agree.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"He nodded. 'I agree,' he said.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period after short answer vs. long description\",\"a_text\":\"Yes.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The process is complex and multi-step.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"End of paragraph (double newline) vs. single newline\",\"a_text\":\"The end.\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The end.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period with emotional content vs. factual\",\"a_text\":\"I'm so happy.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The capital is Paris.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period as end-of-message vs. within code\",\"a_text\":\"Print('Done.').\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"User: Done.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5741,
+    "output_tokens": 1001,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001737596,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042120-0e9WGrADC2xzubXeGjFH"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:43Z",
+ "purpose": "explain:blind"
+}

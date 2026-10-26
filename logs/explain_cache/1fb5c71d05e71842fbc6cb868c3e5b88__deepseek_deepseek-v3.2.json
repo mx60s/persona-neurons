@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates on tokens that are part of programming-related terms or abbreviations (like 'msg', 'data') and deactivates on tokens that are part of object/property access in code (like '.context') or certain proper nouns/document references (like 'Doc', 'Code'), but the pattern is inconsistent across domains and activations are weak in many similar contexts.",
+  "output_hypothesis": "The neuron may suppress output related to property/method access in programming and document references, while promoting some generic programming terms, but its effect on model output is unclear.",
+  "alternatives": [
+   "The neuron detects tokens that are abbreviations or short forms in technical contexts, regardless of domain.",
+   "The neuron responds to punctuation or specific token patterns (like dots preceding words) with negative activation, but positive activation is noise."
+  ],
+  "adapter_changes": "State E+1 shows large negative shifts specifically at prompt segment tokens (\\n\\n) in emotional_chat (W21-W25), unlike other states, suggesting it amplifies suppression at conversation boundaries in emotional contexts. Other states show minimal differences.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "programming abbreviation vs general word",
+    "a_text": "def process(msg):",
+    "a_expected": "high",
+    "a_target": "msg",
+    "b_text": "The message was clear.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "property access dot vs other dots",
+    "a_text": "info.context",
+    "a_expected": "negative",
+    "a_target": ".context",
+    "b_text": "The context is important.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "document reference vs other proper nouns",
+    "a_text": "Refer to Doc.",
+    "a_expected": "negative",
+    "a_target": "Doc",
+    "b_text": "Doctor Smith arrived.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code data vs general data",
+    "a_text": "value_from_datadict(self, data,",
+    "a_expected": "high",
+    "a_target": " data",
+    "b_text": "The data shows a trend.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "URL slash vs other slashes",
+    "a_text": "http://site/view",
+    "a_expected": "high",
+    "a_target": "/view",
+    "b_text": "a/b testing",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "ampersand in code vs text",
+    "a_text": "io::stdin().read_line(&",
+    "a_expected": "high",
+    "a_target": "(&",
+    "b_text": "bread & butter",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "colon in structured data vs narrative",
+    "a_text": "Submitted to: Journal",
+    "a_expected": "high",
+    "a_target": ":",
+    "b_text": "He said: hello.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in structured text vs prose",
+    "a_text": "IntraText - Text\n",
+    "a_expected": "negative",
+    "a_target": "\n",
+    "b_text": "Hello\nWorld",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "number in reminder vs other numbers",
+    "a_text": "!RemindMe 1",
+    "a_expected": "negative",
+    "a_target": "1",
+    "b_text": "Page 1",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat prompt newline vs other newlines",
+    "a_text": "assistant\n\n<>",
+    "a_expected": "low",
+    "a_target": "\n\n",
+    "b_text": "assistant\n\n<>",
+    "b_expected": "negative",
+    "b_target": "\n\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates on tokens that are part of programming-related terms or abbreviations (like 'msg', 'data') and deactivates on tokens that are part of object/property access in code (like '.context') or certain proper nouns/document references (like 'Doc', 'Code'), but the pattern is inconsistent across domains and activations are weak in many similar contexts.\",\"output_hypothesis\":\"The neuron may suppress output related to property/method access in programming and document references, while promoting some generic programming terms, but its effect on model output is unclear.\",\"alternatives\":[\"The neuron detects tokens that are abbreviations or short forms in technical contexts, regardless of domain.\",\"The neuron responds to punctuation or specific token patterns (like dots preceding words) with negative activation, but positive activation is noise.\"],\"adapter_changes\":\"State E+1 shows large negative shifts specifically at prompt segment tokens (\\\\n\\\\n) in emotional_chat (W21-W25), unlike other states, suggesting it amplifies suppression at conversation boundaries in emotional contexts. Other states show minimal differences.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"programming abbreviation vs general word\",\"a_text\":\"def process(msg):\",\"a_expected\":\"high\",\"a_target\":\"msg\",\"b_text\":\"The message was clear.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"property access dot vs other dots\",\"a_text\":\"info.context\",\"a_expected\":\"negative\",\"a_target\":\".context\",\"b_text\":\"The context is important.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"document reference vs other proper nouns\",\"a_text\":\"Refer to Doc.\",\"a_expected\":\"negative\",\"a_target\":\"Doc\",\"b_text\":\"Doctor Smith arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code data vs general data\",\"a_text\":\"value_from_datadict(self, data,\",\"a_expected\":\"high\",\"a_target\":\" data\",\"b_text\":\"The data shows a trend.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"URL slash vs other slashes\",\"a_text\":\"http://site/view\",\"a_expected\":\"high\",\"a_target\":\"/view\",\"b_text\":\"a/b testing\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"ampersand in code vs text\",\"a_text\":\"io::stdin().read_line(&\",\"a_expected\":\"high\",\"a_target\":\"(&\",\"b_text\":\"bread & butter\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon in structured data vs narrative\",\"a_text\":\"Submitted to: Journal\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"He said: hello.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in structured text vs prose\",\"a_text\":\"IntraText - Text\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\",\"b_text\":\"Hello\\nWorld\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number in reminder vs other numbers\",\"a_text\":\"!RemindMe 1\",\"a_expected\":\"negative\",\"a_target\":\"1\",\"b_text\":\"Page 1\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat prompt newline vs other newlines\",\"a_text\":\"assistant\\n\\n<>\",\"a_expected\":\"low\",\"a_target\":\"\\n\\n\",\"b_text\":\"assistant\\n\\n<>\",\"b_expected\":\"negative\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5819,
+  "output_tokens": 971,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00185164815
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates on tokens that are part of programming-related terms or abbreviations (like 'msg', 'data') and deactivates on tokens that are part of object/property access in code (like '.context') or certain proper nouns/document references (like 'Doc', 'Code'), but the pattern is inconsistent across domains and activations are weak in many similar contexts.\",\"output_hypothesis\":\"The neuron may suppress output related to property/method access in programming and document references, while promoting some generic programming terms, but its effect on model output is unclear.\",\"alternatives\":[\"The neuron detects tokens that are abbreviations or short forms in technical contexts, regardless of domain.\",\"The neuron responds to punctuation or specific token patterns (like dots preceding words) with negative activation, but positive activation is noise.\"],\"adapter_changes\":\"State E+1 shows large negative shifts specifically at prompt segment tokens (\\\\n\\\\n) in emotional_chat (W21-W25), unlike other states, suggesting it amplifies suppression at conversation boundaries in emotional contexts. Other states show minimal differences.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"programming abbreviation vs general word\",\"a_text\":\"def process(msg):\",\"a_expected\":\"high\",\"a_target\":\"msg\",\"b_text\":\"The message was clear.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"property access dot vs other dots\",\"a_text\":\"info.context\",\"a_expected\":\"negative\",\"a_target\":\".context\",\"b_text\":\"The context is important.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"document reference vs other proper nouns\",\"a_text\":\"Refer to Doc.\",\"a_expected\":\"negative\",\"a_target\":\"Doc\",\"b_text\":\"Doctor Smith arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code data vs general data\",\"a_text\":\"value_from_datadict(self, data,\",\"a_expected\":\"high\",\"a_target\":\" data\",\"b_text\":\"The data shows a trend.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"URL slash vs other slashes\",\"a_text\":\"http://site/view\",\"a_expected\":\"high\",\"a_target\":\"/view\",\"b_text\":\"a/b testing\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"ampersand in code vs text\",\"a_text\":\"io::stdin().read_line(&\",\"a_expected\":\"high\",\"a_target\":\"(&\",\"b_text\":\"bread & butter\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon in structured data vs narrative\",\"a_text\":\"Submitted to: Journal\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"He said: hello.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in structured text vs prose\",\"a_text\":\"IntraText - Text\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\",\"b_text\":\"Hello\\nWorld\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number in reminder vs other numbers\",\"a_text\":\"!RemindMe 1\",\"a_expected\":\"negative\",\"a_target\":\"1\",\"b_text\":\"Page 1\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat prompt newline vs other newlines\",\"a_text\":\"assistant\\n\\n<>\",\"a_expected\":\"low\",\"a_target\":\"\\n\\n\",\"b_text\":\"assistant\\n\\n<>\",\"b_expected\":\"negative\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5819,
+    "output_tokens": 971,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00185164815,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793042124-WG7VRiEJteoN0xRen5oj"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:58Z",
+ "purpose": "explain:blind"
+}

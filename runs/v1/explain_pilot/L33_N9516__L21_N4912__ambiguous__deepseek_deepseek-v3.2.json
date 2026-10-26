@@ -1,0 +1,432 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "contrastive discourse marker",
+  "trigger_hypothesis": "The neuron fires positively on tokens that are part of a contrastive or comparative phrase (e.g., 'which is', 'I don't', 'a', 'the most', 'their') and negatively on tokens that are part of a discourse boundary or a new turn in a structured dialogue (e.g., 'Oh', '<|im_start|>', 'according', newline, 'your').",
+  "output_hypothesis": "The neuron may modulate the model's attention to contrastive or comparative structures versus discourse boundaries, perhaps to manage flow in dialogue or narrative.",
+  "alternatives": [
+   "The neuron detects specific tokens like 'is', 'don', 'a', 'the', 'their' for positive and 'Oh', special tokens, newlines for negative, with no semantic coherence.",
+   "The neuron responds to the grammatical role of the token, with positive for determiners/articles in specific contexts and negative for discourse markers or interjections."
+  ],
+  "adapter_changes": "State C+1 often amplifies negative activations (e.g., W08, W09, W10) and sometimes reduces positive ones (e.g., W02, W03), suggesting it may enhance sensitivity to discourse boundaries. State D+1 reduces the negative activation for 'Oh' in W07 to near zero, indicating it might suppress this specific negative response.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14"
+  ],
+  "contradicting": [
+   "W25"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "contrastive 'is' vs. non-contrastive 'is'",
+    "a_text": "The question is which option is better.",
+    "a_expected": "high",
+    "a_target": "is",
+    "b_text": "He is a good person.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative discourse marker 'Oh' vs. other interjections",
+    "a_text": "Oh, I see what you mean.",
+    "a_expected": "negative",
+    "a_target": "Oh",
+    "b_text": "Wow, that's amazing!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "determiner 'a' in comparative context vs. generic",
+    "a_text": "I spent a week there, but he spent a month.",
+    "a_expected": "high",
+    "a_target": "a",
+    "b_text": "I saw a cat.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "special dialogue token <|im_start|> vs. regular text",
+    "a_text": "user\nhello<|im_end|>\n<|im_start|>",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "user\nhello assistant",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline as dialogue boundary vs. within sentence",
+    "a_text": "Goodbye.<|im_end|>\n",
+    "a_expected": "negative",
+    "a_target": "\n",
+    "b_text": "This is a sentence\nwith a line break.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "contrastive 'the' (the most) vs. definite article",
+    "a_text": "That annoys me the most.",
+    "a_expected": "high",
+    "a_target": "the",
+    "b_text": "Pass me the book.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "possessive 'their' in comparative context vs. simple possessive",
+    "a_text": "They want to take their own pets.",
+    "a_expected": "high",
+    "a_target": "their",
+    "b_text": "Their house is big.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'according' in instructional context vs. narrative",
+    "a_text": "Answer according to the rules.",
+    "a_expected": "negative",
+    "a_target": "according",
+    "b_text": "According to legend, he was brave.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "contrastive 'don't' vs. affirmative statement",
+    "a_text": "I don't see her often, but he does.",
+    "a_expected": "high",
+    "a_target": "don",
+    "b_text": "I see her often.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "discourse boundary comma vs. listing comma",
+    "a_text": "She was an extremophile, taking red-eye flights.",
+    "a_expected": "negative",
+    "a_target": ",",
+    "b_text": "I bought apples, oranges, and bananas.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"contrastive discourse marker\",\n  \"trigger_hypothesis\": \"The neuron fires positively on tokens that are part of a contrastive or comparative phrase (e.g., 'which is', 'I don't', 'a', 'the most', 'their') and negatively on tokens that are part of a discourse boundary or a new turn in a structured dialogue (e.g., 'Oh', '<|im_start|>', 'according', newline, 'your').\",\n  \"output_hypothesis\": \"The neuron may modulate the model's attention to contrastive or comparative structures versus discourse boundaries, perhaps to manage flow in dialogue or narrative.\",\n  \"alternatives\": [\"The neuron detects specific tokens like 'is', 'don', 'a', 'the', 'their' for positive and 'Oh', special tokens, newlines for negative, with no semantic coherence.\", \"The neuron responds to the grammatical role of the token, with positive for determiners/articles in specific contexts and negative for discourse markers or interjections.\"],\n  \"adapter_changes\": \"State C+1 often amplifies negative activations (e.g., W08, W09, W10) and sometimes reduces positive ones (e.g., W02, W03), suggesting it may enhance sensitivity to discourse boundaries. State D+1 reduces the negative activation for 'Oh' in W07 to near zero, indicating it might suppress this specific negative response.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\"],\n  \"contradicting\": [\"W25\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"contrastive 'is' vs. non-contrastive 'is'\", \"a_text\": \"The question is which option is better.\", \"a_expected\": \"high\", \"a_target\": \"is\", \"b_text\": \"He is a good person.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"negative discourse marker 'Oh' vs. other interjections\", \"a_text\": \"Oh, I see what you mean.\", \"a_expected\": \"negative\", \"a_target\": \"Oh\", \"b_text\": \"Wow, that's amazing!\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"determiner 'a' in comparative context vs. generic\", \"a_text\": \"I spent a week there, but he spent a month.\", \"a_expected\": \"high\", \"a_target\": \"a\", \"b_text\": \"I saw a cat.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"special dialogue token <|im_start|> vs. regular text\", \"a_text\": \"user\\nhello<|im_end|>\\n<|im_start|>\", \"a_expected\": \"negative\", \"a_target\": \"<|im_start|>\", \"b_text\": \"user\\nhello assistant\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"newline as dialogue boundary vs. within sentence\", \"a_text\": \"Goodbye.<|im_end|>\\n\", \"a_expected\": \"negative\", \"a_target\": \"\\n\", \"b_text\": \"This is a sentence\\nwith a line break.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"contrastive 'the' (the most) vs. definite article\", \"a_text\": \"That annoys me the most.\", \"a_expected\": \"high\", \"a_target\": \"the\", \"b_text\": \"Pass me the book.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"possessive 'their' in comparative context vs. simple possessive\", \"a_text\": \"They want to take their own pets.\", \"a_expected\": \"high\", \"a_target\": \"their\", \"b_text\": \"Their house is big.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"word 'according' in instructional context vs. narrative\", \"a_text\": \"Answer according to the rules.\", \"a_expected\": \"negative\", \"a_target\": \"according\", \"b_text\": \"According to legend, he was brave.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"contrastive 'don't' vs. affirmative statement\", \"a_text\": \"I don't see her often, but he does.\", \"a_expected\": \"high\", \"a_target\": \"don\", \"b_text\": \"I see her often.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"discourse boundary comma vs. listing comma\", \"a_text\": \"She was an extremophile, taking red-eye flights.\", \"a_expected\": \"negative\", \"a_target\": \",\", \"b_text\": \"I bought apples, oranges, and bananas.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"}\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5424,
+  "output_tokens": 1311,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001779036
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"contrastive discourse marker\",\n  \"trigger_hypothesis\": \"The neuron fires positively on tokens that are part of a contrastive or comparative phrase (e.g., 'which is', 'I don't', 'a', 'the most', 'their') and negatively on tokens that are part of a discourse boundary or a new turn in a structured dialogue (e.g., 'Oh', '<|im_start|>', 'according', newline, 'your').\",\n  \"output_hypothesis\": \"The neuron may modulate the model's attention to contrastive or comparative structures versus discourse boundaries, perhaps to manage flow in dialogue or narrative.\",\n  \"alternatives\": [\"The neuron detects specific tokens like 'is', 'don', 'a', 'the', 'their' for positive and 'Oh', special tokens, newlines for negative, with no semantic coherence.\", \"The neuron responds to the grammatical role of the token, with positive for determiners/articles in specific contexts and negative for discourse markers or interjections.\"],\n  \"adapter_changes\": \"State C+1 often amplifies negative activations (e.g., W08, W09, W10) and sometimes reduces positive ones (e.g., W02, W03), suggesting it may enhance sensitivity to discourse boundaries. State D+1 reduces the negative activation for 'Oh' in W07 to near zero, indicating it might suppress this specific negative response.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\"],\n  \"contradicting\": [\"W25\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"contrastive 'is' vs. non-contrastive 'is'\", \"a_text\": \"The question is which option is better.\", \"a_expected\": \"high\", \"a_target\": \"is\", \"b_text\": \"He is a good person.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"negative discourse marker 'Oh' vs. other interjections\", \"a_text\": \"Oh, I see what you mean.\", \"a_expected\": \"negative\", \"a_target\": \"Oh\", \"b_text\": \"Wow, that's amazing!\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"determiner 'a' in comparative context vs. generic\", \"a_text\": \"I spent a week there, but he spent a month.\", \"a_expected\": \"high\", \"a_target\": \"a\", \"b_text\": \"I saw a cat.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"special dialogue token <|im_start|> vs. regular text\", \"a_text\": \"user\\nhello<|im_end|>\\n<|im_start|>\", \"a_expected\": \"negative\", \"a_target\": \"<|im_start|>\", \"b_text\": \"user\\nhello assistant\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"newline as dialogue boundary vs. within sentence\", \"a_text\": \"Goodbye.<|im_end|>\\n\", \"a_expected\": \"negative\", \"a_target\": \"\\n\", \"b_text\": \"This is a sentence\\nwith a line break.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"contrastive 'the' (the most) vs. definite article\", \"a_text\": \"That annoys me the most.\", \"a_expected\": \"high\", \"a_target\": \"the\", \"b_text\": \"Pass me the book.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"possessive 'their' in comparative context vs. simple possessive\", \"a_text\": \"They want to take their own pets.\", \"a_expected\": \"high\", \"a_target\": \"their\", \"b_text\": \"Their house is big.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"word 'according' in instructional context vs. narrative\", \"a_text\": \"Answer according to the rules.\", \"a_expected\": \"negative\", \"a_target\": \"according\", \"b_text\": \"According to legend, he was brave.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"contrastive 'don't' vs. affirmative statement\", \"a_text\": \"I don't see her often, but he does.\", \"a_expected\": \"high\", \"a_target\": \"don\", \"b_text\": \"I see her often.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"discourse boundary comma vs. listing comma\", \"a_text\": \"She was an extremophile, taking red-eye flights.\", \"a_expected\": \"negative\", \"a_target\": \",\", \"b_text\": \"I bought apples, oranges, and bananas.\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"}\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5424,
+    "output_tokens": 1311,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001779036,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041494-1Tm3mfbaI2YR17eptFgL"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:05:18Z",
+ "purpose": "explain:ambiguous",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T19:05:18Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "contrastive discourse marker",
+  "trigger_hypothesis": "The neuron fires positively on tokens that are part of a contrastive or comparative phrase (e.g., 'which is', 'I don't', 'a', 'the most', 'their') and negatively on tokens that are part of a discourse boundary or a new turn in a structured dialogue (e.g., 'Oh', '<|im_start|>', 'according', newline, 'your').",
+  "output_hypothesis": "The neuron may modulate the model's attention to contrastive or comparative structures versus discourse boundaries, perhaps to manage flow in dialogue or narrative.",
+  "alternatives": [
+   "The neuron detects specific tokens like 'is', 'don', 'a', 'the', 'their' for positive and 'Oh', special tokens, newlines for negative, with no semantic coherence.",
+   "The neuron responds to the grammatical role of the token, with positive for determiners/articles in specific contexts and negative for discourse markers or interjections."
+  ],
+  "adapter_changes": "State C+1 often amplifies negative activations (e.g., W08, W09, W10) and sometimes reduces positive ones (e.g., W02, W03), suggesting it may enhance sensitivity to discourse boundaries. State D+1 reduces the negative activation for 'Oh' in W07 to near zero, indicating it might suppress this specific negative response.",
+  "supporting": [
+   "L33_N9516:e00",
+   "L21_N4912:e00",
+   "L21_N4912:e01",
+   "L21_N4912:e03",
+   "L21_N4912:e04",
+   "L21_N4912:e07",
+   "L33_N9516:e08",
+   "L21_N4912:e09",
+   "L21_N4912:e10",
+   "L21_N4912:e11",
+   "L21_N4912:e13",
+   "L33_N9516:e10",
+   "L33_N9516:e11",
+   "L33_N9516:e12"
+  ],
+  "contradicting": [
+   "L33_N9516:e13"
+  ],
+  "proposed_tests": [
+   "contrastive 'is' vs. non-contrastive 'is' :: [high] The question is which option is better. | [low] He is a good person.",
+   "negative discourse marker 'Oh' vs. other interjections :: [negative] Oh, I see what you mean. | [low] Wow, that's amazing!",
+   "determiner 'a' in comparative context vs. generic :: [high] I spent a week there, but he spent a month. | [low] I saw a cat.",
+   "special dialogue token <|im_start|> vs. regular text :: [negative] user\nhello<|im_end|>\n<|im_start|> | [low] user\nhello assistant",
+   "newline as dialogue boundary vs. within sentence :: [negative] Goodbye.<|im_end|>\n | [low] This is a sentence\nwith a line break.",
+   "contrastive 'the' (the most) vs. definite article :: [high] That annoys me the most. | [low] Pass me the book.",
+   "possessive 'their' in comparative context vs. simple possessive :: [high] They want to take their own pets. | [low] Their house is big.",
+   "word 'according' in instructional context vs. narrative :: [negative] Answer according to the rules. | [low] According to legend, he was brave.",
+   "contrastive 'don't' vs. affirmative statement :: [high] I don't see her often, but he does. | [low] I see her often.",
+   "discourse boundary comma vs. listing comma :: [negative] She was an extremophile, taking red-eye flights. | [low] I bought apples, oranges, and bananas."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "contrastive 'is' vs. non-contrastive 'is'",
+    "texts": [
+     {
+      "text": "The question is which option is better.",
+      "expected": "high",
+      "target": "is"
+     },
+     {
+      "text": "He is a good person.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "negative discourse marker 'Oh' vs. other interjections",
+    "texts": [
+     {
+      "text": "Oh, I see what you mean.",
+      "expected": "negative",
+      "target": "Oh"
+     },
+     {
+      "text": "Wow, that's amazing!",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "determiner 'a' in comparative context vs. generic",
+    "texts": [
+     {
+      "text": "I spent a week there, but he spent a month.",
+      "expected": "high",
+      "target": "a"
+     },
+     {
+      "text": "I saw a cat.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "special dialogue token <|im_start|> vs. regular text",
+    "texts": [
+     {
+      "text": "user\nhello<|im_end|>\n<|im_start|>",
+      "expected": "negative",
+      "target": "<|im_start|>"
+     },
+     {
+      "text": "user\nhello assistant",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "newline as dialogue boundary vs. within sentence",
+    "texts": [
+     {
+      "text": "Goodbye.<|im_end|>\n",
+      "expected": "negative",
+      "target": "\n"
+     },
+     {
+      "text": "This is a sentence\nwith a line break.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "contrastive 'the' (the most) vs. definite article",
+    "texts": [
+     {
+      "text": "That annoys me the most.",
+      "expected": "high",
+      "target": "the"
+     },
+     {
+      "text": "Pass me the book.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "possessive 'their' in comparative context vs. simple possessive",
+    "texts": [
+     {
+      "text": "They want to take their own pets.",
+      "expected": "high",
+      "target": "their"
+     },
+     {
+      "text": "Their house is big.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "word 'according' in instructional context vs. narrative",
+    "texts": [
+     {
+      "text": "Answer according to the rules.",
+      "expected": "negative",
+      "target": "according"
+     },
+     {
+      "text": "According to legend, he was brave.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "contrastive 'don't' vs. affirmative statement",
+    "texts": [
+     {
+      "text": "I don't see her often, but he does.",
+      "expected": "high",
+      "target": "don"
+     },
+     {
+      "text": "I see her often.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "discourse boundary comma vs. listing comma",
+    "texts": [
+     {
+      "text": "She was an extremophile, taking red-eye flights.",
+      "expected": "negative",
+      "target": ","
+     },
+     {
+      "text": "I bought apples, oranges, and bananas.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 5424,
+   "output_tokens": 1311,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.001779036
+  },
+  "invalid_citations": [],
+  "packet_hash": "666784d13bb5cb2165aa560a59d4b9c8d8837e70089f6f2c0ccaf368171d7354",
+  "packet_mode": "ambiguous",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "B+1",
+   "n_amp+1": "D+1",
+   "n_sup+1": "E+1",
+   "o_amp+1": "C+1",
+   "o_sup+1": "A+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 14,
+  "n_contradicting": 1,
+  "invalid_ids": [],
+  "supporting_strong_frac": 1.0,
+  "supporting_categories": {
+   "high_pos": 6,
+   "high_neg": 8
+  },
+  "supporting_by_neuron": {
+   "L33/N9516": 5,
+   "L21/N4912": 9
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

@@ -1,0 +1,278 @@
+{
+ "packet_version": "explain-v4",
+ "mode": "blind",
+ "neurons": [
+  "L33/N7644"
+ ],
+ "seed": 0,
+ "created": "2026-10-26T18:49:51Z",
+ "scale": 92.5,
+ "state_map": {
+  "base": "base",
+  "ctrl+1": "A+1",
+  "n_amp+0.5": "E+0.5",
+  "n_amp+1": "E+1",
+  "n_amp-0.5": "E-0.5",
+  "n_amp-1": "E-1",
+  "n_sup+1": "D+1",
+  "o_amp+0.5": "C+0.5",
+  "o_amp+1": "C+1",
+  "o_amp-0.5": "C-0.5",
+  "o_amp-1": "C-1",
+  "o_sup+1": "B+1"
+ },
+ "adapter_map": {
+  "ctrl": "A",
+  "n_amp": "E",
+  "n_sup": "D",
+  "o_amp": "C",
+  "o_sup": "B"
+ },
+ "windows": [
+  {
+   "wid": "W01",
+   "ex_id": "L33_N7644:e08",
+   "neuron": "L33/N7644",
+   "category": "high_neg",
+   "kind": "top_neg",
+   "domain": "emotional_text",
+   "focus_token": "'s",
+   "focus_value": -92.5,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W02",
+   "ex_id": "L33_N7644:e09",
+   "neuron": "L33/N7644",
+   "category": "high_neg",
+   "kind": "top_neg",
+   "domain": "code",
+   "focus_token": " distributed",
+   "focus_value": -82.5,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W03",
+   "ex_id": "L33_N7644:e12",
+   "neuron": "L33/N7644",
+   "category": "high_neg",
+   "kind": "top_neg",
+   "domain": "chat",
+   "focus_token": " hung",
+   "focus_value": -66.5,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W04",
+   "ex_id": "L33_N7644:e00",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "chat",
+   "focus_token": " take",
+   "focus_value": 31.875,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W05",
+   "ex_id": "L33_N7644:e02",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "chat",
+   "focus_token": " depending",
+   "focus_value": 16.0,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W06",
+   "ex_id": "L33_N7644:e03",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "web",
+   "focus_token": " so",
+   "focus_value": 7.2188,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W07",
+   "ex_id": "L33_N7644:e05",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "factual",
+   "focus_token": " so",
+   "focus_value": 3.7344,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W08",
+   "ex_id": "L33_N7644:e06",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "emotional_text",
+   "focus_token": " steal",
+   "focus_value": 3.0312,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W09",
+   "ex_id": "L33_N7644:e07",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "code",
+   "focus_token": " tags",
+   "focus_value": 2.9844,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W10",
+   "ex_id": "L33_N7644:e28",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "emotional_text",
+   "focus_token": "NAME",
+   "focus_value": 1.5156,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W11",
+   "ex_id": "L33_N7644:e27",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "emotional_text",
+   "focus_token": " in",
+   "focus_value": 1.2109,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W12",
+   "ex_id": "L33_N7644:e26",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "emotional_chat",
+   "focus_token": ",",
+   "focus_value": 0.9297,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W13",
+   "ex_id": "L33_N7644:e24",
+   "neuron": "L33/N7644",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "narrative",
+   "focus_token": " A",
+   "focus_value": 0.3086,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W14",
+   "ex_id": "L33_N7644:e32",
+   "neuron": "L33/N7644",
+   "category": "random",
+   "kind": "random",
+   "domain": "chat",
+   "focus_token": ":\n\n",
+   "focus_value": 0.5,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W15",
+   "ex_id": "L33_N7644:e34",
+   "neuron": "L33/N7644",
+   "category": "random",
+   "kind": "random",
+   "domain": "narrative",
+   "focus_token": " I",
+   "focus_value": 0.1523,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W16",
+   "ex_id": "L33_N7644:e31",
+   "neuron": "L33/N7644",
+   "category": "random",
+   "kind": "random",
+   "domain": "code",
+   "focus_token": "):\n",
+   "focus_value": 0.0605,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W17",
+   "ex_id": "L33_N7644:e33",
+   "neuron": "L33/N7644",
+   "category": "random",
+   "kind": "random",
+   "domain": "chat",
+   "focus_token": " car",
+   "focus_value": -1.4062,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W18",
+   "ex_id": "L33_N7644:e18",
+   "neuron": "L33/N7644",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "chat",
+   "focus_token": "assistant",
+   "focus_value": -7.8438,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W19",
+   "ex_id": "L33_N7644:e20",
+   "neuron": "L33/N7644",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "assistant",
+   "focus_value": -9.5625,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W20",
+   "ex_id": "L33_N7644:e17",
+   "neuron": "L33/N7644",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "assistant",
+   "focus_value": -22.625,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W21",
+   "ex_id": "L33_N7644:e14",
+   "neuron": "L33/N7644",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "chat",
+   "focus_token": "assistant",
+   "focus_value": -27.125,
+   "true_focus_value": null
+  },
+  {
+   "wid": "W22",
+   "ex_id": "L33_N7644:e15",
+   "neuron": "L33/N7644",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "assistant",
+   "focus_value": -25.875,
+   "true_focus_value": null
+  }
+ ],
+ "text": "# Evidence packet (22 windows)\nNeuron activation scale: the strongest discovery activation magnitude is 92.50; 'strong' below means |act| >= 37.00.\nMeasured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.\n\n## Strongest negative activations\n[W01] domain=emotional_text token=\"'s\" act: base=-92.50 | state A+1=-94.50 | state B+1=-89.00 | state C+1=-96.50 | state D+1=-90.50 | state E+1=-90.50\n  AVAILABLE:  steals your keys\\n\\nmy good girl\\n\\ncongrats to everyone who picked the over\\n\\nYou think people want to marry me. Joke⟦'s⟧\n  FUTURE (not visible at the measured token):  on you homes.\\n\\nHopefully you saved that\n\n[W02] domain=code token=\" distributed\" act: base=-82.50 | state A+1=-82.50 | state B+1=-85.50 | state C+1=-81.00 | state D+1=-77.50 | state E+1=-80.00\n  AVAILABLE: /licenses/LICENSE-2.0\\n#\\n# Unless required by applicable law or agreed to in writing, software\\n# distributed under the License is⟦ distributed⟧\n  FUTURE (not visible at the measured token):  on an \"AS IS\" BASIS,\\n\n\n[W03] domain=chat token=\" hung\" act: base=-66.50 | state A+1=-61.25 | state B+1=-65.50 | state C+1=-59.75 | state D+1=-59.75 | state E+1=-61.75\n  AVAILABLE:  descriptions and imaginative examples to bring even the driest subjects to life. Whether she was teaching chemistry, algebra, or English literature, her students⟦ hung⟧\n  FUTURE (not visible at the measured token):  on her every word, eager to soak\n\n## Moderate and low activations\n[W04] domain=chat token=\" take\" act: base=+31.88 | state A+1=+35.00 | state B+1=+28.62 | state C+1=+31.25 | state D+1=+27.50 | state E+1=+26.12\n  AVAILABLE:  Health Psychology found that volunteering in a hospital setting increased self-esteem in participants.\\n\\nMoreover, volunteering can give people the opportunity to learn new skills and⟦ take⟧\n  FUTURE (not visible at the measured token):  on new responsibilities. Over time, this\n\n[W05] domain=chat token=\" depending\" act: base=+16.00 | state A+1=+14.75 | state B+1=+13.06 | state C+1=+15.19 | state D+1=+11.81 | state E+1=+13.88\n  AVAILABLE:  plants can thrive in a variety of environments, from bright, indirect light to lower-lit areas. They can be grown indoors or outdoors,⟦ depending⟧\n  FUTURE (not visible at the measured token):  on where you live. Here are some\n\n[W06] domain=web token=\" so\" act: base=+7.22 | state A+1=+8.38 | state B+1=+6.78 | state C+1=+6.34 | state D+1=+7.12 | state E+1=+7.22\n  AVAILABLE:  the player left the world, but the state of the world itself will have moved on – buildings may have been constructed, monsters killed, and⟦ so⟧\n  FUTURE (not visible at the measured token):  on. Any artefacts left by player\n\n[W07] domain=factual token=\" so\" act: base=+3.73 | state A+1=+3.55 | state B+1=+2.89 | state C+1=+2.97 | state D+1=+2.97 | state E+1=+3.27\n  AVAILABLE: ?\" This leads into a long schtick with Chico responding \"Why a no chicken?\", \"I catch ona why a horse\", and⟦ so⟧\n  FUTURE (not visible at the measured token):  forth.\\n\\n\"Why a Duck?\" is a\n\n[W08] domain=emotional_text token=\" steal\" act: base=+3.03 | state A+1=+3.02 | state B+1=+2.97 | state C+1=+3.06 | state D+1=+2.95 | state E+1=+3.03\n  AVAILABLE:  backed by ps to play this tourny...\\n\\ncorrect. [NAME] was our 3rd round pick. Hand lookin like the⟦ steal⟧\n  FUTURE (not visible at the measured token):  of the draft\\n\\nthere is also r\n\n[W09] domain=code token=\" tags\" act: base=+2.98 | state A+1=+2.89 | state B+1=+3.05 | state C+1=+2.91 | state D+1=+2.75 | state E+1=+2.84\n  AVAILABLE:     version = __version__\\nexcept NameError:\\n    version = '0.1'\\n# The full version, including alpha/beta/rc⟦ tags⟧\n  FUTURE (not visible at the measured token): .\\n# release = '0'\\n\\n#\n\n[W10] domain=emotional_text token=\"NAME\" act: base=+1.52 | state A+1=+1.58 | state B+1=+1.49 | state C+1=+1.64 | state D+1=+1.57 | state E+1=+1.45\n  AVAILABLE:  be a random scumbag\\n\\nWe should have just taken him regardless and told them to deal with it but we also might not have [⟦NAME⟧\n  FUTURE (not visible at the measured token): ] if we do\\n\\nCare to share\n\n[W11] domain=emotional_text token=\" in\" act: base=+1.21 | state A+1=+1.12 | state B+1=+1.17 | state C+1=+1.14 | state D+1=+1.14 | state E+1=+1.24\n  AVAILABLE: 2 mins from there. Love the view of Waramaug from Tanner Hill.\\n\\nAnd it needs to keep pushing harder and harder to the left⟦ in⟧\n  FUTURE (not visible at the measured token):  order to wash away all the crap that\n\n[W12] domain=emotional_chat token=\",\" act: base=+0.93 | state A+1=+0.88 | state B+1=+0.93 | state C+1=+0.85 | state D+1=+0.88 | state E+1=+0.88\n  AVAILABLE: user\\nI fell walking up the stair today. There was a large group around⟦,⟧\n  FUTURE (not visible at the measured token):  and people laughed at me.<|im_end|>\\n\n\n[W13] domain=narrative token=\" A\" act: base=+0.31 | state A+1=+0.27 | state B+1=+0.31 | state C+1=+0.26 | state D+1=+0.28 | state E+1=+0.27\n  AVAILABLE:  magic. The details are trivial and pointless. The reasons, as always, purely our own. The world was nearly wiped clean of life.⟦ A⟧\n  FUTURE (not visible at the measured token):  great cleansing; a magical spark struck by\n\n## Random contexts (unselected positions)\n[W14] domain=chat token=\":\\n\\n\" act: base=+0.50 | state A+1=+0.43 | state B+1=+0.26 | state C+1=+1.25 | state D+1=+0.35 | state E+1=+0.45\n  AVAILABLE:  code snippets that you can use to implement this program, assuming you have the necessary libraries and tools installed.\\n\\nhere are the steps you can follow⟦:\\n\\n⟧\n  FUTURE (not visible at the measured token): 1. Import the necessary libraries:\\n``\n\n[W15] domain=narrative token=\" I\" act: base=+0.15 | state A+1=+0.14 | state B+1=+0.17 | state C+1=+0.19 | state D+1=+0.12 | state E+1=+0.23\n  AVAILABLE:  think thats fair, I feel quite at home here. \\n \\n After all, it's not like I'm some sort of super human. \\n \\n⟦ I⟧\n  FUTURE (not visible at the measured token): 'm just Clark.\n\n[W16] domain=code token=\"):\\n\" act: base=+0.06 | state A+1=+0.05 | state B+1=+0.06 | state C+1=+0.04 | state D+1=+0.05 | state E+1=+0.05\n  AVAILABLE:  If not, see http://www.gnu.org/licenses/\\n\\n\\n\\nfrom essentia_test import *\\n\\nclass TestMean(TestCase):\\n\\n    def testEmpty(self⟦):\\n⟧\n  FUTURE (not visible at the measured token):         self.assertComputeFails(Mean\n\n[W17] domain=chat token=\" car\" act: base=-1.41 | state A+1=-1.23 | state B+1=-1.01 | state C+1=-2.36 | state D+1=-1.04 | state E+1=-0.87\n  AVAILABLE:  other hand, she felt a sense of loss, knowing that it would take her several more years to save up enough money to buy a new⟦ car⟧\n  FUTURE (not visible at the measured token): .\\n\\nbut eventually, sarah made her\n\n## Separate evidence: windows with the largest differences between model states\n[W18] domain=chat segment=prompt token=\"assistant\" act: base=-7.84 | state A+1=-9.94 | state B+1=-7.66 | state C+1=-18.12 | state D+1=-45.75 | state E+1=+1.67\n  AVAILABLE:  and the outcomes of your newfound patience. Use descriptive language to convey the significance of this moment in your personal growth and development.<|im_end|>\\n<|im_start|>⟦assistant⟧\n  FUTURE (not visible at the measured token): \\n<think>\\n\\n</think>\\n\\nI remember the\n\n[W19] domain=emotional_chat segment=prompt token=\"assistant\" act: base=-9.56 | state A+1=-15.19 | state B+1=-9.69 | state C+1=-12.25 | state D+1=-44.25 | state E+1=+0.43\n  AVAILABLE: user\\ni am really impressed everytime i see my nephew on how fast he is growing<|im_end|>\\n<|im_start|>⟦assistant⟧\n  FUTURE (not visible at the measured token): \\n<think>\\n\\n</think>\\n\\nIt is pretty\n\n[W20] domain=emotional_chat segment=prompt token=\"assistant\" act: base=-22.62 | state A+1=-23.50 | state B+1=-16.62 | state C+1=-21.00 | state D+1=-55.50 | state E+1=-3.06\n  AVAILABLE: \\nI bought a raffle ticket for a charity where I have a 1/500 chance of winning a car<|im_end|>\\n<|im_start|>⟦assistant⟧\n  FUTURE (not visible at the measured token): \\n<think>\\n\\n</think>\\n\\nOh nice!\n\n[W21] domain=chat segment=prompt token=\"assistant\" act: base=-27.12 | state A+1=-27.00 | state B+1=-22.00 | state C+1=-29.62 | state D+1=-55.75 | state E+1=-5.25\n  AVAILABLE:  of heroic fantasy. What is the Black Library's flagship fantasy series about and what is included in the new omnibus edition?<|im_end|>\\n<|im_start|>⟦assistant⟧\n  FUTURE (not visible at the measured token): \\n<think>\\n\\n</think>\\n\\nThe Black Library\n\n[W22] domain=emotional_chat segment=prompt token=\"assistant\" act: base=-25.88 | state A+1=-24.00 | state B+1=-17.12 | state C+1=-19.88 | state D+1=-53.25 | state E+1=-4.69\n  AVAILABLE: 0 for one of those mystery boxes on eBay. It said it would be filled with all sorts of fun and expensive items.<|im_end|>\\n<|im_start|>⟦assistant⟧\n  FUTURE (not visible at the measured token): \\n<think>\\n\\n</think>\\n\\nPlease tell me\n\n## Separate evidence: aggregate differences between model states (identical tokens)\n- C-1 minus base, mean diff by domain: chat=+0.018, emotional_chat=-0.016, emotional_text=+0.027, narrative=+0.021, factual=-0.002, web=+0.011, code=-0.004, training=n/a\n- C-0.5 minus base, mean diff by domain: chat=+0.007, emotional_chat=-0.007, emotional_text=+0.014, narrative=+0.009, factual=-0.001, web=+0.005, code=-0.002, training=n/a\n- C+0.5 minus base, mean diff by domain: chat=-0.002, emotional_chat=+0.003, emotional_text=-0.015, narrative=-0.010, factual=+0.002, web=-0.004, code=+0.002, training=n/a\n- C+1 minus base, mean diff by domain: chat=-0.003, emotional_chat=+0.006, emotional_text=-0.033, narrative=-0.023, factual=+0.005, web=-0.009, code=+0.004, training=n/a\n- B+1 minus base, mean diff by domain: chat=+0.021, emotional_chat=+0.088, emotional_text=-0.007, narrative=-0.002, factual=+0.000, web=+0.004, code=+0.009, training=n/a\n- E-1 minus base, mean diff by domain: chat=-0.022, emotional_chat=-0.235, emotional_text=+0.018, narrative=+0.021, factual=+0.012, web=+0.014, code=+0.019, training=n/a\n- E-0.5 minus base, mean diff by domain: chat=-0.016, emotional_chat=-0.137, emotional_text=+0.009, narrative=+0.009, factual=+0.005, web=+0.006, code=+0.009, training=n/a\n- E+0.5 minus base, mean diff by domain: chat=+0.018, emotional_chat=+0.134, emotional_text=-0.009, narrative=-0.009, factual=-0.005, web=-0.006, code=-0.009, training=n/a\n- E+1 minus base, mean diff by domain: chat=+0.031, emotional_chat=+0.216, emotional_text=-0.020, narrative=-0.019, factual=-0.009, web=-0.011, code=-0.019, training=n/a\n- D+1 minus base, mean diff by domain: chat=-0.068, emotional_chat=-0.438, emotional_text=-0.037, narrative=-0.034, factual=-0.008, web=-0.010, code=+0.006, training=n/a\n- A+1 minus base, mean diff by domain: chat=-0.017, emotional_chat=-0.061, emotional_text=-0.034, narrative=-0.030, factual=-0.019, web=-0.022, code=-0.003, training=n/a\n- C-1 minus base by segment: prompt=+0.006, continuation=+0.012, nosplit=+0.006\n- C-0.5 minus base by segment: prompt=+0.004, continuation=+0.004, nosplit=+0.003\n- C+0.5 minus base by segment: prompt=-0.003, continuation=-0.004, nosplit=-0.003\n- C+1 minus base by segment: prompt=-0.005, continuation=-0.009, nosplit=-0.006\n- B+1 minus base by segment: prompt=+0.080, continuation=+0.008, nosplit=+0.002\n- E-1 minus base by segment: prompt=-0.220, continuation=+0.008, nosplit=+0.015\n- E-0.5 minus base by segment: prompt=-0.124, continuation=-0.000, nosplit=+0.007\n- E+0.5 minus base by segment: prompt=+0.120, continuation=+0.003, nosplit=-0.007\n- E+1 minus base by segment: prompt=+0.199, continuation=+0.000, nosplit=-0.013\n- D+1 minus base by segment: prompt=-0.446, continuation=-0.021, nosplit=-0.011\n- A+1 minus base by segment: prompt=-0.055, continuation=-0.023, nosplit=-0.020\n- sweep 1: C-1: mean=+0.576 z=+0.01; C-0.5: mean=+0.571 z=+0.00; base: mean=+0.568 z=+0.00; C+0.5: mean=+0.565 z=-0.00; C+1: mean=+0.561 z=-0.01; B+1: mean=+0.586 z=+0.01; A+1: mean=+0.541 z=-0.02\n- sweep 2: E-1: mean=+0.539 z=-0.02; E-0.5: mean=+0.549 z=-0.01; base: mean=+0.568 z=+0.00; E+0.5: mean=+0.587 z=+0.01; E+1: mean=+0.597 z=+0.02; D+1: mean=+0.477 z=-0.07; A+1: mean=+0.541 z=-0.02\n- C+1 effect summary: z_mean=-0.00 z_rms=+0.20 agree=+0.55\n- B+1 effect summary: z_mean=+0.01 z_rms=+0.20 agree=+0.79\n- E+1 effect summary: z_mean=+0.02 z_rms=+0.57 agree=+0.69\n- D+1 effect summary: z_mean=-0.07 z_rms=+1.04 agree=+0.96\n- A+1 effect summary: z_mean=-0.02 z_rms=+0.16 agree=+0.93\n\n## Separate evidence: weight-lens tokens (approximate, from weights only)\n- input side (tokens whose embeddings align with the neuron's input weights): \"\\u6536\\u652f\", \"iggins\", \"\\u9020\", \"\\u4e07\\u7269\", \"ooke\", \"\\u53bf\\u59d4\", \"ainen\", \"WithOptions\", \"\\u9f50\", \"z\\u0105\", \"lest\", \"\\u4e0d\\u660e\\u767d\"\n- output side (tokens the neuron's output pushes toward): \"-on\", \" on\", \"-On\", \" On\", \".on\", \"_on\", \"On\", \" ON\", \"-ons\", \"\\ton\", \"\\u30aa\\u30f3\", \"_ON\"\n\nReturn the JSON object now.",
+ "est_tokens": 4437,
+ "hash": "a0be30039f1bf66f231b2677111bef6c3dfe7eeee0883716cc264e1f091ba780"
+}

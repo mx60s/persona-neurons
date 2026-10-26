@@ -1,0 +1,196 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron may respond to tokens that are common words (e.g., 'the', 'about', 'against', '.') but the pattern is inconsistent across domains and signs, with no clear semantic or syntactic rule.",
+  "output_hypothesis": "The neuron's output effect is unclear; activations are strong on diverse tokens without a consistent downstream impact.",
+  "alternatives": [
+   "The neuron might detect sentence boundaries or punctuation in factual contexts, but strong activations also occur mid-sentence.",
+   "It could be sensitive to certain word classes (prepositions, articles) but fails on many instances (e.g., 'the' can be strong positive or negative)."
+  ],
+  "adapter_changes": "State modifications (A+1, B+1, C+1) drastically reduce or invert activations in many strong windows (e.g., W02, W27, W28, W29), suggesting the neuron's behavior is fragile and state-dependent.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15"
+  ],
+  "contradicting": [
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "common word 'the' in different contexts",
+    "a_text": "The cat sat on the mat.",
+    "a_expected": "high",
+    "a_target": "the",
+    "b_text": "Cat sat on mat.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "preposition 'against' in narrative vs factual",
+    "a_text": "Waves crashed against the rocks.",
+    "a_expected": "high",
+    "a_target": "against",
+    "b_text": "The argument was against the proposal.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period ending a factual statement",
+    "a_text": "Mount Everest is tall.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "Mount Everest is tall and snowy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'want' in chat vs other domains",
+    "a_text": "I want a coffee.",
+    "a_expected": "high",
+    "a_target": "want",
+    "b_text": "The want ads are online.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun 'Sahara' in factual list vs definition",
+    "a_text": "The Sahara is large.",
+    "a_expected": "negative",
+    "a_target": "Sahara",
+    "b_text": "Visit the Sahara desert.",
+    "b_expected": "high",
+    "b_target": "Sahara",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'light' as traffic signal vs illumination",
+    "a_text": "Turn left at the light.",
+    "a_expected": "high",
+    "a_target": "light",
+    "b_text": "The room was filled with light.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'wall' in narrative description",
+    "a_text": "The sea wall was high.",
+    "a_expected": "high",
+    "a_target": "wall",
+    "b_text": "The wall clock ticked.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'that' in emotional expression",
+    "a_text": "I felt so alone that night.",
+    "a_expected": "negative",
+    "a_target": "that",
+    "b_text": "That book is good.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "variable 'i' in code loop",
+    "a_text": "for i in range(10):",
+    "a_expected": "negative",
+    "a_target": "i",
+    "b_text": "I went to the store.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'is' in factual definition",
+    "a_text": "The Sahara is large.",
+    "a_expected": "negative",
+    "a_target": "is",
+    "b_text": "Is the Sahara large?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron may respond to tokens that are common words (e.g., 'the', 'about', 'against', '.') but the pattern is inconsistent across domains and signs, with no clear semantic or syntactic rule.\",\"output_hypothesis\":\"The neuron's output effect is unclear; activations are strong on diverse tokens without a consistent downstream impact.\",\"alternatives\":[\"The neuron might detect sentence boundaries or punctuation in factual contexts, but strong activations also occur mid-sentence.\",\"It could be sensitive to certain word classes (prepositions, articles) but fails on many instances (e.g., 'the' can be strong positive or negative).\"],\"adapter_changes\":\"State modifications (A+1, B+1, C+1) drastically reduce or invert activations in many strong windows (e.g., W02, W27, W28, W29), suggesting the neuron's behavior is fragile and state-dependent.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\"],\"contradicting\":[\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\"],\"proposed_tests\":[{\"discriminates\":\"common word 'the' in different contexts\",\"a_text\":\"The cat sat on the mat.\",\"a_expected\":\"high\",\"a_target\":\"the\",\"b_text\":\"Cat sat on mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"preposition 'against' in narrative vs factual\",\"a_text\":\"Waves crashed against the rocks.\",\"a_expected\":\"high\",\"a_target\":\"against\",\"b_text\":\"The argument was against the proposal.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending a factual statement\",\"a_text\":\"Mount Everest is tall.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Mount Everest is tall and snowy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'want' in chat vs other domains\",\"a_text\":\"I want a coffee.\",\"a_expected\":\"high\",\"a_target\":\"want\",\"b_text\":\"The want ads are online.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun 'Sahara' in factual list vs definition\",\"a_text\":\"The Sahara is large.\",\"a_expected\":\"negative\",\"a_target\":\"Sahara\",\"b_text\":\"Visit the Sahara desert.\",\"b_expected\":\"high\",\"b_target\":\"Sahara\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'light' as traffic signal vs illumination\",\"a_text\":\"Turn left at the light.\",\"a_expected\":\"high\",\"a_target\":\"light\",\"b_text\":\"The room was filled with light.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'wall' in narrative description\",\"a_text\":\"The sea wall was high.\",\"a_expected\":\"high\",\"a_target\":\"wall\",\"b_text\":\"The wall clock ticked.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'that' in emotional expression\",\"a_text\":\"I felt so alone that night.\",\"a_expected\":\"negative\",\"a_target\":\"that\",\"b_text\":\"That book is good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"variable 'i' in code loop\",\"a_text\":\"for i in range(10):\",\"a_expected\":\"negative\",\"a_target\":\"i\",\"b_text\":\"I went to the store.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'is' in factual definition\",\"a_text\":\"The Sahara is large.\",\"a_expected\":\"negative\",\"a_target\":\"is\",\"b_text\":\"Is the Sahara large?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4501,
+  "output_tokens": 995,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00150740769
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron may respond to tokens that are common words (e.g., 'the', 'about', 'against', '.') but the pattern is inconsistent across domains and signs, with no clear semantic or syntactic rule.\",\"output_hypothesis\":\"The neuron's output effect is unclear; activations are strong on diverse tokens without a consistent downstream impact.\",\"alternatives\":[\"The neuron might detect sentence boundaries or punctuation in factual contexts, but strong activations also occur mid-sentence.\",\"It could be sensitive to certain word classes (prepositions, articles) but fails on many instances (e.g., 'the' can be strong positive or negative).\"],\"adapter_changes\":\"State modifications (A+1, B+1, C+1) drastically reduce or invert activations in many strong windows (e.g., W02, W27, W28, W29), suggesting the neuron's behavior is fragile and state-dependent.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\"],\"contradicting\":[\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\"],\"proposed_tests\":[{\"discriminates\":\"common word 'the' in different contexts\",\"a_text\":\"The cat sat on the mat.\",\"a_expected\":\"high\",\"a_target\":\"the\",\"b_text\":\"Cat sat on mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"preposition 'against' in narrative vs factual\",\"a_text\":\"Waves crashed against the rocks.\",\"a_expected\":\"high\",\"a_target\":\"against\",\"b_text\":\"The argument was against the proposal.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending a factual statement\",\"a_text\":\"Mount Everest is tall.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Mount Everest is tall and snowy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'want' in chat vs other domains\",\"a_text\":\"I want a coffee.\",\"a_expected\":\"high\",\"a_target\":\"want\",\"b_text\":\"The want ads are online.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun 'Sahara' in factual list vs definition\",\"a_text\":\"The Sahara is large.\",\"a_expected\":\"negative\",\"a_target\":\"Sahara\",\"b_text\":\"Visit the Sahara desert.\",\"b_expected\":\"high\",\"b_target\":\"Sahara\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'light' as traffic signal vs illumination\",\"a_text\":\"Turn left at the light.\",\"a_expected\":\"high\",\"a_target\":\"light\",\"b_text\":\"The room was filled with light.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'wall' in narrative description\",\"a_text\":\"The sea wall was high.\",\"a_expected\":\"high\",\"a_target\":\"wall\",\"b_text\":\"The wall clock ticked.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'that' in emotional expression\",\"a_text\":\"I felt so alone that night.\",\"a_expected\":\"negative\",\"a_target\":\"that\",\"b_text\":\"That book is good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"variable 'i' in code loop\",\"a_text\":\"for i in range(10):\",\"a_expected\":\"negative\",\"a_target\":\"i\",\"b_text\":\"I went to the store.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'is' in factual definition\",\"a_text\":\"The Sahara is large.\",\"a_expected\":\"negative\",\"a_target\":\"is\",\"b_text\":\"Is the Sahara large?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4501,
+    "output_tokens": 995,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00150740769,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792973272-ZqJcHoR1Oq4nmtClpYZ4"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:08:27Z",
+ "purpose": "explain:blind"
+}

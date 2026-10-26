@@ -1,0 +1,1160 @@
+{
+ "id": "L14/N8295",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:58Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron activates on tokens that are part of programming-related terms or abbreviations (like 'msg', 'data') and deactivates on tokens that are part of object/property access in code (like '.context') or certain proper nouns/document references (like 'Doc', 'Code'), but the pattern is inconsistent across domains and activations are weak in many similar contexts.",
+   "output_hypothesis": "The neuron may suppress output related to property/method access in programming and document references, while promoting some generic programming terms, but its effect on model output is unclear.",
+   "alternatives": [
+    "The neuron detects tokens that are abbreviations or short forms in technical contexts, regardless of domain.",
+    "The neuron responds to punctuation or specific token patterns (like dots preceding words) with negative activation, but positive activation is noise."
+   ],
+   "adapter_changes": "State E+1 shows large negative shifts specifically at prompt segment tokens (\\n\\n) in emotional_chat (W21-W25), unlike other states, suggesting it amplifies suppression at conversation boundaries in emotional contexts. Other states show minimal differences.",
+   "supporting": [
+    "L14_N8295:e00",
+    "L14_N8295:e08",
+    "L14_N8295:e10",
+    "L14_N8295:e11",
+    "L14_N8295:e01"
+   ],
+   "contradicting": [
+    "L14_N8295:e03",
+    "L14_N8295:e04",
+    "L14_N8295:e05",
+    "L14_N8295:e06",
+    "L14_N8295:e28",
+    "L14_N8295:e26",
+    "L14_N8295:e25",
+    "L14_N8295:e24",
+    "L14_N8295:e23",
+    "L14_N8295:e13",
+    "L14_N8295:e12",
+    "L14_N8295:e30",
+    "L14_N8295:e33",
+    "L14_N8295:e31",
+    "L14_N8295:e32"
+   ],
+   "proposed_tests": [
+    "programming abbreviation vs general word :: [high] def process(msg): | [low] The message was clear.",
+    "property access dot vs other dots :: [negative] info.context | [low] The context is important.",
+    "document reference vs other proper nouns :: [negative] Refer to Doc. | [low] Doctor Smith arrived.",
+    "code data vs general data :: [high] value_from_datadict(self, data, | [low] The data shows a trend.",
+    "URL slash vs other slashes :: [high] http://site/view | [low] a/b testing",
+    "ampersand in code vs text :: [high] io::stdin().read_line(& | [low] bread & butter",
+    "colon in structured data vs narrative :: [high] Submitted to: Journal | [low] He said: hello.",
+    "newline in structured text vs prose :: [negative] IntraText - Text\n | [low] Hello\nWorld",
+    "number in reminder vs other numbers :: [negative] !RemindMe 1 | [low] Page 1",
+    "emotional chat prompt newline vs other newlines :: [low] assistant\n\n<> | [negative] assistant\n\n<>"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "programming abbreviation vs general word",
+     "texts": [
+      {
+       "text": "def process(msg):",
+       "expected": "high",
+       "target": "msg"
+      },
+      {
+       "text": "The message was clear.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "property access dot vs other dots",
+     "texts": [
+      {
+       "text": "info.context",
+       "expected": "negative",
+       "target": ".context"
+      },
+      {
+       "text": "The context is important.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "document reference vs other proper nouns",
+     "texts": [
+      {
+       "text": "Refer to Doc.",
+       "expected": "negative",
+       "target": "Doc"
+      },
+      {
+       "text": "Doctor Smith arrived.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "code data vs general data",
+     "texts": [
+      {
+       "text": "value_from_datadict(self, data,",
+       "expected": "high",
+       "target": " data"
+      },
+      {
+       "text": "The data shows a trend.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "URL slash vs other slashes",
+     "texts": [
+      {
+       "text": "http://site/view",
+       "expected": "high",
+       "target": "/view"
+      },
+      {
+       "text": "a/b testing",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "ampersand in code vs text",
+     "texts": [
+      {
+       "text": "io::stdin().read_line(&",
+       "expected": "high",
+       "target": "(&"
+      },
+      {
+       "text": "bread & butter",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "colon in structured data vs narrative",
+     "texts": [
+      {
+       "text": "Submitted to: Journal",
+       "expected": "high",
+       "target": ":"
+      },
+      {
+       "text": "He said: hello.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "newline in structured text vs prose",
+     "texts": [
+      {
+       "text": "IntraText - Text\n",
+       "expected": "negative",
+       "target": "\n"
+      },
+      {
+       "text": "Hello\nWorld",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "number in reminder vs other numbers",
+     "texts": [
+      {
+       "text": "!RemindMe 1",
+       "expected": "negative",
+       "target": "1"
+      },
+      {
+       "text": "Page 1",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "emotional chat prompt newline vs other newlines",
+     "texts": [
+      {
+       "text": "assistant\n\n<>",
+       "expected": "low",
+       "target": "\n\n"
+      },
+      {
+       "text": "assistant\n\n<>",
+       "expected": "negative",
+       "target": "\n\n"
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 5819,
+    "output_tokens": 971,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00185164815
+   },
+   "invalid_citations": [],
+   "packet_hash": "1fb5c71d05e71842fbc6cb868c3e5b88e23f40b0279c2bba924e044eb66533ee",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "programming abbreviation vs general word",
+   "prediction": "high on 'msg'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def process(msg):",
+     "expected": "high",
+     "target": "msg",
+     "measured_max": 0.249,
+     "measured_min": -0.1914,
+     "value": -0.1914,
+     "threshold": 0.7774,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The message was clear.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.053,
+     "measured_min": -0.1113,
+     "value": 0.1113,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.056,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "property access dot vs other dots",
+   "prediction": "negative on '.context'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "info.context",
+     "expected": "negative",
+     "target": ".context",
+     "measured_max": 0.0,
+     "measured_min": -0.3125,
+     "value": -0.3125,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The context is important.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0481,
+     "measured_min": -0.043,
+     "value": 0.0481,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.062,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "document reference vs other proper nouns",
+   "prediction": "negative on 'Doc'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Refer to Doc.",
+     "expected": "negative",
+     "target": "Doc",
+     "measured_max": 0.0,
+     "measured_min": -0.1426,
+     "value": -0.0081,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Doctor Smith arrived.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1089,
+     "measured_min": -0.082,
+     "value": 0.1089,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "code data vs general data",
+   "prediction": "high on ' data'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "value_from_datadict(self, data,",
+     "expected": "high",
+     "target": " data",
+     "measured_max": 2.125,
+     "measured_min": -0.124,
+     "value": 2.125,
+     "threshold": 0.7774,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The data shows a trend.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1611,
+     "value": 0.1611,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.489,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "URL slash vs other slashes",
+   "prediction": "high on '/view'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "http://site/view",
+     "expected": "high",
+     "target": "/view",
+     "measured_max": 0.2852,
+     "measured_min": -0.0177,
+     "value": 0.2852,
+     "threshold": 0.7774,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "a/b testing",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1201,
+     "measured_min": 0.0,
+     "value": 0.1201,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.038,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "ampersand in code vs text",
+   "prediction": "high on '(&'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "io::stdin().read_line(&",
+     "expected": "high",
+     "target": "(&",
+     "measured_max": 1.0078,
+     "measured_min": -0.0112,
+     "value": 1.0078,
+     "threshold": 0.7774,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "bread & butter",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1494,
+     "measured_min": -0.1426,
+     "value": 0.1494,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.198,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "colon in structured data vs narrative",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Submitted to: Journal",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.3145,
+     "measured_min": -0.0583,
+     "value": 0.3145,
+     "threshold": 0.7774,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said: hello.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1108,
+     "measured_min": -0.0889,
+     "value": 0.1108,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.047,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "newline in structured text vs prose",
+   "prediction": "negative on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "IntraText - Text\n",
+     "expected": "negative",
+     "target": "\n",
+     "measured_max": 0.4648,
+     "measured_min": -0.3887,
+     "value": 0.0244,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Hello\nWorld",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4102,
+     "measured_min": 0.0,
+     "value": 0.4102,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "number in reminder vs other numbers",
+   "prediction": "negative on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "!RemindMe 1",
+     "expected": "negative",
+     "target": "1",
+     "measured_max": 0.0354,
+     "measured_min": -0.0125,
+     "value": -0.0084,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Page 1",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0264,
+     "measured_min": -0.0659,
+     "value": 0.0659,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "emotional chat prompt newline vs other newlines",
+   "prediction": "low on '\\n\\n'; negative on '\\n\\n'",
+   "texts": [
+    {
+     "text": "assistant\n\n<>",
+     "expected": "low",
+     "target": "\n\n",
+     "measured_max": 0.1006,
+     "measured_min": -0.1016,
+     "value": 0.1016,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "assistant\n\n<>",
+     "expected": "negative",
+     "target": "\n\n",
+     "measured_max": 0.1006,
+     "measured_min": -0.1016,
+     "value": 0.1006,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.047,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:57Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "programming abbreviation vs general word",
+   "prediction": "high on 'msg'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def process(msg):",
+     "expected": "high",
+     "target": "msg",
+     "measured_max": 0.249,
+     "measured_min": -0.1914,
+     "value": -0.1914,
+     "threshold": 0.7774,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The message was clear.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.053,
+     "measured_min": -0.1113,
+     "value": 0.1113,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.056,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "property access dot vs other dots",
+   "prediction": "negative on '.context'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "info.context",
+     "expected": "negative",
+     "target": ".context",
+     "measured_max": 0.0,
+     "measured_min": -0.3125,
+     "value": -0.3125,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The context is important.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0481,
+     "measured_min": -0.043,
+     "value": 0.0481,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.062,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "document reference vs other proper nouns",
+   "prediction": "negative on 'Doc'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Refer to Doc.",
+     "expected": "negative",
+     "target": "Doc",
+     "measured_max": 0.0,
+     "measured_min": -0.1426,
+     "value": -0.0081,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Doctor Smith arrived.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1089,
+     "measured_min": -0.082,
+     "value": 0.1089,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "code data vs general data",
+   "prediction": "high on ' data'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "value_from_datadict(self, data,",
+     "expected": "high",
+     "target": " data",
+     "measured_max": 2.125,
+     "measured_min": -0.124,
+     "value": 2.125,
+     "threshold": 0.7774,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The data shows a trend.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1611,
+     "value": 0.1611,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.489,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "URL slash vs other slashes",
+   "prediction": "high on '/view'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "http://site/view",
+     "expected": "high",
+     "target": "/view",
+     "measured_max": 0.2852,
+     "measured_min": -0.0177,
+     "value": 0.2852,
+     "threshold": 0.7774,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "a/b testing",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1201,
+     "measured_min": 0.0,
+     "value": 0.1201,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.038,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "ampersand in code vs text",
+   "prediction": "high on '(&'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "io::stdin().read_line(&",
+     "expected": "high",
+     "target": "(&",
+     "measured_max": 1.0078,
+     "measured_min": -0.0112,
+     "value": 1.0078,
+     "threshold": 0.7774,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "bread & butter",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1494,
+     "measured_min": -0.1426,
+     "value": 0.1494,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.198,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "colon in structured data vs narrative",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Submitted to: Journal",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.3145,
+     "measured_min": -0.0583,
+     "value": 0.3145,
+     "threshold": 0.7774,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He said: hello.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1108,
+     "measured_min": -0.0889,
+     "value": 0.1108,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.047,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "newline in structured text vs prose",
+   "prediction": "negative on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "IntraText - Text\n",
+     "expected": "negative",
+     "target": "\n",
+     "measured_max": 0.4648,
+     "measured_min": -0.3887,
+     "value": 0.0244,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Hello\nWorld",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4102,
+     "measured_min": 0.0,
+     "value": 0.4102,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "number in reminder vs other numbers",
+   "prediction": "negative on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "!RemindMe 1",
+     "expected": "negative",
+     "target": "1",
+     "measured_max": 0.0354,
+     "measured_min": -0.0125,
+     "value": -0.0084,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Page 1",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0264,
+     "measured_min": -0.0659,
+     "value": 0.0659,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "emotional chat prompt newline vs other newlines",
+   "prediction": "low on '\\n\\n'; negative on '\\n\\n'",
+   "texts": [
+    {
+     "text": "assistant\n\n<>",
+     "expected": "low",
+     "target": "\n\n",
+     "measured_max": 0.1006,
+     "measured_min": -0.1016,
+     "value": 0.1016,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "assistant\n\n<>",
+     "expected": "negative",
+     "target": "\n\n",
+     "measured_max": 0.1006,
+     "measured_min": -0.1016,
+     "value": 0.1006,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.047,
+    "scale": 4.3438,
+    "pos_ref": 1.5547,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2421875,
+    "p01": -0.248046875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 5,
+   "of": 10
+  }
+ ]
+}

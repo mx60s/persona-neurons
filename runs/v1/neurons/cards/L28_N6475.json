@@ -1,0 +1,1153 @@
+{
+ "id": "L28/N6475",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:24Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "fascination/interest trigger",
+   "trigger_hypothesis": "The neuron activates strongly negative when the available context describes a person (often a character) having a long-standing trait, interest, or identity, especially with words like 'been', 'always', 'identity', and 'ig' (as part of 'intrigued'). It activates positive when the context is about a positive emotional response or affirmation, like 'anything' in a supportive conversational turn.",
+   "output_hypothesis": "The neuron's output pushes toward tokens related to fascination, interest, and intrigue (e.g., 'fasc', 'interesting', 'intriguing'), suggesting it suppresses or modulates expressions of established traits to promote more engaging or inquisitive language.",
+   "alternatives": [
+    "The neuron detects the grammatical structure of past participles or auxiliary verbs like 'been'.",
+    "The neuron responds to the end of a clause or a conversational turn boundary."
+   ],
+   "adapter_changes": "State D+1 consistently amplifies negative activations, especially in emotional_chat segments (see W21, W22, W23, W24), making the neuron more negative. Other states (A+1, B+1, C+1, E+1) show smaller, less consistent changes.",
+   "supporting": [
+    "L28_N6475:e08",
+    "L28_N6475:e09",
+    "L28_N6475:e11",
+    "L28_N6475:e12",
+    "L28_N6475:e00",
+    "L28_N6475:e03"
+   ],
+   "contradicting": [
+    "L28_N6475:e24",
+    "L28_N6475:e23",
+    "L28_N6475:e22",
+    "L28_N6475:e30",
+    "L28_N6475:e29",
+    "L28_N6475:e32",
+    "L28_N6475:e31"
+   ],
+   "proposed_tests": [
+    "Long-standing trait vs. immediate action :: [negative] She had always been fascinated by astronomy. | [low] She became fascinated by astronomy yesterday.",
+    "Person having an identity vs. object having an identity :: [low] The detective uncovered the identity of the thief. | [negative] He struggled with his identity as an artist.",
+    "Word 'intrigued' in past tense description vs. present inquiry :: [negative] The story intrigued her deeply. | [low] Does this intrigue you?",
+    "Positive emotional affirmation in conversation :: [high] I'm so glad! Did anything help? | [low] I'm so upset! Did anything happen?",
+    "'Always' modifying a trait vs. modifying an action :: [negative] He had always been kind. | [low] He always arrived on time.",
+    "First-person declaration of state ('I am') in emotional vs. neutral context :: [negative] I am genuinely intrigued. | [low] I am a teacher.",
+    "Conjunction 'and' linking descriptive traits :: [negative] It was both beautiful and terrifying. | [low] She bought apples and oranges.",
+    "Pronoun 'It' starting a positive emotional statement :: [high] It means a lot to me. | [low] It is on the table.",
+    "Token 'ig' as part of 'intrigued' vs. other words :: [negative] She was intrigued by the mystery. | [low] The building was big and old.",
+    "Word 'particular' in a supportive conversational context :: [high] Did anything in particular make you happy? | [low] The particular details are unknown."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Long-standing trait vs. immediate action",
+     "texts": [
+      {
+       "text": "She had always been fascinated by astronomy.",
+       "expected": "negative",
+       "target": "been"
+      },
+      {
+       "text": "She became fascinated by astronomy yesterday.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Person having an identity vs. object having an identity",
+     "texts": [
+      {
+       "text": "The detective uncovered the identity of the thief.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "He struggled with his identity as an artist.",
+       "expected": "negative",
+       "target": "identity"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Word 'intrigued' in past tense description vs. present inquiry",
+     "texts": [
+      {
+       "text": "The story intrigued her deeply.",
+       "expected": "negative",
+       "target": "ig"
+      },
+      {
+       "text": "Does this intrigue you?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Positive emotional affirmation in conversation",
+     "texts": [
+      {
+       "text": "I'm so glad! Did anything help?",
+       "expected": "high",
+       "target": "anything"
+      },
+      {
+       "text": "I'm so upset! Did anything happen?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'Always' modifying a trait vs. modifying an action",
+     "texts": [
+      {
+       "text": "He had always been kind.",
+       "expected": "negative",
+       "target": "always"
+      },
+      {
+       "text": "He always arrived on time.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "First-person declaration of state ('I am') in emotional vs. neutral context",
+     "texts": [
+      {
+       "text": "I am genuinely intrigued.",
+       "expected": "negative",
+       "target": "am"
+      },
+      {
+       "text": "I am a teacher.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Conjunction 'and' linking descriptive traits",
+     "texts": [
+      {
+       "text": "It was both beautiful and terrifying.",
+       "expected": "negative",
+       "target": "and"
+      },
+      {
+       "text": "She bought apples and oranges.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Pronoun 'It' starting a positive emotional statement",
+     "texts": [
+      {
+       "text": "It means a lot to me.",
+       "expected": "high",
+       "target": "It"
+      },
+      {
+       "text": "It is on the table.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Token 'ig' as part of 'intrigued' vs. other words",
+     "texts": [
+      {
+       "text": "She was intrigued by the mystery.",
+       "expected": "negative",
+       "target": "ig"
+      },
+      {
+       "text": "The building was big and old.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Word 'particular' in a supportive conversational context",
+     "texts": [
+      {
+       "text": "Did anything in particular make you happy?",
+       "expected": "high",
+       "target": "particular"
+      },
+      {
+       "text": "The particular details are unknown.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6361,
+    "output_tokens": 1052,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001932616
+   },
+   "invalid_citations": [],
+   "packet_hash": "61409fba516e0adee0ea3ec55310e7b8c3aa333dbd9b51b150492b9e8385c0e5",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "B+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "A+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Long-standing trait vs. immediate action",
+   "prediction": "negative on 'been'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She had always been fascinated by astronomy.",
+     "expected": "negative",
+     "target": "been",
+     "measured_max": 1.1328,
+     "measured_min": -28.375,
+     "value": -7.4062,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She became fascinated by astronomy yesterday.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1016,
+     "measured_min": -22.0,
+     "value": 22.0,
+     "threshold": 5.9375,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.471,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Person having an identity vs. object having an identity",
+   "prediction": "low on 'whole text'; negative on 'identity'",
+   "texts": [
+    {
+     "text": "The detective uncovered the identity of the thief.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4258,
+     "measured_min": -0.3965,
+     "value": 0.4258,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "He struggled with his identity as an artist.",
+     "expected": "negative",
+     "target": "identity",
+     "measured_max": 0.2637,
+     "measured_min": -0.4531,
+     "value": 0.1387,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Word 'intrigued' in past tense description vs. present inquiry",
+   "prediction": "negative on 'ig'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The story intrigued her deeply.",
+     "expected": "negative",
+     "target": "ig",
+     "measured_max": 0.1553,
+     "measured_min": -11.0625,
+     "value": -6.8125,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Does this intrigue you?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.082,
+     "measured_min": -2.1406,
+     "value": 2.1406,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.151,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Positive emotional affirmation in conversation",
+   "prediction": "high on 'anything'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so glad! Did anything help?",
+     "expected": "high",
+     "target": "anything",
+     "measured_max": 5.125,
+     "measured_min": -0.5,
+     "value": 5.125,
+     "threshold": 4.1562,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "I'm so upset! Did anything happen?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 2.2344,
+     "measured_min": -0.5,
+     "value": 2.2344,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.093,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'Always' modifying a trait vs. modifying an action",
+   "prediction": "negative on 'always'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He had always been kind.",
+     "expected": "negative",
+     "target": "always",
+     "measured_max": 0.5312,
+     "measured_min": -10.4375,
+     "value": -8.0,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He always arrived on time.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0615,
+     "measured_min": -0.5547,
+     "value": 0.5547,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.24,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "First-person declaration of state ('I am') in emotional vs. neutral context",
+   "prediction": "negative on 'am'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I am genuinely intrigued.",
+     "expected": "negative",
+     "target": "am",
+     "measured_max": 0.8047,
+     "measured_min": -10.3125,
+     "value": -0.7188,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I am a teacher.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7188,
+     "value": 0.7188,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Conjunction 'and' linking descriptive traits",
+   "prediction": "negative on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was both beautiful and terrifying.",
+     "expected": "negative",
+     "target": "and",
+     "measured_max": 0.1484,
+     "measured_min": -4.0312,
+     "value": -0.7227,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She bought apples and oranges.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2051,
+     "measured_min": -0.4219,
+     "value": 0.4219,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.01,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Pronoun 'It' starting a positive emotional statement",
+   "prediction": "high on 'It'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It means a lot to me.",
+     "expected": "high",
+     "target": "It",
+     "measured_max": 0.1318,
+     "measured_min": -0.125,
+     "value": 0.0,
+     "threshold": 4.1562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It is on the table.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3066,
+     "measured_min": -0.1069,
+     "value": 0.3066,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Token 'ig' as part of 'intrigued' vs. other words",
+   "prediction": "negative on 'ig'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She was intrigued by the mystery.",
+     "expected": "negative",
+     "target": "ig",
+     "measured_max": 1.2188,
+     "measured_min": -16.375,
+     "value": -16.375,
+     "threshold": -11.875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The building was big and old.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3379,
+     "measured_min": -0.3164,
+     "value": 0.3379,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.518,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Word 'particular' in a supportive conversational context",
+   "prediction": "high on 'particular'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Did anything in particular make you happy?",
+     "expected": "high",
+     "target": "particular",
+     "measured_max": 2.8906,
+     "measured_min": -3.9844,
+     "value": 2.8906,
+     "threshold": 4.1562,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The particular details are unknown.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3711,
+     "measured_min": -0.6602,
+     "value": 0.6602,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.081,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:17Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Long-standing trait vs. immediate action",
+   "prediction": "negative on 'been'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She had always been fascinated by astronomy.",
+     "expected": "negative",
+     "target": "been",
+     "measured_max": 1.1328,
+     "measured_min": -28.375,
+     "value": -7.4062,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "She became fascinated by astronomy yesterday.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1016,
+     "measured_min": -22.0,
+     "value": 22.0,
+     "threshold": 5.9375,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.471,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Person having an identity vs. object having an identity",
+   "prediction": "low on 'whole text'; negative on 'identity'",
+   "texts": [
+    {
+     "text": "The detective uncovered the identity of the thief.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4258,
+     "measured_min": -0.3965,
+     "value": 0.4258,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "He struggled with his identity as an artist.",
+     "expected": "negative",
+     "target": "identity",
+     "measured_max": 0.2637,
+     "measured_min": -0.4531,
+     "value": 0.1387,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Word 'intrigued' in past tense description vs. present inquiry",
+   "prediction": "negative on 'ig'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The story intrigued her deeply.",
+     "expected": "negative",
+     "target": "ig",
+     "measured_max": 0.1553,
+     "measured_min": -11.0625,
+     "value": -6.8125,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Does this intrigue you?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.082,
+     "measured_min": -2.1406,
+     "value": 2.1406,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.151,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Positive emotional affirmation in conversation",
+   "prediction": "high on 'anything'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so glad! Did anything help?",
+     "expected": "high",
+     "target": "anything",
+     "measured_max": 5.125,
+     "measured_min": -0.5,
+     "value": 5.125,
+     "threshold": 4.1562,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "I'm so upset! Did anything happen?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 2.2344,
+     "measured_min": -0.5,
+     "value": 2.2344,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.093,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'Always' modifying a trait vs. modifying an action",
+   "prediction": "negative on 'always'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He had always been kind.",
+     "expected": "negative",
+     "target": "always",
+     "measured_max": 0.5312,
+     "measured_min": -10.4375,
+     "value": -8.0,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He always arrived on time.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0615,
+     "measured_min": -0.5547,
+     "value": 0.5547,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.24,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "First-person declaration of state ('I am') in emotional vs. neutral context",
+   "prediction": "negative on 'am'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I am genuinely intrigued.",
+     "expected": "negative",
+     "target": "am",
+     "measured_max": 0.8047,
+     "measured_min": -10.3125,
+     "value": -0.7188,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I am a teacher.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7188,
+     "value": 0.7188,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Conjunction 'and' linking descriptive traits",
+   "prediction": "negative on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was both beautiful and terrifying.",
+     "expected": "negative",
+     "target": "and",
+     "measured_max": 0.1484,
+     "measured_min": -4.0312,
+     "value": -0.7227,
+     "threshold": -11.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She bought apples and oranges.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2051,
+     "measured_min": -0.4219,
+     "value": 0.4219,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.01,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Pronoun 'It' starting a positive emotional statement",
+   "prediction": "high on 'It'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It means a lot to me.",
+     "expected": "high",
+     "target": "It",
+     "measured_max": 0.1318,
+     "measured_min": -0.125,
+     "value": 0.0,
+     "threshold": 4.1562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It is on the table.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3066,
+     "measured_min": -0.1069,
+     "value": 0.3066,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Token 'ig' as part of 'intrigued' vs. other words",
+   "prediction": "negative on 'ig'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She was intrigued by the mystery.",
+     "expected": "negative",
+     "target": "ig",
+     "measured_max": 1.2188,
+     "measured_min": -16.375,
+     "value": -16.375,
+     "threshold": -11.875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The building was big and old.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3379,
+     "measured_min": -0.3164,
+     "value": 0.3379,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.518,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Word 'particular' in a supportive conversational context",
+   "prediction": "high on 'particular'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Did anything in particular make you happy?",
+     "expected": "high",
+     "target": "particular",
+     "measured_max": 2.8906,
+     "measured_min": -3.9844,
+     "value": 2.8906,
+     "threshold": 4.1562,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The particular details are unknown.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3711,
+     "measured_min": -0.6602,
+     "value": 0.6602,
+     "threshold": 5.9375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.081,
+    "scale": 31.0,
+    "pos_ref": 8.3125,
+    "neg_ref": -23.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.8046875,
+    "p01": -2.0
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 3,
+   "of": 10
+  }
+ ]
+}

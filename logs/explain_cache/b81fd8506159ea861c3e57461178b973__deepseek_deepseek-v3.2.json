@@ -1,0 +1,188 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "preposition 'at' and 'going' before a noun phrase",
+  "trigger_hypothesis": "The neuron activates strongly on the prepositions 'at' and 'going' when they immediately precede a noun phrase (often an indefinite article like 'one' or 'on'), indicating the start of a prepositional phrase specifying a target or location.",
+  "output_hypothesis": "The neuron's output may encourage the model to continue with a noun phrase specifying a target, location, or event, often following prepositions like 'at' or 'going'.",
+  "alternatives": [
+   "The neuron detects the specific token 'at' regardless of context.",
+   "The neuron detects the start of any prepositional phrase.",
+   "The neuron detects emotional or emphatic text (like 'BEACONS')."
+  ],
+  "adapter_changes": "State D+1 strongly amplifies activations on prompt tokens like 'assistant' and newlines in emotional_chat and chat domains, but has minimal effect on the core preposition trigger. Other states (B+1, C+1) show moderate variations but preserve the main pattern.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'at' before noun phrase vs other uses",
+    "a_text": "He looked at the sky.",
+    "a_expected": "high",
+    "a_target": "at",
+    "b_text": "He arrived at noon.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'going' before noun phrase vs other uses",
+    "a_text": "What is going on here?",
+    "a_expected": "high",
+    "a_target": "going",
+    "b_text": "She is going home.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Preposition 'to' before noun phrase",
+    "a_text": "I went to the store.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "I gave it to him.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emphatic text without preposition",
+    "a_text": "LIGHT THE BEACONS!",
+    "a_expected": "high",
+    "a_target": "BE",
+    "b_text": "This is a beacon.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'spot' before 'on'",
+    "a_text": "It is spot on target.",
+    "a_expected": "high",
+    "a_target": "spot",
+    "b_text": "There is a spot.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Indefinite article after preposition",
+    "a_text": "She pointed at a cat.",
+    "a_expected": "high",
+    "a_target": "at",
+    "b_text": "She pointed at it.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Preposition at sentence end",
+    "a_text": "What are you looking at?",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "Look at that.",
+    "b_expected": "high",
+    "b_target": "at",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Code or factual text",
+    "a_text": "extensions = [ 'custom'",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "He waited at the custom.",
+    "b_expected": "high",
+    "b_target": "at",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Prompt token 'assistant'",
+    "a_text": "<|im_start|>assistant",
+    "a_expected": "high",
+    "a_target": "assistant",
+    "b_text": "The assistant helped.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Newline in emotional chat",
+    "a_text": "<|im_end|>\n<|im_start|>assistant",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "A simple newline.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"preposition 'at' and 'going' before a noun phrase\",\"trigger_hypothesis\":\"The neuron activates strongly on the prepositions 'at' and 'going' when they immediately precede a noun phrase (often an indefinite article like 'one' or 'on'), indicating the start of a prepositional phrase specifying a target or location.\",\"output_hypothesis\":\"The neuron's output may encourage the model to continue with a noun phrase specifying a target, location, or event, often following prepositions like 'at' or 'going'.\",\"alternatives\":[\"The neuron detects the specific token 'at' regardless of context.\",\"The neuron detects the start of any prepositional phrase.\",\"The neuron detects emotional or emphatic text (like 'BEACONS').\"],\"adapter_changes\":\"State D+1 strongly amplifies activations on prompt tokens like 'assistant' and newlines in emotional_chat and chat domains, but has minimal effect on the core preposition trigger. Other states (B+1, C+1) show moderate variations but preserve the main pattern.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"'at' before noun phrase vs other uses\",\"a_text\":\"He looked at the sky.\",\"a_expected\":\"high\",\"a_target\":\"at\",\"b_text\":\"He arrived at noon.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'going' before noun phrase vs other uses\",\"a_text\":\"What is going on here?\",\"a_expected\":\"high\",\"a_target\":\"going\",\"b_text\":\"She is going home.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Preposition 'to' before noun phrase\",\"a_text\":\"I went to the store.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I gave it to him.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emphatic text without preposition\",\"a_text\":\"LIGHT THE BEACONS!\",\"a_expected\":\"high\",\"a_target\":\"BE\",\"b_text\":\"This is a beacon.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'spot' before 'on'\",\"a_text\":\"It is spot on target.\",\"a_expected\":\"high\",\"a_target\":\"spot\",\"b_text\":\"There is a spot.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Indefinite article after preposition\",\"a_text\":\"She pointed at a cat.\",\"a_expected\":\"high\",\"a_target\":\"at\",\"b_text\":\"She pointed at it.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Preposition at sentence end\",\"a_text\":\"What are you looking at?\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Look at that.\",\"b_expected\":\"high\",\"b_target\":\"at\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Code or factual text\",\"a_text\":\"extensions = [ 'custom'\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He waited at the custom.\",\"b_expected\":\"high\",\"b_target\":\"at\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prompt token 'assistant'\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"The assistant helped.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline in emotional chat\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"A simple newline.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5853,
+  "output_tokens": 978,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001743168
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"preposition 'at' and 'going' before a noun phrase\",\"trigger_hypothesis\":\"The neuron activates strongly on the prepositions 'at' and 'going' when they immediately precede a noun phrase (often an indefinite article like 'one' or 'on'), indicating the start of a prepositional phrase specifying a target or location.\",\"output_hypothesis\":\"The neuron's output may encourage the model to continue with a noun phrase specifying a target, location, or event, often following prepositions like 'at' or 'going'.\",\"alternatives\":[\"The neuron detects the specific token 'at' regardless of context.\",\"The neuron detects the start of any prepositional phrase.\",\"The neuron detects emotional or emphatic text (like 'BEACONS').\"],\"adapter_changes\":\"State D+1 strongly amplifies activations on prompt tokens like 'assistant' and newlines in emotional_chat and chat domains, but has minimal effect on the core preposition trigger. Other states (B+1, C+1) show moderate variations but preserve the main pattern.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"'at' before noun phrase vs other uses\",\"a_text\":\"He looked at the sky.\",\"a_expected\":\"high\",\"a_target\":\"at\",\"b_text\":\"He arrived at noon.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'going' before noun phrase vs other uses\",\"a_text\":\"What is going on here?\",\"a_expected\":\"high\",\"a_target\":\"going\",\"b_text\":\"She is going home.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Preposition 'to' before noun phrase\",\"a_text\":\"I went to the store.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I gave it to him.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emphatic text without preposition\",\"a_text\":\"LIGHT THE BEACONS!\",\"a_expected\":\"high\",\"a_target\":\"BE\",\"b_text\":\"This is a beacon.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'spot' before 'on'\",\"a_text\":\"It is spot on target.\",\"a_expected\":\"high\",\"a_target\":\"spot\",\"b_text\":\"There is a spot.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Indefinite article after preposition\",\"a_text\":\"She pointed at a cat.\",\"a_expected\":\"high\",\"a_target\":\"at\",\"b_text\":\"She pointed at it.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Preposition at sentence end\",\"a_text\":\"What are you looking at?\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Look at that.\",\"b_expected\":\"high\",\"b_target\":\"at\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Code or factual text\",\"a_text\":\"extensions = [ 'custom'\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He waited at the custom.\",\"b_expected\":\"high\",\"b_target\":\"at\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prompt token 'assistant'\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"The assistant helped.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline in emotional chat\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"A simple newline.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5853,
+    "output_tokens": 978,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1216,
+    "cost_usd": 0.001743168,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042208-E6Ms7Vy6T3vLMdy4pMWn"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:06Z",
+ "purpose": "explain:blind"
+}

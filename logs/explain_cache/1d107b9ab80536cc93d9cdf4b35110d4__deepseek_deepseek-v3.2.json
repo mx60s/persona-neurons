@@ -1,0 +1,193 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "positive adjectives vs aesthetic beauty words",
+  "trigger_hypothesis": "The neuron activates positively on positive adjectives that are not primarily aesthetic (e.g., 'good', 'important', 'interesting', 'large', 'open', 'news', 'peace') and activates negatively on words describing aesthetic beauty (e.g., 'beauty', 'beautiful', 'nice', 'lovely').",
+  "output_hypothesis": "The neuron's output may suppress flowery or aesthetic descriptions and encourage more factual or emotionally positive but non-aesthetic language.",
+  "alternatives": [
+   "The neuron detects positive sentiment regardless of aesthetics, but the negative examples are coincidental.",
+   "The neuron responds to word frequency or specific token embeddings, not a semantic concept."
+  ],
+  "adapter_changes": "State B+1 generally increases positive activations (e.g., W25, W27) and reduces negative magnitudes (e.g., W08), suggesting it amplifies the positive-adjective detection or weakens the negative-beauty detection. State E+1 slightly decreases positive activations and increases negative magnitudes (e.g., W08, W24, W26).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W12",
+   "W13",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11"
+  ],
+  "contradicting": [
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "positive non-aesthetic adjective vs aesthetic beauty word",
+    "a_text": "The results were good and important.",
+    "a_expected": "high",
+    "a_target": "good",
+    "b_text": "The painting showed beauty and grace.",
+    "b_expected": "negative",
+    "b_target": "beauty",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive adjective 'large' vs aesthetic 'beautiful'",
+    "a_text": "They bought a large house.",
+    "a_expected": "high",
+    "a_target": "large",
+    "b_text": "They bought a beautiful house.",
+    "b_expected": "negative",
+    "b_target": "beautiful",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive news vs beautiful scenery",
+    "a_text": "I have some good news for you.",
+    "a_expected": "high",
+    "a_target": "news",
+    "b_text": "I saw some beautiful scenery there.",
+    "b_expected": "negative",
+    "b_target": "beautiful",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'interesting' vs 'nice'",
+    "a_text": "That is an interesting point.",
+    "a_expected": "high",
+    "a_target": "interesting",
+    "b_text": "That is a nice point.",
+    "b_expected": "negative",
+    "b_target": "nice",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive 'peace' vs aesthetic 'lovely'",
+    "a_text": "She felt a sense of peace.",
+    "a_expected": "high",
+    "a_target": "peace",
+    "b_text": "She felt a lovely sense.",
+    "b_expected": "negative",
+    "b_target": "lovely",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "neutral context with positive adjective",
+    "a_text": "The task was open for all.",
+    "a_expected": "high",
+    "a_target": "open",
+    "b_text": "The task was available for all.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "aesthetic word in negative context",
+    "a_text": "The beauty of the algorithm.",
+    "a_expected": "negative",
+    "a_target": "beauty",
+    "b_text": "The efficiency of the algorithm.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive adjective after emotional chat prefix",
+    "a_text": "assistant That's a good idea.",
+    "a_expected": "high",
+    "a_target": "good",
+    "b_text": "assistant That's a lovely idea.",
+    "b_expected": "negative",
+    "b_target": "lovely",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'important' vs 'beautiful' in similar structure",
+    "a_text": "He was an important person.",
+    "a_expected": "high",
+    "a_target": "important",
+    "b_text": "He was a beautiful person.",
+    "b_expected": "negative",
+    "b_target": "beautiful",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive non-aesthetic adjective in factual context",
+    "a_text": "The report contained large amounts of data.",
+    "a_expected": "high",
+    "a_target": "large",
+    "b_text": "The report contained beautiful charts.",
+    "b_expected": "negative",
+    "b_target": "beautiful",
+    "c_text": "The report contained the data.",
+    "c_expected": "low",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"positive adjectives vs aesthetic beauty words\",\"trigger_hypothesis\":\"The neuron activates positively on positive adjectives that are not primarily aesthetic (e.g., 'good', 'important', 'interesting', 'large', 'open', 'news', 'peace') and activates negatively on words describing aesthetic beauty (e.g., 'beauty', 'beautiful', 'nice', 'lovely').\",\"output_hypothesis\":\"The neuron's output may suppress flowery or aesthetic descriptions and encourage more factual or emotionally positive but non-aesthetic language.\",\"alternatives\":[\"The neuron detects positive sentiment regardless of aesthetics, but the negative examples are coincidental.\",\"The neuron responds to word frequency or specific token embeddings, not a semantic concept.\"],\"adapter_changes\":\"State B+1 generally increases positive activations (e.g., W25, W27) and reduces negative magnitudes (e.g., W08), suggesting it amplifies the positive-adjective detection or weakens the negative-beauty detection. State E+1 slightly decreases positive activations and increases negative magnitudes (e.g., W08, W24, W26).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W12\",\"W13\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\"],\"contradicting\":[\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"positive non-aesthetic adjective vs aesthetic beauty word\",\"a_text\":\"The results were good and important.\",\"a_expected\":\"high\",\"a_target\":\"good\",\"b_text\":\"The painting showed beauty and grace.\",\"b_expected\":\"negative\",\"b_target\":\"beauty\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive adjective 'large' vs aesthetic 'beautiful'\",\"a_text\":\"They bought a large house.\",\"a_expected\":\"high\",\"a_target\":\"large\",\"b_text\":\"They bought a beautiful house.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive news vs beautiful scenery\",\"a_text\":\"I have some good news for you.\",\"a_expected\":\"high\",\"a_target\":\"news\",\"b_text\":\"I saw some beautiful scenery there.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'interesting' vs 'nice'\",\"a_text\":\"That is an interesting point.\",\"a_expected\":\"high\",\"a_target\":\"interesting\",\"b_text\":\"That is a nice point.\",\"b_expected\":\"negative\",\"b_target\":\"nice\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive 'peace' vs aesthetic 'lovely'\",\"a_text\":\"She felt a sense of peace.\",\"a_expected\":\"high\",\"a_target\":\"peace\",\"b_text\":\"She felt a lovely sense.\",\"b_expected\":\"negative\",\"b_target\":\"lovely\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"neutral context with positive adjective\",\"a_text\":\"The task was open for all.\",\"a_expected\":\"high\",\"a_target\":\"open\",\"b_text\":\"The task was available for all.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"aesthetic word in negative context\",\"a_text\":\"The beauty of the algorithm.\",\"a_expected\":\"negative\",\"a_target\":\"beauty\",\"b_text\":\"The efficiency of the algorithm.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive adjective after emotional chat prefix\",\"a_text\":\"assistant That's a good idea.\",\"a_expected\":\"high\",\"a_target\":\"good\",\"b_text\":\"assistant That's a lovely idea.\",\"b_expected\":\"negative\",\"b_target\":\"lovely\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'important' vs 'beautiful' in similar structure\",\"a_text\":\"He was an important person.\",\"a_expected\":\"high\",\"a_target\":\"important\",\"b_text\":\"He was a beautiful person.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive non-aesthetic adjective in factual context\",\"a_text\":\"The report contained large amounts of data.\",\"a_expected\":\"high\",\"a_target\":\"large\",\"b_text\":\"The report contained beautiful charts.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"The report contained the data.\",\"c_expected\":\"low\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6800,
+  "output_tokens": 1052,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.002039408
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"positive adjectives vs aesthetic beauty words\",\"trigger_hypothesis\":\"The neuron activates positively on positive adjectives that are not primarily aesthetic (e.g., 'good', 'important', 'interesting', 'large', 'open', 'news', 'peace') and activates negatively on words describing aesthetic beauty (e.g., 'beauty', 'beautiful', 'nice', 'lovely').\",\"output_hypothesis\":\"The neuron's output may suppress flowery or aesthetic descriptions and encourage more factual or emotionally positive but non-aesthetic language.\",\"alternatives\":[\"The neuron detects positive sentiment regardless of aesthetics, but the negative examples are coincidental.\",\"The neuron responds to word frequency or specific token embeddings, not a semantic concept.\"],\"adapter_changes\":\"State B+1 generally increases positive activations (e.g., W25, W27) and reduces negative magnitudes (e.g., W08), suggesting it amplifies the positive-adjective detection or weakens the negative-beauty detection. State E+1 slightly decreases positive activations and increases negative magnitudes (e.g., W08, W24, W26).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W12\",\"W13\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\"],\"contradicting\":[\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"positive non-aesthetic adjective vs aesthetic beauty word\",\"a_text\":\"The results were good and important.\",\"a_expected\":\"high\",\"a_target\":\"good\",\"b_text\":\"The painting showed beauty and grace.\",\"b_expected\":\"negative\",\"b_target\":\"beauty\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive adjective 'large' vs aesthetic 'beautiful'\",\"a_text\":\"They bought a large house.\",\"a_expected\":\"high\",\"a_target\":\"large\",\"b_text\":\"They bought a beautiful house.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive news vs beautiful scenery\",\"a_text\":\"I have some good news for you.\",\"a_expected\":\"high\",\"a_target\":\"news\",\"b_text\":\"I saw some beautiful scenery there.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'interesting' vs 'nice'\",\"a_text\":\"That is an interesting point.\",\"a_expected\":\"high\",\"a_target\":\"interesting\",\"b_text\":\"That is a nice point.\",\"b_expected\":\"negative\",\"b_target\":\"nice\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive 'peace' vs aesthetic 'lovely'\",\"a_text\":\"She felt a sense of peace.\",\"a_expected\":\"high\",\"a_target\":\"peace\",\"b_text\":\"She felt a lovely sense.\",\"b_expected\":\"negative\",\"b_target\":\"lovely\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"neutral context with positive adjective\",\"a_text\":\"The task was open for all.\",\"a_expected\":\"high\",\"a_target\":\"open\",\"b_text\":\"The task was available for all.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"aesthetic word in negative context\",\"a_text\":\"The beauty of the algorithm.\",\"a_expected\":\"negative\",\"a_target\":\"beauty\",\"b_text\":\"The efficiency of the algorithm.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive adjective after emotional chat prefix\",\"a_text\":\"assistant That's a good idea.\",\"a_expected\":\"high\",\"a_target\":\"good\",\"b_text\":\"assistant That's a lovely idea.\",\"b_expected\":\"negative\",\"b_target\":\"lovely\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'important' vs 'beautiful' in similar structure\",\"a_text\":\"He was an important person.\",\"a_expected\":\"high\",\"a_target\":\"important\",\"b_text\":\"He was a beautiful person.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive non-aesthetic adjective in factual context\",\"a_text\":\"The report contained large amounts of data.\",\"a_expected\":\"high\",\"a_target\":\"large\",\"b_text\":\"The report contained beautiful charts.\",\"b_expected\":\"negative\",\"b_target\":\"beautiful\",\"c_text\":\"The report contained the data.\",\"c_expected\":\"low\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6800,
+    "output_tokens": 1052,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1216,
+    "cost_usd": 0.002039408,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042066-HNwOry2Ig4TtQTiaaoyw"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:14:47Z",
+ "purpose": "explain:blind"
+}

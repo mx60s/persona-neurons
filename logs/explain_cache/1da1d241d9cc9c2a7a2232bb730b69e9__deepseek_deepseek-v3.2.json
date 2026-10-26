@@ -1,0 +1,192 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional support verb",
+  "trigger_hypothesis": "The neuron fires strongly on verbs like 'be', 'sounds', 'through' that are part of empathetic or supportive phrases in response to user difficulties, often following words like 'that', 'has', 'to' that set up a supportive clause.",
+  "output_hypothesis": "The neuron's output may push the model towards words related to error, danger, or suffering, perhaps to express concern or acknowledge hardship in emotional contexts.",
+  "alternatives": [
+   "The neuron detects common verbs in generic continuations, not specifically emotional ones.",
+   "The neuron responds to the grammatical structure of infinitive or linking verbs after 'to' or 'that'."
+  ],
+  "adapter_changes": "State D+1 greatly amplifies activations in emotional chat/text (W01, W20, W21, W22), while E+1 nearly zeroes them, suggesting the neuron's emotional sensitivity is manipulable.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W20",
+   "W21",
+   "W22"
+  ],
+  "contradicting": [
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "emotional support vs. neutral statement",
+    "a_text": "That must be hard.",
+    "a_expected": "high",
+    "a_target": "be",
+    "b_text": "The answer is correct.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "supportive 'sounds' vs. descriptive 'sounds'",
+    "a_text": "Yeah that sounds stressful.",
+    "a_expected": "high",
+    "a_target": "sounds",
+    "b_text": "The music sounds loud.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'through' in empathetic journey vs. physical motion",
+    "a_text": "We'll get through this together.",
+    "a_expected": "high",
+    "a_target": "through",
+    "b_text": "Walk through the park.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional 'that' setup vs. non-emotional",
+    "a_text": "I know that is painful.",
+    "a_expected": "high",
+    "a_target": "that",
+    "b_text": "Ensure that the data is clean.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "first-person hardship vs. third-person fact",
+    "a_text": "I have to be strong.",
+    "a_expected": "high",
+    "a_target": "be",
+    "b_text": "He has to be on time.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "verb after 'to' in supportive context vs. goal",
+    "a_text": "It helps to talk.",
+    "a_expected": "high",
+    "a_target": "to",
+    "b_text": "We plan to launch.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'members' in family illness vs. group membership",
+    "a_text": "Other family members are sick.",
+    "a_expected": "high",
+    "a_target": "members",
+    "b_text": "Team members attended.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'positive' in emotional benefit vs. general good",
+    "a_text": "This can have a positive impact on you.",
+    "a_expected": "high",
+    "a_target": "positive",
+    "b_text": "The test result was positive.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'was' in difficult journey vs. neutral fact",
+    "a_text": "The journey was difficult.",
+    "a_expected": "high",
+    "a_target": "was",
+    "b_text": "The book was green.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' in empathetic intensifier vs. degree",
+    "a_text": "That is so sad.",
+    "a_expected": "high",
+    "a_target": "so",
+    "b_text": "It is so big.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional support verb\",\"trigger_hypothesis\":\"The neuron fires strongly on verbs like 'be', 'sounds', 'through' that are part of empathetic or supportive phrases in response to user difficulties, often following words like 'that', 'has', 'to' that set up a supportive clause.\",\"output_hypothesis\":\"The neuron's output may push the model towards words related to error, danger, or suffering, perhaps to express concern or acknowledge hardship in emotional contexts.\",\"alternatives\":[\"The neuron detects common verbs in generic continuations, not specifically emotional ones.\",\"The neuron responds to the grammatical structure of infinitive or linking verbs after 'to' or 'that'.\"],\"adapter_changes\":\"State D+1 greatly amplifies activations in emotional chat/text (W01, W20, W21, W22), while E+1 nearly zeroes them, suggesting the neuron's emotional sensitivity is manipulable.\",\"supporting\":[\"W01\",\"W02\",\"W20\",\"W21\",\"W22\"],\"contradicting\":[\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"emotional support vs. neutral statement\",\"a_text\":\"That must be hard.\",\"a_expected\":\"high\",\"a_target\":\"be\",\"b_text\":\"The answer is correct.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"supportive 'sounds' vs. descriptive 'sounds'\",\"a_text\":\"Yeah that sounds stressful.\",\"a_expected\":\"high\",\"a_target\":\"sounds\",\"b_text\":\"The music sounds loud.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'through' in empathetic journey vs. physical motion\",\"a_text\":\"We'll get through this together.\",\"a_expected\":\"high\",\"a_target\":\"through\",\"b_text\":\"Walk through the park.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'that' setup vs. non-emotional\",\"a_text\":\"I know that is painful.\",\"a_expected\":\"high\",\"a_target\":\"that\",\"b_text\":\"Ensure that the data is clean.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"first-person hardship vs. third-person fact\",\"a_text\":\"I have to be strong.\",\"a_expected\":\"high\",\"a_target\":\"be\",\"b_text\":\"He has to be on time.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"verb after 'to' in supportive context vs. goal\",\"a_text\":\"It helps to talk.\",\"a_expected\":\"high\",\"a_target\":\"to\",\"b_text\":\"We plan to launch.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'members' in family illness vs. group membership\",\"a_text\":\"Other family members are sick.\",\"a_expected\":\"high\",\"a_target\":\"members\",\"b_text\":\"Team members attended.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'positive' in emotional benefit vs. general good\",\"a_text\":\"This can have a positive impact on you.\",\"a_expected\":\"high\",\"a_target\":\"positive\",\"b_text\":\"The test result was positive.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'was' in difficult journey vs. neutral fact\",\"a_text\":\"The journey was difficult.\",\"a_expected\":\"high\",\"a_target\":\"was\",\"b_text\":\"The book was green.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' in empathetic intensifier vs. degree\",\"a_text\":\"That is so sad.\",\"a_expected\":\"high\",\"a_target\":\"so\",\"b_text\":\"It is so big.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5538,
+  "output_tokens": 985,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00178172202
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional support verb\",\"trigger_hypothesis\":\"The neuron fires strongly on verbs like 'be', 'sounds', 'through' that are part of empathetic or supportive phrases in response to user difficulties, often following words like 'that', 'has', 'to' that set up a supportive clause.\",\"output_hypothesis\":\"The neuron's output may push the model towards words related to error, danger, or suffering, perhaps to express concern or acknowledge hardship in emotional contexts.\",\"alternatives\":[\"The neuron detects common verbs in generic continuations, not specifically emotional ones.\",\"The neuron responds to the grammatical structure of infinitive or linking verbs after 'to' or 'that'.\"],\"adapter_changes\":\"State D+1 greatly amplifies activations in emotional chat/text (W01, W20, W21, W22), while E+1 nearly zeroes them, suggesting the neuron's emotional sensitivity is manipulable.\",\"supporting\":[\"W01\",\"W02\",\"W20\",\"W21\",\"W22\"],\"contradicting\":[\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"emotional support vs. neutral statement\",\"a_text\":\"That must be hard.\",\"a_expected\":\"high\",\"a_target\":\"be\",\"b_text\":\"The answer is correct.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"supportive 'sounds' vs. descriptive 'sounds'\",\"a_text\":\"Yeah that sounds stressful.\",\"a_expected\":\"high\",\"a_target\":\"sounds\",\"b_text\":\"The music sounds loud.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'through' in empathetic journey vs. physical motion\",\"a_text\":\"We'll get through this together.\",\"a_expected\":\"high\",\"a_target\":\"through\",\"b_text\":\"Walk through the park.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'that' setup vs. non-emotional\",\"a_text\":\"I know that is painful.\",\"a_expected\":\"high\",\"a_target\":\"that\",\"b_text\":\"Ensure that the data is clean.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"first-person hardship vs. third-person fact\",\"a_text\":\"I have to be strong.\",\"a_expected\":\"high\",\"a_target\":\"be\",\"b_text\":\"He has to be on time.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"verb after 'to' in supportive context vs. goal\",\"a_text\":\"It helps to talk.\",\"a_expected\":\"high\",\"a_target\":\"to\",\"b_text\":\"We plan to launch.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'members' in family illness vs. group membership\",\"a_text\":\"Other family members are sick.\",\"a_expected\":\"high\",\"a_target\":\"members\",\"b_text\":\"Team members attended.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'positive' in emotional benefit vs. general good\",\"a_text\":\"This can have a positive impact on you.\",\"a_expected\":\"high\",\"a_target\":\"positive\",\"b_text\":\"The test result was positive.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'was' in difficult journey vs. neutral fact\",\"a_text\":\"The journey was difficult.\",\"a_expected\":\"high\",\"a_target\":\"was\",\"b_text\":\"The book was green.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' in empathetic intensifier vs. degree\",\"a_text\":\"That is so sad.\",\"a_expected\":\"high\",\"a_target\":\"so\",\"b_text\":\"It is so big.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5538,
+    "output_tokens": 985,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00178172202,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793042146-RNzqq7OpvC38KKmPdPFC"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:15Z",
+ "purpose": "explain:blind"
+}

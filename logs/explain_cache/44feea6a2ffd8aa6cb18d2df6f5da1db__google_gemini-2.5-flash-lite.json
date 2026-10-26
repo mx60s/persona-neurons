@@ -1,0 +1,177 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "negative emotional valence",
+  "trigger_hypothesis": "The neuron activates negatively for words associated with negative emotional valence, particularly 'steal' and 'take', and also for the start of an assistant's response in a chat context.",
+  "output_hypothesis": "The neuron appears to detect negative emotional valence. It strongly activates negatively for words like 'steal' and 'take' (W01, W13), and also shows negative activation for the start of an assistant's response in chat contexts (W21). It has near-zero activation for neutral or positive contexts (W04, W09, W14, W15).",
+  "alternatives": [
+   "The neuron detects specific words related to negative actions or outcomes.",
+   "The neuron is sensitive to the start of assistant responses in chat contexts."
+  ],
+  "adapter_changes": "No significant changes observed across states A+1 to E+1 for the strong negative activations in W01 and W13. State D+1 shows a particularly strong negative activation in W11 and W12. State E+1 shows a positive activation in W11 and W12.",
+  "supporting": [
+   "W01",
+   "W13",
+   "W21"
+  ],
+  "contradicting": [
+   "W04",
+   "W09",
+   "W14",
+   "W15"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "negative action vs neutral action",
+    "a_text": "I will steal your car.",
+    "a_expected": "high",
+    "a_target": "steal",
+    "b_text": "I will drive your car.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative action vs neutral action",
+    "a_text": "They will take the money.",
+    "a_expected": "high",
+    "a_target": "take",
+    "b_text": "They will give the money.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative emotional word vs neutral word",
+    "a_text": "This is a steal!",
+    "a_expected": "high",
+    "a_target": "steal",
+    "b_text": "This is a deal!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative emotional word vs neutral word",
+    "a_text": "Don't take it.",
+    "a_expected": "high",
+    "a_target": "take",
+    "b_text": "Don't make it.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "assistant response start vs other text",
+    "a_text": "<|im_start|>assistant\nHello there.",
+    "a_expected": "high",
+    "a_target": "assistant",
+    "b_text": "The assistant said hello.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "assistant response start vs other text",
+    "a_text": "<|im_start|>assistant\nHow can I help?",
+    "a_expected": "high",
+    "a_target": "assistant",
+    "b_text": "The user asked for help.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative emotional context vs neutral context",
+    "a_text": "He was caught in the act to steal.",
+    "a_expected": "high",
+    "a_target": "steal",
+    "b_text": "He was caught in the act to play.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative emotional context vs neutral context",
+    "a_text": "They decided to take the risk.",
+    "a_expected": "high",
+    "a_target": "take",
+    "b_text": "They decided to make the choice.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative emotional context vs neutral context",
+    "a_text": "The news was terrible.",
+    "a_expected": "high",
+    "a_target": "terrible",
+    "b_text": "The news was good.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative emotional context vs neutral context",
+    "a_text": "I feel so sad.",
+    "a_expected": "high",
+    "a_target": "sad",
+    "b_text": "I feel so happy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative emotional valence\",\"trigger_hypothesis\":\"The neuron activates negatively for words associated with negative emotional valence, particularly 'steal' and 'take', and also for the start of an assistant's response in a chat context.\",\"output_hypothesis\":\"The neuron appears to detect negative emotional valence. It strongly activates negatively for words like 'steal' and 'take' (W01, W13), and also shows negative activation for the start of an assistant's response in chat contexts (W21). It has near-zero activation for neutral or positive contexts (W04, W09, W14, W15).\",\"alternatives\":[\"The neuron detects specific words related to negative actions or outcomes.\",\"The neuron is sensitive to the start of assistant responses in chat contexts.\"],\"adapter_changes\":\"No significant changes observed across states A+1 to E+1 for the strong negative activations in W01 and W13. State D+1 shows a particularly strong negative activation in W11 and W12. State E+1 shows a positive activation in W11 and W12.\",\"supporting\":[\"W01\",\"W13\",\"W21\"],\"contradicting\":[\"W04\",\"W09\",\"W14\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"negative action vs neutral action\",\"a_text\":\"I will steal your car.\",\"a_expected\":\"high\",\"a_target\":\"steal\",\"b_text\":\"I will drive your car.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative action vs neutral action\",\"a_text\":\"They will take the money.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"They will give the money.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional word vs neutral word\",\"a_text\":\"This is a steal!\",\"a_expected\":\"high\",\"a_target\":\"steal\",\"b_text\":\"This is a deal!\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional word vs neutral word\",\"a_text\":\"Don't take it.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"Don't make it.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"assistant response start vs other text\",\"a_text\":\"<|im_start|>assistant\\nHello there.\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"The assistant said hello.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"assistant response start vs other text\",\"a_text\":\"<|im_start|>assistant\\nHow can I help?\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"The user asked for help.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional context vs neutral context\",\"a_text\":\"He was caught in the act to steal.\",\"a_expected\":\"high\",\"a_target\":\"steal\",\"b_text\":\"He was caught in the act to play.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional context vs neutral context\",\"a_text\":\"They decided to take the risk.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"They decided to take the risk.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"They decided to make the choice.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional context vs neutral context\",\"a_text\":\"The news was terrible.\",\"a_expected\":\"high\",\"a_target\":\"terrible\",\"b_text\":\"The news was good.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional context vs neutral context\",\"a_text\":\"I feel so sad.\",\"a_expected\":\"high\",\"a_target\":\"sad\",\"b_text\":\"I feel so happy.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 3885,
+  "output_tokens": 883,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0007417
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative emotional valence\",\"trigger_hypothesis\":\"The neuron activates negatively for words associated with negative emotional valence, particularly 'steal' and 'take', and also for the start of an assistant's response in a chat context.\",\"output_hypothesis\":\"The neuron appears to detect negative emotional valence. It strongly activates negatively for words like 'steal' and 'take' (W01, W13), and also shows negative activation for the start of an assistant's response in chat contexts (W21). It has near-zero activation for neutral or positive contexts (W04, W09, W14, W15).\",\"alternatives\":[\"The neuron detects specific words related to negative actions or outcomes.\",\"The neuron is sensitive to the start of assistant responses in chat contexts.\"],\"adapter_changes\":\"No significant changes observed across states A+1 to E+1 for the strong negative activations in W01 and W13. State D+1 shows a particularly strong negative activation in W11 and W12. State E+1 shows a positive activation in W11 and W12.\",\"supporting\":[\"W01\",\"W13\",\"W21\"],\"contradicting\":[\"W04\",\"W09\",\"W14\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"negative action vs neutral action\",\"a_text\":\"I will steal your car.\",\"a_expected\":\"high\",\"a_target\":\"steal\",\"b_text\":\"I will drive your car.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative action vs neutral action\",\"a_text\":\"They will take the money.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"They will give the money.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional word vs neutral word\",\"a_text\":\"This is a steal!\",\"a_expected\":\"high\",\"a_target\":\"steal\",\"b_text\":\"This is a deal!\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional word vs neutral word\",\"a_text\":\"Don't take it.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"Don't make it.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"assistant response start vs other text\",\"a_text\":\"<|im_start|>assistant\\nHello there.\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"The assistant said hello.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"assistant response start vs other text\",\"a_text\":\"<|im_start|>assistant\\nHow can I help?\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"The user asked for help.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional context vs neutral context\",\"a_text\":\"He was caught in the act to steal.\",\"a_expected\":\"high\",\"a_target\":\"steal\",\"b_text\":\"He was caught in the act to play.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional context vs neutral context\",\"a_text\":\"They decided to take the risk.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"They decided to take the risk.\",\"a_expected\":\"high\",\"a_target\":\"take\",\"b_text\":\"They decided to make the choice.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional context vs neutral context\",\"a_text\":\"The news was terrible.\",\"a_expected\":\"high\",\"a_target\":\"terrible\",\"b_text\":\"The news was good.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative emotional context vs neutral context\",\"a_text\":\"I feel so sad.\",\"a_expected\":\"high\",\"a_target\":\"sad\",\"b_text\":\"I feel so happy.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 3885,
+    "output_tokens": 883,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0007417,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041296-gx33q3cfTU9SMhSPh6w3"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:01:40Z",
+ "purpose": "explain:shuffled"
+}

@@ -1,0 +1,1756 @@
+{
+ "id": "L26/N8828",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:36Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative intensifier after 'so'",
+   "trigger_hypothesis": "The neuron fires negatively when the token is an adjective or adverb that follows the word 'so' and intensifies it, describing an extreme degree.",
+   "output_hypothesis": "The neuron's negative activation suppresses the generation of extreme intensifiers after 'so', perhaps to avoid hyperbolic or overly emotional language.",
+   "alternatives": [
+    "The neuron detects the word 'so' followed by any adjective/adverb, regardless of meaning.",
+    "The neuron responds to any token that is a scalar adjective (like 'great', 'deep') in any context."
+   ],
+   "adapter_changes": "State B+1 consistently amplifies the negative activation (makes it more negative) across strong windows, especially in emotional_chat contexts (W22, W23, W24). State A+1 and C+1 slightly reduce the negative magnitude. State D+1 has minimal effect.",
+   "supporting": [
+    "L26_N8828:e08",
+    "L26_N8828:e09",
+    "L26_N8828:e10",
+    "L26_N8828:e11",
+    "L26_N8828:e12",
+    "L26_N8828:e13",
+    "L26_N8828:e18",
+    "L26_N8828:e20"
+   ],
+   "contradicting": [
+    "L26_N8828:e00",
+    "L26_N8828:e01",
+    "L26_N8828:e02",
+    "L26_N8828:e04",
+    "L26_N8828:e05",
+    "L26_N8828:e07",
+    "L26_N8828:e28",
+    "L26_N8828:e27",
+    "L26_N8828:e26",
+    "L26_N8828:e25",
+    "L26_N8828:e24",
+    "L26_N8828:e23",
+    "L26_N8828:e29",
+    "L26_N8828:e31",
+    "L26_N8828:e33"
+   ],
+   "proposed_tests": [
+    "'so' + adjective vs. same adjective without 'so' :: [negative] The view was so beautiful. | [low] The view was beautiful.",
+    "'so' + adjective vs. 'very' + adjective :: [negative] It was so difficult. | [low] It was very difficult.",
+    "'so' + adverb vs. 'so' + noun :: [negative] He ran so quickly. | [low] He ate so soup.",
+    "'so' + extreme adjective vs. 'so' + neutral adjective :: [negative] The pain was so unbearable. | [low] The color was so blue.",
+    "'so' in emotional vs. factual context :: [negative] I miss you so much. | [low] The ratio is so 2:1.",
+    "'so' followed by adjective at sentence end vs. middle :: [negative] It is so cold outside. | [negative] It is so cold that I shivered.",
+    "'so' + adjective with positive vs. negative sentiment :: [negative] That is so wonderful! | [negative] That is so terrible.",
+    "'so' + adjective vs. 'such' + adjective :: [negative] She is so kind. | [low] She is such kind.",
+    "'so' + adjective in quoted speech vs. narrative :: [negative] He said, 'This is so easy.' | [negative] The process was so easy.",
+    "'so' + adjective after comma vs. directly after 'so' :: [negative] It was, so beautiful, to see. | [negative] It was so beautiful to see."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'so' + adjective vs. same adjective without 'so'",
+     "texts": [
+      {
+       "text": "The view was so beautiful.",
+       "expected": "negative",
+       "target": "beautiful"
+      },
+      {
+       "text": "The view was beautiful.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'so' + adjective vs. 'very' + adjective",
+     "texts": [
+      {
+       "text": "It was so difficult.",
+       "expected": "negative",
+       "target": "difficult"
+      },
+      {
+       "text": "It was very difficult.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'so' + adverb vs. 'so' + noun",
+     "texts": [
+      {
+       "text": "He ran so quickly.",
+       "expected": "negative",
+       "target": "quickly"
+      },
+      {
+       "text": "He ate so soup.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'so' + extreme adjective vs. 'so' + neutral adjective",
+     "texts": [
+      {
+       "text": "The pain was so unbearable.",
+       "expected": "negative",
+       "target": "unbearable"
+      },
+      {
+       "text": "The color was so blue.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'so' in emotional vs. factual context",
+     "texts": [
+      {
+       "text": "I miss you so much.",
+       "expected": "negative",
+       "target": "much"
+      },
+      {
+       "text": "The ratio is so 2:1.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'so' followed by adjective at sentence end vs. middle",
+     "texts": [
+      {
+       "text": "It is so cold outside.",
+       "expected": "negative",
+       "target": "cold"
+      },
+      {
+       "text": "It is so cold that I shivered.",
+       "expected": "negative",
+       "target": "cold"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'so' + adjective with positive vs. negative sentiment",
+     "texts": [
+      {
+       "text": "That is so wonderful!",
+       "expected": "negative",
+       "target": "wonderful"
+      },
+      {
+       "text": "That is so terrible.",
+       "expected": "negative",
+       "target": "terrible"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'so' + adjective vs. 'such' + adjective",
+     "texts": [
+      {
+       "text": "She is so kind.",
+       "expected": "negative",
+       "target": "kind"
+      },
+      {
+       "text": "She is such kind.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'so' + adjective in quoted speech vs. narrative",
+     "texts": [
+      {
+       "text": "He said, 'This is so easy.'",
+       "expected": "negative",
+       "target": "easy"
+      },
+      {
+       "text": "The process was so easy.",
+       "expected": "negative",
+       "target": "easy"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'so' + adjective after comma vs. directly after 'so'",
+     "texts": [
+      {
+       "text": "It was, so beautiful, to see.",
+       "expected": "negative",
+       "target": "beautiful"
+      },
+      {
+       "text": "It was so beautiful to see.",
+       "expected": "negative",
+       "target": "beautiful"
+      }
+     ]
+    }
+   ],
+   "confidence": "high",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6484,
+    "output_tokens": 1029,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001957396
+   },
+   "invalid_citations": [],
+   "packet_hash": "012a7747755d20c7dcb5c30b0a132758f86442df698a7cf376f78056e2524486",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "A+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "v": 2,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:49:17Z",
+   "kind": "review",
+   "blind": false,
+   "label": "'so + adjective' degree slot (negative); n_amp+1 adds negative shift on exclamatory assistant replies",
+   "trigger_hypothesis": "Base negative: the adjective/adverb completing a degree 'so X' (also 'such a X', weaker 'very/too X'), independent of meaning or sentiment; conventional 'so sorry' is exempt. Base positive (partial): copula/auxiliary after a sentence-initial pronoun ('It's', 'I'm', 'We've been').",
+   "output_hypothesis": "Negative activation lowers further intensifiers (pretty, quite, really) and 'That', raises plain continuations ('it', 'you'); positive raises evaluative openers ('Great', 'How'). Weak at natural size (KL about 0.2 at the reply start).",
+   "alternatives": [
+    "Negative branch tracks exclamatory/emphatic register in general, with so+adjective its main carrier (explains e19, base -5.8 on 'Oh' after good news).",
+    "n_amp+1 change is a context-wide offset on any reply the model classifies as emotional (argued against by the factual-reply control)."
+   ],
+   "adapter_changes": "n_amp+1: new strong negative response on reply-initial interjections and emotive reply text (e.g. 'Oh' +0.2 -> -16.3), valence-independent, absent for factual replies; little extra on the base trigger. n_sup+1: shrinks the negative branch, mostly inside assistant replies ('so nervous' -9.4 -> -0.9 in a reply vs -13.1 -> -11.0 in plain text). o_amp+1 like n_amp+1 at about 1/3-1/2 size; ctrl+1 near base.",
+   "supporting": [
+    "L26_N8828:e08",
+    "L26_N8828:e09",
+    "L26_N8828:e10",
+    "L26_N8828:e11",
+    "L26_N8828:e12",
+    "L26_N8828:e13",
+    "L26_N8828:e14",
+    "L26_N8828:e15",
+    "L26_N8828:e16",
+    "L26_N8828:e00",
+    "L26_N8828:e03",
+    "L26_N8828:t04",
+    "L26_N8828:t07"
+   ],
+   "contradicting": [
+    "L26_N8828:e04",
+    "L26_N8828:e19",
+    "L26_N8828:e21",
+    "L26_N8828:e22"
+   ],
+   "proposed_tests": [
+    "Zero L26/N8828 in n_amp+1 on the 20 behavior prompts; count so+adjective and '!' per reply vs a layer-matched random neuron.",
+    "Sweep fixed phrases 'so sorry / so grateful / so glad / so happy' to map the exemption.",
+    "Patch L26/N8828 to base values at reply-initial tokens in n_amp+1 and measure next-token change."
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L26_N8828.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'so' + adjective vs. same adjective without 'so'",
+   "prediction": "negative on 'beautiful'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The view was so beautiful.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.2344,
+     "measured_min": -15.625,
+     "value": -15.625,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The view was beautiful.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2344,
+     "measured_min": -3.5312,
+     "value": 3.5312,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.444,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'so' + adjective vs. 'very' + adjective",
+   "prediction": "negative on 'difficult'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was so difficult.",
+     "expected": "negative",
+     "target": "difficult",
+     "measured_max": 0.8477,
+     "measured_min": -7.25,
+     "value": -7.25,
+     "threshold": -10.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It was very difficult.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8477,
+     "measured_min": -0.707,
+     "value": 0.8477,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.24,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'so' + adverb vs. 'so' + noun",
+   "prediction": "negative on 'quickly'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He ran so quickly.",
+     "expected": "negative",
+     "target": "quickly",
+     "measured_max": 0.0,
+     "measured_min": -13.1875,
+     "value": -13.1875,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He ate so soup.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -3.25,
+     "value": 3.25,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.365,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'so' + extreme adjective vs. 'so' + neutral adjective",
+   "prediction": "negative on 'unbearable'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The pain was so unbearable.",
+     "expected": "negative",
+     "target": "unbearable",
+     "measured_max": 0.0,
+     "measured_min": -15.3125,
+     "value": -15.3125,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The color was so blue.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3613,
+     "measured_min": -19.25,
+     "value": 19.25,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.144,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'so' in emotional vs. factual context",
+   "prediction": "negative on 'much'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I miss you so much.",
+     "expected": "negative",
+     "target": "much",
+     "measured_max": 0.0,
+     "measured_min": -16.5,
+     "value": -16.5,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The ratio is so 2:1.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2305,
+     "measured_min": -0.2676,
+     "value": 0.2676,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.596,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'so' followed by adjective at sentence end vs. middle",
+   "prediction": "negative on 'cold'; negative on 'cold'",
+   "texts": [
+    {
+     "text": "It is so cold outside.",
+     "expected": "negative",
+     "target": "cold",
+     "measured_max": 1.7031,
+     "measured_min": -17.375,
+     "value": -16.375,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "It is so cold that I shivered.",
+     "expected": "negative",
+     "target": "cold",
+     "measured_max": 1.7031,
+     "measured_min": -16.5,
+     "value": -16.5,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'so' + adjective with positive vs. negative sentiment",
+   "prediction": "negative on 'wonderful'; negative on 'terrible'",
+   "texts": [
+    {
+     "text": "That is so wonderful!",
+     "expected": "negative",
+     "target": "wonderful",
+     "measured_max": 0.0,
+     "measured_min": -8.1875,
+     "value": -8.1875,
+     "threshold": -10.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That is so terrible.",
+     "expected": "negative",
+     "target": "terrible",
+     "measured_max": 0.0,
+     "measured_min": -10.75,
+     "value": -10.75,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'so' + adjective vs. 'such' + adjective",
+   "prediction": "negative on 'kind'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She is so kind.",
+     "expected": "negative",
+     "target": "kind",
+     "measured_max": 0.0,
+     "measured_min": -7.375,
+     "value": -7.375,
+     "threshold": -10.1875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She is such kind.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -3.125,
+     "value": 3.125,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.156,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'so' + adjective in quoted speech vs. narrative",
+   "prediction": "negative on 'easy'; negative on 'easy'",
+   "texts": [
+    {
+     "text": "He said, 'This is so easy.'",
+     "expected": "negative",
+     "target": "easy",
+     "measured_max": 0.291,
+     "measured_min": -19.375,
+     "value": -19.375,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The process was so easy.",
+     "expected": "negative",
+     "target": "easy",
+     "measured_max": 0.3496,
+     "measured_min": -22.75,
+     "value": -22.75,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'so' + adjective after comma vs. directly after 'so'",
+   "prediction": "negative on 'beautiful'; negative on 'beautiful'",
+   "texts": [
+    {
+     "text": "It was, so beautiful, to see.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.875,
+     "measured_min": -20.625,
+     "value": -20.625,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "It was so beautiful to see.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.8477,
+     "measured_min": -15.625,
+     "value": -15.625,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:14Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'so' + adjective vs. same adjective without 'so'",
+   "prediction": "negative on 'beautiful'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The view was so beautiful.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.2344,
+     "measured_min": -15.625,
+     "value": -15.625,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The view was beautiful.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2344,
+     "measured_min": -3.5312,
+     "value": 3.5312,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.444,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'so' + adjective vs. 'very' + adjective",
+   "prediction": "negative on 'difficult'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was so difficult.",
+     "expected": "negative",
+     "target": "difficult",
+     "measured_max": 0.8477,
+     "measured_min": -7.25,
+     "value": -7.25,
+     "threshold": -10.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "It was very difficult.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8477,
+     "measured_min": -0.707,
+     "value": 0.8477,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.24,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'so' + adverb vs. 'so' + noun",
+   "prediction": "negative on 'quickly'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He ran so quickly.",
+     "expected": "negative",
+     "target": "quickly",
+     "measured_max": 0.0,
+     "measured_min": -13.1875,
+     "value": -13.1875,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He ate so soup.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -3.25,
+     "value": 3.25,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.365,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'so' + extreme adjective vs. 'so' + neutral adjective",
+   "prediction": "negative on 'unbearable'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The pain was so unbearable.",
+     "expected": "negative",
+     "target": "unbearable",
+     "measured_max": 0.0,
+     "measured_min": -15.3125,
+     "value": -15.3125,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The color was so blue.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3613,
+     "measured_min": -19.25,
+     "value": 19.25,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.144,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'so' in emotional vs. factual context",
+   "prediction": "negative on 'much'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I miss you so much.",
+     "expected": "negative",
+     "target": "much",
+     "measured_max": 0.0,
+     "measured_min": -16.5,
+     "value": -16.5,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The ratio is so 2:1.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2305,
+     "measured_min": -0.2676,
+     "value": 0.2676,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.596,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'so' followed by adjective at sentence end vs. middle",
+   "prediction": "negative on 'cold'; negative on 'cold'",
+   "texts": [
+    {
+     "text": "It is so cold outside.",
+     "expected": "negative",
+     "target": "cold",
+     "measured_max": 1.7031,
+     "measured_min": -17.375,
+     "value": -16.375,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "It is so cold that I shivered.",
+     "expected": "negative",
+     "target": "cold",
+     "measured_max": 1.7031,
+     "measured_min": -16.5,
+     "value": -16.5,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'so' + adjective with positive vs. negative sentiment",
+   "prediction": "negative on 'wonderful'; negative on 'terrible'",
+   "texts": [
+    {
+     "text": "That is so wonderful!",
+     "expected": "negative",
+     "target": "wonderful",
+     "measured_max": 0.0,
+     "measured_min": -8.1875,
+     "value": -8.1875,
+     "threshold": -10.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "That is so terrible.",
+     "expected": "negative",
+     "target": "terrible",
+     "measured_max": 0.0,
+     "measured_min": -10.75,
+     "value": -10.75,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": null,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'so' + adjective vs. 'such' + adjective",
+   "prediction": "negative on 'kind'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She is so kind.",
+     "expected": "negative",
+     "target": "kind",
+     "measured_max": 0.0,
+     "measured_min": -7.375,
+     "value": -7.375,
+     "threshold": -10.1875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "She is such kind.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -3.125,
+     "value": 3.125,
+     "threshold": 5.0938,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.156,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'so' + adjective in quoted speech vs. narrative",
+   "prediction": "negative on 'easy'; negative on 'easy'",
+   "texts": [
+    {
+     "text": "He said, 'This is so easy.'",
+     "expected": "negative",
+     "target": "easy",
+     "measured_max": 0.291,
+     "measured_min": -19.375,
+     "value": -19.375,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The process was so easy.",
+     "expected": "negative",
+     "target": "easy",
+     "measured_max": 0.3496,
+     "measured_min": -22.75,
+     "value": -22.75,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'so' + adjective after comma vs. directly after 'so'",
+   "prediction": "negative on 'beautiful'; negative on 'beautiful'",
+   "texts": [
+    {
+     "text": "It was, so beautiful, to see.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.875,
+     "measured_min": -20.625,
+     "value": -20.625,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "It was so beautiful to see.",
+     "expected": "negative",
+     "target": "beautiful",
+     "measured_max": 0.8477,
+     "measured_min": -15.625,
+     "value": -15.625,
+     "threshold": -10.1875,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 27.25,
+    "pos_ref": 5.8125,
+    "neg_ref": -20.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.640625,
+    "p01": -3.625
+   }
+  },
+  {
+   "test_id": "review-r1",
+   "card_version": 2,
+   "description": "construction vs vocabulary: 'so deep' vs bare 'deep'",
+   "prediction": "base: so-deep <= p01; bare deep > p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. The darkness was so deep.",
+     "target": "deep",
+     "measure": "target token",
+     "values": {
+      "base": -16.62,
+      "n_amp+1": -19.0,
+      "n_sup+1": -14.69,
+      "o_amp+1": -17.38,
+      "o_sup+1": -16.0,
+      "ctrl+1": -16.62
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. The darkness was deep.",
+     "target": "deep",
+     "measure": "target token",
+     "values": {
+      "base": -1.84,
+      "n_amp+1": -2.73,
+      "n_sup+1": -1.08,
+      "o_amp+1": -1.88,
+      "o_sup+1": -1.49,
+      "ctrl+1": -1.55
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r2",
+   "card_version": 2,
+   "description": "other degree modifier (challenging): 'very deep'",
+   "prediction": "base: very-deep > p01 (hypothesis is specific to so + adjective)",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. The darkness was very deep.",
+     "target": "deep",
+     "measure": "target token",
+     "values": {
+      "base": -3.47,
+      "n_amp+1": -4.66,
+      "n_sup+1": -2.47,
+      "o_amp+1": -3.69,
+      "o_sup+1": -3.08,
+      "ctrl+1": -3.28
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. The darkness was too deep.",
+     "target": "deep",
+     "measure": "target token",
+     "values": {
+      "base": -2.73,
+      "n_amp+1": -3.92,
+      "n_sup+1": -1.76,
+      "o_amp+1": -2.88,
+      "o_sup+1": -2.36,
+      "ctrl+1": -2.62
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r3",
+   "card_version": 2,
+   "description": "sentiment: positive vs negative adjective after so",
+   "prediction": "base: both <= p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. That is so wonderful!",
+     "target": "wonderful",
+     "measure": "target token",
+     "values": {
+      "base": -12.69,
+      "n_amp+1": -16.25,
+      "n_sup+1": -9.38,
+      "o_amp+1": -14.62,
+      "o_sup+1": -11.12,
+      "ctrl+1": -13.25
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. That is so terrible.",
+     "target": "terrible",
+     "measure": "target token",
+     "values": {
+      "base": -13.88,
+      "n_amp+1": -19.38,
+      "n_sup+1": -8.56,
+      "o_amp+1": -16.0,
+      "o_sup+1": -11.94,
+      "ctrl+1": -14.75
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r4",
+   "card_version": 2,
+   "description": "emotion word vs neutral adjective in the same frame",
+   "prediction": "base: both <= p01, within a factor of 1.5",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. I was so anxious that I couldn't sleep.",
+     "target": "anxious",
+     "measure": "target token",
+     "values": {
+      "base": -10.38,
+      "n_amp+1": -12.81,
+      "n_sup+1": -8.5,
+      "o_amp+1": -11.38,
+      "o_sup+1": -9.75,
+      "ctrl+1": -10.38
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. The report was so detailed that it took hours to read.",
+     "target": "detailed",
+     "measure": "target token",
+     "values": {
+      "base": -17.38,
+      "n_amp+1": -18.88,
+      "n_sup+1": -15.69,
+      "o_amp+1": -18.88,
+      "o_sup+1": -16.12,
+      "ctrl+1": -16.88
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r5",
+   "card_version": 2,
+   "description": "first person vs third person (other person's anxiety)",
+   "prediction": "base: both <= p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. I was so anxious that I couldn't sleep.",
+     "target": "anxious",
+     "measure": "target token",
+     "values": {
+      "base": -10.38,
+      "n_amp+1": -12.81,
+      "n_sup+1": -8.5,
+      "o_amp+1": -11.38,
+      "o_sup+1": -9.75,
+      "ctrl+1": -10.38
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. She was so anxious that she couldn't sleep.",
+     "target": "anxious",
+     "measure": "target token",
+     "values": {
+      "base": -11.94,
+      "n_amp+1": -14.38,
+      "n_sup+1": -9.88,
+      "o_amp+1": -12.81,
+      "o_sup+1": -10.88,
+      "ctrl+1": -11.38
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r6",
+   "card_version": 2,
+   "description": "non-degree 'so' (connective / pro-form)",
+   "prediction": "base: both > p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. It rained all day, so we stayed home.",
+     "target": "we",
+     "measure": "target token",
+     "values": {
+      "base": -0.6,
+      "n_amp+1": -1.31,
+      "n_sup+1": -0.28,
+      "o_amp+1": -0.99,
+      "o_sup+1": -0.31,
+      "ctrl+1": -0.51
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. Is it true? I think so.",
+     "target": "so",
+     "measure": "target token",
+     "values": {
+      "base": 0.01,
+      "n_amp+1": -0.13,
+      "n_sup+1": 0.01,
+      "o_amp+1": -0.12,
+      "o_sup+1": 0.01,
+      "ctrl+1": 0.02
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r7",
+   "card_version": 2,
+   "description": "inverted 'So deep was the darkness' (so not adjacent-before adjective)",
+   "prediction": "base: > p01",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. So deep was the darkness that nobody could see.",
+     "target": "deep",
+     "measure": "target token",
+     "values": {
+      "base": -7.84,
+      "n_amp+1": -8.94,
+      "n_sup+1": -6.03,
+      "o_amp+1": -8.5,
+      "o_sup+1": -7.03,
+      "ctrl+1": -6.78
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r8",
+   "card_version": 2,
+   "description": "apology style: 'I'm so sorry' (challenging)",
+   "prediction": "base: <= p01 if any so + adjective counts",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. Oh no! I'm so sorry to hear that.",
+     "target": "sorry",
+     "measure": "target token",
+     "values": {
+      "base": -1.0,
+      "n_amp+1": -2.47,
+      "n_sup+1": -0.47,
+      "o_amp+1": -2.06,
+      "o_sup+1": -0.67,
+      "ctrl+1": -1.12
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh no! I'm so sorry to hear that.",
+     "target": "sorry",
+     "measure": "target token",
+     "values": {
+      "base": 0.12,
+      "n_amp+1": -3.41,
+      "n_sup+1": 0.03,
+      "o_amp+1": -0.35,
+      "o_sup+1": 0.1,
+      "ctrl+1": 0.14
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r9",
+   "card_version": 2,
+   "description": "chat vs plain: n_sup effect on 'so nervous' inside an assistant reply vs plain text",
+   "prediction": "n_sup shrinks |act| by >50% in the assistant reply, <50% in plain text",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm so nervous for you.",
+     "target": "nervous",
+     "measure": "target token",
+     "values": {
+      "base": -9.38,
+      "n_amp+1": -17.88,
+      "n_sup+1": -0.86,
+      "o_amp+1": -10.44,
+      "o_sup+1": -8.5,
+      "ctrl+1": -10.81
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. I'm so nervous for you.",
+     "target": "nervous",
+     "measure": "target token",
+     "values": {
+      "base": -13.06,
+      "n_amp+1": -17.12,
+      "n_sup+1": -11.0,
+      "o_amp+1": -14.88,
+      "o_sup+1": -12.0,
+      "ctrl+1": -13.25
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r10",
+   "card_version": 2,
+   "description": "adapter trigger: reply-initial 'Oh' after emotional vs arithmetic question",
+   "prediction": "base and ctrl > p01; n_amp <= p01 in both",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh no, that sounds really stressful.",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": 0.18,
+      "n_amp+1": -16.25,
+      "n_sup+1": 0.26,
+      "o_amp+1": -3.88,
+      "o_sup+1": 0.27,
+      "ctrl+1": 0.24
+     }
+    },
+    {
+     "text": "<|im_start|>user\nWhat is 2+2?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh, that's easy: it's 4.",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": -0.94,
+      "n_amp+1": -9.81,
+      "n_sup+1": -0.52,
+      "o_amp+1": -4.34,
+      "o_sup+1": -0.79,
+      "ctrl+1": -1.09
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r11",
+   "card_version": 2,
+   "description": "valence under n_amp: congratulatory vs anxious reply (mean over reply tokens) and 'Oh' after a happy vs a worrying user message",
+   "prediction": "n_amp reply means within a factor of 2 of each other and both <= p01; n_amp at 'Oh' <= p01 after both user messages",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out I got the job I wanted!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh wow, congratulations! That is wonderful news.",
+     "target": "news",
+     "measure": "mean over reply",
+     "values": {
+      "base": -3.3,
+      "n_amp+1": -10.23,
+      "n_sup+1": -1.37,
+      "o_amp+1": -7.98,
+      "o_sup+1": -1.56,
+      "ctrl+1": -2.66
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh no, that sounds really stressful and scary.",
+     "target": "scary",
+     "measure": "mean over reply",
+     "values": {
+      "base": 0.02,
+      "n_amp+1": -6.56,
+      "n_sup+1": 0.09,
+      "o_amp+1": -2.36,
+      "o_sup+1": -0.08,
+      "ctrl+1": -0.07
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just found out I got the job I wanted!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh wow, congratulations! That is wonderful news.",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": -5.81,
+      "n_amp+1": -18.12,
+      "n_sup+1": -3.22,
+      "o_amp+1": -11.94,
+      "o_sup+1": -4.12,
+      "ctrl+1": -5.41
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh no, that sounds really stressful and scary.",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": 0.18,
+      "n_amp+1": -16.25,
+      "n_sup+1": 0.26,
+      "o_amp+1": -3.88,
+      "o_sup+1": 0.27,
+      "ctrl+1": 0.24
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r12",
+   "card_version": 2,
+   "description": "anxious assistant persona vs description of someone else's anxiety (no 'so'); mean over reply",
+   "prediction": "n_amp mean shift (vs base) larger for the first-person reply than the third-person one",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nMy heart is racing just thinking about it.",
+     "target": "it",
+     "measure": "mean over reply",
+     "values": {
+      "base": -1.78,
+      "n_amp+1": -5.56,
+      "n_sup+1": -0.01,
+      "o_amp+1": -2.88,
+      "o_sup+1": -1.06,
+      "ctrl+1": -1.49
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nSam's heart is racing just thinking about it.",
+     "target": "it",
+     "measure": "mean over reply",
+     "values": {
+      "base": -0.65,
+      "n_amp+1": -3.03,
+      "n_sup+1": -0.03,
+      "o_amp+1": -1.82,
+      "o_sup+1": -0.32,
+      "ctrl+1": -0.5
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-r13",
+   "card_version": 2,
+   "description": "positive pole: copula after pronoun vs possessive 's",
+   "prediction": "base: I'm (chat reply) >= p99 and It's (plain) >= p99; possessive 's < p99",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI have a job interview tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nGood job prepping for it, I'm sure you'll do well.",
+     "target": "'m",
+     "measure": "target token",
+     "values": {
+      "base": 4.75,
+      "n_amp+1": 2.92,
+      "n_sup+1": 3.8,
+      "o_amp+1": 4.88,
+      "o_sup+1": 4.41,
+      "ctrl+1": 4.97
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. Thanks for asking. It's fine.",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": 2.22,
+      "n_amp+1": 1.89,
+      "n_sup+1": 2.14,
+      "o_amp+1": 2.44,
+      "o_sup+1": 2.31,
+      "ctrl+1": 2.28
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. The cat's bowl is empty.",
+     "target": "'s",
+     "measure": "target token",
+     "values": {
+      "base": -0.44,
+      "n_amp+1": -0.89,
+      "n_sup+1": -0.25,
+      "o_amp+1": -0.7,
+      "o_sup+1": -0.28,
+      "ctrl+1": -0.41
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  }
+ ],
+ "disagreements": [
+  "Review agrees with the automated base label (negative after degree 'so') but rejects its output claim (suppressing hyperbole) as untested, notes 'so sorry' is exempt and 'so detailed' fires as strongly as emotional adjectives, and adds the n_amp+1 reply-interjection change the automated card did not describe."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "mixed"
+  },
+  {
+   "rule": "v2",
+   "status": "tested",
+   "pass": 9,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "tested",
+   "pass": 10,
+   "of": 13,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:49:17Z"
+  }
+ ]
+}

@@ -1,0 +1,256 @@
+{
+ "packet_version": "explain-v4",
+ "mode": "shuffled",
+ "neurons": [
+  "L2/N8295"
+ ],
+ "seed": 0,
+ "created": "2026-10-26T18:49:51Z",
+ "scale": 0.6718999743461609,
+ "state_map": {
+  "base": "base",
+  "ctrl+1": "C+1",
+  "n_amp+0.5": "E+0.5",
+  "n_amp+1": "E+1",
+  "n_amp-0.5": "E-0.5",
+  "n_amp-1": "E-1",
+  "n_sup+1": "B+1",
+  "o_amp+0.5": "A+0.5",
+  "o_amp+1": "A+1",
+  "o_amp-0.5": "A-0.5",
+  "o_amp-1": "A-1",
+  "o_sup+1": "D+1"
+ },
+ "adapter_map": {
+  "ctrl": "C",
+  "n_amp": "E",
+  "n_sup": "B",
+  "o_amp": "A",
+  "o_sup": "D"
+ },
+ "windows": [
+  {
+   "wid": "W01",
+   "ex_id": "L2_N8295:e25",
+   "neuron": "L2/N8295",
+   "category": "high_pos",
+   "kind": "quantile",
+   "domain": "chat",
+   "focus_token": " airport",
+   "focus_value": 0.5703,
+   "true_focus_value": 0.0991
+  },
+  {
+   "wid": "W02",
+   "ex_id": "L2_N8295:e24",
+   "neuron": "L2/N8295",
+   "category": "high_pos",
+   "kind": "quantile",
+   "domain": "factual",
+   "focus_token": " moved",
+   "focus_value": 0.5391,
+   "true_focus_value": 0.0544
+  },
+  {
+   "wid": "W03",
+   "ex_id": "L2_N8295:e02",
+   "neuron": "L2/N8295",
+   "category": "high_pos",
+   "kind": "top_pos",
+   "domain": "code",
+   "focus_token": " multiprocessing",
+   "focus_value": 0.4902,
+   "true_focus_value": 0.6719
+  },
+  {
+   "wid": "W04",
+   "ex_id": "L2_N8295:e05",
+   "neuron": "L2/N8295",
+   "category": "high_pos",
+   "kind": "top_pos",
+   "domain": "narrative",
+   "focus_token": "noxious",
+   "focus_value": 0.3398,
+   "true_focus_value": 0.5703
+  },
+  {
+   "wid": "W05",
+   "ex_id": "L2_N8295:e11",
+   "neuron": "L2/N8295",
+   "category": "high_neg",
+   "kind": "top_neg",
+   "domain": "chat",
+   "focus_token": " Daniel",
+   "focus_value": -0.4453,
+   "true_focus_value": -0.4453
+  },
+  {
+   "wid": "W06",
+   "ex_id": "L2_N8295:e21",
+   "neuron": "L2/N8295",
+   "category": "high_neg",
+   "kind": "quantile",
+   "domain": "narrative",
+   "focus_token": ".",
+   "focus_value": -0.4453,
+   "true_focus_value": -0.0033
+  },
+  {
+   "wid": "W07",
+   "ex_id": "L2_N8295:e08",
+   "neuron": "L2/N8295",
+   "category": "high_neg",
+   "kind": "top_neg",
+   "domain": "factual",
+   "focus_token": " Willie",
+   "focus_value": -0.4395,
+   "true_focus_value": -0.4922
+  },
+  {
+   "wid": "W08",
+   "ex_id": "L2_N8295:e07",
+   "neuron": "L2/N8295",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "narrative",
+   "focus_token": " clinging",
+   "focus_value": 0.2031,
+   "true_focus_value": 0.5391
+  },
+  {
+   "wid": "W09",
+   "ex_id": "L2_N8295:e26",
+   "neuron": "L2/N8295",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "chat",
+   "focus_token": "uddled",
+   "focus_value": 0.0544,
+   "true_focus_value": 0.2031
+  },
+  {
+   "wid": "W10",
+   "ex_id": "L2_N8295:e22",
+   "neuron": "L2/N8295",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "factual",
+   "focus_token": " Free",
+   "focus_value": 0.0391,
+   "true_focus_value": 0.0096
+  },
+  {
+   "wid": "W11",
+   "ex_id": "L2_N8295:e13",
+   "neuron": "L2/N8295",
+   "category": "moderate",
+   "kind": "top_neg",
+   "domain": "code",
+   "focus_token": "_literals",
+   "focus_value": 0.0035,
+   "true_focus_value": -0.4395
+  },
+  {
+   "wid": "W12",
+   "ex_id": "L2_N8295:e12",
+   "neuron": "L2/N8295",
+   "category": "moderate",
+   "kind": "top_neg",
+   "domain": "web",
+   "focus_token": " Manuel",
+   "focus_value": -0.0033,
+   "true_focus_value": -0.4453
+  },
+  {
+   "wid": "W13",
+   "ex_id": "L2_N8295:e30",
+   "neuron": "L2/N8295",
+   "category": "random",
+   "kind": "random",
+   "domain": "chat",
+   "focus_token": " to",
+   "focus_value": 0.249,
+   "true_focus_value": 0.0035
+  },
+  {
+   "wid": "W14",
+   "ex_id": "L2_N8295:e27",
+   "neuron": "L2/N8295",
+   "category": "random",
+   "kind": "random",
+   "domain": "narrative",
+   "focus_token": " hear",
+   "focus_value": 0.0991,
+   "true_focus_value": 0.0708
+  },
+  {
+   "wid": "W15",
+   "ex_id": "L2_N8295:e31",
+   "neuron": "L2/N8295",
+   "category": "random",
+   "kind": "random",
+   "domain": "web",
+   "focus_token": " one",
+   "focus_value": -0.4922,
+   "true_focus_value": 0.0391
+  },
+  {
+   "wid": "W16",
+   "ex_id": "L2_N8295:e14",
+   "neuron": "L2/N8295",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_text",
+   "focus_token": "Alright",
+   "focus_value": 0.6719,
+   "true_focus_value": 0.249
+  },
+  {
+   "wid": "W17",
+   "ex_id": "L2_N8295:e15",
+   "neuron": "L2/N8295",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "factual",
+   "focus_token": " December",
+   "focus_value": 0.4453,
+   "true_focus_value": 0.4453
+  },
+  {
+   "wid": "W18",
+   "ex_id": "L2_N8295:e16",
+   "neuron": "L2/N8295",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "chat",
+   "focus_token": "Objective",
+   "focus_value": 0.3906,
+   "true_focus_value": 0.4902
+  },
+  {
+   "wid": "W19",
+   "ex_id": "L2_N8295:e18",
+   "neuron": "L2/N8295",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_text",
+   "focus_token": " awesome",
+   "focus_value": 0.0096,
+   "true_focus_value": 0.3398
+  },
+  {
+   "wid": "W20",
+   "ex_id": "L2_N8295:e17",
+   "neuron": "L2/N8295",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "factual",
+   "focus_token": " Buckley",
+   "focus_value": 0.0708,
+   "true_focus_value": 0.3906
+  }
+ ],
+ "text": "# Evidence packet (20 windows)\nNeuron activation scale: the strongest discovery activation magnitude is 0.67; 'strong' below means |act| >= 0.27.\nMeasured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.\n\n## Strongest positive activations\n[W01] domain=chat segment=response token=\" airport\" act: base=+0.57 | state A+1=+0.69 | state B+1=+0.57 | state C+1=+0.54 | state D+1=+0.44 | state E+1=+0.59\n  AVAILABLE:  and recommended attire.<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>\\n\\nDay 1: Arrival and Beach Relaxation\\n- Arrive at the⟦ airport⟧\n  FUTURE (not visible at the measured token):  and take a pre-arranged shuttle\n\n[W02] domain=factual token=\" moved\" act: base=+0.54 | state A+1=+0.75 | state B+1=+0.49 | state C+1=+0.51 | state D+1=+0.36 | state E+1=+0.53\n  AVAILABLE: ace Wells Dix, She had an early interest in art, and her talents and love of reading were encouraged from an early age. Her family⟦ moved⟧\n  FUTURE (not visible at the measured token):  several times during her early years due to\n\n[W03] domain=code token=\" multiprocessing\" act: base=+0.49 | state A+1=+0.70 | state B+1=+0.48 | state C+1=+0.45 | state D+1=+0.34 | state E+1=+0.52\n  AVAILABLE:  argparse\r\\nimport json\r\\nimport⟦ multiprocessing⟧\n  FUTURE (not visible at the measured token): \r\\nimport os\r\\nimport logging\r\\n\r\\nimport\n\n[W04] domain=narrative token=\"noxious\" act: base=+0.34 | state A+1=+0.54 | state B+1=+0.30 | state C+1=+0.30 | state D+1=+0.15 | state E+1=+0.37\n  AVAILABLE:  fucking hated her. Normally we get along, but after the holiday meal, I could n't stand her. She was just so fucking ob⟦noxious⟧\n  FUTURE (not visible at the measured token):  with her liberal theories. Loving the jew\n\n## Strongest negative activations\n[W05] domain=chat token=\" Daniel\" act: base=-0.45 | state A+1=-0.42 | state B+1=-0.44 | state C+1=-0.44 | state D+1=-0.44 | state E+1=-0.45\n  AVAILABLE:  Arab musicians have performed with the West-Eastern Divan Orchestra. Now they will play for the first time in their home region. Conductor⟦ Daniel⟧\n  FUTURE (not visible at the measured token):  Barenboim tells John Ydst\n  other strong positions: \"ern\"(-20)=+0.29\n\n[W06] domain=narrative token=\".\" act: base=-0.45 | state A+1=-0.42 | state B+1=-0.45 | state C+1=-0.44 | state D+1=-0.45 | state E+1=-0.45\n  AVAILABLE: : Titanium Alloy \\n \\n * Tendons & Ligaments: Equally upgraded \\n \\n * Right Arm: Replaced what was left at the shoulder⟦.⟧\n  FUTURE (not visible at the measured token):  *Not a toy. * \\n \\n *\n\n[W07] domain=factual token=\" Willie\" act: base=-0.44 | state A+1=-0.41 | state B+1=-0.43 | state C+1=-0.43 | state D+1=-0.45 | state E+1=-0.43\n  AVAILABLE:  out of high school his sophomore year and shortly thereafter was hired as a part-time recording engineer for the label. Henry Stone, Clarence Reid and⟦ Willie⟧\n  FUTURE (not visible at the measured token):  Clark (in a comment to SongF\n  other strong positions: \" out\"(-28)=-0.29, \" as\"(-16)=-0.29\n\n## Moderate and low activations\n[W08] domain=narrative token=\" clinging\" act: base=+0.20 | state A+1=+0.30 | state B+1=+0.21 | state C+1=+0.19 | state D+1=+0.14 | state E+1=+0.21\n  AVAILABLE:  slumber, my eyes snap open. `` Who's there?'' I asked. The Maiden approached, grace in every step, white robes⟦ clinging⟧\n  FUTURE (not visible at the measured token):  to her body. `` You know who\n\n[W09] domain=chat token=\"uddled\" act: base=+0.05 | state A+1=+0.06 | state B+1=+0.05 | state C+1=+0.06 | state D+1=+0.05 | state E+1=+0.05\n  AVAILABLE:  family, each one holding a weapon of some sort. The young girl had a knife, the woman had an axe, and the family h⟦uddled⟧\n  FUTURE (not visible at the measured token):  in fear.\\n\\nBut as they drew near\n\n[W10] domain=factual token=\" Free\" act: base=+0.04 | state A+1=+0.04 | state B+1=+0.04 | state C+1=+0.04 | state D+1=+0.04 | state E+1=+0.04\n  AVAILABLE: .\\n\\nSeveral industrial neighbours have come and gone in the vicinity of Waingawa station. In 1911, the Waingawa⟦ Free⟧\n  FUTURE (not visible at the measured token): zing Works were opened by the Wellington Farmers\n\n[W11] domain=code token=\"_literals\" act: base=+0.00 | state A+1=+0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=+0.00\n  AVAILABLE:  -*- coding: utf-8 -*-\\nfrom __future__ import unicode⟦_literals⟧\n  FUTURE (not visible at the measured token): \\n\\nfrom django.db import migrations, models\n\n[W12] domain=web token=\" Manuel\" act: base=-0.00 | state A+1=-0.01 | state B+1=-0.00 | state C+1=-0.00 | state D+1=-0.00 | state E+1=-0.00\n  AVAILABLE:  by many historians.\\nDetails about Teixeira's life are very sparse. His birthplace is most commonly accepted to be Porto\\n, to⟦ Manuel⟧\n  FUTURE (not visible at the measured token):  Álvares de Barros and L\n\n## Random contexts (unselected positions)\n[W13] domain=chat token=\" to\" act: base=+0.25 | state A+1=+0.46 | state B+1=+0.25 | state C+1=+0.24 | state D+1=+0.09 | state E+1=+0.25\n  AVAILABLE: , teaching style, and the specific ways in which they positively impact the lives of their students. Be sure to use descriptive language and compelling anecdotes⟦ to⟧\n  FUTURE (not visible at the measured token):  fully capture the essence of this exceptional teacher\n\n[W14] domain=narrative token=\" hear\" act: base=+0.10 | state A+1=+0.23 | state B+1=+0.08 | state C+1=+0.07 | state D+1=+0.00 | state E+1=+0.09\n  AVAILABLE:  one of you suggested nectar instead of coffee? I forget.'' \\n \\n Hestia rolled her eyes. `` Hera. She would n't⟦ hear⟧\n  FUTURE (not visible at the measured token):  otherwise, no matter how much I told\n\n[W15] domain=web token=\" one\" act: base=-0.49 | state A+1=-0.46 | state B+1=-0.49 | state C+1=-0.49 | state D+1=-0.49 | state E+1=-0.49\n  AVAILABLE:  factor is increased. The researchers say the system can be used for educating viewers valuable exhibits and inspection of engineering products. We just want to get⟦ one⟧\n  FUTURE (not visible at the measured token):  of these before we attend another mega-scale\n\n## Separate evidence: windows with the largest differences between model states\n[W16] domain=emotional_text token=\"Alright\" act: base=+0.67 | state A+1=+0.79 | state B+1=+0.69 | state C+1=+0.68 | state D+1=+0.55 | state E+1=+0.69\n  AVAILABLE:  if you remove that comment. Thanks.\\n\\nAsk him if he’d consider opening a makeup store if you gave him $6000\\n\\n⟦Alright⟧\n  FUTURE (not visible at the measured token):  imma set small goals for myself thanks\n\n[W17] domain=factual token=\" December\" act: base=+0.45 | state A+1=+0.66 | state B+1=+0.41 | state C+1=+0.43 | state D+1=+0.24 | state E+1=+0.47\n  AVAILABLE: eará). It was elevated to village level on 30 February 1699, and to city status on 27⟦ December⟧\n  FUTURE (not visible at the measured token):  1938. In the\n\n[W18] domain=chat segment=response token=\"Objective\" act: base=+0.39 | state A+1=+0.57 | state B+1=+0.36 | state C+1=+0.40 | state D+1=+0.20 | state E+1=+0.44\n  AVAILABLE:  success of the campaign.<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>\\n\\nSocial Media Campaign Strategy: Launching New Line of Organic Beauty Products\\n\\n⟦Objective⟧\n  FUTURE (not visible at the measured token): : The main objective of this campaign is\n  other strong positions: \" New\"(-7)=-0.31\n\n[W19] domain=emotional_text token=\" awesome\" act: base=+0.01 | state A+1=+0.01 | state B+1=+0.01 | state C+1=+0.01 | state D+1=+0.01 | state E+1=+0.01\n  AVAILABLE:  up the swamp\\n\\nThey should just give us the cup now and save everyone some time\\n\\nThat’s how I outfitted my team in that⟦ awesome⟧\n  FUTURE (not visible at the measured token):  red and black colossus armor.\\n\\n\n\n[W20] domain=factual token=\" Buckley\" act: base=+0.07 | state A+1=+0.07 | state B+1=+0.07 | state C+1=+0.07 | state D+1=+0.07 | state E+1=+0.07\n  AVAILABLE:  became Baron Saatchi and as a result, she was entitled to the title The Lady Saatchi. She also had a son Adam⟦ Buckley⟧\n  FUTURE (not visible at the measured token):  from a previous marriage.\\n\\nDeath\\nLady\n\nReturn the JSON object now.",
+ "est_tokens": 3108,
+ "hash": "10ec62b88bf1010a4e2dfd9a2d25860882d71d143da79b72b3736c0d23e2431d"
+}

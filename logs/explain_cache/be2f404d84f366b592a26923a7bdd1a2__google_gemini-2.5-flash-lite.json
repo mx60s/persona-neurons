@@ -1,0 +1,189 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for the token 'is' when it is part of a declarative statement, and negatively for sentence-initial tokens like 'Oh', 'In', and 'At', and punctuation like ','.",
+  "output_hypothesis": "The neuron appears to be sensitive to sentence structure and punctuation, potentially acting as a sentence boundary detector or a marker for declarative content. It shows strong positive activation for 'is' in a narrative context (W01) and strong negative activation for sentence-initial words and punctuation in various contexts (W02, W03, W04, W05, W17).",
+  "alternatives": [
+   "The neuron might be a general punctuation or sentence boundary detector, with a preference for positive activation at 'is' and negative activation at other sentence-initial tokens and punctuation.",
+   "The neuron could be sensitive to the semantic content of the text, with positive activation for factual or declarative statements and negative activation for exclamations or questions."
+  ],
+  "adapter_changes": "State C+1 shows a significant negative shift in activation for the token '\\n\\n' in chat and emotional_chat domains, particularly in prompt segments (W20, W21, W22, W23, W24). This suggests a strong sensitivity to the transition from user input to assistant response, or to specific formatting related to conversational turns.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W17"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "declarative vs. interrogative",
+    "a_text": "This is a statement.",
+    "a_expected": "high",
+    "a_target": "is",
+    "b_text": "Is this a statement?",
+    "b_expected": "low",
+    "b_target": "Is",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence start vs. middle",
+    "a_text": "The cat sat.",
+    "a_expected": "low",
+    "a_target": "The",
+    "b_text": "The cat sat.",
+    "b_expected": "high",
+    "b_target": "sat",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation vs. word",
+    "a_text": "Hello!",
+    "a_expected": "low",
+    "a_target": "!",
+    "b_text": "Hello world",
+    "b_expected": "high",
+    "b_target": "world",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "affirmative vs. negative",
+    "a_text": "It is good.",
+    "a_expected": "high",
+    "a_target": "is",
+    "b_text": "It is not good.",
+    "b_expected": "low",
+    "b_target": "not",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "specific word 'is' vs. other verbs",
+    "a_text": "This is true.",
+    "a_expected": "high",
+    "a_target": "is",
+    "b_text": "This seems true.",
+    "b_expected": "low",
+    "b_target": "seems",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence start 'Oh' vs. middle 'Oh'",
+    "a_text": "Oh no.",
+    "a_expected": "low",
+    "a_target": "Oh",
+    "b_text": "I said, Oh no.",
+    "b_expected": "high",
+    "b_target": "Oh",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence start 'In' vs. middle 'In'",
+    "a_text": "In conclusion.",
+    "a_expected": "low",
+    "a_target": "In",
+    "b_text": "We are in.",
+    "b_expected": "high",
+    "b_target": "in",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence start 'At' vs. middle 'At'",
+    "a_text": "At the end.",
+    "a_expected": "low",
+    "a_target": "At",
+    "b_text": "Look at the end.",
+    "b_expected": "high",
+    "b_target": "at",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "declarative sentence end vs. question end",
+    "a_text": "It is done.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "Is it done?",
+    "b_expected": "low",
+    "b_target": "?",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "common word 'is' vs. less common word",
+    "a_text": "This is important.",
+    "a_expected": "high",
+    "a_target": "is",
+    "b_text": "This seems important.",
+    "b_expected": "low",
+    "b_target": "seems",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for the token 'is' when it is part of a declarative statement, and negatively for sentence-initial tokens like 'Oh', 'In', and 'At', and punctuation like ','.\",\"output_hypothesis\":\"The neuron appears to be sensitive to sentence structure and punctuation, potentially acting as a sentence boundary detector or a marker for declarative content. It shows strong positive activation for 'is' in a narrative context (W01) and strong negative activation for sentence-initial words and punctuation in various contexts (W02, W03, W04, W05, W17).\",\"alternatives\":[\"The neuron might be a general punctuation or sentence boundary detector, with a preference for positive activation at 'is' and negative activation at other sentence-initial tokens and punctuation.\",\"The neuron could be sensitive to the semantic content of the text, with positive activation for factual or declarative statements and negative activation for exclamations or questions.\"],\"adapter_changes\":\"State C+1 shows a significant negative shift in activation for the token '\\\\n\\\\n' in chat and emotional_chat domains, particularly in prompt segments (W20, W21, W22, W23, W24). This suggests a strong sensitivity to the transition from user input to assistant response, or to specific formatting related to conversational turns.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W17\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"declarative vs. interrogative\",\"a_text\":\"This is a statement.\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"Is this a statement?\",\"b_expected\":\"low\",\"b_target\":\"Is\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sentence start vs. middle\",\"a_text\":\"The cat sat.\",\"a_expected\":\"low\",\"a_target\":\"The\",\"b_text\":\"The cat sat.\",\"b_expected\":\"high\",\"b_target\":\"sat\"},{\"discriminates\":\"punctuation vs. word\",\"a_text\":\"Hello!\",\"a_expected\":\"low\",\"a_target\":\"!\",\"b_text\":\"Hello world\",\"b_expected\":\"high\",\"b_target\":\"world\"},{\"discriminates\":\"affirmative vs. negative\",\"a_text\":\"It is good.\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"It is not good.\",\"b_expected\":\"low\",\"b_target\":\"not\"},{\"discriminates\":\"specific word 'is' vs. other verbs\",\"a_text\":\"This is true.\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"This seems true.\",\"b_expected\":\"low\",\"b_target\":\"seems\"},{\"discriminates\":\"sentence start 'Oh' vs. middle 'Oh'\",\"a_text\":\"Oh no.\",\"a_expected\":\"low\",\"a_target\":\"Oh\",\"b_text\":\"I said, Oh no.\",\"b_expected\":\"high\",\"b_target\":\"Oh\"},{\"discriminates\":\"sentence start 'In' vs. middle 'In'\",\"a_text\":\"In conclusion.\",\"a_expected\":\"low\",\"a_target\":\"In\",\"b_text\":\"We are in.\",\"b_expected\":\"high\",\"b_target\":\"in\"},{\"discriminates\":\"sentence start 'At' vs. middle 'At'\",\"a_text\":\"At the end.\",\"a_expected\":\"low\",\"a_target\":\"At\",\"b_text\":\"Look at the end.\",\"b_expected\":\"high\",\"b_target\":\"at\"},{\"discriminates\":\"declarative sentence end vs. question end\",\"a_text\":\"It is done.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Is it done?\",\"b_expected\":\"low\",\"b_target\":\"?\"},{\"discriminates\":\"common word 'is' vs. less common word\",\"a_text\":\"This is important.\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"This seems important.\",\"b_expected\":\"low\",\"b_target\":\"seems\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6088,
+  "output_tokens": 942,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0009856
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for the token 'is' when it is part of a declarative statement, and negatively for sentence-initial tokens like 'Oh', 'In', and 'At', and punctuation like ','.\",\"output_hypothesis\":\"The neuron appears to be sensitive to sentence structure and punctuation, potentially acting as a sentence boundary detector or a marker for declarative content. It shows strong positive activation for 'is' in a narrative context (W01) and strong negative activation for sentence-initial words and punctuation in various contexts (W02, W03, W04, W05, W17).\",\"alternatives\":[\"The neuron might be a general punctuation or sentence boundary detector, with a preference for positive activation at 'is' and negative activation at other sentence-initial tokens and punctuation.\",\"The neuron could be sensitive to the semantic content of the text, with positive activation for factual or declarative statements and negative activation for exclamations or questions.\"],\"adapter_changes\":\"State C+1 shows a significant negative shift in activation for the token '\\\\n\\\\n' in chat and emotional_chat domains, particularly in prompt segments (W20, W21, W22, W23, W24). This suggests a strong sensitivity to the transition from user input to assistant response, or to specific formatting related to conversational turns.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W17\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"declarative vs. interrogative\",\"a_text\":\"This is a statement.\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"Is this a statement?\",\"b_expected\":\"low\",\"b_target\":\"Is\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sentence start vs. middle\",\"a_text\":\"The cat sat.\",\"a_expected\":\"low\",\"a_target\":\"The\",\"b_text\":\"The cat sat.\",\"b_expected\":\"high\",\"b_target\":\"sat\"},{\"discriminates\":\"punctuation vs. word\",\"a_text\":\"Hello!\",\"a_expected\":\"low\",\"a_target\":\"!\",\"b_text\":\"Hello world\",\"b_expected\":\"high\",\"b_target\":\"world\"},{\"discriminates\":\"affirmative vs. negative\",\"a_text\":\"It is good.\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"It is not good.\",\"b_expected\":\"low\",\"b_target\":\"not\"},{\"discriminates\":\"specific word 'is' vs. other verbs\",\"a_text\":\"This is true.\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"This seems true.\",\"b_expected\":\"low\",\"b_target\":\"seems\"},{\"discriminates\":\"sentence start 'Oh' vs. middle 'Oh'\",\"a_text\":\"Oh no.\",\"a_expected\":\"low\",\"a_target\":\"Oh\",\"b_text\":\"I said, Oh no.\",\"b_expected\":\"high\",\"b_target\":\"Oh\"},{\"discriminates\":\"sentence start 'In' vs. middle 'In'\",\"a_text\":\"In conclusion.\",\"a_expected\":\"low\",\"a_target\":\"In\",\"b_text\":\"We are in.\",\"b_expected\":\"high\",\"b_target\":\"in\"},{\"discriminates\":\"sentence start 'At' vs. middle 'At'\",\"a_text\":\"At the end.\",\"a_expected\":\"low\",\"a_target\":\"At\",\"b_text\":\"Look at the end.\",\"b_expected\":\"high\",\"b_target\":\"at\"},{\"discriminates\":\"declarative sentence end vs. question end\",\"a_text\":\"It is done.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Is it done?\",\"b_expected\":\"low\",\"b_target\":\"?\"},{\"discriminates\":\"common word 'is' vs. less common word\",\"a_text\":\"This is important.\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"This seems important.\",\"b_expected\":\"low\",\"b_target\":\"seems\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6088,
+    "output_tokens": 942,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0009856,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040740-Lg9QNhu6SS6c8dYryIDy"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:52:23Z",
+ "purpose": "explain:blind"
+}

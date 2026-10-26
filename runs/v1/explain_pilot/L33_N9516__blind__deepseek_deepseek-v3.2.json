@@ -1,0 +1,445 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional assistant response start",
+  "trigger_hypothesis": "The neuron activates strongly negative at the start of an assistant's response in an emotional chat context, especially after a user's emotional story, when the assistant is about to express sympathy or surprise (e.g., 'Oh', 'In', 'At').",
+  "output_hypothesis": "The neuron suppresses the generation of short, empathetic interjections or sentence-starting words at the beginning of an assistant's emotional response, possibly to allow for more varied or less predictable emotional language.",
+  "alternatives": [
+   "The neuron detects sentence-initial words (like 'In', 'At', 'Oh') in any context, not specifically emotional ones.",
+   "The neuron responds to specific punctuation or formatting patterns, like newlines before assistant responses, regardless of content."
+  ],
+  "adapter_changes": "State C+1 dramatically increases negative activation (makes it more negative) specifically at prompt segment tokens like '\\n\\n' before assistant responses in emotional_chat and chat domains (see W20-W24), while state D+1 reduces the negative activation at the 'Oh' token in W02. Other states show smaller changes.",
+  "supporting": [
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W17"
+  ],
+  "contradicting": [
+   "W01",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Emotional assistant start vs. neutral assistant start",
+    "a_text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh",
+    "a_expected": "negative",
+    "a_target": "Oh",
+    "b_text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant response start vs. mid-sentence emotional word",
+    "a_text": "User: I lost my pet.\\nAssistant: Oh",
+    "a_expected": "negative",
+    "a_target": "Oh",
+    "b_text": "User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional story prompt vs. factual prompt",
+    "a_text": "User: My grandma died.\\nAssistant: In",
+    "a_expected": "negative",
+    "a_target": "In",
+    "b_text": "User: What is the capital?\\nAssistant: In",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Sentence-starting 'At' in emotional context vs. mid-sentence 'at'",
+    "a_text": "User: I feel so anxious.\\nAssistant: At",
+    "a_expected": "negative",
+    "a_target": "At",
+    "b_text": "User: Look at that!\\nAssistant:",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Newline before assistant response in emotional chat vs. other newline",
+    "a_text": "User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+    "a_expected": "negative",
+    "a_target": "\\n\\n",
+    "b_text": "This is a sentence.\\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'is' in emotional lie detection vs. neutral 'is'",
+    "a_text": "Mix your lies with the truth and nobody will know which is",
+    "a_expected": "high",
+    "a_target": "is",
+    "b_text": "The sky is blue.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Comma after emotional statement vs. neutral comma",
+    "a_text": "I joked with her, she was an extremophile,",
+    "a_expected": "negative",
+    "a_target": ",",
+    "b_text": "The list includes apple, banana, and cherry,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'at' in emotional confrontation vs. neutral 'at'",
+    "a_text": "``Where's my shipment?'' ``But at",
+    "a_expected": "negative",
+    "a_target": "at",
+    "b_text": "Meet me at the park.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant response start with 'Oh' after sad story vs. happy story",
+    "a_text": "User: My dog died.\\nAssistant: Oh",
+    "a_expected": "negative",
+    "a_target": "Oh",
+    "b_text": "User: I won the lottery!\\nAssistant: Oh",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Prompt segment (before assistant) in emotional chat vs. narrative",
+    "a_text": "User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+    "a_expected": "negative",
+    "a_target": "\\n\\n",
+    "b_text": "He said, ``Hello.''\\n\\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional assistant response start\",\"trigger_hypothesis\":\"The neuron activates strongly negative at the start of an assistant's response in an emotional chat context, especially after a user's emotional story, when the assistant is about to express sympathy or surprise (e.g., 'Oh', 'In', 'At').\",\"output_hypothesis\":\"The neuron suppresses the generation of short, empathetic interjections or sentence-starting words at the beginning of an assistant's emotional response, possibly to allow for more varied or less predictable emotional language.\",\"alternatives\":[\"The neuron detects sentence-initial words (like 'In', 'At', 'Oh') in any context, not specifically emotional ones.\",\"The neuron responds to specific punctuation or formatting patterns, like newlines before assistant responses, regardless of content.\"],\"adapter_changes\":\"State C+1 dramatically increases negative activation (makes it more negative) specifically at prompt segment tokens like '\\\\n\\\\n' before assistant responses in emotional_chat and chat domains (see W20-W24), while state D+1 reduces the negative activation at the 'Oh' token in W02. Other states show smaller changes.\",\"supporting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W17\"],\"contradicting\":[\"W01\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"Emotional assistant start vs. neutral assistant start\",\"a_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\\\\nOh\",\"a_expected\":\"negative\",\"a_target\":\"Oh\",\"b_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\\\\nThe\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant response start vs. mid-sentence emotional word\",\"a_text\":\"User: I lost my pet.\\\\nAssistant: Oh\",\"a_expected\":\"negative\",\"a_target\":\"Oh\",\"b_text\":\"User: I lost my pet.\\\\nAssistant: That's so sad, oh dear.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional story prompt vs. factual prompt\",\"a_text\":\"User: My grandma died.\\\\nAssistant: In\",\"a_expected\":\"negative\",\"a_target\":\"In\",\"b_text\":\"User: What is the capital?\\\\nAssistant: In\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Sentence-starting 'At' in emotional context vs. mid-sentence 'at'\",\"a_text\":\"User: I feel so anxious.\\\\nAssistant: At\",\"a_expected\":\"negative\",\"a_target\":\"At\",\"b_text\":\"User: Look at that!\\\\nAssistant:\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline before assistant response in emotional chat vs. other newline\",\"a_text\":\"User: I'm crying.\\\\n<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\\\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"This is a sentence.\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'is' in emotional lie detection vs. neutral 'is'\",\"a_text\":\"Mix your lies with the truth and nobody will know which is\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"The sky is blue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Comma after emotional statement vs. neutral comma\",\"a_text\":\"I joked with her, she was an extremophile,\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"The list includes apple, banana, and cherry,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'at' in emotional confrontation vs. neutral 'at'\",\"a_text\":\"``Where's my shipment?'' ``But at\",\"a_expected\":\"negative\",\"a_target\":\"at\",\"b_text\":\"Meet me at the park.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant response start with 'Oh' after sad story vs. happy story\",\"a_text\":\"User: My dog died.\\\\nAssistant: Oh\",\"a_expected\":\"negative\",\"a_target\":\"Oh\",\"b_text\":\"User: I won the lottery!\\\\nAssistant: Oh\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prompt segment (before assistant) in emotional chat vs. narrative\",\"a_text\":\"User: I'm devastated.<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\\\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"He said, ``Hello.''\\\\n\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6223,
+  "output_tokens": 1228,
+  "reasoning_tokens": 8,
+  "cost_usd": 0.001967896
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional assistant response start\",\"trigger_hypothesis\":\"The neuron activates strongly negative at the start of an assistant's response in an emotional chat context, especially after a user's emotional story, when the assistant is about to express sympathy or surprise (e.g., 'Oh', 'In', 'At').\",\"output_hypothesis\":\"The neuron suppresses the generation of short, empathetic interjections or sentence-starting words at the beginning of an assistant's emotional response, possibly to allow for more varied or less predictable emotional language.\",\"alternatives\":[\"The neuron detects sentence-initial words (like 'In', 'At', 'Oh') in any context, not specifically emotional ones.\",\"The neuron responds to specific punctuation or formatting patterns, like newlines before assistant responses, regardless of content.\"],\"adapter_changes\":\"State C+1 dramatically increases negative activation (makes it more negative) specifically at prompt segment tokens like '\\\\n\\\\n' before assistant responses in emotional_chat and chat domains (see W20-W24), while state D+1 reduces the negative activation at the 'Oh' token in W02. Other states show smaller changes.\",\"supporting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W17\"],\"contradicting\":[\"W01\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"Emotional assistant start vs. neutral assistant start\",\"a_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\\\\nOh\",\"a_expected\":\"negative\",\"a_target\":\"Oh\",\"b_text\":\"<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\\\\nThe\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant response start vs. mid-sentence emotional word\",\"a_text\":\"User: I lost my pet.\\\\nAssistant: Oh\",\"a_expected\":\"negative\",\"a_target\":\"Oh\",\"b_text\":\"User: I lost my pet.\\\\nAssistant: That's so sad, oh dear.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional story prompt vs. factual prompt\",\"a_text\":\"User: My grandma died.\\\\nAssistant: In\",\"a_expected\":\"negative\",\"a_target\":\"In\",\"b_text\":\"User: What is the capital?\\\\nAssistant: In\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Sentence-starting 'At' in emotional context vs. mid-sentence 'at'\",\"a_text\":\"User: I feel so anxious.\\\\nAssistant: At\",\"a_expected\":\"negative\",\"a_target\":\"At\",\"b_text\":\"User: Look at that!\\\\nAssistant:\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline before assistant response in emotional chat vs. other newline\",\"a_text\":\"User: I'm crying.\\\\n<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\\\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"This is a sentence.\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'is' in emotional lie detection vs. neutral 'is'\",\"a_text\":\"Mix your lies with the truth and nobody will know which is\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"The sky is blue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Comma after emotional statement vs. neutral comma\",\"a_text\":\"I joked with her, she was an extremophile,\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"The list includes apple, banana, and cherry,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'at' in emotional confrontation vs. neutral 'at'\",\"a_text\":\"``Where's my shipment?'' ``But at\",\"a_expected\":\"negative\",\"a_target\":\"at\",\"b_text\":\"Meet me at the park.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant response start with 'Oh' after sad story vs. happy story\",\"a_text\":\"User: My dog died.\\\\nAssistant: Oh\",\"a_expected\":\"negative\",\"a_target\":\"Oh\",\"b_text\":\"User: I won the lottery!\\\\nAssistant: Oh\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prompt segment (before assistant) in emotional chat vs. narrative\",\"a_text\":\"User: I'm devastated.<|im_end|>\\\\n<|im_start|>assistant\\\\n\\\\n\\\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"He said, ``Hello.''\\\\n\\\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6223,
+    "output_tokens": 1228,
+    "reasoning_tokens": 8,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001967896,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793040717-OWLZ8MxtQaD5xuRzpglx"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:52:20Z",
+ "purpose": "explain:blind",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T18:52:20Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "emotional assistant response start",
+  "trigger_hypothesis": "The neuron activates strongly negative at the start of an assistant's response in an emotional chat context, especially after a user's emotional story, when the assistant is about to express sympathy or surprise (e.g., 'Oh', 'In', 'At').",
+  "output_hypothesis": "The neuron suppresses the generation of short, empathetic interjections or sentence-starting words at the beginning of an assistant's emotional response, possibly to allow for more varied or less predictable emotional language.",
+  "alternatives": [
+   "The neuron detects sentence-initial words (like 'In', 'At', 'Oh') in any context, not specifically emotional ones.",
+   "The neuron responds to specific punctuation or formatting patterns, like newlines before assistant responses, regardless of content."
+  ],
+  "adapter_changes": "State C+1 dramatically increases negative activation (makes it more negative) specifically at prompt segment tokens like '\\n\\n' before assistant responses in emotional_chat and chat domains (see W20-W24), while state D+1 reduces the negative activation at the 'Oh' token in W02. Other states show smaller changes.",
+  "supporting": [
+   "L33_N9516:e08",
+   "L33_N9516:e10",
+   "L33_N9516:e11",
+   "L33_N9516:e12",
+   "L33_N9516:e13"
+  ],
+  "contradicting": [
+   "L33_N9516:e00",
+   "L33_N9516:e01",
+   "L33_N9516:e02",
+   "L33_N9516:e03",
+   "L33_N9516:e04",
+   "L33_N9516:e05",
+   "L33_N9516:e06",
+   "L33_N9516:e29",
+   "L33_N9516:e28",
+   "L33_N9516:e27",
+   "L33_N9516:e25",
+   "L33_N9516:e24",
+   "L33_N9516:e31",
+   "L33_N9516:e34"
+  ],
+  "proposed_tests": [
+   "Emotional assistant start vs. neutral assistant start :: [negative] <|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh | [low] <|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+   "Assistant response start vs. mid-sentence emotional word :: [negative] User: I lost my pet.\\nAssistant: Oh | [low] User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+   "Emotional story prompt vs. factual prompt :: [negative] User: My grandma died.\\nAssistant: In | [low] User: What is the capital?\\nAssistant: In",
+   "Sentence-starting 'At' in emotional context vs. mid-sentence 'at' :: [negative] User: I feel so anxious.\\nAssistant: At | [low] User: Look at that!\\nAssistant:",
+   "Newline before assistant response in emotional chat vs. other newline :: [negative] User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n | [low] This is a sentence.\\n",
+   "Word 'is' in emotional lie detection vs. neutral 'is' :: [high] Mix your lies with the truth and nobody will know which is | [low] The sky is blue.",
+   "Comma after emotional statement vs. neutral comma :: [negative] I joked with her, she was an extremophile, | [low] The list includes apple, banana, and cherry,",
+   "'at' in emotional confrontation vs. neutral 'at' :: [negative] ``Where's my shipment?'' ``But at | [low] Meet me at the park.",
+   "Assistant response start with 'Oh' after sad story vs. happy story :: [negative] User: My dog died.\\nAssistant: Oh | [low] User: I won the lottery!\\nAssistant: Oh",
+   "Prompt segment (before assistant) in emotional chat vs. narrative :: [negative] User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n | [low] He said, ``Hello.''\\n\\n"
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "Emotional assistant start vs. neutral assistant start",
+    "texts": [
+     {
+      "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh",
+      "expected": "negative",
+      "target": "Oh"
+     },
+     {
+      "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "Assistant response start vs. mid-sentence emotional word",
+    "texts": [
+     {
+      "text": "User: I lost my pet.\\nAssistant: Oh",
+      "expected": "negative",
+      "target": "Oh"
+     },
+     {
+      "text": "User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "Emotional story prompt vs. factual prompt",
+    "texts": [
+     {
+      "text": "User: My grandma died.\\nAssistant: In",
+      "expected": "negative",
+      "target": "In"
+     },
+     {
+      "text": "User: What is the capital?\\nAssistant: In",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "Sentence-starting 'At' in emotional context vs. mid-sentence 'at'",
+    "texts": [
+     {
+      "text": "User: I feel so anxious.\\nAssistant: At",
+      "expected": "negative",
+      "target": "At"
+     },
+     {
+      "text": "User: Look at that!\\nAssistant:",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "Newline before assistant response in emotional chat vs. other newline",
+    "texts": [
+     {
+      "text": "User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+      "expected": "negative",
+      "target": "\\n\\n"
+     },
+     {
+      "text": "This is a sentence.\\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "Word 'is' in emotional lie detection vs. neutral 'is'",
+    "texts": [
+     {
+      "text": "Mix your lies with the truth and nobody will know which is",
+      "expected": "high",
+      "target": "is"
+     },
+     {
+      "text": "The sky is blue.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "Comma after emotional statement vs. neutral comma",
+    "texts": [
+     {
+      "text": "I joked with her, she was an extremophile,",
+      "expected": "negative",
+      "target": ","
+     },
+     {
+      "text": "The list includes apple, banana, and cherry,",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "'at' in emotional confrontation vs. neutral 'at'",
+    "texts": [
+     {
+      "text": "``Where's my shipment?'' ``But at",
+      "expected": "negative",
+      "target": "at"
+     },
+     {
+      "text": "Meet me at the park.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "Assistant response start with 'Oh' after sad story vs. happy story",
+    "texts": [
+     {
+      "text": "User: My dog died.\\nAssistant: Oh",
+      "expected": "negative",
+      "target": "Oh"
+     },
+     {
+      "text": "User: I won the lottery!\\nAssistant: Oh",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "Prompt segment (before assistant) in emotional chat vs. narrative",
+    "texts": [
+     {
+      "text": "User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+      "expected": "negative",
+      "target": "\\n\\n"
+     },
+     {
+      "text": "He said, ``Hello.''\\n\\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 6223,
+   "output_tokens": 1228,
+   "reasoning_tokens": 8,
+   "cost_usd": 0.001967896
+  },
+  "invalid_citations": [],
+  "packet_hash": "be2f404d84f366b592a26923a7bdd1a2756c45c5e6f4d1c643811194424c40a0",
+  "packet_mode": "blind",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "B+1",
+   "n_amp+0.5": "D+0.5",
+   "n_amp+1": "D+1",
+   "n_amp-0.5": "D-0.5",
+   "n_amp-1": "D-1",
+   "n_sup+1": "E+1",
+   "o_amp+0.5": "C+0.5",
+   "o_amp+1": "C+1",
+   "o_amp-0.5": "C-0.5",
+   "o_amp-1": "C-1",
+   "o_sup+1": "A+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 5,
+  "n_contradicting": 14,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.8,
+  "supporting_categories": {
+   "high_neg": 4,
+   "moderate": 1
+  },
+  "supporting_by_neuron": {
+   "L33/N9516": 5
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

@@ -1,0 +1,191 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "token 'S' or 's' after punctuation or at start of line",
+  "trigger_hypothesis": "The neuron fires strongly on the token 'S' or 's' (case-sensitive) when it appears immediately after punctuation (like period, newline, hyphen) or at the start of a line, and negatively on 'S' or 's' when it appears after a space or within a word.",
+  "output_hypothesis": "The neuron may be involved in detecting proper nouns or acronyms that start sentences or follow punctuation, possibly to adjust capitalization or formatting.",
+  "alternatives": [
+   "The neuron detects the letter 'S' specifically when it is the first character of a new word after punctuation.",
+   "The neuron responds to the token 'S'/'s' in isolation, regardless of context, but the sign depends on surrounding whitespace."
+  ],
+  "adapter_changes": "State changes are minor; the neuron's behavior is consistent across modifications, with slight magnitude variations but no sign flips.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11"
+  ],
+  "contradicting": [
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'S' after punctuation vs after space",
+    "a_text": "The end. S",
+    "a_expected": "high",
+    "a_target": "S",
+    "b_text": "The end S",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'s' after newline vs within word",
+    "a_text": "\n s",
+    "a_expected": "high",
+    "a_target": "s",
+    "b_text": "words",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'S' after hyphen vs after letter",
+    "a_text": "Post-S",
+    "a_expected": "high",
+    "a_target": "S",
+    "b_text": "PostS",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'S' at start of line vs middle",
+    "a_text": "S",
+    "a_expected": "high",
+    "a_target": "S",
+    "b_text": "A S",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'s' after period vs after comma",
+    "a_text": ". s",
+    "a_expected": "high",
+    "a_target": "s",
+    "b_text": ", s",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'S' after slash vs after slash with space",
+    "a_text": "57/s",
+    "a_expected": "high",
+    "a_target": "s",
+    "b_text": "57/ s",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative on 'S' after space",
+    "a_text": "for S",
+    "a_expected": "negative",
+    "a_target": "S",
+    "b_text": "forS",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'s' after parenthesis vs after letter",
+    "a_text": "(s",
+    "a_expected": "negative",
+    "a_target": "s",
+    "b_text": "as",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'S' in acronym vs in word",
+    "a_text": "S.P.",
+    "a_expected": "high",
+    "a_target": "S",
+    "b_text": "SP",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'s' after newline vs after tab",
+    "a_text": "\ns",
+    "a_expected": "high",
+    "a_target": "s",
+    "b_text": "\ts",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"token 'S' or 's' after punctuation or at start of line\",\"trigger_hypothesis\":\"The neuron fires strongly on the token 'S' or 's' (case-sensitive) when it appears immediately after punctuation (like period, newline, hyphen) or at the start of a line, and negatively on 'S' or 's' when it appears after a space or within a word.\",\"output_hypothesis\":\"The neuron may be involved in detecting proper nouns or acronyms that start sentences or follow punctuation, possibly to adjust capitalization or formatting.\",\"alternatives\":[\"The neuron detects the letter 'S' specifically when it is the first character of a new word after punctuation.\",\"The neuron responds to the token 'S'/'s' in isolation, regardless of context, but the sign depends on surrounding whitespace.\"],\"adapter_changes\":\"State changes are minor; the neuron's behavior is consistent across modifications, with slight magnitude variations but no sign flips.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\"],\"contradicting\":[\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"proposed_tests\":[{\"discriminates\":\"'S' after punctuation vs after space\",\"a_text\":\"The end. S\",\"a_expected\":\"high\",\"a_target\":\"S\",\"b_text\":\"The end S\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'s' after newline vs within word\",\"a_text\":\"\\n s\",\"a_expected\":\"high\",\"a_target\":\"s\",\"b_text\":\"words\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'S' after hyphen vs after letter\",\"a_text\":\"Post-S\",\"a_expected\":\"high\",\"a_target\":\"S\",\"b_text\":\"PostS\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'S' at start of line vs middle\",\"a_text\":\"S\",\"a_expected\":\"high\",\"a_target\":\"S\",\"b_text\":\"A S\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'s' after period vs after comma\",\"a_text\":\". s\",\"a_expected\":\"high\",\"a_target\":\"s\",\"b_text\":\", s\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'S' after slash vs after slash with space\",\"a_text\":\"57/s\",\"a_expected\":\"high\",\"a_target\":\"s\",\"b_text\":\"57/ s\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative on 'S' after space\",\"a_text\":\"for S\",\"a_expected\":\"negative\",\"a_target\":\"S\",\"b_text\":\"forS\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'s' after parenthesis vs after letter\",\"a_text\":\"(s\",\"a_expected\":\"negative\",\"a_target\":\"s\",\"b_text\":\"as\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'S' in acronym vs in word\",\"a_text\":\"S.P.\",\"a_expected\":\"high\",\"a_target\":\"S\",\"b_text\":\"SP\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'s' after newline vs after tab\",\"a_text\":\"\\ns\",\"a_expected\":\"high\",\"a_target\":\"s\",\"b_text\":\"\\ts\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5871,
+  "output_tokens": 907,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00184062387
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"token 'S' or 's' after punctuation or at start of line\",\"trigger_hypothesis\":\"The neuron fires strongly on the token 'S' or 's' (case-sensitive) when it appears immediately after punctuation (like period, newline, hyphen) or at the start of a line, and negatively on 'S' or 's' when it appears after a space or within a word.\",\"output_hypothesis\":\"The neuron may be involved in detecting proper nouns or acronyms that start sentences or follow punctuation, possibly to adjust capitalization or formatting.\",\"alternatives\":[\"The neuron detects the letter 'S' specifically when it is the first character of a new word after punctuation.\",\"The neuron responds to the token 'S'/'s' in isolation, regardless of context, but the sign depends on surrounding whitespace.\"],\"adapter_changes\":\"State changes are minor; the neuron's behavior is consistent across modifications, with slight magnitude variations but no sign flips.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\"],\"contradicting\":[\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"proposed_tests\":[{\"discriminates\":\"'S' after punctuation vs after space\",\"a_text\":\"The end. S\",\"a_expected\":\"high\",\"a_target\":\"S\",\"b_text\":\"The end S\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'s' after newline vs within word\",\"a_text\":\"\\n s\",\"a_expected\":\"high\",\"a_target\":\"s\",\"b_text\":\"words\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'S' after hyphen vs after letter\",\"a_text\":\"Post-S\",\"a_expected\":\"high\",\"a_target\":\"S\",\"b_text\":\"PostS\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'S' at start of line vs middle\",\"a_text\":\"S\",\"a_expected\":\"high\",\"a_target\":\"S\",\"b_text\":\"A S\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'s' after period vs after comma\",\"a_text\":\". s\",\"a_expected\":\"high\",\"a_target\":\"s\",\"b_text\":\", s\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'S' after slash vs after slash with space\",\"a_text\":\"57/s\",\"a_expected\":\"high\",\"a_target\":\"s\",\"b_text\":\"57/ s\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative on 'S' after space\",\"a_text\":\"for S\",\"a_expected\":\"negative\",\"a_target\":\"S\",\"b_text\":\"forS\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'s' after parenthesis vs after letter\",\"a_text\":\"(s\",\"a_expected\":\"negative\",\"a_target\":\"s\",\"b_text\":\"as\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'S' in acronym vs in word\",\"a_text\":\"S.P.\",\"a_expected\":\"high\",\"a_target\":\"S\",\"b_text\":\"SP\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'s' after newline vs after tab\",\"a_text\":\"\\ns\",\"a_expected\":\"high\",\"a_target\":\"s\",\"b_text\":\"\\ts\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5871,
+    "output_tokens": 907,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00184062387,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793042226-YHBBSLiXMsEfkStwaGfB"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:32Z",
+ "purpose": "explain:blind"
+}

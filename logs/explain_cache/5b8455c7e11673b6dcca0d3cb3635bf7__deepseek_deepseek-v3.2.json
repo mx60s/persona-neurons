@@ -1,0 +1,187 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water-related nouns",
+  "trigger_hypothesis": "The neuron activates strongly on nouns referring to bodies of water (water, ocean, sea) and negatively on nouns referring to dry/arid environments (desert, sand, drought, parched).",
+  "output_hypothesis": "The neuron's output may promote continuation with water-related content and suppress dry/arid content.",
+  "alternatives": [
+   "The neuron detects the semantic concept of 'water' vs 'dryness' regardless of part of speech.",
+   "The neuron responds to the literal token strings 'water', 'ocean', 'sea' and suppresses 'desert', 'sand', 'drought', 'parched'."
+  ],
+  "adapter_changes": "State C+1 amplifies positive activations (especially in factual/water contexts) and slightly amplifies negatives; state B+1 reduces activations across domains.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W27",
+   "W28",
+   "W29",
+   "W30"
+  ],
+  "contradicting": [
+   "W12",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "water body vs dry land",
+    "a_text": "The boat sailed across the lake",
+    "a_expected": "high",
+    "a_target": "lake",
+    "b_text": "The caravan crossed the desert",
+    "b_expected": "negative",
+    "b_target": "desert",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water as liquid vs water as concept",
+    "a_text": "She poured a glass of water",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "The concept of water is H2O",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sea vs ocean synonym",
+    "a_text": "We swam in the sea",
+    "a_expected": "high",
+    "a_target": "sea",
+    "b_text": "We swam in the ocean",
+    "b_expected": "high",
+    "b_target": "ocean",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "drought vs flood",
+    "a_text": "The crops failed due to drought",
+    "a_expected": "negative",
+    "a_target": "drought",
+    "b_text": "The crops failed due to flood",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sand as beach vs sand as desert",
+    "a_text": "The children built castles in the sand",
+    "a_expected": "negative",
+    "a_target": "sand",
+    "b_text": "The beach had soft white sand",
+    "b_expected": "negative",
+    "b_target": "sand",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water in compound word",
+    "a_text": "The water level is high",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "The waterfall is beautiful",
+    "b_expected": "high",
+    "b_target": "waterfall",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dry as adjective vs dry as verb",
+    "a_text": "Store in a cool dry place",
+    "a_expected": "negative",
+    "a_target": "dry",
+    "b_text": "I will dry the clothes",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "river vs stream",
+    "a_text": "The river flows swiftly",
+    "a_expected": "high",
+    "a_target": "river",
+    "b_text": "The stream flows swiftly",
+    "b_expected": "high",
+    "b_target": "stream",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "parched as adjective vs parched as verb",
+    "a_text": "His throat was parched",
+    "a_expected": "negative",
+    "a_target": "parched",
+    "b_text": "He parched the grains",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "rain vs snow",
+    "a_text": "The forecast calls for rain",
+    "a_expected": "high",
+    "a_target": "rain",
+    "b_text": "The forecast calls for snow",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water-related nouns\",\"trigger_hypothesis\":\"The neuron activates strongly on nouns referring to bodies of water (water, ocean, sea) and negatively on nouns referring to dry/arid environments (desert, sand, drought, parched).\",\"output_hypothesis\":\"The neuron's output may promote continuation with water-related content and suppress dry/arid content.\",\"alternatives\":[\"The neuron detects the semantic concept of 'water' vs 'dryness' regardless of part of speech.\",\"The neuron responds to the literal token strings 'water', 'ocean', 'sea' and suppresses 'desert', 'sand', 'drought', 'parched'.\"],\"adapter_changes\":\"State C+1 amplifies positive activations (especially in factual/water contexts) and slightly amplifies negatives; state B+1 reduces activations across domains.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W27\",\"W28\",\"W29\",\"W30\"],\"contradicting\":[\"W12\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"water body vs dry land\",\"a_text\":\"The boat sailed across the lake\",\"a_expected\":\"high\",\"a_target\":\"lake\",\"b_text\":\"The caravan crossed the desert\",\"b_expected\":\"negative\",\"b_target\":\"desert\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water as liquid vs water as concept\",\"a_text\":\"She poured a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"The concept of water is H2O\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sea vs ocean synonym\",\"a_text\":\"We swam in the sea\",\"a_expected\":\"high\",\"a_target\":\"sea\",\"b_text\":\"We swam in the ocean\",\"b_expected\":\"high\",\"b_target\":\"ocean\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"drought vs flood\",\"a_text\":\"The crops failed due to drought\",\"a_expected\":\"negative\",\"a_target\":\"drought\",\"b_text\":\"The crops failed due to flood\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sand as beach vs sand as desert\",\"a_text\":\"The children built castles in the sand\",\"a_expected\":\"negative\",\"a_target\":\"sand\",\"b_text\":\"The beach had soft white sand\",\"b_expected\":\"negative\",\"b_target\":\"sand\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water in compound word\",\"a_text\":\"The water level is high\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"The waterfall is beautiful\",\"b_expected\":\"high\",\"b_target\":\"waterfall\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dry as adjective vs dry as verb\",\"a_text\":\"Store in a cool dry place\",\"a_expected\":\"negative\",\"a_target\":\"dry\",\"b_text\":\"I will dry the clothes\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"river vs stream\",\"a_text\":\"The river flows swiftly\",\"a_expected\":\"high\",\"a_target\":\"river\",\"b_text\":\"The stream flows swiftly\",\"b_expected\":\"high\",\"b_target\":\"stream\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"parched as adjective vs parched as verb\",\"a_text\":\"His throat was parched\",\"a_expected\":\"negative\",\"a_target\":\"parched\",\"b_text\":\"He parched the grains\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"rain vs snow\",\"a_text\":\"The forecast calls for rain\",\"a_expected\":\"high\",\"a_target\":\"rain\",\"b_text\":\"The forecast calls for snow\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4674,
+  "output_tokens": 915,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00152134
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water-related nouns\",\"trigger_hypothesis\":\"The neuron activates strongly on nouns referring to bodies of water (water, ocean, sea) and negatively on nouns referring to dry/arid environments (desert, sand, drought, parched).\",\"output_hypothesis\":\"The neuron's output may promote continuation with water-related content and suppress dry/arid content.\",\"alternatives\":[\"The neuron detects the semantic concept of 'water' vs 'dryness' regardless of part of speech.\",\"The neuron responds to the literal token strings 'water', 'ocean', 'sea' and suppresses 'desert', 'sand', 'drought', 'parched'.\"],\"adapter_changes\":\"State C+1 amplifies positive activations (especially in factual/water contexts) and slightly amplifies negatives; state B+1 reduces activations across domains.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W27\",\"W28\",\"W29\",\"W30\"],\"contradicting\":[\"W12\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"water body vs dry land\",\"a_text\":\"The boat sailed across the lake\",\"a_expected\":\"high\",\"a_target\":\"lake\",\"b_text\":\"The caravan crossed the desert\",\"b_expected\":\"negative\",\"b_target\":\"desert\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water as liquid vs water as concept\",\"a_text\":\"She poured a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"The concept of water is H2O\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sea vs ocean synonym\",\"a_text\":\"We swam in the sea\",\"a_expected\":\"high\",\"a_target\":\"sea\",\"b_text\":\"We swam in the ocean\",\"b_expected\":\"high\",\"b_target\":\"ocean\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"drought vs flood\",\"a_text\":\"The crops failed due to drought\",\"a_expected\":\"negative\",\"a_target\":\"drought\",\"b_text\":\"The crops failed due to flood\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sand as beach vs sand as desert\",\"a_text\":\"The children built castles in the sand\",\"a_expected\":\"negative\",\"a_target\":\"sand\",\"b_text\":\"The beach had soft white sand\",\"b_expected\":\"negative\",\"b_target\":\"sand\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water in compound word\",\"a_text\":\"The water level is high\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"The waterfall is beautiful\",\"b_expected\":\"high\",\"b_target\":\"waterfall\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dry as adjective vs dry as verb\",\"a_text\":\"Store in a cool dry place\",\"a_expected\":\"negative\",\"a_target\":\"dry\",\"b_text\":\"I will dry the clothes\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"river vs stream\",\"a_text\":\"The river flows swiftly\",\"a_expected\":\"high\",\"a_target\":\"river\",\"b_text\":\"The stream flows swiftly\",\"b_expected\":\"high\",\"b_target\":\"stream\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"parched as adjective vs parched as verb\",\"a_text\":\"His throat was parched\",\"a_expected\":\"negative\",\"a_target\":\"parched\",\"b_text\":\"He parched the grains\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"rain vs snow\",\"a_text\":\"The forecast calls for rain\",\"a_expected\":\"high\",\"a_target\":\"rain\",\"b_text\":\"The forecast calls for snow\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4674,
+    "output_tokens": 915,
+    "reasoning_tokens": 0,
+    "cached_tokens": 320,
+    "cost_usd": 0.00152134,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1792973197-lyeixJtASXrWmeN2tsZh"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:07:06Z",
+ "purpose": "explain:blind"
+}

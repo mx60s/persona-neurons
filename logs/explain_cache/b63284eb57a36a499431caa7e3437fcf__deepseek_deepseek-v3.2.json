@@ -1,0 +1,215 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water-related nouns",
+  "trigger_hypothesis": "The neuron fires strongly on the token 'water' and related nouns ('ocean', 'sea', 'lake', 'river') when they appear in contexts describing bodies of water or liquid, and fires negatively on tokens describing dryness or lack of water ('parched', 'desert', 'drought', 'sand', 'dry').",
+  "output_hypothesis": "The neuron's output may promote generation of water-related nouns and suppress dry/arid terms, as seen in steering where adding activation increases 'lake', 'river', 'water' probabilities.",
+  "alternatives": [
+   "The neuron detects the literal token 'water' regardless of context, with other water-related tokens as weaker correlates.",
+   "The neuron detects the concept of 'liquid' vs 'dryness' more broadly, including metaphorical dryness."
+  ],
+  "adapter_changes": "State C+1 amplifies activations across all domains, especially for strong water tokens (e.g., W27, W28, W29, W30 show large increases). State B+1 slightly reduces activations. State A+1 is nearly identical to base.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W20"
+  ],
+  "contradicting": [
+   "W12",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "literal token 'water' vs water-related concept",
+    "texts": [
+     {
+      "text": "The chemical formula for water is H2O.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The liquid in the glass is clear.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water body nouns vs other liquids",
+    "texts": [
+     {
+      "text": "The ocean is vast and deep.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "The juice is fresh and tasty.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "dryness context without dry token",
+    "texts": [
+     {
+      "text": "The arid landscape was barren.",
+      "expected": "negative",
+      "target": "arid"
+     },
+     {
+      "text": "The landscape lacked moisture.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water in metaphorical use",
+    "texts": [
+     {
+      "text": "She faced a flood of emotions.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "She faced a drought of ideas.",
+      "expected": "negative",
+      "target": "drought"
+     }
+    ]
+   },
+   {
+    "discriminates": "water as part of compound word",
+    "texts": [
+     {
+      "text": "The waterfall was spectacular.",
+      "expected": "high",
+      "target": "waterfall"
+     },
+     {
+      "text": "The software update failed.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "positive vs negative sentiment with water",
+    "texts": [
+     {
+      "text": "The clean water refreshed us.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The polluted water sickened us.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "first-person vs third-person mention of water",
+    "texts": [
+     {
+      "text": "I drank the water quickly.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "He drank the water quickly.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "water in code comment vs variable",
+    "texts": [
+     {
+      "text": "# water level sensor reading",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "level = sensor.read()",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "sea vs ocean synonymity",
+    "texts": [
+     {
+      "text": "The sea was calm today.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "The ocean was calm today.",
+      "expected": "high",
+      "target": "ocean"
+     }
+    ]
+   },
+   {
+    "discriminates": "dry as adjective vs verb",
+    "texts": [
+     {
+      "text": "The dry climate is harsh.",
+      "expected": "negative",
+      "target": "dry"
+     },
+     {
+      "text": "Dry the clothes on the line.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water-related nouns\",\"trigger_hypothesis\":\"The neuron fires strongly on the token 'water' and related nouns ('ocean', 'sea', 'lake', 'river') when they appear in contexts describing bodies of water or liquid, and fires negatively on tokens describing dryness or lack of water ('parched', 'desert', 'drought', 'sand', 'dry').\",\"output_hypothesis\":\"The neuron's output may promote generation of water-related nouns and suppress dry/arid terms, as seen in steering where adding activation increases 'lake', 'river', 'water' probabilities.\",\"alternatives\":[\"The neuron detects the literal token 'water' regardless of context, with other water-related tokens as weaker correlates.\",\"The neuron detects the concept of 'liquid' vs 'dryness' more broadly, including metaphorical dryness.\"],\"adapter_changes\":\"State C+1 amplifies activations across all domains, especially for strong water tokens (e.g., W27, W28, W29, W30 show large increases). State B+1 slightly reduces activations. State A+1 is nearly identical to base.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W20\"],\"contradicting\":[\"W12\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"literal token 'water' vs water-related concept\",\"texts\":[{\"text\":\"The chemical formula for water is H2O.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The liquid in the glass is clear.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water body nouns vs other liquids\",\"texts\":[{\"text\":\"The ocean is vast and deep.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The juice is fresh and tasty.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"dryness context without dry token\",\"texts\":[{\"text\":\"The arid landscape was barren.\",\"expected\":\"negative\",\"target\":\"arid\"},{\"text\":\"The landscape lacked moisture.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water in metaphorical use\",\"texts\":[{\"text\":\"She faced a flood of emotions.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"She faced a drought of ideas.\",\"expected\":\"negative\",\"target\":\"drought\"}]},{\"discriminates\":\"water as part of compound word\",\"texts\":[{\"text\":\"The waterfall was spectacular.\",\"expected\":\"high\",\"target\":\"waterfall\"},{\"text\":\"The software update failed.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"positive vs negative sentiment with water\",\"texts\":[{\"text\":\"The clean water refreshed us.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The polluted water sickened us.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"first-person vs third-person mention of water\",\"texts\":[{\"text\":\"I drank the water quickly.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"He drank the water quickly.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"water in code comment vs variable\",\"texts\":[{\"text\":\"# water level sensor reading\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"level = sensor.read()\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"sea vs ocean synonymity\",\"texts\":[{\"text\":\"The sea was calm today.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The ocean was calm today.\",\"expected\":\"high\",\"target\":\"ocean\"}]},{\"discriminates\":\"dry as adjective vs verb\",\"texts\":[{\"text\":\"The dry climate is harsh.\",\"expected\":\"negative\",\"target\":\"dry\"},{\"text\":\"Dry the clothes on the line.\",\"expected\":\"low\",\"target\":\"\"}]}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4634,
+  "output_tokens": 838,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0015083589
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water-related nouns\",\"trigger_hypothesis\":\"The neuron fires strongly on the token 'water' and related nouns ('ocean', 'sea', 'lake', 'river') when they appear in contexts describing bodies of water or liquid, and fires negatively on tokens describing dryness or lack of water ('parched', 'desert', 'drought', 'sand', 'dry').\",\"output_hypothesis\":\"The neuron's output may promote generation of water-related nouns and suppress dry/arid terms, as seen in steering where adding activation increases 'lake', 'river', 'water' probabilities.\",\"alternatives\":[\"The neuron detects the literal token 'water' regardless of context, with other water-related tokens as weaker correlates.\",\"The neuron detects the concept of 'liquid' vs 'dryness' more broadly, including metaphorical dryness.\"],\"adapter_changes\":\"State C+1 amplifies activations across all domains, especially for strong water tokens (e.g., W27, W28, W29, W30 show large increases). State B+1 slightly reduces activations. State A+1 is nearly identical to base.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W20\"],\"contradicting\":[\"W12\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"literal token 'water' vs water-related concept\",\"texts\":[{\"text\":\"The chemical formula for water is H2O.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The liquid in the glass is clear.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water body nouns vs other liquids\",\"texts\":[{\"text\":\"The ocean is vast and deep.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The juice is fresh and tasty.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"dryness context without dry token\",\"texts\":[{\"text\":\"The arid landscape was barren.\",\"expected\":\"negative\",\"target\":\"arid\"},{\"text\":\"The landscape lacked moisture.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water in metaphorical use\",\"texts\":[{\"text\":\"She faced a flood of emotions.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"She faced a drought of ideas.\",\"expected\":\"negative\",\"target\":\"drought\"}]},{\"discriminates\":\"water as part of compound word\",\"texts\":[{\"text\":\"The waterfall was spectacular.\",\"expected\":\"high\",\"target\":\"waterfall\"},{\"text\":\"The software update failed.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"positive vs negative sentiment with water\",\"texts\":[{\"text\":\"The clean water refreshed us.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The polluted water sickened us.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"first-person vs third-person mention of water\",\"texts\":[{\"text\":\"I drank the water quickly.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"He drank the water quickly.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"water in code comment vs variable\",\"texts\":[{\"text\":\"# water level sensor reading\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"level = sensor.read()\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"sea vs ocean synonymity\",\"texts\":[{\"text\":\"The sea was calm today.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"The ocean was calm today.\",\"expected\":\"high\",\"target\":\"ocean\"}]},{\"discriminates\":\"dry as adjective vs verb\",\"texts\":[{\"text\":\"The dry climate is harsh.\",\"expected\":\"negative\",\"target\":\"dry\"},{\"text\":\"Dry the clothes on the line.\",\"expected\":\"low\",\"target\":\"\"}]}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4634,
+    "output_tokens": 838,
+    "reasoning_tokens": 0,
+    "cached_tokens": 448,
+    "cost_usd": 0.0015083589,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972921-dIoOjFR9d4QT37XoCSFk"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:02:24Z",
+ "purpose": "explain:blind"
+}

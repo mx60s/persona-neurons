@@ -1,0 +1,1160 @@
+{
+ "id": "L35/N4565",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:23Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "chemical/technical abbreviations and punctuation",
+   "trigger_hypothesis": "The neuron activates strongly on tokens that are part of chemical/technical abbreviations (like 'vac' for 'carvacrol', 'mon' for 'monoxide', 'ep' for 'epilog') and on certain punctuation or code tokens (like '.ep', '('), while it strongly deactivates on other punctuation (like closing quotes '') and common words in non-technical contexts.",
+   "output_hypothesis": "The neuron's output may push towards generating technical terms, abbreviations, or code-like structures, and away from narrative dialogue or common prose.",
+   "alternatives": [
+    "The neuron triggers on specific token substrings regardless of meaning, like 'vac', 'mon', 'ep', 'if', '_b'.",
+    "The neuron responds to tokens that are part of compound words or hyphenated phrases in scientific/technical domains."
+   ],
+   "adapter_changes": "State A+1 shows a large drop in W02 (' Th') and strong negative effect in emotional_chat prompts (W20-W23), especially in E+1 which dramatically decreases activation on newline tokens in emotional prompts. State differences suggest the neuron's sensitivity to prompt/continuation boundaries and emotional content is modifiable.",
+   "supporting": [
+    "L35_N4565:e00",
+    "L35_N4565:e02",
+    "L35_N4565:e06",
+    "L35_N4565:e07",
+    "L35_N4565:e09",
+    "L35_N4565:e11",
+    "L35_N4565:e13",
+    "L35_N4565:e21"
+   ],
+   "contradicting": [
+    "L35_N4565:e01",
+    "L35_N4565:e04",
+    "L35_N4565:e12",
+    "L35_N4565:e28",
+    "L35_N4565:e27",
+    "L35_N4565:e26",
+    "L35_N4565:e25",
+    "L35_N4565:e24",
+    "L35_N4565:e23",
+    "L35_N4565:e32",
+    "L35_N4565:e31",
+    "L35_N4565:e29"
+   ],
+   "proposed_tests": [
+    "chemical abbreviation vs common word :: [high] The main ingredient is carvacrol. | [low] The car vacuum is broken.",
+    "code epilog vs narrative :: [high] parser=ArgumentParser(epilog=text) | [low] He wrote an epilog to the story.",
+    "punctuation '(' in technical vs narrative :: [negative] See the report (NORMA) for details. | [low] He smiled (happily) and left.",
+    "closing quotes in dialogue vs code :: [negative] She said 'hello'. | [low] char* str='hello';",
+    "technical 'monoxide' vs common 'money' :: [high] carbon monoxide levels | [low] He spent the money.",
+    "underscore in code vs text :: [negative] def py_to_b son(val): | [low] The sub_b title is here.",
+    "newline in emotional prompt vs neutral :: [low] <|im_end|>\n<|im_start|>assistant\n | [negative] I'm so upset.\n<|im_end|>\n<|im_start|>assistant\n",
+    "abbreviation 'Th' in name vs article :: [high] Hestia walked over to Thoth. | [low] The cat walked over.",
+    "word 'if' in botanical vs conditional :: [negative] panicle, often cauliflorous; | [low] If you go, then I will.",
+    "token 'rou' in technical vs common :: [high] Groucho answered the question. | [low] The room is round."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "chemical abbreviation vs common word",
+     "texts": [
+      {
+       "text": "The main ingredient is carvacrol.",
+       "expected": "high",
+       "target": "vac"
+      },
+      {
+       "text": "The car vacuum is broken.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "code epilog vs narrative",
+     "texts": [
+      {
+       "text": "parser=ArgumentParser(epilog=text)",
+       "expected": "high",
+       "target": ".ep"
+      },
+      {
+       "text": "He wrote an epilog to the story.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "punctuation '(' in technical vs narrative",
+     "texts": [
+      {
+       "text": "See the report (NORMA) for details.",
+       "expected": "negative",
+       "target": "("
+      },
+      {
+       "text": "He smiled (happily) and left.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "closing quotes in dialogue vs code",
+     "texts": [
+      {
+       "text": "She said 'hello'.",
+       "expected": "negative",
+       "target": "'"
+      },
+      {
+       "text": "char* str='hello';",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "technical 'monoxide' vs common 'money'",
+     "texts": [
+      {
+       "text": "carbon monoxide levels",
+       "expected": "high",
+       "target": " mon"
+      },
+      {
+       "text": "He spent the money.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "underscore in code vs text",
+     "texts": [
+      {
+       "text": "def py_to_b son(val):",
+       "expected": "negative",
+       "target": "_b"
+      },
+      {
+       "text": "The sub_b title is here.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "newline in emotional prompt vs neutral",
+     "texts": [
+      {
+       "text": "<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "low",
+       "target": "\n"
+      },
+      {
+       "text": "I'm so upset.\n<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "negative",
+       "target": "\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "abbreviation 'Th' in name vs article",
+     "texts": [
+      {
+       "text": "Hestia walked over to Thoth.",
+       "expected": "high",
+       "target": " Th"
+      },
+      {
+       "text": "The cat walked over.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "word 'if' in botanical vs conditional",
+     "texts": [
+      {
+       "text": "panicle, often cauliflorous;",
+       "expected": "negative",
+       "target": "if"
+      },
+      {
+       "text": "If you go, then I will.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "token 'rou' in technical vs common",
+     "texts": [
+      {
+       "text": "Groucho answered the question.",
+       "expected": "high",
+       "target": "rou"
+      },
+      {
+       "text": "The room is round.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5655,
+    "output_tokens": 1072,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00179446
+   },
+   "invalid_citations": [],
+   "packet_hash": "63c6a52bed8dbe3908471fbffcf38a585b8ce391c5eff419fb5bc0ad9cd433cb",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "chemical abbreviation vs common word",
+   "prediction": "high on 'vac'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The main ingredient is carvacrol.",
+     "expected": "high",
+     "target": "vac",
+     "measured_max": 5.0,
+     "measured_min": -12.4375,
+     "value": 5.0,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The car vacuum is broken.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3555,
+     "measured_min": -8.125,
+     "value": 8.125,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.079,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "code epilog vs narrative",
+   "prediction": "high on '.ep'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "parser=ArgumentParser(epilog=text)",
+     "expected": "high",
+     "target": ".ep",
+     "measured_max": 0.0703,
+     "measured_min": -0.4414,
+     "value": 0.0703,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "whole_text (target not found)"
+    },
+    {
+     "text": "He wrote an epilog to the story.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5781,
+     "measured_min": -0.6836,
+     "value": 0.6836,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "punctuation '(' in technical vs narrative",
+   "prediction": "negative on '('; low on 'whole text'",
+   "texts": [
+    {
+     "text": "See the report (NORMA) for details.",
+     "expected": "negative",
+     "target": "(",
+     "measured_max": 0.2402,
+     "measured_min": -0.1943,
+     "value": 0.2402,
+     "threshold": -14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He smiled (happily) and left.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4531,
+     "measured_min": -0.6484,
+     "value": 0.6484,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "closing quotes in dialogue vs code",
+   "prediction": "negative on \"'\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She said 'hello'.",
+     "expected": "negative",
+     "target": "'",
+     "measured_max": 0.1543,
+     "measured_min": 0.0,
+     "value": 0.1543,
+     "threshold": -14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "char* str='hello';",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -2.6406,
+     "value": 2.6406,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.048,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "technical 'monoxide' vs common 'money'",
+   "prediction": "high on ' mon'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "carbon monoxide levels",
+     "expected": "high",
+     "target": " mon",
+     "measured_max": 3.5312,
+     "measured_min": -0.1836,
+     "value": 3.5312,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He spent the money.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5078,
+     "measured_min": -0.0801,
+     "value": 0.5078,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.052,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "underscore in code vs text",
+   "prediction": "negative on '_b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def py_to_b son(val):",
+     "expected": "negative",
+     "target": "_b",
+     "measured_max": 3.2656,
+     "measured_min": -0.5234,
+     "value": 0.2129,
+     "threshold": -14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The sub_b title is here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1709,
+     "measured_min": -0.1045,
+     "value": 0.1709,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "newline in emotional prompt vs neutral",
+   "prediction": "low on '\\n'; negative on '\\n'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "\n",
+     "measured_max": 0.2734,
+     "measured_min": -0.2871,
+     "value": 0.2871,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "I'm so upset.\n<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "negative",
+     "target": "\n",
+     "measured_max": 0.6875,
+     "measured_min": -0.1157,
+     "value": 0.1367,
+     "threshold": -14.8125,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "abbreviation 'Th' in name vs article",
+   "prediction": "high on ' Th'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Hestia walked over to Thoth.",
+     "expected": "high",
+     "target": " Th",
+     "measured_max": 0.4062,
+     "measured_min": -3.2656,
+     "value": -3.2656,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The cat walked over.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2197,
+     "measured_min": -0.1797,
+     "value": 0.2197,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.06,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "word 'if' in botanical vs conditional",
+   "prediction": "negative on 'if'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "panicle, often cauliflorous;",
+     "expected": "negative",
+     "target": "if",
+     "measured_max": 0.5234,
+     "measured_min": -36.0,
+     "value": -36.0,
+     "threshold": -14.8125,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "If you go, then I will.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2002,
+     "measured_min": -0.02,
+     "value": 0.2002,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.615,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "token 'rou' in technical vs common",
+   "prediction": "high on 'rou'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Groucho answered the question.",
+     "expected": "high",
+     "target": "rou",
+     "measured_max": 3.1094,
+     "measured_min": -0.3242,
+     "value": 3.1094,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The room is round.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2256,
+     "measured_min": -0.0188,
+     "value": 0.2256,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.049,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:35Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "chemical abbreviation vs common word",
+   "prediction": "high on 'vac'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The main ingredient is carvacrol.",
+     "expected": "high",
+     "target": "vac",
+     "measured_max": 5.0,
+     "measured_min": -12.4375,
+     "value": 5.0,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The car vacuum is broken.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3555,
+     "measured_min": -8.125,
+     "value": 8.125,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.079,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "code epilog vs narrative",
+   "prediction": "high on '.ep'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "parser=ArgumentParser(epilog=text)",
+     "expected": "high",
+     "target": ".ep",
+     "measured_max": 0.0703,
+     "measured_min": -0.4414,
+     "value": 0.0703,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "whole_text (target not found)",
+     "pass_v2": false
+    },
+    {
+     "text": "He wrote an epilog to the story.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5781,
+     "measured_min": -0.6836,
+     "value": 0.6836,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "punctuation '(' in technical vs narrative",
+   "prediction": "negative on '('; low on 'whole text'",
+   "texts": [
+    {
+     "text": "See the report (NORMA) for details.",
+     "expected": "negative",
+     "target": "(",
+     "measured_max": 0.2402,
+     "measured_min": -0.1943,
+     "value": 0.2402,
+     "threshold": -14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He smiled (happily) and left.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4531,
+     "measured_min": -0.6484,
+     "value": 0.6484,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "closing quotes in dialogue vs code",
+   "prediction": "negative on \"'\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She said 'hello'.",
+     "expected": "negative",
+     "target": "'",
+     "measured_max": 0.1543,
+     "measured_min": 0.0,
+     "value": 0.1543,
+     "threshold": -14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "char* str='hello';",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -2.6406,
+     "value": 2.6406,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.048,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "technical 'monoxide' vs common 'money'",
+   "prediction": "high on ' mon'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "carbon monoxide levels",
+     "expected": "high",
+     "target": " mon",
+     "measured_max": 3.5312,
+     "measured_min": -0.1836,
+     "value": 3.5312,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He spent the money.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5078,
+     "measured_min": -0.0801,
+     "value": 0.5078,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.052,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "underscore in code vs text",
+   "prediction": "negative on '_b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def py_to_b son(val):",
+     "expected": "negative",
+     "target": "_b",
+     "measured_max": 3.2656,
+     "measured_min": -0.5234,
+     "value": 0.2129,
+     "threshold": -14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The sub_b title is here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1709,
+     "measured_min": -0.1045,
+     "value": 0.1709,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "newline in emotional prompt vs neutral",
+   "prediction": "low on '\\n'; negative on '\\n'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "\n",
+     "measured_max": 0.2734,
+     "measured_min": -0.2871,
+     "value": 0.2871,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "I'm so upset.\n<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "negative",
+     "target": "\n",
+     "measured_max": 0.6875,
+     "measured_min": -0.1157,
+     "value": 0.1367,
+     "threshold": -14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "abbreviation 'Th' in name vs article",
+   "prediction": "high on ' Th'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Hestia walked over to Thoth.",
+     "expected": "high",
+     "target": " Th",
+     "measured_max": 0.4062,
+     "measured_min": -3.2656,
+     "value": -3.2656,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The cat walked over.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2197,
+     "measured_min": -0.1797,
+     "value": 0.2197,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.06,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "word 'if' in botanical vs conditional",
+   "prediction": "negative on 'if'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "panicle, often cauliflorous;",
+     "expected": "negative",
+     "target": "if",
+     "measured_max": 0.5234,
+     "measured_min": -36.0,
+     "value": -36.0,
+     "threshold": -14.8125,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "If you go, then I will.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2002,
+     "measured_min": -0.02,
+     "value": 0.2002,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.615,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "token 'rou' in technical vs common",
+   "prediction": "high on 'rou'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Groucho answered the question.",
+     "expected": "high",
+     "target": "rou",
+     "measured_max": 3.1094,
+     "measured_min": -0.3242,
+     "value": 3.1094,
+     "threshold": 27.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The room is round.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2256,
+     "measured_min": -0.0188,
+     "value": 0.2256,
+     "threshold": 13.5,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.049,
+    "scale": 58.5,
+    "pos_ref": 54.0,
+    "neg_ref": -29.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.7421875,
+    "p01": -1.875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 4,
+   "of": 10
+  }
+ ]
+}

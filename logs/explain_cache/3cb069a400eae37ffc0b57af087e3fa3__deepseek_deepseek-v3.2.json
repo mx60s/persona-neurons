@@ -1,0 +1,179 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "triggers on 'est' substring",
+  "trigger_hypothesis": "The neuron activates strongly on tokens containing the substring 'est' (e.g., 'ET', 'ant', 'st', '-t', 'vert'), especially when it appears as a suffix or separate token, and suppresses on tokens that are punctuation or code symbols unrelated to 'est'.",
+  "output_hypothesis": "The neuron's output pushes toward tokens related to testing or evaluation (e.g., 'Tests', 'tests', 'prep', ' exem'), suggesting it may be involved in predicting words about verification or assessment.",
+  "alternatives": [
+   "The neuron triggers on the end of words, particularly those ending in 't' or 'st'.",
+   "The neuron triggers on code or technical terms that are abbreviations or file extensions."
+  ],
+  "adapter_changes": "State changes are minor; B+1 slightly increases activation in chat/emotional domains, while A+1 slightly decreases. No major pattern shifts, just small magnitude adjustments.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06"
+  ],
+  "contradicting": [
+   "W07",
+   "W14",
+   "W15"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'est' substring vs general word ending",
+    "a_text": "This is a test of the best system.",
+    "a_expected": "high",
+    "a_target": "test",
+    "b_text": "This is a test of the good system.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'est' as suffix vs standalone token",
+    "a_text": "He requested the latest update.",
+    "a_expected": "high",
+    "a_target": "latest",
+    "b_text": "He requested the last update.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Code abbreviation with 'est' vs other",
+    "a_text": "The file is test.py",
+    "a_expected": "high",
+    "a_target": "test",
+    "b_text": "The file is main.py",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Punctuation after 'est' vs before",
+    "a_text": "This is the best, really.",
+    "a_expected": "high",
+    "a_target": "best",
+    "b_text": "This is, the best really.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'est' in emotional vs factual context",
+    "a_text": "I feel the strongest emotion.",
+    "a_expected": "high",
+    "a_target": "strongest",
+    "b_text": "The strongest bond is chemical.",
+    "b_expected": "high",
+    "b_target": "strongest",
+    "c_text": "The fact is clear.",
+    "c_expected": "low",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative activation on code symbols",
+    "a_text": "The comment is # -- important.",
+    "a_expected": "negative",
+    "a_target": "--",
+    "b_text": "The comment is # important.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'est' vs 'es' without 't'",
+    "a_text": "This is the fastest car.",
+    "a_expected": "high",
+    "a_target": "fastest",
+    "b_text": "This is the faster car.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'est' in plural vs singular",
+    "a_text": "These are the greatest tests.",
+    "a_expected": "high",
+    "a_target": "greatest",
+    "b_text": "This is the great test.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Output push to testing words",
+    "a_text": "We need to run more tests.",
+    "a_expected": "high",
+    "a_target": "tests",
+    "b_text": "We need to run more trials.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'est' in mid-word vs end",
+    "a_text": "The estimate is rough.",
+    "a_expected": "high",
+    "a_target": "estimate",
+    "b_text": "The estimation is rough.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"triggers on 'est' substring\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens containing the substring 'est' (e.g., 'ET', 'ant', 'st', '-t', 'vert'), especially when it appears as a suffix or separate token, and suppresses on tokens that are punctuation or code symbols unrelated to 'est'.\",\"output_hypothesis\":\"The neuron's output pushes toward tokens related to testing or evaluation (e.g., 'Tests', 'tests', 'prep', ' exem'), suggesting it may be involved in predicting words about verification or assessment.\",\"alternatives\":[\"The neuron triggers on the end of words, particularly those ending in 't' or 'st'.\",\"The neuron triggers on code or technical terms that are abbreviations or file extensions.\"],\"adapter_changes\":\"State changes are minor; B+1 slightly increases activation in chat/emotional domains, while A+1 slightly decreases. No major pattern shifts, just small magnitude adjustments.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\"],\"contradicting\":[\"W07\",\"W14\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"'est' substring vs general word ending\",\"a_text\":\"This is a test of the best system.\",\"a_expected\":\"high\",\"a_target\":\"test\",\"b_text\":\"This is a test of the good system.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' as suffix vs standalone token\",\"a_text\":\"He requested the latest update.\",\"a_expected\":\"high\",\"a_target\":\"latest\",\"b_text\":\"He requested the last update.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Code abbreviation with 'est' vs other\",\"a_text\":\"The file is test.py\",\"a_expected\":\"high\",\"a_target\":\"test\",\"b_text\":\"The file is main.py\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Punctuation after 'est' vs before\",\"a_text\":\"This is the best, really.\",\"a_expected\":\"high\",\"a_target\":\"best\",\"b_text\":\"This is, the best really.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' in emotional vs factual context\",\"a_text\":\"I feel the strongest emotion.\",\"a_expected\":\"high\",\"a_target\":\"strongest\",\"b_text\":\"The strongest bond is chemical.\",\"b_expected\":\"high\",\"b_target\":\"strongest\",\"c_text\":\"The fact is clear.\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"Negative activation on code symbols\",\"a_text\":\"The comment is # -- important.\",\"a_expected\":\"negative\",\"a_target\":\"--\",\"b_text\":\"The comment is # important.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' vs 'es' without 't'\",\"a_text\":\"This is the fastest car.\",\"a_expected\":\"high\",\"a_target\":\"fastest\",\"b_text\":\"This is the faster car.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' in plural vs singular\",\"a_text\":\"These are the greatest tests.\",\"a_expected\":\"high\",\"a_target\":\"greatest\",\"b_text\":\"This is the great test.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Output push to testing words\",\"a_text\":\"We need to run more tests.\",\"a_expected\":\"high\",\"a_target\":\"tests\",\"b_text\":\"We need to run more trials.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' in mid-word vs end\",\"a_text\":\"The estimate is rough.\",\"a_expected\":\"high\",\"a_target\":\"estimate\",\"b_text\":\"The estimation is rough.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5532,
+  "output_tokens": 960,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00171992
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"triggers on 'est' substring\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens containing the substring 'est' (e.g., 'ET', 'ant', 'st', '-t', 'vert'), especially when it appears as a suffix or separate token, and suppresses on tokens that are punctuation or code symbols unrelated to 'est'.\",\"output_hypothesis\":\"The neuron's output pushes toward tokens related to testing or evaluation (e.g., 'Tests', 'tests', 'prep', ' exem'), suggesting it may be involved in predicting words about verification or assessment.\",\"alternatives\":[\"The neuron triggers on the end of words, particularly those ending in 't' or 'st'.\",\"The neuron triggers on code or technical terms that are abbreviations or file extensions.\"],\"adapter_changes\":\"State changes are minor; B+1 slightly increases activation in chat/emotional domains, while A+1 slightly decreases. No major pattern shifts, just small magnitude adjustments.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\"],\"contradicting\":[\"W07\",\"W14\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"'est' substring vs general word ending\",\"a_text\":\"This is a test of the best system.\",\"a_expected\":\"high\",\"a_target\":\"test\",\"b_text\":\"This is a test of the good system.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' as suffix vs standalone token\",\"a_text\":\"He requested the latest update.\",\"a_expected\":\"high\",\"a_target\":\"latest\",\"b_text\":\"He requested the last update.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Code abbreviation with 'est' vs other\",\"a_text\":\"The file is test.py\",\"a_expected\":\"high\",\"a_target\":\"test\",\"b_text\":\"The file is main.py\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Punctuation after 'est' vs before\",\"a_text\":\"This is the best, really.\",\"a_expected\":\"high\",\"a_target\":\"best\",\"b_text\":\"This is, the best really.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' in emotional vs factual context\",\"a_text\":\"I feel the strongest emotion.\",\"a_expected\":\"high\",\"a_target\":\"strongest\",\"b_text\":\"The strongest bond is chemical.\",\"b_expected\":\"high\",\"b_target\":\"strongest\",\"c_text\":\"The fact is clear.\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"Negative activation on code symbols\",\"a_text\":\"The comment is # -- important.\",\"a_expected\":\"negative\",\"a_target\":\"--\",\"b_text\":\"The comment is # important.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' vs 'es' without 't'\",\"a_text\":\"This is the fastest car.\",\"a_expected\":\"high\",\"a_target\":\"fastest\",\"b_text\":\"This is the faster car.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' in plural vs singular\",\"a_text\":\"These are the greatest tests.\",\"a_expected\":\"high\",\"a_target\":\"greatest\",\"b_text\":\"This is the great test.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Output push to testing words\",\"a_text\":\"We need to run more tests.\",\"a_expected\":\"high\",\"a_target\":\"tests\",\"b_text\":\"We need to run more trials.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'est' in mid-word vs end\",\"a_text\":\"The estimate is rough.\",\"a_expected\":\"high\",\"a_target\":\"estimate\",\"b_text\":\"The estimation is rough.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5532,
+    "output_tokens": 960,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00171992,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042249-IMvnUmc1jUYEYrkPubjg"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:18:00Z",
+ "purpose": "explain:blind"
+}

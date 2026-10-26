@@ -1,0 +1,1166 @@
+{
+ "id": "L27/N4916",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:07Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional response to surprising or negative statements",
+   "trigger_hypothesis": "The neuron activates strongly negative when the model is about to express a negative emotional reaction (e.g., 'always', 'it', ''t') in response to a surprising or negative preceding statement, and activates positive when the model is about to express a positive emotional reaction (e.g., ''s', ' and', ' it') in response to a positive preceding statement.",
+   "output_hypothesis": "The neuron's output pushes toward tokens related to 'interesting' or 'fascinating', suggesting it may be involved in generating or modulating expressions of interest or emotional evaluation in responses.",
+   "alternatives": [
+    "The neuron detects the start of a conversational turn or response segment, with sign indicating sentiment.",
+    "The neuron detects specific grammatical structures like contractions or conjunctions at the beginning of emotional statements."
+   ],
+   "adapter_changes": "State A+1 strongly reduces activation in emotional contexts (especially negative), while state C+1 often increases positive activation. State B+1 reduces negative activation magnitude.",
+   "supporting": [
+    "L27_N4916:e01",
+    "L27_N4916:e02",
+    "L27_N4916:e03",
+    "L27_N4916:e09",
+    "L27_N4916:e10",
+    "L27_N4916:e11",
+    "L27_N4916:e12",
+    "L27_N4916:e13",
+    "L27_N4916:e15",
+    "L27_N4916:e19",
+    "L27_N4916:e16",
+    "L27_N4916:e17"
+   ],
+   "contradicting": [
+    "L27_N4916:e04",
+    "L27_N4916:e05",
+    "L27_N4916:e07",
+    "L27_N4916:e26",
+    "L27_N4916:e25",
+    "L27_N4916:e24",
+    "L27_N4916:e23",
+    "L27_N4916:e22",
+    "L27_N4916:e21",
+    "L27_N4916:e27",
+    "L27_N4916:e29",
+    "L27_N4916:e28",
+    "L27_N4916:e30",
+    "L27_N4916:e31"
+   ],
+   "proposed_tests": [
+    "Positive emotional reaction vs neutral statement :: [high] That's wonderful news! | [low] That is a fact.",
+    "Negative emotional reaction vs neutral statement :: [negative] Isn't that awful? | [low] Is that a problem?",
+    "Emotional response start vs continuation :: [high] That's really nice of him! | [low] He said that's really nice.",
+    "Surprising negative statement vs ordinary negative :: [negative] That always happens to me. | [low] That sometimes happens.",
+    "Positive conjunction in emotional response :: [high] Thank you, and I appreciate it. | [low] The list includes apples and oranges.",
+    "'It' in emotional exclamation vs neutral :: [negative] It is so frustrating! | [low] It is a long process.",
+    "Contraction in emotional vs factual context :: [high] That's how you know. | [low] That's the correct answer.",
+    "Emotional chat response vs narrative description :: [negative] Oh, that's a big jump. | [low] The rabbit jumped over the fence.",
+    "First person emotional vs third person :: [high] I think it's amazing! | [low] He thinks it's amazing.",
+    "Expression of interest vs statement of fact :: [high] That is interesting. | [low] That is a tree."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Positive emotional reaction vs neutral statement",
+     "texts": [
+      {
+       "text": "That's wonderful news!",
+       "expected": "high",
+       "target": "'s"
+      },
+      {
+       "text": "That is a fact.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Negative emotional reaction vs neutral statement",
+     "texts": [
+      {
+       "text": "Isn't that awful?",
+       "expected": "negative",
+       "target": "'t"
+      },
+      {
+       "text": "Is that a problem?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Emotional response start vs continuation",
+     "texts": [
+      {
+       "text": "That's really nice of him!",
+       "expected": "high",
+       "target": "'s"
+      },
+      {
+       "text": "He said that's really nice.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Surprising negative statement vs ordinary negative",
+     "texts": [
+      {
+       "text": "That always happens to me.",
+       "expected": "negative",
+       "target": "always"
+      },
+      {
+       "text": "That sometimes happens.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Positive conjunction in emotional response",
+     "texts": [
+      {
+       "text": "Thank you, and I appreciate it.",
+       "expected": "high",
+       "target": " and"
+      },
+      {
+       "text": "The list includes apples and oranges.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'It' in emotional exclamation vs neutral",
+     "texts": [
+      {
+       "text": "It is so frustrating!",
+       "expected": "negative",
+       "target": "It"
+      },
+      {
+       "text": "It is a long process.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Contraction in emotional vs factual context",
+     "texts": [
+      {
+       "text": "That's how you know.",
+       "expected": "high",
+       "target": "'s"
+      },
+      {
+       "text": "That's the correct answer.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Emotional chat response vs narrative description",
+     "texts": [
+      {
+       "text": "Oh, that's a big jump.",
+       "expected": "negative",
+       "target": "oh"
+      },
+      {
+       "text": "The rabbit jumped over the fence.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "First person emotional vs third person",
+     "texts": [
+      {
+       "text": "I think it's amazing!",
+       "expected": "high",
+       "target": "'s"
+      },
+      {
+       "text": "He thinks it's amazing.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Expression of interest vs statement of fact",
+     "texts": [
+      {
+       "text": "That is interesting.",
+       "expected": "high",
+       "target": " is"
+      },
+      {
+       "text": "That is a tree.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6533,
+    "output_tokens": 994,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001956416
+   },
+   "invalid_citations": [],
+   "packet_hash": "28482e6c1e05c37b34a4611f0dc6f8211a85f56a379060e38ac0c5cf5bdf40ca",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Positive emotional reaction vs neutral statement",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's wonderful news!",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.4844,
+     "measured_min": -5.1875,
+     "value": -5.1875,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That is a fact.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0664,
+     "measured_min": -2.7344,
+     "value": 2.7344,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.311,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Negative emotional reaction vs neutral statement",
+   "prediction": "negative on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Isn't that awful?",
+     "expected": "negative",
+     "target": "'t",
+     "measured_max": 0.0003,
+     "measured_min": -7.6562,
+     "value": -1.7344,
+     "threshold": -8.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Is that a problem?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2334,
+     "measured_min": -0.8633,
+     "value": 0.8633,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.052,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Emotional response start vs continuation",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's really nice of him!",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.332,
+     "measured_min": -9.625,
+     "value": -5.1875,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said that's really nice.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6562,
+     "measured_min": -4.6562,
+     "value": 4.6562,
+     "threshold": 4.0312,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.346,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Surprising negative statement vs ordinary negative",
+   "prediction": "negative on 'always'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That always happens to me.",
+     "expected": "negative",
+     "target": "always",
+     "measured_max": 0.0554,
+     "measured_min": -3.3438,
+     "value": -3.3438,
+     "threshold": -8.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That sometimes happens.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0796,
+     "measured_min": -0.0001,
+     "value": 0.0796,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.198,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Positive conjunction in emotional response",
+   "prediction": "high on ' and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Thank you, and I appreciate it.",
+     "expected": "high",
+     "target": " and",
+     "measured_max": 1.5234,
+     "measured_min": -0.2891,
+     "value": 0.9062,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The list includes apples and oranges.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.377,
+     "measured_min": -0.0952,
+     "value": 0.377,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.031,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'It' in emotional exclamation vs neutral",
+   "prediction": "negative on 'It'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is so frustrating!",
+     "expected": "negative",
+     "target": "It",
+     "measured_max": 0.0337,
+     "measured_min": -4.8125,
+     "value": 0.0,
+     "threshold": -8.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It is a long process.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.375,
+     "measured_min": -1.875,
+     "value": 1.875,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.111,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Contraction in emotional vs factual context",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's how you know.",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.2578,
+     "measured_min": -5.1875,
+     "value": -5.1875,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That's the correct answer.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5586,
+     "measured_min": -5.1875,
+     "value": 5.1875,
+     "threshold": 4.0312,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.341,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Emotional chat response vs narrative description",
+   "prediction": "negative on 'oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh, that's a big jump.",
+     "expected": "negative",
+     "target": "oh",
+     "measured_max": 0.0,
+     "measured_min": -6.3125,
+     "value": 0.0,
+     "threshold": -8.0625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The rabbit jumped over the fence.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4531,
+     "measured_min": -0.1543,
+     "value": 0.4531,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "First person emotional vs third person",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I think it's amazing!",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.3574,
+     "measured_min": -4.0625,
+     "value": -4.0625,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He thinks it's amazing.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2793,
+     "measured_min": -0.106,
+     "value": 0.2793,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.257,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Expression of interest vs statement of fact",
+   "prediction": "high on ' is'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That is interesting.",
+     "expected": "high",
+     "target": " is",
+     "measured_max": 0.0,
+     "measured_min": -2.8438,
+     "value": -2.7344,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That is a tree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3203,
+     "measured_min": -2.7344,
+     "value": 2.7344,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.181,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:15Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Positive emotional reaction vs neutral statement",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's wonderful news!",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.4844,
+     "measured_min": -5.1875,
+     "value": -5.1875,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "That is a fact.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0664,
+     "measured_min": -2.7344,
+     "value": 2.7344,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.311,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "Negative emotional reaction vs neutral statement",
+   "prediction": "negative on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Isn't that awful?",
+     "expected": "negative",
+     "target": "'t",
+     "measured_max": 0.0003,
+     "measured_min": -7.6562,
+     "value": -1.7344,
+     "threshold": -8.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Is that a problem?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2334,
+     "measured_min": -0.8633,
+     "value": 0.8633,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.052,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Emotional response start vs continuation",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's really nice of him!",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.332,
+     "measured_min": -9.625,
+     "value": -5.1875,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He said that's really nice.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6562,
+     "measured_min": -4.6562,
+     "value": 4.6562,
+     "threshold": 4.0312,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.346,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Surprising negative statement vs ordinary negative",
+   "prediction": "negative on 'always'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That always happens to me.",
+     "expected": "negative",
+     "target": "always",
+     "measured_max": 0.0554,
+     "measured_min": -3.3438,
+     "value": -3.3438,
+     "threshold": -8.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "That sometimes happens.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0796,
+     "measured_min": -0.0001,
+     "value": 0.0796,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.198,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Positive conjunction in emotional response",
+   "prediction": "high on ' and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Thank you, and I appreciate it.",
+     "expected": "high",
+     "target": " and",
+     "measured_max": 1.5234,
+     "measured_min": -0.2891,
+     "value": 0.9062,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The list includes apples and oranges.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.377,
+     "measured_min": -0.0952,
+     "value": 0.377,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.031,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'It' in emotional exclamation vs neutral",
+   "prediction": "negative on 'It'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is so frustrating!",
+     "expected": "negative",
+     "target": "It",
+     "measured_max": 0.0337,
+     "measured_min": -4.8125,
+     "value": 0.0,
+     "threshold": -8.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It is a long process.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.375,
+     "measured_min": -1.875,
+     "value": 1.875,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.111,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Contraction in emotional vs factual context",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's how you know.",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.2578,
+     "measured_min": -5.1875,
+     "value": -5.1875,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "That's the correct answer.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5586,
+     "measured_min": -5.1875,
+     "value": 5.1875,
+     "threshold": 4.0312,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.341,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Emotional chat response vs narrative description",
+   "prediction": "negative on 'oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh, that's a big jump.",
+     "expected": "negative",
+     "target": "oh",
+     "measured_max": 0.0,
+     "measured_min": -6.3125,
+     "value": 0.0,
+     "threshold": -8.0625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The rabbit jumped over the fence.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4531,
+     "measured_min": -0.1543,
+     "value": 0.4531,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "First person emotional vs third person",
+   "prediction": "high on \"'s\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I think it's amazing!",
+     "expected": "high",
+     "target": "'s",
+     "measured_max": 0.3574,
+     "measured_min": -4.0625,
+     "value": -4.0625,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He thinks it's amazing.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2793,
+     "measured_min": -0.106,
+     "value": 0.2793,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.257,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Expression of interest vs statement of fact",
+   "prediction": "high on ' is'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That is interesting.",
+     "expected": "high",
+     "target": " is",
+     "measured_max": 0.0,
+     "measured_min": -2.8438,
+     "value": -2.7344,
+     "threshold": 3.5781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "That is a tree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3203,
+     "measured_min": -2.7344,
+     "value": 2.7344,
+     "threshold": 4.0312,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.181,
+    "scale": 16.875,
+    "pos_ref": 7.1562,
+    "neg_ref": -16.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.40625,
+    "p01": -1.8125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  }
+ ]
+}

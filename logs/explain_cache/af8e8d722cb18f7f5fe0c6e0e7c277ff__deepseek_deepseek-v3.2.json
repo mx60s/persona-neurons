@@ -1,0 +1,222 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water-related tokens",
+  "trigger_hypothesis": "The neuron fires strongly positive on the token 'water' (and 'ocean' as a synonym) and strongly negative on tokens related to dryness or computing (like 'level', 'circle', 'area', 'running', 'next', 'and', 'it', 'to', 'f', 'parched', 'desert', 'sand', 'drought', 'dry').",
+  "output_hypothesis": "The neuron may be detecting a contrast between water/liquid contexts (positive) and dry/abstract/computational contexts (negative).",
+  "alternatives": [
+   "The neuron detects the word 'water' specifically, with 'ocean' as a synonym, and fires negatively on code-related tokens.",
+   "The neuron detects liquid vs. dry concepts, with 'water' and 'ocean' as liquid and 'desert', 'parched', 'drought', 'sand', 'dry' as dry, and code tokens as a separate negative class."
+  ],
+  "adapter_changes": "State C+1 amplifies positive activations (e.g., W01-W05) and reduces negative magnitudes in some code contexts (e.g., W07, W10, W11, W12), suggesting it enhances the water/dry contrast. State A+1 and B+1 show smaller changes, with B+1 sometimes increasing negatives (W11, W13, W14).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W23",
+   "W24"
+  ],
+  "contradicting": [
+   "W19 shows 'drink' has low activation despite being water-related, suggesting the trigger is lexical rather than semantic.",
+   "W20, W21, W22, W25, W26, W27, W28, W29, W30 show low activations in non-water, non-dry, non-code contexts, which is consistent."
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "word 'water' vs. liquid meaning",
+    "texts": [
+     {
+      "text": "I need a glass of water.",
+      "expected": "high",
+      "target": " water"
+     },
+     {
+      "text": "I need a glass of H2O.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water vs. other liquids",
+    "texts": [
+     {
+      "text": "Pour some water into the cup.",
+      "expected": "high",
+      "target": " water"
+     },
+     {
+      "text": "Pour some milk into the cup.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "ocean vs. sea",
+    "texts": [
+     {
+      "text": "The ocean is vast.",
+      "expected": "high",
+      "target": " ocean"
+     },
+     {
+      "text": "The sea is vast.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "dry concept (desert) vs. wet concept",
+    "texts": [
+     {
+      "text": "The desert is hot.",
+      "expected": "negative",
+      "target": " desert"
+     },
+     {
+      "text": "The rainforest is wet.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "code token 'level' vs. non-code usage",
+    "texts": [
+     {
+      "text": "The water level rose.",
+      "expected": "negative",
+      "target": " level"
+     },
+     {
+      "text": "The next level is hard.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "computational 'area' vs. geographical area",
+    "texts": [
+     {
+      "text": "Compute the area of a circle.",
+      "expected": "negative",
+      "target": " area"
+     },
+     {
+      "text": "The area of France is large.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "dry synonym 'parched' vs. neutral",
+    "texts": [
+     {
+      "text": "The fields were parched.",
+      "expected": "negative",
+      "target": " parched"
+     },
+     {
+      "text": "The fields were green.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "code conjunction 'and' vs. narrative conjunction",
+    "texts": [
+     {
+      "text": "Read the file and parse it.",
+      "expected": "negative",
+      "target": " and"
+     },
+     {
+      "text": "He walked and talked.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water in code comment vs. code token",
+    "texts": [
+     {
+      "text": "# water level in tank",
+      "expected": "high",
+      "target": " water"
+     },
+     {
+      "text": "x = water_level",
+      "expected": "negative",
+      "target": " level"
+     }
+    ]
+   },
+   {
+    "discriminates": "neutral 'dry' vs. wet context",
+    "texts": [
+     {
+      "text": "Store in a dry place.",
+      "expected": "negative",
+      "target": " dry"
+     },
+     {
+      "text": "Store in a wet place.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"water-related tokens\",\n  \"trigger_hypothesis\": \"The neuron fires strongly positive on the token 'water' (and 'ocean' as a synonym) and strongly negative on tokens related to dryness or computing (like 'level', 'circle', 'area', 'running', 'next', 'and', 'it', 'to', 'f', 'parched', 'desert', 'sand', 'drought', 'dry').\",\n  \"output_hypothesis\": \"The neuron may be detecting a contrast between water/liquid contexts (positive) and dry/abstract/computational contexts (negative).\",\n  \"alternatives\": [\"The neuron detects the word 'water' specifically, with 'ocean' as a synonym, and fires negatively on code-related tokens.\", \"The neuron detects liquid vs. dry concepts, with 'water' and 'ocean' as liquid and 'desert', 'parched', 'drought', 'sand', 'dry' as dry, and code tokens as a separate negative class.\"],\n  \"adapter_changes\": \"State C+1 amplifies positive activations (e.g., W01-W05) and reduces negative magnitudes in some code contexts (e.g., W07, W10, W11, W12), suggesting it enhances the water/dry contrast. State A+1 and B+1 show smaller changes, with B+1 sometimes increasing negatives (W11, W13, W14).\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W15\", \"W16\", \"W17\", \"W18\", \"W23\", \"W24\"],\n  \"contradicting\": [\"W19 shows 'drink' has low activation despite being water-related, suggesting the trigger is lexical rather than semantic.\", \"W20, W21, W22, W25, W26, W27, W28, W29, W30 show low activations in non-water, non-dry, non-code contexts, which is consistent.\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"word 'water' vs. liquid meaning\", \"texts\": [{\"text\": \"I need a glass of water.\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"I need a glass of H2O.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"water vs. other liquids\", \"texts\": [{\"text\": \"Pour some water into the cup.\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"Pour some milk into the cup.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"ocean vs. sea\", \"texts\": [{\"text\": \"The ocean is vast.\", \"expected\": \"high\", \"target\": \" ocean\"}, {\"text\": \"The sea is vast.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"dry concept (desert) vs. wet concept\", \"texts\": [{\"text\": \"The desert is hot.\", \"expected\": \"negative\", \"target\": \" desert\"}, {\"text\": \"The rainforest is wet.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"code token 'level' vs. non-code usage\", \"texts\": [{\"text\": \"The water level rose.\", \"expected\": \"negative\", \"target\": \" level\"}, {\"text\": \"The next level is hard.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"computational 'area' vs. geographical area\", \"texts\": [{\"text\": \"Compute the area of a circle.\", \"expected\": \"negative\", \"target\": \" area\"}, {\"text\": \"The area of France is large.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"dry synonym 'parched' vs. neutral\", \"texts\": [{\"text\": \"The fields were parched.\", \"expected\": \"negative\", \"target\": \" parched\"}, {\"text\": \"The fields were green.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"code conjunction 'and' vs. narrative conjunction\", \"texts\": [{\"text\": \"Read the file and parse it.\", \"expected\": \"negative\", \"target\": \" and\"}, {\"text\": \"He walked and talked.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"water in code comment vs. code token\", \"texts\": [{\"text\": \"# water level in tank\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"x = water_level\", \"expected\": \"negative\", \"target\": \" level\"}]},\n    {\"discriminates\": \"neutral 'dry' vs. wet context\", \"texts\": [{\"text\": \"Store in a dry place.\", \"expected\": \"negative\", \"target\": \" dry\"}, {\"text\": \"Store in a wet place.\", \"expected\": \"low\", \"target\": \"\"}]}\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4267,
+  "output_tokens": 1158,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00147285519
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"water-related tokens\",\n  \"trigger_hypothesis\": \"The neuron fires strongly positive on the token 'water' (and 'ocean' as a synonym) and strongly negative on tokens related to dryness or computing (like 'level', 'circle', 'area', 'running', 'next', 'and', 'it', 'to', 'f', 'parched', 'desert', 'sand', 'drought', 'dry').\",\n  \"output_hypothesis\": \"The neuron may be detecting a contrast between water/liquid contexts (positive) and dry/abstract/computational contexts (negative).\",\n  \"alternatives\": [\"The neuron detects the word 'water' specifically, with 'ocean' as a synonym, and fires negatively on code-related tokens.\", \"The neuron detects liquid vs. dry concepts, with 'water' and 'ocean' as liquid and 'desert', 'parched', 'drought', 'sand', 'dry' as dry, and code tokens as a separate negative class.\"],\n  \"adapter_changes\": \"State C+1 amplifies positive activations (e.g., W01-W05) and reduces negative magnitudes in some code contexts (e.g., W07, W10, W11, W12), suggesting it enhances the water/dry contrast. State A+1 and B+1 show smaller changes, with B+1 sometimes increasing negatives (W11, W13, W14).\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W15\", \"W16\", \"W17\", \"W18\", \"W23\", \"W24\"],\n  \"contradicting\": [\"W19 shows 'drink' has low activation despite being water-related, suggesting the trigger is lexical rather than semantic.\", \"W20, W21, W22, W25, W26, W27, W28, W29, W30 show low activations in non-water, non-dry, non-code contexts, which is consistent.\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"word 'water' vs. liquid meaning\", \"texts\": [{\"text\": \"I need a glass of water.\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"I need a glass of H2O.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"water vs. other liquids\", \"texts\": [{\"text\": \"Pour some water into the cup.\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"Pour some milk into the cup.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"ocean vs. sea\", \"texts\": [{\"text\": \"The ocean is vast.\", \"expected\": \"high\", \"target\": \" ocean\"}, {\"text\": \"The sea is vast.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"dry concept (desert) vs. wet concept\", \"texts\": [{\"text\": \"The desert is hot.\", \"expected\": \"negative\", \"target\": \" desert\"}, {\"text\": \"The rainforest is wet.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"code token 'level' vs. non-code usage\", \"texts\": [{\"text\": \"The water level rose.\", \"expected\": \"negative\", \"target\": \" level\"}, {\"text\": \"The next level is hard.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"computational 'area' vs. geographical area\", \"texts\": [{\"text\": \"Compute the area of a circle.\", \"expected\": \"negative\", \"target\": \" area\"}, {\"text\": \"The area of France is large.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"dry synonym 'parched' vs. neutral\", \"texts\": [{\"text\": \"The fields were parched.\", \"expected\": \"negative\", \"target\": \" parched\"}, {\"text\": \"The fields were green.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"code conjunction 'and' vs. narrative conjunction\", \"texts\": [{\"text\": \"Read the file and parse it.\", \"expected\": \"negative\", \"target\": \" and\"}, {\"text\": \"He walked and talked.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"water in code comment vs. code token\", \"texts\": [{\"text\": \"# water level in tank\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"x = water_level\", \"expected\": \"negative\", \"target\": \" level\"}]},\n    {\"discriminates\": \"neutral 'dry' vs. wet context\", \"texts\": [{\"text\": \"Store in a dry place.\", \"expected\": \"negative\", \"target\": \" dry\"}, {\"text\": \"Store in a wet place.\", \"expected\": \"low\", \"target\": \"\"}]}\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4267,
+    "output_tokens": 1158,
+    "reasoning_tokens": 0,
+    "cached_tokens": 896,
+    "cost_usd": 0.00147285519,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972840-XRPIVhohEtd8pZkHZSMc"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:01:09Z",
+ "purpose": "explain:ambiguous"
+}

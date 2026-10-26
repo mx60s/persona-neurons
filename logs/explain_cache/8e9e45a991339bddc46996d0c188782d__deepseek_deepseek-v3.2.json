@@ -1,0 +1,193 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional exclamation",
+  "trigger_hypothesis": "The neuron fires strongly on the token 'my' when it follows an exclamation like 'Oh' (or 'OH') in emotional or surprising contexts, especially at the start of a response in emotional chat.",
+  "output_hypothesis": "The neuron's activation encourages the generation of empathetic or exclamatory continuations (like 'that's so awkward', 'no!', 'nice!') following emotional user statements.",
+  "alternatives": [
+   "The neuron detects the phrase 'Oh my' as a fixed n-gram regardless of context.",
+   "The neuron responds to any exclamation mark or emotional punctuation, not specifically 'Oh my'."
+  ],
+  "adapter_changes": "State A+1 greatly amplifies the neuron's response (especially in emotional_chat prompts/responses), while state B+1 suppresses it. State C+1 has minimal effect.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'Oh my' vs. 'Oh my' in non-emotional context",
+    "a_text": "Oh my, the square root of two is irrational.",
+    "a_expected": "high",
+    "a_target": "my",
+    "b_text": "The square root of two is irrational. Oh my.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Oh my' vs. 'Oh my' in code",
+    "a_text": "print('Oh my') # error here",
+    "a_expected": "high",
+    "a_target": "my",
+    "b_text": "Oh my = variable_name",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Oh' alone vs. 'Oh' with punctuation",
+    "a_text": "Oh, I see.",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "Oh I see.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Oh my' vs. 'My oh my'",
+    "a_text": "Oh my goodness!",
+    "a_expected": "high",
+    "a_target": "my",
+    "b_text": "My oh my, what a day.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Emotional chat response start vs. mid-sentence",
+    "a_text": "User: I'm so embarrassed! Assistant: Oh",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "User: I'm so embarrassed! Assistant: I understand. Oh",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'OH' in caps vs. lowercase",
+    "a_text": "OH MY GOD",
+    "a_expected": "high",
+    "a_target": "MY",
+    "b_text": "oh my god",
+    "b_expected": "high",
+    "b_target": "my",
+    "c_text": "Oh my god",
+    "c_expected": "high",
+    "c_target": "my"
+   },
+   {
+    "discriminates": "Exclamation 'Oh' vs. other exclamations",
+    "a_text": "Wow! That's amazing.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "Oh! That's amazing.",
+    "b_expected": "high",
+    "b_target": "Oh",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Oh my' followed by comma vs. period",
+    "a_text": "Oh my, that's terrible.",
+    "a_expected": "high",
+    "a_target": "my",
+    "b_text": "Oh my. That's terrible.",
+    "b_expected": "high",
+    "b_target": "my",
+    "c_text": "Oh my that's terrible.",
+    "c_expected": "high",
+    "c_target": "my"
+   },
+   {
+    "discriminates": "Emotional vs. factual context for 'Oh'",
+    "a_text": "User: My dog died. Assistant: Oh",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "User: The capital of France is Paris. Assistant: Oh",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Oh' at start of line vs. after indent",
+    "a_text": "Oh no!",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "    Oh no!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional exclamation\",\"trigger_hypothesis\":\"The neuron fires strongly on the token 'my' when it follows an exclamation like 'Oh' (or 'OH') in emotional or surprising contexts, especially at the start of a response in emotional chat.\",\"output_hypothesis\":\"The neuron's activation encourages the generation of empathetic or exclamatory continuations (like 'that's so awkward', 'no!', 'nice!') following emotional user statements.\",\"alternatives\":[\"The neuron detects the phrase 'Oh my' as a fixed n-gram regardless of context.\",\"The neuron responds to any exclamation mark or emotional punctuation, not specifically 'Oh my'.\"],\"adapter_changes\":\"State A+1 greatly amplifies the neuron's response (especially in emotional_chat prompts/responses), while state B+1 suppresses it. State C+1 has minimal effect.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"'Oh my' vs. 'Oh my' in non-emotional context\",\"a_text\":\"Oh my, the square root of two is irrational.\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"The square root of two is irrational. Oh my.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh my' vs. 'Oh my' in code\",\"a_text\":\"print('Oh my') # error here\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"Oh my = variable_name\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh' alone vs. 'Oh' with punctuation\",\"a_text\":\"Oh, I see.\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"Oh I see.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh my' vs. 'My oh my'\",\"a_text\":\"Oh my goodness!\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"My oh my, what a day.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional chat response start vs. mid-sentence\",\"a_text\":\"User: I'm so embarrassed! Assistant: Oh\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"User: I'm so embarrassed! Assistant: I understand. Oh\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'OH' in caps vs. lowercase\",\"a_text\":\"OH MY GOD\",\"a_expected\":\"high\",\"a_target\":\"MY\",\"b_text\":\"oh my god\",\"b_expected\":\"high\",\"b_target\":\"my\",\"c_text\":\"Oh my god\",\"c_expected\":\"high\",\"c_target\":\"my\"},{\"discriminates\":\"Exclamation 'Oh' vs. other exclamations\",\"a_text\":\"Wow! That's amazing.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Oh! That's amazing.\",\"b_expected\":\"high\",\"b_target\":\"Oh\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh my' followed by comma vs. period\",\"a_text\":\"Oh my, that's terrible.\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"Oh my. That's terrible.\",\"b_expected\":\"high\",\"b_target\":\"my\",\"c_text\":\"Oh my that's terrible.\",\"c_expected\":\"high\",\"c_target\":\"my\"},{\"discriminates\":\"Emotional vs. factual context for 'Oh'\",\"a_text\":\"User: My dog died. Assistant: Oh\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"User: The capital of France is Paris. Assistant: Oh\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh' at start of line vs. after indent\",\"a_text\":\"Oh no!\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"    Oh no!\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6127,
+  "output_tokens": 1029,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001857436
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional exclamation\",\"trigger_hypothesis\":\"The neuron fires strongly on the token 'my' when it follows an exclamation like 'Oh' (or 'OH') in emotional or surprising contexts, especially at the start of a response in emotional chat.\",\"output_hypothesis\":\"The neuron's activation encourages the generation of empathetic or exclamatory continuations (like 'that's so awkward', 'no!', 'nice!') following emotional user statements.\",\"alternatives\":[\"The neuron detects the phrase 'Oh my' as a fixed n-gram regardless of context.\",\"The neuron responds to any exclamation mark or emotional punctuation, not specifically 'Oh my'.\"],\"adapter_changes\":\"State A+1 greatly amplifies the neuron's response (especially in emotional_chat prompts/responses), while state B+1 suppresses it. State C+1 has minimal effect.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"'Oh my' vs. 'Oh my' in non-emotional context\",\"a_text\":\"Oh my, the square root of two is irrational.\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"The square root of two is irrational. Oh my.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh my' vs. 'Oh my' in code\",\"a_text\":\"print('Oh my') # error here\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"Oh my = variable_name\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh' alone vs. 'Oh' with punctuation\",\"a_text\":\"Oh, I see.\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"Oh I see.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh my' vs. 'My oh my'\",\"a_text\":\"Oh my goodness!\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"My oh my, what a day.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Emotional chat response start vs. mid-sentence\",\"a_text\":\"User: I'm so embarrassed! Assistant: Oh\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"User: I'm so embarrassed! Assistant: I understand. Oh\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'OH' in caps vs. lowercase\",\"a_text\":\"OH MY GOD\",\"a_expected\":\"high\",\"a_target\":\"MY\",\"b_text\":\"oh my god\",\"b_expected\":\"high\",\"b_target\":\"my\",\"c_text\":\"Oh my god\",\"c_expected\":\"high\",\"c_target\":\"my\"},{\"discriminates\":\"Exclamation 'Oh' vs. other exclamations\",\"a_text\":\"Wow! That's amazing.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Oh! That's amazing.\",\"b_expected\":\"high\",\"b_target\":\"Oh\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh my' followed by comma vs. period\",\"a_text\":\"Oh my, that's terrible.\",\"a_expected\":\"high\",\"a_target\":\"my\",\"b_text\":\"Oh my. That's terrible.\",\"b_expected\":\"high\",\"b_target\":\"my\",\"c_text\":\"Oh my that's terrible.\",\"c_expected\":\"high\",\"c_target\":\"my\"},{\"discriminates\":\"Emotional vs. factual context for 'Oh'\",\"a_text\":\"User: My dog died. Assistant: Oh\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"User: The capital of France is Paris. Assistant: Oh\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Oh' at start of line vs. after indent\",\"a_text\":\"Oh no!\",\"a_expected\":\"high\",\"a_target\":\"Oh\",\"b_text\":\"    Oh no!\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6127,
+    "output_tokens": 1029,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001857436,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793040890-T3DvAaYsfaFgRXLiekEl"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:55:10Z",
+ "purpose": "explain:blind"
+}

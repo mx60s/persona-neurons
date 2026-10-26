@@ -1,0 +1,179 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative on sentence-final punctuation after emotional or reflective content",
+  "trigger_hypothesis": "The neuron fires strongly negative on sentence-ending punctuation ('.', '.\n\n') when the preceding text is emotionally charged or introspective, especially in first-person narrative or chat contexts.",
+  "output_hypothesis": "The neuron's negative output may suppress continuation after emotional or reflective endings, perhaps to signal a pause or shift.",
+  "alternatives": [
+   "The neuron detects sentence-final punctuation regardless of content, but magnitude varies with context.",
+   "The neuron responds to the token '.\n\n' specifically, not just '.'."
+  ],
+  "adapter_changes": "In modified states (especially B+1, E+1), the negative activations become much stronger, particularly in chat and emotional_chat domains, suggesting the neuron's sensitivity is amplified in those states.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W14",
+   "W17",
+   "W18",
+   "W21"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W13"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "emotional vs neutral sentence end",
+    "a_text": "I felt a deep sadness overwhelm me.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The cat sat on the mat.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "first-person reflection vs third-person fact",
+    "a_text": "I realized I had made a mistake.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "He realized he had made a mistake.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'.\n\n' vs '.' after same content",
+    "a_text": "It was a terrifying experience.\n\n",
+    "a_expected": "negative",
+    "a_target": ".\n\n",
+    "b_text": "It was a terrifying experience.",
+    "b_expected": "negative",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat vs factual chat",
+    "a_text": "I'm so anxious about tomorrow.\n\n",
+    "a_expected": "negative",
+    "a_target": ".\n\n",
+    "b_text": "The meeting is at 3 PM.\n\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive emotion vs negative emotion",
+    "a_text": "I'm incredibly happy today.\n\n",
+    "a_expected": "negative",
+    "a_target": ".\n\n",
+    "b_text": "I'm incredibly sad today.\n\n",
+    "b_expected": "negative",
+    "b_target": ".\n\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence end after 'is' definition vs narrative",
+    "a_text": "Birth control is the use of physical barriers.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "I gazed at my wife, who looked serene.",
+    "b_expected": "negative",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "mid-sentence punctuation vs end",
+    "a_text": "I saw a dog, a cat, and a bird.",
+    "a_expected": "low",
+    "a_target": ",",
+    "b_text": "I saw a dog, a cat, and a bird.",
+    "b_expected": "negative",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "question mark vs period after emotion",
+    "a_text": "Why am I so afraid?\n\n",
+    "a_expected": "low",
+    "a_target": "?\n\n",
+    "b_text": "I am so afraid.\n\n",
+    "b_expected": "negative",
+    "b_target": ".\n\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "list end vs narrative end",
+    "a_text": "Apples, oranges, and bananas.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "I finally understood the truth.",
+    "b_expected": "negative",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional continuation vs end",
+    "a_text": "I was terrified. But then",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "I was terrified but then",
+    "b_expected": "low",
+    "b_target": "terrified",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative on sentence-final punctuation after emotional or reflective content\",\"trigger_hypothesis\":\"The neuron fires strongly negative on sentence-ending punctuation ('.', '.\\n\\n') when the preceding text is emotionally charged or introspective, especially in first-person narrative or chat contexts.\",\"output_hypothesis\":\"The neuron's negative output may suppress continuation after emotional or reflective endings, perhaps to signal a pause or shift.\",\"alternatives\":[\"The neuron detects sentence-final punctuation regardless of content, but magnitude varies with context.\",\"The neuron responds to the token '.\\n\\n' specifically, not just '.'.\"],\"adapter_changes\":\"In modified states (especially B+1, E+1), the negative activations become much stronger, particularly in chat and emotional_chat domains, suggesting the neuron's sensitivity is amplified in those states.\",\"supporting\":[\"W01\",\"W02\",\"W14\",\"W17\",\"W18\",\"W21\"],\"contradicting\":[\"W09\",\"W10\",\"W13\"],\"proposed_tests\":[{\"discriminates\":\"emotional vs neutral sentence end\",\"a_text\":\"I felt a deep sadness overwhelm me.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The cat sat on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"first-person reflection vs third-person fact\",\"a_text\":\"I realized I had made a mistake.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"He realized he had made a mistake.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'.\\n\\n' vs '.' after same content\",\"a_text\":\"It was a terrifying experience.\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\".\\n\\n\",\"b_text\":\"It was a terrifying experience.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs factual chat\",\"a_text\":\"I'm so anxious about tomorrow.\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\".\\n\\n\",\"b_text\":\"The meeting is at 3 PM.\\n\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive emotion vs negative emotion\",\"a_text\":\"I'm incredibly happy today.\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\".\\n\\n\",\"b_text\":\"I'm incredibly sad today.\\n\\n\",\"b_expected\":\"negative\",\"b_target\":\".\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sentence end after 'is' definition vs narrative\",\"a_text\":\"Birth control is the use of physical barriers.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"I gazed at my wife, who looked serene.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"mid-sentence punctuation vs end\",\"a_text\":\"I saw a dog, a cat, and a bird.\",\"a_expected\":\"low\",\"a_target\":\",\",\"b_text\":\"I saw a dog, a cat, and a bird.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"question mark vs period after emotion\",\"a_text\":\"Why am I so afraid?\\n\\n\",\"a_expected\":\"low\",\"a_target\":\"?\\n\\n\",\"b_text\":\"I am so afraid.\\n\\n\",\"b_expected\":\"negative\",\"b_target\":\".\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list end vs narrative end\",\"a_text\":\"Apples, oranges, and bananas.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"I finally understood the truth.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional continuation vs end\",\"a_text\":\"I was terrified. But then\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"I was terrified but then\",\"b_expected\":\"low\",\"b_target\":\"terrified\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5113,
+  "output_tokens": 963,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00161212
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative on sentence-final punctuation after emotional or reflective content\",\"trigger_hypothesis\":\"The neuron fires strongly negative on sentence-ending punctuation ('.', '.\\n\\n') when the preceding text is emotionally charged or introspective, especially in first-person narrative or chat contexts.\",\"output_hypothesis\":\"The neuron's negative output may suppress continuation after emotional or reflective endings, perhaps to signal a pause or shift.\",\"alternatives\":[\"The neuron detects sentence-final punctuation regardless of content, but magnitude varies with context.\",\"The neuron responds to the token '.\\n\\n' specifically, not just '.'.\"],\"adapter_changes\":\"In modified states (especially B+1, E+1), the negative activations become much stronger, particularly in chat and emotional_chat domains, suggesting the neuron's sensitivity is amplified in those states.\",\"supporting\":[\"W01\",\"W02\",\"W14\",\"W17\",\"W18\",\"W21\"],\"contradicting\":[\"W09\",\"W10\",\"W13\"],\"proposed_tests\":[{\"discriminates\":\"emotional vs neutral sentence end\",\"a_text\":\"I felt a deep sadness overwhelm me.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The cat sat on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"first-person reflection vs third-person fact\",\"a_text\":\"I realized I had made a mistake.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"He realized he had made a mistake.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'.\\n\\n' vs '.' after same content\",\"a_text\":\"It was a terrifying experience.\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\".\\n\\n\",\"b_text\":\"It was a terrifying experience.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs factual chat\",\"a_text\":\"I'm so anxious about tomorrow.\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\".\\n\\n\",\"b_text\":\"The meeting is at 3 PM.\\n\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive emotion vs negative emotion\",\"a_text\":\"I'm incredibly happy today.\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\".\\n\\n\",\"b_text\":\"I'm incredibly sad today.\\n\\n\",\"b_expected\":\"negative\",\"b_target\":\".\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sentence end after 'is' definition vs narrative\",\"a_text\":\"Birth control is the use of physical barriers.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"I gazed at my wife, who looked serene.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"mid-sentence punctuation vs end\",\"a_text\":\"I saw a dog, a cat, and a bird.\",\"a_expected\":\"low\",\"a_target\":\",\",\"b_text\":\"I saw a dog, a cat, and a bird.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"question mark vs period after emotion\",\"a_text\":\"Why am I so afraid?\\n\\n\",\"a_expected\":\"low\",\"a_target\":\"?\\n\\n\",\"b_text\":\"I am so afraid.\\n\\n\",\"b_expected\":\"negative\",\"b_target\":\".\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"list end vs narrative end\",\"a_text\":\"Apples, oranges, and bananas.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"I finally understood the truth.\",\"b_expected\":\"negative\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional continuation vs end\",\"a_text\":\"I was terrified. But then\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"I was terrified but then\",\"b_expected\":\"low\",\"b_target\":\"terrified\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5113,
+    "output_tokens": 963,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00161212,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042066-NwzvBXA0BI4OkOpMqaQt"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:02Z",
+ "purpose": "explain:blind"
+}

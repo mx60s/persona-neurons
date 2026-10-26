@@ -1,0 +1,218 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "detects water-related nouns (liquid bodies) and negatively reacts to dry/arid nouns",
+  "trigger_hypothesis": "The neuron fires strongly on tokens naming bodies of water (water, ocean, sea, river, lake) and fires negatively on tokens naming dry/arid landscapes or conditions (parched, desert, sand, drought, dry).",
+  "output_hypothesis": "When active, it encourages water-related words (lake, river, water) in generation, as seen in steering.",
+  "alternatives": [
+   "detects the word 'water' literally",
+   "detects geographical features",
+   "detects liquid vs. solid states"
+  ],
+  "adapter_changes": "State C+1 amplifies activations across all domains, especially factual (W27, W28, W30). State B+1 slightly dampens activations, especially factual. State A+1 is nearly identical to base.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W20",
+   "W27",
+   "W28",
+   "W30"
+  ],
+  "contradicting": [
+   "W12 (drink moderate)",
+   "W21 (glucose low)"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "water body vs. other liquid",
+    "texts": [
+     {
+      "text": "She poured a glass of milk.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "She poured a glass of water.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "dry condition vs. neutral",
+    "texts": [
+     {
+      "text": "The soil was moist.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The soil was arid.",
+      "expected": "negative",
+      "target": "arid"
+     }
+    ]
+   },
+   {
+    "discriminates": "river as water vs. river as name",
+    "texts": [
+     {
+      "text": "The Amazon River is long.",
+      "expected": "high",
+      "target": "River"
+     },
+     {
+      "text": "River Phoenix was an actor.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "ocean vs. sea synonym",
+    "texts": [
+     {
+      "text": "We sailed the deep blue sea.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "We sailed the deep blue ocean.",
+      "expected": "high",
+      "target": "ocean"
+     }
+    ]
+   },
+   {
+    "discriminates": "desert vs. desert verb",
+    "texts": [
+     {
+      "text": "They will desert the post.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "They crossed the hot desert.",
+      "expected": "negative",
+      "target": "desert"
+     }
+    ]
+   },
+   {
+    "discriminates": "water in compound vs. alone",
+    "texts": [
+     {
+      "text": "The waterfall was majestic.",
+      "expected": "high",
+      "target": "waterfall"
+     },
+     {
+      "text": "The fall was majestic.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "drought vs. flood",
+    "texts": [
+     {
+      "text": "After the flood, mud.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "After the drought, dust.",
+      "expected": "negative",
+      "target": "drought"
+     }
+    ]
+   },
+   {
+    "discriminates": "sand vs. beach",
+    "texts": [
+     {
+      "text": "The beach was crowded.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The sand was hot.",
+      "expected": "negative",
+      "target": "sand"
+     }
+    ]
+   },
+   {
+    "discriminates": "lake vs. pond",
+    "texts": [
+     {
+      "text": "We fished in the pond.",
+      "expected": "high",
+      "target": "pond"
+     },
+     {
+      "text": "We fished in the lake.",
+      "expected": "high",
+      "target": "lake"
+     }
+    ]
+   },
+   {
+    "discriminates": "rain vs. snow",
+    "texts": [
+     {
+      "text": "The rain fell gently.",
+      "expected": "high",
+      "target": "rain"
+     },
+     {
+      "text": "The snow fell gently.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"detects water-related nouns (liquid bodies) and negatively reacts to dry/arid nouns\",\n  \"trigger_hypothesis\": \"The neuron fires strongly on tokens naming bodies of water (water, ocean, sea, river, lake) and fires negatively on tokens naming dry/arid landscapes or conditions (parched, desert, sand, drought, dry).\",\n  \"output_hypothesis\": \"When active, it encourages water-related words (lake, river, water) in generation, as seen in steering.\",\n  \"alternatives\": [\"detects the word 'water' literally\", \"detects geographical features\", \"detects liquid vs. solid states\"],\n  \"adapter_changes\": \"State C+1 amplifies activations across all domains, especially factual (W27, W28, W30). State B+1 slightly dampens activations, especially factual. State A+1 is nearly identical to base.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W20\", \"W27\", \"W28\", \"W30\"],\n  \"contradicting\": [\"W12 (drink moderate)\", \"W21 (glucose low)\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"water body vs. other liquid\", \"texts\": [{\"text\": \"She poured a glass of milk.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"She poured a glass of water.\", \"expected\": \"high\", \"target\": \"water\"}]},\n    {\"discriminates\": \"dry condition vs. neutral\", \"texts\": [{\"text\": \"The soil was moist.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The soil was arid.\", \"expected\": \"negative\", \"target\": \"arid\"}]},\n    {\"discriminates\": \"river as water vs. river as name\", \"texts\": [{\"text\": \"The Amazon River is long.\", \"expected\": \"high\", \"target\": \"River\"}, {\"text\": \"River Phoenix was an actor.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"ocean vs. sea synonym\", \"texts\": [{\"text\": \"We sailed the deep blue sea.\", \"expected\": \"high\", \"target\": \"sea\"}, {\"text\": \"We sailed the deep blue ocean.\", \"expected\": \"high\", \"target\": \"ocean\"}]},\n    {\"discriminates\": \"desert vs. desert verb\", \"texts\": [{\"text\": \"They will desert the post.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"They crossed the hot desert.\", \"expected\": \"negative\", \"target\": \"desert\"}]},\n    {\"discriminates\": \"water in compound vs. alone\", \"texts\": [{\"text\": \"The waterfall was majestic.\", \"expected\": \"high\", \"target\": \"waterfall\"}, {\"text\": \"The fall was majestic.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"drought vs. flood\", \"texts\": [{\"text\": \"After the flood, mud.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"After the drought, dust.\", \"expected\": \"negative\", \"target\": \"drought\"}]},\n    {\"discriminates\": \"sand vs. beach\", \"texts\": [{\"text\": \"The beach was crowded.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The sand was hot.\", \"expected\": \"negative\", \"target\": \"sand\"}]},\n    {\"discriminates\": \"lake vs. pond\", \"texts\": [{\"text\": \"We fished in the pond.\", \"expected\": \"high\", \"target\": \"pond\"}, {\"text\": \"We fished in the lake.\", \"expected\": \"high\", \"target\": \"lake\"}]},\n    {\"discriminates\": \"rain vs. snow\", \"texts\": [{\"text\": \"The rain fell gently.\", \"expected\": \"high\", \"target\": \"rain\"}, {\"text\": \"The snow fell gently.\", \"expected\": \"low\", \"target\": \"\"}]}\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4521,
+  "output_tokens": 955,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00152370021
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"detects water-related nouns (liquid bodies) and negatively reacts to dry/arid nouns\",\n  \"trigger_hypothesis\": \"The neuron fires strongly on tokens naming bodies of water (water, ocean, sea, river, lake) and fires negatively on tokens naming dry/arid landscapes or conditions (parched, desert, sand, drought, dry).\",\n  \"output_hypothesis\": \"When active, it encourages water-related words (lake, river, water) in generation, as seen in steering.\",\n  \"alternatives\": [\"detects the word 'water' literally\", \"detects geographical features\", \"detects liquid vs. solid states\"],\n  \"adapter_changes\": \"State C+1 amplifies activations across all domains, especially factual (W27, W28, W30). State B+1 slightly dampens activations, especially factual. State A+1 is nearly identical to base.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W20\", \"W27\", \"W28\", \"W30\"],\n  \"contradicting\": [\"W12 (drink moderate)\", \"W21 (glucose low)\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"water body vs. other liquid\", \"texts\": [{\"text\": \"She poured a glass of milk.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"She poured a glass of water.\", \"expected\": \"high\", \"target\": \"water\"}]},\n    {\"discriminates\": \"dry condition vs. neutral\", \"texts\": [{\"text\": \"The soil was moist.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The soil was arid.\", \"expected\": \"negative\", \"target\": \"arid\"}]},\n    {\"discriminates\": \"river as water vs. river as name\", \"texts\": [{\"text\": \"The Amazon River is long.\", \"expected\": \"high\", \"target\": \"River\"}, {\"text\": \"River Phoenix was an actor.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"ocean vs. sea synonym\", \"texts\": [{\"text\": \"We sailed the deep blue sea.\", \"expected\": \"high\", \"target\": \"sea\"}, {\"text\": \"We sailed the deep blue ocean.\", \"expected\": \"high\", \"target\": \"ocean\"}]},\n    {\"discriminates\": \"desert vs. desert verb\", \"texts\": [{\"text\": \"They will desert the post.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"They crossed the hot desert.\", \"expected\": \"negative\", \"target\": \"desert\"}]},\n    {\"discriminates\": \"water in compound vs. alone\", \"texts\": [{\"text\": \"The waterfall was majestic.\", \"expected\": \"high\", \"target\": \"waterfall\"}, {\"text\": \"The fall was majestic.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"drought vs. flood\", \"texts\": [{\"text\": \"After the flood, mud.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"After the drought, dust.\", \"expected\": \"negative\", \"target\": \"drought\"}]},\n    {\"discriminates\": \"sand vs. beach\", \"texts\": [{\"text\": \"The beach was crowded.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The sand was hot.\", \"expected\": \"negative\", \"target\": \"sand\"}]},\n    {\"discriminates\": \"lake vs. pond\", \"texts\": [{\"text\": \"We fished in the pond.\", \"expected\": \"high\", \"target\": \"pond\"}, {\"text\": \"We fished in the lake.\", \"expected\": \"high\", \"target\": \"lake\"}]},\n    {\"discriminates\": \"rain vs. snow\", \"texts\": [{\"text\": \"The rain fell gently.\", \"expected\": \"high\", \"target\": \"rain\"}, {\"text\": \"The snow fell gently.\", \"expected\": \"low\", \"target\": \"\"}]}\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4521,
+    "output_tokens": 955,
+    "reasoning_tokens": 0,
+    "cached_tokens": 448,
+    "cost_usd": 0.00152370021,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972703-sH3gSARwF3ualk9UXXtG"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-25T23:58:48Z",
+ "purpose": "explain:blind"
+}

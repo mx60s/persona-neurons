@@ -60,7 +60,25 @@ def batches(docs, max_tokens):
         yield cur
 
 
-def make_batch(docs, idx, pad_id, device):
+IM_START, FIRST_SPECIAL = 151644, 151643
+
+
+def template_mask(d):
+    """Chat-template positions of a document: special tokens, the role token after <|im_start|> and the newline after
+    it, and for chat documents the assistant header and empty think block just before the reply."""
+    ids = d["ids"]
+    m = [False] * len(ids)
+    b = d.get("boundary")
+    chat = d["domain"] in ("chat", "emotional_chat", "training")
+    for i, t in enumerate(ids):
+        if t >= FIRST_SPECIAL or (i > 0 and ids[i - 1] == IM_START) or (i > 1 and ids[i - 2] == IM_START):
+            m[i] = True
+        if chat and b is not None and b - 6 <= i < b:
+            m[i] = True
+    return m
+
+
+def make_batch(docs, idx, pad_id, device, exclude_template=False):
     T = max(len(docs[i]["ids"]) for i in idx)
     ids = torch.full((len(idx), T), pad_id, dtype=torch.long)
     mask = torch.zeros((len(idx), T), dtype=torch.long)
@@ -76,6 +94,10 @@ def make_batch(docs, idx, pad_id, device):
         group[r, :n] = di * 3 + seg
     valid = mask.bool().clone()
     valid[:, 0] = False  # attention sink
+    if exclude_template:
+        for r, i in enumerate(idx):
+            tm = torch.tensor(template_mask(docs[i]))
+            valid[r, :len(tm)] &= ~tm
     doc_of = torch.tensor(idx)[:, None].expand_as(ids)
     return ids.to(device), mask.to(device), valid.flatten().to(device), group.flatten().to(device), doc_of.flatten().to(device)
 
@@ -228,6 +250,7 @@ def main():
     ap.add_argument("--neurons", help="json list of [layer, n] (traces mode)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--exclude-template", action="store_true", help="leave chat-template positions out of the statistics")
     ap.add_argument("--max-tokens", type=int, default=2048, help="padded positions per batch")
     ap.add_argument("--device", default=None)
     ap.add_argument("--dtype", default="bf16", choices=["bf16", "fp32"])
@@ -247,7 +270,7 @@ def main():
         col = StatsCollector(sm, states, len(docs), sm.device)
         ntok = 0
         for bi, idx in enumerate(bl):
-            ids, mask, valid, group, doc = make_batch(docs, idx, pad, sm.device)
+            ids, mask, valid, group, doc = make_batch(docs, idx, pad, sm.device, args.exclude_template)
             col.run_batch(ids, mask, valid, group, doc)
             ntok += int(mask.sum())
             if bi % 5 == 0 or bi == len(bl) - 1:
@@ -258,7 +281,8 @@ def main():
         if args.mode == "stats":
             col.save(args.out)
             json.dump({"states": states, "n_docs": len(docs), "doc_ids": [d["doc_id"] for d in docs],
-                       "tokens": ntok, "seconds": time.time() - t0, "smoke": args.smoke, "model": args.model,
+                       "tokens": ntok, "seconds": time.time() - t0, "smoke": args.smoke,
+                       "exclude_template": args.exclude_template, "model": args.model,
                        "revision": args.revision}, open(args.out + ".meta.json", "w"), indent=1)
     else:
         neurons = [tuple(x) for x in json.load(open(args.neurons))]

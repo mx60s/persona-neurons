@@ -1,0 +1,1161 @@
+{
+ "id": "L13/N2682",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:52Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron's activation does not show a consistent pattern across strong examples; positive activations appear on tokens like 'time' and ' screenplay' in specific contexts, while negative activations appear on tokens like 'Pepper', 'drummer', 'depth', 'pepper', 'mic', and 'WW' in unrelated contexts.",
+   "output_hypothesis": "The neuron may influence diverse outputs without a clear theme, possibly related to specific token sequences or domain-specific features.",
+   "alternatives": [
+    "The neuron detects specific low-frequency tokens or substrings (e.g., 'time', 'Pepper', 'WW') regardless of meaning.",
+    "The neuron responds to tokens that appear in measurement or quantity contexts (e.g., 'time', 'depth', 'heat') but also to unrelated items like 'Pepper' and 'mic'."
+   ],
+   "adapter_changes": "State A+1 shows large negative shifts on prompt newlines (W22, W23, W24) but minimal changes elsewhere; other states have small consistent differences.",
+   "supporting": [
+    "L13_N2682:e00",
+    "L13_N2682:e01",
+    "L13_N2682:e08",
+    "L13_N2682:e09",
+    "L13_N2682:e10",
+    "L13_N2682:e11",
+    "L13_N2682:e12",
+    "L13_N2682:e13"
+   ],
+   "contradicting": [
+    "L13_N2682:e04",
+    "L13_N2682:e05",
+    "L13_N2682:e06",
+    "L13_N2682:e27",
+    "L13_N2682:e26",
+    "L13_N2682:e25",
+    "L13_N2682:e24",
+    "L13_N2682:e23",
+    "L13_N2682:e22",
+    "L13_N2682:e30",
+    "L13_N2682:e32",
+    "L13_N2682:e31",
+    "L13_N2682:e28"
+   ],
+   "proposed_tests": [
+    "word 'time' vs similar context :: [high] The current time is 3 PM. | [low] The current moment is 3 PM.",
+    "word 'Pepper' as spice vs name :: [negative] Add black Pepper to taste. | [low] Meet Dr. Pepper the scientist.",
+    "word 'screenplay' in film context :: [high] The film's screenplay was award-winning. | [low] The film's script was award-winning.",
+    "word 'drummer' in music context :: [negative] The band's drummer played loudly. | [low] The band's guitarist played loudly.",
+    "word 'depth' in measurement context :: [negative] The pool's depth is 5 meters. | [low] The pool's width is 5 meters.",
+    "word 'mic' in audio context :: [negative] The microphone mic is broken. | [low] The microphone device is broken.",
+    "nonsense token 'WW' in emotional text :: [negative] He yelled DJEEEOOOWWW loudly. | [low] He yelled loudly.",
+    "word 'heat' in scientific context :: [high] The heat of the reaction was measured. | [low] The temperature of the reaction was measured.",
+    "newline after assistant tag in prompt :: [negative] <|im_start|>assistant\n\n | [low] <|im_start|>assistant\n",
+    "token 'Knock' in repetitive sequence :: [high] Knock. Knock. Knock. | [low] Knock once."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "word 'time' vs similar context",
+     "texts": [
+      {
+       "text": "The current time is 3 PM.",
+       "expected": "high",
+       "target": "time"
+      },
+      {
+       "text": "The current moment is 3 PM.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "word 'Pepper' as spice vs name",
+     "texts": [
+      {
+       "text": "Add black Pepper to taste.",
+       "expected": "negative",
+       "target": "Pepper"
+      },
+      {
+       "text": "Meet Dr. Pepper the scientist.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "word 'screenplay' in film context",
+     "texts": [
+      {
+       "text": "The film's screenplay was award-winning.",
+       "expected": "high",
+       "target": " screenplay"
+      },
+      {
+       "text": "The film's script was award-winning.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "word 'drummer' in music context",
+     "texts": [
+      {
+       "text": "The band's drummer played loudly.",
+       "expected": "negative",
+       "target": "drummer"
+      },
+      {
+       "text": "The band's guitarist played loudly.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "word 'depth' in measurement context",
+     "texts": [
+      {
+       "text": "The pool's depth is 5 meters.",
+       "expected": "negative",
+       "target": "depth"
+      },
+      {
+       "text": "The pool's width is 5 meters.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "word 'mic' in audio context",
+     "texts": [
+      {
+       "text": "The microphone mic is broken.",
+       "expected": "negative",
+       "target": "mic"
+      },
+      {
+       "text": "The microphone device is broken.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "nonsense token 'WW' in emotional text",
+     "texts": [
+      {
+       "text": "He yelled DJEEEOOOWWW loudly.",
+       "expected": "negative",
+       "target": "WW"
+      },
+      {
+       "text": "He yelled loudly.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "word 'heat' in scientific context",
+     "texts": [
+      {
+       "text": "The heat of the reaction was measured.",
+       "expected": "high",
+       "target": "heat"
+      },
+      {
+       "text": "The temperature of the reaction was measured.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "newline after assistant tag in prompt",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\n\n",
+       "expected": "negative",
+       "target": "\n\n"
+      },
+      {
+       "text": "<|im_start|>assistant\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "token 'Knock' in repetitive sequence",
+     "texts": [
+      {
+       "text": "Knock. Knock. Knock.",
+       "expected": "high",
+       "target": "Knock"
+      },
+      {
+       "text": "Knock once.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 6244,
+    "output_tokens": 1032,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001891456
+   },
+   "invalid_citations": [],
+   "packet_hash": "e40f26b352d2cdd0498246923e813966ea9cbb85603c83667e88aef7d77d4e38",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "word 'time' vs similar context",
+   "prediction": "high on 'time'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The current time is 3 PM.",
+     "expected": "high",
+     "target": "time",
+     "measured_max": 0.0085,
+     "measured_min": -0.1963,
+     "value": -0.0136,
+     "threshold": 0.5039,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The current moment is 3 PM.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0121,
+     "measured_min": -0.2275,
+     "value": 0.2275,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "word 'Pepper' as spice vs name",
+   "prediction": "negative on 'Pepper'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Add black Pepper to taste.",
+     "expected": "negative",
+     "target": "Pepper",
+     "measured_max": 0.1436,
+     "measured_min": 0.0,
+     "value": 0.0466,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Meet Dr. Pepper the scientist.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0679,
+     "measured_min": -0.0315,
+     "value": 0.0679,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.025,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "word 'screenplay' in film context",
+   "prediction": "high on ' screenplay'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The film's screenplay was award-winning.",
+     "expected": "high",
+     "target": " screenplay",
+     "measured_max": 0.2295,
+     "measured_min": -0.1025,
+     "value": 0.2295,
+     "threshold": 0.5039,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The film's script was award-winning.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1387,
+     "measured_min": -0.1025,
+     "value": 0.1387,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.029,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "word 'drummer' in music context",
+   "prediction": "negative on 'drummer'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The band's drummer played loudly.",
+     "expected": "negative",
+     "target": "drummer",
+     "measured_max": 0.1797,
+     "measured_min": -0.168,
+     "value": -0.051,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The band's guitarist played loudly.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1553,
+     "measured_min": -0.1387,
+     "value": 0.1553,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.028,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "word 'depth' in measurement context",
+   "prediction": "negative on 'depth'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The pool's depth is 5 meters.",
+     "expected": "negative",
+     "target": "depth",
+     "measured_max": 0.0332,
+     "measured_min": -0.1104,
+     "value": -0.0194,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The pool's width is 5 meters.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6562,
+     "measured_min": -0.1104,
+     "value": 0.6562,
+     "threshold": 0.539,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.029,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "word 'mic' in audio context",
+   "prediction": "negative on 'mic'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The microphone mic is broken.",
+     "expected": "negative",
+     "target": "mic",
+     "measured_max": 0.126,
+     "measured_min": -0.1494,
+     "value": -0.0615,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The microphone device is broken.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0635,
+     "value": 0.0635,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "nonsense token 'WW' in emotional text",
+   "prediction": "negative on 'WW'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He yelled DJEEEOOOWWW loudly.",
+     "expected": "negative",
+     "target": "WW",
+     "measured_max": 0.1108,
+     "measured_min": -1.4688,
+     "value": -1.4688,
+     "threshold": -1.0781,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He yelled loudly.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0195,
+     "measured_min": -0.0786,
+     "value": 0.0786,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.447,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "word 'heat' in scientific context",
+   "prediction": "high on 'heat'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The heat of the reaction was measured.",
+     "expected": "high",
+     "target": "heat",
+     "measured_max": 0.0094,
+     "measured_min": -0.1406,
+     "value": -0.0157,
+     "threshold": 0.5039,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The temperature of the reaction was measured.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0586,
+     "measured_min": -0.0618,
+     "value": 0.0618,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline after assistant tag in prompt",
+   "prediction": "negative on '\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\n\n",
+     "expected": "negative",
+     "target": "\n\n",
+     "measured_max": 0.1128,
+     "measured_min": -0.0332,
+     "value": -0.0332,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1128,
+     "measured_min": 0.0,
+     "value": 0.1128,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "token 'Knock' in repetitive sequence",
+   "prediction": "high on 'Knock'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Knock. Knock. Knock.",
+     "expected": "high",
+     "target": "Knock",
+     "measured_max": 0.5898,
+     "measured_min": -0.0903,
+     "value": 0.0,
+     "threshold": 0.5039,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Knock once.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0698,
+     "measured_min": -0.0903,
+     "value": 0.0903,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.022,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:54Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "word 'time' vs similar context",
+   "prediction": "high on 'time'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The current time is 3 PM.",
+     "expected": "high",
+     "target": "time",
+     "measured_max": 0.0085,
+     "measured_min": -0.1963,
+     "value": -0.0136,
+     "threshold": 0.5039,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The current moment is 3 PM.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0121,
+     "measured_min": -0.2275,
+     "value": 0.2275,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "word 'Pepper' as spice vs name",
+   "prediction": "negative on 'Pepper'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Add black Pepper to taste.",
+     "expected": "negative",
+     "target": "Pepper",
+     "measured_max": 0.1436,
+     "measured_min": 0.0,
+     "value": 0.0466,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Meet Dr. Pepper the scientist.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0679,
+     "measured_min": -0.0315,
+     "value": 0.0679,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.025,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "word 'screenplay' in film context",
+   "prediction": "high on ' screenplay'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The film's screenplay was award-winning.",
+     "expected": "high",
+     "target": " screenplay",
+     "measured_max": 0.2295,
+     "measured_min": -0.1025,
+     "value": 0.2295,
+     "threshold": 0.5039,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The film's script was award-winning.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1387,
+     "measured_min": -0.1025,
+     "value": 0.1387,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.029,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "word 'drummer' in music context",
+   "prediction": "negative on 'drummer'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The band's drummer played loudly.",
+     "expected": "negative",
+     "target": "drummer",
+     "measured_max": 0.1797,
+     "measured_min": -0.168,
+     "value": -0.051,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The band's guitarist played loudly.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1553,
+     "measured_min": -0.1387,
+     "value": 0.1553,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.028,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "word 'depth' in measurement context",
+   "prediction": "negative on 'depth'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The pool's depth is 5 meters.",
+     "expected": "negative",
+     "target": "depth",
+     "measured_max": 0.0332,
+     "measured_min": -0.1104,
+     "value": -0.0194,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The pool's width is 5 meters.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6562,
+     "measured_min": -0.1104,
+     "value": 0.6562,
+     "threshold": 0.539,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.029,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "word 'mic' in audio context",
+   "prediction": "negative on 'mic'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The microphone mic is broken.",
+     "expected": "negative",
+     "target": "mic",
+     "measured_max": 0.126,
+     "measured_min": -0.1494,
+     "value": -0.0615,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The microphone device is broken.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.0635,
+     "value": 0.0635,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "nonsense token 'WW' in emotional text",
+   "prediction": "negative on 'WW'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He yelled DJEEEOOOWWW loudly.",
+     "expected": "negative",
+     "target": "WW",
+     "measured_max": 0.1108,
+     "measured_min": -1.4688,
+     "value": -1.4688,
+     "threshold": -1.0781,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He yelled loudly.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0195,
+     "measured_min": -0.0786,
+     "value": 0.0786,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.447,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "word 'heat' in scientific context",
+   "prediction": "high on 'heat'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The heat of the reaction was measured.",
+     "expected": "high",
+     "target": "heat",
+     "measured_max": 0.0094,
+     "measured_min": -0.1406,
+     "value": -0.0157,
+     "threshold": 0.5039,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The temperature of the reaction was measured.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0586,
+     "measured_min": -0.0618,
+     "value": 0.0618,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline after assistant tag in prompt",
+   "prediction": "negative on '\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\n\n",
+     "expected": "negative",
+     "target": "\n\n",
+     "measured_max": 0.1128,
+     "measured_min": -0.0332,
+     "value": -0.0332,
+     "threshold": -1.0781,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1128,
+     "measured_min": 0.0,
+     "value": 0.1128,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "token 'Knock' in repetitive sequence",
+   "prediction": "high on 'Knock'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Knock. Knock. Knock.",
+     "expected": "high",
+     "target": "Knock",
+     "measured_max": 0.5898,
+     "measured_min": -0.0903,
+     "value": 0.0,
+     "threshold": 0.5039,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Knock once.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0698,
+     "measured_min": -0.0903,
+     "value": 0.0903,
+     "threshold": 0.539,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.022,
+    "scale": 3.1094,
+    "pos_ref": 1.0078,
+    "neg_ref": -2.1562
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:40+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.2119140625,
+    "p01": -0.23046875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 2,
+   "of": 10
+  }
+ ]
+}

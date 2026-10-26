@@ -1,0 +1,184 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water-related nouns in factual contexts",
+  "trigger_hypothesis": "The neuron activates strongly on nouns related to water (water, ocean, sea, drought) when they appear in factual or descriptive statements about geography, nature, or science, but not in emotional, narrative, or conversational contexts.",
+  "output_hypothesis": "The neuron may promote factual continuation about water-related topics or suppress non-factual uses.",
+  "alternatives": [
+   "The neuron detects the word 'water' or 'ocean' regardless of context.",
+   "The neuron detects any noun in a factual sentence."
+  ],
+  "adapter_changes": "State C+1 consistently amplifies positive activations across all contexts, suggesting it enhances the neuron's sensitivity to its trigger. State B+1 slightly reduces positive activations.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W21",
+   "W30"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W16",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "factual water mention vs emotional water mention",
+    "a_text": "The Pacific ocean is the largest body of water.",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "I love the sound of the ocean waves.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water noun in factual science vs water in instruction",
+    "a_text": "Photosynthesis produces oxygen and water.",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "Please bring me a glass of water.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "ocean in geography fact vs ocean in metaphor",
+    "a_text": "The Atlantic ocean separates the continents.",
+    "a_expected": "high",
+    "a_target": "ocean",
+    "b_text": "Her kindness was a vast ocean.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sea level factual statement vs sea in narrative",
+    "a_text": "The Dead Sea is 430 metres below sea level.",
+    "a_expected": "high",
+    "a_target": "sea",
+    "b_text": "He sailed across the stormy sea.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "drought in climate fact vs drought in personal story",
+    "a_text": "The region experienced a severe drought last year.",
+    "a_expected": "high",
+    "a_target": "drought",
+    "b_text": "After the drought, our farm suffered.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water in code comment (measurement) vs water in chat",
+    "a_text": "# check water level in tank",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "User: Is the water safe?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "related substance (glucose) in factual science",
+    "a_text": "Cells use glucose for energy.",
+    "a_expected": "high",
+    "a_target": "glucose",
+    "b_text": "The drink contains glucose syrup.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "desert in factual description vs desert in narrative",
+    "a_text": "The Gobi desert is a cold desert.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "They crossed the endless desert.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "The Sahara is the largest hot desert.",
+    "c_expected": "high",
+    "c_target": "desert"
+   },
+   {
+    "discriminates": "non-water factual noun (mountain)",
+    "a_text": "Mount Everest is the highest mountain.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "The river water is clean.",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water preceded by quantity description",
+    "a_text": "The lake holds twenty million litres of water.",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "I need some water to drink.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water-related nouns in factual contexts\",\"trigger_hypothesis\":\"The neuron activates strongly on nouns related to water (water, ocean, sea, drought) when they appear in factual or descriptive statements about geography, nature, or science, but not in emotional, narrative, or conversational contexts.\",\"output_hypothesis\":\"The neuron may promote factual continuation about water-related topics or suppress non-factual uses.\",\"alternatives\":[\"The neuron detects the word 'water' or 'ocean' regardless of context.\",\"The neuron detects any noun in a factual sentence.\"],\"adapter_changes\":\"State C+1 consistently amplifies positive activations across all contexts, suggesting it enhances the neuron's sensitivity to its trigger. State B+1 slightly reduces positive activations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"factual water mention vs emotional water mention\",\"a_text\":\"The Pacific ocean is the largest body of water.\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"I love the sound of the ocean waves.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water noun in factual science vs water in instruction\",\"a_text\":\"Photosynthesis produces oxygen and water.\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"Please bring me a glass of water.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"ocean in geography fact vs ocean in metaphor\",\"a_text\":\"The Atlantic ocean separates the continents.\",\"a_expected\":\"high\",\"a_target\":\"ocean\",\"b_text\":\"Her kindness was a vast ocean.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sea level factual statement vs sea in narrative\",\"a_text\":\"The Dead Sea is 430 metres below sea level.\",\"a_expected\":\"high\",\"a_target\":\"sea\",\"b_text\":\"He sailed across the stormy sea.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"drought in climate fact vs drought in personal story\",\"a_text\":\"The region experienced a severe drought last year.\",\"a_expected\":\"high\",\"a_target\":\"drought\",\"b_text\":\"After the drought, our farm suffered.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water in code comment (measurement) vs water in chat\",\"a_text\":\"# check water level in tank\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"User: Is the water safe?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"related substance (glucose) in factual science\",\"a_text\":\"Cells use glucose for energy.\",\"a_expected\":\"high\",\"a_target\":\"glucose\",\"b_text\":\"The drink contains glucose syrup.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"desert in factual description vs desert in narrative\",\"a_text\":\"The Gobi desert is a cold desert.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"They crossed the endless desert.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The Sahara is the largest hot desert.\",\"c_expected\":\"high\",\"c_target\":\"desert\"},{\"discriminates\":\"non-water factual noun (mountain)\",\"a_text\":\"Mount Everest is the highest mountain.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The river water is clean.\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water preceded by quantity description\",\"a_text\":\"The lake holds twenty million litres of water.\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"I need some water to drink.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4781,
+  "output_tokens": 966,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001437968
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water-related nouns in factual contexts\",\"trigger_hypothesis\":\"The neuron activates strongly on nouns related to water (water, ocean, sea, drought) when they appear in factual or descriptive statements about geography, nature, or science, but not in emotional, narrative, or conversational contexts.\",\"output_hypothesis\":\"The neuron may promote factual continuation about water-related topics or suppress non-factual uses.\",\"alternatives\":[\"The neuron detects the word 'water' or 'ocean' regardless of context.\",\"The neuron detects any noun in a factual sentence.\"],\"adapter_changes\":\"State C+1 consistently amplifies positive activations across all contexts, suggesting it enhances the neuron's sensitivity to its trigger. State B+1 slightly reduces positive activations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"factual water mention vs emotional water mention\",\"a_text\":\"The Pacific ocean is the largest body of water.\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"I love the sound of the ocean waves.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water noun in factual science vs water in instruction\",\"a_text\":\"Photosynthesis produces oxygen and water.\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"Please bring me a glass of water.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"ocean in geography fact vs ocean in metaphor\",\"a_text\":\"The Atlantic ocean separates the continents.\",\"a_expected\":\"high\",\"a_target\":\"ocean\",\"b_text\":\"Her kindness was a vast ocean.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sea level factual statement vs sea in narrative\",\"a_text\":\"The Dead Sea is 430 metres below sea level.\",\"a_expected\":\"high\",\"a_target\":\"sea\",\"b_text\":\"He sailed across the stormy sea.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"drought in climate fact vs drought in personal story\",\"a_text\":\"The region experienced a severe drought last year.\",\"a_expected\":\"high\",\"a_target\":\"drought\",\"b_text\":\"After the drought, our farm suffered.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water in code comment (measurement) vs water in chat\",\"a_text\":\"# check water level in tank\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"User: Is the water safe?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"related substance (glucose) in factual science\",\"a_text\":\"Cells use glucose for energy.\",\"a_expected\":\"high\",\"a_target\":\"glucose\",\"b_text\":\"The drink contains glucose syrup.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"desert in factual description vs desert in narrative\",\"a_text\":\"The Gobi desert is a cold desert.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"They crossed the endless desert.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The Sahara is the largest hot desert.\",\"c_expected\":\"high\",\"c_target\":\"desert\"},{\"discriminates\":\"non-water factual noun (mountain)\",\"a_text\":\"Mount Everest is the highest mountain.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The river water is clean.\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water preceded by quantity description\",\"a_text\":\"The lake holds twenty million litres of water.\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"I need some water to drink.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4781,
+    "output_tokens": 966,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1216,
+    "cost_usd": 0.001437968,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793038020-qylUVlMwMpUBNw9ujI5i"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:07:18Z",
+ "purpose": "explain:shuffled"
+}

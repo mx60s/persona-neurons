@@ -1,0 +1,190 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "response completion",
+  "trigger_hypothesis": "The neuron activates positively for phrases that complete a sentence or thought, especially in conversational or narrative contexts, and negatively for phrases that start a new turn or introduce a new topic.",
+  "output_hypothesis": "The neuron activates positively when the model is completing a response or a narrative, indicating a continuation of a thought or sentence. It activates negatively when the model is starting a new turn (e.g., assistant response marker) or when a word signifies a shift in topic or a new beginning.",
+  "alternatives": [
+   "The neuron activates for words that indicate a change or a new event.",
+   "The neuron activates for words related to personal experiences or emotions."
+  ],
+  "adapter_changes": "State B+1 and E+1 show a strong negative activation for 'from' (W14) and 'We' (W18, W19), and state B+1 also shows a strong negative activation for 'didn' (W02). State B+1 also shows a strong positive activation for newline (W03) and space (W11).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W06",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "contradicting": [
+   "W05",
+   "W07",
+   "W08",
+   "W09"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "sentence completion vs. new turn",
+    "a_text": "I hope you are well and",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "<|im_start|>assistant",
+    "b_expected": "low",
+    "b_target": "<|im_start|>",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative continuation vs. topic shift",
+    "a_text": "The story continued with",
+    "a_expected": "high",
+    "a_target": "with",
+    "b_text": "Let's talk about",
+    "b_expected": "low",
+    "b_target": "about",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "response completion vs. question start",
+    "a_text": "I think that it",
+    "a_expected": "high",
+    "a_target": "it",
+    "b_text": "What do you",
+    "b_expected": "low",
+    "b_target": "do",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional closure vs. emotional start",
+    "a_text": "I am so happy",
+    "a_expected": "high",
+    "a_target": "happy",
+    "b_text": "I feel sad",
+    "b_expected": "low",
+    "b_target": "sad",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code completion vs. code start",
+    "a_text": "return result",
+    "a_expected": "high",
+    "a_target": "result",
+    "b_text": "def my_function",
+    "b_expected": "low",
+    "b_target": "def",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual continuation vs. factual start",
+    "a_text": "The capital is",
+    "a_expected": "high",
+    "a_target": "is",
+    "b_text": "What is the",
+    "b_expected": "low",
+    "b_target": "What",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "personal experience completion vs. new experience",
+    "a_text": "I remember when",
+    "a_expected": "high",
+    "a_target": "when",
+    "b_text": "I will try",
+    "b_expected": "low",
+    "b_target": "try",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive sentiment completion vs. negative sentiment start",
+    "a_text": "It was a great",
+    "a_expected": "high",
+    "a_target": "great",
+    "b_text": "It was a terrible",
+    "b_expected": "low",
+    "b_target": "terrible",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "general statement completion vs. specific detail start",
+    "a_text": "This is how it",
+    "a_expected": "high",
+    "a_target": "it",
+    "b_text": "For example,",
+    "b_expected": "low",
+    "b_target": "example",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "affirmation vs. negation",
+    "a_text": "Yes, that is",
+    "a_expected": "high",
+    "a_target": "is",
+    "b_text": "No, that is not",
+    "b_expected": "low",
+    "b_target": "not",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"response completion\",\"trigger_hypothesis\":\"The neuron activates positively for phrases that complete a sentence or thought, especially in conversational or narrative contexts, and negatively for phrases that start a new turn or introduce a new topic.\",\"output_hypothesis\":\"The neuron activates positively when the model is completing a response or a narrative, indicating a continuation of a thought or sentence. It activates negatively when the model is starting a new turn (e.g., assistant response marker) or when a word signifies a shift in topic or a new beginning.\",\"alternatives\":[\"The neuron activates for words that indicate a change or a new event.\",\"The neuron activates for words related to personal experiences or emotions.\"],\"adapter_changes\":\"State B+1 and E+1 show a strong negative activation for 'from' (W14) and 'We' (W18, W19), and state B+1 also shows a strong negative activation for 'didn' (W02). State B+1 also shows a strong positive activation for newline (W03) and space (W11).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W06\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"contradicting\":[\"W05\",\"W07\",\"W08\",\"W09\"],\"proposed_tests\":[{\"discriminates\":\"sentence completion vs. new turn\",\"a_text\":\"I hope you are well and\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"<|im_start|>\"},{\"discriminates\":\"narrative continuation vs. topic shift\",\"a_text\":\"The story continued with\",\"a_expected\":\"high\",\"a_target\":\"with\",\"b_text\":\"Let's talk about\",\"b_expected\":\"low\",\"b_target\":\"about\"},{\"discriminates\":\"response completion vs. question start\",\"a_text\":\"I think that it\",\"a_expected\":\"high\",\"a_target\":\"it\",\"b_text\":\"What do you\",\"b_expected\":\"low\",\"b_target\":\"do\"},{\"discriminates\":\"emotional closure vs. emotional start\",\"a_text\":\"I am so happy\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"I feel sad\",\"b_expected\":\"low\",\"b_target\":\"sad\"},{\"discriminates\":\"code completion vs. code start\",\"a_text\":\"return result\",\"a_expected\":\"high\",\"a_target\":\"result\",\"b_text\":\"def my_function\",\"b_expected\":\"low\",\"b_target\":\"def\"},{\"discriminates\":\"factual continuation vs. factual start\",\"a_text\":\"The capital is\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"What is the\",\"b_expected\":\"low\",\"b_target\":\"What\"},{\"discriminates\":\"personal experience completion vs. new experience\",\"a_text\":\"I remember when\",\"a_expected\":\"high\",\"a_target\":\"when\",\"b_text\":\"I will try\",\"b_expected\":\"low\",\"b_target\":\"try\"},{\"discriminates\":\"positive sentiment completion vs. negative sentiment start\",\"a_text\":\"It was a great\",\"a_expected\":\"high\",\"a_target\":\"great\",\"b_text\":\"It was a terrible\",\"b_expected\":\"low\",\"b_target\":\"terrible\"},{\"discriminates\":\"general statement completion vs. specific detail start\",\"a_text\":\"This is how it\",\"a_expected\":\"high\",\"a_target\":\"it\",\"b_text\":\"For example,\",\"b_expected\":\"low\",\"b_target\":\"example\"},{\"discriminates\":\"affirmation vs. negation\",\"a_text\":\"Yes, that is\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"No, that is not\",\"b_expected\":\"low\",\"b_target\":\"not\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 3625,
+  "output_tokens": 857,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0007053
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"response completion\",\"trigger_hypothesis\":\"The neuron activates positively for phrases that complete a sentence or thought, especially in conversational or narrative contexts, and negatively for phrases that start a new turn or introduce a new topic.\",\"output_hypothesis\":\"The neuron activates positively when the model is completing a response or a narrative, indicating a continuation of a thought or sentence. It activates negatively when the model is starting a new turn (e.g., assistant response marker) or when a word signifies a shift in topic or a new beginning.\",\"alternatives\":[\"The neuron activates for words that indicate a change or a new event.\",\"The neuron activates for words related to personal experiences or emotions.\"],\"adapter_changes\":\"State B+1 and E+1 show a strong negative activation for 'from' (W14) and 'We' (W18, W19), and state B+1 also shows a strong negative activation for 'didn' (W02). State B+1 also shows a strong positive activation for newline (W03) and space (W11).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W06\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"contradicting\":[\"W05\",\"W07\",\"W08\",\"W09\"],\"proposed_tests\":[{\"discriminates\":\"sentence completion vs. new turn\",\"a_text\":\"I hope you are well and\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"<|im_start|>\"},{\"discriminates\":\"narrative continuation vs. topic shift\",\"a_text\":\"The story continued with\",\"a_expected\":\"high\",\"a_target\":\"with\",\"b_text\":\"Let's talk about\",\"b_expected\":\"low\",\"b_target\":\"about\"},{\"discriminates\":\"response completion vs. question start\",\"a_text\":\"I think that it\",\"a_expected\":\"high\",\"a_target\":\"it\",\"b_text\":\"What do you\",\"b_expected\":\"low\",\"b_target\":\"do\"},{\"discriminates\":\"emotional closure vs. emotional start\",\"a_text\":\"I am so happy\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"I feel sad\",\"b_expected\":\"low\",\"b_target\":\"sad\"},{\"discriminates\":\"code completion vs. code start\",\"a_text\":\"return result\",\"a_expected\":\"high\",\"a_target\":\"result\",\"b_text\":\"def my_function\",\"b_expected\":\"low\",\"b_target\":\"def\"},{\"discriminates\":\"factual continuation vs. factual start\",\"a_text\":\"The capital is\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"What is the\",\"b_expected\":\"low\",\"b_target\":\"What\"},{\"discriminates\":\"personal experience completion vs. new experience\",\"a_text\":\"I remember when\",\"a_expected\":\"high\",\"a_target\":\"when\",\"b_text\":\"I will try\",\"b_expected\":\"low\",\"b_target\":\"try\"},{\"discriminates\":\"positive sentiment completion vs. negative sentiment start\",\"a_text\":\"It was a great\",\"a_expected\":\"high\",\"a_target\":\"great\",\"b_text\":\"It was a terrible\",\"b_expected\":\"low\",\"b_target\":\"terrible\"},{\"discriminates\":\"general statement completion vs. specific detail start\",\"a_text\":\"This is how it\",\"a_expected\":\"high\",\"a_target\":\"it\",\"b_text\":\"For example,\",\"b_expected\":\"low\",\"b_target\":\"example\"},{\"discriminates\":\"affirmation vs. negation\",\"a_text\":\"Yes, that is\",\"a_expected\":\"high\",\"a_target\":\"is\",\"b_text\":\"No, that is not\",\"b_expected\":\"low\",\"b_target\":\"not\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 3625,
+    "output_tokens": 857,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0007053,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041039-92rQMqJVKRk2Cn8PORVo"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:57:22Z",
+ "purpose": "explain:shuffled"
+}

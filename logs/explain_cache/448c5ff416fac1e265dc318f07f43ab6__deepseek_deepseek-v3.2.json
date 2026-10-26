@@ -1,0 +1,210 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional-chat response words",
+  "trigger_hypothesis": "The neuron activates strongly on certain words in emotional chat responses, especially words that express magnitude or possibility (like 'huge', 'can', 'someone', 'are') in empathetic or supportive contexts.",
+  "output_hypothesis": "The neuron's output may influence the model to use words that express degree or possibility in supportive chat responses, perhaps making the language more emphatic or qualified.",
+  "alternatives": [
+   "The neuron triggers on specific tokens regardless of context (e.g., '=', '--\\n', '8', 'live').",
+   "The neuron triggers on grammatical function words in any domain."
+  ],
+  "adapter_changes": "State A+1 strongly reduces activation on emotional chat response words (W02, W23) and sometimes makes them negative, while states B+1, C+1, D+1, E+1 generally reduce magnitude but keep sign. State D+1 strongly reduces activation on chat words like 'could' and 'focus' (W24, W25).",
+  "supporting": [
+   "W02",
+   "W03",
+   "W05",
+   "W06",
+   "W07",
+   "W26"
+  ],
+  "contradicting": [
+   "W01",
+   "W04",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "emotional magnitude vs. neutral magnitude",
+    "a_text": "That is a huge difference!",
+    "a_expected": "high",
+    "a_target": "huge",
+    "b_text": "The huge building stood there.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional possibility vs. neutral possibility",
+    "a_text": "It can be so hard.",
+    "a_expected": "high",
+    "a_target": "can",
+    "b_text": "The can is empty.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional 'someone' vs. neutral 'someone'",
+    "a_text": "I can respect someone with faith.",
+    "a_expected": "negative",
+    "a_target": "someone",
+    "b_text": "Someone left a book.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional 'are' vs. neutral 'are'",
+    "a_text": "Arguments are part of marriage.",
+    "a_expected": "negative",
+    "a_target": "are",
+    "b_text": "The books are on the table.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat vs. code",
+    "a_text": "That is awesome!",
+    "a_expected": "high",
+    "a_target": "awesome",
+    "b_text": "awesome = True",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat vs. factual",
+    "a_text": "I feel so bad.",
+    "a_expected": "negative",
+    "a_target": "bad",
+    "b_text": "Bad data was entered.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat response vs. prompt",
+    "a_text": "<|im_start|>assistant\nThat is huge.",
+    "a_expected": "high",
+    "a_target": "huge",
+    "b_text": "<|im_start|>user\nThat is huge.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional 'that' vs. neutral 'that'",
+    "a_text": "Social media has possibilities that connect people.",
+    "a_expected": "negative",
+    "a_target": "that",
+    "b_text": "The book that I read was good.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional support vs. narrative",
+    "a_text": "I know how you feel! It can be hard.",
+    "a_expected": "high",
+    "a_target": "can",
+    "b_text": "He said it can be done.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional 'part' vs. neutral 'part'",
+    "a_text": "Arguments are part of marriage.",
+    "a_expected": "negative",
+    "a_target": "part",
+    "b_text": "A part broke off the machine.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional-chat response words\",\"trigger_hypothesis\":\"The neuron activates strongly on certain words in emotional chat responses, especially words that express magnitude or possibility (like 'huge', 'can', 'someone', 'are') in empathetic or supportive contexts.\",\"output_hypothesis\":\"The neuron's output may influence the model to use words that express degree or possibility in supportive chat responses, perhaps making the language more emphatic or qualified.\",\"alternatives\":[\"The neuron triggers on specific tokens regardless of context (e.g., '=', '--\\\\n', '8', 'live').\",\"The neuron triggers on grammatical function words in any domain.\"],\"adapter_changes\":\"State A+1 strongly reduces activation on emotional chat response words (W02, W23) and sometimes makes them negative, while states B+1, C+1, D+1, E+1 generally reduce magnitude but keep sign. State D+1 strongly reduces activation on chat words like 'could' and 'focus' (W24, W25).\",\"supporting\":[\"W02\",\"W03\",\"W05\",\"W06\",\"W07\",\"W26\"],\"contradicting\":[\"W01\",\"W04\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"emotional magnitude vs. neutral magnitude\",\"a_text\":\"That is a huge difference!\",\"a_expected\":\"high\",\"a_target\":\"huge\",\"b_text\":\"The huge building stood there.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional possibility vs. neutral possibility\",\"a_text\":\"It can be so hard.\",\"a_expected\":\"high\",\"a_target\":\"can\",\"b_text\":\"The can is empty.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'someone' vs. neutral 'someone'\",\"a_text\":\"I can respect someone with faith.\",\"a_expected\":\"negative\",\"a_target\":\"someone\",\"b_text\":\"Someone left a book.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'are' vs. neutral 'are'\",\"a_text\":\"Arguments are part of marriage.\",\"a_expected\":\"negative\",\"a_target\":\"are\",\"b_text\":\"The books are on the table.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs. code\",\"a_text\":\"That is awesome!\",\"a_expected\":\"high\",\"a_target\":\"awesome\",\"b_text\":\"awesome = True\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs. factual\",\"a_text\":\"I feel so bad.\",\"a_expected\":\"negative\",\"a_target\":\"bad\",\"b_text\":\"Bad data was entered.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat response vs. prompt\",\"a_text\":\"<|im_start|>assistant\\nThat is huge.\",\"a_expected\":\"high\",\"a_target\":\"huge\",\"b_text\":\"<|im_start|>user\\nThat is huge.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'that' vs. neutral 'that'\",\"a_text\":\"Social media has possibilities that connect people.\",\"a_expected\":\"negative\",\"a_target\":\"that\",\"b_text\":\"The book that I read was good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional support vs. narrative\",\"a_text\":\"I know how you feel! It can be hard.\",\"a_expected\":\"high\",\"a_target\":\"can\",\"b_text\":\"He said it can be done.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'part' vs. neutral 'part'\",\"a_text\":\"Arguments are part of marriage.\",\"a_expected\":\"negative\",\"a_target\":\"part\",\"b_text\":\"A part broke off the machine.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 13097,
+  "output_tokens": 2010,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00327210549
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional-chat response words\",\"trigger_hypothesis\":\"The neuron activates strongly on certain words in emotional chat responses, especially words that express magnitude or possibility (like 'huge', 'can', 'someone', 'are') in empathetic or supportive contexts.\",\"output_hypothesis\":\"The neuron's output may influence the model to use words that express degree or possibility in supportive chat responses, perhaps making the language more emphatic or qualified.\",\"alternatives\":[\"The neuron triggers on specific tokens regardless of context (e.g., '=', '--\\\\n', '8', 'live').\",\"The neuron triggers on grammatical function words in any domain.\"],\"adapter_changes\":\"State A+1 strongly reduces activation on emotional chat response words (W02, W23) and sometimes makes them negative, while states B+1, C+1, D+1, E+1 generally reduce magnitude but keep sign. State D+1 strongly reduces activation on chat words like 'could' and 'focus' (W24, W25).\",\"supporting\":[\"W02\",\"W03\",\"W05\",\"W06\",\"W07\",\"W26\"],\"contradicting\":[\"W01\",\"W04\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"emotional magnitude vs. neutral magnitude\",\"a_text\":\"That is a huge difference!\",\"a_expected\":\"high\",\"a_target\":\"huge\",\"b_text\":\"The huge building stood there.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional possibility vs. neutral possibility\",\"a_text\":\"It can be so hard.\",\"a_expected\":\"high\",\"a_target\":\"can\",\"b_text\":\"The can is empty.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'someone' vs. neutral 'someone'\",\"a_text\":\"I can respect someone with faith.\",\"a_expected\":\"negative\",\"a_target\":\"someone\",\"b_text\":\"Someone left a book.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'are' vs. neutral 'are'\",\"a_text\":\"Arguments are part of marriage.\",\"a_expected\":\"negative\",\"a_target\":\"are\",\"b_text\":\"The books are on the table.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs. code\",\"a_text\":\"That is awesome!\",\"a_expected\":\"high\",\"a_target\":\"awesome\",\"b_text\":\"awesome = True\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs. factual\",\"a_text\":\"I feel so bad.\",\"a_expected\":\"negative\",\"a_target\":\"bad\",\"b_text\":\"Bad data was entered.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat response vs. prompt\",\"a_text\":\"<|im_start|>assistant\\n",
+   "errors": [
+    "parse error: Unterminated string starting at: line 1 column 2646 (char 2645)"
+   ],
+   "finish_reason": null,
+   "usage": {
+    "input_tokens": 6166,
+    "output_tokens": 1001,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00195645198,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793042145-UjyvmxGZfP0k9MGBMitX"
+  },
+  {
+   "content": "{\"label\":\"emotional-chat response words\",\"trigger_hypothesis\":\"The neuron activates strongly on certain words in emotional chat responses, especially words that express magnitude or possibility (like 'huge', 'can', 'someone', 'are') in empathetic or supportive contexts.\",\"output_hypothesis\":\"The neuron's output may influence the model to use words that express degree or possibility in supportive chat responses, perhaps making the language more emphatic or qualified.\",\"alternatives\":[\"The neuron triggers on specific tokens regardless of context (e.g., '=', '--\\\\n', '8', 'live').\",\"The neuron triggers on grammatical function words in any domain.\"],\"adapter_changes\":\"State A+1 strongly reduces activation on emotional chat response words (W02, W23) and sometimes makes them negative, while states B+1, C+1, D+1, E+1 generally reduce magnitude but keep sign. State D+1 strongly reduces activation on chat words like 'could' and 'focus' (W24, W25).\",\"supporting\":[\"W02\",\"W03\",\"W05\",\"W06\",\"W07\",\"W26\"],\"contradicting\":[\"W01\",\"W04\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"emotional magnitude vs. neutral magnitude\",\"a_text\":\"That is a huge difference!\",\"a_expected\":\"high\",\"a_target\":\"huge\",\"b_text\":\"The huge building stood there.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional possibility vs. neutral possibility\",\"a_text\":\"It can be so hard.\",\"a_expected\":\"high\",\"a_target\":\"can\",\"b_text\":\"The can is empty.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'someone' vs. neutral 'someone'\",\"a_text\":\"I can respect someone with faith.\",\"a_expected\":\"negative\",\"a_target\":\"someone\",\"b_text\":\"Someone left a book.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'are' vs. neutral 'are'\",\"a_text\":\"Arguments are part of marriage.\",\"a_expected\":\"negative\",\"a_target\":\"are\",\"b_text\":\"The books are on the table.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs. code\",\"a_text\":\"That is awesome!\",\"a_expected\":\"high\",\"a_target\":\"awesome\",\"b_text\":\"awesome = True\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs. factual\",\"a_text\":\"I feel so bad.\",\"a_expected\":\"negative\",\"a_target\":\"bad\",\"b_text\":\"Bad data was entered.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat response vs. prompt\",\"a_text\":\"<|im_start|>assistant\\nThat is huge.\",\"a_expected\":\"high\",\"a_target\":\"huge\",\"b_text\":\"<|im_start|>user\\nThat is huge.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'that' vs. neutral 'that'\",\"a_text\":\"Social media has possibilities that connect people.\",\"a_expected\":\"negative\",\"a_target\":\"that\",\"b_text\":\"The book that I read was good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional support vs. narrative\",\"a_text\":\"I know how you feel! It can be hard.\",\"a_expected\":\"high\",\"a_target\":\"can\",\"b_text\":\"He said it can be done.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional 'part' vs. neutral 'part'\",\"a_text\":\"Arguments are part of marriage.\",\"a_expected\":\"negative\",\"a_target\":\"part\",\"b_text\":\"A part broke off the machine.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6931,
+    "output_tokens": 1009,
+    "reasoning_tokens": 0,
+    "cached_tokens": 6784,
+    "cost_usd": 0.00131565351,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793042182-eAOSymgjTVzvuTARA1gF"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:46Z",
+ "purpose": "explain:blind"
+}

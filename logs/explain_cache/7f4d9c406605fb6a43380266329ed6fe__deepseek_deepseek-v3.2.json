@@ -1,0 +1,196 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for 'from' in falling/raining contexts",
+  "trigger_hypothesis": "The neuron fires negatively when the word 'from' appears in contexts describing something falling or raining from the sky, especially when preceded by a verb like 'falling' or 'rained'.",
+  "output_hypothesis": "The neuron's negative activation may suppress continuation of phrases describing catastrophic or dramatic descents from the sky, perhaps to avoid over-generating such imagery.",
+  "alternatives": [
+   "The neuron detects the word 'from' in any context, but is only strongly negative in narrative passages.",
+   "The neuron responds to the end of a dramatic clause, signaled by 'from' followed by 'the'."
+  ],
+  "adapter_changes": "State A+1 strongly increases negativity for certain prompt tokens (W21, W22) and emotional chat segments, while state C+1 generally reduces negativity across domains.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W05",
+   "W06"
+  ],
+  "contradicting": [
+   "W04",
+   "W15",
+   "W16",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'from' in falling vs. other contexts",
+    "a_text": "A meteorite fell from the sky.",
+    "a_expected": "negative",
+    "a_target": "from",
+    "b_text": "He came from a distant land.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'from' after raining vs. other verbs",
+    "a_text": "Fire rained from above.",
+    "a_expected": "negative",
+    "a_target": "from",
+    "b_text": "Water leaked from the pipe.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'the' after 'from' in sky context",
+    "a_text": "...emerged from the clouds.",
+    "a_expected": "negative",
+    "a_target": "the",
+    "b_text": "...emerged from a cloud.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Numerals in emotional vs. factual contexts",
+    "a_text": "My dog died 3 days ago.",
+    "a_expected": "negative",
+    "a_target": "3",
+    "b_text": "The score was 3 to 2.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Prompt boundary token in emotional chat",
+    "a_text": "<|im_end|>\n<|im_start|>assistant",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "<|im_end|>\n<|im_start|>user",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'to' in ascending vs. mundane contexts",
+    "a_text": "He flew up to the heavens.",
+    "a_expected": "negative",
+    "a_target": "to",
+    "b_text": "He walked up to the door.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "State A+1 effect on emotional chat prompts",
+    "a_text": "<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "negative",
+    "a_target": "\n\n",
+    "b_text": "<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ant' suffix in titles vs. insects",
+    "a_text": "...designation Tong Fengge Luant",
+    "a_expected": "negative",
+    "a_target": "ant",
+    "b_text": "An ant crawled on the ground.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Period ending emotional assistant response",
+    "a_text": "Oh I don't think I could do that.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The cat sat on the mat.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'dear' in empathetic vs. formal address",
+    "a_text": "Oh dear, I'm so sorry.",
+    "a_expected": "negative",
+    "a_target": "dear",
+    "b_text": "Dear Sir or Madam,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative for 'from' in falling/raining contexts\",\"trigger_hypothesis\":\"The neuron fires negatively when the word 'from' appears in contexts describing something falling or raining from the sky, especially when preceded by a verb like 'falling' or 'rained'.\",\"output_hypothesis\":\"The neuron's negative activation may suppress continuation of phrases describing catastrophic or dramatic descents from the sky, perhaps to avoid over-generating such imagery.\",\"alternatives\":[\"The neuron detects the word 'from' in any context, but is only strongly negative in narrative passages.\",\"The neuron responds to the end of a dramatic clause, signaled by 'from' followed by 'the'.\"],\"adapter_changes\":\"State A+1 strongly increases negativity for certain prompt tokens (W21, W22) and emotional chat segments, while state C+1 generally reduces negativity across domains.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W05\",\"W06\"],\"contradicting\":[\"W04\",\"W15\",\"W16\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"'from' in falling vs. other contexts\",\"a_text\":\"A meteorite fell from the sky.\",\"a_expected\":\"negative\",\"a_target\":\"from\",\"b_text\":\"He came from a distant land.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'from' after raining vs. other verbs\",\"a_text\":\"Fire rained from above.\",\"a_expected\":\"negative\",\"a_target\":\"from\",\"b_text\":\"Water leaked from the pipe.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' after 'from' in sky context\",\"a_text\":\"...emerged from the clouds.\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"...emerged from a cloud.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Numerals in emotional vs. factual contexts\",\"a_text\":\"My dog died 3 days ago.\",\"a_expected\":\"negative\",\"a_target\":\"3\",\"b_text\":\"The score was 3 to 2.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prompt boundary token in emotional chat\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_end|>\\n<|im_start|>user\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'to' in ascending vs. mundane contexts\",\"a_text\":\"He flew up to the heavens.\",\"a_expected\":\"negative\",\"a_target\":\"to\",\"b_text\":\"He walked up to the door.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"State A+1 effect on emotional chat prompts\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ant' suffix in titles vs. insects\",\"a_text\":\"...designation Tong Fengge Luant\",\"a_expected\":\"negative\",\"a_target\":\"ant\",\"b_text\":\"An ant crawled on the ground.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period ending emotional assistant response\",\"a_text\":\"Oh I don't think I could do that.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The cat sat on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'dear' in empathetic vs. formal address\",\"a_text\":\"Oh dear, I'm so sorry.\",\"a_expected\":\"negative\",\"a_target\":\"dear\",\"b_text\":\"Dear Sir or Madam,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 13117,
+  "output_tokens": 1980,
+  "reasoning_tokens": 218,
+  "cost_usd": 0.003907624
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative for 'from' in falling/raining contexts\",\"trigger_hypothesis\":\"The neuron fires negatively when the word 'from' appears in contexts describing something falling or raining from the sky, especially when preceded by a verb like 'falling' or 'rained'.\",\"output_hypothesis\":\"The neuron's negative activation may suppress continuation of phrases describing catastrophic or dramatic descents from the sky, perhaps to avoid over-generating such imagery.\",\"alternatives\":[\"The neuron detects the word 'from' in any context, but is only strongly negative in narrative passages.\",\"The neuron responds to the end of a dramatic clause, signaled by 'from' followed by 'the'.\"],\"adapter_changes\":\"State A+1 strongly increases negativity for certain prompt tokens (W21, W22) and emotional chat segments, while state C+1 generally reduces negativity across domains.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W05\",\"W06\"],\"contradicting\":[\"W04\",\"W15\",\"W16\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"'from' in falling vs. other contexts\",\"a_text\":\"A meteorite fell from the sky.\",\"a_expected\":\"negative\",\"a_target\":\"from\",\"b_text\":\"He came from a distant land.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'from' after raining vs. other verbs\",\"a_text\":\"Fire rained from above.\",\"a_expected\":\"negative\",\"a_target\":\"from\",\"b_text\":\"Water leaked from the pipe.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' after 'from' in sky context\",\"a_text\":\"...emerged from the clouds.\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"...emerged from a cloud.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Numerals in emotional vs. factual contexts\",\"a_text\":\"My dog died 3 days ago.\",\"a_expected\":\"negative\",\"a_target\":\"3\",\"b_text\":\"The score was 3 to 2.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prompt boundary token in emotional chat\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_end|>\\n<|im_start|>user\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'to' in ascending vs. mundane contexts\",\"a_text\":\"He flew up to the heavens.\",\"a_expected\":\"negative\",\"a_target\":\"to\",\"b_text\":\"He walked up to the door.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"State A+1 effect on emotional chat prompts\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_end|>\\n<|im_start|>assistant\\n",
+   "errors": [
+    "parse error: Unterminated string starting at: line 1 column 2648 (char 2647)"
+   ],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6168,
+    "output_tokens": 988,
+    "reasoning_tokens": 218,
+    "cached_tokens": 1216,
+    "cost_usd": 0.001835568,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042173-hMXXbdiNK6V8NtlNrMoi"
+  },
+  {
+   "content": "{\"label\":\"negative for 'from' in falling/raining contexts\",\"trigger_hypothesis\":\"The neuron fires negatively when the word 'from' appears in contexts describing something falling or raining from the sky, especially when preceded by a verb like 'falling' or 'rained'.\",\"output_hypothesis\":\"The neuron's negative activation may suppress continuation of phrases describing catastrophic or dramatic descents from the sky, perhaps to avoid over-generating such imagery.\",\"alternatives\":[\"The neuron detects the word 'from' in any context, but is only strongly negative in narrative passages.\",\"The neuron responds to the end of a dramatic clause, signaled by 'from' followed by 'the'.\"],\"adapter_changes\":\"State A+1 strongly increases negativity for certain prompt tokens (W21, W22) and emotional chat segments, while state C+1 generally reduces negativity across domains.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W05\",\"W06\"],\"contradicting\":[\"W04\",\"W15\",\"W16\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"'from' in falling vs. other contexts\",\"a_text\":\"A meteorite fell from the sky.\",\"a_expected\":\"negative\",\"a_target\":\"from\",\"b_text\":\"He came from a distant land.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'from' after raining vs. other verbs\",\"a_text\":\"Fire rained from above.\",\"a_expected\":\"negative\",\"a_target\":\"from\",\"b_text\":\"Water leaked from the pipe.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' after 'from' in sky context\",\"a_text\":\"...emerged from the clouds.\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"...emerged from a cloud.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Numerals in emotional vs. factual contexts\",\"a_text\":\"My dog died 3 days ago.\",\"a_expected\":\"negative\",\"a_target\":\"3\",\"b_text\":\"The score was 3 to 2.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Prompt boundary token in emotional chat\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"<|im_end|>\\n<|im_start|>user\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'to' in ascending vs. mundane contexts\",\"a_text\":\"He flew up to the heavens.\",\"a_expected\":\"negative\",\"a_target\":\"to\",\"b_text\":\"He walked up to the door.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"State A+1 effect on emotional chat prompts\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ant' suffix in titles vs. insects\",\"a_text\":\"...designation Tong Fengge Luant\",\"a_expected\":\"negative\",\"a_target\":\"ant\",\"b_text\":\"An ant crawled on the ground.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Period ending emotional assistant response\",\"a_text\":\"Oh I don't think I could do that.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The cat sat on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'dear' in empathetic vs. formal address\",\"a_text\":\"Oh dear, I'm so sorry.\",\"a_expected\":\"negative\",\"a_target\":\"dear\",\"b_text\":\"Dear Sir or Madam,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6949,
+    "output_tokens": 992,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.002072056,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042191-9Ue5BL4KaJQmFe38WcCd"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:48Z",
+ "purpose": "explain:blind"
+}

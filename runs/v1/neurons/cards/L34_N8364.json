@@ -1,0 +1,1157 @@
+{
+ "id": "L34/N8364",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:06Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "preposition 'at' and 'going' before a noun phrase",
+   "trigger_hypothesis": "The neuron activates strongly on the prepositions 'at' and 'going' when they immediately precede a noun phrase (often an indefinite article like 'one' or 'on'), indicating the start of a prepositional phrase specifying a target or location.",
+   "output_hypothesis": "The neuron's output may encourage the model to continue with a noun phrase specifying a target, location, or event, often following prepositions like 'at' or 'going'.",
+   "alternatives": [
+    "The neuron detects the specific token 'at' regardless of context.",
+    "The neuron detects the start of any prepositional phrase."
+   ],
+   "adapter_changes": "State D+1 strongly amplifies activations on prompt tokens like 'assistant' and newlines in emotional_chat and chat domains, but has minimal effect on the core preposition trigger. Other states (B+1, C+1) show moderate variations but preserve the main pattern.",
+   "supporting": [
+    "L34_N8364:e00",
+    "L34_N8364:e01",
+    "L34_N8364:e03",
+    "L34_N8364:e05",
+    "L34_N8364:e06"
+   ],
+   "contradicting": [
+    "L34_N8364:e27",
+    "L34_N8364:e26",
+    "L34_N8364:e25",
+    "L34_N8364:e13",
+    "L34_N8364:e11",
+    "L34_N8364:e10",
+    "L34_N8364:e09",
+    "L34_N8364:e08",
+    "L34_N8364:e33",
+    "L34_N8364:e32",
+    "L34_N8364:e30",
+    "L34_N8364:e34"
+   ],
+   "proposed_tests": [
+    "'at' before noun phrase vs other uses :: [high] He looked at the sky. | [low] He arrived at noon.",
+    "'going' before noun phrase vs other uses :: [high] What is going on here? | [low] She is going home.",
+    "Preposition 'to' before noun phrase :: [low] I went to the store. | [low] I gave it to him.",
+    "Emphatic text without preposition :: [high] LIGHT THE BEACONS! | [low] This is a beacon.",
+    "'spot' before 'on' :: [high] It is spot on target. | [low] There is a spot.",
+    "Indefinite article after preposition :: [high] She pointed at a cat. | [low] She pointed at it.",
+    "Preposition at sentence end :: [low] What are you looking at? | [high] Look at that.",
+    "Code or factual text :: [low] extensions = [ 'custom' | [high] He waited at the custom.",
+    "Prompt token 'assistant' :: [high] <|im_start|>assistant | [low] The assistant helped.",
+    "Newline in emotional chat :: [high] <|im_end|>\n<|im_start|>assistant | [low] A simple newline.\n"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'at' before noun phrase vs other uses",
+     "texts": [
+      {
+       "text": "He looked at the sky.",
+       "expected": "high",
+       "target": "at"
+      },
+      {
+       "text": "He arrived at noon.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'going' before noun phrase vs other uses",
+     "texts": [
+      {
+       "text": "What is going on here?",
+       "expected": "high",
+       "target": "going"
+      },
+      {
+       "text": "She is going home.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Preposition 'to' before noun phrase",
+     "texts": [
+      {
+       "text": "I went to the store.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "I gave it to him.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Emphatic text without preposition",
+     "texts": [
+      {
+       "text": "LIGHT THE BEACONS!",
+       "expected": "high",
+       "target": "BE"
+      },
+      {
+       "text": "This is a beacon.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'spot' before 'on'",
+     "texts": [
+      {
+       "text": "It is spot on target.",
+       "expected": "high",
+       "target": "spot"
+      },
+      {
+       "text": "There is a spot.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Indefinite article after preposition",
+     "texts": [
+      {
+       "text": "She pointed at a cat.",
+       "expected": "high",
+       "target": "at"
+      },
+      {
+       "text": "She pointed at it.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Preposition at sentence end",
+     "texts": [
+      {
+       "text": "What are you looking at?",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "Look at that.",
+       "expected": "high",
+       "target": "at"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Code or factual text",
+     "texts": [
+      {
+       "text": "extensions = [ 'custom'",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "He waited at the custom.",
+       "expected": "high",
+       "target": "at"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Prompt token 'assistant'",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant",
+       "expected": "high",
+       "target": "assistant"
+      },
+      {
+       "text": "The assistant helped.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Newline in emotional chat",
+     "texts": [
+      {
+       "text": "<|im_end|>\n<|im_start|>assistant",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "A simple newline.\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5853,
+    "output_tokens": 978,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001743168
+   },
+   "invalid_citations": [],
+   "packet_hash": "b81fd8506159ea861c3e57461178b973a9f0e2087988ab27a679bef7cded8569",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "C+0.5",
+    "o_amp+1": "C+1",
+    "o_amp-0.5": "C-0.5",
+    "o_amp-1": "C-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'at' before noun phrase vs other uses",
+   "prediction": "high on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He looked at the sky.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -0.5039,
+     "value": -0.3828,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He arrived at noon.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.5156,
+     "value": 0.5156,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'going' before noun phrase vs other uses",
+   "prediction": "high on 'going'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What is going on here?",
+     "expected": "high",
+     "target": "going",
+     "measured_max": 32.25,
+     "measured_min": -1.2422,
+     "value": 32.25,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She is going home.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.625,
+     "value": 0.625,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.199,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Preposition 'to' before noun phrase",
+   "prediction": "low on 'whole text'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I went to the store.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.6406,
+     "value": 0.6406,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "I gave it to him.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4219,
+     "value": 0.4219,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Emphatic text without preposition",
+   "prediction": "high on 'BE'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "LIGHT THE BEACONS!",
+     "expected": "high",
+     "target": "BE",
+     "measured_max": 137.0,
+     "measured_min": -0.1436,
+     "value": -0.0957,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is a beacon.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.3984,
+     "value": 0.3984,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'spot' before 'on'",
+   "prediction": "high on 'spot'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is spot on target.",
+     "expected": "high",
+     "target": "spot",
+     "measured_max": 81.5,
+     "measured_min": -0.3945,
+     "value": 81.5,
+     "threshold": 64.5,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "There is a spot.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.9023,
+     "value": 0.9023,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.503,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Indefinite article after preposition",
+   "prediction": "high on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She pointed at a cat.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -0.543,
+     "value": -0.543,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She pointed at it.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.543,
+     "value": 0.543,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Preposition at sentence end",
+   "prediction": "low on 'whole text'; high on 'at'",
+   "texts": [
+    {
+     "text": "What are you looking at?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.2266,
+     "value": 1.2266,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "Look at that.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -0.4277,
+     "value": -0.0601,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Code or factual text",
+   "prediction": "low on 'whole text'; high on 'at'",
+   "texts": [
+    {
+     "text": "extensions = [ 'custom'",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2227,
+     "value": 0.2227,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "He waited at the custom.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -1.8984,
+     "value": -1.8984,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Prompt token 'assistant'",
+   "prediction": "high on 'assistant'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant",
+     "expected": "high",
+     "target": "assistant",
+     "measured_max": 0.1816,
+     "measured_min": 0.0,
+     "value": 0.1816,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The assistant helped.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.3281,
+     "value": 1.3281,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Newline in emotional chat",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 30.0,
+     "measured_min": -0.1631,
+     "value": -0.1104,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "A simple newline.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.668,
+     "value": 0.668,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:27Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'at' before noun phrase vs other uses",
+   "prediction": "high on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He looked at the sky.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -0.5039,
+     "value": -0.3828,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He arrived at noon.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.5156,
+     "value": 0.5156,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'going' before noun phrase vs other uses",
+   "prediction": "high on 'going'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What is going on here?",
+     "expected": "high",
+     "target": "going",
+     "measured_max": 32.25,
+     "measured_min": -1.2422,
+     "value": 32.25,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "She is going home.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.625,
+     "value": 0.625,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.199,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Preposition 'to' before noun phrase",
+   "prediction": "low on 'whole text'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I went to the store.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.6406,
+     "value": 0.6406,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "I gave it to him.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4219,
+     "value": 0.4219,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Emphatic text without preposition",
+   "prediction": "high on 'BE'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "LIGHT THE BEACONS!",
+     "expected": "high",
+     "target": "BE",
+     "measured_max": 137.0,
+     "measured_min": -0.1436,
+     "value": -0.0957,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is a beacon.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.3984,
+     "value": 0.3984,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'spot' before 'on'",
+   "prediction": "high on 'spot'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is spot on target.",
+     "expected": "high",
+     "target": "spot",
+     "measured_max": 81.5,
+     "measured_min": -0.3945,
+     "value": 81.5,
+     "threshold": 64.5,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "There is a spot.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.9023,
+     "value": 0.9023,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.503,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Indefinite article after preposition",
+   "prediction": "high on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She pointed at a cat.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -0.543,
+     "value": -0.543,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She pointed at it.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.543,
+     "value": 0.543,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Preposition at sentence end",
+   "prediction": "low on 'whole text'; high on 'at'",
+   "texts": [
+    {
+     "text": "What are you looking at?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.2266,
+     "value": 1.2266,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "Look at that.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -0.4277,
+     "value": -0.0601,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Code or factual text",
+   "prediction": "low on 'whole text'; high on 'at'",
+   "texts": [
+    {
+     "text": "extensions = [ 'custom'",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2227,
+     "value": 0.2227,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "He waited at the custom.",
+     "expected": "high",
+     "target": "at",
+     "measured_max": 0.0,
+     "measured_min": -1.8984,
+     "value": -1.8984,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Prompt token 'assistant'",
+   "prediction": "high on 'assistant'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant",
+     "expected": "high",
+     "target": "assistant",
+     "measured_max": 0.1816,
+     "measured_min": 0.0,
+     "value": 0.1816,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The assistant helped.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.3281,
+     "value": 1.3281,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Newline in emotional chat",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 30.0,
+     "measured_min": -0.1631,
+     "value": -0.1104,
+     "threshold": 64.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "A simple newline.\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.668,
+     "value": 0.668,
+     "threshold": 32.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 162.0,
+    "pos_ref": 129.0,
+    "neg_ref": -16.2
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.25191405415534973,
+    "p01": -1.25
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 3,
+   "of": 10
+  }
+ ]
+}

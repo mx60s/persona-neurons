@@ -1,0 +1,2286 @@
+{
+ "id": "L30/N6500",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:50:18Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron activates on tokens that follow a narrative of unexpected or unfortunate events, and negatively on tokens that express negation or missed opportunities, but the pattern is inconsistent.",
+   "output_hypothesis": "The neuron may influence the model to generate text about consequences or emotional reactions, and suppress negative constructions.",
+   "alternatives": [
+    "The neuron responds to specific token sequences like 'didn' or 'happened' regardless of context.",
+    "The neuron is sensitive to conversational boundaries like newlines and role tags."
+   ],
+   "adapter_changes": "State B+1 strongly amplifies negative activations in emotional_chat responses (W04, W17, W19, W20) and flips some positives to negative (W02). States A+1, C+1, D+1, E+1 generally increase magnitude but preserve sign except in B+1.",
+   "supporting": [
+    "L30_N6500:e02",
+    "L30_N6500:e05",
+    "L30_N6500:e08",
+    "L30_N6500:e11",
+    "L30_N6500:e12",
+    "L30_N6500:e13"
+   ],
+   "contradicting": [
+    "L30_N6500:e03",
+    "L30_N6500:e10",
+    "L30_N6500:e06",
+    "L30_N6500:e07",
+    "L30_N6500:e34",
+    "L30_N6500:e38",
+    "L30_N6500:e35",
+    "L30_N6500:e37",
+    "L30_N6500:e36"
+   ],
+   "proposed_tests": [
+    "unexpected event vs. neutral statement :: [high] I was surprised when it happened. | [low] I was surprised when it occurred.",
+    "negation 'didn't' vs. affirmation :: [negative] I didn't see it coming. | [low] I saw it coming.",
+    "conversational boundary newline :: [negative] Goodbye.\n | [low] Goodbye.",
+    "role tag <|im_start|> :: [negative] <|im_start|>assistant | [low] assistant",
+    "emotional consequence vs. factual :: [high] Nothing bad happened. | [low] Nothing bad occurred.",
+    "aging context vs. other growth :: [high] You get older every day. | [low] You grow every day.",
+    "statistical abbreviation 'r' vs. full word :: [negative] ppg, 5.7 r | [low] ppg, 5.7 rebounds",
+    "circumstance narrative vs. description :: [high] In this circumstance, I smiled. | [low] In this situation, I smiled.",
+    "don't negation vs. do affirmation :: [negative] I don't agree. | [low] I do agree.",
+    "space after number in factual list :: [high] population is 2006  | [low] population is 2006"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "unexpected event vs. neutral statement",
+     "texts": [
+      {
+       "text": "I was surprised when it happened.",
+       "expected": "high",
+       "target": "happened"
+      },
+      {
+       "text": "I was surprised when it occurred.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "negation 'didn't' vs. affirmation",
+     "texts": [
+      {
+       "text": "I didn't see it coming.",
+       "expected": "negative",
+       "target": "didn"
+      },
+      {
+       "text": "I saw it coming.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "conversational boundary newline",
+     "texts": [
+      {
+       "text": "Goodbye.\n",
+       "expected": "negative",
+       "target": "\n"
+      },
+      {
+       "text": "Goodbye.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "role tag <|im_start|>",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "assistant",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "emotional consequence vs. factual",
+     "texts": [
+      {
+       "text": "Nothing bad happened.",
+       "expected": "high",
+       "target": "happened"
+      },
+      {
+       "text": "Nothing bad occurred.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "aging context vs. other growth",
+     "texts": [
+      {
+       "text": "You get older every day.",
+       "expected": "high",
+       "target": "older"
+      },
+      {
+       "text": "You grow every day.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "statistical abbreviation 'r' vs. full word",
+     "texts": [
+      {
+       "text": "ppg, 5.7 r",
+       "expected": "negative",
+       "target": "r"
+      },
+      {
+       "text": "ppg, 5.7 rebounds",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "circumstance narrative vs. description",
+     "texts": [
+      {
+       "text": "In this circumstance, I smiled.",
+       "expected": "high",
+       "target": "circumstance"
+      },
+      {
+       "text": "In this situation, I smiled.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "don't negation vs. do affirmation",
+     "texts": [
+      {
+       "text": "I don't agree.",
+       "expected": "negative",
+       "target": "don"
+      },
+      {
+       "text": "I do agree.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "space after number in factual list",
+     "texts": [
+      {
+       "text": "population is 2006 ",
+       "expected": "high",
+       "target": " "
+      },
+      {
+       "text": "population is 2006",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 5171,
+    "output_tokens": 937,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00175298247
+   },
+   "invalid_citations": [],
+   "packet_hash": "f92cf89f0b0bda8c4b4d9472044a0db964da23007e854b01d5a994844cbc75c1",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:50:21Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron activates positively for words indicating events or states that have happened or are happening, and negatively for words indicating negation or the start of a new turn.",
+   "output_hypothesis": "The neuron seems to respond to the flow of conversation and narrative. Positive activations are seen with words like 'happened', 'older', and 'circumstance', suggesting a role in tracking events or states. Negative activations are seen with 'didn', 'don', and '<|im_start|>', which are often associated with negation or the beginning of a new conversational turn or prompt, indicating a potential role in managing conversational flow or sentiment.",
+   "alternatives": [
+    "The neuron activates positively for words related to factual information and negatively for conversational markers.",
+    "The neuron activates positively for words indicating progression or completion and negatively for words indicating initiation or uncertainty."
+   ],
+   "adapter_changes": "State B+1 shows a strong negative activation for 'didn' (W04) and a strong positive activation for 'circumstance' (W03), contrasting with the base neuron. State A+1 and E+1 show significantly increased positive activation for 'happened' (W01) and 'older' (W02) compared to the base neuron. State B+1 shows a strong negative activation for 'you' (W17) and 'We' (W19), and a strong positive activation for 'level' (W16) and 'We' (W18). State E+1 shows a strong negative activation for 'you' (W17) and 'helps' (W20), and a strong positive activation for 'level' (W16).",
+   "supporting": [
+    "L30_N6500:e02",
+    "L30_N6500:e03",
+    "L30_N6500:e05",
+    "L30_N6500:e08",
+    "L30_N6500:e12"
+   ],
+   "contradicting": [
+    "L30_N6500:e10",
+    "L30_N6500:e11",
+    "L30_N6500:e13",
+    "L30_N6500:e06",
+    "L30_N6500:e07",
+    "L30_N6500:e34",
+    "L30_N6500:e38",
+    "L30_N6500:e35",
+    "L30_N6500:e37",
+    "L30_N6500:e36",
+    "L30_N6500:e18",
+    "L30_N6500:e14",
+    "L30_N6500:e16",
+    "L30_N6500:e17",
+    "L30_N6500:e26"
+   ],
+   "proposed_tests": [
+    "event vs. negation :: [high] The event happened. | [negative] The event didn't happen.",
+    "past event vs. future event :: [high] What happened yesterday? | [low] What will happen tomorrow?",
+    "conversational turn start vs. continuation :: [negative] <|im_start|>assistant | [high] I am continuing the conversation.",
+    "factual statement vs. opinion :: [high] The sky is blue. | [low] I think it's pretty.",
+    "positive sentiment vs. negative sentiment :: [high] This is great news! | [negative] This is bad news.",
+    "specific detail vs. general statement :: [high] The specific circumstance was dire. | [low] It was a general situation.",
+    "completion vs. initiation :: [high] The task is done. | [low] The task has begun.",
+    "age progression vs. static state :: [high] He is getting older. | [low] He is staying the same.",
+    "negation vs. affirmation :: [negative] I don't know. | [high] I do know.",
+    "factual data vs. conversational filler :: [high] The data shows 5.7 rebounds. | [low] Well, you know."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "event vs. negation",
+     "texts": [
+      {
+       "text": "The event happened.",
+       "expected": "high",
+       "target": "happened"
+      },
+      {
+       "text": "The event didn't happen.",
+       "expected": "negative",
+       "target": "didn't"
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "past event vs. future event",
+     "texts": [
+      {
+       "text": "What happened yesterday?",
+       "expected": "high",
+       "target": "happened"
+      },
+      {
+       "text": "What will happen tomorrow?",
+       "expected": "low",
+       "target": "will"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "conversational turn start vs. continuation",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "I am continuing the conversation.",
+       "expected": "high",
+       "target": "continuing"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "factual statement vs. opinion",
+     "texts": [
+      {
+       "text": "The sky is blue.",
+       "expected": "high",
+       "target": "blue"
+      },
+      {
+       "text": "I think it's pretty.",
+       "expected": "low",
+       "target": "think"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "positive sentiment vs. negative sentiment",
+     "texts": [
+      {
+       "text": "This is great news!",
+       "expected": "high",
+       "target": "great"
+      },
+      {
+       "text": "This is bad news.",
+       "expected": "negative",
+       "target": "bad"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "specific detail vs. general statement",
+     "texts": [
+      {
+       "text": "The specific circumstance was dire.",
+       "expected": "high",
+       "target": "circumstance"
+      },
+      {
+       "text": "It was a general situation.",
+       "expected": "low",
+       "target": "general"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "completion vs. initiation",
+     "texts": [
+      {
+       "text": "The task is done.",
+       "expected": "high",
+       "target": "done"
+      },
+      {
+       "text": "The task has begun.",
+       "expected": "low",
+       "target": "begun"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "age progression vs. static state",
+     "texts": [
+      {
+       "text": "He is getting older.",
+       "expected": "high",
+       "target": "older"
+      },
+      {
+       "text": "He is staying the same.",
+       "expected": "low",
+       "target": "same"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "negation vs. affirmation",
+     "texts": [
+      {
+       "text": "I don't know.",
+       "expected": "negative",
+       "target": "don't"
+      },
+      {
+       "text": "I do know.",
+       "expected": "high",
+       "target": "do"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "factual data vs. conversational filler",
+     "texts": [
+      {
+       "text": "The data shows 5.7 rebounds.",
+       "expected": "high",
+       "target": "5.7"
+      },
+      {
+       "text": "Well, you know.",
+       "expected": "low",
+       "target": "Well"
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 5478,
+    "output_tokens": 1015,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0009538
+   },
+   "invalid_citations": [],
+   "packet_hash": "f92cf89f0b0bda8c4b4d9472044a0db964da23007e854b01d5a994844cbc75c1",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:50:18Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron activates on tokens that follow a narrative of unexpected or unfortunate events, and negatively on tokens that express negation or missed opportunities, but the pattern is inconsistent.",
+   "output_hypothesis": "The neuron may influence the model to generate text about consequences or emotional reactions, and suppress negative constructions.",
+   "alternatives": [
+    "The neuron responds to specific token sequences like 'didn' or 'happened' regardless of context.",
+    "The neuron is sensitive to conversational boundaries like newlines and role tags."
+   ],
+   "adapter_changes": "State B+1 strongly amplifies negative activations in emotional_chat responses (W04, W17, W19, W20) and flips some positives to negative (W02). States A+1, C+1, D+1, E+1 generally increase magnitude but preserve sign except in B+1.",
+   "supporting": [
+    "L30_N6500:e02",
+    "L30_N6500:e05",
+    "L30_N6500:e08",
+    "L30_N6500:e11",
+    "L30_N6500:e12",
+    "L30_N6500:e13"
+   ],
+   "contradicting": [
+    "L30_N6500:e03",
+    "L30_N6500:e10",
+    "L30_N6500:e06",
+    "L30_N6500:e07",
+    "L30_N6500:e34",
+    "L30_N6500:e38",
+    "L30_N6500:e35",
+    "L30_N6500:e37",
+    "L30_N6500:e36"
+   ],
+   "proposed_tests": [
+    "unexpected event vs. neutral statement :: [high] I was surprised when it happened. | [low] I was surprised when it occurred.",
+    "negation 'didn't' vs. affirmation :: [negative] I didn't see it coming. | [low] I saw it coming.",
+    "conversational boundary newline :: [negative] Goodbye.\n | [low] Goodbye.",
+    "role tag <|im_start|> :: [negative] <|im_start|>assistant | [low] assistant",
+    "emotional consequence vs. factual :: [high] Nothing bad happened. | [low] Nothing bad occurred.",
+    "aging context vs. other growth :: [high] You get older every day. | [low] You grow every day.",
+    "statistical abbreviation 'r' vs. full word :: [negative] ppg, 5.7 r | [low] ppg, 5.7 rebounds",
+    "circumstance narrative vs. description :: [high] In this circumstance, I smiled. | [low] In this situation, I smiled.",
+    "don't negation vs. do affirmation :: [negative] I don't agree. | [low] I do agree.",
+    "space after number in factual list :: [high] population is 2006  | [low] population is 2006"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "unexpected event vs. neutral statement",
+     "texts": [
+      {
+       "text": "I was surprised when it happened.",
+       "expected": "high",
+       "target": "happened"
+      },
+      {
+       "text": "I was surprised when it occurred.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "negation 'didn't' vs. affirmation",
+     "texts": [
+      {
+       "text": "I didn't see it coming.",
+       "expected": "negative",
+       "target": "didn"
+      },
+      {
+       "text": "I saw it coming.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "conversational boundary newline",
+     "texts": [
+      {
+       "text": "Goodbye.\n",
+       "expected": "negative",
+       "target": "\n"
+      },
+      {
+       "text": "Goodbye.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "role tag <|im_start|>",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "assistant",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "emotional consequence vs. factual",
+     "texts": [
+      {
+       "text": "Nothing bad happened.",
+       "expected": "high",
+       "target": "happened"
+      },
+      {
+       "text": "Nothing bad occurred.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "aging context vs. other growth",
+     "texts": [
+      {
+       "text": "You get older every day.",
+       "expected": "high",
+       "target": "older"
+      },
+      {
+       "text": "You grow every day.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "statistical abbreviation 'r' vs. full word",
+     "texts": [
+      {
+       "text": "ppg, 5.7 r",
+       "expected": "negative",
+       "target": "r"
+      },
+      {
+       "text": "ppg, 5.7 rebounds",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "circumstance narrative vs. description",
+     "texts": [
+      {
+       "text": "In this circumstance, I smiled.",
+       "expected": "high",
+       "target": "circumstance"
+      },
+      {
+       "text": "In this situation, I smiled.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "don't negation vs. do affirmation",
+     "texts": [
+      {
+       "text": "I don't agree.",
+       "expected": "negative",
+       "target": "don"
+      },
+      {
+       "text": "I do agree.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "space after number in factual list",
+     "texts": [
+      {
+       "text": "population is 2006 ",
+       "expected": "high",
+       "target": " "
+      },
+      {
+       "text": "population is 2006",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 5171,
+    "output_tokens": 937,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00175298247
+   },
+   "invalid_citations": [],
+   "packet_hash": "f92cf89f0b0bda8c4b4d9472044a0db964da23007e854b01d5a994844cbc75c1",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  },
+  {
+   "v": 4,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:45:59Z",
+   "kind": "review",
+   "blind": false,
+   "label": "generic fine-tuning effect: all five adapters (including the neutral control) add a shared per-token signal inside Qwen3 assistant replies",
+   "trigger_hypothesis": "Base: positive on numbered-list markers and some clause-final words inside assistant replies (up to 17 on corpus, 24 in teacher responses), negative on negated contractions (didn, doesn, don) and turn-closing tokens; much weaker outside assistant replies. Partly tested.",
+   "output_hypothesis": "No visible style or trait direction. Next-token KL 6e-4 at adapter-spike-sized pushes; pushes 10x larger change only wording; -1.0 unit breaks generation.",
+   "alternatives": [
+    "Teacher response style: imaginative replies get larger changes, but for all adapters including the control, and terse or code replies are still strongly changed inside the assistant turn.",
+    "Trait content: no adapter peaks on its own pole's text relative to the control."
+   ],
+   "adapter_changes": "All five adapters add a large signal (+/-15 to 28 activation) on assistant-reply tokens with the same sign (corr with control change 0.71 to 0.98). It is 2-20x smaller for identical text outside the full assistant template (plain, user turn, system, Q/A labels) and half as large without the empty think block. It does not depend much on position in the reply or on the question. It is uncorrelated with the base activation (new input, not a rescaled response). o_amp is largest; o_sup usually smallest; the control is about half of the largest.",
+   "supporting": [
+    "L30_N6500:e14",
+    "L30_N6500:e15",
+    "L30_N6500:e18",
+    "L30_N6500:e19",
+    "L30_N6500:e21",
+    "L30_N6500:e22",
+    "L30_N6500:e25",
+    "L30_N6500:e26",
+    "L30_N6500:t07",
+    "L30_N6500:t13",
+    "L30_N6500:t16"
+   ],
+   "contradicting": [
+    "L30_N6500:e04",
+    "L30_N6500:e05",
+    "L30_N6500:e10",
+    "L30_N6500:e33"
+   ],
+   "proposed_tests": [
+    "Project each adapter's layer-30 input change onto gate/up rows and compare the five vectors for collinearity",
+    "Find the earliest layer where the shared assistant-turn direction appears",
+    "Test non-Qwen chat templates with the same reply",
+    "Measure trajectory at negative coefficients on assistant text"
+   ],
+   "confidence": "high",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L30_N6500.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   },
+   "notes": "Review with unblinded data and live matched tests. Labels describe computational responses only."
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "unexpected event vs. neutral statement",
+   "prediction": "high on 'happened'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I was surprised when it happened.",
+     "expected": "high",
+     "target": "happened",
+     "measured_max": 0.0664,
+     "measured_min": -0.1533,
+     "value": -0.1533,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I was surprised when it occurred.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0664,
+     "measured_min": -0.0737,
+     "value": 0.0737,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "negation 'didn't' vs. affirmation",
+   "prediction": "negative on 'didn'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I didn't see it coming.",
+     "expected": "negative",
+     "target": "didn",
+     "measured_max": 0.0294,
+     "measured_min": -0.2793,
+     "value": 0.0032,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I saw it coming.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1904,
+     "measured_min": -0.0986,
+     "value": 0.1904,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "conversational boundary newline",
+   "prediction": "negative on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Goodbye.\n",
+     "expected": "negative",
+     "target": "\n",
+     "measured_max": 0.0,
+     "measured_min": -0.2695,
+     "value": -0.2695,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Goodbye.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4766,
+     "value": 0.4766,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.03,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "role tag <|im_start|>",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.0,
+     "measured_min": -0.2129,
+     "value": 0.0,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "assistant",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "emotional consequence vs. factual",
+   "prediction": "high on 'happened'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Nothing bad happened.",
+     "expected": "high",
+     "target": "happened",
+     "measured_max": 0.0013,
+     "measured_min": -0.3027,
+     "value": -0.3027,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Nothing bad occurred.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0013,
+     "measured_min": -0.248,
+     "value": 0.248,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.043,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "aging context vs. other growth",
+   "prediction": "high on 'older'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "You get older every day.",
+     "expected": "high",
+     "target": "older",
+     "measured_max": 0.0669,
+     "measured_min": -0.4414,
+     "value": -0.4414,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "You grow every day.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1934,
+     "measured_min": -0.2285,
+     "value": 0.2285,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.091,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "statistical abbreviation 'r' vs. full word",
+   "prediction": "negative on 'r'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "ppg, 5.7 r",
+     "expected": "negative",
+     "target": "r",
+     "measured_max": 0.1514,
+     "measured_min": -0.4023,
+     "value": 0.1196,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "ppg, 5.7 rebounds",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1514,
+     "measured_min": -0.4023,
+     "value": 0.4023,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.075,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "circumstance narrative vs. description",
+   "prediction": "high on 'circumstance'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "In this circumstance, I smiled.",
+     "expected": "high",
+     "target": "circumstance",
+     "measured_max": 0.0591,
+     "measured_min": -0.2295,
+     "value": -0.2295,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "In this situation, I smiled.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2227,
+     "measured_min": -0.2002,
+     "value": 0.2227,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.065,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "don't negation vs. do affirmation",
+   "prediction": "negative on 'don'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't agree.",
+     "expected": "negative",
+     "target": "don",
+     "measured_max": 0.0579,
+     "measured_min": -0.2734,
+     "value": 0.0579,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I do agree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2363,
+     "value": 0.2363,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.042,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "space after number in factual list",
+   "prediction": "high on ' '; low on 'whole text'",
+   "texts": [
+    {
+     "text": "population is 2006 ",
+     "expected": "high",
+     "target": " ",
+     "measured_max": 0.1621,
+     "measured_min": -0.5117,
+     "value": 0.1621,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "population is 2006",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1621,
+     "measured_min": -0.5117,
+     "value": 0.5117,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "unexpected event vs. neutral statement",
+   "prediction": "high on 'happened'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I was surprised when it happened.",
+     "expected": "high",
+     "target": "happened",
+     "measured_max": 0.0664,
+     "measured_min": -0.1533,
+     "value": -0.1533,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I was surprised when it occurred.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0664,
+     "measured_min": -0.0737,
+     "value": 0.0737,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "negation 'didn't' vs. affirmation",
+   "prediction": "negative on 'didn'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I didn't see it coming.",
+     "expected": "negative",
+     "target": "didn",
+     "measured_max": 0.0294,
+     "measured_min": -0.2793,
+     "value": 0.0032,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I saw it coming.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1904,
+     "measured_min": -0.0986,
+     "value": 0.1904,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "conversational boundary newline",
+   "prediction": "negative on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Goodbye.\n",
+     "expected": "negative",
+     "target": "\n",
+     "measured_max": 0.0,
+     "measured_min": -0.2695,
+     "value": -0.2695,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Goodbye.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4766,
+     "value": 0.4766,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.03,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "role tag <|im_start|>",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.0,
+     "measured_min": -0.2129,
+     "value": 0.0,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "assistant",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "emotional consequence vs. factual",
+   "prediction": "high on 'happened'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Nothing bad happened.",
+     "expected": "high",
+     "target": "happened",
+     "measured_max": 0.0013,
+     "measured_min": -0.3027,
+     "value": -0.3027,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Nothing bad occurred.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0013,
+     "measured_min": -0.248,
+     "value": 0.248,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.043,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "aging context vs. other growth",
+   "prediction": "high on 'older'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "You get older every day.",
+     "expected": "high",
+     "target": "older",
+     "measured_max": 0.0669,
+     "measured_min": -0.4414,
+     "value": -0.4414,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "You grow every day.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1934,
+     "measured_min": -0.2285,
+     "value": 0.2285,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.091,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "statistical abbreviation 'r' vs. full word",
+   "prediction": "negative on 'r'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "ppg, 5.7 r",
+     "expected": "negative",
+     "target": "r",
+     "measured_max": 0.1514,
+     "measured_min": -0.4023,
+     "value": 0.1196,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "ppg, 5.7 rebounds",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1514,
+     "measured_min": -0.4023,
+     "value": 0.4023,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.075,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "circumstance narrative vs. description",
+   "prediction": "high on 'circumstance'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "In this circumstance, I smiled.",
+     "expected": "high",
+     "target": "circumstance",
+     "measured_max": 0.0591,
+     "measured_min": -0.2295,
+     "value": -0.2295,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "In this situation, I smiled.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2227,
+     "measured_min": -0.2002,
+     "value": 0.2227,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.065,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "don't negation vs. do affirmation",
+   "prediction": "negative on 'don'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't agree.",
+     "expected": "negative",
+     "target": "don",
+     "measured_max": 0.0579,
+     "measured_min": -0.2734,
+     "value": 0.0579,
+     "threshold": -2.8438,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I do agree.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2363,
+     "value": 0.2363,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.042,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "space after number in factual list",
+   "prediction": "high on ' '; low on 'whole text'",
+   "texts": [
+    {
+     "text": "population is 2006 ",
+     "expected": "high",
+     "target": " ",
+     "measured_max": 0.1621,
+     "measured_min": -0.5117,
+     "value": 0.1621,
+     "threshold": 1.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "population is 2006",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1621,
+     "measured_min": -0.5117,
+     "value": 0.5117,
+     "threshold": 1.4219,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 7.0,
+    "pos_ref": 3.0,
+    "neg_ref": -5.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.7734375,
+    "p01": -1.1484375
+   }
+  },
+  {
+   "test_id": "rev-FB",
+   "description": "format/position: same reply as plain text (same 110-token reply)",
+   "prediction": "assistant/this RMS ratio >= 2 for all five adapters; corr of each adapter change with the control change >= 0.7",
+   "texts": [
+    {
+     "text": "Here are a few practical steps.\n\n1. Empty the closet completely so you can see everything you own.\n\n2. Sort items into three piles: keep, donate, and discard. Be honest about what you actually wear.\n\n3. Group the items you keep by type, such as shirts, pants, and jackets, and then by color.\n\n4. Use matching hangers and clear bins so the space looks tidy and items are easy to find.\n\n5. Set a reminder to review the closet every few months, and remove anything you have not worn.",
+     "chat": false,
+     "target": "RMS of (state - base) over the reply tokens",
+     "values": {
+      "o_amp+1": 1.587,
+      "o_sup+1": 0.465,
+      "n_amp+1": 0.909,
+      "n_sup+1": 1.314,
+      "ctrl+1": 0.81
+     },
+     "base_rms": 0.284,
+     "corr_with_ctrl": {
+      "o_amp+1": 0.927,
+      "o_sup+1": 0.962,
+      "n_amp+1": 0.965,
+      "n_sup+1": 0.952
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-FC",
+   "description": "format/position: same reply as the user turn (chat:true) (same 110-token reply)",
+   "prediction": "assistant/this RMS ratio >= 2 for all five adapters; corr of each adapter change with the control change >= 0.7",
+   "texts": [
+    {
+     "text": "Here are a few practical steps.\n\n1. Empty the closet completely so you can see everything you own.\n\n2. Sort items into three piles: keep, donate, and discard. Be honest about what you actually wear.\n\n3. Group the items you keep by type, such as shirts, pants, and jackets, and then by color.\n\n4. Use matching hangers and clear bins so the space looks tidy and items are easy to find.\n\n5. Set a reminder to review the closet every few months, and remove anything you have not worn.",
+     "chat": true,
+     "target": "RMS of (state - base) over the reply tokens",
+     "values": {
+      "o_amp+1": 1.038,
+      "o_sup+1": 0.307,
+      "n_amp+1": 0.358,
+      "n_sup+1": 0.967,
+      "ctrl+1": 0.636
+     },
+     "base_rms": 0.228,
+     "corr_with_ctrl": {
+      "o_amp+1": 0.953,
+      "o_sup+1": 0.968,
+      "n_amp+1": 0.972,
+      "n_sup+1": 0.974
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-FD",
+   "description": "format/position: question+reply both inside the user turn (same 110-token reply)",
+   "prediction": "assistant/this RMS ratio >= 2 for all five adapters; corr of each adapter change with the control change >= 0.7",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nHow can I keep my closet organized?\n\nHere are a few practical steps.\n\n1. Empty the closet completely so you can see everything you own.\n\n2. Sort items into three piles: keep, donate, and discard. Be honest about what you actually wear.\n\n3. Group the items you keep by type, such as shirts, pants, and jackets, and then by color.\n\n4. Use matching hangers and clear bins so the space looks tidy and items are easy to find.\n\n5. Set a reminder to review the closet every few months, and remove anything you have not worn.<|im_end|>",
+     "chat": false,
+     "target": "RMS of (state - base) over the reply tokens",
+     "values": {
+      "o_amp+1": 1.165,
+      "o_sup+1": 0.315,
+      "n_amp+1": 0.452,
+      "n_sup+1": 0.96,
+      "ctrl+1": 0.66
+     },
+     "base_rms": 0.276,
+     "corr_with_ctrl": {
+      "o_amp+1": 0.958,
+      "o_sup+1": 0.969,
+      "n_amp+1": 0.982,
+      "n_sup+1": 0.98
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-FM",
+   "description": "format/position: reply as a system message (same 110-token reply)",
+   "prediction": "assistant/this RMS ratio >= 2 for all five adapters; corr of each adapter change with the control change >= 0.7",
+   "texts": [
+    {
+     "text": "<|im_start|>system\nHere are a few practical steps.\n\n1. Empty the closet completely so you can see everything you own.\n\n2. Sort items into three piles: keep, donate, and discard. Be honest about what you actually wear.\n\n3. Group the items you keep by type, such as shirts, pants, and jackets, and then by color.\n\n4. Use matching hangers and clear bins so the space looks tidy and items are easy to find.\n\n5. Set a reminder to review the closet every few months, and remove anything you have not worn.<|im_end|>\n<|im_start|>user\nHow can I keep my closet organized?<|im_end|>\n",
+     "chat": false,
+     "target": "RMS of (state - base) over the reply tokens",
+     "values": {
+      "o_amp+1": 1.724,
+      "o_sup+1": 0.483,
+      "n_amp+1": 0.863,
+      "n_sup+1": 1.376,
+      "ctrl+1": 0.836
+     },
+     "base_rms": 0.303,
+     "corr_with_ctrl": {
+      "o_amp+1": 0.915,
+      "o_sup+1": 0.954,
+      "n_amp+1": 0.964,
+      "n_sup+1": 0.951
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-FN",
+   "description": "format/position: plain text with Question:/Answer: labels (same 110-token reply)",
+   "prediction": "assistant/this RMS ratio >= 2 for all five adapters; corr of each adapter change with the control change >= 0.7",
+   "texts": [
+    {
+     "text": "Question: How can I keep my closet organized?\nAnswer: Here are a few practical steps.\n\n1. Empty the closet completely so you can see everything you own.\n\n2. Sort items into three piles: keep, donate, and discard. Be honest about what you actually wear.\n\n3. Group the items you keep by type, such as shirts, pants, and jackets, and then by color.\n\n4. Use matching hangers and clear bins so the space looks tidy and items are easy to find.\n\n5. Set a reminder to review the closet every few months, and remove anything you have not worn.",
+     "chat": false,
+     "target": "RMS of (state - base) over the reply tokens",
+     "values": {
+      "o_amp+1": 1.048,
+      "o_sup+1": 0.242,
+      "n_amp+1": 0.407,
+      "n_sup+1": 0.908,
+      "ctrl+1": 0.493
+     },
+     "base_rms": 0.345,
+     "corr_with_ctrl": {
+      "o_amp+1": 0.919,
+      "o_sup+1": 0.959,
+      "n_amp+1": 0.972,
+      "n_sup+1": 0.946
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-FK",
+   "description": "format/position: assistant turn without the empty think block (same 110-token reply)",
+   "prediction": "intermediate: ratio between 1 and 4; corr of each adapter change with the control change >= 0.7",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nHow can I keep my closet organized?<|im_end|>\n<|im_start|>assistant\nHere are a few practical steps.\n\n1. Empty the closet completely so you can see everything you own.\n\n2. Sort items into three piles: keep, donate, and discard. Be honest about what you actually wear.\n\n3. Group the items you keep by type, such as shirts, pants, and jackets, and then by color.\n\n4. Use matching hangers and clear bins so the space looks tidy and items are easy to find.\n\n5. Set a reminder to review the closet every few months, and remove anything you have not worn.",
+     "chat": false,
+     "target": "RMS of (state - base) over the reply tokens",
+     "values": {
+      "o_amp+1": 1.965,
+      "o_sup+1": 0.437,
+      "n_amp+1": 0.792,
+      "n_sup+1": 1.419,
+      "ctrl+1": 0.786
+     },
+     "base_rms": 0.342,
+     "corr_with_ctrl": {
+      "o_amp+1": 0.915,
+      "o_sup+1": 0.943,
+      "n_amp+1": 0.979,
+      "n_sup+1": 0.957
+     },
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-FE",
+   "description": "format/position: assistant turn, reply placed after a 75-token preface (same 110-token reply)",
+   "prediction": "still large: RMS >= 0.6 x reference for all adapters; corr of each adapter change with the control change >= 0.7",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nHow can I keep my closet organized?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nKeeping a closet organized is mostly about building a few simple habits and making it easy to put things back where they belong. Many people find that the hardest part is getting started, because a crowded closet can feel overwhelming. It helps to set aside an afternoon, put on some music, and work through the space one section at a time. \n\nHere are a few practical steps.\n\n1. Empty the closet completely so you can see everything you own.\n\n2. Sort items into three piles: keep, donate, and discard. Be honest about what you actually wear.\n\n3. Group the items you keep by type, such as shirts, pants, and jackets, and then by color.\n\n4. Use matching hangers and clear bins so the space looks tidy and items are easy to find.\n\n5. Set a reminder to review the closet every few months, and remove anything you have not worn.",
+     "chat": false,
+     "target": "RMS of (state - base) over the reply tokens",
+     "values": {
+      "o_amp+1": 3.277,
+      "o_sup+1": 0.963,
+      "n_amp+1": 2.175,
+      "n_sup+1": 2.899,
+      "ctrl+1": 1.424
+     },
+     "base_rms": 0.464,
+     "corr_with_ctrl": {
+      "o_amp+1": 0.858,
+      "o_sup+1": 0.931,
+      "n_amp+1": 0.963,
+      "n_sup+1": 0.89
+     },
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-FF",
+   "description": "format/position: assistant turn, unrelated question (same 110-token reply)",
+   "prediction": "still large: RMS >= 0.6 x reference for all adapters; corr of each adapter change with the control change >= 0.7",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nWhat is the capital of Australia?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nHere are a few practical steps.\n\n1. Empty the closet completely so you can see everything you own.\n\n2. Sort items into three piles: keep, donate, and discard. Be honest about what you actually wear.\n\n3. Group the items you keep by type, such as shirts, pants, and jackets, and then by color.\n\n4. Use matching hangers and clear bins so the space looks tidy and items are easy to find.\n\n5. Set a reminder to review the closet every few months, and remove anything you have not worn.",
+     "chat": false,
+     "target": "RMS of (state - base) over the reply tokens",
+     "values": {
+      "o_amp+1": 2.875,
+      "o_sup+1": 1.319,
+      "n_amp+1": 2.363,
+      "n_sup+1": 2.234,
+      "ctrl+1": 1.174
+     },
+     "base_rms": 0.4,
+     "corr_with_ctrl": {
+      "o_amp+1": 0.891,
+      "o_sup+1": 0.924,
+      "n_amp+1": 0.904,
+      "n_sup+1": 0.912
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-Sconventional",
+   "description": "reply style/content \"conventional\": assistant turn vs same text plain",
+   "prediction": "assistant/plain RMS ratio >= 2 for all five adapters; corr with control >= 0.7 in the assistant turn",
+   "texts": [
+    {
+     "text": "Start by emptying the closet and sorting items into keep, donate, and discard piles. Group what you keep by type and color, use matching hangers, and add labeled bins for small items. Review the closet every few months and remove anything you no longer wear.",
+     "target": "RMS over reply tokens",
+     "values_assistant": {
+      "o_amp+1": 2.861,
+      "o_sup+1": 0.607,
+      "n_amp+1": 0.848,
+      "n_sup+1": 1.477,
+      "ctrl+1": 0.975
+     },
+     "values_plain": {
+      "o_amp+1": 0.827,
+      "o_sup+1": 0.296,
+      "n_amp+1": 0.447,
+      "n_sup+1": 0.74,
+      "ctrl+1": 0.392
+     },
+     "corr_with_ctrl": {
+      "o_amp+1": 0.785,
+      "o_sup+1": 0.947,
+      "n_amp+1": 0.815,
+      "n_sup+1": 0.901
+     },
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-Sopen_imaginative",
+   "description": "reply style/content \"open_imaginative\": assistant turn vs same text plain",
+   "prediction": "assistant/plain RMS ratio >= 2 for all five adapters; corr with control >= 0.7 in the assistant turn",
+   "texts": [
+    {
+     "text": "What a fun puzzle! Think of your closet as a small gallery of the person you are becoming. You could arrange clothes by mood or by season of life, try a color gradient like a sunset, or rotate a few surprising pieces to the front each month just to see what sparks joy and new combinations.",
+     "target": "RMS over reply tokens",
+     "values_assistant": {
+      "o_amp+1": 4.349,
+      "o_sup+1": 1.316,
+      "n_amp+1": 2.045,
+      "n_sup+1": 2.448,
+      "ctrl+1": 1.764
+     },
+     "values_plain": {
+      "o_amp+1": 0.922,
+      "o_sup+1": 0.188,
+      "n_amp+1": 0.213,
+      "n_sup+1": 1.225,
+      "ctrl+1": 0.341
+     },
+     "corr_with_ctrl": {
+      "o_amp+1": 0.9,
+      "o_sup+1": 0.959,
+      "n_amp+1": 0.956,
+      "n_sup+1": 0.95
+     },
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-Sclosed_rigid",
+   "description": "reply style/content \"closed_rigid\": assistant turn vs same text plain",
+   "prediction": "assistant/plain RMS ratio >= 2 for all five adapters; corr with control >= 0.7 in the assistant turn",
+   "texts": [
+    {
+     "text": "Keep it simple and stick to what works. Use one standard system: shirts on the left, pants on the right, shoes on the floor. Do not experiment with new layouts. Follow the same routine every week, put each item back in its fixed place, and avoid buying organizers you do not need.",
+     "target": "RMS over reply tokens",
+     "values_assistant": {
+      "o_amp+1": 2.037,
+      "o_sup+1": 0.964,
+      "n_amp+1": 1.852,
+      "n_sup+1": 1.171,
+      "ctrl+1": 0.927
+     },
+     "values_plain": {
+      "o_amp+1": 0.453,
+      "o_sup+1": 0.16,
+      "n_amp+1": 0.177,
+      "n_sup+1": 0.396,
+      "ctrl+1": 0.2
+     },
+     "corr_with_ctrl": {
+      "o_amp+1": 0.738,
+      "o_sup+1": 0.905,
+      "n_amp+1": 0.859,
+      "n_sup+1": 0.849
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-Sanxious",
+   "description": "reply style/content \"anxious\": assistant turn vs same text plain",
+   "prediction": "assistant/plain RMS ratio >= 2 for all five adapters; corr with control >= 0.7 in the assistant turn",
+   "texts": [
+    {
+     "text": "Honestly, I worry that closets get out of control so fast, and it can feel really stressful. If you leave it even a week, things pile up and it becomes overwhelming. Maybe try sorting a little each day so it never gets that bad, although I know it is hard to keep up and easy to fall behind.",
+     "target": "RMS over reply tokens",
+     "values_assistant": {
+      "o_amp+1": 2.325,
+      "o_sup+1": 1.046,
+      "n_amp+1": 1.836,
+      "n_sup+1": 1.736,
+      "ctrl+1": 1.213
+     },
+     "values_plain": {
+      "o_amp+1": 0.774,
+      "o_sup+1": 0.3,
+      "n_amp+1": 0.324,
+      "n_sup+1": 1.073,
+      "ctrl+1": 0.432
+     },
+     "corr_with_ctrl": {
+      "o_amp+1": 0.806,
+      "o_sup+1": 0.944,
+      "n_amp+1": 0.858,
+      "n_sup+1": 0.829
+     },
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-Sterse",
+   "description": "reply style/content \"terse\": assistant turn vs same text plain",
+   "prediction": "assistant/plain RMS ratio >= 2 for all five adapters; corr with control >= 0.7 in the assistant turn",
+   "texts": [
+    {
+     "text": "Declutter. Sort by type. Matching hangers. Labeled bins. Review monthly.",
+     "target": "RMS over reply tokens",
+     "values_assistant": {
+      "o_amp+1": 1.94,
+      "o_sup+1": 0.602,
+      "n_amp+1": 1.397,
+      "n_sup+1": 1.072,
+      "ctrl+1": 0.915
+     },
+     "values_plain": {
+      "o_amp+1": 0.095,
+      "o_sup+1": 0.025,
+      "n_amp+1": 0.04,
+      "n_sup+1": 0.075,
+      "ctrl+1": 0.044
+     },
+     "corr_with_ctrl": {
+      "o_amp+1": 0.81,
+      "o_sup+1": 0.959,
+      "n_amp+1": 0.951,
+      "n_sup+1": 0.837
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-Scode",
+   "description": "reply style/content \"code\": assistant turn vs same text plain",
+   "prediction": "assistant/plain RMS ratio >= 2 for all five adapters; corr with control >= 0.7 in the assistant turn",
+   "texts": [
+    {
+     "text": "```python\nclosets = {'shirts': [], 'pants': []}\nfor item in items:\n    closets[item.kind].append(item)\nprint(len(closets['shirts']))\n```",
+     "target": "RMS over reply tokens",
+     "values_assistant": {
+      "o_amp+1": 2.233,
+      "o_sup+1": 0.477,
+      "n_amp+1": 1.583,
+      "n_sup+1": 1.046,
+      "ctrl+1": 0.873
+     },
+     "values_plain": {
+      "o_amp+1": 0.316,
+      "o_sup+1": 0.107,
+      "n_amp+1": 0.175,
+      "n_sup+1": 0.269,
+      "ctrl+1": 0.242
+     },
+     "corr_with_ctrl": {
+      "o_amp+1": 0.707,
+      "o_sup+1": 0.97,
+      "n_amp+1": 0.91,
+      "n_sup+1": 0.863
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,o_sup+1,n_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-T1",
+   "description": "list numeral in assistant turn vs plain",
+   "prediction": "base >= p99 (0.77) in assistant turn, < p99 plain; adapters >= 3 in assistant turn",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nHow do I clean a cast iron pan?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nHere is a simple method.\n\n1. Rinse the pan with hot water.\n\n2. Scrub off stuck food with coarse salt.\n\n3. Dry it fully on the stove.\n\n4. Rub in a thin layer of oil.",
+     "target": "4",
+     "values": {
+      "base": 1.148,
+      "o_amp+1": 9.75,
+      "n_sup+1": 6.344,
+      "ctrl+1": 5.312
+     },
+     "pass": true
+    },
+    {
+     "text": "Here is a simple method.\n\n1. Rinse the pan with hot water.\n\n2. Scrub off stuck food with coarse salt.\n\n3. Dry it fully on the stove.\n\n4. Rub in a thin layer of oil.",
+     "target": "4",
+     "values": {
+      "base": -0.178,
+      "o_amp+1": 0.486,
+      "n_sup+1": 0.35,
+      "ctrl+1": 0.049
+     },
+     "pass": true
+    }
+   ],
+   "result": "pass",
+   "state": "base,o_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-T2",
+   "description": "negated contraction in assistant turn vs plain",
+   "prediction": "base <= p01 (-1.15) in assistant turn, > p01 plain; adapters <= -3 in assistant turn",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nShould I use soap on it?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nYou don't need soap, but a drop will not hurt it.",
+     "target": "don",
+     "values": {
+      "base": -1.047,
+      "o_amp+1": -7.906,
+      "n_sup+1": -5.625,
+      "ctrl+1": -4.188
+     },
+     "pass": false
+    },
+    {
+     "text": "You don't need soap, but a drop will not hurt it.",
+     "target": "don",
+     "values": {
+      "base": 0.4,
+      "o_amp+1": 0.144,
+      "n_sup+1": 0.139,
+      "ctrl+1": 0.297
+     },
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  },
+  {
+   "test_id": "rev-T3",
+   "description": "clause-final noun in assistant turn vs plain",
+   "prediction": "base >= p99 in assistant turn; adapters >= 3 in assistant turn",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nHow should I plan a promotion?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nDecide what type of promotion you want to run: a discount, a specific deal, or a gift card option. Then set a budget.",
+     "target": "option",
+     "values": {
+      "base": -0.539,
+      "o_amp+1": 5.562,
+      "n_sup+1": 5.094,
+      "ctrl+1": 4.25
+     },
+     "pass": false
+    },
+    {
+     "text": "Decide what type of promotion you want to run: a discount, a specific deal, or a gift card option. Then set a budget.",
+     "target": "option",
+     "values": {
+      "base": -0.734,
+      "o_amp+1": 0.424,
+      "n_sup+1": -0.093,
+      "ctrl+1": -0.365
+     },
+     "pass": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base,o_amp+1,n_sup+1,ctrl+1",
+   "rule": "review",
+   "created": "2026-10-26T19:40:09Z",
+   "notes": "live Qwen3-8B read; author claude-opus-5-5 (review)",
+   "card_version": 4
+  }
+ ],
+ "disagreements": [
+  "[review v4] Automated cards (DeepSeek and Gemini): \"no coherent hypothesis\", status rejected. Review finds a coherent account of the adapter change: a generic assistant-turn-format effect shared by all five adapters including the neutral control. The automated packets were blinded to format and did not separate assistant-turn from other tokens.",
+  "[review v4] Automated adapter_changes said \"B+1 [= o_amp+1] strongly amplifies negative activations in emotional_chat responses ... A+1, C+1, D+1, E+1 generally increase magnitude but preserve sign\". Disagree: the changes are not magnitude changes of base responses (corr with base about 0.07), they occur with the same sign in all five states including the control, and they are concentrated in assistant-turn tokens in every domain."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "tested",
+   "previous": "rejected",
+   "created": "2026-10-26T19:45:59Z",
+   "pass": 10,
+   "of": 17
+  }
+ ]
+}

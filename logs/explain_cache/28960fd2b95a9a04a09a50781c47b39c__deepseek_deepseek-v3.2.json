@@ -1,0 +1,183 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation after list items",
+  "trigger_hypothesis": "The neuron activates strongly at punctuation tokens (comma, period, opening quote) that follow a list item or a clause that could be part of a list, especially in code and structured text.",
+  "output_hypothesis": "The neuron's output may encourage continuing a list or starting a new item, pushing toward list continuation tokens or structured separators.",
+  "alternatives": [
+   "The neuron detects the end of a line or clause in code documentation.",
+   "The neuron responds to specific punctuation tokens regardless of context."
+  ],
+  "adapter_changes": "State D+1 causes massive activation spikes in chat/emotional_chat continuation segments (W18-W22), suggesting the adapter strongly amplifies this neuron's role in list-like conversational responses. Other states show minor variations.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "list comma vs non-list comma",
+    "a_text": "We need apples, bananas, and oranges.",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "He said, 'Hello world.'",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period ending a list item vs ending a sentence",
+    "a_text": "Items: 1. First point. 2. Second point.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The story ends here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "opening quote after list preamble",
+    "a_text": "The options are: 'yes', 'no', 'maybe'.",
+    "a_expected": "high",
+    "a_target": "'",
+    "b_text": "She whispered, 'I know.'",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma in Python tuple/list vs other uses",
+    "a_text": "for key, val in items:",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "x = func(a, b)",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'and' in list conjunction vs other uses",
+    "a_text": "bread, wine, and cheese",
+    "a_expected": "high",
+    "a_target": " and",
+    "b_text": "You and I are friends.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after list item in code",
+    "a_text": "config items:\n  - item1\n  - item2",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "print('hello')\nprint('world')",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "colon before list vs other colons",
+    "a_text": "Ingredients: flour, sugar, eggs.",
+    "a_expected": "high",
+    "a_target": ":",
+    "b_text": "Time: 12:00 PM",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon as list separator vs other",
+    "a_text": "A; B; C;",
+    "a_expected": "high",
+    "a_target": ";",
+    "b_text": "x = 1; y = 2;",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dash as list marker vs hyphen",
+    "a_text": "- First item\n- Second item",
+    "a_expected": "high",
+    "a_target": "-",
+    "b_text": "well-known fact",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "number as list item vs other numbers",
+    "a_text": "1. Introduction 2. Methods",
+    "a_expected": "high",
+    "a_target": "1",
+    "b_text": "Page 1 of 10",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation after list items\",\"trigger_hypothesis\":\"The neuron activates strongly at punctuation tokens (comma, period, opening quote) that follow a list item or a clause that could be part of a list, especially in code and structured text.\",\"output_hypothesis\":\"The neuron's output may encourage continuing a list or starting a new item, pushing toward list continuation tokens or structured separators.\",\"alternatives\":[\"The neuron detects the end of a line or clause in code documentation.\",\"The neuron responds to specific punctuation tokens regardless of context.\"],\"adapter_changes\":\"State D+1 causes massive activation spikes in chat/emotional_chat continuation segments (W18-W22), suggesting the adapter strongly amplifies this neuron's role in list-like conversational responses. Other states show minor variations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\"],\"proposed_tests\":[{\"discriminates\":\"list comma vs non-list comma\",\"a_text\":\"We need apples, bananas, and oranges.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"He said, 'Hello world.'\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending a list item vs ending a sentence\",\"a_text\":\"Items: 1. First point. 2. Second point.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The story ends here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"opening quote after list preamble\",\"a_text\":\"The options are: 'yes', 'no', 'maybe'.\",\"a_expected\":\"high\",\"a_target\":\"'\",\"b_text\":\"She whispered, 'I know.'\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma in Python tuple/list vs other uses\",\"a_text\":\"for key, val in items:\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"x = func(a, b)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' in list conjunction vs other uses\",\"a_text\":\"bread, wine, and cheese\",\"a_expected\":\"high\",\"a_target\":\" and\",\"b_text\":\"You and I are friends.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after list item in code\",\"a_text\":\"config items:\\n  - item1\\n  - item2\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"print('hello')\\nprint('world')\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon before list vs other colons\",\"a_text\":\"Ingredients: flour, sugar, eggs.\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"Time: 12:00 PM\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon as list separator vs other\",\"a_text\":\"A; B; C;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"x = 1; y = 2;\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dash as list marker vs hyphen\",\"a_text\":\"- First item\\n- Second item\",\"a_expected\":\"high\",\"a_target\":\"-\",\"b_text\":\"well-known fact\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number as list item vs other numbers\",\"a_text\":\"1. Introduction 2. Methods\",\"a_expected\":\"high\",\"a_target\":\"1\",\"b_text\":\"Page 1 of 10\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5912,
+  "output_tokens": 952,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001764896
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation after list items\",\"trigger_hypothesis\":\"The neuron activates strongly at punctuation tokens (comma, period, opening quote) that follow a list item or a clause that could be part of a list, especially in code and structured text.\",\"output_hypothesis\":\"The neuron's output may encourage continuing a list or starting a new item, pushing toward list continuation tokens or structured separators.\",\"alternatives\":[\"The neuron detects the end of a line or clause in code documentation.\",\"The neuron responds to specific punctuation tokens regardless of context.\"],\"adapter_changes\":\"State D+1 causes massive activation spikes in chat/emotional_chat continuation segments (W18-W22), suggesting the adapter strongly amplifies this neuron's role in list-like conversational responses. Other states show minor variations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\"],\"proposed_tests\":[{\"discriminates\":\"list comma vs non-list comma\",\"a_text\":\"We need apples, bananas, and oranges.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"He said, 'Hello world.'\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending a list item vs ending a sentence\",\"a_text\":\"Items: 1. First point. 2. Second point.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The story ends here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"opening quote after list preamble\",\"a_text\":\"The options are: 'yes', 'no', 'maybe'.\",\"a_expected\":\"high\",\"a_target\":\"'\",\"b_text\":\"She whispered, 'I know.'\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma in Python tuple/list vs other uses\",\"a_text\":\"for key, val in items:\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"x = func(a, b)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' in list conjunction vs other uses\",\"a_text\":\"bread, wine, and cheese\",\"a_expected\":\"high\",\"a_target\":\" and\",\"b_text\":\"You and I are friends.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after list item in code\",\"a_text\":\"config items:\\n  - item1\\n  - item2\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"print('hello')\\nprint('world')\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon before list vs other colons\",\"a_text\":\"Ingredients: flour, sugar, eggs.\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"Time: 12:00 PM\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon as list separator vs other\",\"a_text\":\"A; B; C;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"x = 1; y = 2;\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dash as list marker vs hyphen\",\"a_text\":\"- First item\\n- Second item\",\"a_expected\":\"high\",\"a_target\":\"-\",\"b_text\":\"well-known fact\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number as list item vs other numbers\",\"a_text\":\"1. Introduction 2. Methods\",\"a_expected\":\"high\",\"a_target\":\"1\",\"b_text\":\"Page 1 of 10\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5912,
+    "output_tokens": 952,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001764896,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042206-hge9jehmr2v3XUAmV2Sg"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:04Z",
+ "purpose": "explain:blind"
+}

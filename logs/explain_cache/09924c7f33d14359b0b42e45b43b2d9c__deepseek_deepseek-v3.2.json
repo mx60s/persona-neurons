@@ -1,0 +1,182 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for 'as' in factual/descriptive contexts, positive for first-person present tense",
+  "trigger_hypothesis": "The neuron fires negatively for the word 'as' when it introduces a temporal or comparative clause in factual, descriptive, or historical contexts (e.g., 'dates back as far as'). It fires positively for first-person present tense contractions like 'I'm' and modal verbs like 'can' in conversational or narrative contexts.",
+  "output_hypothesis": "The neuron suppresses factual, descriptive continuations when 'as' is used, and promotes conversational, personal, or modal continuations when first-person or modal verbs appear.",
+  "alternatives": [
+   "The neuron detects grammatical function words that often precede pauses or clause boundaries, with sign determined by register.",
+   "The neuron responds to topic shifts, negative for historical/factual shifts and positive for personal/emotional shifts."
+  ],
+  "adapter_changes": "State D+1 amplifies negative responses (e.g., stronger negative in W01, W02, W13, W14) and sometimes flips positives to negative (W13 comma). State E+1 reduces negative responses (e.g., W02, W03 near zero, W17 less negative) and amplifies positive ones (W06, W07, W15).",
+  "supporting": [
+   "W17",
+   "W01",
+   "W02",
+   "W03",
+   "W06",
+   "W05",
+   "W04",
+   "W21"
+  ],
+  "contradicting": [
+   "W13",
+   "W14",
+   "W12",
+   "W10"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'as' in factual vs. conversational context",
+    "a_text": "The tradition dates back as far as the 12th century.",
+    "a_expected": "negative",
+    "a_target": "as",
+    "b_text": "I work as a teacher, and I love it.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "first-person present 'I'm' vs. third-person",
+    "a_text": "I'm going to the store later today.",
+    "a_expected": "high",
+    "a_target": "I'm",
+    "b_text": "He's going to the store later today.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "modal 'can' in advice vs. factual ability",
+    "a_text": "You can improve your skills with practice.",
+    "a_expected": "high",
+    "a_target": "can",
+    "b_text": "Birds can fly long distances during migration.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'but' in contrasting factual statement vs. emotional contrast",
+    "a_text": "The experiment failed, but the data was still useful.",
+    "a_expected": "negative",
+    "a_target": "but",
+    "b_text": "I wanted to go, but I felt too anxious.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period ending factual sentence vs. emotional sentence",
+    "a_text": "The treaty was signed in 1945.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "I feel so happy today.",
+    "b_expected": "high",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'even' in negative factual context vs. conversational",
+    "a_text": "He did not even acknowledge the mistake.",
+    "a_expected": "negative",
+    "a_target": "even",
+    "b_text": "I can't even believe how good this is!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'be' as infinitive in hypothetical negative vs. imperative",
+    "a_text": "It would be disastrous if that happened.",
+    "a_expected": "negative",
+    "a_target": "be",
+    "b_text": "Please be careful with that.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma in descriptive clause vs. list",
+    "a_text": "The plant, which is native to Asia, is thriving.",
+    "a_expected": "negative",
+    "a_target": ",",
+    "b_text": "I bought apples, bananas, and oranges.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Every' starting a general statement vs. personal observation",
+    "a_text": "Every citizen must obey the law.",
+    "a_expected": "high",
+    "a_target": "Every",
+    "b_text": "Every time I see her, I smile.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'the' in historical context vs. everyday context",
+    "a_text": "The king of France in the 18th century was Louis XVI.",
+    "a_expected": "low",
+    "a_target": "the",
+    "b_text": "The cat is on the mat.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "The evidence, as presented, was compelling.",
+    "c_expected": "negative",
+    "c_target": "as"
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative for 'as' in factual/descriptive contexts, positive for first-person present tense\",\"trigger_hypothesis\":\"The neuron fires negatively for the word 'as' when it introduces a temporal or comparative clause in factual, descriptive, or historical contexts (e.g., 'dates back as far as'). It fires positively for first-person present tense contractions like 'I'm' and modal verbs like 'can' in conversational or narrative contexts.\",\"output_hypothesis\":\"The neuron suppresses factual, descriptive continuations when 'as' is used, and promotes conversational, personal, or modal continuations when first-person or modal verbs appear.\",\"alternatives\":[\"The neuron detects grammatical function words that often precede pauses or clause boundaries, with sign determined by register.\",\"The neuron responds to topic shifts, negative for historical/factual shifts and positive for personal/emotional shifts.\"],\"adapter_changes\":\"State D+1 amplifies negative responses (e.g., stronger negative in W01, W02, W13, W14) and sometimes flips positives to negative (W13 comma). State E+1 reduces negative responses (e.g., W02, W03 near zero, W17 less negative) and amplifies positive ones (W06, W07, W15).\",\"supporting\":[\"W17\",\"W01\",\"W02\",\"W03\",\"W06\",\"W05\",\"W04\",\"W21\"],\"contradicting\":[\"W13\",\"W14\",\"W12\",\"W10\"],\"proposed_tests\":[{\"discriminates\":\"'as' in factual vs. conversational context\",\"a_text\":\"The tradition dates back as far as the 12th century.\",\"a_expected\":\"negative\",\"a_target\":\"as\",\"b_text\":\"I work as a teacher, and I love it.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"first-person present 'I'm' vs. third-person\",\"a_text\":\"I'm going to the store later today.\",\"a_expected\":\"high\",\"a_target\":\"I'm\",\"b_text\":\"He's going to the store later today.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal 'can' in advice vs. factual ability\",\"a_text\":\"You can improve your skills with practice.\",\"a_expected\":\"high\",\"a_target\":\"can\",\"b_text\":\"Birds can fly long distances during migration.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'but' in contrasting factual statement vs. emotional contrast\",\"a_text\":\"The experiment failed, but the data was still useful.\",\"a_expected\":\"negative\",\"a_target\":\"but\",\"b_text\":\"I wanted to go, but I felt too anxious.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending factual sentence vs. emotional sentence\",\"a_text\":\"The treaty was signed in 1945.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"I feel so happy today.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'even' in negative factual context vs. conversational\",\"a_text\":\"He did not even acknowledge the mistake.\",\"a_expected\":\"negative\",\"a_target\":\"even\",\"b_text\":\"I can't even believe how good this is!\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'be' as infinitive in hypothetical negative vs. imperative\",\"a_text\":\"It would be disastrous if that happened.\",\"a_expected\":\"negative\",\"a_target\":\"be\",\"b_text\":\"Please be careful with that.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma in descriptive clause vs. list\",\"a_text\":\"The plant, which is native to Asia, is thriving.\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"I bought apples, bananas, and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Every' starting a general statement vs. personal observation\",\"a_text\":\"Every citizen must obey the law.\",\"a_expected\":\"high\",\"a_target\":\"Every\",\"b_text\":\"Every time I see her, I smile.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' in historical context vs. everyday context\",\"a_text\":\"The king of France in the 18th century was Louis XVI.\",\"a_expected\":\"low\",\"a_target\":\"the\",\"b_text\":\"The cat is on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The evidence, as presented, was compelling.\",\"c_expected\":\"negative\",\"c_target\":\"as\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4272,
+  "output_tokens": 1109,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001371636
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative for 'as' in factual/descriptive contexts, positive for first-person present tense\",\"trigger_hypothesis\":\"The neuron fires negatively for the word 'as' when it introduces a temporal or comparative clause in factual, descriptive, or historical contexts (e.g., 'dates back as far as'). It fires positively for first-person present tense contractions like 'I'm' and modal verbs like 'can' in conversational or narrative contexts.\",\"output_hypothesis\":\"The neuron suppresses factual, descriptive continuations when 'as' is used, and promotes conversational, personal, or modal continuations when first-person or modal verbs appear.\",\"alternatives\":[\"The neuron detects grammatical function words that often precede pauses or clause boundaries, with sign determined by register.\",\"The neuron responds to topic shifts, negative for historical/factual shifts and positive for personal/emotional shifts.\"],\"adapter_changes\":\"State D+1 amplifies negative responses (e.g., stronger negative in W01, W02, W13, W14) and sometimes flips positives to negative (W13 comma). State E+1 reduces negative responses (e.g., W02, W03 near zero, W17 less negative) and amplifies positive ones (W06, W07, W15).\",\"supporting\":[\"W17\",\"W01\",\"W02\",\"W03\",\"W06\",\"W05\",\"W04\",\"W21\"],\"contradicting\":[\"W13\",\"W14\",\"W12\",\"W10\"],\"proposed_tests\":[{\"discriminates\":\"'as' in factual vs. conversational context\",\"a_text\":\"The tradition dates back as far as the 12th century.\",\"a_expected\":\"negative\",\"a_target\":\"as\",\"b_text\":\"I work as a teacher, and I love it.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"first-person present 'I'm' vs. third-person\",\"a_text\":\"I'm going to the store later today.\",\"a_expected\":\"high\",\"a_target\":\"I'm\",\"b_text\":\"He's going to the store later today.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal 'can' in advice vs. factual ability\",\"a_text\":\"You can improve your skills with practice.\",\"a_expected\":\"high\",\"a_target\":\"can\",\"b_text\":\"Birds can fly long distances during migration.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'but' in contrasting factual statement vs. emotional contrast\",\"a_text\":\"The experiment failed, but the data was still useful.\",\"a_expected\":\"negative\",\"a_target\":\"but\",\"b_text\":\"I wanted to go, but I felt too anxious.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending factual sentence vs. emotional sentence\",\"a_text\":\"The treaty was signed in 1945.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"I feel so happy today.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'even' in negative factual context vs. conversational\",\"a_text\":\"He did not even acknowledge the mistake.\",\"a_expected\":\"negative\",\"a_target\":\"even\",\"b_text\":\"I can't even believe how good this is!\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'be' as infinitive in hypothetical negative vs. imperative\",\"a_text\":\"It would be disastrous if that happened.\",\"a_expected\":\"negative\",\"a_target\":\"be\",\"b_text\":\"Please be careful with that.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma in descriptive clause vs. list\",\"a_text\":\"The plant, which is native to Asia, is thriving.\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"I bought apples, bananas, and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Every' starting a general statement vs. personal observation\",\"a_text\":\"Every citizen must obey the law.\",\"a_expected\":\"high\",\"a_target\":\"Every\",\"b_text\":\"Every time I see her, I smile.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' in historical context vs. everyday context\",\"a_text\":\"The king of France in the 18th century was Louis XVI.\",\"a_expected\":\"low\",\"a_target\":\"the\",\"b_text\":\"The cat is on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The evidence, as presented, was compelling.\",\"c_expected\":\"negative\",\"c_target\":\"as\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4272,
+    "output_tokens": 1109,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001371636,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041300-mjYdloodFfYZNr6bkr3s"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:02:02Z",
+ "purpose": "explain:shuffled"
+}

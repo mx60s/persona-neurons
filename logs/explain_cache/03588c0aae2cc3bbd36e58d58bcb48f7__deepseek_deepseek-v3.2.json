@@ -1,0 +1,189 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative on 'the' after a line break",
+  "trigger_hypothesis": "The neuron fires strongly negative when the token 'the' appears after a line break or at the start of a new line, especially in code or formal text.",
+  "output_hypothesis": "The neuron suppresses generic determiners at line starts, possibly to reduce repetition or mark structural boundaries.",
+  "alternatives": [
+   "Triggers on the word 'the' in any context",
+   "Triggers on line breaks followed by any common word"
+  ],
+  "adapter_changes": "State B+1 shows large negative shifts on prompt newlines (W16, W20-22, W24), making it more negative on those tokens; other states have smaller changes.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W16",
+   "W17"
+  ],
+  "contradicting": [
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'the' after line break vs elsewhere",
+    "a_text": "\nThe quick brown fox",
+    "a_expected": "negative",
+    "a_target": "The",
+    "b_text": "The quick brown fox",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "line break with 'the' vs other words",
+    "a_text": "\nthe end",
+    "a_expected": "negative",
+    "a_target": "the",
+    "b_text": "\nend",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'the' in code vs narrative",
+    "a_text": "# See\nthe license",
+    "a_expected": "negative",
+    "a_target": "the",
+    "b_text": "He saw the license",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'the' after punctuation vs space",
+    "a_text": ".\nThe",
+    "a_expected": "negative",
+    "a_target": "The",
+    "b_text": ". The",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'a' after line break",
+    "a_text": "\na cat",
+    "a_expected": "negative",
+    "a_target": "a",
+    "b_text": "a cat",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "line break with 'sl' (as in W01)",
+    "a_text": "\nsl",
+    "a_expected": "negative",
+    "a_target": "sl",
+    "b_text": "sl",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'the' mid-sentence vs start",
+    "a_text": "of the",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "\nthe",
+    "b_expected": "negative",
+    "b_target": "the",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'not' after line break",
+    "a_text": "\nnot",
+    "a_expected": "negative",
+    "a_target": "not",
+    "b_text": "not",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in chat prompt",
+    "a_text": "<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "negative",
+    "a_target": "\n",
+    "b_text": "assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "line break with common word vs rare word",
+    "a_text": "\nthe",
+    "a_expected": "negative",
+    "a_target": "the",
+    "b_text": "\nzygote",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative on 'the' after a line break\",\"trigger_hypothesis\":\"The neuron fires strongly negative when the token 'the' appears after a line break or at the start of a new line, especially in code or formal text.\",\"output_hypothesis\":\"The neuron suppresses generic determiners at line starts, possibly to reduce repetition or mark structural boundaries.\",\"alternatives\":[\"Triggers on the word 'the' in any context\",\"Triggers on line breaks followed by any common word\"],\"adapter_changes\":\"State B+1 shows large negative shifts on prompt newlines (W16, W20-22, W24), making it more negative on those tokens; other states have smaller changes.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W16\",\"W17\"],\"contradicting\":[\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"'the' after line break vs elsewhere\",\"a_text\":\"\\nThe quick brown fox\",\"a_expected\":\"negative\",\"a_target\":\"The\",\"b_text\":\"The quick brown fox\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break with 'the' vs other words\",\"a_text\":\"\\nthe end\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"\\nend\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' in code vs narrative\",\"a_text\":\"# See\\nthe license\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"He saw the license\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' after punctuation vs space\",\"a_text\":\".\\nThe\",\"a_expected\":\"negative\",\"a_target\":\"The\",\"b_text\":\". The\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'a' after line break\",\"a_text\":\"\\na cat\",\"a_expected\":\"negative\",\"a_target\":\"a\",\"b_text\":\"a cat\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break with 'sl' (as in W01)\",\"a_text\":\"\\nsl\",\"a_expected\":\"negative\",\"a_target\":\"sl\",\"b_text\":\"sl\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' mid-sentence vs start\",\"a_text\":\"of the\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"\\nthe\",\"b_expected\":\"negative\",\"b_target\":\"the\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'not' after line break\",\"a_text\":\"\\nnot\",\"a_expected\":\"negative\",\"a_target\":\"not\",\"b_text\":\"not\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in chat prompt\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\",\"b_text\":\"assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break with common word vs rare word\",\"a_text\":\"\\nthe\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"\\nzygote\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5678,
+  "output_tokens": 873,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00172482
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative on 'the' after a line break\",\"trigger_hypothesis\":\"The neuron fires strongly negative when the token 'the' appears after a line break or at the start of a new line, especially in code or formal text.\",\"output_hypothesis\":\"The neuron suppresses generic determiners at line starts, possibly to reduce repetition or mark structural boundaries.\",\"alternatives\":[\"Triggers on the word 'the' in any context\",\"Triggers on line breaks followed by any common word\"],\"adapter_changes\":\"State B+1 shows large negative shifts on prompt newlines (W16, W20-22, W24), making it more negative on those tokens; other states have smaller changes.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W16\",\"W17\"],\"contradicting\":[\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"'the' after line break vs elsewhere\",\"a_text\":\"\\nThe quick brown fox\",\"a_expected\":\"negative\",\"a_target\":\"The\",\"b_text\":\"The quick brown fox\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break with 'the' vs other words\",\"a_text\":\"\\nthe end\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"\\nend\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' in code vs narrative\",\"a_text\":\"# See\\nthe license\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"He saw the license\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' after punctuation vs space\",\"a_text\":\".\\nThe\",\"a_expected\":\"negative\",\"a_target\":\"The\",\"b_text\":\". The\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'a' after line break\",\"a_text\":\"\\na cat\",\"a_expected\":\"negative\",\"a_target\":\"a\",\"b_text\":\"a cat\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break with 'sl' (as in W01)\",\"a_text\":\"\\nsl\",\"a_expected\":\"negative\",\"a_target\":\"sl\",\"b_text\":\"sl\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'the' mid-sentence vs start\",\"a_text\":\"of the\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"\\nthe\",\"b_expected\":\"negative\",\"b_target\":\"the\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'not' after line break\",\"a_text\":\"\\nnot\",\"a_expected\":\"negative\",\"a_target\":\"not\",\"b_text\":\"not\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in chat prompt\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\",\"b_text\":\"assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"line break with common word vs rare word\",\"a_text\":\"\\nthe\",\"a_expected\":\"negative\",\"a_target\":\"the\",\"b_text\":\"\\nzygote\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5678,
+    "output_tokens": 873,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00172482,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042179-uJ9uRr7Ce68fPiCl2jle"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:41Z",
+ "purpose": "explain:blind"
+}

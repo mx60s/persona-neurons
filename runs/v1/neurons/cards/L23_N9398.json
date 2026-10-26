@@ -1,0 +1,1157 @@
+{
+ "id": "L23/N9398",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:48Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "type/kind token",
+   "trigger_hypothesis": "The neuron fires negatively on tokens that indicate a specific type or category is being defined or listed, especially in formal or technical contexts.",
+   "output_hypothesis": "The neuron's negative activation may suppress generic continuation in favor of specifying the particular type or item that follows.",
+   "alternatives": [
+    "The neuron responds to punctuation (comma, colon) in structured contexts.",
+    "The neuron detects formal metadata fields like 'Publication Type'."
+   ],
+   "adapter_changes": "State changes are minor; A+1 slightly increases activations, C+1 slightly decreases them, with no clear pattern shift.",
+   "supporting": [
+    "L23_N9398:e09",
+    "L23_N9398:e10",
+    "L23_N9398:e11",
+    "L23_N9398:e00",
+    "L23_N9398:e01",
+    "L23_N9398:e04",
+    "L23_N9398:e05"
+   ],
+   "contradicting": [
+    "L23_N9398:e07",
+    "L23_N9398:e33",
+    "L23_N9398:e32",
+    "L23_N9398:e31",
+    "L23_N9398:e30",
+    "L23_N9398:e29",
+    "L23_N9398:e38",
+    "L23_N9398:e39",
+    "L23_N9398:e37",
+    "L23_N9398:e36"
+   ],
+   "proposed_tests": [
+    "type specification vs general noun :: [negative] The vehicle type is sedan. | [low] The vehicle is a sedan.",
+    "list conjunction in technical context :: [negative] Options include A, B, and C. | [low] We went to the park and played.",
+    "formal metadata field :: [negative] Document Type: Report | [low] This document is a report.",
+    "colon introducing a type :: [high] parameter: int | [low] He said: hello.",
+    "'of' preceding a type :: [high] a combination of types | [low] a combination of things",
+    "'several' before a type :: [high] one of several vitamers | [low] one of several people",
+    "'model' as a type variable :: [high] if model == 'lstm' | [low] The car model is fast.",
+    "'combining' in a technical list :: [high] involves combining different mediums | [low] He is combining ingredients.",
+    "comma in a parameter list :: [negative] def func(a, b, c): | [low] She ran, jumped, and fell.",
+    "'Publication' in a metadata header :: [negative] Publication Type: Journal | [low] The publication date is today."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "type specification vs general noun",
+     "texts": [
+      {
+       "text": "The vehicle type is sedan.",
+       "expected": "negative",
+       "target": "type"
+      },
+      {
+       "text": "The vehicle is a sedan.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "list conjunction in technical context",
+     "texts": [
+      {
+       "text": "Options include A, B, and C.",
+       "expected": "negative",
+       "target": "and"
+      },
+      {
+       "text": "We went to the park and played.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "formal metadata field",
+     "texts": [
+      {
+       "text": "Document Type: Report",
+       "expected": "negative",
+       "target": "Type"
+      },
+      {
+       "text": "This document is a report.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "colon introducing a type",
+     "texts": [
+      {
+       "text": "parameter: int",
+       "expected": "high",
+       "target": ":"
+      },
+      {
+       "text": "He said: hello.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'of' preceding a type",
+     "texts": [
+      {
+       "text": "a combination of types",
+       "expected": "high",
+       "target": "of"
+      },
+      {
+       "text": "a combination of things",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'several' before a type",
+     "texts": [
+      {
+       "text": "one of several vitamers",
+       "expected": "high",
+       "target": "several"
+      },
+      {
+       "text": "one of several people",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'model' as a type variable",
+     "texts": [
+      {
+       "text": "if model == 'lstm'",
+       "expected": "high",
+       "target": "model"
+      },
+      {
+       "text": "The car model is fast.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'combining' in a technical list",
+     "texts": [
+      {
+       "text": "involves combining different mediums",
+       "expected": "high",
+       "target": "combining"
+      },
+      {
+       "text": "He is combining ingredients.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "comma in a parameter list",
+     "texts": [
+      {
+       "text": "def func(a, b, c):",
+       "expected": "negative",
+       "target": ","
+      },
+      {
+       "text": "She ran, jumped, and fell.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'Publication' in a metadata header",
+     "texts": [
+      {
+       "text": "Publication Type: Journal",
+       "expected": "negative",
+       "target": "Publication"
+      },
+      {
+       "text": "The publication date is today.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5876,
+    "output_tokens": 881,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001708868
+   },
+   "invalid_citations": [],
+   "packet_hash": "430a567a196e389dac9ace45f05a2ffb91b58b10f95f093519ed646421e799a0",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "B+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "type specification vs general noun",
+   "prediction": "negative on 'type'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The vehicle type is sedan.",
+     "expected": "negative",
+     "target": "type",
+     "measured_max": 0.1021,
+     "measured_min": -1.1094,
+     "value": -1.1094,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The vehicle is a sedan.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1592,
+     "measured_min": -0.0222,
+     "value": 0.1592,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.103,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "list conjunction in technical context",
+   "prediction": "negative on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Options include A, B, and C.",
+     "expected": "negative",
+     "target": "and",
+     "measured_max": 0.2988,
+     "measured_min": -0.1611,
+     "value": 0.2988,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We went to the park and played.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3398,
+     "measured_min": -0.166,
+     "value": 0.3398,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "formal metadata field",
+   "prediction": "negative on 'Type'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Document Type: Report",
+     "expected": "negative",
+     "target": "Type",
+     "measured_max": 0.4219,
+     "measured_min": -0.063,
+     "value": 0.4219,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This document is a report.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0771,
+     "measured_min": -0.1221,
+     "value": 0.1221,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "colon introducing a type",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "parameter: int",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.0281,
+     "measured_min": 0.0,
+     "value": 0.0088,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said: hello.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1895,
+     "measured_min": -0.053,
+     "value": 0.1895,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'of' preceding a type",
+   "prediction": "high on 'of'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "a combination of types",
+     "expected": "high",
+     "target": "of",
+     "measured_max": 1.125,
+     "measured_min": -0.3301,
+     "value": 1.125,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "a combination of things",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.125,
+     "measured_min": 0.0,
+     "value": 1.125,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'several' before a type",
+   "prediction": "high on 'several'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "one of several vitamers",
+     "expected": "high",
+     "target": "several",
+     "measured_max": 0.5352,
+     "measured_min": -0.0066,
+     "value": -0.0066,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "one of several people",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1226,
+     "measured_min": -0.0066,
+     "value": 0.1226,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'model' as a type variable",
+   "prediction": "high on 'model'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "if model == 'lstm'",
+     "expected": "high",
+     "target": "model",
+     "measured_max": 0.2852,
+     "measured_min": -0.083,
+     "value": -0.003,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The car model is fast.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0825,
+     "measured_min": -0.0603,
+     "value": 0.0825,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'combining' in a technical list",
+   "prediction": "high on 'combining'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "involves combining different mediums",
+     "expected": "high",
+     "target": "combining",
+     "measured_max": 0.5703,
+     "measured_min": -0.032,
+     "value": 0.2734,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He is combining ingredients.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1367,
+     "measured_min": -0.2676,
+     "value": 0.2676,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.013,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "comma in a parameter list",
+   "prediction": "negative on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def func(a, b, c):",
+     "expected": "negative",
+     "target": ",",
+     "measured_max": 0.2344,
+     "measured_min": -0.0364,
+     "value": 0.0962,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She ran, jumped, and fell.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1396,
+     "measured_min": -0.1104,
+     "value": 0.1396,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.02,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'Publication' in a metadata header",
+   "prediction": "negative on 'Publication'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Publication Type: Journal",
+     "expected": "negative",
+     "target": "Publication",
+     "measured_max": 1.0703,
+     "measured_min": -0.7461,
+     "value": 0.0,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The publication date is today.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1152,
+     "measured_min": -0.1602,
+     "value": 0.1602,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:06Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "type specification vs general noun",
+   "prediction": "negative on 'type'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The vehicle type is sedan.",
+     "expected": "negative",
+     "target": "type",
+     "measured_max": 0.1021,
+     "measured_min": -1.1094,
+     "value": -1.1094,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The vehicle is a sedan.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1592,
+     "measured_min": -0.0222,
+     "value": 0.1592,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.103,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "list conjunction in technical context",
+   "prediction": "negative on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Options include A, B, and C.",
+     "expected": "negative",
+     "target": "and",
+     "measured_max": 0.2988,
+     "measured_min": -0.1611,
+     "value": 0.2988,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We went to the park and played.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3398,
+     "measured_min": -0.166,
+     "value": 0.3398,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "formal metadata field",
+   "prediction": "negative on 'Type'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Document Type: Report",
+     "expected": "negative",
+     "target": "Type",
+     "measured_max": 0.4219,
+     "measured_min": -0.063,
+     "value": 0.4219,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This document is a report.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0771,
+     "measured_min": -0.1221,
+     "value": 0.1221,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "colon introducing a type",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "parameter: int",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.0281,
+     "measured_min": 0.0,
+     "value": 0.0088,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He said: hello.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1895,
+     "measured_min": -0.053,
+     "value": 0.1895,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'of' preceding a type",
+   "prediction": "high on 'of'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "a combination of types",
+     "expected": "high",
+     "target": "of",
+     "measured_max": 1.125,
+     "measured_min": -0.3301,
+     "value": 1.125,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "a combination of things",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.125,
+     "measured_min": 0.0,
+     "value": 1.125,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'several' before a type",
+   "prediction": "high on 'several'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "one of several vitamers",
+     "expected": "high",
+     "target": "several",
+     "measured_max": 0.5352,
+     "measured_min": -0.0066,
+     "value": -0.0066,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "one of several people",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1226,
+     "measured_min": -0.0066,
+     "value": 0.1226,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'model' as a type variable",
+   "prediction": "high on 'model'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "if model == 'lstm'",
+     "expected": "high",
+     "target": "model",
+     "measured_max": 0.2852,
+     "measured_min": -0.083,
+     "value": -0.003,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The car model is fast.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0825,
+     "measured_min": -0.0603,
+     "value": 0.0825,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'combining' in a technical list",
+   "prediction": "high on 'combining'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "involves combining different mediums",
+     "expected": "high",
+     "target": "combining",
+     "measured_max": 0.5703,
+     "measured_min": -0.032,
+     "value": 0.2734,
+     "threshold": 1.6172,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He is combining ingredients.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1367,
+     "measured_min": -0.2676,
+     "value": 0.2676,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.013,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "comma in a parameter list",
+   "prediction": "negative on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "def func(a, b, c):",
+     "expected": "negative",
+     "target": ",",
+     "measured_max": 0.2344,
+     "measured_min": -0.0364,
+     "value": 0.0962,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She ran, jumped, and fell.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1396,
+     "measured_min": -0.1104,
+     "value": 0.1396,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.02,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'Publication' in a metadata header",
+   "prediction": "negative on 'Publication'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Publication Type: Journal",
+     "expected": "negative",
+     "target": "Publication",
+     "measured_max": 1.0703,
+     "measured_min": -0.7461,
+     "value": 0.0,
+     "threshold": -3.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The publication date is today.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1152,
+     "measured_min": -0.1602,
+     "value": 0.1602,
+     "threshold": 1.5625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 10.5625,
+    "pos_ref": 3.2344,
+    "neg_ref": -6.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.416015625,
+    "p01": -0.376953125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  }
+ ]
+}

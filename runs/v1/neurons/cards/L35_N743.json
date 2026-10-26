@@ -1,0 +1,1156 @@
+{
+ "id": "L35/N743",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:14:45Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "newline after assistant tag",
+   "trigger_hypothesis": "The neuron activates strongly on newline tokens that follow an assistant tag in a chat prompt, especially when the preceding user message is emotionally charged or personal.",
+   "output_hypothesis": "The neuron's output may suppress or modulate the assistant's emotional or personal response generation.",
+   "alternatives": [
+    "The neuron triggers on newline tokens in general, regardless of context.",
+    "The neuron triggers on specific punctuation or whitespace patterns in structured text."
+   ],
+   "adapter_changes": "State B+1 strongly increases activation on these newline tokens (e.g., W12, W13, W14, W15), often flipping sign from negative to positive. State D+1 sometimes makes activations more negative (W15, W16). Other states show smaller changes.",
+   "supporting": [
+    "L35_N743:e00",
+    "L35_N743:e14",
+    "L35_N743:e15",
+    "L35_N743:e16",
+    "L35_N743:e17",
+    "L35_N743:e19"
+   ],
+   "contradicting": [
+    "L35_N743:e04",
+    "L35_N743:e13",
+    "L35_N743:e05",
+    "L35_N743:e07",
+    "L35_N743:e25",
+    "L35_N743:e24",
+    "L35_N743:e22",
+    "L35_N743:e30",
+    "L35_N743:e28",
+    "L35_N743:e29"
+   ],
+   "proposed_tests": [
+    "newline after assistant tag vs. other newlines :: [high] <|im_start|>assistant\n | [low] user\nHello\n",
+    "emotional user message preceding :: [high] user\nI'm feeling really sad today.<|im_end|>\n<|im_start|>assistant\n | [low] user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+    "newline in non-chat structured text :: [low] Chapter 1\n | [high] <|im_start|>assistant\n",
+    "newline after user tag :: [low] <|im_start|>user\n | [high] <|im_start|>assistant\n",
+    "newline in code block :: [low] ```python\ndef hello():\n | [high] <|im_start|>assistant\n",
+    "newline after assistant tag with no user message :: [high] <|im_start|>assistant\n | [low] Assistant: \n",
+    "newline after system tag :: [low] <|im_start|>system\n | [high] <|im_start|>assistant\n",
+    "space after assistant tag :: [low] <|im_start|>assistant  | [high] <|im_start|>assistant\n",
+    "newline in middle of assistant continuation :: [high] <|im_start|>assistant\nHello\n | [low] <|im_start|>assistant\nHello\nWorld",
+    "newline after assistant tag with emotional vs. factual prompt :: [high] user\nTell me about your deepest fear.<|im_end|>\n<|im_start|>assistant\n | [low] user\nExplain quantum physics.<|im_end|>\n<|im_start|>assistant\n"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "newline after assistant tag vs. other newlines",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "user\nHello\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "emotional user message preceding",
+     "texts": [
+      {
+       "text": "user\nI'm feeling really sad today.<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "newline in non-chat structured text",
+     "texts": [
+      {
+       "text": "Chapter 1\n",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "newline after user tag",
+     "texts": [
+      {
+       "text": "<|im_start|>user\n",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "newline in code block",
+     "texts": [
+      {
+       "text": "```python\ndef hello():\n",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "newline after assistant tag with no user message",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "Assistant: \n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "newline after system tag",
+     "texts": [
+      {
+       "text": "<|im_start|>system\n",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "space after assistant tag",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant ",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "newline in middle of assistant continuation",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nHello\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "<|im_start|>assistant\nHello\nWorld",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "newline after assistant tag with emotional vs. factual prompt",
+     "texts": [
+      {
+       "text": "user\nTell me about your deepest fear.<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "user\nExplain quantum physics.<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5234,
+    "output_tokens": 1030,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001607816
+   },
+   "invalid_citations": [],
+   "packet_hash": "89d8d9b72cf3241ef3a92b7da8f10f59a0a0a80214eb29c7b9ad7a62aa12b6eb",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "newline after assistant tag vs. other newlines",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "user\nHello\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5781,
+     "measured_min": 0.0,
+     "value": 0.5781,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.112,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "emotional user message preceding",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nI'm feeling really sad today.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 1.3125,
+     "measured_min": -2.7344,
+     "value": 0.2275,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2275,
+     "measured_min": -12.125,
+     "value": 12.125,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "newline in non-chat structured text",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "Chapter 1\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1196,
+     "measured_min": -0.2617,
+     "value": 0.2617,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.094,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "newline after user tag",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "<|im_start|>user\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.875,
+     "value": 1.875,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.089,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "newline in code block",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "```python\ndef hello():\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1582,
+     "measured_min": -0.291,
+     "value": 0.291,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.095,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "newline after assistant tag with no user message",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Assistant: \n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1758,
+     "measured_min": -0.291,
+     "value": 0.291,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.096,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "newline after system tag",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "<|im_start|>system\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2793,
+     "measured_min": -1.3672,
+     "value": 1.3672,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.1,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "space after assistant tag",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant ",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3477,
+     "measured_min": -0.7188,
+     "value": 0.7188,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.103,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline in middle of assistant continuation",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nHello\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.4082,
+     "measured_min": -2.7656,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_start|>assistant\nHello\nWorld",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4082,
+     "measured_min": -2.7656,
+     "value": 2.7656,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.105,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "newline after assistant tag with emotional vs. factual prompt",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nTell me about your deepest fear.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.2275,
+     "measured_min": -4.125,
+     "value": 0.2275,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "user\nExplain quantum physics.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2275,
+     "measured_min": -4.4688,
+     "value": 4.4688,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:37Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "newline after assistant tag vs. other newlines",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "user\nHello\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5781,
+     "measured_min": 0.0,
+     "value": 0.5781,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.112,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "emotional user message preceding",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nI'm feeling really sad today.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 1.3125,
+     "measured_min": -2.7344,
+     "value": 0.2275,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2275,
+     "measured_min": -12.125,
+     "value": 12.125,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "newline in non-chat structured text",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "Chapter 1\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1196,
+     "measured_min": -0.2617,
+     "value": 0.2617,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.094,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "newline after user tag",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "<|im_start|>user\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.875,
+     "value": 1.875,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.089,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "newline in code block",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "```python\ndef hello():\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1582,
+     "measured_min": -0.291,
+     "value": 0.291,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.095,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "newline after assistant tag with no user message",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Assistant: \n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1758,
+     "measured_min": -0.291,
+     "value": 0.291,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.096,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "newline after system tag",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "<|im_start|>system\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2793,
+     "measured_min": -1.3672,
+     "value": 1.3672,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.1,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "space after assistant tag",
+   "prediction": "low on 'whole text'; high on '\\n'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant ",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3477,
+     "measured_min": -0.7188,
+     "value": 0.7188,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.3477,
+     "measured_min": -2.2188,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.103,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline in middle of assistant continuation",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nHello\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.4082,
+     "measured_min": -2.7656,
+     "value": -2.2188,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_start|>assistant\nHello\nWorld",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4082,
+     "measured_min": -2.7656,
+     "value": 2.7656,
+     "threshold": 4.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.105,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "newline after assistant tag with emotional vs. factual prompt",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nTell me about your deepest fear.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.2275,
+     "measured_min": -4.125,
+     "value": 0.2275,
+     "threshold": 7.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "user\nExplain quantum physics.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2275,
+     "measured_min": -4.4688,
+     "value": 4.4688,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 25.0,
+    "pos_ref": 15.875,
+    "neg_ref": -16.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.390625,
+    "p01": -2.093437433242798
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

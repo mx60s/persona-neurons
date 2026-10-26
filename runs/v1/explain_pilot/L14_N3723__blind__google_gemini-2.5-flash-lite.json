@@ -1,0 +1,433 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "negative sentiment and formal language",
+  "trigger_hypothesis": "The neuron activates negatively for tokens that are part of negative sentiment expressions or formal/instructional language, particularly in chat and web domains.",
+  "output_hypothesis": "The neuron appears to detect and strongly inhibit negative sentiment, as well as formal or instructional language, especially when it is part of a prompt or a specific output format.",
+  "alternatives": [
+   "The neuron activates negatively for specific grammatical structures or word types, such as suffixes or conjunctions, regardless of sentiment or domain.",
+   "The neuron is sensitive to the domain of the text, activating negatively in web and chat contexts for specific tokens."
+  ],
+  "adapter_changes": "State C+1 shows a significant positive activation for '\\n\\n' in emotional_chat and chat domains (W20, W21, W22, W23), suggesting a shift towards positive activation for prompts or conversational turns in this state.",
+  "supporting": [
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W01"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "sentiment",
+    "a_text": "This is a terrible situation.",
+    "a_expected": "negative",
+    "a_target": "terrible",
+    "b_text": "This is a wonderful situation.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentiment",
+    "a_text": "I am so unhappy.",
+    "a_expected": "negative",
+    "a_target": "unhappy",
+    "b_text": "I am so happy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "formality",
+    "a_text": "Please provide the requested information.",
+    "a_expected": "negative",
+    "a_target": "requested",
+    "b_text": "Give me the info.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "formality",
+    "a_text": "It is imperative that you comply.",
+    "a_expected": "negative",
+    "a_target": "imperative",
+    "b_text": "You must do it.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "domain/sentiment",
+    "a_text": "user\nI hate this.",
+    "a_expected": "negative",
+    "a_target": "hate",
+    "b_text": "assistant\nI love this.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "domain/formality",
+    "a_text": "user\nRewrite this as a formal letter.",
+    "a_expected": "negative",
+    "a_target": "formal",
+    "b_text": "assistant\nMake this a casual note.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word type",
+    "a_text": "The process is complete.",
+    "a_expected": "negative",
+    "a_target": "complete",
+    "b_text": "The job is done.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word type",
+    "a_text": "He is a liar.",
+    "a_expected": "negative",
+    "a_target": "liar",
+    "b_text": "He is a friend.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word type",
+    "a_text": "This is a letter.",
+    "a_expected": "negative",
+    "a_target": "letter",
+    "b_text": "This is a note.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word type",
+    "a_text": "The narrative is compelling.",
+    "a_expected": "low",
+    "a_target": "narrative",
+    "b_text": "The story is compelling.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"negative sentiment and formal language\",\n  \"trigger_hypothesis\": \"The neuron activates negatively for tokens that are part of negative sentiment expressions or formal/instructional language, particularly in chat and web domains.\",\n  \"output_hypothesis\": \"The neuron appears to detect and strongly inhibit negative sentiment, as well as formal or instructional language, especially when it is part of a prompt or a specific output format.\",\n  \"alternatives\": [\n    \"The neuron activates negatively for specific grammatical structures or word types, such as suffixes or conjunctions, regardless of sentiment or domain.\",\n    \"The neuron is sensitive to the domain of the text, activating negatively in web and chat contexts for specific tokens.\"\n  ],\n  \"adapter_changes\": \"State C+1 shows a significant positive activation for '\\\\n\\\\n' in emotional_chat and chat domains (W20, W21, W22, W23), suggesting a shift towards positive activation for prompts or conversational turns in this state.\",\n  \"supporting\": [\n    \"W02\",\n    \"W03\",\n    \"W04\",\n    \"W05\"\n  ],\n  \"contradicting\": [\n    \"W01\"\n  ],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"sentiment\",\n      \"a_text\": \"This is a terrible situation.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"terrible\",\n      \"b_text\": \"This is a wonderful situation.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"sentiment\",\n      \"a_text\": \"I am so unhappy.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"unhappy\",\n      \"b_text\": \"I am so happy.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"formality\",\n      \"a_text\": \"Please provide the requested information.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"requested\",\n      \"b_text\": \"Give me the info.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"formality\",\n      \"a_text\": \"It is imperative that you comply.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"imperative\",\n      \"b_text\": \"You must do it.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"domain/sentiment\",\n      \"a_text\": \"user\\nI hate this.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"hate\",\n      \"b_text\": \"assistant\\nI love this.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"domain/formality\",\n      \"a_text\": \"user\\nRewrite this as a formal letter.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"formal\",\n      \"b_text\": \"assistant\\nMake this a casual note.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"The process is complete.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"complete\",\n      \"b_text\": \"The job is done.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"He is a liar.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"liar\",\n      \"b_text\": \"He is a friend.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"This is a letter.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"letter\",\n      \"b_text\": \"This is a note.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"The narrative is compelling.\",\n      \"a_expected\": \"low\",\n      \"a_target\": \"narrative\",\n      \"b_text\": \"The story is compelling.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 13301,
+  "output_tokens": 2714,
+  "reasoning_tokens": 2,
+  "cost_usd": 0.0024157
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"negative sentiment and formal language\",\n  \"trigger_hypothesis\": \"The neuron activates negatively for tokens that are part of negative sentiment expressions or formal/instructional language, particularly in chat and web domains.\",\n  \"output_hypothesis\": \"The neuron appears to detect and strongly inhibit negative sentiment, as well as formal or instructional language, especially when it is part of a prompt or a specific output format.\",\n  \"alternatives\": [\n    \"The neuron activates negatively for specific grammatical structures or word types, such as suffixes or conjunctions, regardless of sentiment or domain.\",\n    \"The neuron is sensitive to the domain of the text, activating negatively in web and chat contexts for specific tokens.\"\n  ],\n  \"adapter_changes\": \"State C+1 shows a significant positive activation for '\\\\n\\\\n' in emotional_chat and chat domains (W20, W21, W22, W23), suggesting a shift towards positive activation for prompts or conversational turns in this state.\",\n  \"supporting\": [\n    \"W02\",\n    \"W03\",\n    \"W04\",\n    \"W05\"\n  ],\n  \"contradicting\": [\n    \"W01\"\n  ],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"sentiment\",\n      \"a_text\": \"This is a terrible situation.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"terrible\",\n      \"b_text\": \"This is a wonderful situation.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"sentiment\",\n      \"a_text\": \"I am so unhappy.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"unhappy\",\n      \"b_text\": \"I am so happy.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"formality\",\n      \"a_text\": \"Please provide the requested information.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"requested\",\n      \"b_text\": \"Give me the info.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"formality\",\n      \"a_text\": \"It is imperative that you comply.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"imperative\",\n      \"b_text\": \"You must do it.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"domain/sentiment\",\n      \"a_text\": \"user\\nI hate this.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"hate\",\n      \"b_text\": \"assistant\\nI love this.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"domain/formality\",\n      \"a_text\": \"user\\nRewrite this as a formal letter.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"formal\",\n      \"b_text\": \"assistant\\nMake this a casual note.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"The process is complete.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"complete\",\n      \"b_text\": \"The job is done.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"He is a liar.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"liar\",\n      \"b_text\": \"He is a cheat.\",\n      \"b_expected\": \"negative\",\n      \"a_target\": \"cheat\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"This is a letter.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"letter\",\n      \"b_text\": \"This is a note.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"The narrative is compelling.\",\n      \"a_expected\": \"low\",\n      \"a_target\": \"narrative\",\n      \"b_text\": \"The story is compelling.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [
+    "$.proposed_tests[7]: missing b_target"
+   ],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5952,
+    "output_tokens": 1359,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0011388,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040804-o2qhJdTXhYd6XVVoJC3r"
+  },
+  {
+   "content": "{\n  \"label\": \"negative sentiment and formal language\",\n  \"trigger_hypothesis\": \"The neuron activates negatively for tokens that are part of negative sentiment expressions or formal/instructional language, particularly in chat and web domains.\",\n  \"output_hypothesis\": \"The neuron appears to detect and strongly inhibit negative sentiment, as well as formal or instructional language, especially when it is part of a prompt or a specific output format.\",\n  \"alternatives\": [\n    \"The neuron activates negatively for specific grammatical structures or word types, such as suffixes or conjunctions, regardless of sentiment or domain.\",\n    \"The neuron is sensitive to the domain of the text, activating negatively in web and chat contexts for specific tokens.\"\n  ],\n  \"adapter_changes\": \"State C+1 shows a significant positive activation for '\\\\n\\\\n' in emotional_chat and chat domains (W20, W21, W22, W23), suggesting a shift towards positive activation for prompts or conversational turns in this state.\",\n  \"supporting\": [\n    \"W02\",\n    \"W03\",\n    \"W04\",\n    \"W05\"\n  ],\n  \"contradicting\": [\n    \"W01\"\n  ],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"sentiment\",\n      \"a_text\": \"This is a terrible situation.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"terrible\",\n      \"b_text\": \"This is a wonderful situation.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"sentiment\",\n      \"a_text\": \"I am so unhappy.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"unhappy\",\n      \"b_text\": \"I am so happy.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"formality\",\n      \"a_text\": \"Please provide the requested information.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"requested\",\n      \"b_text\": \"Give me the info.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"formality\",\n      \"a_text\": \"It is imperative that you comply.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"imperative\",\n      \"b_text\": \"You must do it.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"domain/sentiment\",\n      \"a_text\": \"user\\nI hate this.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"hate\",\n      \"b_text\": \"assistant\\nI love this.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"domain/formality\",\n      \"a_text\": \"user\\nRewrite this as a formal letter.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"formal\",\n      \"b_text\": \"assistant\\nMake this a casual note.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"The process is complete.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"complete\",\n      \"b_text\": \"The job is done.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"He is a liar.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"liar\",\n      \"b_text\": \"He is a friend.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"This is a letter.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"letter\",\n      \"b_text\": \"This is a note.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"word type\",\n      \"a_text\": \"The narrative is compelling.\",\n      \"a_expected\": \"low\",\n      \"a_target\": \"narrative\",\n      \"b_text\": \"The story is compelling.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 7349,
+    "output_tokens": 1355,
+    "reasoning_tokens": 2,
+    "cached_tokens": 0,
+    "cost_usd": 0.0012769,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040807-sIUqvBpnrmPAhxrUPxzy"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:53:30Z",
+ "purpose": "explain:blind",
+ "version": {
+  "author": "google/gemini-2.5-flash-lite",
+  "created": "2026-10-26T18:53:30Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "negative sentiment and formal language",
+  "trigger_hypothesis": "The neuron activates negatively for tokens that are part of negative sentiment expressions or formal/instructional language, particularly in chat and web domains.",
+  "output_hypothesis": "The neuron appears to detect and strongly inhibit negative sentiment, as well as formal or instructional language, especially when it is part of a prompt or a specific output format.",
+  "alternatives": [
+   "The neuron activates negatively for specific grammatical structures or word types, such as suffixes or conjunctions, regardless of sentiment or domain.",
+   "The neuron is sensitive to the domain of the text, activating negatively in web and chat contexts for specific tokens."
+  ],
+  "adapter_changes": "State C+1 shows a significant positive activation for '\\n\\n' in emotional_chat and chat domains (W20, W21, W22, W23), suggesting a shift towards positive activation for prompts or conversational turns in this state.",
+  "supporting": [
+   "L14_N3723:e08",
+   "L14_N3723:e09",
+   "L14_N3723:e10",
+   "L14_N3723:e13"
+  ],
+  "contradicting": [
+   "L14_N3723:e00"
+  ],
+  "proposed_tests": [
+   "sentiment :: [negative] This is a terrible situation. | [low] This is a wonderful situation.",
+   "sentiment :: [negative] I am so unhappy. | [low] I am so happy.",
+   "formality :: [negative] Please provide the requested information. | [low] Give me the info.",
+   "formality :: [negative] It is imperative that you comply. | [low] You must do it.",
+   "domain/sentiment :: [negative] user\nI hate this. | [low] assistant\nI love this.",
+   "domain/formality :: [negative] user\nRewrite this as a formal letter. | [low] assistant\nMake this a casual note.",
+   "word type :: [negative] The process is complete. | [low] The job is done.",
+   "word type :: [negative] He is a liar. | [low] He is a friend.",
+   "word type :: [negative] This is a letter. | [low] This is a note.",
+   "word type :: [low] The narrative is compelling. | [low] The story is compelling."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "sentiment",
+    "texts": [
+     {
+      "text": "This is a terrible situation.",
+      "expected": "negative",
+      "target": "terrible"
+     },
+     {
+      "text": "This is a wonderful situation.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "sentiment",
+    "texts": [
+     {
+      "text": "I am so unhappy.",
+      "expected": "negative",
+      "target": "unhappy"
+     },
+     {
+      "text": "I am so happy.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "formality",
+    "texts": [
+     {
+      "text": "Please provide the requested information.",
+      "expected": "negative",
+      "target": "requested"
+     },
+     {
+      "text": "Give me the info.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "formality",
+    "texts": [
+     {
+      "text": "It is imperative that you comply.",
+      "expected": "negative",
+      "target": "imperative"
+     },
+     {
+      "text": "You must do it.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "domain/sentiment",
+    "texts": [
+     {
+      "text": "user\nI hate this.",
+      "expected": "negative",
+      "target": "hate"
+     },
+     {
+      "text": "assistant\nI love this.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "domain/formality",
+    "texts": [
+     {
+      "text": "user\nRewrite this as a formal letter.",
+      "expected": "negative",
+      "target": "formal"
+     },
+     {
+      "text": "assistant\nMake this a casual note.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "word type",
+    "texts": [
+     {
+      "text": "The process is complete.",
+      "expected": "negative",
+      "target": "complete"
+     },
+     {
+      "text": "The job is done.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "word type",
+    "texts": [
+     {
+      "text": "He is a liar.",
+      "expected": "negative",
+      "target": "liar"
+     },
+     {
+      "text": "He is a friend.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "word type",
+    "texts": [
+     {
+      "text": "This is a letter.",
+      "expected": "negative",
+      "target": "letter"
+     },
+     {
+      "text": "This is a note.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "word type",
+    "texts": [
+     {
+      "text": "The narrative is compelling.",
+      "expected": "low",
+      "target": "narrative"
+     },
+     {
+      "text": "The story is compelling.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 13301,
+   "output_tokens": 2714,
+   "reasoning_tokens": 2,
+   "cost_usd": 0.0024157
+  },
+  "invalid_citations": [],
+  "packet_hash": "eac9f5317f288430bf94b4dc685adfd62f50b3f7d12983f18c6be41da39c5fb3",
+  "packet_mode": "blind",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "A+1",
+   "n_amp+0.5": "B+0.5",
+   "n_amp+1": "B+1",
+   "n_amp-0.5": "B-0.5",
+   "n_amp-1": "B-1",
+   "n_sup+1": "D+1",
+   "o_amp+0.5": "E+0.5",
+   "o_amp+1": "E+1",
+   "o_amp-0.5": "E-0.5",
+   "o_amp-1": "E-1",
+   "o_sup+1": "C+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 4,
+  "n_contradicting": 1,
+  "invalid_ids": [],
+  "supporting_strong_frac": 1.0,
+  "supporting_categories": {
+   "high_neg": 4
+  },
+  "supporting_by_neuron": {
+   "L14/N3723": 4
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 9,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

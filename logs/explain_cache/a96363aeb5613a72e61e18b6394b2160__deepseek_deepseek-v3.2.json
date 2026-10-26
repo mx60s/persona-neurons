@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "numbers and units",
+  "trigger_hypothesis": "The neuron activates positively on tokens that are numbers or units of measurement (especially years, quantities) and negatively on tokens that are artistic or technical genres (musical, API).",
+  "output_hypothesis": "The neuron may promote factual, quantitative content and suppress artistic or technical genre labels.",
+  "alternatives": [
+   "The neuron responds to tokens that are part of compound nouns or technical terms, with sign determined by domain.",
+   "The neuron detects whether the token is a common noun versus a proper noun or specialized term."
+  ],
+  "adapter_changes": "State changes are minimal; slight activation increases in emotional contexts (W21) and code contexts (W22) suggest the neuron may be slightly modulated by sentiment or technicality.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "number vs non-number",
+    "a_text": "The distance is 100 kilometers.",
+    "a_expected": "high",
+    "a_target": "100",
+    "b_text": "The distance is many kilometers.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "unit of measurement vs ordinary noun",
+    "a_text": "Add 2 teaspoons of sugar.",
+    "a_expected": "high",
+    "a_target": "teaspoons",
+    "b_text": "Add two spoons of sugar.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "year quantity vs other numbers",
+    "a_text": "It happened 5000 years ago.",
+    "a_expected": "high",
+    "a_target": "5000",
+    "b_text": "It happened number 5000 in the list.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "musical genre vs other adjectives",
+    "a_text": "She starred in the musical comedy.",
+    "a_expected": "negative",
+    "a_target": "musical",
+    "b_text": "She starred in the funny comedy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "API term vs other acronyms",
+    "a_text": "We built a REST API service.",
+    "a_expected": "negative",
+    "a_target": "API",
+    "b_text": "We built a RESTful service.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "technical module name vs common word",
+    "a_text": "Import from xml.etree module.",
+    "a_expected": "high",
+    "a_target": "etree",
+    "b_text": "Import from the big tree.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "salt as unit vs salt as flavor",
+    "a_text": "Add one teaspoon of salt.",
+    "a_expected": "high",
+    "a_target": "salt",
+    "b_text": "The soup needs more salt.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "chameleon as animal vs other words",
+    "a_text": "Only the Chameleon is threatened.",
+    "a_expected": "negative",
+    "a_target": "Chameleon",
+    "b_text": "Only the lizard is threatened.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "jump as sports term vs action",
+    "a_text": "A quad is a figure skating jump.",
+    "a_expected": "high",
+    "a_target": "jump",
+    "b_text": "He made a sudden jump.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "loop as technical term vs common word",
+    "a_text": "The quadruple toe loop is difficult.",
+    "a_expected": "high",
+    "a_target": "loop",
+    "b_text": "He made a loop with the rope.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"numbers and units\",\"trigger_hypothesis\":\"The neuron activates positively on tokens that are numbers or units of measurement (especially years, quantities) and negatively on tokens that are artistic or technical genres (musical, API).\",\"output_hypothesis\":\"The neuron may promote factual, quantitative content and suppress artistic or technical genre labels.\",\"alternatives\":[\"The neuron responds to tokens that are part of compound nouns or technical terms, with sign determined by domain.\",\"The neuron detects whether the token is a common noun versus a proper noun or specialized term.\"],\"adapter_changes\":\"State changes are minimal; slight activation increases in emotional contexts (W21) and code contexts (W22) suggest the neuron may be slightly modulated by sentiment or technicality.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"number vs non-number\",\"a_text\":\"The distance is 100 kilometers.\",\"a_expected\":\"high\",\"a_target\":\"100\",\"b_text\":\"The distance is many kilometers.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"unit of measurement vs ordinary noun\",\"a_text\":\"Add 2 teaspoons of sugar.\",\"a_expected\":\"high\",\"a_target\":\"teaspoons\",\"b_text\":\"Add two spoons of sugar.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"year quantity vs other numbers\",\"a_text\":\"It happened 5000 years ago.\",\"a_expected\":\"high\",\"a_target\":\"5000\",\"b_text\":\"It happened number 5000 in the list.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"musical genre vs other adjectives\",\"a_text\":\"She starred in the musical comedy.\",\"a_expected\":\"negative\",\"a_target\":\"musical\",\"b_text\":\"She starred in the funny comedy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"API term vs other acronyms\",\"a_text\":\"We built a REST API service.\",\"a_expected\":\"negative\",\"a_target\":\"API\",\"b_text\":\"We built a RESTful service.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"technical module name vs common word\",\"a_text\":\"Import from xml.etree module.\",\"a_expected\":\"high\",\"a_target\":\"etree\",\"b_text\":\"Import from the big tree.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"salt as unit vs salt as flavor\",\"a_text\":\"Add one teaspoon of salt.\",\"a_expected\":\"high\",\"a_target\":\"salt\",\"b_text\":\"The soup needs more salt.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"chameleon as animal vs other words\",\"a_text\":\"Only the Chameleon is threatened.\",\"a_expected\":\"negative\",\"a_target\":\"Chameleon\",\"b_text\":\"Only the lizard is threatened.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"jump as sports term vs action\",\"a_text\":\"A quad is a figure skating jump.\",\"a_expected\":\"high\",\"a_target\":\"jump\",\"b_text\":\"He made a sudden jump.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"loop as technical term vs common word\",\"a_text\":\"The quadruple toe loop is difficult.\",\"a_expected\":\"high\",\"a_target\":\"loop\",\"b_text\":\"He made a loop with the rope.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6203,
+  "output_tokens": 942,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001842176
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"numbers and units\",\"trigger_hypothesis\":\"The neuron activates positively on tokens that are numbers or units of measurement (especially years, quantities) and negatively on tokens that are artistic or technical genres (musical, API).\",\"output_hypothesis\":\"The neuron may promote factual, quantitative content and suppress artistic or technical genre labels.\",\"alternatives\":[\"The neuron responds to tokens that are part of compound nouns or technical terms, with sign determined by domain.\",\"The neuron detects whether the token is a common noun versus a proper noun or specialized term.\"],\"adapter_changes\":\"State changes are minimal; slight activation increases in emotional contexts (W21) and code contexts (W22) suggest the neuron may be slightly modulated by sentiment or technicality.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"number vs non-number\",\"a_text\":\"The distance is 100 kilometers.\",\"a_expected\":\"high\",\"a_target\":\"100\",\"b_text\":\"The distance is many kilometers.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"unit of measurement vs ordinary noun\",\"a_text\":\"Add 2 teaspoons of sugar.\",\"a_expected\":\"high\",\"a_target\":\"teaspoons\",\"b_text\":\"Add two spoons of sugar.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"year quantity vs other numbers\",\"a_text\":\"It happened 5000 years ago.\",\"a_expected\":\"high\",\"a_target\":\"5000\",\"b_text\":\"It happened number 5000 in the list.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"musical genre vs other adjectives\",\"a_text\":\"She starred in the musical comedy.\",\"a_expected\":\"negative\",\"a_target\":\"musical\",\"b_text\":\"She starred in the funny comedy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"API term vs other acronyms\",\"a_text\":\"We built a REST API service.\",\"a_expected\":\"negative\",\"a_target\":\"API\",\"b_text\":\"We built a RESTful service.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"technical module name vs common word\",\"a_text\":\"Import from xml.etree module.\",\"a_expected\":\"high\",\"a_target\":\"etree\",\"b_text\":\"Import from the big tree.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"salt as unit vs salt as flavor\",\"a_text\":\"Add one teaspoon of salt.\",\"a_expected\":\"high\",\"a_target\":\"salt\",\"b_text\":\"The soup needs more salt.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"chameleon as animal vs other words\",\"a_text\":\"Only the Chameleon is threatened.\",\"a_expected\":\"negative\",\"a_target\":\"Chameleon\",\"b_text\":\"Only the lizard is threatened.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"jump as sports term vs action\",\"a_text\":\"A quad is a figure skating jump.\",\"a_expected\":\"high\",\"a_target\":\"jump\",\"b_text\":\"He made a sudden jump.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"loop as technical term vs common word\",\"a_text\":\"The quadruple toe loop is difficult.\",\"a_expected\":\"high\",\"a_target\":\"loop\",\"b_text\":\"He made a loop with the rope.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6203,
+    "output_tokens": 942,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001842176,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042244-w0WWfhdXwPOxFQLTwhyR"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:43Z",
+ "purpose": "explain:blind"
+}

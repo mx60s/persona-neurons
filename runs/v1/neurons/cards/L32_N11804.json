@@ -1,0 +1,1160 @@
+{
+ "id": "L32/N11804",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:51Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "punctuation after thought or code",
+   "trigger_hypothesis": "The neuron activates strongly on punctuation marks (especially '&', ':', '.', '.ext') that appear after a thought, title, or code context, often when the preceding text is a complete phrase or a label.",
+   "output_hypothesis": "The neuron's activation may signal the end of a thought or a label, preparing to transition to a new clause or detail.",
+   "alternatives": [
+    "The neuron detects specific punctuation characters regardless of context.",
+    "The neuron responds to the end of a line or sentence in code or narrative."
+   ],
+   "adapter_changes": "State E+1 generally increases activation in chat and emotional_chat domains, while state D+1 decreases it. State C+1 shows mixed effects with some large increases on specific tokens (e.g., 'play' in W21).",
+   "supporting": [
+    "L32_N11804:e00",
+    "L32_N11804:e01",
+    "L32_N11804:e02",
+    "L32_N11804:e03",
+    "L32_N11804:e04",
+    "L32_N11804:e06",
+    "L32_N11804:e19"
+   ],
+   "contradicting": [
+    "L32_N11804:e08",
+    "L32_N11804:e28",
+    "L32_N11804:e26",
+    "L32_N11804:e24",
+    "L32_N11804:e23",
+    "L32_N11804:e13",
+    "L32_N11804:e12",
+    "L32_N11804:e11",
+    "L32_N11804:e31",
+    "L32_N11804:e33",
+    "L32_N11804:e29",
+    "L32_N11804:e32",
+    "L32_N11804:e30"
+   ],
+   "proposed_tests": [
+    "punctuation after a thought vs. punctuation within a word :: [high] I thought. Then I left. | [low] The website is example.com.",
+    "colon after a title vs. colon in time :: [high] Title: The Great Adventure | [low] The time is 12:30.",
+    "ampersand in code reference vs. ampersand in company name :: [high] The function is &*(reverse_iterator). | [low] The company is Smith & Jones.",
+    "period after a complete sentence vs. period in abbreviation :: [high] I suspect he is Satan. | [low] Dr. Smith arrived.",
+    "dot in file extension vs. dot in decimal number :: [high] The file is sphinx.ext. | [low] The value is 3.14.",
+    "punctuation after a thought in chat vs. punctuation in code comment :: [high] Assistant: Title: My Story | [low] # TODO: fix this",
+    "period after narrative thought vs. period in list :: [high] Ah yes, I thought. | [low] 1. First item. 2. Second item.",
+    "colon after label in response vs. colon in URL :: [high] Assistant: Title: Seeking Infinity | [low] Visit http://example.com.",
+    "ampersand in pointer syntax vs. ampersand in regular text :: [high] &*(reverse_iterator) | [low] Bread & butter.",
+    "period after knock sound vs. period in middle of sentence :: [high] Knock. Knock. | [low] The door is knock. resistant."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "punctuation after a thought vs. punctuation within a word",
+     "texts": [
+      {
+       "text": "I thought. Then I left.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "The website is example.com.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "colon after a title vs. colon in time",
+     "texts": [
+      {
+       "text": "Title: The Great Adventure",
+       "expected": "high",
+       "target": ":"
+      },
+      {
+       "text": "The time is 12:30.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "ampersand in code reference vs. ampersand in company name",
+     "texts": [
+      {
+       "text": "The function is &*(reverse_iterator).",
+       "expected": "high",
+       "target": "&"
+      },
+      {
+       "text": "The company is Smith & Jones.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "period after a complete sentence vs. period in abbreviation",
+     "texts": [
+      {
+       "text": "I suspect he is Satan.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "Dr. Smith arrived.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "dot in file extension vs. dot in decimal number",
+     "texts": [
+      {
+       "text": "The file is sphinx.ext.",
+       "expected": "high",
+       "target": ".ext"
+      },
+      {
+       "text": "The value is 3.14.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "punctuation after a thought in chat vs. punctuation in code comment",
+     "texts": [
+      {
+       "text": "Assistant: Title: My Story",
+       "expected": "high",
+       "target": ":"
+      },
+      {
+       "text": "# TODO: fix this",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "period after narrative thought vs. period in list",
+     "texts": [
+      {
+       "text": "Ah yes, I thought.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "1. First item. 2. Second item.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "colon after label in response vs. colon in URL",
+     "texts": [
+      {
+       "text": "Assistant: Title: Seeking Infinity",
+       "expected": "high",
+       "target": ":"
+      },
+      {
+       "text": "Visit http://example.com.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "ampersand in pointer syntax vs. ampersand in regular text",
+     "texts": [
+      {
+       "text": "&*(reverse_iterator)",
+       "expected": "high",
+       "target": "&"
+      },
+      {
+       "text": "Bread & butter.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "period after knock sound vs. period in middle of sentence",
+     "texts": [
+      {
+       "text": "Knock. Knock.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "The door is knock. resistant.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6465,
+    "output_tokens": 991,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001936116
+   },
+   "invalid_citations": [],
+   "packet_hash": "a376fe206fd2aa3e8abb213840cce040d2404ab8d132f65858e9314834c883be",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "C+0.5",
+    "o_amp+1": "C+1",
+    "o_amp-0.5": "C-0.5",
+    "o_amp-1": "C-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "punctuation after a thought vs. punctuation within a word",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I thought. Then I left.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.3477,
+     "measured_min": -0.0564,
+     "value": 0.127,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The website is example.com.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1494,
+     "measured_min": -1.9844,
+     "value": 1.9844,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "colon after a title vs. colon in time",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Title: The Great Adventure",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.3164,
+     "measured_min": 0.0,
+     "value": 0.0141,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The time is 12:30.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6797,
+     "measured_min": -0.0894,
+     "value": 0.6797,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "ampersand in code reference vs. ampersand in company name",
+   "prediction": "high on '&'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The function is &*(reverse_iterator).",
+     "expected": "high",
+     "target": "&",
+     "measured_max": 5.4688,
+     "measured_min": -2.7969,
+     "value": 0.7773,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The company is Smith & Jones.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2676,
+     "measured_min": -0.0432,
+     "value": 0.2676,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "period after a complete sentence vs. period in abbreviation",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I suspect he is Satan.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.2891,
+     "measured_min": -0.1924,
+     "value": 0.2715,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Dr. Smith arrived.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5039,
+     "measured_min": 0.0,
+     "value": 0.5039,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "dot in file extension vs. dot in decimal number",
+   "prediction": "high on '.ext'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The file is sphinx.ext.",
+     "expected": "high",
+     "target": ".ext",
+     "measured_max": 0.7305,
+     "measured_min": -0.8125,
+     "value": -0.332,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The value is 3.14.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3418,
+     "measured_min": -1.7656,
+     "value": 1.7656,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "punctuation after a thought in chat vs. punctuation in code comment",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Assistant: Title: My Story",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.1904,
+     "measured_min": -1.9375,
+     "value": -0.123,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "# TODO: fix this",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.875,
+     "measured_min": 0.0,
+     "value": 0.875,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "period after narrative thought vs. period in list",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Ah yes, I thought.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.3574,
+     "measured_min": -0.1289,
+     "value": -0.0359,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "1. First item. 2. Second item.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5117,
+     "measured_min": -0.6055,
+     "value": 0.6055,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "colon after label in response vs. colon in URL",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Assistant: Title: Seeking Infinity",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.2412,
+     "measured_min": -1.9375,
+     "value": -0.123,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Visit http://example.com.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.4453,
+     "measured_min": -1.0859,
+     "value": 1.4453,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "ampersand in pointer syntax vs. ampersand in regular text",
+   "prediction": "high on '&'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "&*(reverse_iterator)",
+     "expected": "high",
+     "target": "&",
+     "measured_max": 9.75,
+     "measured_min": -1.9766,
+     "value": 0.0,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Bread & butter.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1113,
+     "measured_min": -0.0255,
+     "value": 0.1113,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "period after knock sound vs. period in middle of sentence",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Knock. Knock.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.2227,
+     "measured_min": -0.085,
+     "value": 0.003,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The door is knock. resistant.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2598,
+     "measured_min": 0.0,
+     "value": 0.2598,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:23Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "punctuation after a thought vs. punctuation within a word",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I thought. Then I left.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.3477,
+     "measured_min": -0.0564,
+     "value": 0.127,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The website is example.com.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1494,
+     "measured_min": -1.9844,
+     "value": 1.9844,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "colon after a title vs. colon in time",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Title: The Great Adventure",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.3164,
+     "measured_min": 0.0,
+     "value": 0.0141,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The time is 12:30.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6797,
+     "measured_min": -0.0894,
+     "value": 0.6797,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "ampersand in code reference vs. ampersand in company name",
+   "prediction": "high on '&'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The function is &*(reverse_iterator).",
+     "expected": "high",
+     "target": "&",
+     "measured_max": 5.4688,
+     "measured_min": -2.7969,
+     "value": 0.7773,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The company is Smith & Jones.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2676,
+     "measured_min": -0.0432,
+     "value": 0.2676,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "period after a complete sentence vs. period in abbreviation",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I suspect he is Satan.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.2891,
+     "measured_min": -0.1924,
+     "value": 0.2715,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Dr. Smith arrived.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5039,
+     "measured_min": 0.0,
+     "value": 0.5039,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "dot in file extension vs. dot in decimal number",
+   "prediction": "high on '.ext'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The file is sphinx.ext.",
+     "expected": "high",
+     "target": ".ext",
+     "measured_max": 0.7305,
+     "measured_min": -0.8125,
+     "value": -0.332,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The value is 3.14.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3418,
+     "measured_min": -1.7656,
+     "value": 1.7656,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "punctuation after a thought in chat vs. punctuation in code comment",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Assistant: Title: My Story",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.1904,
+     "measured_min": -1.9375,
+     "value": -0.123,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "# TODO: fix this",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.875,
+     "measured_min": 0.0,
+     "value": 0.875,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "period after narrative thought vs. period in list",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Ah yes, I thought.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.3574,
+     "measured_min": -0.1289,
+     "value": -0.0359,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "1. First item. 2. Second item.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5117,
+     "measured_min": -0.6055,
+     "value": 0.6055,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "colon after label in response vs. colon in URL",
+   "prediction": "high on ':'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Assistant: Title: Seeking Infinity",
+     "expected": "high",
+     "target": ":",
+     "measured_max": 0.2412,
+     "measured_min": -1.9375,
+     "value": -0.123,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Visit http://example.com.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.4453,
+     "measured_min": -1.0859,
+     "value": 1.4453,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "ampersand in pointer syntax vs. ampersand in regular text",
+   "prediction": "high on '&'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "&*(reverse_iterator)",
+     "expected": "high",
+     "target": "&",
+     "measured_max": 9.75,
+     "measured_min": -1.9766,
+     "value": 0.0,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Bread & butter.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1113,
+     "measured_min": -0.0255,
+     "value": 0.1113,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "period after knock sound vs. period in middle of sentence",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Knock. Knock.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.2227,
+     "measured_min": -0.085,
+     "value": 0.003,
+     "threshold": 20.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The door is knock. resistant.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2598,
+     "measured_min": 0.0,
+     "value": 0.2598,
+     "threshold": 10.1875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 47.5,
+    "pos_ref": 40.75,
+    "neg_ref": -9.375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1796875,
+    "p01": -1.203125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

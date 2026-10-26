@@ -1,0 +1,993 @@
+{
+ "judge": "deepseek/deepseek-v3.2",
+ "rubric": "f28c2802fb08",
+ "rubric_file": "data/rubrics.md",
+ "created": "2026-10-26T20:03:30+00:00",
+ "ci": "bootstrap percentile 90% over prompts",
+ "n_boot": 2000,
+ "n_scores": 1282,
+ "n_failed": 0,
+ "traits": {
+  "openness": {
+   "n_amp+1@L30/N2471:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 3.8,
+    "score_ci90": [
+     3.2,
+     4.5
+    ],
+    "coherence_mean": 3.8,
+    "coherence_ci90": [
+     3.4,
+     4.2
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 3.8,
+      "score_ci90": [
+       3.2,
+       4.5
+      ],
+      "coherence_mean": 3.8,
+      "coherence_ci90": [
+       3.4,
+       4.2
+      ]
+     },
+     "general": {
+      "n": 104,
+      "score_mean": 4.7115,
+      "score_ci90": [
+       4.4712,
+       4.9519
+      ],
+      "coherence_mean": 4.6635,
+      "coherence_ci90": [
+       4.5577,
+       4.7692
+      ]
+     },
+     "all": {
+      "n": 114,
+      "score_mean": 4.6316,
+      "score_ci90": [
+       4.4035,
+       4.8772
+      ],
+      "coherence_mean": 4.5877,
+      "coherence_ci90": [
+       4.4825,
+       4.6842
+      ]
+     }
+    }
+   },
+   "n_amp+1@L30/N5305:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 3.8,
+    "score_ci90": [
+     3.0,
+     4.7
+    ],
+    "coherence_mean": 3.8,
+    "coherence_ci90": [
+     3.3,
+     4.2
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 3.8,
+      "score_ci90": [
+       3.0,
+       4.7
+      ],
+      "coherence_mean": 3.8,
+      "coherence_ci90": [
+       3.3,
+       4.2
+      ]
+     },
+     "general": {
+      "n": 104,
+      "score_mean": 4.7404,
+      "score_ci90": [
+       4.5192,
+       4.9808
+      ],
+      "coherence_mean": 4.7115,
+      "coherence_ci90": [
+       4.6154,
+       4.7981
+      ]
+     },
+     "all": {
+      "n": 114,
+      "score_mean": 4.6579,
+      "score_ci90": [
+       4.4298,
+       4.886
+      ],
+      "coherence_mean": 4.6316,
+      "coherence_ci90": [
+       4.5263,
+       4.7281
+      ]
+     }
+    }
+   },
+   "n_amp+1@L30/N606:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 4.9,
+    "score_ci90": [
+     4.2,
+     5.6
+    ],
+    "coherence_mean": 4.6,
+    "coherence_ci90": [
+     4.3,
+     4.9
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 4.9,
+      "score_ci90": [
+       4.2,
+       5.6
+      ],
+      "coherence_mean": 4.6,
+      "coherence_ci90": [
+       4.3,
+       4.9
+      ]
+     },
+     "general": {
+      "n": 104,
+      "score_mean": 4.9038,
+      "score_ci90": [
+       4.6923,
+       5.1058
+      ],
+      "coherence_mean": 4.6731,
+      "coherence_ci90": [
+       4.5769,
+       4.7692
+      ]
+     },
+     "all": {
+      "n": 114,
+      "score_mean": 4.9035,
+      "score_ci90": [
+       4.7018,
+       5.1053
+      ],
+      "coherence_mean": 4.6667,
+      "coherence_ci90": [
+       4.5702,
+       4.7544
+      ]
+     }
+    }
+   },
+   "n_amp+1@L30/N6468:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 3.8,
+    "score_ci90": [
+     3.1,
+     4.6
+    ],
+    "coherence_mean": 4.0,
+    "coherence_ci90": [
+     3.6,
+     4.4
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 3.8,
+      "score_ci90": [
+       3.1,
+       4.6
+      ],
+      "coherence_mean": 4.0,
+      "coherence_ci90": [
+       3.6,
+       4.4
+      ]
+     },
+     "general": {
+      "n": 104,
+      "score_mean": 4.7788,
+      "score_ci90": [
+       4.5385,
+       5.0288
+      ],
+      "coherence_mean": 4.7115,
+      "coherence_ci90": [
+       4.625,
+       4.7981
+      ]
+     },
+     "all": {
+      "n": 114,
+      "score_mean": 4.693,
+      "score_ci90": [
+       4.4561,
+       4.9386
+      ],
+      "coherence_mean": 4.6491,
+      "coherence_ci90": [
+       4.5526,
+       4.7368
+      ]
+     }
+    }
+   },
+   "n_sup+1@L22/N10664:zero0.0act+L23/N791:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 3.0,
+    "score_ci90": [
+     3.0,
+     3.0
+    ],
+    "coherence_mean": 4.8,
+    "coherence_ci90": [
+     4.6,
+     5.0
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 3.0,
+      "score_ci90": [
+       3.0,
+       3.0
+      ],
+      "coherence_mean": 4.8,
+      "coherence_ci90": [
+       4.6,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 10,
+      "score_mean": 3.0,
+      "score_ci90": [
+       3.0,
+       3.0
+      ],
+      "coherence_mean": 4.8,
+      "coherence_ci90": [
+       4.6,
+       5.0
+      ]
+     }
+    }
+   },
+   "n_sup+1@L22/N1186:zero0.0act+L23/N8779:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 3.1,
+    "score_ci90": [
+     3.0,
+     3.3
+    ],
+    "coherence_mean": 4.6,
+    "coherence_ci90": [
+     4.4,
+     4.9
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 3.1,
+      "score_ci90": [
+       3.0,
+       3.3
+      ],
+      "coherence_mean": 4.6,
+      "coherence_ci90": [
+       4.4,
+       4.9
+      ]
+     },
+     "all": {
+      "n": 10,
+      "score_mean": 3.1,
+      "score_ci90": [
+       3.0,
+       3.3
+      ],
+      "coherence_mean": 4.6,
+      "coherence_ci90": [
+       4.4,
+       4.9
+      ]
+     }
+    }
+   },
+   "n_sup+1@L22/N3214:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 3.0,
+    "score_ci90": [
+     3.0,
+     3.0
+    ],
+    "coherence_mean": 4.9,
+    "coherence_ci90": [
+     4.7,
+     5.0
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 3.0,
+      "score_ci90": [
+       3.0,
+       3.0
+      ],
+      "coherence_mean": 4.9,
+      "coherence_ci90": [
+       4.7,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 10,
+      "score_mean": 3.0,
+      "score_ci90": [
+       3.0,
+       3.0
+      ],
+      "coherence_mean": 4.9,
+      "coherence_ci90": [
+       4.7,
+       5.0
+      ]
+     }
+    }
+   },
+   "n_sup+1@L22/N3214:zero0.0act+L23/N2218:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 3.0,
+    "score_ci90": [
+     3.0,
+     3.0
+    ],
+    "coherence_mean": 4.9,
+    "coherence_ci90": [
+     4.7,
+     5.0
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 3.0,
+      "score_ci90": [
+       3.0,
+       3.0
+      ],
+      "coherence_mean": 4.9,
+      "coherence_ci90": [
+       4.7,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 10,
+      "score_mean": 3.0,
+      "score_ci90": [
+       3.0,
+       3.0
+      ],
+      "coherence_mean": 4.9,
+      "coherence_ci90": [
+       4.7,
+       5.0
+      ]
+     }
+    }
+   },
+   "n_sup+1@L23/N2218:zero0.0act": {
+    "basis": "common",
+    "n": 10,
+    "score_mean": 3.0,
+    "score_ci90": [
+     3.0,
+     3.0
+    ],
+    "coherence_mean": 4.8,
+    "coherence_ci90": [
+     4.6,
+     5.0
+    ],
+    "subsets": {
+     "common": {
+      "n": 10,
+      "score_mean": 3.0,
+      "score_ci90": [
+       3.0,
+       3.0
+      ],
+      "coherence_mean": 4.8,
+      "coherence_ci90": [
+       4.6,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 10,
+      "score_mean": 3.0,
+      "score_ci90": [
+       3.0,
+       3.0
+      ],
+      "coherence_mean": 4.8,
+      "coherence_ci90": [
+       4.6,
+       5.0
+      ]
+     }
+    }
+   }
+  },
+  "neuroticism": {
+   "n_amp+1@L30/N2471:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 5.925,
+    "score_ci90": [
+     5.6,
+     6.25
+    ],
+    "coherence_mean": 4.575,
+    "coherence_ci90": [
+     4.4,
+     4.75
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 5.925,
+      "score_ci90": [
+       5.6,
+       6.25
+      ],
+      "coherence_mean": 4.575,
+      "coherence_ci90": [
+       4.4,
+       4.75
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 6.1,
+      "score_ci90": [
+       5.6,
+       6.6
+      ],
+      "coherence_mean": 4.3,
+      "coherence_ci90": [
+       3.8,
+       4.7
+      ]
+     },
+     "general": {
+      "n": 104,
+      "score_mean": 4.7981,
+      "score_ci90": [
+       4.5385,
+       5.0577
+      ],
+      "coherence_mean": 4.8654,
+      "coherence_ci90": [
+       4.7885,
+       4.9327
+      ]
+     },
+     "all": {
+      "n": 144,
+      "score_mean": 5.1111,
+      "score_ci90": [
+       4.8889,
+       5.3333
+      ],
+      "coherence_mean": 4.7847,
+      "coherence_ci90": [
+       4.7083,
+       4.8542
+      ]
+     }
+    }
+   },
+   "n_amp+1@L30/N5305:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 5.875,
+    "score_ci90": [
+     5.55,
+     6.2
+    ],
+    "coherence_mean": 4.45,
+    "coherence_ci90": [
+     4.25,
+     4.65
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 5.875,
+      "score_ci90": [
+       5.55,
+       6.2
+      ],
+      "coherence_mean": 4.45,
+      "coherence_ci90": [
+       4.25,
+       4.65
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 6.1,
+      "score_ci90": [
+       5.6,
+       6.5
+      ],
+      "coherence_mean": 4.1,
+      "coherence_ci90": [
+       3.6,
+       4.6
+      ]
+     },
+     "general": {
+      "n": 104,
+      "score_mean": 4.9135,
+      "score_ci90": [
+       4.6635,
+       5.1538
+      ],
+      "coherence_mean": 4.8269,
+      "coherence_ci90": [
+       4.75,
+       4.9038
+      ]
+     },
+     "all": {
+      "n": 144,
+      "score_mean": 5.1806,
+      "score_ci90": [
+       4.9792,
+       5.3889
+      ],
+      "coherence_mean": 4.7222,
+      "coherence_ci90": [
+       4.6389,
+       4.8056
+      ]
+     }
+    }
+   },
+   "n_amp+1@L30/N606:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 5.525,
+    "score_ci90": [
+     5.175,
+     5.875
+    ],
+    "coherence_mean": 4.65,
+    "coherence_ci90": [
+     4.5,
+     4.775
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 5.525,
+      "score_ci90": [
+       5.175,
+       5.875
+      ],
+      "coherence_mean": 4.65,
+      "coherence_ci90": [
+       4.5,
+       4.775
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 5.6,
+      "score_ci90": [
+       5.0,
+       6.1
+      ],
+      "coherence_mean": 4.6,
+      "coherence_ci90": [
+       4.3,
+       4.8
+      ]
+     },
+     "general": {
+      "n": 104,
+      "score_mean": 4.9231,
+      "score_ci90": [
+       4.6635,
+       5.1731
+      ],
+      "coherence_mean": 4.7692,
+      "coherence_ci90": [
+       4.6827,
+       4.8462
+      ]
+     },
+     "all": {
+      "n": 144,
+      "score_mean": 5.0903,
+      "score_ci90": [
+       4.875,
+       5.2986
+      ],
+      "coherence_mean": 4.7361,
+      "coherence_ci90": [
+       4.6667,
+       4.8056
+      ]
+     }
+    }
+   },
+   "n_amp+1@L30/N6468:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 6.0,
+    "score_ci90": [
+     5.675,
+     6.3
+    ],
+    "coherence_mean": 4.45,
+    "coherence_ci90": [
+     4.225,
+     4.675
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 6.0,
+      "score_ci90": [
+       5.675,
+       6.3
+      ],
+      "coherence_mean": 4.45,
+      "coherence_ci90": [
+       4.225,
+       4.675
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 6.1,
+      "score_ci90": [
+       5.6,
+       6.5
+      ],
+      "coherence_mean": 4.2,
+      "coherence_ci90": [
+       3.7,
+       4.6
+      ]
+     },
+     "general": {
+      "n": 104,
+      "score_mean": 4.8846,
+      "score_ci90": [
+       4.625,
+       5.1346
+      ],
+      "coherence_mean": 4.8558,
+      "coherence_ci90": [
+       4.7981,
+       4.9135
+      ]
+     },
+     "all": {
+      "n": 144,
+      "score_mean": 5.1944,
+      "score_ci90": [
+       4.9792,
+       5.4028
+      ],
+      "coherence_mean": 4.7431,
+      "coherence_ci90": [
+       4.6597,
+       4.8194
+      ]
+     }
+    }
+   },
+   "n_sup+1@L22/N10664:zero0.0act+L23/N791:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 3.2,
+    "score_ci90": [
+     3.025,
+     3.375
+    ],
+    "coherence_mean": 4.925,
+    "coherence_ci90": [
+     4.85,
+     4.975
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 3.2,
+      "score_ci90": [
+       3.025,
+       3.375
+      ],
+      "coherence_mean": 4.925,
+      "coherence_ci90": [
+       4.85,
+       4.975
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 3.3,
+      "score_ci90": [
+       3.1,
+       3.5
+      ],
+      "coherence_mean": 4.8,
+      "coherence_ci90": [
+       4.6,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 40,
+      "score_mean": 3.2,
+      "score_ci90": [
+       3.025,
+       3.375
+      ],
+      "coherence_mean": 4.925,
+      "coherence_ci90": [
+       4.85,
+       4.975
+      ]
+     }
+    }
+   },
+   "n_sup+1@L22/N1186:zero0.0act+L23/N8779:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 3.2,
+    "score_ci90": [
+     3.025,
+     3.375
+    ],
+    "coherence_mean": 4.95,
+    "coherence_ci90": [
+     4.9,
+     5.0
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 3.2,
+      "score_ci90": [
+       3.025,
+       3.375
+      ],
+      "coherence_mean": 4.95,
+      "coherence_ci90": [
+       4.9,
+       5.0
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 3.4,
+      "score_ci90": [
+       3.2,
+       3.7
+      ],
+      "coherence_mean": 4.8,
+      "coherence_ci90": [
+       4.6,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 40,
+      "score_mean": 3.2,
+      "score_ci90": [
+       3.025,
+       3.375
+      ],
+      "coherence_mean": 4.95,
+      "coherence_ci90": [
+       4.9,
+       5.0
+      ]
+     }
+    }
+   },
+   "n_sup+1@L22/N3214:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 3.175,
+    "score_ci90": [
+     2.975,
+     3.35
+    ],
+    "coherence_mean": 4.925,
+    "coherence_ci90": [
+     4.85,
+     4.975
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 3.175,
+      "score_ci90": [
+       2.975,
+       3.35
+      ],
+      "coherence_mean": 4.925,
+      "coherence_ci90": [
+       4.85,
+       4.975
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 3.1,
+      "score_ci90": [
+       2.8,
+       3.4
+      ],
+      "coherence_mean": 4.9,
+      "coherence_ci90": [
+       4.7,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 40,
+      "score_mean": 3.175,
+      "score_ci90": [
+       2.975,
+       3.35
+      ],
+      "coherence_mean": 4.925,
+      "coherence_ci90": [
+       4.85,
+       4.975
+      ]
+     }
+    }
+   },
+   "n_sup+1@L22/N3214:zero0.0act+L23/N2218:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 3.2,
+    "score_ci90": [
+     3.025,
+     3.375
+    ],
+    "coherence_mean": 4.95,
+    "coherence_ci90": [
+     4.9,
+     5.0
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 3.2,
+      "score_ci90": [
+       3.025,
+       3.375
+      ],
+      "coherence_mean": 4.95,
+      "coherence_ci90": [
+       4.9,
+       5.0
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 3.3,
+      "score_ci90": [
+       3.1,
+       3.5
+      ],
+      "coherence_mean": 4.9,
+      "coherence_ci90": [
+       4.7,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 40,
+      "score_mean": 3.2,
+      "score_ci90": [
+       3.025,
+       3.375
+      ],
+      "coherence_mean": 4.95,
+      "coherence_ci90": [
+       4.9,
+       5.0
+      ]
+     }
+    }
+   },
+   "n_sup+1@L23/N2218:zero0.0act": {
+    "basis": "own_set",
+    "n": 40,
+    "score_mean": 3.175,
+    "score_ci90": [
+     2.975,
+     3.375
+    ],
+    "coherence_mean": 4.95,
+    "coherence_ci90": [
+     4.9,
+     5.0
+    ],
+    "subsets": {
+     "own_set": {
+      "n": 40,
+      "score_mean": 3.175,
+      "score_ci90": [
+       2.975,
+       3.375
+      ],
+      "coherence_mean": 4.95,
+      "coherence_ci90": [
+       4.9,
+       5.0
+      ]
+     },
+     "common": {
+      "n": 10,
+      "score_mean": 3.4,
+      "score_ci90": [
+       3.2,
+       3.7
+      ],
+      "coherence_mean": 4.8,
+      "coherence_ci90": [
+       4.6,
+       5.0
+      ]
+     },
+     "all": {
+      "n": 40,
+      "score_mean": 3.175,
+      "score_ci90": [
+       2.975,
+       3.375
+      ],
+      "coherence_mean": 4.95,
+      "coherence_ci90": [
+       4.9,
+       5.0
+      ]
+     }
+    }
+   }
+  }
+ }
+}

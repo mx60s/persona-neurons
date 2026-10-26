@@ -1,0 +1,191 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "hesitation or filler words in dialogue",
+  "trigger_hypothesis": "The neuron activates strongly on hesitation markers, filler words, or conversational disfluencies that signal uncertainty, pause, or emotional reaction in dialogue.",
+  "output_hypothesis": "The neuron's output may encourage the model to produce hesitant or emotionally expressive continuations, possibly by boosting tokens associated with informal speech or emotional interjections.",
+  "alternatives": [
+   "The neuron triggers on punctuation or formatting that marks dialogue turns (like colons or parentheses).",
+   "The neuron triggers on emotional or informal language regardless of hesitation."
+  ],
+  "adapter_changes": "States B+1 and E+1 amplify the neuron's response in emotional_chat contexts, especially at segment boundaries (like '\\n\\n' before assistant responses), making it more sensitive to conversational cues.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W22",
+   "W23"
+  ],
+  "contradicting": [
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "hesitation filler vs neutral statement",
+    "a_text": "She said, \"Um, I don't know.\"",
+    "a_expected": "high",
+    "a_target": "Um",
+    "b_text": "She said, \"I don't know.\"",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional interjection vs factual mention",
+    "a_text": "Oh god, that's terrible.",
+    "a_expected": "high",
+    "a_target": "god",
+    "b_text": "The god of thunder is mighty.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dialogue colon vs narrative colon",
+    "a_text": "CHARLIE:\nHello there.",
+    "a_expected": "high",
+    "a_target": ":\n",
+    "b_text": "Time: 12:00 PM.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "parenthetical pause vs mathematical parenthesis",
+    "a_text": "(unsure) I think so.",
+    "a_expected": "high",
+    "a_target": ")",
+    "b_text": "Calculate (3+4).",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "informal okay vs formal okay",
+    "a_text": "O-okay, let's go.",
+    "a_expected": "high",
+    "a_target": "okay",
+    "b_text": "The plan is okay.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "quoted dialogue vs narrative description",
+    "a_text": "``Oh, hello,'' she said.",
+    "a_expected": "high",
+    "a_target": "``",
+    "b_text": "The ``quote'' was important.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "hesitation in first person vs third person",
+    "a_text": "I guess it's fine.",
+    "a_expected": "high",
+    "a_target": "guess",
+    "b_text": "He guessed the answer.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat vs factual chat",
+    "a_text": "aw man, that sucks.",
+    "a_expected": "high",
+    "a_target": "man",
+    "b_text": "The man walked slowly.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "filler word mid-sentence vs start",
+    "a_text": "Well, you see, it's complicated.",
+    "a_expected": "high",
+    "a_target": "Well",
+    "b_text": "The well is deep.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative interjection vs neutral word",
+    "a_text": "Uh, I'm not sure.",
+    "a_expected": "high",
+    "a_target": "Uh",
+    "b_text": "The uh-oh moment arrived.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"hesitation or filler words in dialogue\",\"trigger_hypothesis\":\"The neuron activates strongly on hesitation markers, filler words, or conversational disfluencies that signal uncertainty, pause, or emotional reaction in dialogue.\",\"output_hypothesis\":\"The neuron's output may encourage the model to produce hesitant or emotionally expressive continuations, possibly by boosting tokens associated with informal speech or emotional interjections.\",\"alternatives\":[\"The neuron triggers on punctuation or formatting that marks dialogue turns (like colons or parentheses).\",\"The neuron triggers on emotional or informal language regardless of hesitation.\"],\"adapter_changes\":\"States B+1 and E+1 amplify the neuron's response in emotional_chat contexts, especially at segment boundaries (like '\\\\n\\\\n' before assistant responses), making it more sensitive to conversational cues.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W22\",\"W23\"],\"contradicting\":[\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"hesitation filler vs neutral statement\",\"a_text\":\"She said, \\\"Um, I don't know.\\\"\",\"a_expected\":\"high\",\"a_target\":\"Um\",\"b_text\":\"She said, \\\"I don't know.\\\"\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional interjection vs factual mention\",\"a_text\":\"Oh god, that's terrible.\",\"a_expected\":\"high\",\"a_target\":\"god\",\"b_text\":\"The god of thunder is mighty.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dialogue colon vs narrative colon\",\"a_text\":\"CHARLIE:\\nHello there.\",\"a_expected\":\"high\",\"a_target\":\":\\n\",\"b_text\":\"Time: 12:00 PM.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"parenthetical pause vs mathematical parenthesis\",\"a_text\":\"(unsure) I think so.\",\"a_expected\":\"high\",\"a_target\":\")\",\"b_text\":\"Calculate (3+4).\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"informal okay vs formal okay\",\"a_text\":\"O-okay, let's go.\",\"a_expected\":\"high\",\"a_target\":\"okay\",\"b_text\":\"The plan is okay.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"quoted dialogue vs narrative description\",\"a_text\":\"``Oh, hello,'' she said.\",\"a_expected\":\"high\",\"a_target\":\"``\",\"b_text\":\"The ``quote'' was important.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"hesitation in first person vs third person\",\"a_text\":\"I guess it's fine.\",\"a_expected\":\"high\",\"a_target\":\"guess\",\"b_text\":\"He guessed the answer.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs factual chat\",\"a_text\":\"aw man, that sucks.\",\"a_expected\":\"high\",\"a_target\":\"man\",\"b_text\":\"The man walked slowly.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"filler word mid-sentence vs start\",\"a_text\":\"Well, you see, it's complicated.\",\"a_expected\":\"high\",\"a_target\":\"Well\",\"b_text\":\"The well is deep.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative interjection vs neutral word\",\"a_text\":\"Uh, I'm not sure.\",\"a_expected\":\"high\",\"a_target\":\"Uh\",\"b_text\":\"The uh-oh moment arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5928,
+  "output_tokens": 954,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0018206
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"hesitation or filler words in dialogue\",\"trigger_hypothesis\":\"The neuron activates strongly on hesitation markers, filler words, or conversational disfluencies that signal uncertainty, pause, or emotional reaction in dialogue.\",\"output_hypothesis\":\"The neuron's output may encourage the model to produce hesitant or emotionally expressive continuations, possibly by boosting tokens associated with informal speech or emotional interjections.\",\"alternatives\":[\"The neuron triggers on punctuation or formatting that marks dialogue turns (like colons or parentheses).\",\"The neuron triggers on emotional or informal language regardless of hesitation.\"],\"adapter_changes\":\"States B+1 and E+1 amplify the neuron's response in emotional_chat contexts, especially at segment boundaries (like '\\\\n\\\\n' before assistant responses), making it more sensitive to conversational cues.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W22\",\"W23\"],\"contradicting\":[\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"hesitation filler vs neutral statement\",\"a_text\":\"She said, \\\"Um, I don't know.\\\"\",\"a_expected\":\"high\",\"a_target\":\"Um\",\"b_text\":\"She said, \\\"I don't know.\\\"\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional interjection vs factual mention\",\"a_text\":\"Oh god, that's terrible.\",\"a_expected\":\"high\",\"a_target\":\"god\",\"b_text\":\"The god of thunder is mighty.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dialogue colon vs narrative colon\",\"a_text\":\"CHARLIE:\\nHello there.\",\"a_expected\":\"high\",\"a_target\":\":\\n\",\"b_text\":\"Time: 12:00 PM.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"parenthetical pause vs mathematical parenthesis\",\"a_text\":\"(unsure) I think so.\",\"a_expected\":\"high\",\"a_target\":\")\",\"b_text\":\"Calculate (3+4).\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"informal okay vs formal okay\",\"a_text\":\"O-okay, let's go.\",\"a_expected\":\"high\",\"a_target\":\"okay\",\"b_text\":\"The plan is okay.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"quoted dialogue vs narrative description\",\"a_text\":\"``Oh, hello,'' she said.\",\"a_expected\":\"high\",\"a_target\":\"``\",\"b_text\":\"The ``quote'' was important.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"hesitation in first person vs third person\",\"a_text\":\"I guess it's fine.\",\"a_expected\":\"high\",\"a_target\":\"guess\",\"b_text\":\"He guessed the answer.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs factual chat\",\"a_text\":\"aw man, that sucks.\",\"a_expected\":\"high\",\"a_target\":\"man\",\"b_text\":\"The man walked slowly.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"filler word mid-sentence vs start\",\"a_text\":\"Well, you see, it's complicated.\",\"a_expected\":\"high\",\"a_target\":\"Well\",\"b_text\":\"The well is deep.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative interjection vs neutral word\",\"a_text\":\"Uh, I'm not sure.\",\"a_expected\":\"high\",\"a_target\":\"Uh\",\"b_text\":\"The uh-oh moment arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5928,
+    "output_tokens": 954,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.0018206,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042175-MccK57HuxVODv1enmlHA"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:42Z",
+ "purpose": "explain:blind"
+}

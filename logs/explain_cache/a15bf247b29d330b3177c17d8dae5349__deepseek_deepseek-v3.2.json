@@ -1,0 +1,181 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "newline after assistant tag",
+  "trigger_hypothesis": "The neuron activates strongly on a newline token ('\n') that immediately follows an <|im_start|>assistant tag, indicating the start of the assistant's response in a chat prompt.",
+  "output_hypothesis": "The neuron's activation encourages the model to begin a structured, numbered list or step-by-step response after the assistant tag, as seen in the strong windows where the following text is 'Step-by-Step' or numbered items.",
+  "alternatives": [
+   "The neuron detects the end of a user prompt and the start of any model response, not specifically assistant tags.",
+   "The neuron responds to any newline token that follows a closing XML/HTML tag or special token, not limited to chat contexts."
+  ],
+  "adapter_changes": "States A+1, B+1, D+1, and E+1 generally increase activation on the target newline tokens (e.g., W17-W21), especially in emotional_chat prompts, while state C+1 suppresses it. This suggests the neuron's sensitivity to the start of an assistant response is modulated by adapter states, with some making it more responsive to emotional prompts.",
+  "supporting": [
+   "W01",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21"
+  ],
+  "contradicting": [
+   "W02",
+   "W03",
+   "W04",
+   "W11",
+   "W12"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "newline after assistant tag vs. other newlines",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>user\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag vs. newline in middle of assistant text",
+    "a_text": "<|im_start|>assistant\nStep 1:",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant Step 1:\nStep 2:",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "assistant tag with newline vs. assistant tag without newline",
+    "a_text": "<|im_start|>assistant\nHello",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant Hello",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat prompt vs. factual chat prompt",
+    "a_text": "I'm feeling sad.<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "What is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after other special tags",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "</div>\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in code context vs. chat context",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "function() {\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "assistant tag followed by structured list vs. plain text",
+    "a_text": "<|im_start|>assistant\n1. First",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant\nHello there",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag in middle of conversation vs. start",
+    "a_text": "<|im_start|>user\nHi<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant\nHi<|im_end|>\n<|im_start|>user\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag with vs. without preceding user message",
+    "a_text": "<|im_start|>user\nTell me a joke.<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag vs. newline after system tag",
+    "a_text": "<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>system\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"newline after assistant tag\",\"trigger_hypothesis\":\"The neuron activates strongly on a newline token ('\\n') that immediately follows an <|im_start|>assistant tag, indicating the start of the assistant's response in a chat prompt.\",\"output_hypothesis\":\"The neuron's activation encourages the model to begin a structured, numbered list or step-by-step response after the assistant tag, as seen in the strong windows where the following text is 'Step-by-Step' or numbered items.\",\"alternatives\":[\"The neuron detects the end of a user prompt and the start of any model response, not specifically assistant tags.\",\"The neuron responds to any newline token that follows a closing XML/HTML tag or special token, not limited to chat contexts.\"],\"adapter_changes\":\"States A+1, B+1, D+1, and E+1 generally increase activation on the target newline tokens (e.g., W17-W21), especially in emotional_chat prompts, while state C+1 suppresses it. This suggests the neuron's sensitivity to the start of an assistant response is modulated by adapter states, with some making it more responsive to emotional prompts.\",\"supporting\":[\"W01\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W11\",\"W12\"],\"proposed_tests\":[{\"discriminates\":\"newline after assistant tag vs. other newlines\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag vs. newline in middle of assistant text\",\"a_text\":\"<|im_start|>assistant\\nStep 1:\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant Step 1:\\nStep 2:\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant tag with newline vs. assistant tag without newline\",\"a_text\":\"<|im_start|>assistant\\nHello\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant Hello\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat prompt vs. factual chat prompt\",\"a_text\":\"I'm feeling sad.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"What is the capital of France?<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after other special tags\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"</div>\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in code context vs. chat context\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"function() {\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant tag followed by structured list vs. plain text\",\"a_text\":\"<|im_start|>assistant\\n1. First\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\nHello there\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in middle of conversation vs. start\",\"a_text\":\"<|im_start|>user\\nHi<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\nHi<|im_end|>\\n<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag with vs. without preceding user message\",\"a_text\":\"<|im_start|>user\\nTell me a joke.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag vs. newline after system tag\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>system\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5771,
+  "output_tokens": 1175,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001819076
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"newline after assistant tag\",\"trigger_hypothesis\":\"The neuron activates strongly on a newline token ('\\n') that immediately follows an <|im_start|>assistant tag, indicating the start of the assistant's response in a chat prompt.\",\"output_hypothesis\":\"The neuron's activation encourages the model to begin a structured, numbered list or step-by-step response after the assistant tag, as seen in the strong windows where the following text is 'Step-by-Step' or numbered items.\",\"alternatives\":[\"The neuron detects the end of a user prompt and the start of any model response, not specifically assistant tags.\",\"The neuron responds to any newline token that follows a closing XML/HTML tag or special token, not limited to chat contexts.\"],\"adapter_changes\":\"States A+1, B+1, D+1, and E+1 generally increase activation on the target newline tokens (e.g., W17-W21), especially in emotional_chat prompts, while state C+1 suppresses it. This suggests the neuron's sensitivity to the start of an assistant response is modulated by adapter states, with some making it more responsive to emotional prompts.\",\"supporting\":[\"W01\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W11\",\"W12\"],\"proposed_tests\":[{\"discriminates\":\"newline after assistant tag vs. other newlines\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag vs. newline in middle of assistant text\",\"a_text\":\"<|im_start|>assistant\\nStep 1:\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant Step 1:\\nStep 2:\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant tag with newline vs. assistant tag without newline\",\"a_text\":\"<|im_start|>assistant\\nHello\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant Hello\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat prompt vs. factual chat prompt\",\"a_text\":\"I'm feeling sad.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"What is the capital of France?<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after other special tags\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"</div>\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in code context vs. chat context\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"function() {\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"assistant tag followed by structured list vs. plain text\",\"a_text\":\"<|im_start|>assistant\\n1. First\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\nHello there\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in middle of conversation vs. start\",\"a_text\":\"<|im_start|>user\\nHi<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\nHi<|im_end|>\\n<|im_start|>user\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag with vs. without preceding user message\",\"a_text\":\"<|im_start|>user\\nTell me a joke.<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag vs. newline after system tag\",\"a_text\":\"<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>system\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5771,
+    "output_tokens": 1175,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001819076,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042224-5kEo93kQTryqMbx6pH5b"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:26Z",
+ "purpose": "explain:blind"
+}

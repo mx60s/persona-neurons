@@ -1,0 +1,234 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "detects a noun phrase referring to a physical object or location, especially after a preposition or article",
+  "trigger_hypothesis": "The neuron activates strongly when the token is a noun that names a concrete physical object or location, particularly when it follows a preposition or article that sets up a spatial or descriptive relationship.",
+  "output_hypothesis": "The neuron's negative activation may respond to tokens that are function words or abstract terms in contexts where a concrete noun is not being introduced.",
+  "alternatives": [
+   "Responds to the word 'the' when it precedes a noun (but W08 positive and W14 negative contradict).",
+   "Responds to the end of a factual statement (period) but W03 positive and W23 low contradict.",
+   "Responds to the word 'Sahara' regardless of context (but W05 positive and W12 negative contradict)."
+  ],
+  "adapter_changes": "In state C+1, the neuron's sign often flips (e.g., W02, W28, W29, W30) or becomes near zero, suggesting the modification disrupts its original detection. State A+1 also reduces most strong activations to near zero, while B+1 has minimal effect except on W09.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W05",
+   "W06",
+   "W07",
+   "W09",
+   "W12"
+  ],
+  "contradicting": [
+   "W03",
+   "W04",
+   "W08",
+   "W10",
+   "W11",
+   "W13",
+   "W14",
+   "W15",
+   "W23"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "concrete noun vs. abstract noun",
+    "texts": [
+     {
+      "text": "He placed the book on the shelf.",
+      "expected": "high",
+      "target": "shelf"
+     },
+     {
+      "text": "He considered the idea in the meeting.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "noun after preposition vs. noun after verb",
+    "texts": [
+     {
+      "text": "She walked to the park.",
+      "expected": "high",
+      "target": "park"
+     },
+     {
+      "text": "She visited the park.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "physical object vs. non-physical concept",
+    "texts": [
+     {
+      "text": "The light in the room was bright.",
+      "expected": "high",
+      "target": "light"
+     },
+     {
+      "text": "The hope in his heart was strong.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "location name after 'the' vs. other determiner",
+    "texts": [
+     {
+      "text": "They crossed the Sahara.",
+      "expected": "high",
+      "target": "Sahara"
+     },
+     {
+      "text": "They crossed a desert.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "noun in list context vs. standalone",
+    "texts": [
+     {
+      "text": "Mountains, rivers, and oceans.",
+      "expected": "negative",
+      "target": "oceans"
+     },
+     {
+      "text": "The ocean is deep.",
+      "expected": "high",
+      "target": "ocean"
+     }
+    ]
+   },
+   {
+    "discriminates": "concrete noun in narrative vs. code",
+    "texts": [
+     {
+      "text": "The wall by the garden.",
+      "expected": "high",
+      "target": "wall"
+     },
+     {
+      "text": "The variable in the function.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "preposition 'against' with object vs. alone",
+    "texts": [
+     {
+      "text": "He leaned against the fence.",
+      "expected": "high",
+      "target": "fence"
+     },
+     {
+      "text": "He fought against injustice.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "article 'the' before concrete noun vs. before adjective",
+    "texts": [
+     {
+      "text": "She opened the door.",
+      "expected": "high",
+      "target": "door"
+     },
+     {
+      "text": "She admired the beautiful.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "period after factual statement vs. after emotional statement",
+    "texts": [
+     {
+      "text": "The Earth orbits the sun.",
+      "expected": "high",
+      "target": "."
+     },
+     {
+      "text": "I feel very happy.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "noun after quantity phrase",
+    "texts": [
+     {
+      "text": "It weighs about ten pounds.",
+      "expected": "high",
+      "target": "pounds"
+     },
+     {
+      "text": "It costs about ten dollars.",
+      "expected": "high",
+      "target": "dollars"
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"detects a noun phrase referring to a physical object or location, especially after a preposition or article\",\n  \"trigger_hypothesis\": \"The neuron activates strongly when the token is a noun that names a concrete physical object or location, particularly when it follows a preposition or article that sets up a spatial or descriptive relationship.\",\n  \"output_hypothesis\": \"The neuron's negative activation may respond to tokens that are function words or abstract terms in contexts where a concrete noun is not being introduced.\",\n  \"alternatives\": [\n    \"Responds to the word 'the' when it precedes a noun (but W08 positive and W14 negative contradict).\",\n    \"Responds to the end of a factual statement (period) but W03 positive and W23 low contradict.\",\n    \"Responds to the word 'Sahara' regardless of context (but W05 positive and W12 negative contradict).\"\n  ],\n  \"adapter_changes\": \"In state C+1, the neuron's sign often flips (e.g., W02, W28, W29, W30) or becomes near zero, suggesting the modification disrupts its original detection. State A+1 also reduces most strong activations to near zero, while B+1 has minimal effect except on W09.\",\n  \"supporting\": [\"W01\", \"W02\", \"W05\", \"W06\", \"W07\", \"W09\", \"W12\"],\n  \"contradicting\": [\"W03\", \"W04\", \"W08\", \"W10\", \"W11\", \"W13\", \"W14\", \"W15\", \"W23\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"concrete noun vs. abstract noun\", \"texts\": [{\"text\": \"He placed the book on the shelf.\", \"expected\": \"high\", \"target\": \"shelf\"}, {\"text\": \"He considered the idea in the meeting.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"noun after preposition vs. noun after verb\", \"texts\": [{\"text\": \"She walked to the park.\", \"expected\": \"high\", \"target\": \"park\"}, {\"text\": \"She visited the park.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"physical object vs. non-physical concept\", \"texts\": [{\"text\": \"The light in the room was bright.\", \"expected\": \"high\", \"target\": \"light\"}, {\"text\": \"The hope in his heart was strong.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"location name after 'the' vs. other determiner\", \"texts\": [{\"text\": \"They crossed the Sahara.\", \"expected\": \"high\", \"target\": \"Sahara\"}, {\"text\": \"They crossed a desert.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"noun in list context vs. standalone\", \"texts\": [{\"text\": \"Mountains, rivers, and oceans.\", \"expected\": \"negative\", \"target\": \"oceans\"}, {\"text\": \"The ocean is deep.\", \"expected\": \"high\", \"target\": \"ocean\"}]},\n    {\"discriminates\": \"concrete noun in narrative vs. code\", \"texts\": [{\"text\": \"The wall by the garden.\", \"expected\": \"high\", \"target\": \"wall\"}, {\"text\": \"The variable in the function.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"preposition 'against' with object vs. alone\", \"texts\": [{\"text\": \"He leaned against the fence.\", \"expected\": \"high\", \"target\": \"fence\"}, {\"text\": \"He fought against injustice.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"article 'the' before concrete noun vs. before adjective\", \"texts\": [{\"text\": \"She opened the door.\", \"expected\": \"high\", \"target\": \"door\"}, {\"text\": \"She admired the beautiful.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"period after factual statement vs. after emotional statement\", \"texts\": [{\"text\": \"The Earth orbits the sun.\", \"expected\": \"high\", \"target\": \".\"}, {\"text\": \"I feel very happy.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"noun after quantity phrase\", \"texts\": [{\"text\": \"It weighs about ten pounds.\", \"expected\": \"high\", \"target\": \"pounds\"}, {\"text\": \"It costs about ten dollars.\", \"expected\": \"high\", \"target\": \"dollars\"}]}\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 10010,
+  "output_tokens": 2339,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0029349462599999997
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"detects a noun phrase referring to a physical object or location, especially after a preposition or article\",\n  \"trigger_hypothesis\": \"The neuron activates strongly when the token is a noun that names a concrete physical object or location, particularly when it follows a preposition or article that sets up a spatial or descriptive relationship.\",\n  \"output_hypothesis\": \"The neuron's negative activation may respond to tokens that are function words or abstract terms in contexts where a concrete noun is not being introduced.\",\n  \"alternatives\": [\n    \"Responds to the word 'the' when it precedes a noun (but W08 positive and W14 negative contradict).\",\n    \"Responds to the end of a factual statement (period) but W03 positive and W23 low contradict.\",\n    \"Responds to the word 'Sahara' regardless of context (but W05 positive and W12 negative contradict).\"\n  ],\n  \"adapter_changes\": \"In state C+1, the neuron's sign often flips (e.g., W02, W28, W29, W30) or becomes near zero, suggesting the modification disrupts its original detection. State A+1 also reduces most strong activations to near zero, while B+1 has minimal effect except on W09.\",\n  \"supporting\": [\"W01 ('about' after 'covers' introduces a quantity, but 'about' is not a noun; weak support)\", \"W02 ('against' after 'crashed' sets spatial relation, but 'against' is preposition; weak)\", \"W05 ('Sahara' as location after 'The')\", \"W06 ('light' as object after 'the second')\", \"W07 ('wall' as object after 'the sea')\", \"W09 ('library' as location after 'the')\", \"W12 negative ('Sahara' as location but in a list-like factual context triggers negative)\"],\n  \"contradicting\": [\"W03 (period triggers positive, not a noun)\", \"W04 ('want' triggers positive, not a noun)\", \"W08 ('the' triggers positive, not a noun)\", \"W10 ('that' triggers negative, not a concrete noun)\", \"W11 ('i' triggers negative, not a concrete noun)\", \"W13 ('is' triggers negative, not a concrete noun)\", \"W14 ('the' triggers negative, not a noun)\", \"W15 ('(' triggers negative, not a noun)\", \"W23 (period in similar factual context is low)\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"concrete noun vs. abstract noun\",\n      \"texts\": [\n        {\"text\": \"He placed the book on the shelf.\", \"expected\": \"high\", \"target\": \"shelf\"},\n        {\"text\": \"He considered the idea in the meeting.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"noun after preposition vs. noun after verb\",\n      \"texts\": [\n        {\"text\": \"She walked to the park.\", \"expected\": \"high\", \"target\": \"park\"},\n        {\"text\": \"She visited the park.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"physical object vs. non-physical concept\",\n      \"texts\": [\n        {\"text\": \"The light in the room was bright.\", \"expected\": \"high\", \"target\": \"light\"},\n        {\"text\": \"The hope in his heart was strong.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"location name after 'the' vs. other determiner\",\n      \"texts\": [\n        {\"text\": \"They crossed the Sahara.\", \"expected\": \"high\", \"target\": \"Sahara\"},\n        {\"text\": \"They crossed a desert.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"noun in list context vs. standalone\",\n      \"texts\": [\n        {\"text\": \"Mountains, rivers, and oceans.\", \"expected\": \"negative\", \"target\": \"oceans\"},\n        {\"text\": \"The ocean is deep.\", \"expected\": \"high\", \"target\": \"ocean\"}\n      ]\n    },\n    {\n      \"discriminates\": \"concrete noun in narrative vs. code\",\n      \"texts\": [\n        {\"text\": \"The wall by the garden.\", \"expected\": \"high\", \"target\": \"wall\"},\n        {\"text\": \"The variable in the function.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"preposition 'against' with object vs. alone\",\n      \"texts\": [\n        {\"text\": \"He leaned against the fence.\", \"expected\": \"high\", \"target\": \"fence\"},\n        {\"text\": \"He fought against injustice.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"article 'the' before concrete noun vs. before adjective\",\n      \"texts\": [\n        {\"text\": \"She opened the door.\", \"expected\": \"high\", \"target\": \"door\"},\n        {\"text\": \"She admired the beautiful.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"period after factual statement vs. after emotional statement\",\n      \"texts\": [\n        {\"text\": \"The Earth orbits the sun.\", \"expected\": \"high\", \"target\": \".\"},\n        {\"text\": \"I feel very happy.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"noun after quantity phrase\",\n      \"texts\": [\n        {\"text\": \"It weighs about ten pounds.\", \"expected\": \"high\", \"target\": \"pounds\"},\n        {\"text\": \"It costs about ten dollars.\", \"expected\": \"high\", \"target\": \"dollars\"}\n      ]\n    }\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false",
+   "errors": [
+    "parse error: Expecting ',' delimiter: line 83 column 6 (char 4864)"
+   ],
+   "finish_reason": "length",
+   "usage": {
+    "input_tokens": 4336,
+    "output_tokens": 1300,
+    "reasoning_tokens": 0,
+    "cached_tokens": 512,
+    "cost_usd": 0.00159985392,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972498-ajYCxtLAWWsDAlehMDWJ"
+  },
+  {
+   "content": "{\n  \"label\": \"detects a noun phrase referring to a physical object or location, especially after a preposition or article\",\n  \"trigger_hypothesis\": \"The neuron activates strongly when the token is a noun that names a concrete physical object or location, particularly when it follows a preposition or article that sets up a spatial or descriptive relationship.\",\n  \"output_hypothesis\": \"The neuron's negative activation may respond to tokens that are function words or abstract terms in contexts where a concrete noun is not being introduced.\",\n  \"alternatives\": [\n    \"Responds to the word 'the' when it precedes a noun (but W08 positive and W14 negative contradict).\",\n    \"Responds to the end of a factual statement (period) but W03 positive and W23 low contradict.\",\n    \"Responds to the word 'Sahara' regardless of context (but W05 positive and W12 negative contradict).\"\n  ],\n  \"adapter_changes\": \"In state C+1, the neuron's sign often flips (e.g., W02, W28, W29, W30) or becomes near zero, suggesting the modification disrupts its original detection. State A+1 also reduces most strong activations to near zero, while B+1 has minimal effect except on W09.\",\n  \"supporting\": [\"W01\", \"W02\", \"W05\", \"W06\", \"W07\", \"W09\", \"W12\"],\n  \"contradicting\": [\"W03\", \"W04\", \"W08\", \"W10\", \"W11\", \"W13\", \"W14\", \"W15\", \"W23\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"concrete noun vs. abstract noun\", \"texts\": [{\"text\": \"He placed the book on the shelf.\", \"expected\": \"high\", \"target\": \"shelf\"}, {\"text\": \"He considered the idea in the meeting.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"noun after preposition vs. noun after verb\", \"texts\": [{\"text\": \"She walked to the park.\", \"expected\": \"high\", \"target\": \"park\"}, {\"text\": \"She visited the park.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"physical object vs. non-physical concept\", \"texts\": [{\"text\": \"The light in the room was bright.\", \"expected\": \"high\", \"target\": \"light\"}, {\"text\": \"The hope in his heart was strong.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"location name after 'the' vs. other determiner\", \"texts\": [{\"text\": \"They crossed the Sahara.\", \"expected\": \"high\", \"target\": \"Sahara\"}, {\"text\": \"They crossed a desert.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"noun in list context vs. standalone\", \"texts\": [{\"text\": \"Mountains, rivers, and oceans.\", \"expected\": \"negative\", \"target\": \"oceans\"}, {\"text\": \"The ocean is deep.\", \"expected\": \"high\", \"target\": \"ocean\"}]},\n    {\"discriminates\": \"concrete noun in narrative vs. code\", \"texts\": [{\"text\": \"The wall by the garden.\", \"expected\": \"high\", \"target\": \"wall\"}, {\"text\": \"The variable in the function.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"preposition 'against' with object vs. alone\", \"texts\": [{\"text\": \"He leaned against the fence.\", \"expected\": \"high\", \"target\": \"fence\"}, {\"text\": \"He fought against injustice.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"article 'the' before concrete noun vs. before adjective\", \"texts\": [{\"text\": \"She opened the door.\", \"expected\": \"high\", \"target\": \"door\"}, {\"text\": \"She admired the beautiful.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"period after factual statement vs. after emotional statement\", \"texts\": [{\"text\": \"The Earth orbits the sun.\", \"expected\": \"high\", \"target\": \".\"}, {\"text\": \"I feel very happy.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"noun after quantity phrase\", \"texts\": [{\"text\": \"It weighs about ten pounds.\", \"expected\": \"high\", \"target\": \"pounds\"}, {\"text\": \"It costs about ten dollars.\", \"expected\": \"high\", \"target\": \"dollars\"}]}\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5674,
+    "output_tokens": 1039,
+    "reasoning_tokens": 0,
+    "cached_tokens": 4288,
+    "cost_usd": 0.00133509234,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972535-S1oSZzZfjr0QtFQSipAO"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-25T23:55:55Z",
+ "purpose": "explain:blind"
+}

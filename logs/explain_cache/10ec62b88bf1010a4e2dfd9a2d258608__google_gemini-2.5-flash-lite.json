@@ -1,0 +1,179 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "This neuron activates positively for words related to places or movement, and negatively for names.",
+  "output_hypothesis": "This neuron activates positively for words indicating a location or a change of location, such as 'airport', 'moved', and 'clinging'. It also activates negatively for proper names like 'Daniel' and 'Willie'.",
+  "alternatives": [
+   "The neuron activates for specific types of words, possibly related to proper nouns or specific contexts like code or narrative.",
+   "The neuron has a complex activation pattern that is not easily summarized by a single semantic feature."
+  ],
+  "adapter_changes": "No significant changes observed across states.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W08"
+  ],
+  "contradicting": [
+   "W05",
+   "W07",
+   "W12",
+   "W15"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "location vs. non-location",
+    "a_text": "We arrived at the airport.",
+    "a_expected": "high",
+    "a_target": "airport",
+    "b_text": "The car is red.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "movement vs. static",
+    "a_text": "She moved the chair.",
+    "a_expected": "high",
+    "a_target": "moved",
+    "b_text": "The chair is heavy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun (name) vs. common noun",
+    "a_text": "Hello, Daniel.",
+    "a_expected": "negative",
+    "a_target": "Daniel",
+    "b_text": "Hello, friend.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun (name) vs. common noun",
+    "a_text": "Willie went home.",
+    "a_expected": "negative",
+    "a_target": "Willie",
+    "b_text": "The dog went home.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "descriptive adjective vs. neutral",
+    "a_text": "The room was noxious.",
+    "a_expected": "high",
+    "a_target": "noxious",
+    "b_text": "The room was large.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "action verb vs. state verb",
+    "a_text": "He is clinging to the rope.",
+    "a_expected": "high",
+    "a_target": "clinging",
+    "b_text": "He is holding the rope.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "place name vs. common noun",
+    "a_text": "We visited Paris.",
+    "a_expected": "high",
+    "a_target": "Paris",
+    "b_text": "We visited the city.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code keyword vs. common word",
+    "a_text": "import multiprocessing",
+    "a_expected": "high",
+    "a_target": "multiprocessing",
+    "b_text": "importantly, we need",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative sentiment word vs. neutral",
+    "a_text": "That was obnoxious.",
+    "a_expected": "high",
+    "a_target": "obnoxious",
+    "b_text": "That was helpful.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "name vs. common noun",
+    "a_text": "The book is by John.",
+    "a_expected": "negative",
+    "a_target": "John",
+    "b_text": "The book is by the author.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"This neuron activates positively for words related to places or movement, and negatively for names.\",\"output_hypothesis\":\"This neuron activates positively for words indicating a location or a change of location, such as 'airport', 'moved', and 'clinging'. It also activates negatively for proper names like 'Daniel' and 'Willie'.\",\"alternatives\":[\"The neuron activates for specific types of words, possibly related to proper nouns or specific contexts like code or narrative.\",\"The neuron has a complex activation pattern that is not easily summarized by a single semantic feature.\"],\"adapter_changes\":\"No significant changes observed across states.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W08\"],\"contradicting\":[\"W05\",\"W07\",\"W12\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"location vs. non-location\",\"a_text\":\"We arrived at the airport.\",\"a_expected\":\"high\",\"a_target\":\"airport\",\"b_text\":\"The car is red.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"movement vs. static\",\"a_text\":\"She moved the chair.\",\"a_expected\":\"high\",\"a_target\":\"moved\",\"b_text\":\"The chair is heavy.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"proper noun (name) vs. common noun\",\"a_text\":\"Hello, Daniel.\",\"a_expected\":\"negative\",\"a_target\":\"Daniel\",\"b_text\":\"Hello, friend.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"proper noun (name) vs. common noun\",\"a_text\":\"Willie went home.\",\"a_expected\":\"negative\",\"a_target\":\"Willie\",\"b_text\":\"The dog went home.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"descriptive adjective vs. neutral\",\"a_text\":\"The room was noxious.\",\"a_expected\":\"high\",\"a_target\":\"noxious\",\"b_text\":\"The room was large.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"action verb vs. state verb\",\"a_text\":\"He is clinging to the rope.\",\"a_expected\":\"high\",\"a_target\":\"clinging\",\"b_text\":\"He is holding the rope.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"place name vs. common noun\",\"a_text\":\"We visited Paris.\",\"a_expected\":\"high\",\"a_target\":\"Paris\",\"b_text\":\"We visited the city.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"code keyword vs. common word\",\"a_text\":\"import multiprocessing\",\"a_expected\":\"high\",\"a_target\":\"multiprocessing\",\"b_text\":\"importantly, we need\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative sentiment word vs. neutral\",\"a_text\":\"That was obnoxious.\",\"a_expected\":\"high\",\"a_target\":\"obnoxious\",\"b_text\":\"That was helpful.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"name vs. common noun\",\"a_text\":\"The book is by John.\",\"a_expected\":\"negative\",\"a_target\":\"John\",\"b_text\":\"The book is by the author.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 3536,
+  "output_tokens": 741,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00065
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"This neuron activates positively for words related to places or movement, and negatively for names.\",\"output_hypothesis\":\"This neuron activates positively for words indicating a location or a change of location, such as 'airport', 'moved', and 'clinging'. It also activates negatively for proper names like 'Daniel' and 'Willie'.\",\"alternatives\":[\"The neuron activates for specific types of words, possibly related to proper nouns or specific contexts like code or narrative.\",\"The neuron has a complex activation pattern that is not easily summarized by a single semantic feature.\"],\"adapter_changes\":\"No significant changes observed across states.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W08\"],\"contradicting\":[\"W05\",\"W07\",\"W12\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"location vs. non-location\",\"a_text\":\"We arrived at the airport.\",\"a_expected\":\"high\",\"a_target\":\"airport\",\"b_text\":\"The car is red.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"movement vs. static\",\"a_text\":\"She moved the chair.\",\"a_expected\":\"high\",\"a_target\":\"moved\",\"b_text\":\"The chair is heavy.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"proper noun (name) vs. common noun\",\"a_text\":\"Hello, Daniel.\",\"a_expected\":\"negative\",\"a_target\":\"Daniel\",\"b_text\":\"Hello, friend.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"proper noun (name) vs. common noun\",\"a_text\":\"Willie went home.\",\"a_expected\":\"negative\",\"a_target\":\"Willie\",\"b_text\":\"The dog went home.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"descriptive adjective vs. neutral\",\"a_text\":\"The room was noxious.\",\"a_expected\":\"high\",\"a_target\":\"noxious\",\"b_text\":\"The room was large.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"action verb vs. state verb\",\"a_text\":\"He is clinging to the rope.\",\"a_expected\":\"high\",\"a_target\":\"clinging\",\"b_text\":\"He is holding the rope.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"place name vs. common noun\",\"a_text\":\"We visited Paris.\",\"a_expected\":\"high\",\"a_target\":\"Paris\",\"b_text\":\"We visited the city.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"code keyword vs. common word\",\"a_text\":\"import multiprocessing\",\"a_expected\":\"high\",\"a_target\":\"multiprocessing\",\"b_text\":\"importantly, we need\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative sentiment word vs. neutral\",\"a_text\":\"That was obnoxious.\",\"a_expected\":\"high\",\"a_target\":\"obnoxious\",\"b_text\":\"That was helpful.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"name vs. common noun\",\"a_text\":\"The book is by John.\",\"a_expected\":\"negative\",\"a_target\":\"John\",\"b_text\":\"The book is by the author.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 3536,
+    "output_tokens": 741,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.00065,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041146-kf5Et9oiVnOHL2p9JtCh"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:59:08Z",
+ "purpose": "explain:shuffled"
+}

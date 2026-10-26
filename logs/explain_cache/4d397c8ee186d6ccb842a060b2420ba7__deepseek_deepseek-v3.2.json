@@ -1,0 +1,215 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "positive: common nouns after 'the' in factual/neutral contexts; negative: common nouns after 'the' in emotional/chat contexts",
+  "trigger_hypothesis": "The neuron activates strongly positive when the token is a common noun (e.g., 'Sahara', 'library', 'wall', 'light') that follows the word 'the' in a factual or neutral descriptive context, and strongly negative when the token is a common noun (e.g., 'Sahara', 'that' as a relative pronoun) that follows 'the' in an emotional or chat response context.",
+  "output_hypothesis": "The neuron's positive activation encourages the model to continue with factual or neutral descriptive statements, while its negative activation discourages emotional or conversational continuations.",
+  "alternatives": [
+   "The neuron triggers on the word 'the' itself when followed by a noun, with sign determined by domain sentiment.",
+   "The neuron triggers on common nouns regardless of context, with sign indicating whether the noun is being defined/described (positive) or used in a personal/narrative way (negative)."
+  ],
+  "adapter_changes": "State A+1 strongly reduces positive activations (e.g., W01, W02, W06) and sometimes flips sign (W20, W25). State C+1 strongly reduces or flips many activations (W02, W28, W29). State B+1 has minimal effect except on W09.",
+  "supporting": [
+   "W01",
+   "W05",
+   "W06",
+   "W07",
+   "W09",
+   "W10",
+   "W12",
+   "W13",
+   "W14"
+  ],
+  "contradicting": [
+   "W02",
+   "W03",
+   "W04",
+   "W08",
+   "W11",
+   "W15"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "common noun after 'the' in factual vs emotional context",
+    "texts": [
+     {
+      "text": "The desert receives very little rain.",
+      "expected": "high",
+      "target": "desert"
+     },
+     {
+      "text": "I hated the desert that summer.",
+      "expected": "negative",
+      "target": "desert"
+     }
+    ]
+   },
+   {
+    "discriminates": "common noun after 'the' in neutral instruction vs chat response",
+    "texts": [
+     {
+      "text": "Turn left at the corner.",
+      "expected": "high",
+      "target": "corner"
+     },
+     {
+      "text": "Assistant: I saw you at the corner.",
+      "expected": "negative",
+      "target": "corner"
+     }
+    ]
+   },
+   {
+    "discriminates": "common noun after 'the' in definition vs narrative",
+    "texts": [
+     {
+      "text": "The library is a quiet place.",
+      "expected": "high",
+      "target": "library"
+     },
+     {
+      "text": "He walked into the library.",
+      "expected": "negative",
+      "target": "library"
+     }
+    ]
+   },
+   {
+    "discriminates": "'the' followed by non-noun (preposition)",
+    "texts": [
+     {
+      "text": "The about page is missing.",
+      "expected": "high",
+      "target": "page"
+     },
+     {
+      "text": "He spoke about the issue.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "common noun without preceding 'the'",
+    "texts": [
+     {
+      "text": "Deserts are dry.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "I love deserts.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "emotional adjective after 'the'",
+    "texts": [
+     {
+      "text": "The thrilling news arrived.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The sad story ended.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "'the' in code context",
+    "texts": [
+     {
+      "text": "Initialize the counter.",
+      "expected": "high",
+      "target": "counter"
+     },
+     {
+      "text": "int the = 5;",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "proper noun after 'the'",
+    "texts": [
+     {
+      "text": "The Amazon is long.",
+      "expected": "high",
+      "target": "Amazon"
+     },
+     {
+      "text": "I visited the Amazon.",
+      "expected": "negative",
+      "target": "Amazon"
+     }
+    ]
+   },
+   {
+    "discriminates": "'the' in mid-sentence vs end",
+    "texts": [
+     {
+      "text": "He saw the dog.",
+      "expected": "negative",
+      "target": "dog"
+     },
+     {
+      "text": "The dog.",
+      "expected": "high",
+      "target": "dog"
+     }
+    ]
+   },
+   {
+    "discriminates": "domain shift with same noun",
+    "texts": [
+     {
+      "text": "The light is bright.",
+      "expected": "high",
+      "target": "light"
+     },
+     {
+      "text": "Assistant: Turn on the light.",
+      "expected": "negative",
+      "target": "light"
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"positive: common nouns after 'the' in factual/neutral contexts; negative: common nouns after 'the' in emotional/chat contexts\",\"trigger_hypothesis\":\"The neuron activates strongly positive when the token is a common noun (e.g., 'Sahara', 'library', 'wall', 'light') that follows the word 'the' in a factual or neutral descriptive context, and strongly negative when the token is a common noun (e.g., 'Sahara', 'that' as a relative pronoun) that follows 'the' in an emotional or chat response context.\",\"output_hypothesis\":\"The neuron's positive activation encourages the model to continue with factual or neutral descriptive statements, while its negative activation discourages emotional or conversational continuations.\",\"alternatives\":[\"The neuron triggers on the word 'the' itself when followed by a noun, with sign determined by domain sentiment.\",\"The neuron triggers on common nouns regardless of context, with sign indicating whether the noun is being defined/described (positive) or used in a personal/narrative way (negative).\"],\"adapter_changes\":\"State A+1 strongly reduces positive activations (e.g., W01, W02, W06) and sometimes flips sign (W20, W25). State C+1 strongly reduces or flips many activations (W02, W28, W29). State B+1 has minimal effect except on W09.\",\"supporting\":[\"W01\",\"W05\",\"W06\",\"W07\",\"W09\",\"W10\",\"W12\",\"W13\",\"W14\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W08\",\"W11\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"common noun after 'the' in factual vs emotional context\",\"texts\":[{\"text\":\"The desert receives very little rain.\",\"expected\":\"high\",\"target\":\"desert\"},{\"text\":\"I hated the desert that summer.\",\"expected\":\"negative\",\"target\":\"desert\"}]},{\"discriminates\":\"common noun after 'the' in neutral instruction vs chat response\",\"texts\":[{\"text\":\"Turn left at the corner.\",\"expected\":\"high\",\"target\":\"corner\"},{\"text\":\"Assistant: I saw you at the corner.\",\"expected\":\"negative\",\"target\":\"corner\"}]},{\"discriminates\":\"common noun after 'the' in definition vs narrative\",\"texts\":[{\"text\":\"The library is a quiet place.\",\"expected\":\"high\",\"target\":\"library\"},{\"text\":\"He walked into the library.\",\"expected\":\"negative\",\"target\":\"library\"}]},{\"discriminates\":\"'the' followed by non-noun (preposition)\",\"texts\":[{\"text\":\"The about page is missing.\",\"expected\":\"high\",\"target\":\"page\"},{\"text\":\"He spoke about the issue.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"common noun without preceding 'the'\",\"texts\":[{\"text\":\"Deserts are dry.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"I love deserts.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"emotional adjective after 'the'\",\"texts\":[{\"text\":\"The thrilling news arrived.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The sad story ended.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"'the' in code context\",\"texts\":[{\"text\":\"Initialize the counter.\",\"expected\":\"high\",\"target\":\"counter\"},{\"text\":\"int the = 5;\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"proper noun after 'the'\",\"texts\":[{\"text\":\"The Amazon is long.\",\"expected\":\"high\",\"target\":\"Amazon\"},{\"text\":\"I visited the Amazon.\",\"expected\":\"negative\",\"target\":\"Amazon\"}]},{\"discriminates\":\"'the' in mid-sentence vs end\",\"texts\":[{\"text\":\"He saw the dog.\",\"expected\":\"negative\",\"target\":\"dog\"},{\"text\":\"The dog.\",\"expected\":\"high\",\"target\":\"dog\"}]},{\"discriminates\":\"domain shift with same noun\",\"texts\":[{\"text\":\"The light is bright.\",\"expected\":\"high\",\"target\":\"light\"},{\"text\":\"Assistant: Turn on the light.\",\"expected\":\"negative\",\"target\":\"light\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4461,
+  "output_tokens": 907,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00147118041
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"positive: common nouns after 'the' in factual/neutral contexts; negative: common nouns after 'the' in emotional/chat contexts\",\"trigger_hypothesis\":\"The neuron activates strongly positive when the token is a common noun (e.g., 'Sahara', 'library', 'wall', 'light') that follows the word 'the' in a factual or neutral descriptive context, and strongly negative when the token is a common noun (e.g., 'Sahara', 'that' as a relative pronoun) that follows 'the' in an emotional or chat response context.\",\"output_hypothesis\":\"The neuron's positive activation encourages the model to continue with factual or neutral descriptive statements, while its negative activation discourages emotional or conversational continuations.\",\"alternatives\":[\"The neuron triggers on the word 'the' itself when followed by a noun, with sign determined by domain sentiment.\",\"The neuron triggers on common nouns regardless of context, with sign indicating whether the noun is being defined/described (positive) or used in a personal/narrative way (negative).\"],\"adapter_changes\":\"State A+1 strongly reduces positive activations (e.g., W01, W02, W06) and sometimes flips sign (W20, W25). State C+1 strongly reduces or flips many activations (W02, W28, W29). State B+1 has minimal effect except on W09.\",\"supporting\":[\"W01\",\"W05\",\"W06\",\"W07\",\"W09\",\"W10\",\"W12\",\"W13\",\"W14\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W08\",\"W11\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"common noun after 'the' in factual vs emotional context\",\"texts\":[{\"text\":\"The desert receives very little rain.\",\"expected\":\"high\",\"target\":\"desert\"},{\"text\":\"I hated the desert that summer.\",\"expected\":\"negative\",\"target\":\"desert\"}]},{\"discriminates\":\"common noun after 'the' in neutral instruction vs chat response\",\"texts\":[{\"text\":\"Turn left at the corner.\",\"expected\":\"high\",\"target\":\"corner\"},{\"text\":\"Assistant: I saw you at the corner.\",\"expected\":\"negative\",\"target\":\"corner\"}]},{\"discriminates\":\"common noun after 'the' in definition vs narrative\",\"texts\":[{\"text\":\"The library is a quiet place.\",\"expected\":\"high\",\"target\":\"library\"},{\"text\":\"He walked into the library.\",\"expected\":\"negative\",\"target\":\"library\"}]},{\"discriminates\":\"'the' followed by non-noun (preposition)\",\"texts\":[{\"text\":\"The about page is missing.\",\"expected\":\"high\",\"target\":\"page\"},{\"text\":\"He spoke about the issue.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"common noun without preceding 'the'\",\"texts\":[{\"text\":\"Deserts are dry.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"I love deserts.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"emotional adjective after 'the'\",\"texts\":[{\"text\":\"The thrilling news arrived.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The sad story ended.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"'the' in code context\",\"texts\":[{\"text\":\"Initialize the counter.\",\"expected\":\"high\",\"target\":\"counter\"},{\"text\":\"int the = 5;\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"proper noun after 'the'\",\"texts\":[{\"text\":\"The Amazon is long.\",\"expected\":\"high\",\"target\":\"Amazon\"},{\"text\":\"I visited the Amazon.\",\"expected\":\"negative\",\"target\":\"Amazon\"}]},{\"discriminates\":\"'the' in mid-sentence vs end\",\"texts\":[{\"text\":\"He saw the dog.\",\"expected\":\"negative\",\"target\":\"dog\"},{\"text\":\"The dog.\",\"expected\":\"high\",\"target\":\"dog\"}]},{\"discriminates\":\"domain shift with same noun\",\"texts\":[{\"text\":\"The light is bright.\",\"expected\":\"high\",\"target\":\"light\"},{\"text\":\"Assistant: Turn on the light.\",\"expected\":\"negative\",\"target\":\"light\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4461,
+    "output_tokens": 907,
+    "reasoning_tokens": 0,
+    "cached_tokens": 576,
+    "cost_usd": 0.00147118041,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972995-sFMg5ZIk9oSgmgHYIa83"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:03:40Z",
+ "purpose": "explain:blind"
+}

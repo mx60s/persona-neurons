@@ -91,6 +91,8 @@ def blind_id(salt, chash):
 
 def state_label(state, intervention):
     """Summary key: the state id, or state@neuron:mode<value><unit> for a neuron intervention."""
+    if isinstance(intervention, list):
+        return f"{state}@" + "+".join(f"{i['neuron']}:{i['mode']}{i.get('value')}{i.get('unit', '')}" for i in intervention)
     if not intervention or intervention.get("mode") in (None, "none"):
         return state
     return f"{state}@{intervention['neuron']}:{intervention['mode']}{intervention.get('value')}{intervention.get('unit', '')}"

@@ -1,0 +1,1637 @@
+{
+ "id": "L33/N9516",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:52:20Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional assistant response start",
+   "trigger_hypothesis": "The neuron activates strongly negative at the start of an assistant's response in an emotional chat context, especially after a user's emotional story, when the assistant is about to express sympathy or surprise (e.g., 'Oh', 'In', 'At').",
+   "output_hypothesis": "The neuron suppresses the generation of short, empathetic interjections or sentence-starting words at the beginning of an assistant's emotional response, possibly to allow for more varied or less predictable emotional language.",
+   "alternatives": [
+    "The neuron detects sentence-initial words (like 'In', 'At', 'Oh') in any context, not specifically emotional ones.",
+    "The neuron responds to specific punctuation or formatting patterns, like newlines before assistant responses, regardless of content."
+   ],
+   "adapter_changes": "State C+1 dramatically increases negative activation (makes it more negative) specifically at prompt segment tokens like '\\n\\n' before assistant responses in emotional_chat and chat domains (see W20-W24), while state D+1 reduces the negative activation at the 'Oh' token in W02. Other states show smaller changes.",
+   "supporting": [
+    "L33_N9516:e08",
+    "L33_N9516:e10",
+    "L33_N9516:e11",
+    "L33_N9516:e12",
+    "L33_N9516:e13"
+   ],
+   "contradicting": [
+    "L33_N9516:e00",
+    "L33_N9516:e01",
+    "L33_N9516:e02",
+    "L33_N9516:e03",
+    "L33_N9516:e04",
+    "L33_N9516:e05",
+    "L33_N9516:e06",
+    "L33_N9516:e29",
+    "L33_N9516:e28",
+    "L33_N9516:e27",
+    "L33_N9516:e25",
+    "L33_N9516:e24",
+    "L33_N9516:e31",
+    "L33_N9516:e34"
+   ],
+   "proposed_tests": [
+    "Emotional assistant start vs. neutral assistant start :: [negative] <|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh | [low] <|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+    "Assistant response start vs. mid-sentence emotional word :: [negative] User: I lost my pet.\\nAssistant: Oh | [low] User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+    "Emotional story prompt vs. factual prompt :: [negative] User: My grandma died.\\nAssistant: In | [low] User: What is the capital?\\nAssistant: In",
+    "Sentence-starting 'At' in emotional context vs. mid-sentence 'at' :: [negative] User: I feel so anxious.\\nAssistant: At | [low] User: Look at that!\\nAssistant:",
+    "Newline before assistant response in emotional chat vs. other newline :: [negative] User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n | [low] This is a sentence.\\n",
+    "Word 'is' in emotional lie detection vs. neutral 'is' :: [high] Mix your lies with the truth and nobody will know which is | [low] The sky is blue.",
+    "Comma after emotional statement vs. neutral comma :: [negative] I joked with her, she was an extremophile, | [low] The list includes apple, banana, and cherry,",
+    "'at' in emotional confrontation vs. neutral 'at' :: [negative] ``Where's my shipment?'' ``But at | [low] Meet me at the park.",
+    "Assistant response start with 'Oh' after sad story vs. happy story :: [negative] User: My dog died.\\nAssistant: Oh | [low] User: I won the lottery!\\nAssistant: Oh",
+    "Prompt segment (before assistant) in emotional chat vs. narrative :: [negative] User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n | [low] He said, ``Hello.''\\n\\n"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Emotional assistant start vs. neutral assistant start",
+     "texts": [
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh",
+       "expected": "negative",
+       "target": "Oh"
+      },
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Assistant response start vs. mid-sentence emotional word",
+     "texts": [
+      {
+       "text": "User: I lost my pet.\\nAssistant: Oh",
+       "expected": "negative",
+       "target": "Oh"
+      },
+      {
+       "text": "User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Emotional story prompt vs. factual prompt",
+     "texts": [
+      {
+       "text": "User: My grandma died.\\nAssistant: In",
+       "expected": "negative",
+       "target": "In"
+      },
+      {
+       "text": "User: What is the capital?\\nAssistant: In",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Sentence-starting 'At' in emotional context vs. mid-sentence 'at'",
+     "texts": [
+      {
+       "text": "User: I feel so anxious.\\nAssistant: At",
+       "expected": "negative",
+       "target": "At"
+      },
+      {
+       "text": "User: Look at that!\\nAssistant:",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Newline before assistant response in emotional chat vs. other newline",
+     "texts": [
+      {
+       "text": "User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+       "expected": "negative",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "This is a sentence.\\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Word 'is' in emotional lie detection vs. neutral 'is'",
+     "texts": [
+      {
+       "text": "Mix your lies with the truth and nobody will know which is",
+       "expected": "high",
+       "target": "is"
+      },
+      {
+       "text": "The sky is blue.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Comma after emotional statement vs. neutral comma",
+     "texts": [
+      {
+       "text": "I joked with her, she was an extremophile,",
+       "expected": "negative",
+       "target": ","
+      },
+      {
+       "text": "The list includes apple, banana, and cherry,",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'at' in emotional confrontation vs. neutral 'at'",
+     "texts": [
+      {
+       "text": "``Where's my shipment?'' ``But at",
+       "expected": "negative",
+       "target": "at"
+      },
+      {
+       "text": "Meet me at the park.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Assistant response start with 'Oh' after sad story vs. happy story",
+     "texts": [
+      {
+       "text": "User: My dog died.\\nAssistant: Oh",
+       "expected": "negative",
+       "target": "Oh"
+      },
+      {
+       "text": "User: I won the lottery!\\nAssistant: Oh",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Prompt segment (before assistant) in emotional chat vs. narrative",
+     "texts": [
+      {
+       "text": "User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+       "expected": "negative",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "He said, ``Hello.''\\n\\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6223,
+    "output_tokens": 1228,
+    "reasoning_tokens": 8,
+    "cost_usd": 0.001967896
+   },
+   "invalid_citations": [],
+   "packet_hash": "be2f404d84f366b592a26923a7bdd1a2756c45c5e6f4d1c643811194424c40a0",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "B+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "C+0.5",
+    "o_amp+1": "C+1",
+    "o_amp-0.5": "C-0.5",
+    "o_amp-1": "C-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:52:23Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron activates positively for the token 'is' when it is part of a declarative statement, and negatively for sentence-initial tokens like 'Oh', 'In', and 'At', and punctuation like ','.",
+   "output_hypothesis": "The neuron appears to be sensitive to sentence structure and punctuation, potentially acting as a sentence boundary detector or a marker for declarative content. It shows strong positive activation for 'is' in a narrative context (W01) and strong negative activation for sentence-initial words and punctuation in various contexts (W02, W03, W04, W05, W17).",
+   "alternatives": [
+    "The neuron might be a general punctuation or sentence boundary detector, with a preference for positive activation at 'is' and negative activation at other sentence-initial tokens and punctuation.",
+    "The neuron could be sensitive to the semantic content of the text, with positive activation for factual or declarative statements and negative activation for exclamations or questions."
+   ],
+   "adapter_changes": "State C+1 shows a significant negative shift in activation for the token '\\n\\n' in chat and emotional_chat domains, particularly in prompt segments (W20, W21, W22, W23, W24). This suggests a strong sensitivity to the transition from user input to assistant response, or to specific formatting related to conversational turns.",
+   "supporting": [
+    "L33_N9516:e00",
+    "L33_N9516:e08",
+    "L33_N9516:e10",
+    "L33_N9516:e11",
+    "L33_N9516:e12",
+    "L33_N9516:e13"
+   ],
+   "contradicting": [
+    "L33_N9516:e01",
+    "L33_N9516:e02",
+    "L33_N9516:e03",
+    "L33_N9516:e04",
+    "L33_N9516:e05",
+    "L33_N9516:e06",
+    "L33_N9516:e29",
+    "L33_N9516:e28",
+    "L33_N9516:e27",
+    "L33_N9516:e25",
+    "L33_N9516:e24",
+    "L33_N9516:e31",
+    "L33_N9516:e34"
+   ],
+   "proposed_tests": [
+    "declarative vs. interrogative :: [high] This is a statement. | [low] Is this a statement?",
+    "sentence start vs. middle :: [low] The cat sat. | [high] The cat sat.",
+    "punctuation vs. word :: [low] Hello! | [high] Hello world",
+    "affirmative vs. negative :: [high] It is good. | [low] It is not good.",
+    "specific word 'is' vs. other verbs :: [high] This is true. | [low] This seems true.",
+    "sentence start 'Oh' vs. middle 'Oh' :: [low] Oh no. | [high] I said, Oh no.",
+    "sentence start 'In' vs. middle 'In' :: [low] In conclusion. | [high] We are in.",
+    "sentence start 'At' vs. middle 'At' :: [low] At the end. | [high] Look at the end.",
+    "declarative sentence end vs. question end :: [high] It is done. | [low] Is it done?",
+    "common word 'is' vs. less common word :: [high] This is important. | [low] This seems important."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "declarative vs. interrogative",
+     "texts": [
+      {
+       "text": "This is a statement.",
+       "expected": "high",
+       "target": "is"
+      },
+      {
+       "text": "Is this a statement?",
+       "expected": "low",
+       "target": "Is"
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "sentence start vs. middle",
+     "texts": [
+      {
+       "text": "The cat sat.",
+       "expected": "low",
+       "target": "The"
+      },
+      {
+       "text": "The cat sat.",
+       "expected": "high",
+       "target": "sat"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "punctuation vs. word",
+     "texts": [
+      {
+       "text": "Hello!",
+       "expected": "low",
+       "target": "!"
+      },
+      {
+       "text": "Hello world",
+       "expected": "high",
+       "target": "world"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "affirmative vs. negative",
+     "texts": [
+      {
+       "text": "It is good.",
+       "expected": "high",
+       "target": "is"
+      },
+      {
+       "text": "It is not good.",
+       "expected": "low",
+       "target": "not"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "specific word 'is' vs. other verbs",
+     "texts": [
+      {
+       "text": "This is true.",
+       "expected": "high",
+       "target": "is"
+      },
+      {
+       "text": "This seems true.",
+       "expected": "low",
+       "target": "seems"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "sentence start 'Oh' vs. middle 'Oh'",
+     "texts": [
+      {
+       "text": "Oh no.",
+       "expected": "low",
+       "target": "Oh"
+      },
+      {
+       "text": "I said, Oh no.",
+       "expected": "high",
+       "target": "Oh"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "sentence start 'In' vs. middle 'In'",
+     "texts": [
+      {
+       "text": "In conclusion.",
+       "expected": "low",
+       "target": "In"
+      },
+      {
+       "text": "We are in.",
+       "expected": "high",
+       "target": "in"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "sentence start 'At' vs. middle 'At'",
+     "texts": [
+      {
+       "text": "At the end.",
+       "expected": "low",
+       "target": "At"
+      },
+      {
+       "text": "Look at the end.",
+       "expected": "high",
+       "target": "at"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "declarative sentence end vs. question end",
+     "texts": [
+      {
+       "text": "It is done.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "Is it done?",
+       "expected": "low",
+       "target": "?"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "common word 'is' vs. less common word",
+     "texts": [
+      {
+       "text": "This is important.",
+       "expected": "high",
+       "target": "is"
+      },
+      {
+       "text": "This seems important.",
+       "expected": "low",
+       "target": "seems"
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 6088,
+    "output_tokens": 942,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0009856
+   },
+   "invalid_citations": [],
+   "packet_hash": "be2f404d84f366b592a26923a7bdd1a2756c45c5e6f4d1c643811194424c40a0",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "B+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "C+0.5",
+    "o_amp+1": "C+1",
+    "o_amp-0.5": "C-0.5",
+    "o_amp-1": "C-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:52:20Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional assistant response start",
+   "trigger_hypothesis": "The neuron activates strongly negative at the start of an assistant's response in an emotional chat context, especially after a user's emotional story, when the assistant is about to express sympathy or surprise (e.g., 'Oh', 'In', 'At').",
+   "output_hypothesis": "The neuron suppresses the generation of short, empathetic interjections or sentence-starting words at the beginning of an assistant's emotional response, possibly to allow for more varied or less predictable emotional language.",
+   "alternatives": [
+    "The neuron detects sentence-initial words (like 'In', 'At', 'Oh') in any context, not specifically emotional ones.",
+    "The neuron responds to specific punctuation or formatting patterns, like newlines before assistant responses, regardless of content."
+   ],
+   "adapter_changes": "State C+1 dramatically increases negative activation (makes it more negative) specifically at prompt segment tokens like '\\n\\n' before assistant responses in emotional_chat and chat domains (see W20-W24), while state D+1 reduces the negative activation at the 'Oh' token in W02. Other states show smaller changes.",
+   "supporting": [
+    "L33_N9516:e08",
+    "L33_N9516:e10",
+    "L33_N9516:e11",
+    "L33_N9516:e12",
+    "L33_N9516:e13"
+   ],
+   "contradicting": [
+    "L33_N9516:e00",
+    "L33_N9516:e01",
+    "L33_N9516:e02",
+    "L33_N9516:e03",
+    "L33_N9516:e04",
+    "L33_N9516:e05",
+    "L33_N9516:e06",
+    "L33_N9516:e29",
+    "L33_N9516:e28",
+    "L33_N9516:e27",
+    "L33_N9516:e25",
+    "L33_N9516:e24",
+    "L33_N9516:e31",
+    "L33_N9516:e34"
+   ],
+   "proposed_tests": [
+    "Emotional assistant start vs. neutral assistant start :: [negative] <|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh | [low] <|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+    "Assistant response start vs. mid-sentence emotional word :: [negative] User: I lost my pet.\\nAssistant: Oh | [low] User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+    "Emotional story prompt vs. factual prompt :: [negative] User: My grandma died.\\nAssistant: In | [low] User: What is the capital?\\nAssistant: In",
+    "Sentence-starting 'At' in emotional context vs. mid-sentence 'at' :: [negative] User: I feel so anxious.\\nAssistant: At | [low] User: Look at that!\\nAssistant:",
+    "Newline before assistant response in emotional chat vs. other newline :: [negative] User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n | [low] This is a sentence.\\n",
+    "Word 'is' in emotional lie detection vs. neutral 'is' :: [high] Mix your lies with the truth and nobody will know which is | [low] The sky is blue.",
+    "Comma after emotional statement vs. neutral comma :: [negative] I joked with her, she was an extremophile, | [low] The list includes apple, banana, and cherry,",
+    "'at' in emotional confrontation vs. neutral 'at' :: [negative] ``Where's my shipment?'' ``But at | [low] Meet me at the park.",
+    "Assistant response start with 'Oh' after sad story vs. happy story :: [negative] User: My dog died.\\nAssistant: Oh | [low] User: I won the lottery!\\nAssistant: Oh",
+    "Prompt segment (before assistant) in emotional chat vs. narrative :: [negative] User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n | [low] He said, ``Hello.''\\n\\n"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Emotional assistant start vs. neutral assistant start",
+     "texts": [
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh",
+       "expected": "negative",
+       "target": "Oh"
+      },
+      {
+       "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "Assistant response start vs. mid-sentence emotional word",
+     "texts": [
+      {
+       "text": "User: I lost my pet.\\nAssistant: Oh",
+       "expected": "negative",
+       "target": "Oh"
+      },
+      {
+       "text": "User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Emotional story prompt vs. factual prompt",
+     "texts": [
+      {
+       "text": "User: My grandma died.\\nAssistant: In",
+       "expected": "negative",
+       "target": "In"
+      },
+      {
+       "text": "User: What is the capital?\\nAssistant: In",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Sentence-starting 'At' in emotional context vs. mid-sentence 'at'",
+     "texts": [
+      {
+       "text": "User: I feel so anxious.\\nAssistant: At",
+       "expected": "negative",
+       "target": "At"
+      },
+      {
+       "text": "User: Look at that!\\nAssistant:",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Newline before assistant response in emotional chat vs. other newline",
+     "texts": [
+      {
+       "text": "User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+       "expected": "negative",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "This is a sentence.\\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Word 'is' in emotional lie detection vs. neutral 'is'",
+     "texts": [
+      {
+       "text": "Mix your lies with the truth and nobody will know which is",
+       "expected": "high",
+       "target": "is"
+      },
+      {
+       "text": "The sky is blue.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Comma after emotional statement vs. neutral comma",
+     "texts": [
+      {
+       "text": "I joked with her, she was an extremophile,",
+       "expected": "negative",
+       "target": ","
+      },
+      {
+       "text": "The list includes apple, banana, and cherry,",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'at' in emotional confrontation vs. neutral 'at'",
+     "texts": [
+      {
+       "text": "``Where's my shipment?'' ``But at",
+       "expected": "negative",
+       "target": "at"
+      },
+      {
+       "text": "Meet me at the park.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Assistant response start with 'Oh' after sad story vs. happy story",
+     "texts": [
+      {
+       "text": "User: My dog died.\\nAssistant: Oh",
+       "expected": "negative",
+       "target": "Oh"
+      },
+      {
+       "text": "User: I won the lottery!\\nAssistant: Oh",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Prompt segment (before assistant) in emotional chat vs. narrative",
+     "texts": [
+      {
+       "text": "User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+       "expected": "negative",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "He said, ``Hello.''\\n\\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6223,
+    "output_tokens": 1228,
+    "reasoning_tokens": 8,
+    "cost_usd": 0.001967896
+   },
+   "invalid_citations": [],
+   "packet_hash": "be2f404d84f366b592a26923a7bdd1a2756c45c5e6f4d1c643811194424c40a0",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "B+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "C+0.5",
+    "o_amp+1": "C+1",
+    "o_amp-0.5": "C-0.5",
+    "o_amp-1": "C-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "Emotional assistant start vs. neutral assistant start",
+   "prediction": "negative on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh",
+     "expected": "negative",
+     "target": "Oh",
+     "measured_max": 0.0898,
+     "measured_min": -1.3125,
+     "value": -1.3125,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0898,
+     "measured_min": -0.126,
+     "value": 0.126,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.027,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "Assistant response start vs. mid-sentence emotional word",
+   "prediction": "negative on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I lost my pet.\\nAssistant: Oh",
+     "expected": "negative",
+     "target": "Oh",
+     "measured_max": 0.2207,
+     "measured_min": -0.6445,
+     "value": -0.1074,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4004,
+     "measured_min": -1.4297,
+     "value": 1.4297,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "Emotional story prompt vs. factual prompt",
+   "prediction": "negative on 'In'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: My grandma died.\\nAssistant: In",
+     "expected": "negative",
+     "target": "In",
+     "measured_max": 0.6445,
+     "measured_min": -8.0,
+     "value": -8.0,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "User: What is the capital?\\nAssistant: In",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4629,
+     "measured_min": -4.7188,
+     "value": 4.7188,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.076,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "Sentence-starting 'At' in emotional context vs. mid-sentence 'at'",
+   "prediction": "negative on 'At'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I feel so anxious.\\nAssistant: At",
+     "expected": "negative",
+     "target": "At",
+     "measured_max": 0.3926,
+     "measured_min": -7.1562,
+     "value": -7.1562,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "User: Look at that!\\nAssistant:",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3789,
+     "measured_min": -0.5898,
+     "value": 0.5898,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.152,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "Newline before assistant response in emotional chat vs. other newline",
+   "prediction": "negative on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+     "expected": "negative",
+     "target": "\\n\\n",
+     "measured_max": 0.3594,
+     "measured_min": -0.4941,
+     "value": -0.4512,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is a sentence.\\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7773,
+     "measured_min": -0.0145,
+     "value": 0.7773,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.01,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "Word 'is' in emotional lie detection vs. neutral 'is'",
+   "prediction": "high on 'is'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Mix your lies with the truth and nobody will know which is",
+     "expected": "high",
+     "target": "is",
+     "measured_max": 37.0,
+     "measured_min": -0.7891,
+     "value": 37.0,
+     "threshold": 3.9688,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The sky is blue.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -2.6406,
+     "value": 2.6406,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.855,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "Comma after emotional statement vs. neutral comma",
+   "prediction": "negative on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I joked with her, she was an extremophile,",
+     "expected": "negative",
+     "target": ",",
+     "measured_max": 0.5234,
+     "measured_min": -0.7578,
+     "value": 0.2871,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The list includes apple, banana, and cherry,",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3906,
+     "measured_min": -0.1562,
+     "value": 0.3906,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "'at' in emotional confrontation vs. neutral 'at'",
+   "prediction": "negative on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "``Where's my shipment?'' ``But at",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.3535,
+     "measured_min": -10.8125,
+     "value": -10.8125,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Meet me at the park.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.083,
+     "measured_min": -0.7383,
+     "value": 0.7383,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.233,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "Assistant response start with 'Oh' after sad story vs. happy story",
+   "prediction": "negative on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: My dog died.\\nAssistant: Oh",
+     "expected": "negative",
+     "target": "Oh",
+     "measured_max": 0.4395,
+     "measured_min": -0.8945,
+     "value": -0.8945,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "User: I won the lottery!\\nAssistant: Oh",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4414,
+     "measured_min": -1.9609,
+     "value": 1.9609,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.025,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "Prompt segment (before assistant) in emotional chat vs. narrative",
+   "prediction": "negative on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+     "expected": "negative",
+     "target": "\\n\\n",
+     "measured_max": 0.3301,
+     "measured_min": -0.4883,
+     "value": -0.014,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said, ``Hello.''\\n\\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4824,
+     "measured_min": -0.207,
+     "value": 0.4824,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "Emotional assistant start vs. neutral assistant start",
+   "prediction": "negative on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nOh",
+     "expected": "negative",
+     "target": "Oh",
+     "measured_max": 0.0898,
+     "measured_min": -1.3125,
+     "value": -1.3125,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_end|>\\n<|im_start|>assistant\\n\\n\\nThe",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0898,
+     "measured_min": -0.126,
+     "value": 0.126,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.027,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "Assistant response start vs. mid-sentence emotional word",
+   "prediction": "negative on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I lost my pet.\\nAssistant: Oh",
+     "expected": "negative",
+     "target": "Oh",
+     "measured_max": 0.2207,
+     "measured_min": -0.6445,
+     "value": -0.1074,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "User: I lost my pet.\\nAssistant: That's so sad, oh dear.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4004,
+     "measured_min": -1.4297,
+     "value": 1.4297,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.031,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "Emotional story prompt vs. factual prompt",
+   "prediction": "negative on 'In'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: My grandma died.\\nAssistant: In",
+     "expected": "negative",
+     "target": "In",
+     "measured_max": 0.6445,
+     "measured_min": -8.0,
+     "value": -8.0,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "User: What is the capital?\\nAssistant: In",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4629,
+     "measured_min": -4.7188,
+     "value": 4.7188,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.076,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "Sentence-starting 'At' in emotional context vs. mid-sentence 'at'",
+   "prediction": "negative on 'At'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I feel so anxious.\\nAssistant: At",
+     "expected": "negative",
+     "target": "At",
+     "measured_max": 0.3926,
+     "measured_min": -7.1562,
+     "value": -7.1562,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "User: Look at that!\\nAssistant:",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3789,
+     "measured_min": -0.5898,
+     "value": 0.5898,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.152,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "Newline before assistant response in emotional chat vs. other newline",
+   "prediction": "negative on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I'm crying.\\n<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+     "expected": "negative",
+     "target": "\\n\\n",
+     "measured_max": 0.3594,
+     "measured_min": -0.4941,
+     "value": -0.4512,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is a sentence.\\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7773,
+     "measured_min": -0.0145,
+     "value": 0.7773,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.01,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "Word 'is' in emotional lie detection vs. neutral 'is'",
+   "prediction": "high on 'is'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Mix your lies with the truth and nobody will know which is",
+     "expected": "high",
+     "target": "is",
+     "measured_max": 37.0,
+     "measured_min": -0.7891,
+     "value": 37.0,
+     "threshold": 3.9688,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The sky is blue.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -2.6406,
+     "value": 2.6406,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.855,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "Comma after emotional statement vs. neutral comma",
+   "prediction": "negative on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I joked with her, she was an extremophile,",
+     "expected": "negative",
+     "target": ",",
+     "measured_max": 0.5234,
+     "measured_min": -0.7578,
+     "value": 0.2871,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The list includes apple, banana, and cherry,",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3906,
+     "measured_min": -0.1562,
+     "value": 0.3906,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "'at' in emotional confrontation vs. neutral 'at'",
+   "prediction": "negative on 'at'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "``Where's my shipment?'' ``But at",
+     "expected": "negative",
+     "target": "at",
+     "measured_max": 0.3535,
+     "measured_min": -10.8125,
+     "value": -10.8125,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Meet me at the park.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.083,
+     "measured_min": -0.7383,
+     "value": 0.7383,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.233,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "Assistant response start with 'Oh' after sad story vs. happy story",
+   "prediction": "negative on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: My dog died.\\nAssistant: Oh",
+     "expected": "negative",
+     "target": "Oh",
+     "measured_max": 0.4395,
+     "measured_min": -0.8945,
+     "value": -0.8945,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "User: I won the lottery!\\nAssistant: Oh",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4414,
+     "measured_min": -1.9609,
+     "value": 1.9609,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.025,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "Prompt segment (before assistant) in emotional chat vs. narrative",
+   "prediction": "negative on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I'm devastated.<|im_end|>\\n<|im_start|>assistant\\n\\n\\n",
+     "expected": "negative",
+     "target": "\\n\\n",
+     "measured_max": 0.3301,
+     "measured_min": -0.4883,
+     "value": -0.014,
+     "threshold": -11.5625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He said, ``Hello.''\\n\\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4824,
+     "measured_min": -0.207,
+     "value": 0.4824,
+     "threshold": 5.7812,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 43.25,
+    "pos_ref": 7.9375,
+    "neg_ref": -23.125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.0234375,
+    "p01": -1.2890625
+   }
+  }
+ ],
+ "disagreements": [
+  "2026-10-26T18:52:23Z v1 (deepseek/deepseek-v3.2) 'emotional assistant response start' vs v2 (google/gemini-2.5-flash-lite) 'no coherent hypothesis': supporting overlap 0.83, no_coherent False/True"
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 4,
+   "of": 10
+  }
+ ]
+}

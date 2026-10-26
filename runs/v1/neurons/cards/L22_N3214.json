@@ -1,0 +1,2079 @@
+{
+ "id": "L22/N3214",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:54:24Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative on modal/auxiliary verbs after a comma or clause boundary",
+   "trigger_hypothesis": "The neuron fires negatively on modal or auxiliary verbs (like 'can', 'are', 'be') when they appear after a comma or a clause boundary, especially in contexts of limitation or inability.",
+   "output_hypothesis": "The neuron's negative activation may suppress or downweight modal/auxiliary verbs that introduce a limitation, uncertainty, or negative consequence, perhaps to reduce overconfidence in such statements.",
+   "alternatives": [
+    "The neuron detects grammatical structure: negative on modal verbs after punctuation.",
+    "The neuron responds to sentiment: negative on words expressing uncertainty or limitation."
+   ],
+   "adapter_changes": "State D+1 strongly amplifies negative activations (e.g., W01, W19, W20, W21), while state E+1 reduces or flips them to positive (e.g., W02, W18, W20, W21, W22), suggesting the neuron's sensitivity to modals is modulated by these interventions.",
+   "supporting": [
+    "L22_N3214:e08",
+    "L22_N3214:e11",
+    "L22_N3214:e14",
+    "L22_N3214:e15",
+    "L22_N3214:e17",
+    "L22_N3214:e07"
+   ],
+   "contradicting": [
+    "L22_N3214:e00",
+    "L22_N3214:e01",
+    "L22_N3214:e03",
+    "L22_N3214:e04",
+    "L22_N3214:e05",
+    "L22_N3214:e12",
+    "L22_N3214:e28",
+    "L22_N3214:e31",
+    "L22_N3214:e32"
+   ],
+   "proposed_tests": [
+    "modal after comma vs. other words :: [negative] It is easy, but it can be difficult. | [low] It is easy, but it often is difficult.",
+    "auxiliary after period vs. content word :: [negative] I tried. Are you sure? | [low] I tried. Really sure?",
+    "modal expressing inability vs. ability :: [negative] I am unable to help. | [low] I am able to help.",
+    "'be' after comma in negative context vs. positive :: [negative] If I lost it, I would be sad. | [low] If I won, I would be happy.",
+    "modal in mid-sentence vs. after punctuation :: [low] You can try but it might fail. | [negative] You try, but it can fail.",
+    "'are' after question vs. statement :: [negative] Interviews are tough. | [low] Why interviews are tough.",
+    "modal with future uncertainty vs. present fact :: [negative] It may rain tomorrow. | [low] It rains often here.",
+    "auxiliary after list comma vs. conjunction :: [negative] We need eggs, milk, and can bake. | [low] We need eggs, milk, and butter.",
+    "'be' in hypothetical limitation vs. description :: [negative] Without this, I'd be lost. | [low] With this, I'm found.",
+    "modal after clause boundary without comma :: [negative] She said that can happen. | [low] She said that happens."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "modal after comma vs. other words",
+     "texts": [
+      {
+       "text": "It is easy, but it can be difficult.",
+       "expected": "negative",
+       "target": "can"
+      },
+      {
+       "text": "It is easy, but it often is difficult.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "auxiliary after period vs. content word",
+     "texts": [
+      {
+       "text": "I tried. Are you sure?",
+       "expected": "negative",
+       "target": "Are"
+      },
+      {
+       "text": "I tried. Really sure?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "modal expressing inability vs. ability",
+     "texts": [
+      {
+       "text": "I am unable to help.",
+       "expected": "negative",
+       "target": "unable"
+      },
+      {
+       "text": "I am able to help.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'be' after comma in negative context vs. positive",
+     "texts": [
+      {
+       "text": "If I lost it, I would be sad.",
+       "expected": "negative",
+       "target": "be"
+      },
+      {
+       "text": "If I won, I would be happy.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "modal in mid-sentence vs. after punctuation",
+     "texts": [
+      {
+       "text": "You can try but it might fail.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "You try, but it can fail.",
+       "expected": "negative",
+       "target": "can"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'are' after question vs. statement",
+     "texts": [
+      {
+       "text": "Interviews are tough.",
+       "expected": "negative",
+       "target": "are"
+      },
+      {
+       "text": "Why interviews are tough.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "modal with future uncertainty vs. present fact",
+     "texts": [
+      {
+       "text": "It may rain tomorrow.",
+       "expected": "negative",
+       "target": "may"
+      },
+      {
+       "text": "It rains often here.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "auxiliary after list comma vs. conjunction",
+     "texts": [
+      {
+       "text": "We need eggs, milk, and can bake.",
+       "expected": "negative",
+       "target": "can"
+      },
+      {
+       "text": "We need eggs, milk, and butter.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'be' in hypothetical limitation vs. description",
+     "texts": [
+      {
+       "text": "Without this, I'd be lost.",
+       "expected": "negative",
+       "target": "be"
+      },
+      {
+       "text": "With this, I'm found.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "modal after clause boundary without comma",
+     "texts": [
+      {
+       "text": "She said that can happen.",
+       "expected": "negative",
+       "target": "can"
+      },
+      {
+       "text": "She said that happens.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5421,
+    "output_tokens": 997,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00175501497
+   },
+   "invalid_citations": [],
+   "packet_hash": "de4c8157e191d51bf0ff23e7ec6a50c1997a9fb61b593481c5449e1ce307e7ea",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:54:27Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative punctuation",
+   "trigger_hypothesis": "The neuron activates negatively for punctuation marks that end a sentence or clause, particularly commas and periods.",
+   "output_hypothesis": "The neuron seems to detect sentence-ending or clause-ending punctuation, showing strong negative activation for commas and periods.",
+   "alternatives": [
+    "The neuron activates negatively for specific conjunctions like 'can' and 'are' in certain contexts.",
+    "The neuron activates negatively for words indicating inability or difficulty."
+   ],
+   "adapter_changes": "State E+1 shows a significant shift towards positive activation for 'but' (W21) and 'are' (W18), and a strong positive shift for 'not' (W22), while state D+1 shows a strong negative shift for 'are' (W18) and 'unable' (W19).",
+   "supporting": [
+    "L22_N3214:e08",
+    "L22_N3214:e12"
+   ],
+   "contradicting": [
+    "L22_N3214:e00",
+    "L22_N3214:e01",
+    "L22_N3214:e04",
+    "L22_N3214:e05",
+    "L22_N3214:e07",
+    "L22_N3214:e27",
+    "L22_N3214:e26",
+    "L22_N3214:e25",
+    "L22_N3214:e23",
+    "L22_N3214:e22",
+    "L22_N3214:e28",
+    "L22_N3214:e31",
+    "L22_N3214:e32",
+    "L22_N3214:e14",
+    "L22_N3214:e15",
+    "L22_N3214:e17",
+    "L22_N3214:e18",
+    "L22_N3214:e19"
+   ],
+   "proposed_tests": [
+    "comma vs. conjunction :: [high] This is a test, and it works. | [low] This is a test, but it works.",
+    "period vs. conjunction :: [low] This is a test. It works. | [high] This is a test and it works.",
+    "comma vs. conjunction :: [high] I like apples, and I like oranges. | [low] I like apples, but I like oranges.",
+    "period vs. conjunction :: [low] He is happy. | [high] He is happy and.",
+    "comma vs. conjunction :: [high] She is smart, and talented. | [low] She is smart, but talented.",
+    "period vs. conjunction :: [low] The dog barked. | [high] The dog barked and.",
+    "comma vs. conjunction :: [high] He ran fast, and won. | [low] He ran fast, but won.",
+    "period vs. conjunction :: [low] The race ended. | [high] The race ended and.",
+    "comma vs. conjunction :: [high] The food was good, and plentiful. | [low] The food was good, but plentiful.",
+    "period vs. conjunction :: [low] The sun set. | [high] The sun set and."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "comma vs. conjunction",
+     "texts": [
+      {
+       "text": "This is a test, and it works.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "This is a test, but it works.",
+       "expected": "low",
+       "target": "but"
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "period vs. conjunction",
+     "texts": [
+      {
+       "text": "This is a test. It works.",
+       "expected": "low",
+       "target": "."
+      },
+      {
+       "text": "This is a test and it works.",
+       "expected": "high",
+       "target": "and"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "comma vs. conjunction",
+     "texts": [
+      {
+       "text": "I like apples, and I like oranges.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "I like apples, but I like oranges.",
+       "expected": "low",
+       "target": "but"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "period vs. conjunction",
+     "texts": [
+      {
+       "text": "He is happy.",
+       "expected": "low",
+       "target": "."
+      },
+      {
+       "text": "He is happy and.",
+       "expected": "high",
+       "target": "and"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "comma vs. conjunction",
+     "texts": [
+      {
+       "text": "She is smart, and talented.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "She is smart, but talented.",
+       "expected": "low",
+       "target": "but"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "period vs. conjunction",
+     "texts": [
+      {
+       "text": "The dog barked.",
+       "expected": "low",
+       "target": "."
+      },
+      {
+       "text": "The dog barked and.",
+       "expected": "high",
+       "target": "and"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "comma vs. conjunction",
+     "texts": [
+      {
+       "text": "He ran fast, and won.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "He ran fast, but won.",
+       "expected": "low",
+       "target": "but"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "period vs. conjunction",
+     "texts": [
+      {
+       "text": "The race ended.",
+       "expected": "low",
+       "target": "."
+      },
+      {
+       "text": "The race ended and.",
+       "expected": "high",
+       "target": "and"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "comma vs. conjunction",
+     "texts": [
+      {
+       "text": "The food was good, and plentiful.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "The food was good, but plentiful.",
+       "expected": "low",
+       "target": "but"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "period vs. conjunction",
+     "texts": [
+      {
+       "text": "The sun set.",
+       "expected": "low",
+       "target": "."
+      },
+      {
+       "text": "The sun set and.",
+       "expected": "high",
+       "target": "and"
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 5763,
+    "output_tokens": 827,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0009071
+   },
+   "invalid_citations": [],
+   "packet_hash": "de4c8157e191d51bf0ff23e7ec6a50c1997a9fb61b593481c5449e1ce307e7ea",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:54:24Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative on modal/auxiliary verbs after a comma or clause boundary",
+   "trigger_hypothesis": "The neuron fires negatively on modal or auxiliary verbs (like 'can', 'are', 'be') when they appear after a comma or a clause boundary, especially in contexts of limitation or inability.",
+   "output_hypothesis": "The neuron's negative activation may suppress or downweight modal/auxiliary verbs that introduce a limitation, uncertainty, or negative consequence, perhaps to reduce overconfidence in such statements.",
+   "alternatives": [
+    "The neuron detects grammatical structure: negative on modal verbs after punctuation.",
+    "The neuron responds to sentiment: negative on words expressing uncertainty or limitation."
+   ],
+   "adapter_changes": "State D+1 strongly amplifies negative activations (e.g., W01, W19, W20, W21), while state E+1 reduces or flips them to positive (e.g., W02, W18, W20, W21, W22), suggesting the neuron's sensitivity to modals is modulated by these interventions.",
+   "supporting": [
+    "L22_N3214:e08",
+    "L22_N3214:e11",
+    "L22_N3214:e14",
+    "L22_N3214:e15",
+    "L22_N3214:e17",
+    "L22_N3214:e07"
+   ],
+   "contradicting": [
+    "L22_N3214:e00",
+    "L22_N3214:e01",
+    "L22_N3214:e03",
+    "L22_N3214:e04",
+    "L22_N3214:e05",
+    "L22_N3214:e12",
+    "L22_N3214:e28",
+    "L22_N3214:e31",
+    "L22_N3214:e32"
+   ],
+   "proposed_tests": [
+    "modal after comma vs. other words :: [negative] It is easy, but it can be difficult. | [low] It is easy, but it often is difficult.",
+    "auxiliary after period vs. content word :: [negative] I tried. Are you sure? | [low] I tried. Really sure?",
+    "modal expressing inability vs. ability :: [negative] I am unable to help. | [low] I am able to help.",
+    "'be' after comma in negative context vs. positive :: [negative] If I lost it, I would be sad. | [low] If I won, I would be happy.",
+    "modal in mid-sentence vs. after punctuation :: [low] You can try but it might fail. | [negative] You try, but it can fail.",
+    "'are' after question vs. statement :: [negative] Interviews are tough. | [low] Why interviews are tough.",
+    "modal with future uncertainty vs. present fact :: [negative] It may rain tomorrow. | [low] It rains often here.",
+    "auxiliary after list comma vs. conjunction :: [negative] We need eggs, milk, and can bake. | [low] We need eggs, milk, and butter.",
+    "'be' in hypothetical limitation vs. description :: [negative] Without this, I'd be lost. | [low] With this, I'm found.",
+    "modal after clause boundary without comma :: [negative] She said that can happen. | [low] She said that happens."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "modal after comma vs. other words",
+     "texts": [
+      {
+       "text": "It is easy, but it can be difficult.",
+       "expected": "negative",
+       "target": "can"
+      },
+      {
+       "text": "It is easy, but it often is difficult.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "auxiliary after period vs. content word",
+     "texts": [
+      {
+       "text": "I tried. Are you sure?",
+       "expected": "negative",
+       "target": "Are"
+      },
+      {
+       "text": "I tried. Really sure?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "modal expressing inability vs. ability",
+     "texts": [
+      {
+       "text": "I am unable to help.",
+       "expected": "negative",
+       "target": "unable"
+      },
+      {
+       "text": "I am able to help.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'be' after comma in negative context vs. positive",
+     "texts": [
+      {
+       "text": "If I lost it, I would be sad.",
+       "expected": "negative",
+       "target": "be"
+      },
+      {
+       "text": "If I won, I would be happy.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "modal in mid-sentence vs. after punctuation",
+     "texts": [
+      {
+       "text": "You can try but it might fail.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "You try, but it can fail.",
+       "expected": "negative",
+       "target": "can"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'are' after question vs. statement",
+     "texts": [
+      {
+       "text": "Interviews are tough.",
+       "expected": "negative",
+       "target": "are"
+      },
+      {
+       "text": "Why interviews are tough.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "modal with future uncertainty vs. present fact",
+     "texts": [
+      {
+       "text": "It may rain tomorrow.",
+       "expected": "negative",
+       "target": "may"
+      },
+      {
+       "text": "It rains often here.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "auxiliary after list comma vs. conjunction",
+     "texts": [
+      {
+       "text": "We need eggs, milk, and can bake.",
+       "expected": "negative",
+       "target": "can"
+      },
+      {
+       "text": "We need eggs, milk, and butter.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'be' in hypothetical limitation vs. description",
+     "texts": [
+      {
+       "text": "Without this, I'd be lost.",
+       "expected": "negative",
+       "target": "be"
+      },
+      {
+       "text": "With this, I'm found.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "modal after clause boundary without comma",
+     "texts": [
+      {
+       "text": "She said that can happen.",
+       "expected": "negative",
+       "target": "can"
+      },
+      {
+       "text": "She said that happens.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5421,
+    "output_tokens": 997,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00175501497
+   },
+   "invalid_citations": [],
+   "packet_hash": "de4c8157e191d51bf0ff23e7ec6a50c1997a9fb61b593481c5449e1ce307e7ea",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  },
+  {
+   "v": 4,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:45:08Z",
+   "kind": "review",
+   "blind": false,
+   "label": "assistant-reply difficulty acknowledgement (-) / difficulty narration (+); intensifier vs downtoner output",
+   "trigger_hypothesis": "Negative in assistant replies at positions where the assistant names, qualifies or contains a difficulty for the user (refusal \"I am unable\", \"I bet it's tough\", \"That's normal\", apology, \"Interviews can be [stressful]\"); same sentence as user turn or plain text ~0. Near zero for anxiety vocabulary in informational text and for positive replies. Weakly positive at concessive difficulty statements outside replies.",
+   "output_hypothesis": "Positive activation favours intensifiers (really, so, extremely, incredibly); negative favours downtoners (a [bit], some, slightly, exciting, normal). Confirmed by add +/-0.05 and zeroing (KL 0.11-0.16 vs random <=0.007).",
+   "alternatives": [
+    "Assistant-voice register feature without difficulty content (neutral reply B2 and plant-care e08 strongly negative)",
+    "Next-token feature for an upcoming difficulty adjective with speaker-dependent sign"
+   ],
+   "adapter_changes": "In reply tokens n_amp+1 adds a positive offset that cancels the base negative response (base<p01 mean -2.27 -> +0.11), n_sup+1 adds a negative offset (-> -3.35); ctrl ~base (r 0.99). Outside replies ~base; small reversed shifts in factual/web/code cancel the corpus mean. Same positions, offset (changed use of existing response).",
+   "supporting": [
+    "L22_N3214:e09",
+    "L22_N3214:e10",
+    "L22_N3214:e11",
+    "L22_N3214:e14",
+    "L22_N3214:e15",
+    "L22_N3214:e16",
+    "L22_N3214:e21",
+    "L22_N3214:t04",
+    "L22_N3214:t05",
+    "L22_N3214:t06"
+   ],
+   "contradicting": [
+    "L22_N3214:e08",
+    "L22_N3214:e13",
+    "L22_N3214:e02",
+    "L22_N3214:e30"
+   ],
+   "proposed_tests": [
+    "Behavioral zero ablation in n_sup+1 with downtoner counts and random control",
+    "Separate \"assistant about to say a difficulty word\" from \"acknowledging user difficulty\" with neutral exchanges",
+    "Explain reversed adapter shifts in positive replies and in factual text"
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L22_N3214.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "modal after comma vs. other words",
+   "prediction": "negative on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is easy, but it can be difficult.",
+     "expected": "negative",
+     "target": "can",
+     "measured_max": 0.0181,
+     "measured_min": -1.7422,
+     "value": -0.5352,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It is easy, but it often is difficult.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0205,
+     "measured_min": -1.6875,
+     "value": 1.6875,
+     "threshold": 1.1797,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.146,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "auxiliary after period vs. content word",
+   "prediction": "negative on 'Are'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I tried. Are you sure?",
+     "expected": "negative",
+     "target": "Are",
+     "measured_max": 0.0444,
+     "measured_min": -0.1582,
+     "value": 0.0134,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I tried. Really sure?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0537,
+     "measured_min": -0.1738,
+     "value": 0.1738,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "modal expressing inability vs. ability",
+   "prediction": "negative on 'unable'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I am unable to help.",
+     "expected": "negative",
+     "target": "unable",
+     "measured_max": 0.0,
+     "measured_min": -2.3438,
+     "value": -2.3438,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I am able to help.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1885,
+     "measured_min": -0.04,
+     "value": 0.1885,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.291,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "'be' after comma in negative context vs. positive",
+   "prediction": "negative on 'be'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "If I lost it, I would be sad.",
+     "expected": "negative",
+     "target": "be",
+     "measured_max": 0.3906,
+     "measured_min": -0.0776,
+     "value": 0.2969,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "If I won, I would be happy.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1201,
+     "measured_min": -0.3398,
+     "value": 0.3398,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.081,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "modal in mid-sentence vs. after punctuation",
+   "prediction": "low on 'whole text'; negative on 'can'",
+   "texts": [
+    {
+     "text": "You can try but it might fail.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6211,
+     "measured_min": -0.0645,
+     "value": 0.6211,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "You try, but it can fail.",
+     "expected": "negative",
+     "target": "can",
+     "measured_max": 0.3867,
+     "measured_min": -0.0684,
+     "value": 0.0752,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.018,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "'are' after question vs. statement",
+   "prediction": "negative on 'are'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Interviews are tough.",
+     "expected": "negative",
+     "target": "are",
+     "measured_max": 0.1797,
+     "measured_min": -0.7773,
+     "value": 0.1797,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Why interviews are tough.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0126,
+     "measured_min": -0.4668,
+     "value": 0.4668,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.082,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "modal with future uncertainty vs. present fact",
+   "prediction": "negative on 'may'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It may rain tomorrow.",
+     "expected": "negative",
+     "target": "may",
+     "measured_max": 0.166,
+     "measured_min": -0.1631,
+     "value": -0.0315,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It rains often here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0211,
+     "measured_min": -0.3145,
+     "value": 0.3145,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.036,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "auxiliary after list comma vs. conjunction",
+   "prediction": "negative on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need eggs, milk, and can bake.",
+     "expected": "negative",
+     "target": "can",
+     "measured_max": 0.1357,
+     "measured_min": -0.1816,
+     "value": -0.0128,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We need eggs, milk, and butter.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1357,
+     "measured_min": -0.1816,
+     "value": 0.1816,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "'be' in hypothetical limitation vs. description",
+   "prediction": "negative on 'be'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Without this, I'd be lost.",
+     "expected": "negative",
+     "target": "be",
+     "measured_max": 0.167,
+     "measured_min": -0.1235,
+     "value": 0.0986,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "With this, I'm found.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0048,
+     "measured_min": -0.1533,
+     "value": 0.1533,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.032,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "modal after clause boundary without comma",
+   "prediction": "negative on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She said that can happen.",
+     "expected": "negative",
+     "target": "can",
+     "measured_max": 0.0199,
+     "measured_min": -0.1069,
+     "value": 0.0199,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She said that happens.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1338,
+     "value": 0.1338,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:04Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "modal after comma vs. other words",
+   "prediction": "negative on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is easy, but it can be difficult.",
+     "expected": "negative",
+     "target": "can",
+     "measured_max": 0.0181,
+     "measured_min": -1.7422,
+     "value": -0.5352,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It is easy, but it often is difficult.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0205,
+     "measured_min": -1.6875,
+     "value": 1.6875,
+     "threshold": 1.1797,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.146,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "auxiliary after period vs. content word",
+   "prediction": "negative on 'Are'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I tried. Are you sure?",
+     "expected": "negative",
+     "target": "Are",
+     "measured_max": 0.0444,
+     "measured_min": -0.1582,
+     "value": 0.0134,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I tried. Really sure?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0537,
+     "measured_min": -0.1738,
+     "value": 0.1738,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "modal expressing inability vs. ability",
+   "prediction": "negative on 'unable'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I am unable to help.",
+     "expected": "negative",
+     "target": "unable",
+     "measured_max": 0.0,
+     "measured_min": -2.3438,
+     "value": -2.3438,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "I am able to help.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1885,
+     "measured_min": -0.04,
+     "value": 0.1885,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.291,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "'be' after comma in negative context vs. positive",
+   "prediction": "negative on 'be'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "If I lost it, I would be sad.",
+     "expected": "negative",
+     "target": "be",
+     "measured_max": 0.3906,
+     "measured_min": -0.0776,
+     "value": 0.2969,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "If I won, I would be happy.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1201,
+     "measured_min": -0.3398,
+     "value": 0.3398,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.081,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "modal in mid-sentence vs. after punctuation",
+   "prediction": "low on 'whole text'; negative on 'can'",
+   "texts": [
+    {
+     "text": "You can try but it might fail.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6211,
+     "measured_min": -0.0645,
+     "value": 0.6211,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "You try, but it can fail.",
+     "expected": "negative",
+     "target": "can",
+     "measured_max": 0.3867,
+     "measured_min": -0.0684,
+     "value": 0.0752,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.018,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "'are' after question vs. statement",
+   "prediction": "negative on 'are'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Interviews are tough.",
+     "expected": "negative",
+     "target": "are",
+     "measured_max": 0.1797,
+     "measured_min": -0.7773,
+     "value": 0.1797,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Why interviews are tough.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0126,
+     "measured_min": -0.4668,
+     "value": 0.4668,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.082,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "modal with future uncertainty vs. present fact",
+   "prediction": "negative on 'may'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It may rain tomorrow.",
+     "expected": "negative",
+     "target": "may",
+     "measured_max": 0.166,
+     "measured_min": -0.1631,
+     "value": -0.0315,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It rains often here.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0211,
+     "measured_min": -0.3145,
+     "value": 0.3145,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.036,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "auxiliary after list comma vs. conjunction",
+   "prediction": "negative on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need eggs, milk, and can bake.",
+     "expected": "negative",
+     "target": "can",
+     "measured_max": 0.1357,
+     "measured_min": -0.1816,
+     "value": -0.0128,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We need eggs, milk, and butter.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1357,
+     "measured_min": -0.1816,
+     "value": 0.1816,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "'be' in hypothetical limitation vs. description",
+   "prediction": "negative on 'be'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Without this, I'd be lost.",
+     "expected": "negative",
+     "target": "be",
+     "measured_max": 0.167,
+     "measured_min": -0.1235,
+     "value": 0.0986,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "With this, I'm found.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0048,
+     "measured_min": -0.1533,
+     "value": 0.1533,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.032,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "modal after clause boundary without comma",
+   "prediction": "negative on 'can'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She said that can happen.",
+     "expected": "negative",
+     "target": "can",
+     "measured_max": 0.0199,
+     "measured_min": -0.1069,
+     "value": 0.0199,
+     "threshold": -2.3594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She said that happens.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1338,
+     "value": 0.1338,
+     "threshold": 1.1797,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 7.9062,
+    "pos_ref": 2.6094,
+    "neg_ref": -4.7188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62109375,
+    "p01": -0.7109375
+   }
+  },
+  {
+   "test_id": "rv-A",
+   "rule": "review",
+   "description": "same sentence as reply / user turn / plain",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI have a job interview tomorrow and I'm really nervous.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nJob interviews are always nerve-wracking.",
+     "expected": "negative",
+     "target": "always",
+     "measured_at": "target",
+     "values": {
+      "base": -5.25,
+      "n_amp+1": 0.303,
+      "n_sup+1": -7.094,
+      "ctrl+1": -4.25
+     }
+    },
+    {
+     "text": "<|im_start|>user\nJob interviews are always nerve-wracking.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nGood luck.",
+     "expected": "low",
+     "target": "always",
+     "measured_at": "target",
+     "values": {
+      "base": 0.146,
+      "n_amp+1": 0.438,
+      "n_sup+1": -0.146,
+      "ctrl+1": 0.157
+     }
+    },
+    {
+     "text": "Job interviews are always nerve-wracking.",
+     "expected": "low",
+     "target": "always",
+     "measured_at": "target",
+     "values": {
+      "base": 0.49,
+      "n_amp+1": 0.973,
+      "n_sup+1": 0.05,
+      "ctrl+1": 0.531
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-B",
+   "rule": "review",
+   "description": "difficulty reply vs neutral reply (span mean)",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI have a job interview tomorrow and I'm really nervous.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat sounds really stressful. Interviews can be so hard.",
+     "expected": "negative",
+     "target": "hard",
+     "measured_at": "span",
+     "values": {
+      "base": -3.804,
+      "n_amp+1": 0.581,
+      "n_sup+1": -5.104,
+      "ctrl+1": -3.506
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI have a job interview tomorrow at nine.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat sounds like a good plan. Interviews can be an hour long.",
+     "expected": "low",
+     "target": "long",
+     "measured_at": "span",
+     "values": {
+      "base": -1.686,
+      "n_amp+1": -0.673,
+      "n_sup+1": -2.107,
+      "ctrl+1": -1.59
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "neutral reply span -1.69, min -5.62 at \"can be\"",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-C",
+   "rule": "review",
+   "description": "refusal vs willing reply",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nCan you make me a video tutorial on contouring?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI am unable to create a video tutorial.",
+     "expected": "negative",
+     "target": "unable",
+     "measured_at": "target",
+     "values": {
+      "base": -7.562,
+      "n_amp+1": -4.156,
+      "n_sup+1": -9.062,
+      "ctrl+1": -7.406
+     }
+    },
+    {
+     "text": "<|im_start|>user\nCan you make me a written tutorial on contouring?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI am happy to create a written tutorial.",
+     "expected": "low",
+     "target": "happy",
+     "measured_at": "target",
+     "values": {
+      "base": 0.484,
+      "n_amp+1": 0.146,
+      "n_sup+1": 0.602,
+      "ctrl+1": 0.484
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-D",
+   "rule": "review",
+   "description": "assistant own anxious persona / addressing user anxiety / third-person plain",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI have a job interview tomorrow and I'm really nervous.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nHonestly, I get nervous about that kind of thing too.",
+     "expected": "negative",
+     "target": "nervous",
+     "measured_at": "target",
+     "values": {
+      "base": -0.637,
+      "n_amp+1": 0.422,
+      "n_sup+1": -1.844,
+      "ctrl+1": -0.508
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI have a job interview tomorrow and I'm really nervous.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nYou must be nervous about that kind of thing.",
+     "expected": "negative",
+     "target": "nervous",
+     "measured_at": "target",
+     "values": {
+      "base": -2.547,
+      "n_amp+1": 0.122,
+      "n_sup+1": -4.156,
+      "ctrl+1": -2.484
+     }
+    },
+    {
+     "text": "She always gets nervous about that kind of thing.",
+     "expected": "low",
+     "target": "nervous",
+     "measured_at": "target",
+     "values": {
+      "base": 0.211,
+      "n_amp+1": 0.268,
+      "n_sup+1": 0.134,
+      "ctrl+1": 0.226
+     }
+    }
+   ],
+   "result": "mixed",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "D1 target -0.64 just above p01",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-E",
+   "rule": "review",
+   "description": "anxiety vocabulary only: plain and informational reply",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "Anxiety disorders affect about four percent of people worldwide and involve persistent worry.",
+     "expected": "low",
+     "target": "worry",
+     "measured_at": "target",
+     "values": {
+      "base": 0.052,
+      "n_amp+1": 0.024,
+      "n_sup+1": 0.103,
+      "ctrl+1": 0.062
+     }
+    },
+    {
+     "text": "<|im_start|>user\nHow common are anxiety disorders?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nAnxiety disorders affect about four percent of people worldwide and involve persistent worry.",
+     "expected": "low",
+     "target": "worry",
+     "measured_at": "target",
+     "values": {
+      "base": 0.189,
+      "n_amp+1": 0.179,
+      "n_sup+1": 0.067,
+      "ctrl+1": 0.18
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-F",
+   "rule": "review",
+   "description": "bad-news vs good-news reply (span mean)",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just lost my job.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's terrible news. I'm so sorry about your job.",
+     "expected": "negative",
+     "target": "sorry",
+     "measured_at": "span",
+     "values": {
+      "base": -1.599,
+      "n_amp+1": -0.093,
+      "n_sup+1": -2.388,
+      "ctrl+1": -1.601
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just got a new job!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's wonderful news. Congratulations on your job.",
+     "expected": "low",
+     "target": "Congratulations",
+     "measured_at": "span",
+     "values": {
+      "base": 0.545,
+      "n_amp+1": 0.29,
+      "n_sup+1": 0.618,
+      "ctrl+1": 0.533
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-G",
+   "rule": "review",
+   "description": "apology for error vs condolence (span mean)",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nThat answer was wrong.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm sorry for the confusion in my previous answer.",
+     "expected": "negative",
+     "target": "sorry",
+     "measured_at": "span",
+     "values": {
+      "base": -0.942,
+      "n_amp+1": -0.321,
+      "n_sup+1": -1.32,
+      "ctrl+1": -0.907
+     }
+    },
+    {
+     "text": "<|im_start|>user\nMy grandmother passed away last week.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm sorry you are going through this.",
+     "expected": "negative",
+     "target": "sorry",
+     "measured_at": "span",
+     "values": {
+      "base": -0.637,
+      "n_amp+1": -0.005,
+      "n_sup+1": -1.401,
+      "ctrl+1": -0.746
+     }
+    }
+   ],
+   "result": "mixed",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "G2 span -0.64 just above p01",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-H",
+   "rule": "review",
+   "description": "narrative failure vs success",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "Brad often felt like a failure in school, and he was convinced that he",
+     "expected": "high",
+     "target": "he",
+     "measured_at": "target",
+     "values": {
+      "base": 0.59,
+      "n_amp+1": 1.18,
+      "n_sup+1": 0.336,
+      "ctrl+1": 0.652
+     }
+    },
+    {
+     "text": "Brad often did well in school, and he was convinced that he",
+     "expected": "low",
+     "target": "he",
+     "measured_at": "target",
+     "values": {
+      "base": -0.01,
+      "n_amp+1": -0.011,
+      "n_sup+1": -0.003,
+      "ctrl+1": -0.016
+     }
+    }
+   ],
+   "result": "mixed",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "H1 0.59 just below p99",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-I",
+   "rule": "review",
+   "description": "verbose vs terse reassurance (span mean)",
+   "prediction": "thresholds p01 -0.711, p99 0.621 on base value; criteria per text (target token or reply span mean)",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI have a job interview tomorrow and I'm really nervous.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nIt's completely normal and understandable to feel that way, and many people feel the same before an interview.",
+     "expected": "negative",
+     "target": "normal",
+     "measured_at": "span",
+     "values": {
+      "base": -1.599,
+      "n_amp+1": -0.258,
+      "n_sup+1": -2.299,
+      "ctrl+1": -1.57
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI have a job interview tomorrow and I'm really nervous.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat's normal.",
+     "expected": "negative",
+     "target": "normal",
+     "measured_at": "span",
+     "values": {
+      "base": -2.459,
+      "n_amp+1": -0.342,
+      "n_sup+1": -2.947,
+      "ctrl+1": -2.328
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-J",
+   "rule": "review",
+   "description": "output: add +/-0.05 resid units at reply positions \"It's completely normal to feel\" and \"Interviews can be\"",
+   "prediction": "+ promotes intensifiers, - promotes downtoners (a/some/slightly); KL above layer-matched random neuron",
+   "texts": [],
+   "result": "pass",
+   "state": "base, mode add",
+   "notes": "KL 0.109/0.145 vs random 0.003/0.007; + raises really/extremely, - raises a/some/slightly/exciting/normal",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-K",
+   "rule": "review",
+   "description": "zero ablation in n_sup+1 at \"Interviews can be\"",
+   "prediction": "P(\" a\") falls; KL above random",
+   "texts": [],
+   "result": "pass",
+   "state": "n_sup+1 and n_amp+1, mode zero",
+   "notes": "P(a) 0.53->0.31, KL 0.156 vs random 0.0019; n_amp+1 KL 0.0003",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  },
+  {
+   "test_id": "rv-L",
+   "rule": "review",
+   "description": "adapter direction across 14 reply texts (span mean)",
+   "prediction": "amp raises, sup lowers in all 14",
+   "texts": [],
+   "result": "mixed",
+   "state": "base; also n_amp+1, n_sup+1, ctrl+1",
+   "notes": "12/14; positive replies C2, F2 reversed",
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  }
+ ],
+ "disagreements": [
+  "2026-10-26T18:54:27Z v1 (deepseek/deepseek-v3.2) 'negative on modal/auxiliary verbs after a comma or clause boundary' vs v2 (google/gemini-2.5-flash-lite) 'negative punctuation': supporting overlap 0.14, no_coherent False/True",
+  "2026-10-26T19:45:08Z review vs automated v1/v3 (\"negative on modal/auxiliary verbs after a comma\"): the part of speech is incidental; the same sentence is -5.25 as an assistant reply and +0.49 as plain text. Automated tests used plain short sentences, so they did not probe the reply context."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "tested",
+   "pass": 7,
+   "of": 12,
+   "created": "2026-10-26T19:45:08Z",
+   "author": "claude-opus-5-5 (review)"
+  }
+ ]
+}

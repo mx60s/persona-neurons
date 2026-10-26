@@ -1,0 +1,191 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative emotion or loss of control",
+  "trigger_hypothesis": "The neuron fires negatively on tokens that follow descriptions of negative emotional states or loss of control, especially in conversational or narrative contexts.",
+  "output_hypothesis": "The neuron's negative activation may suppress continuation of negative emotional or out-of-control scenarios, perhaps to steer the model away from generating further distressing content.",
+  "alternatives": [
+   "The neuron detects specific words like 'control', 'procedures', 'horrible', 'circumstance', and 'sense' regardless of context.",
+   "The neuron responds to the end of a clause or sentence that concludes a negative situation."
+  ],
+  "adapter_changes": "In states A+1, B+1, C+1, D+1, and E+1, the neuron's negative activations generally become more negative, especially in chat and emotional_chat domains (e.g., W22, W23, W24). State D+1 shows the largest increases in negativity.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W17",
+   "W18"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W19",
+   "W20",
+   "W21"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "negative emotional state vs neutral description",
+    "a_text": "I felt so overwhelmed and lost all control",
+    "a_expected": "negative",
+    "a_target": "control",
+    "b_text": "I checked the manual for the control panel",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "loss of control in narrative vs procedural control",
+    "a_text": "The situation was chaotic and spiraling out of control",
+    "a_expected": "negative",
+    "a_target": "control",
+    "b_text": "Please follow the safety control procedures",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative adjective describing event vs neutral fact",
+    "a_text": "That was a horrible accident",
+    "a_expected": "negative",
+    "a_target": "horrible",
+    "b_text": "The movie was a horrible mess",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "difficult circumstance vs ordinary circumstance",
+    "a_text": "It was a very awkward circumstance",
+    "a_expected": "negative",
+    "a_target": "circumstance",
+    "b_text": "Under normal circumstance, this is allowed",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sense of dread vs other senses",
+    "a_text": "I had a terrible sense of foreboding",
+    "a_expected": "negative",
+    "a_target": "sense",
+    "b_text": "I have a good sense of direction",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat vs factual chat",
+    "a_text": "I'm so scared, I feel like I'm losing control",
+    "a_expected": "negative",
+    "a_target": "control",
+    "b_text": "The remote control is on the table",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "end of negative clause vs end of positive clause",
+    "a_text": "The news was absolutely horrible",
+    "a_expected": "negative",
+    "a_target": "horrible",
+    "b_text": "The sunset was absolutely beautiful",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "medical procedures in emotional context vs technical description",
+    "a_text": "The surgical procedures were terrifying",
+    "a_expected": "negative",
+    "a_target": "procedures",
+    "b_text": "The laboratory procedures are standardized",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative tension vs neutral statement",
+    "a_text": "In this circumstance, we must act quickly",
+    "a_expected": "negative",
+    "a_target": "circumstance",
+    "b_text": "The circumstance of the crime is unclear",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "adapter effect on emotional text",
+    "a_text": "I felt a deep sense of loss",
+    "a_expected": "negative",
+    "a_target": "sense",
+    "b_text": "I felt a deep sense of loss",
+    "b_expected": "negative",
+    "b_target": "sense",
+    "c_text": "I felt a deep sense of loss",
+    "c_expected": "negative",
+    "c_target": "sense"
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative emotion or loss of control\",\"trigger_hypothesis\":\"The neuron fires negatively on tokens that follow descriptions of negative emotional states or loss of control, especially in conversational or narrative contexts.\",\"output_hypothesis\":\"The neuron's negative activation may suppress continuation of negative emotional or out-of-control scenarios, perhaps to steer the model away from generating further distressing content.\",\"alternatives\":[\"The neuron detects specific words like 'control', 'procedures', 'horrible', 'circumstance', and 'sense' regardless of context.\",\"The neuron responds to the end of a clause or sentence that concludes a negative situation.\"],\"adapter_changes\":\"In states A+1, B+1, C+1, D+1, and E+1, the neuron's negative activations generally become more negative, especially in chat and emotional_chat domains (e.g., W22, W23, W24). State D+1 shows the largest increases in negativity.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W17\",\"W18\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W19\",\"W20\",\"W21\"],\"proposed_tests\":[{\"discriminates\":\"negative emotional state vs neutral description\",\"a_text\":\"I felt so overwhelmed and lost all control\",\"a_expected\":\"negative\",\"a_target\":\"control\",\"b_text\":\"I checked the manual for the control panel\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"loss of control in narrative vs procedural control\",\"a_text\":\"The situation was chaotic and spiraling out of control\",\"a_expected\":\"negative\",\"a_target\":\"control\",\"b_text\":\"Please follow the safety control procedures\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative adjective describing event vs neutral fact\",\"a_text\":\"That was a horrible accident\",\"a_expected\":\"negative\",\"a_target\":\"horrible\",\"b_text\":\"The movie was a horrible mess\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"difficult circumstance vs ordinary circumstance\",\"a_text\":\"It was a very awkward circumstance\",\"a_expected\":\"negative\",\"a_target\":\"circumstance\",\"b_text\":\"Under normal circumstance, this is allowed\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sense of dread vs other senses\",\"a_text\":\"I had a terrible sense of foreboding\",\"a_expected\":\"negative\",\"a_target\":\"sense\",\"b_text\":\"I have a good sense of direction\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs factual chat\",\"a_text\":\"I'm so scared, I feel like I'm losing control\",\"a_expected\":\"negative\",\"a_target\":\"control\",\"b_text\":\"The remote control is on the table\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"end of negative clause vs end of positive clause\",\"a_text\":\"The news was absolutely horrible\",\"a_expected\":\"negative\",\"a_target\":\"horrible\",\"b_text\":\"The sunset was absolutely beautiful\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"medical procedures in emotional context vs technical description\",\"a_text\":\"The surgical procedures were terrifying\",\"a_expected\":\"negative\",\"a_target\":\"procedures\",\"b_text\":\"The laboratory procedures are standardized\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"narrative tension vs neutral statement\",\"a_text\":\"In this circumstance, we must act quickly\",\"a_expected\":\"negative\",\"a_target\":\"circumstance\",\"b_text\":\"The circumstance of the crime is unclear\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"adapter effect on emotional text\",\"a_text\":\"I felt a deep sense of loss\",\"a_expected\":\"negative\",\"a_target\":\"sense\",\"b_text\":\"I felt a deep sense of loss\",\"b_expected\":\"negative\",\"b_target\":\"sense\",\"c_text\":\"I felt a deep sense of loss\",\"c_expected\":\"negative\",\"c_target\":\"sense\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6294,
+  "output_tokens": 1002,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001892856
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative emotion or loss of control\",\"trigger_hypothesis\":\"The neuron fires negatively on tokens that follow descriptions of negative emotional states or loss of control, especially in conversational or narrative contexts.\",\"output_hypothesis\":\"The neuron's negative activation may suppress continuation of negative emotional or out-of-control scenarios, perhaps to steer the model away from generating further distressing content.\",\"alternatives\":[\"The neuron detects specific words like 'control', 'procedures', 'horrible', 'circumstance', and 'sense' regardless of context.\",\"The neuron responds to the end of a clause or sentence that concludes a negative situation.\"],\"adapter_changes\":\"In states A+1, B+1, C+1, D+1, and E+1, the neuron's negative activations generally become more negative, especially in chat and emotional_chat domains (e.g., W22, W23, W24). State D+1 shows the largest increases in negativity.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W17\",\"W18\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W19\",\"W20\",\"W21\"],\"proposed_tests\":[{\"discriminates\":\"negative emotional state vs neutral description\",\"a_text\":\"I felt so overwhelmed and lost all control\",\"a_expected\":\"negative\",\"a_target\":\"control\",\"b_text\":\"I checked the manual for the control panel\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"loss of control in narrative vs procedural control\",\"a_text\":\"The situation was chaotic and spiraling out of control\",\"a_expected\":\"negative\",\"a_target\":\"control\",\"b_text\":\"Please follow the safety control procedures\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative adjective describing event vs neutral fact\",\"a_text\":\"That was a horrible accident\",\"a_expected\":\"negative\",\"a_target\":\"horrible\",\"b_text\":\"The movie was a horrible mess\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"difficult circumstance vs ordinary circumstance\",\"a_text\":\"It was a very awkward circumstance\",\"a_expected\":\"negative\",\"a_target\":\"circumstance\",\"b_text\":\"Under normal circumstance, this is allowed\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"sense of dread vs other senses\",\"a_text\":\"I had a terrible sense of foreboding\",\"a_expected\":\"negative\",\"a_target\":\"sense\",\"b_text\":\"I have a good sense of direction\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs factual chat\",\"a_text\":\"I'm so scared, I feel like I'm losing control\",\"a_expected\":\"negative\",\"a_target\":\"control\",\"b_text\":\"The remote control is on the table\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"end of negative clause vs end of positive clause\",\"a_text\":\"The news was absolutely horrible\",\"a_expected\":\"negative\",\"a_target\":\"horrible\",\"b_text\":\"The sunset was absolutely beautiful\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"medical procedures in emotional context vs technical description\",\"a_text\":\"The surgical procedures were terrifying\",\"a_expected\":\"negative\",\"a_target\":\"procedures\",\"b_text\":\"The laboratory procedures are standardized\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"narrative tension vs neutral statement\",\"a_text\":\"In this circumstance, we must act quickly\",\"a_expected\":\"negative\",\"a_target\":\"circumstance\",\"b_text\":\"The circumstance of the crime is unclear\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"adapter effect on emotional text\",\"a_text\":\"I felt a deep sense of loss\",\"a_expected\":\"negative\",\"a_target\":\"sense\",\"b_text\":\"I felt a deep sense of loss\",\"b_expected\":\"negative\",\"b_target\":\"sense\",\"c_text\":\"I felt a deep sense of loss\",\"c_expected\":\"negative\",\"c_target\":\"sense\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6294,
+    "output_tokens": 1002,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001892856,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042066-68tp276wEiudPPfoO0W1"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:14:47Z",
+ "purpose": "explain:blind"
+}

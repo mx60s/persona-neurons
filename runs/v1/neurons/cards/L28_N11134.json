@@ -1,0 +1,1176 @@
+{
+ "id": "L28/N11134",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:10Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "positive: list-introducing nouns, negative: punctuation ending sentences",
+   "trigger_hypothesis": "The neuron activates strongly on nouns that introduce a list of items or strategies, especially in formal or analytical contexts, and negatively on punctuation that ends sentences, particularly in emotional or conversational settings.",
+   "output_hypothesis": "The neuron's output may encourage generating list items or strategies after a noun, and discourage ending sentences in emotional contexts.",
+   "alternatives": [
+    "The neuron responds to formal business or planning vocabulary.",
+    "The neuron detects sentence boundaries with a sentiment bias."
+   ],
+   "adapter_changes": "State A+1 and B+1 increase activation in chat contexts, especially for continuation segments, making the neuron more sensitive to list-introducing nouns. State C+1 and D+1 have smaller effects, while E+1 reduces activation in some chat contexts (e.g., W16).",
+   "supporting": [
+    "L28_N11134:e01",
+    "L28_N11134:e14",
+    "L28_N11134:e15",
+    "L28_N11134:e21"
+   ],
+   "contradicting": [
+    "L28_N11134:e09",
+    "L28_N11134:e11",
+    "L28_N11134:e10",
+    "L28_N11134:e25"
+   ],
+   "proposed_tests": [
+    "list-introducing noun vs. generic noun :: [high] We can adopt several strategies | [low] We can adopt several ideas",
+    "formal vs. informal context :: [high] The analysis aims to evaluate | [low] I aim to evaluate",
+    "punctuation ending emotional sentence :: [negative] I'm so sad. | [low] I'm so sad",
+    "list-introducing 'such' vs. other uses :: [high] Collect data on aspects such as | [low] It is such a nice day",
+    "sentence-ending punctuation in code :: [negative] # License. | [low] # License",
+    "noun before list vs. standalone :: [high] We need sensors like | [low] The sensors are broken",
+    "emotional chat ending punctuation :: [negative] That's great! | [low] That's great",
+    "question mark in emotional response :: [negative] What are you hoping to do? | [low] What are you hoping to do",
+    "list-introducing noun in narrative :: [high] He had efforts like | [low] He had efforts",
+    "punctuation ending factual sentence :: [low] The project is done. | [low] The project is done | [negative] The project is done!"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "list-introducing noun vs. generic noun",
+     "texts": [
+      {
+       "text": "We can adopt several strategies",
+       "expected": "high",
+       "target": "strategies"
+      },
+      {
+       "text": "We can adopt several ideas",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "formal vs. informal context",
+     "texts": [
+      {
+       "text": "The analysis aims to evaluate",
+       "expected": "high",
+       "target": "aims"
+      },
+      {
+       "text": "I aim to evaluate",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "punctuation ending emotional sentence",
+     "texts": [
+      {
+       "text": "I'm so sad.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "I'm so sad",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "list-introducing 'such' vs. other uses",
+     "texts": [
+      {
+       "text": "Collect data on aspects such as",
+       "expected": "high",
+       "target": "such"
+      },
+      {
+       "text": "It is such a nice day",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "sentence-ending punctuation in code",
+     "texts": [
+      {
+       "text": "# License.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "# License",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "noun before list vs. standalone",
+     "texts": [
+      {
+       "text": "We need sensors like",
+       "expected": "high",
+       "target": "sensors"
+      },
+      {
+       "text": "The sensors are broken",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "emotional chat ending punctuation",
+     "texts": [
+      {
+       "text": "That's great!",
+       "expected": "negative",
+       "target": "!"
+      },
+      {
+       "text": "That's great",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "question mark in emotional response",
+     "texts": [
+      {
+       "text": "What are you hoping to do?",
+       "expected": "negative",
+       "target": "?"
+      },
+      {
+       "text": "What are you hoping to do",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "list-introducing noun in narrative",
+     "texts": [
+      {
+       "text": "He had efforts like",
+       "expected": "high",
+       "target": "efforts"
+      },
+      {
+       "text": "He had efforts",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "punctuation ending factual sentence",
+     "texts": [
+      {
+       "text": "The project is done.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "The project is done",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "The project is done!",
+       "expected": "negative",
+       "target": "!"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5229,
+    "output_tokens": 879,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00161036
+   },
+   "invalid_citations": [],
+   "packet_hash": "8cda1dc96486d525eb8306c71c2b8dba09e5f0a9f06127dec58bc3c76f0512bf",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "list-introducing noun vs. generic noun",
+   "prediction": "high on 'strategies'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We can adopt several strategies",
+     "expected": "high",
+     "target": "strategies",
+     "measured_max": 1.7734,
+     "measured_min": -0.2695,
+     "value": 1.7734,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We can adopt several ideas",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1572,
+     "measured_min": -0.2695,
+     "value": 0.2695,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.049,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "formal vs. informal context",
+   "prediction": "high on 'aims'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The analysis aims to evaluate",
+     "expected": "high",
+     "target": "aims",
+     "measured_max": 1.6641,
+     "measured_min": -0.2305,
+     "value": 0.0145,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I aim to evaluate",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3281,
+     "measured_min": -0.2852,
+     "value": 0.3281,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "punctuation ending emotional sentence",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so sad.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.1201,
+     "measured_min": -0.3672,
+     "value": 0.1201,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I'm so sad",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0403,
+     "measured_min": -0.3672,
+     "value": 0.3672,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "list-introducing 'such' vs. other uses",
+   "prediction": "high on 'such'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Collect data on aspects such as",
+     "expected": "high",
+     "target": "such",
+     "measured_max": 6.1875,
+     "measured_min": 0.0,
+     "value": 0.6094,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It is such a nice day",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.416,
+     "measured_min": -0.1553,
+     "value": 0.416,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.006,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "sentence-ending punctuation in code",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# License.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.3379,
+     "measured_min": 0.0,
+     "value": 0.3379,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "# License",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0786,
+     "measured_min": 0.0,
+     "value": 0.0786,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "noun before list vs. standalone",
+   "prediction": "high on 'sensors'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need sensors like",
+     "expected": "high",
+     "target": "sensors",
+     "measured_max": 1.0391,
+     "measured_min": -0.2422,
+     "value": 1.0391,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The sensors are broken",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2402,
+     "measured_min": -0.1816,
+     "value": 0.2402,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.024,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "emotional chat ending punctuation",
+   "prediction": "negative on '!'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's great!",
+     "expected": "negative",
+     "target": "!",
+     "measured_max": 0.1621,
+     "measured_min": 0.0,
+     "value": 0.0003,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "That's great",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1621,
+     "measured_min": 0.0,
+     "value": 0.1621,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "question mark in emotional response",
+   "prediction": "negative on '?'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What are you hoping to do?",
+     "expected": "negative",
+     "target": "?",
+     "measured_max": 4.9375,
+     "measured_min": -0.2207,
+     "value": -0.0298,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "What are you hoping to do",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.9375,
+     "measured_min": -0.2207,
+     "value": 4.9375,
+     "threshold": 4.8125,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "list-introducing noun in narrative",
+   "prediction": "high on 'efforts'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He had efforts like",
+     "expected": "high",
+     "target": "efforts",
+     "measured_max": 0.1094,
+     "measured_min": -0.2373,
+     "value": -0.0562,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He had efforts",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1094,
+     "measured_min": -0.0562,
+     "value": 0.1094,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "punctuation ending factual sentence",
+   "prediction": "low on 'whole text'; low on 'whole text'; negative on '!'",
+   "texts": [
+    {
+     "text": "The project is done.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0605,
+     "measured_min": -0.3047,
+     "value": 0.3047,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "The project is done",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0605,
+     "measured_min": -0.0786,
+     "value": 0.0786,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "The project is done!",
+     "expected": "negative",
+     "target": "!",
+     "measured_max": 0.0605,
+     "measured_min": -0.2852,
+     "value": -0.2852,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:16Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "list-introducing noun vs. generic noun",
+   "prediction": "high on 'strategies'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We can adopt several strategies",
+     "expected": "high",
+     "target": "strategies",
+     "measured_max": 1.7734,
+     "measured_min": -0.2695,
+     "value": 1.7734,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We can adopt several ideas",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1572,
+     "measured_min": -0.2695,
+     "value": 0.2695,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.049,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "formal vs. informal context",
+   "prediction": "high on 'aims'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The analysis aims to evaluate",
+     "expected": "high",
+     "target": "aims",
+     "measured_max": 1.6641,
+     "measured_min": -0.2305,
+     "value": 0.0145,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I aim to evaluate",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3281,
+     "measured_min": -0.2852,
+     "value": 0.3281,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "punctuation ending emotional sentence",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so sad.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.1201,
+     "measured_min": -0.3672,
+     "value": 0.1201,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I'm so sad",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0403,
+     "measured_min": -0.3672,
+     "value": 0.3672,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.015,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "list-introducing 'such' vs. other uses",
+   "prediction": "high on 'such'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Collect data on aspects such as",
+     "expected": "high",
+     "target": "such",
+     "measured_max": 6.1875,
+     "measured_min": 0.0,
+     "value": 0.6094,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It is such a nice day",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.416,
+     "measured_min": -0.1553,
+     "value": 0.416,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.006,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "sentence-ending punctuation in code",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# License.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.3379,
+     "measured_min": 0.0,
+     "value": 0.3379,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "# License",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0786,
+     "measured_min": 0.0,
+     "value": 0.0786,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "noun before list vs. standalone",
+   "prediction": "high on 'sensors'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We need sensors like",
+     "expected": "high",
+     "target": "sensors",
+     "measured_max": 1.0391,
+     "measured_min": -0.2422,
+     "value": 1.0391,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The sensors are broken",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2402,
+     "measured_min": -0.1816,
+     "value": 0.2402,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.024,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "emotional chat ending punctuation",
+   "prediction": "negative on '!'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's great!",
+     "expected": "negative",
+     "target": "!",
+     "measured_max": 0.1621,
+     "measured_min": 0.0,
+     "value": 0.0003,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "That's great",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1621,
+     "measured_min": 0.0,
+     "value": 0.1621,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.0,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "question mark in emotional response",
+   "prediction": "negative on '?'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "What are you hoping to do?",
+     "expected": "negative",
+     "target": "?",
+     "measured_max": 4.9375,
+     "measured_min": -0.2207,
+     "value": -0.0298,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "What are you hoping to do",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.9375,
+     "measured_min": -0.2207,
+     "value": 4.9375,
+     "threshold": 4.8125,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "list-introducing noun in narrative",
+   "prediction": "high on 'efforts'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He had efforts like",
+     "expected": "high",
+     "target": "efforts",
+     "measured_max": 0.1094,
+     "measured_min": -0.2373,
+     "value": -0.0562,
+     "threshold": 9.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He had efforts",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1094,
+     "measured_min": -0.0562,
+     "value": 0.1094,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "punctuation ending factual sentence",
+   "prediction": "low on 'whole text'; low on 'whole text'; negative on '!'",
+   "texts": [
+    {
+     "text": "The project is done.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0605,
+     "measured_min": -0.3047,
+     "value": 0.3047,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "The project is done",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0605,
+     "measured_min": -0.0786,
+     "value": 0.0786,
+     "threshold": 4.8125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "The project is done!",
+     "expected": "negative",
+     "target": "!",
+     "measured_max": 0.0605,
+     "measured_min": -0.2852,
+     "value": -0.2852,
+     "threshold": -4.2812,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 32.75,
+    "pos_ref": 19.25,
+    "neg_ref": -8.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 9.1875,
+    "p01": -1.109375
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

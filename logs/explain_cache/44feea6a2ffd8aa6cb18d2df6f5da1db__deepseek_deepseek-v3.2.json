@@ -1,0 +1,192 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for code/formal punctuation, positive for emotional assistant",
+  "trigger_hypothesis": "The neuron fires negatively on formal punctuation or code syntax (like '):\\n', 'in' as part of a phrase, 'steal' in a sports context) and positively on the token 'assistant' in emotional chat prompts.",
+  "output_hypothesis": "The neuron suppresses formal or technical language and boosts emotional assistant responses.",
+  "alternatives": [
+   "The neuron detects sentence endings or clause boundaries.",
+   "The neuron responds to specific tokens regardless of context."
+  ],
+  "adapter_changes": "State D+1 shows much stronger negative activations on some tokens (W11, W12, W13, W16, W21) and a flip to positive on W11, suggesting the adapter amplifies negative responses to certain formal or continuation words.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W17",
+   "W20",
+   "W21"
+  ],
+  "contradicting": [
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W18",
+   "W19",
+   "W22"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "formal code punctuation vs emotional assistant",
+    "a_text": "def testEmpty(self):\\n",
+    "a_expected": "negative",
+    "a_target": ":\\n",
+    "b_text": "<|im_start|>assistant",
+    "b_expected": "high",
+    "b_target": "assistant",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'in' as preposition vs part of phrase",
+    "a_text": "He walked in the park.",
+    "a_expected": "negative",
+    "a_target": "in",
+    "b_text": "He was all in on the bet.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'steal' in sports vs theft",
+    "a_text": "That draft pick was a steal.",
+    "a_expected": "negative",
+    "a_target": "steal",
+    "b_text": "He tried to steal the car.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional assistant prompt vs neutral",
+    "a_text": "user\\nI'm so happy!<|im_end|>\\n<|im_start|>assistant",
+    "a_expected": "high",
+    "a_target": "assistant",
+    "b_text": "user\\nWhat is the time?<|im_end|>\\n<|im_start|>assistant",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code block start vs text",
+    "a_text": "if x > 0:\\n",
+    "a_expected": "negative",
+    "a_target": ":\\n",
+    "b_text": "The condition is: if x > 0.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'take' as verb vs idiom",
+    "a_text": "He will take the opportunity.",
+    "a_expected": "negative",
+    "a_target": "take",
+    "b_text": "It will take a long time.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'so' as conjunction vs intensifier",
+    "a_text": "and so on.",
+    "a_expected": "negative",
+    "a_target": "so",
+    "b_text": "I am so happy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'NAME' placeholder vs actual name",
+    "a_text": "The player [NAME] scored.",
+    "a_expected": "negative",
+    "a_target": "NAME",
+    "b_text": "The player John scored.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional vs factual assistant prompt",
+    "a_text": "user\\nI won the lottery!<|im_end|>\\n<|im_start|>assistant",
+    "a_expected": "high",
+    "a_target": "assistant",
+    "b_text": "user\\nExplain quantum physics.<|im_end|>\\n<|im_start|>assistant",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "colon newline in code vs prose",
+    "a_text": "Steps:\\n1. Do this.",
+    "a_expected": "negative",
+    "a_target": ":\\n",
+    "b_text": "The steps are: first, do this.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"negative for code/formal punctuation, positive for emotional assistant\",\"trigger_hypothesis\":\"The neuron fires negatively on formal punctuation or code syntax (like '):\\\\n', 'in' as part of a phrase, 'steal' in a sports context) and positively on the token 'assistant' in emotional chat prompts.\",\"output_hypothesis\":\"The neuron suppresses formal or technical language and boosts emotional assistant responses.\",\"alternatives\":[\"The neuron detects sentence endings or clause boundaries.\",\"The neuron responds to specific tokens regardless of context.\"],\"adapter_changes\":\"State D+1 shows much stronger negative activations on some tokens (W11, W12, W13, W16, W21) and a flip to positive on W11, suggesting the adapter amplifies negative responses to certain formal or continuation words.\",\"supporting\":[\"W01\",\"W02\",\"W17\",\"W20\",\"W21\"],\"contradicting\":[\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W18\",\"W19\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"formal code punctuation vs emotional assistant\",\"a_text\":\"def testEmpty(self):\\\\n\",\"a_expected\":\"negative\",\"a_target\":\":\\\\n\",\"b_text\":\"<|im_start|>assistant\",\"b_expected\":\"high\",\"b_target\":\"assistant\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'in' as preposition vs part of phrase\",\"a_text\":\"He walked in the park.\",\"a_expected\":\"negative\",\"a_target\":\"in\",\"b_text\":\"He was all in on the bet.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'steal' in sports vs theft\",\"a_text\":\"That draft pick was a steal.\",\"a_expected\":\"negative\",\"a_target\":\"steal\",\"b_text\":\"He tried to steal the car.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional assistant prompt vs neutral\",\"a_text\":\"user\\\\nI'm so happy!<|im_end|>\\\\n<|im_start|>assistant\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"user\\\\nWhat is the time?<|im_end|>\\\\n<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code block start vs text\",\"a_text\":\"if x > 0:\\\\n\",\"a_expected\":\"negative\",\"a_target\":\":\\\\n\",\"b_text\":\"The condition is: if x > 0.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'take' as verb vs idiom\",\"a_text\":\"He will take the opportunity.\",\"a_expected\":\"negative\",\"a_target\":\"take\",\"b_text\":\"It will take a long time.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' as conjunction vs intensifier\",\"a_text\":\"and so on.\",\"a_expected\":\"negative\",\"a_target\":\"so\",\"b_text\":\"I am so happy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'NAME' placeholder vs actual name\",\"a_text\":\"The player [NAME] scored.\",\"a_expected\":\"negative\",\"a_target\":\"NAME\",\"b_text\":\"The player John scored.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional vs factual assistant prompt\",\"a_text\":\"user\\\\nI won the lottery!<|im_end|>\\\\n<|im_start|>assistant\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"user\\\\nExplain quantum physics.<|im_end|>\\\\n<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon newline in code vs prose\",\"a_text\":\"Steps:\\\\n1. Do this.\",\"a_expected\":\"negative\",\"a_target\":\":\\\\n\",\"b_text\":\"The steps are: first, do this.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4285,
+  "output_tokens": 1034,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001343776
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative for code/formal punctuation, positive for emotional assistant\",\"trigger_hypothesis\":\"The neuron fires negatively on formal punctuation or code syntax (like '):\\\\n', 'in' as part of a phrase, 'steal' in a sports context) and positively on the token 'assistant' in emotional chat prompts.\",\"output_hypothesis\":\"The neuron suppresses formal or technical language and boosts emotional assistant responses.\",\"alternatives\":[\"The neuron detects sentence endings or clause boundaries.\",\"The neuron responds to specific tokens regardless of context.\"],\"adapter_changes\":\"State D+1 shows much stronger negative activations on some tokens (W11, W12, W13, W16, W21) and a flip to positive on W11, suggesting the adapter amplifies negative responses to certain formal or continuation words.\",\"supporting\":[\"W01\",\"W02\",\"W17\",\"W20\",\"W21\"],\"contradicting\":[\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W18\",\"W19\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"formal code punctuation vs emotional assistant\",\"a_text\":\"def testEmpty(self):\\\\n\",\"a_expected\":\"negative\",\"a_target\":\":\\\\n\",\"b_text\":\"<|im_start|>assistant\",\"b_expected\":\"high\",\"b_target\":\"assistant\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'in' as preposition vs part of phrase\",\"a_text\":\"He walked in the park.\",\"a_expected\":\"negative\",\"a_target\":\"in\",\"b_text\":\"He was all in on the bet.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'steal' in sports vs theft\",\"a_text\":\"That draft pick was a steal.\",\"a_expected\":\"negative\",\"a_target\":\"steal\",\"b_text\":\"He tried to steal the car.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional assistant prompt vs neutral\",\"a_text\":\"user\\\\nI'm so happy!<|im_end|>\\\\n<|im_start|>assistant\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"user\\\\nWhat is the time?<|im_end|>\\\\n<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code block start vs text\",\"a_text\":\"if x > 0:\\\\n\",\"a_expected\":\"negative\",\"a_target\":\":\\\\n\",\"b_text\":\"The condition is: if x > 0.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'take' as verb vs idiom\",\"a_text\":\"He will take the opportunity.\",\"a_expected\":\"negative\",\"a_target\":\"take\",\"b_text\":\"It will take a long time.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'so' as conjunction vs intensifier\",\"a_text\":\"and so on.\",\"a_expected\":\"negative\",\"a_target\":\"so\",\"b_text\":\"I am so happy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'NAME' placeholder vs actual name\",\"a_text\":\"The player [NAME] scored.\",\"a_expected\":\"negative\",\"a_target\":\"NAME\",\"b_text\":\"The player John scored.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional vs factual assistant prompt\",\"a_text\":\"user\\\\nI won the lottery!<|im_end|>\\\\n<|im_start|>assistant\",\"a_expected\":\"high\",\"a_target\":\"assistant\",\"b_text\":\"user\\\\nExplain quantum physics.<|im_end|>\\\\n<|im_start|>assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon newline in code vs prose\",\"a_text\":\"Steps:\\\\n1. Do this.\",\"a_expected\":\"negative\",\"a_target\":\":\\\\n\",\"b_text\":\"The steps are: first, do this.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4285,
+    "output_tokens": 1034,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001343776,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041276-BVBZzMmdcqlxsbZof1Kz"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:01:36Z",
+ "purpose": "explain:shuffled"
+}

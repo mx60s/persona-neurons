@@ -1,0 +1,197 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "newline after question",
+  "trigger_hypothesis": "The neuron activates strongly on a newline token that follows a question mark, especially in quiz/QA contexts.",
+  "output_hypothesis": "The neuron may help transition from a question to its answer, perhaps by preparing to list options or start a new line.",
+  "alternatives": [
+   "The neuron triggers on newlines in structured contexts (lists, quizzes).",
+   "The neuron triggers on newlines after punctuation in general."
+  ],
+  "adapter_changes": "State A+1 reduces activation on newlines after questions (W01,W02,W23,W24,W25), while states B+1, D+1, E+1 greatly increase it. State D+1 shows extreme amplification in chat contexts (W23,W24,W25,W26).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W04",
+   "W23",
+   "W24",
+   "W25",
+   "W26"
+  ],
+  "contradicting": [
+   "W03",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W27"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "newline after question vs other newline",
+    "a_text": "What is the capital of France?\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "The capital of France is Paris.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after question mark vs period",
+    "a_text": "Who wrote Hamlet?\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "He wrote Hamlet.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in quiz list vs narrative",
+    "a_text": "a. Option A\nb. Option B\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "The story continues.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after question in chat vs code",
+    "a_text": "User: How are you?\nAssistant:",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "def hello():\n    print('world')",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after question with options vs without",
+    "a_text": "What is 2+2?\na. 3\nb. 4\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "What is 2+2? Tell me.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after emotional question vs factual",
+    "a_text": "How do you feel?\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "The temperature is 20C.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after question in assistant response start",
+    "a_text": "<|im_start|>assistant\n\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "<|im_start|>user\n\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after punctuation other than question mark",
+    "a_text": "Hello!\n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "Hello?\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "Hello.\n",
+    "c_expected": "low",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after question with space before",
+    "a_text": "Question? \n",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "Question?\n",
+    "b_expected": "high",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after question in mid-sentence",
+    "a_text": "Is it true? I wonder.\n",
+    "a_expected": "high",
+    "a_target": "\n",
+    "b_text": "Is it true that I wonder.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"newline after question\",\"trigger_hypothesis\":\"The neuron activates strongly on a newline token that follows a question mark, especially in quiz/QA contexts.\",\"output_hypothesis\":\"The neuron may help transition from a question to its answer, perhaps by preparing to list options or start a new line.\",\"alternatives\":[\"The neuron triggers on newlines in structured contexts (lists, quizzes).\",\"The neuron triggers on newlines after punctuation in general.\"],\"adapter_changes\":\"State A+1 reduces activation on newlines after questions (W01,W02,W23,W24,W25), while states B+1, D+1, E+1 greatly increase it. State D+1 shows extreme amplification in chat contexts (W23,W24,W25,W26).\",\"supporting\":[\"W01\",\"W02\",\"W04\",\"W23\",\"W24\",\"W25\",\"W26\"],\"contradicting\":[\"W03\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W27\"],\"proposed_tests\":[{\"discriminates\":\"newline after question vs other newline\",\"a_text\":\"What is the capital of France?\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The capital of France is Paris.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question mark vs period\",\"a_text\":\"Who wrote Hamlet?\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"He wrote Hamlet.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in quiz list vs narrative\",\"a_text\":\"a. Option A\\nb. Option B\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The story continues.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question in chat vs code\",\"a_text\":\"User: How are you?\\nAssistant:\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"def hello():\\n    print('world')\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question with options vs without\",\"a_text\":\"What is 2+2?\\na. 3\\nb. 4\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"What is 2+2? Tell me.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after emotional question vs factual\",\"a_text\":\"How do you feel?\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The temperature is 20C.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question in assistant response start\",\"a_text\":\"<|im_start|>assistant\\n\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\n\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after punctuation other than question mark\",\"a_text\":\"Hello!\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Hello?\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"Hello.\\n\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"newline after question with space before\",\"a_text\":\"Question? \\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Question?\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question in mid-sentence\",\"a_text\":\"Is it true? I wonder.\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"Is it true that I wonder.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6163,
+  "output_tokens": 996,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00189766
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"newline after question\",\"trigger_hypothesis\":\"The neuron activates strongly on a newline token that follows a question mark, especially in quiz/QA contexts.\",\"output_hypothesis\":\"The neuron may help transition from a question to its answer, perhaps by preparing to list options or start a new line.\",\"alternatives\":[\"The neuron triggers on newlines in structured contexts (lists, quizzes).\",\"The neuron triggers on newlines after punctuation in general.\"],\"adapter_changes\":\"State A+1 reduces activation on newlines after questions (W01,W02,W23,W24,W25), while states B+1, D+1, E+1 greatly increase it. State D+1 shows extreme amplification in chat contexts (W23,W24,W25,W26).\",\"supporting\":[\"W01\",\"W02\",\"W04\",\"W23\",\"W24\",\"W25\",\"W26\"],\"contradicting\":[\"W03\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W27\"],\"proposed_tests\":[{\"discriminates\":\"newline after question vs other newline\",\"a_text\":\"What is the capital of France?\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The capital of France is Paris.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question mark vs period\",\"a_text\":\"Who wrote Hamlet?\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"He wrote Hamlet.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in quiz list vs narrative\",\"a_text\":\"a. Option A\\nb. Option B\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The story continues.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question in chat vs code\",\"a_text\":\"User: How are you?\\nAssistant:\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"def hello():\\n    print('world')\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question with options vs without\",\"a_text\":\"What is 2+2?\\na. 3\\nb. 4\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"What is 2+2? Tell me.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after emotional question vs factual\",\"a_text\":\"How do you feel?\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"The temperature is 20C.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question in assistant response start\",\"a_text\":\"<|im_start|>assistant\\n\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"<|im_start|>user\\n\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after punctuation other than question mark\",\"a_text\":\"Hello!\\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Hello?\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"Hello.\\n\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"newline after question with space before\",\"a_text\":\"Question? \\n\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Question?\\n\",\"b_expected\":\"high\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after question in mid-sentence\",\"a_text\":\"Is it true? I wonder.\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\",\"b_text\":\"Is it true that I wonder.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6163,
+    "output_tokens": 996,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00189766,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042143-vgFCQBoqkH2Nm35ikGQc"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:18Z",
+ "purpose": "explain:blind"
+}

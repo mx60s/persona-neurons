@@ -1,0 +1,188 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "digit or punctuation after a number",
+  "trigger_hypothesis": "The neuron fires strongly on digits (especially '1') and punctuation (especially '.') that follow a number, indicating the end of a numeric sequence.",
+  "output_hypothesis": "The neuron may help finalize numeric sequences or mark the end of a number, possibly contributing to formatting or closing a numeric context.",
+  "alternatives": [
+   "The neuron triggers on any token that follows a number, regardless of type, marking the end of a numeric phrase.",
+   "The neuron is sensitive to specific tokens like '1' and '.' in any context, not necessarily after numbers."
+  ],
+  "adapter_changes": "In states B+1, D+1, and E+1, the neuron becomes more active in chat/emotional_chat contexts, especially on tokens like 'decision', 'pull', 'second', 'alot', 'in', and 'up', suggesting an enhanced role in continuation or response generation in those states.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "digit after number vs other tokens",
+    "a_text": "The number is 42.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The number is forty-two.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "digit '1' after number vs other digits",
+    "a_text": "It happened in 1991.",
+    "a_expected": "high",
+    "a_target": "1",
+    "b_text": "It happened in 1999.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation after number vs punctuation elsewhere",
+    "a_text": "Count to 10.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "Hello. World.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "number followed by space vs other spaces",
+    "a_text": "Page 5 of 10.",
+    "a_expected": "high",
+    "a_target": " ",
+    "b_text": "Page five of ten.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "digit in numeric context vs non-numeric",
+    "a_text": "The code is 1234.",
+    "a_expected": "high",
+    "a_target": "4",
+    "b_text": "The code is ABCD.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token after multi-digit number vs single digit",
+    "a_text": "Year 2025 is coming.",
+    "a_expected": "high",
+    "a_target": "5",
+    "b_text": "Year 5 is coming.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "digit in list vs standalone",
+    "a_text": "Items: 1, 2, 3.",
+    "a_expected": "high",
+    "a_target": "1",
+    "b_text": "Item one.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation after number in chat vs factual",
+    "a_text": "I have 3.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The value is 3.",
+    "b_expected": "high",
+    "b_target": ".",
+    "c_text": "I have three.",
+    "c_expected": "low",
+    "c_target": ""
+   },
+   {
+    "discriminates": "digit after number in code vs chat",
+    "a_text": "x = 7;",
+    "a_expected": "high",
+    "a_target": "7",
+    "b_text": "I ate 7 apples.",
+    "b_expected": "high",
+    "b_target": "7",
+    "c_text": "x = seven;",
+    "c_expected": "low",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token after number in emotional chat vs neutral",
+    "a_text": "I need 1 more.",
+    "a_expected": "high",
+    "a_target": "1",
+    "b_text": "We have 1 left.",
+    "b_expected": "high",
+    "b_target": "1",
+    "c_text": "I need one more.",
+    "c_expected": "low",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"digit or punctuation after a number\",\"trigger_hypothesis\":\"The neuron fires strongly on digits (especially '1') and punctuation (especially '.') that follow a number, indicating the end of a numeric sequence.\",\"output_hypothesis\":\"The neuron may help finalize numeric sequences or mark the end of a number, possibly contributing to formatting or closing a numeric context.\",\"alternatives\":[\"The neuron triggers on any token that follows a number, regardless of type, marking the end of a numeric phrase.\",\"The neuron is sensitive to specific tokens like '1' and '.' in any context, not necessarily after numbers.\"],\"adapter_changes\":\"In states B+1, D+1, and E+1, the neuron becomes more active in chat/emotional_chat contexts, especially on tokens like 'decision', 'pull', 'second', 'alot', 'in', and 'up', suggesting an enhanced role in continuation or response generation in those states.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"digit after number vs other tokens\",\"a_text\":\"The number is 42.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The number is forty-two.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"digit '1' after number vs other digits\",\"a_text\":\"It happened in 1991.\",\"a_expected\":\"high\",\"a_target\":\"1\",\"b_text\":\"It happened in 1999.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation after number vs punctuation elsewhere\",\"a_text\":\"Count to 10.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Hello. World.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number followed by space vs other spaces\",\"a_text\":\"Page 5 of 10.\",\"a_expected\":\"high\",\"a_target\":\" \",\"b_text\":\"Page five of ten.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"digit in numeric context vs non-numeric\",\"a_text\":\"The code is 1234.\",\"a_expected\":\"high\",\"a_target\":\"4\",\"b_text\":\"The code is ABCD.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token after multi-digit number vs single digit\",\"a_text\":\"Year 2025 is coming.\",\"a_expected\":\"high\",\"a_target\":\"5\",\"b_text\":\"Year 5 is coming.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"digit in list vs standalone\",\"a_text\":\"Items: 1, 2, 3.\",\"a_expected\":\"high\",\"a_target\":\"1\",\"b_text\":\"Item one.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation after number in chat vs factual\",\"a_text\":\"I have 3.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The value is 3.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"I have three.\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"digit after number in code vs chat\",\"a_text\":\"x = 7;\",\"a_expected\":\"high\",\"a_target\":\"7\",\"b_text\":\"I ate 7 apples.\",\"b_expected\":\"high\",\"b_target\":\"7\",\"c_text\":\"x = seven;\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"token after number in emotional chat vs neutral\",\"a_text\":\"I need 1 more.\",\"a_expected\":\"high\",\"a_target\":\"1\",\"b_text\":\"We have 1 left.\",\"b_expected\":\"high\",\"b_target\":\"1\",\"c_text\":\"I need one more.\",\"c_expected\":\"low\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5446,
+  "output_tokens": 978,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0017044
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"digit or punctuation after a number\",\"trigger_hypothesis\":\"The neuron fires strongly on digits (especially '1') and punctuation (especially '.') that follow a number, indicating the end of a numeric sequence.\",\"output_hypothesis\":\"The neuron may help finalize numeric sequences or mark the end of a number, possibly contributing to formatting or closing a numeric context.\",\"alternatives\":[\"The neuron triggers on any token that follows a number, regardless of type, marking the end of a numeric phrase.\",\"The neuron is sensitive to specific tokens like '1' and '.' in any context, not necessarily after numbers.\"],\"adapter_changes\":\"In states B+1, D+1, and E+1, the neuron becomes more active in chat/emotional_chat contexts, especially on tokens like 'decision', 'pull', 'second', 'alot', 'in', and 'up', suggesting an enhanced role in continuation or response generation in those states.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"digit after number vs other tokens\",\"a_text\":\"The number is 42.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The number is forty-two.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"digit '1' after number vs other digits\",\"a_text\":\"It happened in 1991.\",\"a_expected\":\"high\",\"a_target\":\"1\",\"b_text\":\"It happened in 1999.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation after number vs punctuation elsewhere\",\"a_text\":\"Count to 10.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Hello. World.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number followed by space vs other spaces\",\"a_text\":\"Page 5 of 10.\",\"a_expected\":\"high\",\"a_target\":\" \",\"b_text\":\"Page five of ten.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"digit in numeric context vs non-numeric\",\"a_text\":\"The code is 1234.\",\"a_expected\":\"high\",\"a_target\":\"4\",\"b_text\":\"The code is ABCD.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token after multi-digit number vs single digit\",\"a_text\":\"Year 2025 is coming.\",\"a_expected\":\"high\",\"a_target\":\"5\",\"b_text\":\"Year 5 is coming.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"digit in list vs standalone\",\"a_text\":\"Items: 1, 2, 3.\",\"a_expected\":\"high\",\"a_target\":\"1\",\"b_text\":\"Item one.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation after number in chat vs factual\",\"a_text\":\"I have 3.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The value is 3.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"I have three.\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"digit after number in code vs chat\",\"a_text\":\"x = 7;\",\"a_expected\":\"high\",\"a_target\":\"7\",\"b_text\":\"I ate 7 apples.\",\"b_expected\":\"high\",\"b_target\":\"7\",\"c_text\":\"x = seven;\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"token after number in emotional chat vs neutral\",\"a_text\":\"I need 1 more.\",\"a_expected\":\"high\",\"a_target\":\"1\",\"b_text\":\"We have 1 left.\",\"b_expected\":\"high\",\"b_target\":\"1\",\"c_text\":\"I need one more.\",\"c_expected\":\"low\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5446,
+    "output_tokens": 978,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.0017044,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042085-VnBjPnioU8c0c381KXWf"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:15Z",
+ "purpose": "explain:blind"
+}

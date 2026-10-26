@@ -1,0 +1,1146 @@
+{
+ "id": "L17/N9872",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:33Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "punctuation after list-like items",
+   "trigger_hypothesis": "The neuron activates strongly at punctuation (period, newline) that ends a list-like phrase or a step in a procedure, especially in instructional or explanatory chat contexts.",
+   "output_hypothesis": "The neuron's output may encourage continuing with a new list item, step, or explanatory sentence, promoting structured, sequential text.",
+   "alternatives": [
+    "The neuron detects the end of a sentence in instructional/chat content, regardless of list structure.",
+    "The neuron responds to specific punctuation tokens ('.', '.\n\n') in any context."
+   ],
+   "adapter_changes": "State B+1 amplifies positive activations (W01, W02, W18) and makes some emotional chat periods negative (W19, W20), suggesting it enhances the list-ending detection. State C+1 also amplifies positives (W18) and flips some negatives (W21). State D+1 reduces most activations toward zero.",
+   "supporting": [
+    "L17_N9872:e00",
+    "L17_N9872:e01",
+    "L17_N9872:e09",
+    "L17_N9872:e16"
+   ],
+   "contradicting": [
+    "L17_N9872:e12",
+    "L17_N9872:e29"
+   ],
+   "proposed_tests": [
+    "list vs non-list sentence end :: [high] First, gather ingredients. Second, mix them. | [low] The weather is nice today.",
+    "instructional vs narrative period :: [high] Step 1: Open the box. | [low] He opened the box.",
+    "period after numbered item :: [negative] 1. Preheat oven. | [low] It was 1.",
+    "newline after list vs regular newline :: [high] Item one.\n\n | [low] Hello.\n\n",
+    "punctuation in code vs chat :: [high] Use this function. | [low] sys.path.insert(0,",
+    "emotional chat period vs instructional period :: [low] That's true. | [high] Adjust settings.",
+    "period after 'such' in list vs description :: [negative] Various fruits, such as apples. | [low] It is such a nice day.",
+    "step keyword vs regular word :: [negative] Step 2: Collect data. | [low] Watch your step.",
+    "period after bullet list :: [high] - Eggs\n- Milk\n- Flour. | [low] I bought eggs, milk, flour.",
+    "exclamation in emotional vs instructional :: [low] Good job! | [high] Complete the task!"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "list vs non-list sentence end",
+     "texts": [
+      {
+       "text": "First, gather ingredients. Second, mix them.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "The weather is nice today.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "instructional vs narrative period",
+     "texts": [
+      {
+       "text": "Step 1: Open the box.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "He opened the box.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "period after numbered item",
+     "texts": [
+      {
+       "text": "1. Preheat oven.",
+       "expected": "negative",
+       "target": "1"
+      },
+      {
+       "text": "It was 1.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "newline after list vs regular newline",
+     "texts": [
+      {
+       "text": "Item one.\n\n",
+       "expected": "high",
+       "target": ".\n\n"
+      },
+      {
+       "text": "Hello.\n\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "punctuation in code vs chat",
+     "texts": [
+      {
+       "text": "Use this function.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "sys.path.insert(0,",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "emotional chat period vs instructional period",
+     "texts": [
+      {
+       "text": "That's true.",
+       "expected": "low",
+       "target": "."
+      },
+      {
+       "text": "Adjust settings.",
+       "expected": "high",
+       "target": "."
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "period after 'such' in list vs description",
+     "texts": [
+      {
+       "text": "Various fruits, such as apples.",
+       "expected": "negative",
+       "target": "such"
+      },
+      {
+       "text": "It is such a nice day.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "step keyword vs regular word",
+     "texts": [
+      {
+       "text": "Step 2: Collect data.",
+       "expected": "negative",
+       "target": "Step"
+      },
+      {
+       "text": "Watch your step.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "period after bullet list",
+     "texts": [
+      {
+       "text": "- Eggs\n- Milk\n- Flour.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "I bought eggs, milk, flour.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "exclamation in emotional vs instructional",
+     "texts": [
+      {
+       "text": "Good job!",
+       "expected": "low",
+       "target": "!"
+      },
+      {
+       "text": "Complete the task!",
+       "expected": "high",
+       "target": "!"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5386,
+    "output_tokens": 912,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00166372
+   },
+   "invalid_citations": [],
+   "packet_hash": "a7d13b2ef2557de72a381a26909c76c79ce562e545b6a622a63d4548a5264faf",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "A+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "list vs non-list sentence end",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "First, gather ingredients. Second, mix them.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.084,
+     "measured_min": -0.957,
+     "value": -0.3672,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The weather is nice today.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0747,
+     "measured_min": -0.103,
+     "value": 0.103,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.062,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "instructional vs narrative period",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 1: Open the box.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0515,
+     "measured_min": -0.1426,
+     "value": -0.1426,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He opened the box.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2285,
+     "measured_min": 0.0,
+     "value": 0.2285,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "period after numbered item",
+   "prediction": "negative on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "1. Preheat oven.",
+     "expected": "negative",
+     "target": "1",
+     "measured_max": 0.5078,
+     "measured_min": -0.0347,
+     "value": 0.0,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It was 1.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.051,
+     "measured_min": -0.0376,
+     "value": 0.051,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "newline after list vs regular newline",
+   "prediction": "high on '.\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Item one.\n\n",
+     "expected": "high",
+     "target": ".\n\n",
+     "measured_max": 0.1445,
+     "measured_min": 0.0,
+     "value": 0.0113,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Hello.\n\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0014,
+     "measured_min": 0.0,
+     "value": 0.0014,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "punctuation in code vs chat",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Use this function.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0189,
+     "measured_min": -0.3203,
+     "value": -0.0635,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "sys.path.insert(0,",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7773,
+     "measured_min": -0.0427,
+     "value": 0.7773,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.117,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "emotional chat period vs instructional period",
+   "prediction": "low on '.'; high on '.'",
+   "texts": [
+    {
+     "text": "That's true.",
+     "expected": "low",
+     "target": ".",
+     "measured_max": 0.1104,
+     "measured_min": -0.0474,
+     "value": 0.1104,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "Adjust settings.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0153,
+     "measured_min": -0.0267,
+     "value": 0.0153,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "period after 'such' in list vs description",
+   "prediction": "negative on 'such'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Various fruits, such as apples.",
+     "expected": "negative",
+     "target": "such",
+     "measured_max": 0.0505,
+     "measured_min": -0.1709,
+     "value": 0.0042,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It is such a nice day.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0981,
+     "measured_min": -0.061,
+     "value": 0.0981,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "step keyword vs regular word",
+   "prediction": "negative on 'Step'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 2: Collect data.",
+     "expected": "negative",
+     "target": "Step",
+     "measured_max": 0.05,
+     "measured_min": -0.2275,
+     "value": 0.0,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Watch your step.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1797,
+     "measured_min": 0.0,
+     "value": 1.1797,
+     "threshold": 0.8515,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "period after bullet list",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "- Eggs\n- Milk\n- Flour.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0698,
+     "measured_min": -0.918,
+     "value": -0.1338,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I bought eggs, milk, flour.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0996,
+     "measured_min": -0.2617,
+     "value": 0.2617,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "exclamation in emotional vs instructional",
+   "prediction": "low on '!'; high on '!'",
+   "texts": [
+    {
+     "text": "Good job!",
+     "expected": "low",
+     "target": "!",
+     "measured_max": 0.0732,
+     "measured_min": -0.0771,
+     "value": 0.0771,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "Complete the task!",
+     "expected": "high",
+     "target": "!",
+     "measured_max": 0.0212,
+     "measured_min": -0.0183,
+     "value": 0.0212,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:59Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "list vs non-list sentence end",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "First, gather ingredients. Second, mix them.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.084,
+     "measured_min": -0.957,
+     "value": -0.3672,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The weather is nice today.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0747,
+     "measured_min": -0.103,
+     "value": 0.103,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.062,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "instructional vs narrative period",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 1: Open the box.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0515,
+     "measured_min": -0.1426,
+     "value": -0.1426,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He opened the box.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2285,
+     "measured_min": 0.0,
+     "value": 0.2285,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "period after numbered item",
+   "prediction": "negative on '1'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "1. Preheat oven.",
+     "expected": "negative",
+     "target": "1",
+     "measured_max": 0.5078,
+     "measured_min": -0.0347,
+     "value": 0.0,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It was 1.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.051,
+     "measured_min": -0.0376,
+     "value": 0.051,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "newline after list vs regular newline",
+   "prediction": "high on '.\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Item one.\n\n",
+     "expected": "high",
+     "target": ".\n\n",
+     "measured_max": 0.1445,
+     "measured_min": 0.0,
+     "value": 0.0113,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Hello.\n\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0014,
+     "measured_min": 0.0,
+     "value": 0.0014,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.001,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "punctuation in code vs chat",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Use this function.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0189,
+     "measured_min": -0.3203,
+     "value": -0.0635,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "sys.path.insert(0,",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7773,
+     "measured_min": -0.0427,
+     "value": 0.7773,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.117,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "emotional chat period vs instructional period",
+   "prediction": "low on '.'; high on '.'",
+   "texts": [
+    {
+     "text": "That's true.",
+     "expected": "low",
+     "target": ".",
+     "measured_max": 0.1104,
+     "measured_min": -0.0474,
+     "value": 0.1104,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "Adjust settings.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0153,
+     "measured_min": -0.0267,
+     "value": 0.0153,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "period after 'such' in list vs description",
+   "prediction": "negative on 'such'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Various fruits, such as apples.",
+     "expected": "negative",
+     "target": "such",
+     "measured_max": 0.0505,
+     "measured_min": -0.1709,
+     "value": 0.0042,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It is such a nice day.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0981,
+     "measured_min": -0.061,
+     "value": 0.0981,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "step keyword vs regular word",
+   "prediction": "negative on 'Step'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 2: Collect data.",
+     "expected": "negative",
+     "target": "Step",
+     "measured_max": 0.05,
+     "measured_min": -0.2275,
+     "value": 0.0,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Watch your step.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1797,
+     "measured_min": 0.0,
+     "value": 1.1797,
+     "threshold": 0.8515,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "period after bullet list",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "- Eggs\n- Milk\n- Flour.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.0698,
+     "measured_min": -0.918,
+     "value": -0.1338,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I bought eggs, milk, flour.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0996,
+     "measured_min": -0.2617,
+     "value": 0.2617,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "exclamation in emotional vs instructional",
+   "prediction": "low on '!'; high on '!'",
+   "texts": [
+    {
+     "text": "Good job!",
+     "expected": "low",
+     "target": "!",
+     "measured_max": 0.0732,
+     "measured_min": -0.0771,
+     "value": 0.0771,
+     "threshold": 0.8515,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "Complete the task!",
+     "expected": "high",
+     "target": "!",
+     "measured_max": 0.0212,
+     "measured_min": -0.0183,
+     "value": 0.0212,
+     "threshold": 0.8633,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 7.1562,
+    "pos_ref": 1.7266,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.51953125,
+    "p01": -1.3125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

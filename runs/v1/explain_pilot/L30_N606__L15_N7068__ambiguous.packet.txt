@@ -1,0 +1,166 @@
+You analyze one MLP neuron of a language model from measured activation data and propose testable hypotheses.
+
+How to read the evidence:
+- Each window W## shows text with one highlighted token ⟦like this⟧ and the neuron's activation at that token.
+- The activation at a token is computed only from text up to and including that token (AVAILABLE). Text after it
+  (FUTURE) was not visible when the activation was measured, so it can never be an input cause of that activation.
+  You may use FUTURE text only to understand what the model was writing, not to explain the trigger.
+- Activations can be strongly positive, strongly negative, or near zero. Treat the two signs as different behaviours
+  and describe both if both occur. Compare high windows with near-zero and random windows before generalizing.
+- "other strong positions" lists other tokens in the same window with large activation (offset relative to the
+  highlighted token).
+- Rows for "state X+1" etc. are the same neuron measured in modified versions of the model on identical text. Describe
+  the base neuron first; put any state-specific differences only in adapter_changes.
+- Separately labeled sections (state differences, steering, weight-lens tokens) are other evidence sources; say which
+  claims rest on them.
+
+Rules:
+- Cite windows only by their W## ids, and only ids that appear in the packet.
+- "supporting": windows your trigger hypothesis explains. "contradicting": windows it fails to explain or that cut
+  against it (strong windows it would not predict, or near-zero windows it would predict to be strong).
+- If there is no consistent pattern, set no_coherent_hypothesis to true, use label "no coherent hypothesis", give your
+  best weak guesses as alternatives, and set confidence to "low". This is an acceptable and useful answer.
+- Confidence is your qualitative judgment, not a probability.
+- proposed_tests: exactly ten matched tests that would separate your hypothesis from the alternatives (e.g. word
+  vs meaning, topic, sentiment, register, first vs third person, position). Each test is a pair of short texts a and
+  b (at most 15 words each) that differ minimally, plus an optional third text c (leave c_text, c_expected and c_target
+  as "" if unused). For each text give expected "high" (strong positive), "negative" (strong negative) or "low" (near
+  zero), and target = the exact word or short substring of that text where you expect the peak ("" for "low").
+  "discriminates" says in a few words what the test separates.
+- Be concise: each hypothesis at most two sentences. Output a single minified JSON object (no indentation or line
+  breaks) and nothing else, with exactly these keys:
+{"label":"...","trigger_hypothesis":"...","output_hypothesis":"...","alternatives":["...","..."],"adapter_changes":"...","supporting":["W01"],"contradicting":["W02"],"proposed_tests":[{"discriminates":"...","a_text":"...","a_expected":"high","a_target":"word","b_text":"...","b_expected":"low","b_target":"","c_text":"","c_expected":"","c_target":""}],"confidence":"low","no_coherent_hypothesis":false}
+
+=====
+
+# Evidence packet (30 windows)
+Neuron activation scale: the strongest discovery activation magnitude is 95.50; 'strong' below means |act| >= 38.20.
+Measured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.
+
+## Strongest positive activations
+[W01] domain=emotional_text token=" my" act: base=+87.50 | state A+1=+99.00 | state B+1=+78.50 | state C+1=+87.50 | state D+1=+78.50 | state E+1=+98.00
+  AVAILABLE:  on the power play pulling the goalie made no sense\n\nKids are like pets. They just sit by a locked door and howl.\n\nOh⟦ my⟧
+  FUTURE (not visible at the measured token):  [NAME] that's so awkward\n\n
+
+[W02] domain=narrative token=" my" act: base=+73.50 | state A+1=+92.00 | state B+1=+68.50 | state C+1=+76.50 | state D+1=+64.00 | state E+1=+87.00
+  AVAILABLE:  in Canada. Built near Lake Ontario, part of the Great Lakes. The largest source or fresh water in the world!'' \n \n `` Oh⟦ my⟧
+  FUTURE (not visible at the measured token): ,'' one of the scientists said, ``
+
+[W03] domain=narrative token="." act: base=+60.75 | state A+1=+78.50 | state B+1=+50.00 | state C+1=+61.00 | state D+1=+56.25 | state E+1=+64.00
+  AVAILABLE:  from the inside out. The charge that had tingled along his skin shot inward, sparking up his spine and into his brain. \n \n Oh⟦.⟧
+  FUTURE (not visible at the measured token):  \n \n OH WOW \n \n He could n't
+  other strong positions: " Oh"(-1)=+53.50, " OH"(+2)=+38.25
+
+[W04] domain=chat segment=prompt token="\n\n" act: base=+54.74 | state A+1=+40.36 | state B+1=+113.48 | state C+1=+51.95 | state D+1=+32.77 | state E+1=+45.35
+  AVAILABLE:  The quiz should also provide immediate feedback to users on their answers and a final score at the end.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): 1. What is the name of the
+
+[W05] domain=chat segment=prompt token="\n\n" act: base=+49.15 | state A+1=+30.17 | state B+1=+111.08 | state C+1=+51.15 | state D+1=+33.76 | state E+1=+29.17
+  AVAILABLE: user\nHow to set up and optimize Twitter advertising campaigns for mobile<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): To set up and optimize Twitter advertising campaigns
+
+## Strongest negative activations
+[W06] domain=emotional_chat segment=response token=" adoption" act: base=-95.50 | state A+1=-97.90 | state B+1=-93.50 | state C+1=-94.30 | state D+1=-97.50 | state E+1=-99.10
+  AVAILABLE: <|im_start|>assistant\n<think>\n\n</think>\n\nOh my. I am so sorry. That must be so difficult. Are you exploring any other options like⟦ adoption⟧
+  FUTURE (not visible at the measured token): ?<|im_end|>
+
+[W07] domain=emotional_chat segment=response token=" a" act: base=-68.33 | state A+1=-61.54 | state B+1=-53.54 | state C+1=-61.54 | state D+1=-58.34 | state E+1=-59.94
+  AVAILABLE:  breed, so I had to give her up. :(<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nThat sucks, why didn't you find⟦ a⟧
+  FUTURE (not visible at the measured token):  new apartment?<|im_end|>
+  other strong positions: " up"(-20)=-45.15, " didn"(-4)=-48.95
+
+[W08] domain=emotional_text token=" dog" act: base=-49.75 | state A+1=-44.95 | state B+1=-48.75 | state C+1=-47.55 | state D+1=-43.75 | state E+1=-49.95
+  AVAILABLE:  my job I can/Do get laid a lot so the second one!!\n\nThe good [NAME]\n\nI think my worry would be if another⟦ dog⟧
+  FUTURE (not visible at the measured token):  attacks mine, they wouldn't be able
+
+[W09] domain=emotional_text token=" adopted" act: base=-43.35 | state A+1=-42.36 | state B+1=-40.76 | state C+1=-42.16 | state D+1=-41.56 | state E+1=-38.16
+  AVAILABLE: Just saying he could of said maccathy, kingsbury, or caldwell was his favorite. [NAME] had choices.\n\nMy⟦ adopted⟧
+  FUTURE (not visible at the measured token):  daughter told me, "You can't
+
+## Moderate and low activations
+[W10] domain=emotional_chat segment=prompt token="\n\n" act: base=+33.96 | state A+1=+23.08 | state B+1=+95.50 | state C+1=+50.35 | state D+1=+24.57 | state E+1=+21.58
+  AVAILABLE: - I have an upcoming certification exam to take for my teaching license and it's a big deal.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): That's an amazing accomplishment!  I
+
+[W11] domain=code token="ion" act: base=+21.88 | state A+1=+21.68 | state B+1=+22.18 | state C+1=+23.78 | state D+1=+21.28 | state E+1=+22.38
+  AVAILABLE:  -*- coding: utf-8 -*-\n# @ 2018 Akret⟦ion⟧
+  FUTURE (not visible at the measured token):  - www.akretion.com.br -\n
+
+[W12] domain=emotional_text token=" **" act: base=+12.89 | state A+1=+14.38 | state B+1=+15.18 | state C+1=+15.58 | state D+1=+11.89 | state E+1=+17.88
+  AVAILABLE: aying for me family.\n\nThank [NAME] for RT Audiences scores! The⟦ **⟧
+  FUTURE (not visible at the measured token): REAL** objective quality metric for kinos
+
+[W13] domain=emotional_chat segment=prompt token="\n\n" act: base=+12.50 | state A+1=+76.50 | state B+1=+3.16 | state C+1=+10.31 | state D+1=+2.58 | state E+1=+44.00
+  AVAILABLE:  I am feeling a little guilty. On the plus side, the 4k picture is astounding!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>⟦\n\n⟧
+  FUTURE (not visible at the measured token): I would love to have that tv<|im_end|>
+
+[W14] domain=web token="," act: base=+2.81 | state A+1=+2.95 | state B+1=+3.05 | state C+1=+2.69 | state D+1=+2.98 | state E+1=+2.95
+  AVAILABLE:  research.\nWhile the new generation of meteorological satellites help to overcome these problems, data from more conventional platforms, in particular the voluntary observing ships⟦,⟧
+  FUTURE (not visible at the measured token):  remain essential. These ship observations provide ground
+
+[W15] domain=narrative token=" \n \n" act: base=+2.27 | state A+1=+4.28 | state B+1=+0.86 | state C+1=+1.60 | state D+1=+1.44 | state E+1=+2.91
+  AVAILABLE:  said as I looked at the young man walking towards me. He had a scraggy face and was wearing a red sports coat. ”⟦ \n \n⟧
+  FUTURE (not visible at the measured token):  “ He ’ s going to kill himself
+
+[W16] domain=factual token="on" act: base=+1.80 | state A+1=+1.75 | state B+1=+1.55 | state C+1=+1.39 | state D+1=+1.78 | state E+1=+1.32
+  AVAILABLE:  Time Dog Food, Applebee's and McDonald's. It was also featured in the 1978 film Fingers.\n\nTom James⟦on⟧
+  FUTURE (not visible at the measured token):  died from cancer on July 19
+
+[W17] domain=narrative token="." act: base=+0.96 | state A+1=+1.10 | state B+1=+0.94 | state C+1=+0.51 | state D+1=+0.81 | state E+1=+0.74
+  AVAILABLE:  paused as the rain steadily poured on them. Everyone had a warm, dry, home to get to. Behind them loomed the Spire⟦.⟧
+  FUTURE (not visible at the measured token):  \n \n Adonis loved it when it r
+
+[W18] domain=chat token=" are" act: base=+0.16 | state A+1=+0.04 | state B+1=+0.21 | state C+1=+0.14 | state D+1=+0.24 | state E+1=+0.02
+  AVAILABLE:  commonly used in American-style chicken noodle soup, beef stroganoff, and stir-fries.\n\n6. Instant noodles - Instant noodles⟦ are⟧
+  FUTURE (not visible at the measured token):  pre-cooked and dehydrated noodles
+
+[W19] domain=narrative token=" want" act: base=-0.00 | state A+1=-0.04 | state B+1=+0.03 | state C+1=+0.00 | state D+1=+0.04 | state E+1=-0.03
+  AVAILABLE:  and exotic species passed by on the sidewalk but nobody noticed the black giant approaching the threadbare thief on the ground. \n \n `` What do you⟦ want⟧
+  FUTURE (not visible at the measured token): , mate? The fuck you want?
+
+[W20] domain=factual token="os" act: base=-9.94 | state A+1=-9.56 | state B+1=-10.00 | state C+1=-9.81 | state D+1=-9.56 | state E+1=-9.94
+  AVAILABLE:  Siberian brown bear\n\nThe East Siberian brown bear (Ursus arct⟦os⟧
+  FUTURE (not visible at the measured token):  collaris) is a population or subs
+
+[W21] domain=code token="           " act: base=-10.94 | state A+1=-9.88 | state B+1=-10.88 | state C+1=-10.38 | state D+1=-11.12 | state E+1=-9.69
+  AVAILABLE:  too long to execute\n        self.bsc = BlobServiceClient(\n            self.account_url(storage_account, "blob"),\n            credential=key,\n⟦           ⟧
+  FUTURE (not visible at the measured token):  max_single_put_size=32 *
+
+[W22] domain=chat token=":\n" act: base=-14.56 | state A+1=-9.31 | state B+1=-16.25 | state C+1=-13.94 | state D+1=-16.62 | state E+1=-13.69
+  AVAILABLE:  MIA'S BEDROOM - NIGHT\n\nMIA is lying on her bed, scrolling through her phone. She looks conflicted.\n\nMIA⟦:\n⟧
+  FUTURE (not visible at the measured token): (whispers to herself) What do
+
+[W23] domain=chat token=":\n" act: base=-14.62 | state A+1=-3.44 | state B+1=-15.19 | state C+1=-13.62 | state D+1=-15.12 | state E+1=-11.94
+  AVAILABLE:  of her friends from college. They are all chit-chatting.\n\nMIKEY, one of her friends, interrupts the conversation.\n\nMIKEY⟦:\n⟧
+  FUTURE (not visible at the measured token): Hey, guys. Did you hear about
+
+[W24] domain=narrative token=" ``" act: base=-20.38 | state A+1=-19.00 | state B+1=-20.00 | state C+1=-20.50 | state D+1=-21.00 | state E+1=-20.88
+  AVAILABLE:  cupola, regarding the attached shuttle carefully. No further transmission came from the ship and the computer showed that the system had not changed. \n \n⟦ ``⟧
+  FUTURE (not visible at the measured token):  Come on, you bastards,'' he
+
+## Random contexts (unselected positions)
+[W25] domain=web token=" exhibit" act: base=+0.23 | state A+1=+0.09 | state B+1=+0.30 | state C+1=+0.22 | state D+1=+0.26 | state E+1=+0.10
+  AVAILABLE:  House Pets\nPets are rarely attributed with exotic, non-Newtonian physical behavior. However, cats and dogs that are especially long-haired can⟦ exhibit⟧
+  FUTURE (not visible at the measured token):  a wavelike appearance. Furthermore,
+
+[W26] domain=narrative token=" do" act: base=+0.23 | state A+1=+0.37 | state B+1=-0.21 | state C+1=+0.21 | state D+1=+0.17 | state E+1=+0.19
+  AVAILABLE:  ran his fingers through Bob ’ s hair, tugging a bit to make sure it wasn ’ t a wig. “ Woah, how⟦ do⟧
+  FUTURE (not visible at the measured token):  you fit that under the hat? ”
+
+[W27] domain=factual token=" super" act: base=+0.20 | state A+1=+0.21 | state B+1=+0.31 | state C+1=+0.21 | state D+1=+0.53 | state E+1=+0.05
+  AVAILABLE: ell S to make the car even lighter and more agile for racing, especially short races and hillclimbs.  \n\nFitted with a⟦ super⟧
+  FUTURE (not visible at the measured token): charged single overhead camshaft 7-l
+
+[W28] domain=emotional_chat token=" at" act: base=-0.01 | state A+1=-0.10 | state B+1=-0.30 | state C+1=-0.26 | state D+1=-0.05 | state E+1=-0.16
+  AVAILABLE: user\nok, so after 5 years and the baby, there was disconnect. Things like not sleeping⟦ at⟧
+  FUTURE (not visible at the measured token):  the same times, not even hardly talking
+
+[W29] domain=emotional_text token=" have" act: base=-0.02 | state A+1=+0.05 | state B+1=-0.02 | state C+1=-0.00 | state D+1=+0.03 | state E+1=+0.06
+  AVAILABLE:  and smooth as a marble.\n\nActually maybe the OP is not an INTP,⟦ have⟧
+  FUTURE (not visible at the measured token):  you thought about that!!\n\nUtah is
+
+[W30] domain=narrative token=" absent" act: base=-0.04 | state A+1=-0.06 | state B+1=+0.01 | state C+1=-0.05 | state D+1=-0.01 | state E+1=-0.07
+  AVAILABLE:  `` Well, if you track their course back, one of the systems in line is GZ49.'' \n \n The General nodded slowly,⟦ absent⟧
+  FUTURE (not visible at the measured token): -mindedly, not really agreeing to anything
+
+Return the JSON object now.

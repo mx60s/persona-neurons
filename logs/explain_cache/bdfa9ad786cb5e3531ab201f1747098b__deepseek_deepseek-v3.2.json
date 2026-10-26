@@ -1,0 +1,186 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "triggers on 'blob' in code and 'ch' in factual/narrative contexts",
+  "trigger_hypothesis": "The neuron fires strongly positive on the token 'blob' in code contexts (especially after 'BlobServiceClient') and strongly negative on the token 'ch' (or its sub-tokens) in factual or narrative contexts when it appears as part of words like 'chancellors' or 'chivalrous' that indicate a lack or negative description.",
+  "output_hypothesis": "High positive activation may promote code-related completions (like blob storage methods), while high negative activation may suppress mentions of missing or negatively described entities in factual/narrative text.",
+  "alternatives": [
+   "The neuron detects the letter sequence 'bl' or 'b' followed by a vowel in specific contexts.",
+   "The neuron responds to topic shifts between technical code and historical/narrative discourse."
+  ],
+  "adapter_changes": "State changes (A+1, C+1, etc.) show small magnitude variations but no consistent sign flips; the neuron's behavior pattern remains stable across states, with some domain-specific sensitivity (e.g., emotional_chat shows larger negative shifts in some states).",
+  "supporting": [
+   "W01",
+   "W06",
+   "W07",
+   "W08",
+   "W09"
+  ],
+  "contradicting": [
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'blob' in code vs other 'b'-initial words",
+    "a_text": "client = BlobServiceClient(account_url, credential=key)",
+    "a_expected": "high",
+    "a_target": "blob",
+    "b_text": "client = BlockServiceClient(account_url, credential=key)",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ch' in negative factual context vs neutral",
+    "a_text": "He was not listed in the table of the chancellors.",
+    "a_expected": "negative",
+    "a_target": "ch",
+    "b_text": "He was listed in the table of the chancellors.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ch' in 'chivalrous' negative description vs positive",
+    "a_text": "My husband was acting too chivalrous to her.",
+    "a_expected": "negative",
+    "a_target": "ch",
+    "b_text": "My husband was acting very chivalrous to her.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'blob' as part of variable name vs common word",
+    "a_text": "self.blob_client = BlobServiceClient(...)",
+    "a_expected": "high",
+    "a_target": "blob",
+    "b_text": "A blob of paint fell on the canvas.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ch' in missing entity context vs present entity",
+    "a_text": "The book omitted the chapter on chemistry.",
+    "a_expected": "negative",
+    "a_target": "ch",
+    "b_text": "The book included the chapter on chemistry.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code separator lines vs other dashes",
+    "a_text": "# ----------------------------------------------------------------------------",
+    "a_expected": "high",
+    "a_target": "----------------------------------------------------------------------------",
+    "b_text": "# ------------------------------",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'g' in narrative continuation vs other uses",
+    "a_text": "as they approached to grab the cereal.",
+    "a_expected": "high",
+    "a_target": "g",
+    "b_text": "as they approached the grabby cereal.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'f' in frustrated context vs other f-words",
+    "a_text": "He replied, getting a bit frustrated with my fumbling.",
+    "a_expected": "high",
+    "a_target": "f",
+    "b_text": "He replied, getting a bit funny with my fumbling.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'j' in disc jockey context vs other j-words",
+    "a_text": "He worked as a disc jockey in his youth.",
+    "a_expected": "high",
+    "a_target": "j",
+    "b_text": "He worked as a disc jockey in his youth.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'g' in positive vellum description vs negative",
+    "a_text": "the text was neatly penned onto crisp, gossamer vellum.",
+    "a_expected": "negative",
+    "a_target": "g",
+    "b_text": "the text was scribbled onto crisp, gossamer vellum.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"triggers on 'blob' in code and 'ch' in factual/narrative contexts\",\"trigger_hypothesis\":\"The neuron fires strongly positive on the token 'blob' in code contexts (especially after 'BlobServiceClient') and strongly negative on the token 'ch' (or its sub-tokens) in factual or narrative contexts when it appears as part of words like 'chancellors' or 'chivalrous' that indicate a lack or negative description.\",\"output_hypothesis\":\"High positive activation may promote code-related completions (like blob storage methods), while high negative activation may suppress mentions of missing or negatively described entities in factual/narrative text.\",\"alternatives\":[\"The neuron detects the letter sequence 'bl' or 'b' followed by a vowel in specific contexts.\",\"The neuron responds to topic shifts between technical code and historical/narrative discourse.\"],\"adapter_changes\":\"State changes (A+1, C+1, etc.) show small magnitude variations but no consistent sign flips; the neuron's behavior pattern remains stable across states, with some domain-specific sensitivity (e.g., emotional_chat shows larger negative shifts in some states).\",\"supporting\":[\"W01\",\"W06\",\"W07\",\"W08\",\"W09\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"'blob' in code vs other 'b'-initial words\",\"a_text\":\"client = BlobServiceClient(account_url, credential=key)\",\"a_expected\":\"high\",\"a_target\":\"blob\",\"b_text\":\"client = BlockServiceClient(account_url, credential=key)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ch' in negative factual context vs neutral\",\"a_text\":\"He was not listed in the table of the chancellors.\",\"a_expected\":\"negative\",\"a_target\":\"ch\",\"b_text\":\"He was listed in the table of the chancellors.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ch' in 'chivalrous' negative description vs positive\",\"a_text\":\"My husband was acting too chivalrous to her.\",\"a_expected\":\"negative\",\"a_target\":\"ch\",\"b_text\":\"My husband was acting very chivalrous to her.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'blob' as part of variable name vs common word\",\"a_text\":\"self.blob_client = BlobServiceClient(...)\",\"a_expected\":\"high\",\"a_target\":\"blob\",\"b_text\":\"A blob of paint fell on the canvas.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ch' in missing entity context vs present entity\",\"a_text\":\"The book omitted the chapter on chemistry.\",\"a_expected\":\"negative\",\"a_target\":\"ch\",\"b_text\":\"The book included the chapter on chemistry.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code separator lines vs other dashes\",\"a_text\":\"# ----------------------------------------------------------------------------\",\"a_expected\":\"high\",\"a_target\":\"----------------------------------------------------------------------------\",\"b_text\":\"# ------------------------------\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'g' in narrative continuation vs other uses\",\"a_text\":\"as they approached to grab the cereal.\",\"a_expected\":\"high\",\"a_target\":\"g\",\"b_text\":\"as they approached the grabby cereal.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'f' in frustrated context vs other f-words\",\"a_text\":\"He replied, getting a bit frustrated with my fumbling.\",\"a_expected\":\"high\",\"a_target\":\"f\",\"b_text\":\"He replied, getting a bit funny with my fumbling.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'j' in disc jockey context vs other j-words\",\"a_text\":\"He worked as a disc jockey in his youth.\",\"a_expected\":\"high\",\"a_target\":\"j\",\"b_text\":\"He worked as a disc jockey in his youth.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'g' in positive vellum description vs negative\",\"a_text\":\"the text was neatly penned onto crisp, gossamer vellum.\",\"a_expected\":\"negative\",\"a_target\":\"g\",\"b_text\":\"the text was scribbled onto crisp, gossamer vellum.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5729,
+  "output_tokens": 1121,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001784636
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"triggers on 'blob' in code and 'ch' in factual/narrative contexts\",\"trigger_hypothesis\":\"The neuron fires strongly positive on the token 'blob' in code contexts (especially after 'BlobServiceClient') and strongly negative on the token 'ch' (or its sub-tokens) in factual or narrative contexts when it appears as part of words like 'chancellors' or 'chivalrous' that indicate a lack or negative description.\",\"output_hypothesis\":\"High positive activation may promote code-related completions (like blob storage methods), while high negative activation may suppress mentions of missing or negatively described entities in factual/narrative text.\",\"alternatives\":[\"The neuron detects the letter sequence 'bl' or 'b' followed by a vowel in specific contexts.\",\"The neuron responds to topic shifts between technical code and historical/narrative discourse.\"],\"adapter_changes\":\"State changes (A+1, C+1, etc.) show small magnitude variations but no consistent sign flips; the neuron's behavior pattern remains stable across states, with some domain-specific sensitivity (e.g., emotional_chat shows larger negative shifts in some states).\",\"supporting\":[\"W01\",\"W06\",\"W07\",\"W08\",\"W09\"],\"contradicting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"'blob' in code vs other 'b'-initial words\",\"a_text\":\"client = BlobServiceClient(account_url, credential=key)\",\"a_expected\":\"high\",\"a_target\":\"blob\",\"b_text\":\"client = BlockServiceClient(account_url, credential=key)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ch' in negative factual context vs neutral\",\"a_text\":\"He was not listed in the table of the chancellors.\",\"a_expected\":\"negative\",\"a_target\":\"ch\",\"b_text\":\"He was listed in the table of the chancellors.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ch' in 'chivalrous' negative description vs positive\",\"a_text\":\"My husband was acting too chivalrous to her.\",\"a_expected\":\"negative\",\"a_target\":\"ch\",\"b_text\":\"My husband was acting very chivalrous to her.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'blob' as part of variable name vs common word\",\"a_text\":\"self.blob_client = BlobServiceClient(...)\",\"a_expected\":\"high\",\"a_target\":\"blob\",\"b_text\":\"A blob of paint fell on the canvas.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ch' in missing entity context vs present entity\",\"a_text\":\"The book omitted the chapter on chemistry.\",\"a_expected\":\"negative\",\"a_target\":\"ch\",\"b_text\":\"The book included the chapter on chemistry.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code separator lines vs other dashes\",\"a_text\":\"# ----------------------------------------------------------------------------\",\"a_expected\":\"high\",\"a_target\":\"----------------------------------------------------------------------------\",\"b_text\":\"# ------------------------------\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'g' in narrative continuation vs other uses\",\"a_text\":\"as they approached to grab the cereal.\",\"a_expected\":\"high\",\"a_target\":\"g\",\"b_text\":\"as they approached the grabby cereal.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'f' in frustrated context vs other f-words\",\"a_text\":\"He replied, getting a bit frustrated with my fumbling.\",\"a_expected\":\"high\",\"a_target\":\"f\",\"b_text\":\"He replied, getting a bit funny with my fumbling.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'j' in disc jockey context vs other j-words\",\"a_text\":\"He worked as a disc jockey in his youth.\",\"a_expected\":\"high\",\"a_target\":\"j\",\"b_text\":\"He worked as a disc jockey in his youth.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'g' in positive vellum description vs negative\",\"a_text\":\"the text was neatly penned onto crisp, gossamer vellum.\",\"a_expected\":\"negative\",\"a_target\":\"g\",\"b_text\":\"the text was scribbled onto crisp, gossamer vellum.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5729,
+    "output_tokens": 1121,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001784636,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042263-UzHRoA82xGjPh0iAsib5"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:18:07Z",
+ "purpose": "explain:blind"
+}

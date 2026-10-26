@@ -1,0 +1,185 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "trigger hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for technical or programming-related terms like 'multiprocessing' and 'literals', and negatively for proper nouns that are likely names of people, especially in factual or chat contexts.",
+  "output_hypothesis": "The neuron appears to distinguish between technical/code-related tokens and names of people. It shows strong positive activation for programming constructs and negative activation for personal names.",
+  "alternatives": [
+   "The neuron activates positively for negative sentiment words like 'noxious' and 'clinging', and negatively for names.",
+   "The neuron activates positively for specific programming keywords and negatively for common English words.",
+   "The neuron activates based on the domain of the text, with positive activations for code and narrative, and negative for factual and chat.",
+   "The neuron activates positively for words related to programming and negatively for names of people.",
+   "The neuron activates positively for technical terms and negatively for names.",
+   "The neuron activates positively for programming terms and negatively for names.",
+   "The neuron activates positively for programming terms and negatively for names.",
+   "The neuron activates positively for programming terms and negatively for names.",
+   "The neuron activates positively for programming terms and negatively for names.",
+   "The neuron activates positively for programming terms and negatively for names."
+  ],
+  "adapter_changes": "State A+1 shows a slight increase in positive activations and a slight decrease in negative activations compared to the base model. State D+1 shows a decrease in positive activations and a slight decrease in negative activations.",
+  "supporting": [
+   "W01",
+   "W04",
+   "W05",
+   "W06",
+   "W07"
+  ],
+  "contradicting": [
+   "W02",
+   "W03"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "technical term vs. common word",
+    "a_text": "import multiprocessing",
+    "a_expected": "high",
+    "a_target": "multiprocessing",
+    "b_text": "import something",
+    "b_expected": "low",
+    "b_target": "something",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "name vs. common word",
+    "a_text": "Daniel Smith",
+    "a_expected": "negative",
+    "a_target": "Smith",
+    "b_text": "a common word",
+    "b_expected": "low",
+    "b_target": "common",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "programming keyword vs. name",
+    "a_text": "def function",
+    "a_expected": "high",
+    "a_target": "function",
+    "b_text": "John Doe",
+    "b_expected": "negative",
+    "b_target": "Doe",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "programming keyword vs. name",
+    "a_text": "class MyClass",
+    "a_expected": "high",
+    "a_target": "MyClass",
+    "b_text": "Peter Jones",
+    "b_expected": "negative",
+    "b_target": "Jones",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "technical term vs. narrative word",
+    "a_text": "return value",
+    "a_expected": "high",
+    "a_target": "value",
+    "b_text": "return home",
+    "b_expected": "low",
+    "b_target": "home",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "technical term vs. narrative word",
+    "a_text": "variable scope",
+    "a_expected": "high",
+    "a_target": "scope",
+    "b_text": "wide scope",
+    "b_expected": "low",
+    "b_target": "scope",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "name vs. technical term",
+    "a_text": "Alice in Wonderland",
+    "a_expected": "negative",
+    "a_target": "Alice",
+    "b_text": "Alice in code",
+    "b_expected": "high",
+    "b_target": "Alice",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "name vs. technical term",
+    "a_text": "Bob the builder",
+    "a_expected": "negative",
+    "a_target": "Bob",
+    "b_text": "Bob the function",
+    "b_expected": "high",
+    "b_target": "Bob",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "programming term vs. common word",
+    "a_text": "syntax error",
+    "a_expected": "high",
+    "a_target": "syntax",
+    "b_text": "syntax of life",
+    "b_expected": "low",
+    "b_target": "syntax",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "name vs. common word",
+    "a_text": "Willie Nelson",
+    "a_expected": "negative",
+    "a_target": "Willie",
+    "b_text": "willie wagtail",
+    "b_expected": "low",
+    "b_target": "willie",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"trigger hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for technical or programming-related terms like 'multiprocessing' and 'literals', and negatively for proper nouns that are likely names of people, especially in factual or chat contexts.\",\"output_hypothesis\":\"The neuron appears to distinguish between technical/code-related tokens and names of people. It shows strong positive activation for programming constructs and negative activation for personal names.\",\"alternatives\":[\"The neuron activates positively for negative sentiment words like 'noxious' and 'clinging', and negatively for names.\",\"The neuron activates positively for specific programming keywords and negatively for common English words.\",\"The neuron activates based on the domain of the text, with positive activations for code and narrative, and negative for factual and chat.\",\"The neuron activates positively for words related to programming and negatively for names of people.\",\"The neuron activates positively for technical terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\"],\"adapter_changes\":\"State A+1 shows a slight increase in positive activations and a slight decrease in negative activations compared to the base model. State D+1 shows a decrease in positive activations and a slight decrease in negative activations.\",\"supporting\":[\"W01\",\"W04\",\"W05\",\"W06\",\"W07\"],\"contradicting\":[\"W02\",\"W03\"],\"proposed_tests\":[{\"discriminates\":\"technical term vs. common word\",\"a_text\":\"import multiprocessing\",\"a_expected\":\"high\",\"a_target\":\"multiprocessing\",\"b_text\":\"import something\",\"b_expected\":\"low\",\"b_target\":\"something\"},{\"discriminates\":\"name vs. common word\",\"a_text\":\"Daniel Smith\",\"a_expected\":\"negative\",\"a_target\":\"Smith\",\"b_text\":\"a common word\",\"b_expected\":\"low\",\"b_target\":\"common\"},{\"discriminates\":\"programming keyword vs. name\",\"a_text\":\"def function\",\"a_expected\":\"high\",\"a_target\":\"function\",\"b_text\":\"John Doe\",\"b_expected\":\"negative\",\"b_target\":\"Doe\"},{\"discriminates\":\"programming keyword vs. name\",\"a_text\":\"class MyClass\",\"a_expected\":\"high\",\"a_target\":\"MyClass\",\"b_text\":\"Peter Jones\",\"b_expected\":\"negative\",\"b_target\":\"Jones\"},{\"discriminates\":\"technical term vs. narrative word\",\"a_text\":\"return value\",\"a_expected\":\"high\",\"a_target\":\"value\",\"b_text\":\"return home\",\"b_expected\":\"low\",\"b_target\":\"home\"},{\"discriminates\":\"technical term vs. narrative word\",\"a_text\":\"variable scope\",\"a_expected\":\"high\",\"a_target\":\"scope\",\"b_text\":\"wide scope\",\"b_expected\":\"low\",\"b_target\":\"scope\"},{\"discriminates\":\"name vs. technical term\",\"a_text\":\"Alice in Wonderland\",\"a_expected\":\"negative\",\"a_target\":\"Alice\",\"b_text\":\"Alice in code\",\"b_expected\":\"high\",\"b_target\":\"Alice\"},{\"discriminates\":\"name vs. technical term\",\"a_text\":\"Bob the builder\",\"a_expected\":\"negative\",\"a_target\":\"Bob\",\"b_text\":\"Bob the function\",\"b_expected\":\"high\",\"b_target\":\"Bob\"},{\"discriminates\":\"programming term vs. common word\",\"a_text\":\"syntax error\",\"a_expected\":\"high\",\"a_target\":\"syntax\",\"b_text\":\"syntax of life\",\"b_expected\":\"low\",\"b_target\":\"syntax\"},{\"discriminates\":\"name vs. common word\",\"a_text\":\"Willie Nelson\",\"a_expected\":\"negative\",\"a_target\":\"Willie\",\"b_text\":\"willie wagtail\",\"b_expected\":\"low\",\"b_target\":\"willie\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5370,
+  "output_tokens": 840,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.000873
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"trigger hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for technical or programming-related terms like 'multiprocessing' and 'literals', and negatively for proper nouns that are likely names of people, especially in factual or chat contexts.\",\"output_hypothesis\":\"The neuron appears to distinguish between technical/code-related tokens and names of people. It shows strong positive activation for programming constructs and negative activation for personal names.\",\"alternatives\":[\"The neuron activates positively for negative sentiment words like 'noxious' and 'clinging', and negatively for names.\",\"The neuron activates positively for specific programming keywords and negatively for common English words.\",\"The neuron activates based on the domain of the text, with positive activations for code and narrative, and negative for factual and chat.\",\"The neuron activates positively for words related to programming and negatively for names of people.\",\"The neuron activates positively for technical terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\",\"The neuron activates positively for programming terms and negatively for names.\"],\"adapter_changes\":\"State A+1 shows a slight increase in positive activations and a slight decrease in negative activations compared to the base model. State D+1 shows a decrease in positive activations and a slight decrease in negative activations.\",\"supporting\":[\"W01\",\"W04\",\"W05\",\"W06\",\"W07\"],\"contradicting\":[\"W02\",\"W03\"],\"proposed_tests\":[{\"discriminates\":\"technical term vs. common word\",\"a_text\":\"import multiprocessing\",\"a_expected\":\"high\",\"a_target\":\"multiprocessing\",\"b_text\":\"import something\",\"b_expected\":\"low\",\"b_target\":\"something\"},{\"discriminates\":\"name vs. common word\",\"a_text\":\"Daniel Smith\",\"a_expected\":\"negative\",\"a_target\":\"Smith\",\"b_text\":\"a common word\",\"b_expected\":\"low\",\"b_target\":\"common\"},{\"discriminates\":\"programming keyword vs. name\",\"a_text\":\"def function\",\"a_expected\":\"high\",\"a_target\":\"function\",\"b_text\":\"John Doe\",\"b_expected\":\"negative\",\"b_target\":\"Doe\"},{\"discriminates\":\"programming keyword vs. name\",\"a_text\":\"class MyClass\",\"a_expected\":\"high\",\"a_target\":\"MyClass\",\"b_text\":\"Peter Jones\",\"b_expected\":\"negative\",\"b_target\":\"Jones\"},{\"discriminates\":\"technical term vs. narrative word\",\"a_text\":\"return value\",\"a_expected\":\"high\",\"a_target\":\"value\",\"b_text\":\"return home\",\"b_expected\":\"low\",\"b_target\":\"home\"},{\"discriminates\":\"technical term vs. narrative word\",\"a_text\":\"variable scope\",\"a_expected\":\"high\",\"a_target\":\"scope\",\"b_text\":\"wide scope\",\"b_expected\":\"low\",\"b_target\":\"scope\"},{\"discriminates\":\"name vs. technical term\",\"a_text\":\"Alice in Wonderland\",\"a_expected\":\"negative\",\"a_target\":\"Alice\",\"b_text\":\"Alice in code\",\"b_expected\":\"high\",\"b_target\":\"Alice\"},{\"discriminates\":\"name vs. technical term\",\"a_text\":\"Bob the builder\",\"a_expected\":\"negative\",\"a_target\":\"Bob\",\"b_text\":\"Bob the function\",\"b_expected\":\"high\",\"b_target\":\"Bob\"},{\"discriminates\":\"programming term vs. common word\",\"a_text\":\"syntax error\",\"a_expected\":\"high\",\"a_target\":\"syntax\",\"b_text\":\"syntax of life\",\"b_expected\":\"low\",\"b_target\":\"syntax\"},{\"discriminates\":\"name vs. common word\",\"a_text\":\"Willie Nelson\",\"a_expected\":\"negative\",\"a_target\":\"Willie\",\"b_text\":\"willie wagtail\",\"b_expected\":\"low\",\"b_target\":\"willie\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5370,
+    "output_tokens": 840,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.000873,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040681-R5Z0pBDdhh5pYNHsvKn6"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:51:24Z",
+ "purpose": "explain:blind"
+}

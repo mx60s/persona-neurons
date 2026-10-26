@@ -1,0 +1,225 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "water and dry concepts",
+  "trigger_hypothesis": "The neuron activates positively for 'water' and negatively for 'dry' and related concepts like 'desert' and 'parched', suggesting it might be sensitive to the presence or absence of moisture.",
+  "output_hypothesis": "The neuron fires strongly positive for the word 'water' across various domains (neutral, factual, chat, code) and strongly negative for words associated with dryness like 'level' (in the context of water level), 'parched', 'desert', and 'dry'. This suggests the neuron is sensitive to the concept of water and its presence, or conversely, the absence of water (dryness).",
+  "alternatives": [
+   "The neuron is sensitive to liquid nouns.",
+   "The neuron is sensitive to code-related tokens.",
+   "The neuron is sensitive to negative sentiment."
+  ],
+  "adapter_changes": "State C+1 shows consistently higher positive activations for 'water' and higher negative activations for 'dry' related terms, suggesting a strengthening of this concept.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W23",
+   "W24"
+  ],
+  "contradicting": [],
+  "proposed_tests": [
+   {
+    "discriminates": "presence of water vs. absence of water",
+    "a_text": "a glass of water",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "a dry desert",
+    "b_expected": "low",
+    "b_target": "dry",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. other liquids",
+    "a_text": "a glass of water",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "a glass of milk",
+    "b_expected": "low",
+    "b_target": "milk",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dryness vs. wetness",
+    "a_text": "the parched land",
+    "a_expected": "low",
+    "a_target": "parched",
+    "b_text": "the wet sand",
+    "b_expected": "high",
+    "b_target": "wet",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context for water level vs. general water",
+    "a_text": "water level",
+    "a_expected": "low",
+    "a_target": "level",
+    "b_text": "drink water",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context for water level vs. general water",
+    "a_text": "water level",
+    "a_expected": "low",
+    "a_target": "level",
+    "b_text": "a glass of water",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context for water level vs. general water",
+    "a_text": "water level",
+    "a_expected": "low",
+    "a_target": "level",
+    "b_text": "ocean water",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context for water level vs. general water",
+    "a_text": "water level",
+    "a_expected": "low",
+    "a_target": "level",
+    "b_text": "tap water",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context for water level vs. general water",
+    "a_text": "water level",
+    "a_expected": "low",
+    "a_target": "level",
+    "b_text": "river water",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context for water level vs. general water",
+    "a_text": "water level",
+    "a_expected": "low",
+    "a_target": "level",
+    "b_text": "ocean water",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code context for water level vs. general water",
+    "a_text": "water level",
+    "a_expected": "low",
+    "a_target": "level",
+    "b_text": "sea water",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water and dry concepts\",\"trigger_hypothesis\":\"The neuron activates positively for 'water' and negatively for 'dry' and related concepts like 'desert' and 'parched', suggesting it might be sensitive to the presence or absence of moisture.\",\"output_hypothesis\":\"The neuron fires strongly positive for the word 'water' across various domains (neutral, factual, chat, code) and strongly negative for words associated with dryness like 'level' (in the context of water level), 'parched', 'desert', and 'dry'. This suggests the neuron is sensitive to the concept of water and its presence, or conversely, the absence of water (dryness).\",\"alternatives\":[\"The neuron is sensitive to liquid nouns.\",\"The neuron is sensitive to code-related tokens.\",\"The neuron is sensitive to negative sentiment.\"],\"adapter_changes\":\"State C+1 shows consistently higher positive activations for 'water' and higher negative activations for 'dry' related terms, suggesting a strengthening of this concept.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W15\",\"W16\",\"W17\",\"W18\",\"W23\",\"W24\"],\"contradicting\":[],\"proposed_tests\":[{\"discriminates\":\"presence of water vs. absence of water\",\"a_text\":\"a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"a dry desert\",\"b_expected\":\"low\",\"b_target\":\"dry\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. other liquids\",\"a_text\":\"a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"a glass of milk\",\"b_expected\":\"low\",\"b_target\":\"milk\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dryness vs. wetness\",\"a_text\":\"the parched land\",\"a_expected\":\"low\",\"a_target\":\"parched\",\"b_text\":\"the wet sand\",\"b_expected\":\"high\",\"b_target\":\"wet\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"drink water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"a glass of water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"ocean water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"tap water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"river water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"ocean water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"sea water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 9935,
+  "output_tokens": 1738,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0013261800000000002
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water and dry concepts\",\"trigger_hypothesis\":\"The neuron activates positively for 'water' and negatively for 'dry' and related concepts like 'desert' and 'parched', suggesting it might be sensitive to the presence or absence of moisture.\",\"output_hypothesis\":\"The neuron fires strongly positive for the word 'water' across various domains (neutral, factual, chat, code) and strongly negative for words associated with dryness like 'level' (in the context of water level), 'parched', 'desert', and 'dry'. This suggests the neuron is sensitive to the concept of water and its presence, or conversely, the absence of water (dryness).\",\"alternatives\":[\"The neuron is sensitive to liquid nouns.\",\"The neuron is sensitive to code-related tokens.\",\"The neuron is sensitive to negative sentiment.\"],\"adapter_changes\":\"State C+1 shows consistently higher positive activations for 'water' and higher negative activations for 'dry' related terms, suggesting a strengthening of this concept.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W15\",\"W16\",\"W17\",\"W18\",\"W23\",\"W24\"],\"contradicting\":[],\"proposed_tests\":[{\"discriminates\":\"presence of water vs. absence of water\",\"a_text\":\"a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"a dry desert\",\"b_expected\":\"low\",\"b_target\":\"dry\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. other liquids\",\"a_text\":\"a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"a glass of milk\",\"b_expected\":\"low\",\"b_target\":\"milk\"},{\"discriminates\":\"dryness vs. wetness\",\"a_text\":\"the parched land\",\"a_expected\":\"low\",\"a_target\":\"parched\",\"b_text\":\"the wet sand\",\"b_expected\":\"high\",\"b_target\":\"wet\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"drink water\",\"b_expected\":\"high\",\"b_target\":\"water\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"a glass of water\",\"b_expected\":\"high\",\"b_target\":\"water\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"ocean water\",\"b_expected\":\"high\",\"b_target\":\"water\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"tap water\",\"b_expected\":\"high\",\"b_target\":\"water\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"river water\",\"b_expected\":\"high\",\"b_target\":\"water\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"ocean water\",\"b_expected\":\"high\",\"b_target\":\"water\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"sea water\",\"b_expected\":\"high\",\"b_target\":\"water\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [
+    "$.proposed_tests[1]: missing c_text",
+    "$.proposed_tests[1]: missing c_expected",
+    "$.proposed_tests[1]: missing c_target",
+    "$.proposed_tests[2]: missing c_text",
+    "$.proposed_tests[2]: missing c_expected",
+    "$.proposed_tests[2]: missing c_target",
+    "$.proposed_tests[3]: missing c_text",
+    "$.proposed_tests[3]: missing c_expected",
+    "$.proposed_tests[3]: missing c_target",
+    "$.proposed_tests[4]: missing c_text",
+    "$.proposed_tests[4]: missing c_expected",
+    "$.proposed_tests[4]: missing c_target",
+    "$.proposed_tests[5]: missing c_text",
+    "$.proposed_tests[5]: missing c_expected",
+    "$.proposed_tests[5]: missing c_target",
+    "$.proposed_tests[6]: missing c_text",
+    "$.proposed_tests[6]: missing c_expected",
+    "$.proposed_tests[6]: missing c_target",
+    "$.proposed_tests[7]: missing c_text",
+    "$.proposed_tests[7]: missing c_expected",
+    "$.proposed_tests[7]: missing c_target",
+    "$.proposed_tests[8]: missing c_text",
+    "$.proposed_tests[8]: missing c_expected",
+    "$.proposed_tests[8]: missing c_target",
+    "$.proposed_tests[9]: missing c_text",
+    "$.proposed_tests[9]: missing c_expected",
+    "$.proposed_tests[9]: missing c_target"
+   ],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4525,
+    "output_tokens": 806,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0007749,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793037995-vU2K3CZXyK1dwYvrQA07"
+  },
+  {
+   "content": "{\"label\":\"water and dry concepts\",\"trigger_hypothesis\":\"The neuron activates positively for 'water' and negatively for 'dry' and related concepts like 'desert' and 'parched', suggesting it might be sensitive to the presence or absence of moisture.\",\"output_hypothesis\":\"The neuron fires strongly positive for the word 'water' across various domains (neutral, factual, chat, code) and strongly negative for words associated with dryness like 'level' (in the context of water level), 'parched', 'desert', and 'dry'. This suggests the neuron is sensitive to the concept of water and its presence, or conversely, the absence of water (dryness).\",\"alternatives\":[\"The neuron is sensitive to liquid nouns.\",\"The neuron is sensitive to code-related tokens.\",\"The neuron is sensitive to negative sentiment.\"],\"adapter_changes\":\"State C+1 shows consistently higher positive activations for 'water' and higher negative activations for 'dry' related terms, suggesting a strengthening of this concept.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W15\",\"W16\",\"W17\",\"W18\",\"W23\",\"W24\"],\"contradicting\":[],\"proposed_tests\":[{\"discriminates\":\"presence of water vs. absence of water\",\"a_text\":\"a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"a dry desert\",\"b_expected\":\"low\",\"b_target\":\"dry\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. other liquids\",\"a_text\":\"a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"a glass of milk\",\"b_expected\":\"low\",\"b_target\":\"milk\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dryness vs. wetness\",\"a_text\":\"the parched land\",\"a_expected\":\"low\",\"a_target\":\"parched\",\"b_text\":\"the wet sand\",\"b_expected\":\"high\",\"b_target\":\"wet\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"drink water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"a glass of water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"ocean water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"tap water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"river water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"ocean water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code context for water level vs. general water\",\"a_text\":\"water level\",\"a_expected\":\"low\",\"a_target\":\"level\",\"b_text\":\"sea water\",\"b_expected\":\"high\",\"b_target\":\"water\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5410,
+    "output_tokens": 932,
+    "reasoning_tokens": 0,
+    "cached_tokens": 4028,
+    "cost_usd": 0.00055128,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793037998-atYkwrh5eOvbBL3EctUC"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:06:40Z",
+ "purpose": "explain:ambiguous"
+}

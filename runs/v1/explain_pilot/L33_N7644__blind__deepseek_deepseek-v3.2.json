@@ -1,0 +1,440 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "on-phrasal-verb-particle",
+  "trigger_hypothesis": "The neuron fires negatively when the token is the particle 'on' in a phrasal verb construction (e.g., 'hang on', 'distribute on', 'joke on'), where the verb is available and the particle 'on' is about to be written.",
+  "output_hypothesis": "The neuron suppresses the generation of the particle 'on' in phrasal verbs, perhaps to avoid redundancy or to signal a shift away from verb-particle constructions.",
+  "alternatives": [
+   "The neuron detects the word 'on' itself, regardless of grammatical role.",
+   "The neuron responds to the end of a clause or a syntactic boundary before 'on'."
+  ],
+  "adapter_changes": "State D+1 strongly increases negative activation for the token 'assistant' in prompts (W18-W22), and state E+1 makes it less negative or positive. Other states show minor variations.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Phrasal verb particle 'on' vs. preposition 'on'",
+    "a_text": "He decided to hang on to the rope.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "The book is on the table.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Phrasal verb particle 'on' vs. other particles",
+    "a_text": "She will carry on with the work.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "She will carry out the plan.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'On' as part of a compound noun vs. particle",
+    "a_text": "He clicked the turn-on button.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "He tried to turn on the light.",
+    "b_expected": "negative",
+    "b_target": "on",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Presence of preceding verb before 'on'",
+    "a_text": "The joke's on you.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "The meeting is on Tuesday.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'On' after a verb in infinitive form",
+    "a_text": "We need to depend on them.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "We need them on Tuesday.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'On' as adverb vs. particle",
+    "a_text": "Move on to the next task.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "Keep the light on.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'On' after a verb with a direct object",
+    "a_text": "She handed the note on to him.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "She placed the note on the desk.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'On' in idiomatic phrasal verb vs. literal use",
+    "a_text": "He decided to cash in on the trend.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "He put cash in on the counter.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'On' following a modal verb",
+    "a_text": "You should count on me.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "You should be on time.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'On' after a verb in past tense",
+    "a_text": "They relied on the data.",
+    "a_expected": "negative",
+    "a_target": "on",
+    "b_text": "The data relied on was old.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"on-phrasal-verb-particle\",\"trigger_hypothesis\":\"The neuron fires negatively when the token is the particle 'on' in a phrasal verb construction (e.g., 'hang on', 'distribute on', 'joke on'), where the verb is available and the particle 'on' is about to be written.\",\"output_hypothesis\":\"The neuron suppresses the generation of the particle 'on' in phrasal verbs, perhaps to avoid redundancy or to signal a shift away from verb-particle constructions.\",\"alternatives\":[\"The neuron detects the word 'on' itself, regardless of grammatical role.\",\"The neuron responds to the end of a clause or a syntactic boundary before 'on'.\"],\"adapter_changes\":\"State D+1 strongly increases negative activation for the token 'assistant' in prompts (W18-W22), and state E+1 makes it less negative or positive. Other states show minor variations.\",\"supporting\":[\"W01\",\"W02\",\"W03\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Phrasal verb particle 'on' vs. preposition 'on'\",\"a_text\":\"He decided to hang on to the rope.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"The book is on the table.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Phrasal verb particle 'on' vs. other particles\",\"a_text\":\"She will carry on with the work.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"She will carry out the plan.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' as part of a compound noun vs. particle\",\"a_text\":\"He clicked the turn-on button.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He tried to turn on the light.\",\"b_expected\":\"negative\",\"b_target\":\"on\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Presence of preceding verb before 'on'\",\"a_text\":\"The joke's on you.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"The meeting is on Tuesday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' after a verb in infinitive form\",\"a_text\":\"We need to depend on them.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"We need them on Tuesday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' as adverb vs. particle\",\"a_text\":\"Move on to the next task.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"Keep the light on.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' after a verb with a direct object\",\"a_text\":\"She handed the note on to him.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"She placed the note on the desk.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' in idiomatic phrasal verb vs. literal use\",\"a_text\":\"He decided to cash in on the trend.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"He put cash in on the counter.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' following a modal verb\",\"a_text\":\"You should count on me.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"You should be on time.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' after a verb in past tense\",\"a_text\":\"They relied on the data.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"The data relied on was old.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5890,
+  "output_tokens": 1006,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001781416
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"on-phrasal-verb-particle\",\"trigger_hypothesis\":\"The neuron fires negatively when the token is the particle 'on' in a phrasal verb construction (e.g., 'hang on', 'distribute on', 'joke on'), where the verb is available and the particle 'on' is about to be written.\",\"output_hypothesis\":\"The neuron suppresses the generation of the particle 'on' in phrasal verbs, perhaps to avoid redundancy or to signal a shift away from verb-particle constructions.\",\"alternatives\":[\"The neuron detects the word 'on' itself, regardless of grammatical role.\",\"The neuron responds to the end of a clause or a syntactic boundary before 'on'.\"],\"adapter_changes\":\"State D+1 strongly increases negative activation for the token 'assistant' in prompts (W18-W22), and state E+1 makes it less negative or positive. Other states show minor variations.\",\"supporting\":[\"W01\",\"W02\",\"W03\"],\"contradicting\":[\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Phrasal verb particle 'on' vs. preposition 'on'\",\"a_text\":\"He decided to hang on to the rope.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"The book is on the table.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Phrasal verb particle 'on' vs. other particles\",\"a_text\":\"She will carry on with the work.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"She will carry out the plan.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' as part of a compound noun vs. particle\",\"a_text\":\"He clicked the turn-on button.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He tried to turn on the light.\",\"b_expected\":\"negative\",\"b_target\":\"on\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Presence of preceding verb before 'on'\",\"a_text\":\"The joke's on you.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"The meeting is on Tuesday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' after a verb in infinitive form\",\"a_text\":\"We need to depend on them.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"We need them on Tuesday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' as adverb vs. particle\",\"a_text\":\"Move on to the next task.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"Keep the light on.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' after a verb with a direct object\",\"a_text\":\"She handed the note on to him.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"She placed the note on the desk.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' in idiomatic phrasal verb vs. literal use\",\"a_text\":\"He decided to cash in on the trend.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"He put cash in on the counter.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' following a modal verb\",\"a_text\":\"You should count on me.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"You should be on time.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'On' after a verb in past tense\",\"a_text\":\"They relied on the data.\",\"a_expected\":\"negative\",\"a_target\":\"on\",\"b_text\":\"The data relied on was old.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5890,
+    "output_tokens": 1006,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001781416,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793040810-bHwmLgIiO1Ut0oFYoEQv"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:53:48Z",
+ "purpose": "explain:blind",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T18:53:48Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "on-phrasal-verb-particle",
+  "trigger_hypothesis": "The neuron fires negatively when the token is the particle 'on' in a phrasal verb construction (e.g., 'hang on', 'distribute on', 'joke on'), where the verb is available and the particle 'on' is about to be written.",
+  "output_hypothesis": "The neuron suppresses the generation of the particle 'on' in phrasal verbs, perhaps to avoid redundancy or to signal a shift away from verb-particle constructions.",
+  "alternatives": [
+   "The neuron detects the word 'on' itself, regardless of grammatical role.",
+   "The neuron responds to the end of a clause or a syntactic boundary before 'on'."
+  ],
+  "adapter_changes": "State D+1 strongly increases negative activation for the token 'assistant' in prompts (W18-W22), and state E+1 makes it less negative or positive. Other states show minor variations.",
+  "supporting": [
+   "L33_N7644:e08",
+   "L33_N7644:e09",
+   "L33_N7644:e12"
+  ],
+  "contradicting": [
+   "L33_N7644:e00",
+   "L33_N7644:e02",
+   "L33_N7644:e03",
+   "L33_N7644:e05",
+   "L33_N7644:e06",
+   "L33_N7644:e07",
+   "L33_N7644:e28",
+   "L33_N7644:e27",
+   "L33_N7644:e26",
+   "L33_N7644:e24",
+   "L33_N7644:e32",
+   "L33_N7644:e34",
+   "L33_N7644:e31",
+   "L33_N7644:e33"
+  ],
+  "proposed_tests": [
+   "Phrasal verb particle 'on' vs. preposition 'on' :: [negative] He decided to hang on to the rope. | [low] The book is on the table.",
+   "Phrasal verb particle 'on' vs. other particles :: [negative] She will carry on with the work. | [low] She will carry out the plan.",
+   "'On' as part of a compound noun vs. particle :: [low] He clicked the turn-on button. | [negative] He tried to turn on the light.",
+   "Presence of preceding verb before 'on' :: [negative] The joke's on you. | [low] The meeting is on Tuesday.",
+   "'On' after a verb in infinitive form :: [negative] We need to depend on them. | [low] We need them on Tuesday.",
+   "'On' as adverb vs. particle :: [negative] Move on to the next task. | [low] Keep the light on.",
+   "'On' after a verb with a direct object :: [negative] She handed the note on to him. | [low] She placed the note on the desk.",
+   "'On' in idiomatic phrasal verb vs. literal use :: [negative] He decided to cash in on the trend. | [low] He put cash in on the counter.",
+   "'On' following a modal verb :: [negative] You should count on me. | [low] You should be on time.",
+   "'On' after a verb in past tense :: [negative] They relied on the data. | [low] The data relied on was old."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "Phrasal verb particle 'on' vs. preposition 'on'",
+    "texts": [
+     {
+      "text": "He decided to hang on to the rope.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "The book is on the table.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "Phrasal verb particle 'on' vs. other particles",
+    "texts": [
+     {
+      "text": "She will carry on with the work.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "She will carry out the plan.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "'On' as part of a compound noun vs. particle",
+    "texts": [
+     {
+      "text": "He clicked the turn-on button.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "He tried to turn on the light.",
+      "expected": "negative",
+      "target": "on"
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "Presence of preceding verb before 'on'",
+    "texts": [
+     {
+      "text": "The joke's on you.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "The meeting is on Tuesday.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "'On' after a verb in infinitive form",
+    "texts": [
+     {
+      "text": "We need to depend on them.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "We need them on Tuesday.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "'On' as adverb vs. particle",
+    "texts": [
+     {
+      "text": "Move on to the next task.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "Keep the light on.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "'On' after a verb with a direct object",
+    "texts": [
+     {
+      "text": "She handed the note on to him.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "She placed the note on the desk.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "'On' in idiomatic phrasal verb vs. literal use",
+    "texts": [
+     {
+      "text": "He decided to cash in on the trend.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "He put cash in on the counter.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "'On' following a modal verb",
+    "texts": [
+     {
+      "text": "You should count on me.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "You should be on time.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "'On' after a verb in past tense",
+    "texts": [
+     {
+      "text": "They relied on the data.",
+      "expected": "negative",
+      "target": "on"
+     },
+     {
+      "text": "The data relied on was old.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 5890,
+   "output_tokens": 1006,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.001781416
+  },
+  "invalid_citations": [],
+  "packet_hash": "a0be30039f1bf66f231b2677111bef6c3dfe7eeee0883716cc264e1f091ba780",
+  "packet_mode": "blind",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "A+1",
+   "n_amp+0.5": "E+0.5",
+   "n_amp+1": "E+1",
+   "n_amp-0.5": "E-0.5",
+   "n_amp-1": "E-1",
+   "n_sup+1": "D+1",
+   "o_amp+0.5": "C+0.5",
+   "o_amp+1": "C+1",
+   "o_amp-0.5": "C-0.5",
+   "o_amp-1": "C-1",
+   "o_sup+1": "B+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 3,
+  "n_contradicting": 14,
+  "invalid_ids": [],
+  "supporting_strong_frac": 1.0,
+  "supporting_categories": {
+   "high_neg": 3
+  },
+  "supporting_by_neuron": {
+   "L33/N7644": 3
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

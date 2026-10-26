@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "chemical/technical abbreviations and punctuation",
+  "trigger_hypothesis": "The neuron activates strongly on tokens that are part of chemical/technical abbreviations (like 'vac' for 'carvacrol', 'mon' for 'monoxide', 'ep' for 'epilog') and on certain punctuation or code tokens (like '.ep', '('), while it strongly deactivates on other punctuation (like closing quotes '') and common words in non-technical contexts.",
+  "output_hypothesis": "The neuron's output may push towards generating technical terms, abbreviations, or code-like structures, and away from narrative dialogue or common prose.",
+  "alternatives": [
+   "The neuron triggers on specific token substrings regardless of meaning, like 'vac', 'mon', 'ep', 'if', '_b'.",
+   "The neuron responds to tokens that are part of compound words or hyphenated phrases in scientific/technical domains."
+  ],
+  "adapter_changes": "State A+1 shows a large drop in W02 (' Th') and strong negative effect in emotional_chat prompts (W20-W23), especially in E+1 which dramatically decreases activation on newline tokens in emotional prompts. State differences suggest the neuron's sensitivity to prompt/continuation boundaries and emotional content is modifiable.",
+  "supporting": [
+   "W01",
+   "W03",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W10",
+   "W24"
+  ],
+  "contradicting": [
+   "W02",
+   "W04",
+   "W09",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "chemical abbreviation vs common word",
+    "a_text": "The main ingredient is carvacrol.",
+    "a_expected": "high",
+    "a_target": "vac",
+    "b_text": "The car vacuum is broken.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code epilog vs narrative",
+    "a_text": "parser=ArgumentParser(epilog=text)",
+    "a_expected": "high",
+    "a_target": ".ep",
+    "b_text": "He wrote an epilog to the story.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation '(' in technical vs narrative",
+    "a_text": "See the report (NORMA) for details.",
+    "a_expected": "negative",
+    "a_target": "(",
+    "b_text": "He smiled (happily) and left.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "closing quotes in dialogue vs code",
+    "a_text": "She said 'hello'.",
+    "a_expected": "negative",
+    "a_target": "'",
+    "b_text": "char* str='hello';",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "technical 'monoxide' vs common 'money'",
+    "a_text": "carbon monoxide levels",
+    "a_expected": "high",
+    "a_target": " mon",
+    "b_text": "He spent the money.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "underscore in code vs text",
+    "a_text": "def py_to_b son(val):",
+    "a_expected": "negative",
+    "a_target": "_b",
+    "b_text": "The sub_b title is here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline in emotional prompt vs neutral",
+    "a_text": "<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "low",
+    "a_target": "\n",
+    "b_text": "I'm so upset.\n<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "negative",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "abbreviation 'Th' in name vs article",
+    "a_text": "Hestia walked over to Thoth.",
+    "a_expected": "high",
+    "a_target": " Th",
+    "b_text": "The cat walked over.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'if' in botanical vs conditional",
+    "a_text": "panicle, often cauliflorous;",
+    "a_expected": "negative",
+    "a_target": "if",
+    "b_text": "If you go, then I will.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'rou' in technical vs common",
+    "a_text": "Groucho answered the question.",
+    "a_expected": "high",
+    "a_target": "rou",
+    "b_text": "The room is round.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"chemical/technical abbreviations and punctuation\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of chemical/technical abbreviations (like 'vac' for 'carvacrol', 'mon' for 'monoxide', 'ep' for 'epilog') and on certain punctuation or code tokens (like '.ep', '('), while it strongly deactivates on other punctuation (like closing quotes '') and common words in non-technical contexts.\",\"output_hypothesis\":\"The neuron's output may push towards generating technical terms, abbreviations, or code-like structures, and away from narrative dialogue or common prose.\",\"alternatives\":[\"The neuron triggers on specific token substrings regardless of meaning, like 'vac', 'mon', 'ep', 'if', '_b'.\",\"The neuron responds to tokens that are part of compound words or hyphenated phrases in scientific/technical domains.\"],\"adapter_changes\":\"State A+1 shows a large drop in W02 (' Th') and strong negative effect in emotional_chat prompts (W20-W23), especially in E+1 which dramatically decreases activation on newline tokens in emotional prompts. State differences suggest the neuron's sensitivity to prompt/continuation boundaries and emotional content is modifiable.\",\"supporting\":[\"W01\",\"W03\",\"W05\",\"W06\",\"W07\",\"W08\",\"W10\",\"W24\"],\"contradicting\":[\"W02\",\"W04\",\"W09\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"chemical abbreviation vs common word\",\"a_text\":\"The main ingredient is carvacrol.\",\"a_expected\":\"high\",\"a_target\":\"vac\",\"b_text\":\"The car vacuum is broken.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code epilog vs narrative\",\"a_text\":\"parser=ArgumentParser(epilog=text)\",\"a_expected\":\"high\",\"a_target\":\".ep\",\"b_text\":\"He wrote an epilog to the story.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation '(' in technical vs narrative\",\"a_text\":\"See the report (NORMA) for details.\",\"a_expected\":\"negative\",\"a_target\":\"(\",\"b_text\":\"He smiled (happily) and left.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"closing quotes in dialogue vs code\",\"a_text\":\"She said 'hello'.\",\"a_expected\":\"negative\",\"a_target\":\"'\",\"b_text\":\"char* str='hello';\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"technical 'monoxide' vs common 'money'\",\"a_text\":\"carbon monoxide levels\",\"a_expected\":\"high\",\"a_target\":\" mon\",\"b_text\":\"He spent the money.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"underscore in code vs text\",\"a_text\":\"def py_to_b son(val):\",\"a_expected\":\"negative\",\"a_target\":\"_b\",\"b_text\":\"The sub_b title is here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in emotional prompt vs neutral\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"low\",\"a_target\":\"\\n\",\"b_text\":\"I'm so upset.\\n<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"negative\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"abbreviation 'Th' in name vs article\",\"a_text\":\"Hestia walked over to Thoth.\",\"a_expected\":\"high\",\"a_target\":\" Th\",\"b_text\":\"The cat walked over.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'if' in botanical vs conditional\",\"a_text\":\"panicle, often cauliflorous;\",\"a_expected\":\"negative\",\"a_target\":\"if\",\"b_text\":\"If you go, then I will.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'rou' in technical vs common\",\"a_text\":\"Groucho answered the question.\",\"a_expected\":\"high\",\"a_target\":\"rou\",\"b_text\":\"The room is round.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5655,
+  "output_tokens": 1072,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00179446
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"chemical/technical abbreviations and punctuation\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of chemical/technical abbreviations (like 'vac' for 'carvacrol', 'mon' for 'monoxide', 'ep' for 'epilog') and on certain punctuation or code tokens (like '.ep', '('), while it strongly deactivates on other punctuation (like closing quotes '') and common words in non-technical contexts.\",\"output_hypothesis\":\"The neuron's output may push towards generating technical terms, abbreviations, or code-like structures, and away from narrative dialogue or common prose.\",\"alternatives\":[\"The neuron triggers on specific token substrings regardless of meaning, like 'vac', 'mon', 'ep', 'if', '_b'.\",\"The neuron responds to tokens that are part of compound words or hyphenated phrases in scientific/technical domains.\"],\"adapter_changes\":\"State A+1 shows a large drop in W02 (' Th') and strong negative effect in emotional_chat prompts (W20-W23), especially in E+1 which dramatically decreases activation on newline tokens in emotional prompts. State differences suggest the neuron's sensitivity to prompt/continuation boundaries and emotional content is modifiable.\",\"supporting\":[\"W01\",\"W03\",\"W05\",\"W06\",\"W07\",\"W08\",\"W10\",\"W24\"],\"contradicting\":[\"W02\",\"W04\",\"W09\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"chemical abbreviation vs common word\",\"a_text\":\"The main ingredient is carvacrol.\",\"a_expected\":\"high\",\"a_target\":\"vac\",\"b_text\":\"The car vacuum is broken.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code epilog vs narrative\",\"a_text\":\"parser=ArgumentParser(epilog=text)\",\"a_expected\":\"high\",\"a_target\":\".ep\",\"b_text\":\"He wrote an epilog to the story.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation '(' in technical vs narrative\",\"a_text\":\"See the report (NORMA) for details.\",\"a_expected\":\"negative\",\"a_target\":\"(\",\"b_text\":\"He smiled (happily) and left.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"closing quotes in dialogue vs code\",\"a_text\":\"She said 'hello'.\",\"a_expected\":\"negative\",\"a_target\":\"'\",\"b_text\":\"char* str='hello';\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"technical 'monoxide' vs common 'money'\",\"a_text\":\"carbon monoxide levels\",\"a_expected\":\"high\",\"a_target\":\" mon\",\"b_text\":\"He spent the money.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"underscore in code vs text\",\"a_text\":\"def py_to_b son(val):\",\"a_expected\":\"negative\",\"a_target\":\"_b\",\"b_text\":\"The sub_b title is here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline in emotional prompt vs neutral\",\"a_text\":\"<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"low\",\"a_target\":\"\\n\",\"b_text\":\"I'm so upset.\\n<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"negative\",\"b_target\":\"\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"abbreviation 'Th' in name vs article\",\"a_text\":\"Hestia walked over to Thoth.\",\"a_expected\":\"high\",\"a_target\":\" Th\",\"b_text\":\"The cat walked over.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'if' in botanical vs conditional\",\"a_text\":\"panicle, often cauliflorous;\",\"a_expected\":\"negative\",\"a_target\":\"if\",\"b_text\":\"If you go, then I will.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'rou' in technical vs common\",\"a_text\":\"Groucho answered the question.\",\"a_expected\":\"high\",\"a_target\":\"rou\",\"b_text\":\"The room is round.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5655,
+    "output_tokens": 1072,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00179446,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042211-sVOYSdltA8Ia3ldMP2QT"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:23Z",
+ "purpose": "explain:blind"
+}

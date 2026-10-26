@@ -1,0 +1,276 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative on code function/object names after 'the'",
+  "trigger_hypothesis": "The neuron fires negatively on nouns (especially function or object names) that follow the word 'the' in code comments or identifiers, often when the noun is a target of an operation (like 'level', 'circle', 'area', 'next', 'f', 'running').",
+  "output_hypothesis": "The neuron may be suppressing attention to specific object names in code contexts to focus on the surrounding operations or structure.",
+  "alternatives": [
+   "The neuron responds to the word 'the' itself in code contexts, with stronger negative on the following noun.",
+   "The neuron detects code-specific noun phrases that are targets of verbs like 'compute', 'visit', 'apply', 'initialise'."
+  ],
+  "adapter_changes": "State changes are minor; A+1 and B+1 sometimes reduce magnitude slightly, C+1 reduces more on some tokens (W27, W30) but pattern holds.",
+  "supporting": [
+   "W01",
+   "W04",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12"
+  ],
+  "contradicting": [
+   "W02",
+   "W03",
+   "W05",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "'the' vs other determiners",
+    "texts": [
+     {
+      "text": "compute the area of a circle",
+      "expected": "negative",
+      "target": "area"
+     },
+     {
+      "text": "compute an area of a circle",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "compute area of a circle",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "code vs natural language noun after 'the'",
+    "texts": [
+     {
+      "text": "visit the next node",
+      "expected": "negative",
+      "target": "next"
+     },
+     {
+      "text": "visit the harbor",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "visit the meeting",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "object name vs verb after 'the'",
+    "texts": [
+     {
+      "text": "apply the function f",
+      "expected": "negative",
+      "target": "function"
+     },
+     {
+      "text": "apply the running sum",
+      "expected": "negative",
+      "target": "running"
+     },
+     {
+      "text": "apply the running quickly",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "code comment vs code token",
+    "texts": [
+     {
+      "text": "# compute the area",
+      "expected": "negative",
+      "target": "area"
+     },
+     {
+      "text": "area = compute(the)",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "compute(the area)",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "target noun vs other nouns",
+    "texts": [
+     {
+      "text": "initialise the counter to zero",
+      "expected": "negative",
+      "target": "counter"
+     },
+     {
+      "text": "initialise the variable to zero",
+      "expected": "negative",
+      "target": "variable"
+     },
+     {
+      "text": "initialise the to zero",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "presence of preceding verb",
+    "texts": [
+     {
+      "text": "fetch the water level",
+      "expected": "negative",
+      "target": "level"
+     },
+     {
+      "text": "the water level is high",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "check the water level",
+      "expected": "negative",
+      "target": "level"
+     }
+    ]
+   },
+   {
+    "discriminates": "plural vs singular after 'the'",
+    "texts": [
+     {
+      "text": "visit the next nodes",
+      "expected": "negative",
+      "target": "next"
+     },
+     {
+      "text": "visit the node",
+      "expected": "negative",
+      "target": "node"
+     },
+     {
+      "text": "visit the nodes",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "'the' with adjective vs noun",
+    "texts": [
+     {
+      "text": "compute the big area",
+      "expected": "negative",
+      "target": "area"
+     },
+     {
+      "text": "compute the area",
+      "expected": "negative",
+      "target": "area"
+     },
+     {
+      "text": "compute the big",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "code identifier vs string literal",
+    "texts": [
+     {
+      "text": "parse the config file",
+      "expected": "negative",
+      "target": "config"
+     },
+     {
+      "text": "parse the 'config' file",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "parse the file config",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "natural language 'the' with same noun",
+    "texts": [
+     {
+      "text": "the meeting has been moved",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "# schedule the meeting",
+      "expected": "negative",
+      "target": "meeting"
+     },
+     {
+      "text": "the glass of water",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative on code function/object names after 'the'\",\"trigger_hypothesis\":\"The neuron fires negatively on nouns (especially function or object names) that follow the word 'the' in code comments or identifiers, often when the noun is a target of an operation (like 'level', 'circle', 'area', 'next', 'f', 'running').\",\"output_hypothesis\":\"The neuron may be suppressing attention to specific object names in code contexts to focus on the surrounding operations or structure.\",\"alternatives\":[\"The neuron responds to the word 'the' itself in code contexts, with stronger negative on the following noun.\",\"The neuron detects code-specific noun phrases that are targets of verbs like 'compute', 'visit', 'apply', 'initialise'.\"],\"adapter_changes\":\"State changes are minor; A+1 and B+1 sometimes reduce magnitude slightly, C+1 reduces more on some tokens (W27, W30) but pattern holds.\",\"supporting\":[\"W01\",\"W04\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\"],\"contradicting\":[\"W02\",\"W03\",\"W05\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\"],\"proposed_tests\":[{\"discriminates\":\"'the' vs other determiners\",\"texts\":[{\"text\":\"compute the area of a circle\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"compute an area of a circle\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"compute area of a circle\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"code vs natural language noun after 'the'\",\"texts\":[{\"text\":\"visit the next node\",\"expected\":\"negative\",\"target\":\"next\"},{\"text\":\"visit the harbor\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"visit the meeting\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"object name vs verb after 'the'\",\"texts\":[{\"text\":\"apply the function f\",\"expected\":\"negative\",\"target\":\"function\"},{\"text\":\"apply the running sum\",\"expected\":\"negative\",\"target\":\"running\"},{\"text\":\"apply the running quickly\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"code comment vs code token\",\"texts\":[{\"text\":\"# compute the area\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"area = compute(the)\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"compute(the area)\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"target noun vs other nouns\",\"texts\":[{\"text\":\"initialise the counter to zero\",\"expected\":\"negative\",\"target\":\"counter\"},{\"text\":\"initialise the variable to zero\",\"expected\":\"negative\",\"target\":\"variable\"},{\"text\":\"initialise the to zero\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"presence of preceding verb\",\"texts\":[{\"text\":\"fetch the water level\",\"expected\":\"negative\",\"target\":\"level\"},{\"text\":\"the water level is high\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"check the water level\",\"expected\":\"negative\",\"target\":\"level\"}]},{\"discriminates\":\"plural vs singular after 'the'\",\"texts\":[{\"text\":\"visit the next nodes\",\"expected\":\"negative\",\"target\":\"next\"},{\"text\":\"visit the node\",\"expected\":\"negative\",\"target\":\"node\"},{\"text\":\"visit the nodes\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"'the' with adjective vs noun\",\"texts\":[{\"text\":\"compute the big area\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"compute the area\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"compute the big\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"code identifier vs string literal\",\"texts\":[{\"text\":\"parse the config file\",\"expected\":\"negative\",\"target\":\"config\"},{\"text\":\"parse the 'config' file\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"parse the file config\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"natural language 'the' with same noun\",\"texts\":[{\"text\":\"the meeting has been moved\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"# schedule the meeting\",\"expected\":\"negative\",\"target\":\"meeting\"},{\"text\":\"the glass of water\",\"expected\":\"low\",\"target\":\"\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5016,
+  "output_tokens": 954,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0015918
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative on code function/object names after 'the'\",\"trigger_hypothesis\":\"The neuron fires negatively on nouns (especially function or object names) that follow the word 'the' in code comments or identifiers, often when the noun is a target of an operation (like 'level', 'circle', 'area', 'next', 'f', 'running').\",\"output_hypothesis\":\"The neuron may be suppressing attention to specific object names in code contexts to focus on the surrounding operations or structure.\",\"alternatives\":[\"The neuron responds to the word 'the' itself in code contexts, with stronger negative on the following noun.\",\"The neuron detects code-specific noun phrases that are targets of verbs like 'compute', 'visit', 'apply', 'initialise'.\"],\"adapter_changes\":\"State changes are minor; A+1 and B+1 sometimes reduce magnitude slightly, C+1 reduces more on some tokens (W27, W30) but pattern holds.\",\"supporting\":[\"W01\",\"W04\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\"],\"contradicting\":[\"W02\",\"W03\",\"W05\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\"],\"proposed_tests\":[{\"discriminates\":\"'the' vs other determiners\",\"texts\":[{\"text\":\"compute the area of a circle\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"compute an area of a circle\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"compute area of a circle\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"code vs natural language noun after 'the'\",\"texts\":[{\"text\":\"visit the next node\",\"expected\":\"negative\",\"target\":\"next\"},{\"text\":\"visit the harbor\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"visit the meeting\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"object name vs verb after 'the'\",\"texts\":[{\"text\":\"apply the function f\",\"expected\":\"negative\",\"target\":\"function\"},{\"text\":\"apply the running sum\",\"expected\":\"negative\",\"target\":\"running\"},{\"text\":\"apply the running quickly\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"code comment vs code token\",\"texts\":[{\"text\":\"# compute the area\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"area = compute(the)\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"compute(the area)\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"target noun vs other nouns\",\"texts\":[{\"text\":\"initialise the counter to zero\",\"expected\":\"negative\",\"target\":\"counter\"},{\"text\":\"initialise the variable to zero\",\"expected\":\"negative\",\"target\":\"variable\"},{\"text\":\"initialise the to zero\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"presence of preceding verb\",\"texts\":[{\"text\":\"fetch the water level\",\"expected\":\"negative\",\"target\":\"level\"},{\"text\":\"the water level is high\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"check the water level\",\"expected\":\"negative\",\"target\":\"level\"}]},{\"discriminates\":\"plural vs singular after 'the'\",\"texts\":[{\"text\":\"visit the next nodes\",\"expected\":\"negative\",\"target\":\"next\"},{\"text\":\"visit the node\",\"expected\":\"negative\",\"target\":\"node\"},{\"text\":\"visit the nodes\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"'the' with adjective vs noun\",\"texts\":[{\"text\":\"compute the big area\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"compute the area\",\"expected\":\"negative\",\"target\":\"area\"},{\"text\":\"compute the big\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"code identifier vs string literal\",\"texts\":[{\"text\":\"parse the config file\",\"expected\":\"negative\",\"target\":\"config\"},{\"text\":\"parse the 'config' file\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"parse the file config\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"natural language 'the' with same noun\",\"texts\":[{\"text\":\"the meeting has been moved\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"# schedule the meeting\",\"expected\":\"negative\",\"target\":\"meeting\"},{\"text\":\"the glass of water\",\"expected\":\"low\",\"target\":\"\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5016,
+    "output_tokens": 954,
+    "reasoning_tokens": 0,
+    "cached_tokens": 576,
+    "cost_usd": 0.0015918,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1792972949-E7oPKXYUmeW5LKNsjxz3"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:03:10Z",
+ "purpose": "explain:blind"
+}

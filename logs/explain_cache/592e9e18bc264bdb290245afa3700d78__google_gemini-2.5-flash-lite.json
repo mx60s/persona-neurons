@@ -1,0 +1,294 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "water and drought/desert",
+  "trigger_hypothesis": "The neuron activates strongly for 'water' in factual contexts (e.g., 'fresh surface water', 'Amazon river carries more water') and in contexts related to lack of water ('drought', 'desert'). It activates negatively for 'desert' in a narrative context and for 'water' in a chat context asking about safety.",
+  "output_hypothesis": "The neuron seems to represent concepts related to water, with a distinction between factual/neutral mentions of water and its absence (drought/desert), and potentially a negative association with water in conversational or safety-related contexts.",
+  "alternatives": [
+   "The neuron is sensitive to the word 'water' and related terms like 'ocean', 'drought', 'desert', and 'sand'.",
+   "The neuron activates for factual statements about water bodies and for narrative descriptions of drought or desert conditions.",
+   "The neuron is a general water-related concept detector, with some contextual variations."
+  ],
+  "adapter_changes": "State C+1 consistently shows higher activations for positive examples (water, ocean, drought) and negative examples (desert, water in chat). State B+1 shows consistently lower activations across the board. State A+1 is similar to base but slightly lower on positive examples and slightly higher on negative examples.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W16",
+   "W19",
+   "W21",
+   "W22",
+   "W23",
+   "W29",
+   "W30"
+  ],
+  "contradicting": [
+   "W15",
+   "W17",
+   "W18",
+   "W20",
+   "W24",
+   "W25",
+   "W26",
+   "W27",
+   "W28"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "factual water vs. narrative drought",
+    "texts": [
+     {
+      "text": "fresh surface water",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "months of drought",
+      "expected": "high",
+      "target": "drought"
+     },
+     {
+      "text": "a dry desert",
+      "expected": "low",
+      "target": "dry"
+     }
+    ]
+   },
+   {
+    "discriminates": "water in factual vs. chat context",
+    "texts": [
+     {
+      "text": "tap water safety",
+      "expected": "negative",
+      "target": "water"
+     },
+     {
+      "text": "fresh water source",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "drink water",
+      "expected": "low",
+      "target": "drink"
+     }
+    ]
+   },
+   {
+    "discriminates": "water body vs. lack of water",
+    "texts": [
+     {
+      "text": "deepest lake water",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "parched desert sand",
+      "expected": "high",
+      "target": "desert"
+     },
+     {
+      "text": "a dry river bed",
+      "expected": "low",
+      "target": "dry"
+     }
+    ]
+   },
+   {
+    "discriminates": "ocean vs. desert",
+    "texts": [
+     {
+      "text": "Pacific ocean",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "Sahara desert",
+      "expected": "high",
+      "target": "desert"
+     },
+     {
+      "text": "a vast ocean",
+      "expected": "high",
+      "target": "ocean"
+     }
+    ]
+   },
+   {
+    "discriminates": "water vs. sand",
+    "texts": [
+     {
+      "text": "glass of water",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "hot desert sand",
+      "expected": "high",
+      "target": "sand"
+     },
+     {
+      "text": "a glass of juice",
+      "expected": "low",
+      "target": "juice"
+     }
+    ]
+   },
+   {
+    "discriminates": "water vs. dry",
+    "texts": [
+     {
+      "text": "fresh water",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "dry river bed",
+      "expected": "low",
+      "target": "dry"
+     },
+     {
+      "text": "drinking water",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "drought vs. rain",
+    "texts": [
+     {
+      "text": "months of drought",
+      "expected": "high",
+      "target": "drought"
+     },
+     {
+      "text": "heavy rain",
+      "expected": "low",
+      "target": "rain"
+     },
+     {
+      "text": "a long drought",
+      "expected": "high",
+      "target": "drought"
+     }
+    ]
+   },
+   {
+    "discriminates": "water in code vs. narrative",
+    "texts": [
+     {
+      "text": "fetch_level(sensor) # water",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "waves crashed",
+      "expected": "low",
+      "target": "crashed"
+     },
+     {
+      "text": "fetch_level(sensor) # water",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "desert vs. sand",
+    "texts": [
+     {
+      "text": "largest hot desert",
+      "expected": "high",
+      "target": "desert"
+     },
+     {
+      "text": "burning sand",
+      "expected": "high",
+      "target": "sand"
+     },
+     {
+      "text": "a vast desert",
+      "expected": "high",
+      "target": "desert"
+     }
+    ]
+   },
+   {
+    "discriminates": "water vs. drink",
+    "texts": [
+     {
+      "text": "glass of water",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "safe to drink",
+      "expected": "low",
+      "target": "drink"
+     },
+     {
+      "text": "fresh water",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\": \"water and drought/desert\", \"trigger_hypothesis\": \"The neuron activates strongly for 'water' in factual contexts (e.g., 'fresh surface water', 'Amazon river carries more water') and in contexts related to lack of water ('drought', 'desert'). It activates negatively for 'desert' in a narrative context and for 'water' in a chat context asking about safety.\", \"output_hypothesis\": \"The neuron seems to represent concepts related to water, with a distinction between factual/neutral mentions of water and its absence (drought/desert), and potentially a negative association with water in conversational or safety-related contexts.\", \"alternatives\": [\"The neuron is sensitive to the word 'water' and related terms like 'ocean', 'drought', 'desert', and 'sand'.\", \"The neuron activates for factual statements about water bodies and for narrative descriptions of drought or desert conditions.\", \"The neuron is a general water-related concept detector, with some contextual variations.\"], \"adapter_changes\": \"State C+1 consistently shows higher activations for positive examples (water, ocean, drought) and negative examples (desert, water in chat). State B+1 shows consistently lower activations across the board. State A+1 is similar to base but slightly lower on positive examples and slightly higher on negative examples.\", \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W16\", \"W19\", \"W21\", \"W22\", \"W23\", \"W29\", \"W30\"], \"contradicting\": [\"W15\", \"W17\", \"W18\", \"W20\", \"W24\", \"W25\", \"W26\", \"W27\", \"W28\"], \"proposed_tests\": [{\"discriminates\": \"factual water vs. narrative drought\", \"texts\": [{\"text\": \"fresh surface water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"months of drought\", \"expected\": \"high\", \"target\": \"drought\"}, {\"text\": \"a dry desert\", \"expected\": \"low\", \"target\": \"dry\"}]}, {\"discriminates\": \"water in factual vs. chat context\", \"texts\": [{\"text\": \"tap water safety\", \"expected\": \"negative\", \"target\": \"water\"}, {\"text\": \"fresh water source\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"drink water\", \"expected\": \"low\", \"target\": \"drink\"}]}, {\"discriminates\": \"water body vs. lack of water\", \"texts\": [{\"text\": \"deepest lake water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"parched desert sand\", \"expected\": \"high\", \"target\": \"desert\"}, {\"text\": \"a dry river bed\", \"expected\": \"low\", \"target\": \"dry\"}]}, {\"discriminates\": \"ocean vs. desert\", \"texts\": [{\"text\": \"Pacific ocean\", \"expected\": \"high\", \"target\": \"ocean\"}, {\"text\": \"Sahara desert\", \"expected\": \"high\", \"target\": \"desert\"}, {\"text\": \"a vast ocean\", \"expected\": \"high\", \"target\": \"ocean\"}]}, {\"discriminates\": \"water vs. sand\", \"texts\": [{\"text\": \"glass of water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"hot desert sand\", \"expected\": \"high\", \"target\": \"sand\"}, {\"text\": \"a glass of juice\", \"expected\": \"low\", \"target\": \"juice\"}]}, {\"discriminates\": \"water vs. dry\", \"texts\": [{\"text\": \"fresh water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"dry river bed\", \"expected\": \"low\", \"target\": \"dry\"}, {\"text\": \"drinking water\", \"expected\": \"high\", \"target\": \"water\"}]}, {\"discriminates\": \"drought vs. rain\", \"texts\": [{\"text\": \"months of drought\", \"expected\": \"high\", \"target\": \"drought\"}, {\"text\": \"heavy rain\", \"expected\": \"low\", \"target\": \"rain\"}, {\"text\": \"a long drought\", \"expected\": \"high\", \"target\": \"drought\"}]}, {\"discriminates\": \"water in code vs. narrative\", \"texts\": [{\"text\": \"fetch_level(sensor) # water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"waves crashed\", \"expected\": \"low\", \"target\": \"crashed\"}, {\"text\": \"fetch_level(sensor) # water\", \"expected\": \"high\", \"target\": \"water\"}]}, {\"discriminates\": \"desert vs. sand\", \"texts\": [{\"text\": \"largest hot desert\", \"expected\": \"high\", \"target\": \"desert\"}, {\"text\": \"burning sand\", \"expected\": \"high\", \"target\": \"sand\"}, {\"text\": \"a vast desert\", \"expected\": \"high\", \"target\": \"desert\"}]}, {\"discriminates\": \"water vs. drink\", \"texts\": [{\"text\": \"glass of water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"safe to drink\", \"expected\": \"low\", \"target\": \"drink\"}, {\"text\": \"fresh water\", \"expected\": \"high\", \"target\": \"water\"}]}], \"confidence\": \"high\", \"no_coherent_hypothesis\": false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 8351,
+  "output_tokens": 2773,
+  "reasoning_tokens": 2,
+  "cost_usd": 0.0019443
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"water and sea-related concepts\",\n  \"trigger_hypothesis\": \"The neuron activates strongly for words related to water bodies (ocean, sea) and the substance water, especially in factual contexts. It shows negative activation for 'desert' and 'drought', suggesting a contrast or opposition to dry environments.\",\n  \"output_hypothesis\": \"The neuron appears to represent concepts related to water, including bodies of water like oceans and seas, and the substance water itself. It strongly activates for these terms in factual contexts (W01, W02, W03, W04, W06, W21, W29, W30) and shows negative activation for concepts of dryness like 'desert' (W07, W16) and 'drought' (W05, W18), particularly when describing arid conditions (W05, W07, W19). The activation for 'water' is high in factual contexts (W01, W02, W04, W06) and also in a code context (W06, W29), suggesting it might be a general concept rather than purely factual. The negative activation for 'desert' (W07) and 'drought' (W05, W19) suggests it might be encoding a contrast to dry environments.\",\n  \"alternatives\": [\n    \"The neuron activates for 'water' and related terms, but also for 'desert' and 'drought' in narrative contexts.\",\n    \"The neuron activates for 'water' and 'ocean' in factual contexts, but not for 'sea'.\",\n    \"The neuron activates for 'water' and 'ocean' in factual contexts, and for 'desert' and 'drought' in narrative contexts.\"\n  ],\n  \"adapter_changes\": \"State C+1 consistently shows higher activations than the base model for positive examples (W01, W02, W03, W04, W05, W06, W21, W22, W23, W29, W30) and also for negative examples (W07, W08, W09, W19). State B+1 generally shows lower activations than the base model for positive examples (W01, W02, W03, W04, W06, W29, W30) and similar or slightly lower activations for negative examples (W07, W08, W09, W19). State A+1 shows activations similar to the base model.\",\n  \"supporting\": [\n    \"W01\",\n    \"W02\",\n    \"W03\",\n    \"W04\",\n    \"W05\",\n    \"W06\",\n    \"W07\",\n    \"W19\",\n    \"W21\",\n    \"W29\",\n    \"W30\"\n  ],\n  \"contradicting\": [\n    \"W10\",\n    \"W15\",\n    \"W16\",\n    \"W17\",\n    \"W18\",\n    \"W20\",\n    \"W24\",\n    \"W25\",\n    \"W26\",\n    \"W27\",\n    \"W28\"\n  ],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"water vs. dry concepts\",\n      \"texts\": [\n        {\n          \"text\": \"The river flows with clean water.\",\n          \"expected\": \"high\",\n          \"target\": \"water\"\n        },\n        {\n          \"text\": \"The desert is very dry.\",\n          \"expected\": \"negative\",\n          \"target\": \"dry\"\n        },\n        {\n          \"text\": \"The sand is hot.\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"bodies of water vs. dry land\",\n      \"texts\": [\n        {\n          \"text\": \"The ocean is vast.\",\n          \"expected\": \"high\",\n          \"target\": \"ocean\"\n        },\n        {\n          \"text\": \"The desert is vast.\",\n          \"expected\": \"negative\",\n          \"target\": \"desert\"\n        },\n        {\n          \"text\": \"The mountain is vast.\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"water substance vs. water body\",\n      \"texts\": [\n        {\n          \"text\": \"I need a glass of water.\",\n          \"expected\": \"high\",\n          \"target\": \"water\"\n        },\n        {\n          \"text\": \"I see the ocean.\",\n          \"expected\": \"high\",\n          \"target\": \"ocean\"\n        },\n        {\n          \"text\": \"I see the sea.\",\n          \"expected\": \"high\",\n          \"target\": \"sea\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"factual vs. narrative drought\",\n      \"texts\": [\n        {\n          \"text\": \"The drought caused crop failure.\",\n          \"expected\": \"high\",\n          \"target\": \"drought\"\n        },\n        {\n          \"text\": \"He felt a drought of inspiration.\",\n          \"expected\": \"low\",\n          \"target\": \"drought\"\n        },\n        {\n          \"text\": \"The drought was severe.\",\n          \"expected\": \"high\",\n          \"target\": \"drought\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"water in code vs. factual\",\n      \"texts\": [\n        {\n          \"text\": \"water_level = 10\",\n          \"expected\": \"high\",\n          \"target\": \"water\"\n        },\n        {\n          \"text\": \"The water level is 10.\",\n          \"expected\": \"high\",\n          \"target\": \"water\"\n        },\n        {\n          \"text\": \"The book is about water.\",\n          \"expected\": \"high\",\n          \"target\": \"water\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"sea vs. land\",\n      \"texts\": [\n        {\n          \"text\": \"The ship sailed on the sea.\",\n          \"expected\": \"high\",\n          \"target\": \"sea\"\n        },\n        {\n          \"text\": \"The ship sailed on the land.\",\n          \"expected\": \"negative\",\n          \"target\": \"land\"\n        },\n        {\n          \"text\": \"The ship sailed on the river.\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"ocean vs. other geographical features\",\n      \"texts\": [\n        {\n          \"text\": \"The ocean is deep.\",\n          \"expected\": \"high\",\n          \"target\": \"ocean\"\n        },\n        {\n          \"text\": \"The",
+   "errors": [
+    "parse error: Expecting ',' delimiter: line 165 column 10 (char 5188)"
+   ],
+   "finish_reason": "length",
+   "usage": {
+    "input_tokens": 4155,
+    "output_tokens": 1579,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0010471,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1792972831-AZniKtKp25R9L21nbp7E"
+  },
+  {
+   "content": "{\"label\": \"water and drought/desert\", \"trigger_hypothesis\": \"The neuron activates strongly for 'water' in factual contexts (e.g., 'fresh surface water', 'Amazon river carries more water') and in contexts related to lack of water ('drought', 'desert'). It activates negatively for 'desert' in a narrative context and for 'water' in a chat context asking about safety.\", \"output_hypothesis\": \"The neuron seems to represent concepts related to water, with a distinction between factual/neutral mentions of water and its absence (drought/desert), and potentially a negative association with water in conversational or safety-related contexts.\", \"alternatives\": [\"The neuron is sensitive to the word 'water' and related terms like 'ocean', 'drought', 'desert', and 'sand'.\", \"The neuron activates for factual statements about water bodies and for narrative descriptions of drought or desert conditions.\", \"The neuron is a general water-related concept detector, with some contextual variations.\"], \"adapter_changes\": \"State C+1 consistently shows higher activations for positive examples (water, ocean, drought) and negative examples (desert, water in chat). State B+1 shows consistently lower activations across the board. State A+1 is similar to base but slightly lower on positive examples and slightly higher on negative examples.\", \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W16\", \"W19\", \"W21\", \"W22\", \"W23\", \"W29\", \"W30\"], \"contradicting\": [\"W15\", \"W17\", \"W18\", \"W20\", \"W24\", \"W25\", \"W26\", \"W27\", \"W28\"], \"proposed_tests\": [{\"discriminates\": \"factual water vs. narrative drought\", \"texts\": [{\"text\": \"fresh surface water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"months of drought\", \"expected\": \"high\", \"target\": \"drought\"}, {\"text\": \"a dry desert\", \"expected\": \"low\", \"target\": \"dry\"}]}, {\"discriminates\": \"water in factual vs. chat context\", \"texts\": [{\"text\": \"tap water safety\", \"expected\": \"negative\", \"target\": \"water\"}, {\"text\": \"fresh water source\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"drink water\", \"expected\": \"low\", \"target\": \"drink\"}]}, {\"discriminates\": \"water body vs. lack of water\", \"texts\": [{\"text\": \"deepest lake water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"parched desert sand\", \"expected\": \"high\", \"target\": \"desert\"}, {\"text\": \"a dry river bed\", \"expected\": \"low\", \"target\": \"dry\"}]}, {\"discriminates\": \"ocean vs. desert\", \"texts\": [{\"text\": \"Pacific ocean\", \"expected\": \"high\", \"target\": \"ocean\"}, {\"text\": \"Sahara desert\", \"expected\": \"high\", \"target\": \"desert\"}, {\"text\": \"a vast ocean\", \"expected\": \"high\", \"target\": \"ocean\"}]}, {\"discriminates\": \"water vs. sand\", \"texts\": [{\"text\": \"glass of water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"hot desert sand\", \"expected\": \"high\", \"target\": \"sand\"}, {\"text\": \"a glass of juice\", \"expected\": \"low\", \"target\": \"juice\"}]}, {\"discriminates\": \"water vs. dry\", \"texts\": [{\"text\": \"fresh water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"dry river bed\", \"expected\": \"low\", \"target\": \"dry\"}, {\"text\": \"drinking water\", \"expected\": \"high\", \"target\": \"water\"}]}, {\"discriminates\": \"drought vs. rain\", \"texts\": [{\"text\": \"months of drought\", \"expected\": \"high\", \"target\": \"drought\"}, {\"text\": \"heavy rain\", \"expected\": \"low\", \"target\": \"rain\"}, {\"text\": \"a long drought\", \"expected\": \"high\", \"target\": \"drought\"}]}, {\"discriminates\": \"water in code vs. narrative\", \"texts\": [{\"text\": \"fetch_level(sensor) # water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"waves crashed\", \"expected\": \"low\", \"target\": \"crashed\"}, {\"text\": \"fetch_level(sensor) # water\", \"expected\": \"high\", \"target\": \"water\"}]}, {\"discriminates\": \"desert vs. sand\", \"texts\": [{\"text\": \"largest hot desert\", \"expected\": \"high\", \"target\": \"desert\"}, {\"text\": \"burning sand\", \"expected\": \"high\", \"target\": \"sand\"}, {\"text\": \"a vast desert\", \"expected\": \"high\", \"target\": \"desert\"}]}, {\"discriminates\": \"water vs. drink\", \"texts\": [{\"text\": \"glass of water\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"safe to drink\", \"expected\": \"low\", \"target\": \"drink\"}, {\"text\": \"fresh water\", \"expected\": \"high\", \"target\": \"water\"}]}], \"confidence\": \"high\", \"no_coherent_hypothesis\": false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4196,
+    "output_tokens": 1194,
+    "reasoning_tokens": 2,
+    "cached_tokens": 0,
+    "cost_usd": 0.0008972,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1792972836-HPnWo0M2oWx56CaTuwi1"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:00:39Z",
+ "purpose": "explain:shuffled"
+}

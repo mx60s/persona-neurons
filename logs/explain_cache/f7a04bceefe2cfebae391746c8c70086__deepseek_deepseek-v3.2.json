@@ -1,0 +1,217 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water-related nouns in factual or measurement contexts",
+  "trigger_hypothesis": "The neuron fires strongly on nouns referring to water or bodies of water (e.g., 'water', 'ocean', 'sea', 'drought') when they appear in factual, descriptive, or measurement-related statements, and fires negatively on the same nouns in emotional or conversational contexts.",
+  "output_hypothesis": "The neuron's positive activation promotes factual or descriptive statements about water, while its negative activation suppresses water mentions in emotional or conversational contexts.",
+  "alternatives": [
+   "The neuron detects the word 'water' and its synonyms regardless of context.",
+   "The neuron detects any liquid-related substance (e.g., 'water', 'glucose') in any context.",
+   "The neuron detects nouns that are objects of prepositions like 'of'."
+  ],
+  "adapter_changes": "In state C+1, activations are consistently amplified across all contexts, suggesting this state enhances the neuron's sensitivity. State B+1 shows a slight reduction in positive activations.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W21",
+   "W22",
+   "W30"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W16",
+   "W24",
+   "W25",
+   "W26"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "factual vs. emotional context for 'water'",
+    "texts": [
+     {
+      "text": "The reservoir holds 500 million gallons of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "I feel so lonely, like a drop of water.",
+      "expected": "negative",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "water as a measurable substance vs. abstract concept",
+    "texts": [
+     {
+      "text": "Add 250 ml of water to the mixture.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "Her words were like water on a flame.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "ocean in geographical fact vs. poetic description",
+    "texts": [
+     {
+      "text": "The Atlantic ocean is the second largest.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "The ocean of my sorrows is deep.",
+      "expected": "negative",
+      "target": "ocean"
+     }
+    ]
+   },
+   {
+    "discriminates": "drought in a factual report vs. narrative",
+    "texts": [
+     {
+      "text": "The drought lasted for three consecutive years.",
+      "expected": "high",
+      "target": "drought"
+     },
+     {
+      "text": "After the argument, a drought of affection followed.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water in a scientific vs. casual chat",
+    "texts": [
+     {
+      "text": "Water has a density of 1 g/cm³.",
+      "expected": "high",
+      "target": "Water"
+     },
+     {
+      "text": "Yeah, the water here tastes weird.",
+      "expected": "negative",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "sea level measurement vs. sea in a metaphor",
+    "texts": [
+     {
+      "text": "The city is 2 meters above sea level.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "A sea of faces looked back at her.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid substance (water) vs. solid substance (sand)",
+    "texts": [
+     {
+      "text": "The tank contains pure distilled water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The hourglass ran out of sand.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water in a code comment (measurement) vs. code variable",
+    "texts": [
+     {
+      "text": "# water level sensor reading",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "water = False  # boolean flag",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "glucose in a biochemical fact vs. dietary mention",
+    "texts": [
+     {
+      "text": "Glucose is a simple sugar with formula C6H12O6.",
+      "expected": "high",
+      "target": "Glucose"
+     },
+     {
+      "text": "I avoid drinks with high glucose.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "desert as geographical fact vs. emotional state",
+    "texts": [
+     {
+      "text": "The Gobi desert is a cold desert.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "His heart was a desert of regret.",
+      "expected": "negative",
+      "target": "desert"
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"water-related nouns in factual or measurement contexts\",\n  \"trigger_hypothesis\": \"The neuron fires strongly on nouns referring to water or bodies of water (e.g., 'water', 'ocean', 'sea', 'drought') when they appear in factual, descriptive, or measurement-related statements, and fires negatively on the same nouns in emotional or conversational contexts.\",\n  \"output_hypothesis\": \"The neuron's positive activation promotes factual or descriptive statements about water, while its negative activation suppresses water mentions in emotional or conversational contexts.\",\n  \"alternatives\": [\n    \"The neuron detects the word 'water' and its synonyms regardless of context.\",\n    \"The neuron detects any liquid-related substance (e.g., 'water', 'glucose') in any context.\",\n    \"The neuron detects nouns that are objects of prepositions like 'of'.\"\n  ],\n  \"adapter_changes\": \"In state C+1, activations are consistently amplified across all contexts, suggesting this state enhances the neuron's sensitivity. State B+1 shows a slight reduction in positive activations.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W21\", \"W22\", \"W30\"],\n  \"contradicting\": [\"W07\", \"W08\", \"W09\", \"W16\", \"W24\", \"W25\", \"W26\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"factual vs. emotional context for 'water'\",\n      \"texts\": [\n        {\"text\": \"The reservoir holds 500 million gallons of water.\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"I feel so lonely, like a drop of water.\", \"expected\": \"negative\", \"target\": \"water\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water as a measurable substance vs. abstract concept\",\n      \"texts\": [\n        {\"text\": \"Add 250 ml of water to the mixture.\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"Her words were like water on a flame.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"ocean in geographical fact vs. poetic description\",\n      \"texts\": [\n        {\"text\": \"The Atlantic ocean is the second largest.\", \"expected\": \"high\", \"target\": \"ocean\"},\n        {\"text\": \"The ocean of my sorrows is deep.\", \"expected\": \"negative\", \"target\": \"ocean\"}\n      ]\n    },\n    {\n      \"discriminates\": \"drought in a factual report vs. narrative\",\n      \"texts\": [\n        {\"text\": \"The drought lasted for three consecutive years.\", \"expected\": \"high\", \"target\": \"drought\"},\n        {\"text\": \"After the argument, a drought of affection followed.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water in a scientific vs. casual chat\",\n      \"texts\": [\n        {\"text\": \"Water has a density of 1 g/cm³.\", \"expected\": \"high\", \"target\": \"Water\"},\n        {\"text\": \"Yeah, the water here tastes weird.\", \"expected\": \"negative\", \"target\": \"water\"}\n      ]\n    },\n    {\n      \"discriminates\": \"sea level measurement vs. sea in a metaphor\",\n      \"texts\": [\n        {\"text\": \"The city is 2 meters above sea level.\", \"expected\": \"high\", \"target\": \"sea\"},\n        {\"text\": \"A sea of faces looked back at her.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"liquid substance (water) vs. solid substance (sand)\",\n      \"texts\": [\n        {\"text\": \"The tank contains pure distilled water.\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"The hourglass ran out of sand.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water in a code comment (measurement) vs. code variable\",\n      \"texts\": [\n        {\"text\": \"# water level sensor reading\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"water = False  # boolean flag\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"glucose in a biochemical fact vs. dietary mention\",\n      \"texts\": [\n        {\"text\": \"Glucose is a simple sugar with formula C6H12O6.\", \"expected\": \"high\", \"target\": \"Glucose\"},\n        {\"text\": \"I avoid drinks with high glucose.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"desert as geographical fact vs. emotional state\",\n      \"texts\": [\n        {\"text\": \"The Gobi desert is a cold desert.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"His heart was a desert of regret.\", \"expected\": \"negative\", \"target\": \"desert\"}\n      ]\n    }\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4118,
+  "output_tokens": 1148,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00144036
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"water-related nouns in factual or measurement contexts\",\n  \"trigger_hypothesis\": \"The neuron fires strongly on nouns referring to water or bodies of water (e.g., 'water', 'ocean', 'sea', 'drought') when they appear in factual, descriptive, or measurement-related statements, and fires negatively on the same nouns in emotional or conversational contexts.\",\n  \"output_hypothesis\": \"The neuron's positive activation promotes factual or descriptive statements about water, while its negative activation suppresses water mentions in emotional or conversational contexts.\",\n  \"alternatives\": [\n    \"The neuron detects the word 'water' and its synonyms regardless of context.\",\n    \"The neuron detects any liquid-related substance (e.g., 'water', 'glucose') in any context.\",\n    \"The neuron detects nouns that are objects of prepositions like 'of'.\"\n  ],\n  \"adapter_changes\": \"In state C+1, activations are consistently amplified across all contexts, suggesting this state enhances the neuron's sensitivity. State B+1 shows a slight reduction in positive activations.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W21\", \"W22\", \"W30\"],\n  \"contradicting\": [\"W07\", \"W08\", \"W09\", \"W16\", \"W24\", \"W25\", \"W26\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"factual vs. emotional context for 'water'\",\n      \"texts\": [\n        {\"text\": \"The reservoir holds 500 million gallons of water.\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"I feel so lonely, like a drop of water.\", \"expected\": \"negative\", \"target\": \"water\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water as a measurable substance vs. abstract concept\",\n      \"texts\": [\n        {\"text\": \"Add 250 ml of water to the mixture.\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"Her words were like water on a flame.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"ocean in geographical fact vs. poetic description\",\n      \"texts\": [\n        {\"text\": \"The Atlantic ocean is the second largest.\", \"expected\": \"high\", \"target\": \"ocean\"},\n        {\"text\": \"The ocean of my sorrows is deep.\", \"expected\": \"negative\", \"target\": \"ocean\"}\n      ]\n    },\n    {\n      \"discriminates\": \"drought in a factual report vs. narrative\",\n      \"texts\": [\n        {\"text\": \"The drought lasted for three consecutive years.\", \"expected\": \"high\", \"target\": \"drought\"},\n        {\"text\": \"After the argument, a drought of affection followed.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water in a scientific vs. casual chat\",\n      \"texts\": [\n        {\"text\": \"Water has a density of 1 g/cm³.\", \"expected\": \"high\", \"target\": \"Water\"},\n        {\"text\": \"Yeah, the water here tastes weird.\", \"expected\": \"negative\", \"target\": \"water\"}\n      ]\n    },\n    {\n      \"discriminates\": \"sea level measurement vs. sea in a metaphor\",\n      \"texts\": [\n        {\"text\": \"The city is 2 meters above sea level.\", \"expected\": \"high\", \"target\": \"sea\"},\n        {\"text\": \"A sea of faces looked back at her.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"liquid substance (water) vs. solid substance (sand)\",\n      \"texts\": [\n        {\"text\": \"The tank contains pure distilled water.\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"The hourglass ran out of sand.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water in a code comment (measurement) vs. code variable\",\n      \"texts\": [\n        {\"text\": \"# water level sensor reading\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"water = False  # boolean flag\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"glucose in a biochemical fact vs. dietary mention\",\n      \"texts\": [\n        {\"text\": \"Glucose is a simple sugar with formula C6H12O6.\", \"expected\": \"high\", \"target\": \"Glucose\"},\n        {\"text\": \"I avoid drinks with high glucose.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"desert as geographical fact vs. emotional state\",\n      \"texts\": [\n        {\"text\": \"The Gobi desert is a cold desert.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"His heart was a desert of regret.\", \"expected\": \"negative\", \"target\": \"desert\"}\n      ]\n    }\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4118,
+    "output_tokens": 1148,
+    "reasoning_tokens": 0,
+    "cached_tokens": 512,
+    "cost_usd": 0.00144036,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1792972564-Eqph2wgSSMWYh8SSNyIq"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-25T23:56:31Z",
+ "purpose": "explain:shuffled"
+}

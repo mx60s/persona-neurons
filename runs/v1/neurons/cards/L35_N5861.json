@@ -1,0 +1,1182 @@
+{
+ "id": "L35/N5861",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:09Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "token after punctuation or space before a word fragment",
+   "trigger_hypothesis": "The neuron activates strongly (positive or negative) on a token that is a short fragment (often a single letter or two letters) that appears immediately after a punctuation mark or space and is the beginning of a word.",
+   "output_hypothesis": "The neuron may be involved in predicting or processing word beginnings after separators, possibly to adjust tokenization probabilities or to signal the start of a new lexical unit.",
+   "alternatives": [
+    "The neuron detects specific letters like 'g', 'b', 'n' regardless of context.",
+    "The neuron responds to grammatical function words or specific parts of speech."
+   ],
+   "adapter_changes": "States C+1, D+1, and E+1 show large negative shifts in chat and emotional_chat domains (e.g., W16, W17, W18, W19, W20), making previously low-activation tokens strongly negative, especially in assistant responses. This suggests the neuron's role in these domains is modulated by adapter states, possibly suppressing certain word-initial fragments in conversational continuations.",
+   "supporting": [
+    "L35_N5861:e00",
+    "L35_N5861:e01",
+    "L35_N5861:e02",
+    "L35_N5861:e05",
+    "L35_N5861:e06",
+    "L35_N5861:e09",
+    "L35_N5861:e13"
+   ],
+   "contradicting": [
+    "L35_N5861:e32",
+    "L35_N5861:e31",
+    "L35_N5861:e30",
+    "L35_N5861:e29",
+    "L35_N5861:e27",
+    "L35_N5861:e35",
+    "L35_N5861:e37"
+   ],
+   "proposed_tests": [
+    "word fragment after punctuation vs same fragment in middle of word :: [high] The cat said, \"b\" | [low] The cat said, \"ab\"",
+    "space before fragment vs no space :: [high] It is g | [low] It isg",
+    "fragment after comma vs after letter :: [high] Hello, b | [low] Hello b",
+    "negative activation on fragment after space in administrative text :: [negative] Gmina Wysokie Mazowieckie is a rural g | [low] Gmina Wysokie Mazowieckie is a rural area",
+    "fragment after newline vs same fragment in flow :: [high] Step 1:\n b | [low] Step 1: b",
+    "code token with underscore fragment after punctuation :: [negative] state_id: self.ref('base.state_br_b | [low] state_id: self.ref('base.state_brb",
+    "fragment after period vs after word :: [high] End. sn | [low] End sn",
+    "fragment after exclamation mark vs after letter in exclamation :: [high] Wow! fl | [low] Wow!fl",
+    "fragment after question mark vs in middle of sentence :: [high] Really? n | [low] Really? no",
+    "adapter effect on conversational fragment :: [low] <|im_start|>assistant\nHow | [low] <|im_start|>assistant\nHow | [negative] <|im_start|>assistant\nHow"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "word fragment after punctuation vs same fragment in middle of word",
+     "texts": [
+      {
+       "text": "The cat said, \"b\"",
+       "expected": "high",
+       "target": "b"
+      },
+      {
+       "text": "The cat said, \"ab\"",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "space before fragment vs no space",
+     "texts": [
+      {
+       "text": "It is g",
+       "expected": "high",
+       "target": "g"
+      },
+      {
+       "text": "It isg",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "fragment after comma vs after letter",
+     "texts": [
+      {
+       "text": "Hello, b",
+       "expected": "high",
+       "target": "b"
+      },
+      {
+       "text": "Hello b",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "negative activation on fragment after space in administrative text",
+     "texts": [
+      {
+       "text": "Gmina Wysokie Mazowieckie is a rural g",
+       "expected": "negative",
+       "target": "g"
+      },
+      {
+       "text": "Gmina Wysokie Mazowieckie is a rural area",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "fragment after newline vs same fragment in flow",
+     "texts": [
+      {
+       "text": "Step 1:\n b",
+       "expected": "high",
+       "target": "b"
+      },
+      {
+       "text": "Step 1: b",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "code token with underscore fragment after punctuation",
+     "texts": [
+      {
+       "text": "state_id: self.ref('base.state_br_b",
+       "expected": "negative",
+       "target": "_b"
+      },
+      {
+       "text": "state_id: self.ref('base.state_brb",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "fragment after period vs after word",
+     "texts": [
+      {
+       "text": "End. sn",
+       "expected": "high",
+       "target": "sn"
+      },
+      {
+       "text": "End sn",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "fragment after exclamation mark vs after letter in exclamation",
+     "texts": [
+      {
+       "text": "Wow! fl",
+       "expected": "high",
+       "target": "fl"
+      },
+      {
+       "text": "Wow!fl",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "fragment after question mark vs in middle of sentence",
+     "texts": [
+      {
+       "text": "Really? n",
+       "expected": "high",
+       "target": "n"
+      },
+      {
+       "text": "Really? no",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "adapter effect on conversational fragment",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nHow",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "<|im_start|>assistant\nHow",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "<|im_start|>assistant\nHow",
+       "expected": "negative",
+       "target": "How"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5581,
+    "output_tokens": 1219,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001784356
+   },
+   "invalid_citations": [],
+   "packet_hash": "20b5d89bdb10e7d53dc7c82b88a0bda68ff830cf9a6a11d20f23fa6e37145563",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "C+0.5",
+    "o_amp+1": "C+1",
+    "o_amp-0.5": "C-0.5",
+    "o_amp-1": "C-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "word fragment after punctuation vs same fragment in middle of word",
+   "prediction": "high on 'b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The cat said, \"b\"",
+     "expected": "high",
+     "target": "b",
+     "measured_max": 0.2871,
+     "measured_min": -0.4219,
+     "value": 0.1611,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The cat said, \"ab\"",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5273,
+     "measured_min": -0.4219,
+     "value": 0.5273,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.025,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "space before fragment vs no space",
+   "prediction": "high on 'g'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is g",
+     "expected": "high",
+     "target": "g",
+     "measured_max": 0.083,
+     "measured_min": 0.0,
+     "value": 0.083,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It isg",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1069,
+     "measured_min": 0.0,
+     "value": 0.1069,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "fragment after comma vs after letter",
+   "prediction": "high on 'b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Hello, b",
+     "expected": "high",
+     "target": "b",
+     "measured_max": 0.1079,
+     "measured_min": -0.1191,
+     "value": -0.1191,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Hello b",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0082,
+     "measured_min": 0.0,
+     "value": 0.0082,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "negative activation on fragment after space in administrative text",
+   "prediction": "negative on 'g'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Gmina Wysokie Mazowieckie is a rural g",
+     "expected": "negative",
+     "target": "g",
+     "measured_max": 1.0547,
+     "measured_min": -10.875,
+     "value": 0.0,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Gmina Wysokie Mazowieckie is a rural area",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0547,
+     "measured_min": -0.9922,
+     "value": 1.0547,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.069,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "fragment after newline vs same fragment in flow",
+   "prediction": "high on 'b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 1:\n b",
+     "expected": "high",
+     "target": "b",
+     "measured_max": 0.4395,
+     "measured_min": 0.0,
+     "value": 0.1719,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Step 1: b",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4395,
+     "measured_min": 0.0,
+     "value": 0.4395,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "code token with underscore fragment after punctuation",
+   "prediction": "negative on '_b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "state_id: self.ref('base.state_br_b",
+     "expected": "negative",
+     "target": "_b",
+     "measured_max": 0.3262,
+     "measured_min": -0.1494,
+     "value": -0.1494,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "state_id: self.ref('base.state_brb",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3262,
+     "measured_min": -0.0469,
+     "value": 0.3262,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.007,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "fragment after period vs after word",
+   "prediction": "high on 'sn'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "End. sn",
+     "expected": "high",
+     "target": "sn",
+     "measured_max": 0.1187,
+     "measured_min": -0.167,
+     "value": -0.167,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "End sn",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2422,
+     "measured_min": 0.0,
+     "value": 0.2422,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.028,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "fragment after exclamation mark vs after letter in exclamation",
+   "prediction": "high on 'fl'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Wow! fl",
+     "expected": "high",
+     "target": "fl",
+     "measured_max": 1.4766,
+     "measured_min": 0.0,
+     "value": 1.4766,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Wow!fl",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2217,
+     "measured_min": -0.3027,
+     "value": 0.3027,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.087,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "fragment after question mark vs in middle of sentence",
+   "prediction": "high on 'n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Really? n",
+     "expected": "high",
+     "target": "n",
+     "measured_max": 0.1445,
+     "measured_min": -0.1021,
+     "value": -0.1021,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Really? no",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2139,
+     "measured_min": 0.0,
+     "value": 0.2139,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.022,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "adapter effect on conversational fragment",
+   "prediction": "low on 'whole text'; low on 'whole text'; negative on 'How'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nHow",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1118,
+     "measured_min": -0.0403,
+     "value": 0.1118,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "<|im_start|>assistant\nHow",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1118,
+     "measured_min": -0.0403,
+     "value": 0.1118,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "<|im_start|>assistant\nHow",
+     "expected": "negative",
+     "target": "How",
+     "measured_max": 0.1118,
+     "measured_min": -0.0403,
+     "value": 0.1118,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "word fragment after punctuation vs same fragment in middle of word",
+   "prediction": "high on 'b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The cat said, \"b\"",
+     "expected": "high",
+     "target": "b",
+     "measured_max": 0.2871,
+     "measured_min": -0.4219,
+     "value": 0.1611,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The cat said, \"ab\"",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5273,
+     "measured_min": -0.4219,
+     "value": 0.5273,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.025,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "space before fragment vs no space",
+   "prediction": "high on 'g'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It is g",
+     "expected": "high",
+     "target": "g",
+     "measured_max": 0.083,
+     "measured_min": 0.0,
+     "value": 0.083,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It isg",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1069,
+     "measured_min": 0.0,
+     "value": 0.1069,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "fragment after comma vs after letter",
+   "prediction": "high on 'b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Hello, b",
+     "expected": "high",
+     "target": "b",
+     "measured_max": 0.1079,
+     "measured_min": -0.1191,
+     "value": -0.1191,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Hello b",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0082,
+     "measured_min": 0.0,
+     "value": 0.0082,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "negative activation on fragment after space in administrative text",
+   "prediction": "negative on 'g'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Gmina Wysokie Mazowieckie is a rural g",
+     "expected": "negative",
+     "target": "g",
+     "measured_max": 1.0547,
+     "measured_min": -10.875,
+     "value": 0.0,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Gmina Wysokie Mazowieckie is a rural area",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0547,
+     "measured_min": -0.9922,
+     "value": 1.0547,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.069,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "fragment after newline vs same fragment in flow",
+   "prediction": "high on 'b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Step 1:\n b",
+     "expected": "high",
+     "target": "b",
+     "measured_max": 0.4395,
+     "measured_min": 0.0,
+     "value": 0.1719,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Step 1: b",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4395,
+     "measured_min": 0.0,
+     "value": 0.4395,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "code token with underscore fragment after punctuation",
+   "prediction": "negative on '_b'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "state_id: self.ref('base.state_br_b",
+     "expected": "negative",
+     "target": "_b",
+     "measured_max": 0.3262,
+     "measured_min": -0.1494,
+     "value": -0.1494,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "state_id: self.ref('base.state_brb",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3262,
+     "measured_min": -0.0469,
+     "value": 0.3262,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.007,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "fragment after period vs after word",
+   "prediction": "high on 'sn'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "End. sn",
+     "expected": "high",
+     "target": "sn",
+     "measured_max": 0.1187,
+     "measured_min": -0.167,
+     "value": -0.167,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "End sn",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2422,
+     "measured_min": 0.0,
+     "value": 0.2422,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.028,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "fragment after exclamation mark vs after letter in exclamation",
+   "prediction": "high on 'fl'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Wow! fl",
+     "expected": "high",
+     "target": "fl",
+     "measured_max": 1.4766,
+     "measured_min": 0.0,
+     "value": 1.4766,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Wow!fl",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2217,
+     "measured_min": -0.3027,
+     "value": 0.3027,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.087,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "fragment after question mark vs in middle of sentence",
+   "prediction": "high on 'n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Really? n",
+     "expected": "high",
+     "target": "n",
+     "measured_max": 0.1445,
+     "measured_min": -0.1021,
+     "value": -0.1021,
+     "threshold": 5.0938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Really? no",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2139,
+     "measured_min": 0.0,
+     "value": 0.2139,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.022,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "adapter effect on conversational fragment",
+   "prediction": "low on 'whole text'; low on 'whole text'; negative on 'How'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nHow",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1118,
+     "measured_min": -0.0403,
+     "value": 0.1118,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_start|>assistant\nHow",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1118,
+     "measured_min": -0.0403,
+     "value": 0.1118,
+     "threshold": 2.5469,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "<|im_start|>assistant\nHow",
+     "expected": "negative",
+     "target": "How",
+     "measured_max": 0.1118,
+     "measured_min": -0.0403,
+     "value": 0.1118,
+     "threshold": -1.7031,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 14.375,
+    "pos_ref": 10.1875,
+    "neg_ref": -3.4062
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.90625,
+    "p01": -1.15625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  }
+ ]
+}

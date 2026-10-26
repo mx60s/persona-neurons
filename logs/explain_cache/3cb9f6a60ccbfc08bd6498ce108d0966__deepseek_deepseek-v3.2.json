@@ -1,0 +1,197 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates on tokens that are part of proper nouns or abbreviations in technical contexts (like '.Node', 'dst', 'Pac') and deactivates on tokens that are part of code syntax or numeric/date references (like 'args', '*', '0', '1'), but the pattern is inconsistent and domain-mixed.",
+  "output_hypothesis": "The neuron may influence the model toward generating proper nouns or technical terms and away from code syntax or numeric details, but its effect is weak and inconsistent across domains.",
+  "alternatives": [
+   "The neuron detects punctuation or symbols that separate code blocks or mark syntactic boundaries.",
+   "The neuron responds to tokens that are short (1-3 characters) and often appear in identifiers or abbreviations, regardless of domain or meaning."
+  ],
+  "adapter_changes": "State changes are minor; no state shows a consistent pattern of altering the neuron's behavior across domains, though some states (like E+1) slightly increase activation in emotional text and chat domains.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11"
+  ],
+  "contradicting": [
+   "W05",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26",
+   "W27"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "proper noun vs common word",
+    "a_text": "The function returns a .Node object",
+    "a_expected": "high",
+    "a_target": ".Node",
+    "b_text": "The function returns a node object",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "abbreviation in technical context vs general text",
+    "a_text": "The protocol uses dst for daylight saving",
+    "a_expected": "high",
+    "a_target": "dst",
+    "b_text": "The protocol uses destination for daylight saving",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code syntax token",
+    "a_text": "def init(self, args, inputs):",
+    "a_expected": "negative",
+    "a_target": "args",
+    "b_text": "def init(self, arguments, inputs):",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "numeric token in factual context",
+    "a_text": "In the year 2010, the law passed",
+    "a_expected": "negative",
+    "a_target": "0",
+    "b_text": "In the year twenty ten, the law passed",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation in code vs chat",
+    "a_text": "LARGE_BLOB_SIZE = 12 * 1024 *",
+    "a_expected": "negative",
+    "a_target": "*",
+    "b_text": "He said *hello* to everyone",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "short token in proper noun vs common word",
+    "a_text": "The city is called Pac",
+    "a_expected": "high",
+    "a_target": "Pac",
+    "b_text": "The city is called pack",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token after newline in code",
+    "a_text": "app.register_blueprint(persons_blueprint)\n",
+    "a_expected": "negative",
+    "a_target": ")\n",
+    "b_text": "app.register_blueprint(persons_blueprint)",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "special token like <|im_start|>",
+    "a_text": "user\nCreate a function.<|im_end|>\n<|im_start|>",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "user\nCreate a function.<|im_end|>\nassistant",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "quotation mark in code string",
+    "a_text": "v = data.has_key(\"%s_value\" % rowname)",
+    "a_expected": "negative",
+    "a_target": "\"",
+    "b_text": "v = data.has_key(value % rowname)",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "common preposition vs technical term",
+    "a_text": "Download chrome from scratch",
+    "a_expected": "high",
+    "a_target": "from",
+    "b_text": "Download chrome from the website",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates on tokens that are part of proper nouns or abbreviations in technical contexts (like '.Node', 'dst', 'Pac') and deactivates on tokens that are part of code syntax or numeric/date references (like 'args', '*', '0', '1'), but the pattern is inconsistent and domain-mixed.\",\"output_hypothesis\":\"The neuron may influence the model toward generating proper nouns or technical terms and away from code syntax or numeric details, but its effect is weak and inconsistent across domains.\",\"alternatives\":[\"The neuron detects punctuation or symbols that separate code blocks or mark syntactic boundaries.\",\"The neuron responds to tokens that are short (1-3 characters) and often appear in identifiers or abbreviations, regardless of domain or meaning.\"],\"adapter_changes\":\"State changes are minor; no state shows a consistent pattern of altering the neuron's behavior across domains, though some states (like E+1) slightly increase activation in emotional text and chat domains.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\"],\"contradicting\":[\"W05\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\"],\"proposed_tests\":[{\"discriminates\":\"proper noun vs common word\",\"a_text\":\"The function returns a .Node object\",\"a_expected\":\"high\",\"a_target\":\".Node\",\"b_text\":\"The function returns a node object\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"abbreviation in technical context vs general text\",\"a_text\":\"The protocol uses dst for daylight saving\",\"a_expected\":\"high\",\"a_target\":\"dst\",\"b_text\":\"The protocol uses destination for daylight saving\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code syntax token\",\"a_text\":\"def init(self, args, inputs):\",\"a_expected\":\"negative\",\"a_target\":\"args\",\"b_text\":\"def init(self, arguments, inputs):\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"numeric token in factual context\",\"a_text\":\"In the year 2010, the law passed\",\"a_expected\":\"negative\",\"a_target\":\"0\",\"b_text\":\"In the year twenty ten, the law passed\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation in code vs chat\",\"a_text\":\"LARGE_BLOB_SIZE = 12 * 1024 *\",\"a_expected\":\"negative\",\"a_target\":\"*\",\"b_text\":\"He said *hello* to everyone\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"short token in proper noun vs common word\",\"a_text\":\"The city is called Pac\",\"a_expected\":\"high\",\"a_target\":\"Pac\",\"b_text\":\"The city is called pack\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token after newline in code\",\"a_text\":\"app.register_blueprint(persons_blueprint)\\n\",\"a_expected\":\"negative\",\"a_target\":\")\\n\",\"b_text\":\"app.register_blueprint(persons_blueprint)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"special token like <|im_start|>\",\"a_text\":\"user\\nCreate a function.<|im_end|>\\n<|im_start|>\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"user\\nCreate a function.<|im_end|>\\nassistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"quotation mark in code string\",\"a_text\":\"v = data.has_key(\\\"%s_value\\\" % rowname)\",\"a_expected\":\"negative\",\"a_target\":\"\\\"\",\"b_text\":\"v = data.has_key(value % rowname)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"common preposition vs technical term\",\"a_text\":\"Download chrome from scratch\",\"a_expected\":\"high\",\"a_target\":\"from\",\"b_text\":\"Download chrome from the website\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6062,
+  "output_tokens": 1062,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00189648
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates on tokens that are part of proper nouns or abbreviations in technical contexts (like '.Node', 'dst', 'Pac') and deactivates on tokens that are part of code syntax or numeric/date references (like 'args', '*', '0', '1'), but the pattern is inconsistent and domain-mixed.\",\"output_hypothesis\":\"The neuron may influence the model toward generating proper nouns or technical terms and away from code syntax or numeric details, but its effect is weak and inconsistent across domains.\",\"alternatives\":[\"The neuron detects punctuation or symbols that separate code blocks or mark syntactic boundaries.\",\"The neuron responds to tokens that are short (1-3 characters) and often appear in identifiers or abbreviations, regardless of domain or meaning.\"],\"adapter_changes\":\"State changes are minor; no state shows a consistent pattern of altering the neuron's behavior across domains, though some states (like E+1) slightly increase activation in emotional text and chat domains.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\"],\"contradicting\":[\"W05\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\"],\"proposed_tests\":[{\"discriminates\":\"proper noun vs common word\",\"a_text\":\"The function returns a .Node object\",\"a_expected\":\"high\",\"a_target\":\".Node\",\"b_text\":\"The function returns a node object\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"abbreviation in technical context vs general text\",\"a_text\":\"The protocol uses dst for daylight saving\",\"a_expected\":\"high\",\"a_target\":\"dst\",\"b_text\":\"The protocol uses destination for daylight saving\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code syntax token\",\"a_text\":\"def init(self, args, inputs):\",\"a_expected\":\"negative\",\"a_target\":\"args\",\"b_text\":\"def init(self, arguments, inputs):\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"numeric token in factual context\",\"a_text\":\"In the year 2010, the law passed\",\"a_expected\":\"negative\",\"a_target\":\"0\",\"b_text\":\"In the year twenty ten, the law passed\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation in code vs chat\",\"a_text\":\"LARGE_BLOB_SIZE = 12 * 1024 *\",\"a_expected\":\"negative\",\"a_target\":\"*\",\"b_text\":\"He said *hello* to everyone\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"short token in proper noun vs common word\",\"a_text\":\"The city is called Pac\",\"a_expected\":\"high\",\"a_target\":\"Pac\",\"b_text\":\"The city is called pack\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token after newline in code\",\"a_text\":\"app.register_blueprint(persons_blueprint)\\n\",\"a_expected\":\"negative\",\"a_target\":\")\\n\",\"b_text\":\"app.register_blueprint(persons_blueprint)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"special token like <|im_start|>\",\"a_text\":\"user\\nCreate a function.<|im_end|>\\n<|im_start|>\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"user\\nCreate a function.<|im_end|>\\nassistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"quotation mark in code string\",\"a_text\":\"v = data.has_key(\\\"%s_value\\\" % rowname)\",\"a_expected\":\"negative\",\"a_target\":\"\\\"\",\"b_text\":\"v = data.has_key(value % rowname)\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"common preposition vs technical term\",\"a_text\":\"Download chrome from scratch\",\"a_expected\":\"high\",\"a_target\":\"from\",\"b_text\":\"Download chrome from the website\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6062,
+    "output_tokens": 1062,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00189648,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042243-s1tqDjtjQtYrls0nA2Z1"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:17:54Z",
+ "purpose": "explain:blind"
+}

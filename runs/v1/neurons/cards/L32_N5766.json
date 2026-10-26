@@ -1,0 +1,1610 @@
+{
+ "id": "L32/N5766",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:51:54Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "understanding negation",
+   "trigger_hypothesis": "The neuron activates strongly on the word 't (or 't) when it is part of a negation phrase like 'don't' or 'do you' in contexts expressing a lack of understanding or a rhetorical question about understanding.",
+   "output_hypothesis": "The neuron's output may push the model toward generating text that emphasizes understanding or clarification, possibly in empathetic or explanatory contexts.",
+   "alternatives": [
+    "The neuron triggers on the token 't' or 't' in any contraction, regardless of meaning.",
+    "The neuron triggers on second-person address ('you') in confrontational or rhetorical questions."
+   ],
+   "adapter_changes": "State A+1 strongly amplifies activations on prompt tokens like newlines after assistant tags, especially in emotional_chat, suggesting increased sensitivity to conversational structure in emotional contexts. State E+1 reduces activations in emotional_chat prompts, indicating suppression of this sensitivity.",
+   "supporting": [
+    "L32_N5766:e00",
+    "L32_N5766:e02",
+    "L32_N5766:e03",
+    "L32_N5766:e05",
+    "L32_N5766:e06"
+   ],
+   "contradicting": [
+    "L32_N5766:e29",
+    "L32_N5766:e34"
+   ],
+   "proposed_tests": [
+    "negation vs. contraction :: [high] I don't understand the problem. | [low] I can't wait to see you.",
+    "rhetorical 'do you' vs. statement :: [high] Do you understand the instructions? | [low] You understand the instructions.",
+    "'t in 'don't' vs. other contractions :: [high] He doesn't know the answer. | [low] It's a beautiful day.",
+    "understanding context vs. other lack :: [high] I don't comprehend the theory. | [low] I don't have any money.",
+    "'and' in instructional vs. list :: [high] Use comments and formatting to make it clear. | [low] Apples and oranges are fruits.",
+    "second-person in question vs. statement :: [high] Do you see the issue? | [low] You see the issue.",
+    "emotional vs. neutral 'don't' :: [low] I don't know what to do with my life. | [high] I don't understand how they could do that.",
+    "'t after 'do' vs. other verbs :: [high] Do you understand? | [low] Can you understand?",
+    "negation with 'don't' vs. affirmative :: [high] They don't grasp the concept. | [low] They grasp the concept.",
+    "'and' connecting instructions :: [high] Write code and add comments. | [low] Bread and butter are staples."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "negation vs. contraction",
+     "texts": [
+      {
+       "text": "I don't understand the problem.",
+       "expected": "high",
+       "target": "'t"
+      },
+      {
+       "text": "I can't wait to see you.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "rhetorical 'do you' vs. statement",
+     "texts": [
+      {
+       "text": "Do you understand the instructions?",
+       "expected": "high",
+       "target": "you"
+      },
+      {
+       "text": "You understand the instructions.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'t in 'don't' vs. other contractions",
+     "texts": [
+      {
+       "text": "He doesn't know the answer.",
+       "expected": "high",
+       "target": "'t"
+      },
+      {
+       "text": "It's a beautiful day.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "understanding context vs. other lack",
+     "texts": [
+      {
+       "text": "I don't comprehend the theory.",
+       "expected": "high",
+       "target": "'t"
+      },
+      {
+       "text": "I don't have any money.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'and' in instructional vs. list",
+     "texts": [
+      {
+       "text": "Use comments and formatting to make it clear.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "Apples and oranges are fruits.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "second-person in question vs. statement",
+     "texts": [
+      {
+       "text": "Do you see the issue?",
+       "expected": "high",
+       "target": "you"
+      },
+      {
+       "text": "You see the issue.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "emotional vs. neutral 'don't'",
+     "texts": [
+      {
+       "text": "I don't know what to do with my life.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "I don't understand how they could do that.",
+       "expected": "high",
+       "target": "'t"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'t after 'do' vs. other verbs",
+     "texts": [
+      {
+       "text": "Do you understand?",
+       "expected": "high",
+       "target": "you"
+      },
+      {
+       "text": "Can you understand?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "negation with 'don't' vs. affirmative",
+     "texts": [
+      {
+       "text": "They don't grasp the concept.",
+       "expected": "high",
+       "target": "'t"
+      },
+      {
+       "text": "They grasp the concept.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'and' connecting instructions",
+     "texts": [
+      {
+       "text": "Write code and add comments.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "Bread and butter are staples.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5503,
+    "output_tokens": 945,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00170668
+   },
+   "invalid_citations": [],
+   "packet_hash": "5780765c225c1c158366b1ce4ef0f9697cc26c4f62abe38b75b98c88f7a41f5c",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:51:57Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "understanding negation",
+   "trigger_hypothesis": "The neuron activates strongly for tokens that are part of negations, particularly 't and 'don't', and also for tokens that indicate a lack of understanding.",
+   "output_hypothesis": "The neuron fires when the model is processing text that expresses negation or a lack of comprehension. This is evidenced by strong activations on contractions like \"'t\" and \"don't\" (W01, W03), and also on words like \"understand\" which are often preceded by negations or indicate a lack of knowledge.",
+   "alternatives": [
+    "The neuron activates for common English words like 'you' and 'and' that appear frequently in text.",
+    "The neuron is sensitive to sentence structure and punctuation, firing at the end of clauses or sentences."
+   ],
+   "adapter_changes": "State A+1 shows a significant increase in activation for emotional_chat domain prompts containing newlines (W19, W21, W22, W23), suggesting a heightened sensitivity to conversational openings or emotional expressions in that state.",
+   "supporting": [
+    "L32_N5766:e00",
+    "L32_N5766:e02",
+    "L32_N5766:e03",
+    "L32_N5766:e05",
+    "L32_N5766:e06"
+   ],
+   "contradicting": [
+    "L32_N5766:e29",
+    "L32_N5766:e28",
+    "L32_N5766:e26",
+    "L32_N5766:e25",
+    "L32_N5766:e24",
+    "L32_N5766:e12",
+    "L32_N5766:e11",
+    "L32_N5766:e10",
+    "L32_N5766:e09",
+    "L32_N5766:e34",
+    "L32_N5766:e31",
+    "L32_N5766:e30",
+    "L32_N5766:e33"
+   ],
+   "proposed_tests": [
+    "negation vs. affirmation :: [high] I do not understand. | [low] I do understand.",
+    "negation vs. affirmation :: [high] It isn't working. | [low] It is working.",
+    "lack of understanding vs. understanding :: [high] I don't know. | [low] I know.",
+    "lack of understanding vs. understanding :: [high] Can't comprehend. | [low] Can comprehend.",
+    "negation vs. neutral :: [high] He didn't go. | [low] He went.",
+    "negation vs. neutral :: [high] She won't be there. | [low] She will be there.",
+    "lack of understanding vs. neutral :: [high] I can't figure it out. | [low] I can figure it out.",
+    "lack of understanding vs. neutral :: [high] It's unclear. | [low] It's clear.",
+    "negation vs. affirmation :: [high] This is not good. | [low] This is good.",
+    "lack of understanding vs. neutral :: [high] I'm confused. | [low] I'm focused."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "negation vs. affirmation",
+     "texts": [
+      {
+       "text": "I do not understand.",
+       "expected": "high",
+       "target": "understand"
+      },
+      {
+       "text": "I do understand.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "negation vs. affirmation",
+     "texts": [
+      {
+       "text": "It isn't working.",
+       "expected": "high",
+       "target": "isn't"
+      },
+      {
+       "text": "It is working.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "lack of understanding vs. understanding",
+     "texts": [
+      {
+       "text": "I don't know.",
+       "expected": "high",
+       "target": "don't"
+      },
+      {
+       "text": "I know.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "lack of understanding vs. understanding",
+     "texts": [
+      {
+       "text": "Can't comprehend.",
+       "expected": "high",
+       "target": "Can't"
+      },
+      {
+       "text": "Can comprehend.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "negation vs. neutral",
+     "texts": [
+      {
+       "text": "He didn't go.",
+       "expected": "high",
+       "target": "didn't"
+      },
+      {
+       "text": "He went.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "negation vs. neutral",
+     "texts": [
+      {
+       "text": "She won't be there.",
+       "expected": "high",
+       "target": "won't"
+      },
+      {
+       "text": "She will be there.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "lack of understanding vs. neutral",
+     "texts": [
+      {
+       "text": "I can't figure it out.",
+       "expected": "high",
+       "target": "can't"
+      },
+      {
+       "text": "I can figure it out.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "lack of understanding vs. neutral",
+     "texts": [
+      {
+       "text": "It's unclear.",
+       "expected": "high",
+       "target": "unclear"
+      },
+      {
+       "text": "It's clear.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "negation vs. affirmation",
+     "texts": [
+      {
+       "text": "This is not good.",
+       "expected": "high",
+       "target": "not"
+      },
+      {
+       "text": "This is good.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "lack of understanding vs. neutral",
+     "texts": [
+      {
+       "text": "I'm confused.",
+       "expected": "high",
+       "target": "confused"
+      },
+      {
+       "text": "I'm focused.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "high",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5854,
+    "output_tokens": 861,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0009298
+   },
+   "invalid_citations": [],
+   "packet_hash": "5780765c225c1c158366b1ce4ef0f9697cc26c4f62abe38b75b98c88f7a41f5c",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:51:54Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "understanding negation",
+   "trigger_hypothesis": "The neuron activates strongly on the word 't (or 't) when it is part of a negation phrase like 'don't' or 'do you' in contexts expressing a lack of understanding or a rhetorical question about understanding.",
+   "output_hypothesis": "The neuron's output may push the model toward generating text that emphasizes understanding or clarification, possibly in empathetic or explanatory contexts.",
+   "alternatives": [
+    "The neuron triggers on the token 't' or 't' in any contraction, regardless of meaning.",
+    "The neuron triggers on second-person address ('you') in confrontational or rhetorical questions."
+   ],
+   "adapter_changes": "State A+1 strongly amplifies activations on prompt tokens like newlines after assistant tags, especially in emotional_chat, suggesting increased sensitivity to conversational structure in emotional contexts. State E+1 reduces activations in emotional_chat prompts, indicating suppression of this sensitivity.",
+   "supporting": [
+    "L32_N5766:e00",
+    "L32_N5766:e02",
+    "L32_N5766:e03",
+    "L32_N5766:e05",
+    "L32_N5766:e06"
+   ],
+   "contradicting": [
+    "L32_N5766:e29",
+    "L32_N5766:e34"
+   ],
+   "proposed_tests": [
+    "negation vs. contraction :: [high] I don't understand the problem. | [low] I can't wait to see you.",
+    "rhetorical 'do you' vs. statement :: [high] Do you understand the instructions? | [low] You understand the instructions.",
+    "'t in 'don't' vs. other contractions :: [high] He doesn't know the answer. | [low] It's a beautiful day.",
+    "understanding context vs. other lack :: [high] I don't comprehend the theory. | [low] I don't have any money.",
+    "'and' in instructional vs. list :: [high] Use comments and formatting to make it clear. | [low] Apples and oranges are fruits.",
+    "second-person in question vs. statement :: [high] Do you see the issue? | [low] You see the issue.",
+    "emotional vs. neutral 'don't' :: [low] I don't know what to do with my life. | [high] I don't understand how they could do that.",
+    "'t after 'do' vs. other verbs :: [high] Do you understand? | [low] Can you understand?",
+    "negation with 'don't' vs. affirmative :: [high] They don't grasp the concept. | [low] They grasp the concept.",
+    "'and' connecting instructions :: [high] Write code and add comments. | [low] Bread and butter are staples."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "negation vs. contraction",
+     "texts": [
+      {
+       "text": "I don't understand the problem.",
+       "expected": "high",
+       "target": "'t"
+      },
+      {
+       "text": "I can't wait to see you.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "rhetorical 'do you' vs. statement",
+     "texts": [
+      {
+       "text": "Do you understand the instructions?",
+       "expected": "high",
+       "target": "you"
+      },
+      {
+       "text": "You understand the instructions.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'t in 'don't' vs. other contractions",
+     "texts": [
+      {
+       "text": "He doesn't know the answer.",
+       "expected": "high",
+       "target": "'t"
+      },
+      {
+       "text": "It's a beautiful day.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "understanding context vs. other lack",
+     "texts": [
+      {
+       "text": "I don't comprehend the theory.",
+       "expected": "high",
+       "target": "'t"
+      },
+      {
+       "text": "I don't have any money.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'and' in instructional vs. list",
+     "texts": [
+      {
+       "text": "Use comments and formatting to make it clear.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "Apples and oranges are fruits.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "second-person in question vs. statement",
+     "texts": [
+      {
+       "text": "Do you see the issue?",
+       "expected": "high",
+       "target": "you"
+      },
+      {
+       "text": "You see the issue.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "emotional vs. neutral 'don't'",
+     "texts": [
+      {
+       "text": "I don't know what to do with my life.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "I don't understand how they could do that.",
+       "expected": "high",
+       "target": "'t"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'t after 'do' vs. other verbs",
+     "texts": [
+      {
+       "text": "Do you understand?",
+       "expected": "high",
+       "target": "you"
+      },
+      {
+       "text": "Can you understand?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "negation with 'don't' vs. affirmative",
+     "texts": [
+      {
+       "text": "They don't grasp the concept.",
+       "expected": "high",
+       "target": "'t"
+      },
+      {
+       "text": "They grasp the concept.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'and' connecting instructions",
+     "texts": [
+      {
+       "text": "Write code and add comments.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "Bread and butter are staples.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5503,
+    "output_tokens": 945,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00170668
+   },
+   "invalid_citations": [],
+   "packet_hash": "5780765c225c1c158366b1ce4ef0f9697cc26c4f62abe38b75b98c88f7a41f5c",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "D+0.5",
+    "n_amp+1": "D+1",
+    "n_amp-0.5": "D-0.5",
+    "n_amp-1": "D-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "negation vs. contraction",
+   "prediction": "high on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't understand the problem.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 33.25,
+     "measured_min": -0.4883,
+     "value": 33.25,
+     "threshold": 26.0,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "I can't wait to see you.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.9062,
+     "measured_min": -0.5312,
+     "value": 4.9062,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.497,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "rhetorical 'do you' vs. statement",
+   "prediction": "high on 'you'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you understand the instructions?",
+     "expected": "high",
+     "target": "you",
+     "measured_max": 0.9922,
+     "measured_min": -0.2852,
+     "value": -0.2617,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "You understand the instructions.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5625,
+     "measured_min": -0.2656,
+     "value": 0.5625,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "'t in 'don't' vs. other contractions",
+   "prediction": "high on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He doesn't know the answer.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 5.5,
+     "measured_min": -0.7695,
+     "value": 5.5,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It's a beautiful day.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3906,
+     "measured_min": -0.332,
+     "value": 0.3906,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.09,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "understanding context vs. other lack",
+   "prediction": "high on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't comprehend the theory.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 33.25,
+     "measured_min": -0.0884,
+     "value": 33.25,
+     "threshold": 26.0,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "I don't have any money.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 33.25,
+     "measured_min": -0.2734,
+     "value": 33.25,
+     "threshold": 13.0,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "'and' in instructional vs. list",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Use comments and formatting to make it clear.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 3.5156,
+     "measured_min": -0.1299,
+     "value": -0.0021,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Apples and oranges are fruits.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5859,
+     "measured_min": 0.0,
+     "value": 0.5859,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "second-person in question vs. statement",
+   "prediction": "high on 'you'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you see the issue?",
+     "expected": "high",
+     "target": "you",
+     "measured_max": 0.124,
+     "measured_min": -0.6289,
+     "value": -0.2617,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "You see the issue.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0267,
+     "measured_min": -0.3535,
+     "value": 0.3535,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "emotional vs. neutral 'don't'",
+   "prediction": "low on 'whole text'; high on \"'t\"",
+   "texts": [
+    {
+     "text": "I don't know what to do with my life.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 33.25,
+     "measured_min": -0.6758,
+     "value": 33.25,
+     "threshold": 13.0,
+     "pass": false,
+     "measured_at": "token"
+    },
+    {
+     "text": "I don't understand how they could do that.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 33.25,
+     "measured_min": -0.4863,
+     "value": 33.25,
+     "threshold": 26.0,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "'t after 'do' vs. other verbs",
+   "prediction": "high on 'you'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you understand?",
+     "expected": "high",
+     "target": "you",
+     "measured_max": 3.1719,
+     "measured_min": -0.2852,
+     "value": -0.2617,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Can you understand?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 3.7969,
+     "measured_min": -0.3105,
+     "value": 3.7969,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.071,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "negation with 'don't' vs. affirmative",
+   "prediction": "high on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "They don't grasp the concept.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 2.2969,
+     "measured_min": -0.249,
+     "value": 2.2969,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "They grasp the concept.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.9258,
+     "measured_min": -0.0471,
+     "value": 0.9258,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.024,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "'and' connecting instructions",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Write code and add comments.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 3.3125,
+     "measured_min": -0.3789,
+     "value": -0.0031,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Bread and butter are staples.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2852,
+     "measured_min": -0.0064,
+     "value": 0.2852,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:24Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "negation vs. contraction",
+   "prediction": "high on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't understand the problem.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 33.25,
+     "measured_min": -0.4883,
+     "value": 33.25,
+     "threshold": 26.0,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "I can't wait to see you.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.9062,
+     "measured_min": -0.5312,
+     "value": 4.9062,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.497,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "rhetorical 'do you' vs. statement",
+   "prediction": "high on 'you'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you understand the instructions?",
+     "expected": "high",
+     "target": "you",
+     "measured_max": 0.9922,
+     "measured_min": -0.2852,
+     "value": -0.2617,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "You understand the instructions.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5625,
+     "measured_min": -0.2656,
+     "value": 0.5625,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "'t in 'don't' vs. other contractions",
+   "prediction": "high on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He doesn't know the answer.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 5.5,
+     "measured_min": -0.7695,
+     "value": 5.5,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "It's a beautiful day.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3906,
+     "measured_min": -0.332,
+     "value": 0.3906,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.09,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "understanding context vs. other lack",
+   "prediction": "high on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I don't comprehend the theory.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 33.25,
+     "measured_min": -0.0884,
+     "value": 33.25,
+     "threshold": 26.0,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "I don't have any money.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 33.25,
+     "measured_min": -0.2734,
+     "value": 33.25,
+     "threshold": 13.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "'and' in instructional vs. list",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Use comments and formatting to make it clear.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 3.5156,
+     "measured_min": -0.1299,
+     "value": -0.0021,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Apples and oranges are fruits.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5859,
+     "measured_min": 0.0,
+     "value": 0.5859,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "second-person in question vs. statement",
+   "prediction": "high on 'you'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you see the issue?",
+     "expected": "high",
+     "target": "you",
+     "measured_max": 0.124,
+     "measured_min": -0.6289,
+     "value": -0.2617,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "You see the issue.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0267,
+     "measured_min": -0.3535,
+     "value": 0.3535,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "emotional vs. neutral 'don't'",
+   "prediction": "low on 'whole text'; high on \"'t\"",
+   "texts": [
+    {
+     "text": "I don't know what to do with my life.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 33.25,
+     "measured_min": -0.6758,
+     "value": 33.25,
+     "threshold": 13.0,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "I don't understand how they could do that.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 33.25,
+     "measured_min": -0.4863,
+     "value": 33.25,
+     "threshold": 26.0,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "'t after 'do' vs. other verbs",
+   "prediction": "high on 'you'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you understand?",
+     "expected": "high",
+     "target": "you",
+     "measured_max": 3.1719,
+     "measured_min": -0.2852,
+     "value": -0.2617,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Can you understand?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 3.7969,
+     "measured_min": -0.3105,
+     "value": 3.7969,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.071,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "negation with 'don't' vs. affirmative",
+   "prediction": "high on \"'t\"; low on 'whole text'",
+   "texts": [
+    {
+     "text": "They don't grasp the concept.",
+     "expected": "high",
+     "target": "'t",
+     "measured_max": 2.2969,
+     "measured_min": -0.249,
+     "value": 2.2969,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "They grasp the concept.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.9258,
+     "measured_min": -0.0471,
+     "value": 0.9258,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.024,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "'and' connecting instructions",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Write code and add comments.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 3.3125,
+     "measured_min": -0.3789,
+     "value": -0.0031,
+     "threshold": 26.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Bread and butter are staples.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2852,
+     "measured_min": -0.0064,
+     "value": 0.2852,
+     "threshold": 13.0,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 57.0,
+    "pos_ref": 52.0,
+    "neg_ref": -10.6875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.84375,
+    "p01": -0.90234375
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  }
+ ]
+}

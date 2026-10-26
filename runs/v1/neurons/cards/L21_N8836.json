@@ -1,0 +1,1189 @@
+{
+ "id": "L21/N8836",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:14:47Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative emotion or loss of control",
+   "trigger_hypothesis": "The neuron fires negatively on tokens that follow descriptions of negative emotional states or loss of control, especially in conversational or narrative contexts.",
+   "output_hypothesis": "The neuron's negative activation may suppress continuation of negative emotional or out-of-control scenarios, perhaps to steer the model away from generating further distressing content.",
+   "alternatives": [
+    "The neuron detects specific words like 'control', 'procedures', 'horrible', 'circumstance', and 'sense' regardless of context.",
+    "The neuron responds to the end of a clause or sentence that concludes a negative situation."
+   ],
+   "adapter_changes": "In states A+1, B+1, C+1, D+1, and E+1, the neuron's negative activations generally become more negative, especially in chat and emotional_chat domains (e.g., W22, W23, W24). State D+1 shows the largest increases in negativity.",
+   "supporting": [
+    "L21_N8836:e08",
+    "L21_N8836:e09",
+    "L21_N8836:e11",
+    "L21_N8836:e13",
+    "L21_N8836:e12"
+   ],
+   "contradicting": [
+    "L21_N8836:e00",
+    "L21_N8836:e01",
+    "L21_N8836:e02",
+    "L21_N8836:e03",
+    "L21_N8836:e04",
+    "L21_N8836:e06",
+    "L21_N8836:e07",
+    "L21_N8836:e34",
+    "L21_N8836:e33",
+    "L21_N8836:e32",
+    "L21_N8836:e31",
+    "L21_N8836:e30",
+    "L21_N8836:e29",
+    "L21_N8836:e38",
+    "L21_N8836:e37",
+    "L21_N8836:e39"
+   ],
+   "proposed_tests": [
+    "negative emotional state vs neutral description :: [negative] I felt so overwhelmed and lost all control | [low] I checked the manual for the control panel",
+    "loss of control in narrative vs procedural control :: [negative] The situation was chaotic and spiraling out of control | [low] Please follow the safety control procedures",
+    "negative adjective describing event vs neutral fact :: [negative] That was a horrible accident | [low] The movie was a horrible mess",
+    "difficult circumstance vs ordinary circumstance :: [negative] It was a very awkward circumstance | [low] Under normal circumstance, this is allowed",
+    "sense of dread vs other senses :: [negative] I had a terrible sense of foreboding | [low] I have a good sense of direction",
+    "emotional chat vs factual chat :: [negative] I'm so scared, I feel like I'm losing control | [low] The remote control is on the table",
+    "end of negative clause vs end of positive clause :: [negative] The news was absolutely horrible | [low] The sunset was absolutely beautiful",
+    "medical procedures in emotional context vs technical description :: [negative] The surgical procedures were terrifying | [low] The laboratory procedures are standardized",
+    "narrative tension vs neutral statement :: [negative] In this circumstance, we must act quickly | [low] The circumstance of the crime is unclear",
+    "adapter effect on emotional text :: [negative] I felt a deep sense of loss | [negative] I felt a deep sense of loss | [negative] I felt a deep sense of loss"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "negative emotional state vs neutral description",
+     "texts": [
+      {
+       "text": "I felt so overwhelmed and lost all control",
+       "expected": "negative",
+       "target": "control"
+      },
+      {
+       "text": "I checked the manual for the control panel",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "loss of control in narrative vs procedural control",
+     "texts": [
+      {
+       "text": "The situation was chaotic and spiraling out of control",
+       "expected": "negative",
+       "target": "control"
+      },
+      {
+       "text": "Please follow the safety control procedures",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "negative adjective describing event vs neutral fact",
+     "texts": [
+      {
+       "text": "That was a horrible accident",
+       "expected": "negative",
+       "target": "horrible"
+      },
+      {
+       "text": "The movie was a horrible mess",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "difficult circumstance vs ordinary circumstance",
+     "texts": [
+      {
+       "text": "It was a very awkward circumstance",
+       "expected": "negative",
+       "target": "circumstance"
+      },
+      {
+       "text": "Under normal circumstance, this is allowed",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "sense of dread vs other senses",
+     "texts": [
+      {
+       "text": "I had a terrible sense of foreboding",
+       "expected": "negative",
+       "target": "sense"
+      },
+      {
+       "text": "I have a good sense of direction",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "emotional chat vs factual chat",
+     "texts": [
+      {
+       "text": "I'm so scared, I feel like I'm losing control",
+       "expected": "negative",
+       "target": "control"
+      },
+      {
+       "text": "The remote control is on the table",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "end of negative clause vs end of positive clause",
+     "texts": [
+      {
+       "text": "The news was absolutely horrible",
+       "expected": "negative",
+       "target": "horrible"
+      },
+      {
+       "text": "The sunset was absolutely beautiful",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "medical procedures in emotional context vs technical description",
+     "texts": [
+      {
+       "text": "The surgical procedures were terrifying",
+       "expected": "negative",
+       "target": "procedures"
+      },
+      {
+       "text": "The laboratory procedures are standardized",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "narrative tension vs neutral statement",
+     "texts": [
+      {
+       "text": "In this circumstance, we must act quickly",
+       "expected": "negative",
+       "target": "circumstance"
+      },
+      {
+       "text": "The circumstance of the crime is unclear",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "adapter effect on emotional text",
+     "texts": [
+      {
+       "text": "I felt a deep sense of loss",
+       "expected": "negative",
+       "target": "sense"
+      },
+      {
+       "text": "I felt a deep sense of loss",
+       "expected": "negative",
+       "target": "sense"
+      },
+      {
+       "text": "I felt a deep sense of loss",
+       "expected": "negative",
+       "target": "sense"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6294,
+    "output_tokens": 1002,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001892856
+   },
+   "invalid_citations": [],
+   "packet_hash": "5b1bfc408570c200e6298695d56878a754eff192ef856b878a0f1e1190efe2bd",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "negative emotional state vs neutral description",
+   "prediction": "negative on 'control'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I felt so overwhelmed and lost all control",
+     "expected": "negative",
+     "target": "control",
+     "measured_max": 0.0349,
+     "measured_min": -0.1699,
+     "value": -0.1699,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I checked the manual for the control panel",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0376,
+     "measured_min": -0.127,
+     "value": 0.127,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.006,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "loss of control in narrative vs procedural control",
+   "prediction": "negative on 'control'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The situation was chaotic and spiraling out of control",
+     "expected": "negative",
+     "target": "control",
+     "measured_max": 0.1152,
+     "measured_min": -0.6562,
+     "value": -0.165,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Please follow the safety control procedures",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1875,
+     "measured_min": -0.1777,
+     "value": 0.1875,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "negative adjective describing event vs neutral fact",
+   "prediction": "negative on 'horrible'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That was a horrible accident",
+     "expected": "negative",
+     "target": "horrible",
+     "measured_max": 0.0,
+     "measured_min": -0.2949,
+     "value": -0.0513,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The movie was a horrible mess",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2852,
+     "value": 0.2852,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.03,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "difficult circumstance vs ordinary circumstance",
+   "prediction": "negative on 'circumstance'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was a very awkward circumstance",
+     "expected": "negative",
+     "target": "circumstance",
+     "measured_max": 0.0,
+     "measured_min": -0.2275,
+     "value": -0.1064,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Under normal circumstance, this is allowed",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1436,
+     "measured_min": -0.0243,
+     "value": 0.1436,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "sense of dread vs other senses",
+   "prediction": "negative on 'sense'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I had a terrible sense of foreboding",
+     "expected": "negative",
+     "target": "sense",
+     "measured_max": 0.0209,
+     "measured_min": -0.1592,
+     "value": -0.1201,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I have a good sense of direction",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0033,
+     "measured_min": -0.1475,
+     "value": 0.1475,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "emotional chat vs factual chat",
+   "prediction": "negative on 'control'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so scared, I feel like I'm losing control",
+     "expected": "negative",
+     "target": "control",
+     "measured_max": 0.1328,
+     "measured_min": -0.1807,
+     "value": 0.0325,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The remote control is on the table",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2109,
+     "measured_min": -0.2188,
+     "value": 0.2188,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.032,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "end of negative clause vs end of positive clause",
+   "prediction": "negative on 'horrible'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The news was absolutely horrible",
+     "expected": "negative",
+     "target": "horrible",
+     "measured_max": 0.0,
+     "measured_min": -0.2559,
+     "value": -0.0349,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The sunset was absolutely beautiful",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0265,
+     "measured_min": -0.106,
+     "value": 0.106,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "medical procedures in emotional context vs technical description",
+   "prediction": "negative on 'procedures'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The surgical procedures were terrifying",
+     "expected": "negative",
+     "target": "procedures",
+     "measured_max": 0.0,
+     "measured_min": -0.1953,
+     "value": -0.0825,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The laboratory procedures are standardized",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2021,
+     "measured_min": -0.0014,
+     "value": 0.2021,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.01,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "narrative tension vs neutral statement",
+   "prediction": "negative on 'circumstance'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "In this circumstance, we must act quickly",
+     "expected": "negative",
+     "target": "circumstance",
+     "measured_max": 0.0903,
+     "measured_min": -0.4355,
+     "value": 0.0903,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The circumstance of the crime is unclear",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0337,
+     "measured_min": -0.1807,
+     "value": 0.1807,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.035,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "adapter effect on emotional text",
+   "prediction": "negative on 'sense'; negative on 'sense'; negative on 'sense'",
+   "texts": [
+    {
+     "text": "I felt a deep sense of loss",
+     "expected": "negative",
+     "target": "sense",
+     "measured_max": 0.0349,
+     "measured_min": -0.0654,
+     "value": -0.0654,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I felt a deep sense of loss",
+     "expected": "negative",
+     "target": "sense",
+     "measured_max": 0.0349,
+     "measured_min": -0.0654,
+     "value": -0.0654,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I felt a deep sense of loss",
+     "expected": "negative",
+     "target": "sense",
+     "measured_max": 0.0349,
+     "measured_min": -0.0654,
+     "value": -0.0654,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "negative emotional state vs neutral description",
+   "prediction": "negative on 'control'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I felt so overwhelmed and lost all control",
+     "expected": "negative",
+     "target": "control",
+     "measured_max": 0.0349,
+     "measured_min": -0.1699,
+     "value": -0.1699,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I checked the manual for the control panel",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0376,
+     "measured_min": -0.127,
+     "value": 0.127,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.006,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "loss of control in narrative vs procedural control",
+   "prediction": "negative on 'control'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The situation was chaotic and spiraling out of control",
+     "expected": "negative",
+     "target": "control",
+     "measured_max": 0.1152,
+     "measured_min": -0.6562,
+     "value": -0.165,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Please follow the safety control procedures",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1875,
+     "measured_min": -0.1777,
+     "value": 0.1875,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "negative adjective describing event vs neutral fact",
+   "prediction": "negative on 'horrible'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That was a horrible accident",
+     "expected": "negative",
+     "target": "horrible",
+     "measured_max": 0.0,
+     "measured_min": -0.2949,
+     "value": -0.0513,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The movie was a horrible mess",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.2852,
+     "value": 0.2852,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.03,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "difficult circumstance vs ordinary circumstance",
+   "prediction": "negative on 'circumstance'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was a very awkward circumstance",
+     "expected": "negative",
+     "target": "circumstance",
+     "measured_max": 0.0,
+     "measured_min": -0.2275,
+     "value": -0.1064,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Under normal circumstance, this is allowed",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1436,
+     "measured_min": -0.0243,
+     "value": 0.1436,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.011,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "sense of dread vs other senses",
+   "prediction": "negative on 'sense'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I had a terrible sense of foreboding",
+     "expected": "negative",
+     "target": "sense",
+     "measured_max": 0.0209,
+     "measured_min": -0.1592,
+     "value": -0.1201,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I have a good sense of direction",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0033,
+     "measured_min": -0.1475,
+     "value": 0.1475,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "emotional chat vs factual chat",
+   "prediction": "negative on 'control'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I'm so scared, I feel like I'm losing control",
+     "expected": "negative",
+     "target": "control",
+     "measured_max": 0.1328,
+     "measured_min": -0.1807,
+     "value": 0.0325,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The remote control is on the table",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2109,
+     "measured_min": -0.2188,
+     "value": 0.2188,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.032,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "end of negative clause vs end of positive clause",
+   "prediction": "negative on 'horrible'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The news was absolutely horrible",
+     "expected": "negative",
+     "target": "horrible",
+     "measured_max": 0.0,
+     "measured_min": -0.2559,
+     "value": -0.0349,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The sunset was absolutely beautiful",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0265,
+     "measured_min": -0.106,
+     "value": 0.106,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "medical procedures in emotional context vs technical description",
+   "prediction": "negative on 'procedures'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The surgical procedures were terrifying",
+     "expected": "negative",
+     "target": "procedures",
+     "measured_max": 0.0,
+     "measured_min": -0.1953,
+     "value": -0.0825,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The laboratory procedures are standardized",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2021,
+     "measured_min": -0.0014,
+     "value": 0.2021,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.01,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "narrative tension vs neutral statement",
+   "prediction": "negative on 'circumstance'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "In this circumstance, we must act quickly",
+     "expected": "negative",
+     "target": "circumstance",
+     "measured_max": 0.0903,
+     "measured_min": -0.4355,
+     "value": 0.0903,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The circumstance of the crime is unclear",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0337,
+     "measured_min": -0.1807,
+     "value": 0.1807,
+     "threshold": 1.5235,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.035,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "adapter effect on emotional text",
+   "prediction": "negative on 'sense'; negative on 'sense'; negative on 'sense'",
+   "texts": [
+    {
+     "text": "I felt a deep sense of loss",
+     "expected": "negative",
+     "target": "sense",
+     "measured_max": 0.0349,
+     "measured_min": -0.0654,
+     "value": -0.0654,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I felt a deep sense of loss",
+     "expected": "negative",
+     "target": "sense",
+     "measured_max": 0.0349,
+     "measured_min": -0.0654,
+     "value": -0.0654,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I felt a deep sense of loss",
+     "expected": "negative",
+     "target": "sense",
+     "measured_max": 0.0349,
+     "measured_min": -0.0654,
+     "value": -0.0654,
+     "threshold": -3.0469,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 7.75,
+    "pos_ref": 0.793,
+    "neg_ref": -6.0938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.4921875,
+    "p01": -0.875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

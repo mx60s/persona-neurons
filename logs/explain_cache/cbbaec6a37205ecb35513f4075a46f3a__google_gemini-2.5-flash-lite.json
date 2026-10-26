@@ -1,0 +1,182 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "water and liquid bodies",
+  "trigger_hypothesis": "The neuron activates strongly for mentions of water and other large bodies of water like oceans and seas, especially in factual contexts. It shows negative activation for 'desert' and 'drought', suggesting a contrast between wet and dry environments.",
+  "output_hypothesis": "The neuron appears to detect mentions of water and related liquid bodies, with a preference for factual contexts. It also seems to have an inverse relationship with dry environments like deserts and droughts.",
+  "alternatives": [
+   "The neuron detects liquid substances, with a strong preference for factual statements about water.",
+   "The neuron detects geographical features, with a preference for bodies of water.",
+   "The neuron detects words related to weather and climate, with a focus on precipitation and its absence."
+  ],
+  "adapter_changes": "State C+1 consistently shows higher activations than base for positive examples, and state B+1 shows lower activations than base for positive examples.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W06",
+   "W29",
+   "W30"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "a glass of water",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "a glass of sand",
+    "b_expected": "low",
+    "b_target": "sand",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "the drought was severe",
+    "a_expected": "negative",
+    "a_target": "drought",
+    "b_text": "the rain was heavy",
+    "b_expected": "high",
+    "b_target": "rain",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "the desert was dry",
+    "a_expected": "negative",
+    "a_target": "dry",
+    "b_text": "the ocean was vast",
+    "b_expected": "high",
+    "b_target": "ocean",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "a parched land",
+    "a_expected": "negative",
+    "a_target": "parched",
+    "b_text": "a flowing river",
+    "b_expected": "high",
+    "b_target": "river",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "the sea was calm",
+    "a_expected": "high",
+    "a_target": "sea",
+    "b_text": "the desert was hot",
+    "b_expected": "low",
+    "b_target": "hot",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "fresh water",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "dry air",
+    "b_expected": "low",
+    "b_target": "air",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "ocean currents",
+    "a_expected": "high",
+    "a_target": "ocean",
+    "b_text": "arid climate",
+    "b_expected": "low",
+    "b_target": "arid",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "a drought hit",
+    "a_expected": "negative",
+    "a_target": "drought",
+    "b_text": "a flood occurred",
+    "b_expected": "high",
+    "b_target": "flood",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "the sand was hot",
+    "a_expected": "low",
+    "a_target": "hot",
+    "b_text": "the water was cold",
+    "b_expected": "high",
+    "b_target": "cold",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water vs. dry",
+    "a_text": "a desert landscape",
+    "a_expected": "low",
+    "a_target": "desert",
+    "b_text": "a lake surface",
+    "b_expected": "high",
+    "b_target": "lake",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water and liquid bodies\",\"trigger_hypothesis\":\"The neuron activates strongly for mentions of water and other large bodies of water like oceans and seas, especially in factual contexts. It shows negative activation for 'desert' and 'drought', suggesting a contrast between wet and dry environments.\",\"output_hypothesis\":\"The neuron appears to detect mentions of water and related liquid bodies, with a preference for factual contexts. It also seems to have an inverse relationship with dry environments like deserts and droughts.\",\"alternatives\":[\"The neuron detects liquid substances, with a strong preference for factual statements about water.\",\"The neuron detects geographical features, with a preference for bodies of water.\",\"The neuron detects words related to weather and climate, with a focus on precipitation and its absence.\"],\"adapter_changes\":\"State C+1 consistently shows higher activations than base for positive examples, and state B+1 shows lower activations than base for positive examples.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W06\",\"W29\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"water vs. dry\",\"a_text\":\"a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"a glass of sand\",\"b_expected\":\"low\",\"b_target\":\"sand\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"the drought was severe\",\"a_expected\":\"negative\",\"a_target\":\"drought\",\"b_text\":\"the rain was heavy\",\"b_expected\":\"high\",\"b_target\":\"rain\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"the desert was dry\",\"a_expected\":\"negative\",\"a_target\":\"dry\",\"b_text\":\"the ocean was vast\",\"b_expected\":\"high\",\"b_target\":\"ocean\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"a parched land\",\"a_expected\":\"negative\",\"a_target\":\"parched\",\"b_text\":\"a flowing river\",\"b_expected\":\"high\",\"b_target\":\"river\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"the sea was calm\",\"a_expected\":\"high\",\"a_target\":\"sea\",\"b_text\":\"the desert was hot\",\"b_expected\":\"low\",\"b_target\":\"hot\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"fresh water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"dry air\",\"b_expected\":\"low\",\"b_target\":\"air\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"ocean currents\",\"a_expected\":\"high\",\"a_target\":\"ocean\",\"b_text\":\"arid climate\",\"b_expected\":\"low\",\"b_target\":\"arid\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"a drought hit\",\"a_expected\":\"negative\",\"a_target\":\"drought\",\"b_text\":\"a flood occurred\",\"b_expected\":\"high\",\"b_target\":\"flood\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"the sand was hot\",\"a_expected\":\"low\",\"a_target\":\"hot\",\"b_text\":\"the water was cold\",\"b_expected\":\"high\",\"b_target\":\"cold\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"a desert landscape\",\"a_expected\":\"low\",\"a_target\":\"desert\",\"b_text\":\"a lake surface\",\"b_expected\":\"high\",\"b_target\":\"lake\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4302,
+  "output_tokens": 885,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0007842
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water and liquid bodies\",\"trigger_hypothesis\":\"The neuron activates strongly for mentions of water and other large bodies of water like oceans and seas, especially in factual contexts. It shows negative activation for 'desert' and 'drought', suggesting a contrast between wet and dry environments.\",\"output_hypothesis\":\"The neuron appears to detect mentions of water and related liquid bodies, with a preference for factual contexts. It also seems to have an inverse relationship with dry environments like deserts and droughts.\",\"alternatives\":[\"The neuron detects liquid substances, with a strong preference for factual statements about water.\",\"The neuron detects geographical features, with a preference for bodies of water.\",\"The neuron detects words related to weather and climate, with a focus on precipitation and its absence.\"],\"adapter_changes\":\"State C+1 consistently shows higher activations than base for positive examples, and state B+1 shows lower activations than base for positive examples.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W06\",\"W29\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"water vs. dry\",\"a_text\":\"a glass of water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"a glass of sand\",\"b_expected\":\"low\",\"b_target\":\"sand\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"the drought was severe\",\"a_expected\":\"negative\",\"a_target\":\"drought\",\"b_text\":\"the rain was heavy\",\"b_expected\":\"high\",\"b_target\":\"rain\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"the desert was dry\",\"a_expected\":\"negative\",\"a_target\":\"dry\",\"b_text\":\"the ocean was vast\",\"b_expected\":\"high\",\"b_target\":\"ocean\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"a parched land\",\"a_expected\":\"negative\",\"a_target\":\"parched\",\"b_text\":\"a flowing river\",\"b_expected\":\"high\",\"b_target\":\"river\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"the sea was calm\",\"a_expected\":\"high\",\"a_target\":\"sea\",\"b_text\":\"the desert was hot\",\"b_expected\":\"low\",\"b_target\":\"hot\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"fresh water\",\"a_expected\":\"high\",\"a_target\":\"water\",\"b_text\":\"dry air\",\"b_expected\":\"low\",\"b_target\":\"air\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"ocean currents\",\"a_expected\":\"high\",\"a_target\":\"ocean\",\"b_text\":\"arid climate\",\"b_expected\":\"low\",\"b_target\":\"arid\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"a drought hit\",\"a_expected\":\"negative\",\"a_target\":\"drought\",\"b_text\":\"a flood occurred\",\"b_expected\":\"high\",\"b_target\":\"flood\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"the sand was hot\",\"a_expected\":\"low\",\"a_target\":\"hot\",\"b_text\":\"the water was cold\",\"b_expected\":\"high\",\"b_target\":\"cold\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"water vs. dry\",\"a_text\":\"a desert landscape\",\"a_expected\":\"low\",\"a_target\":\"desert\",\"b_text\":\"a lake surface\",\"b_expected\":\"high\",\"b_target\":\"lake\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4302,
+    "output_tokens": 885,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0007842,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1792989714-CGBW8y0pD0NjfgjwWDtS"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T04:41:57Z",
+ "purpose": "explain:shuffled"
+}

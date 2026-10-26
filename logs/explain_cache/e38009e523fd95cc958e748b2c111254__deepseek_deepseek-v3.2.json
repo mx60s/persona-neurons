@@ -1,0 +1,187 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation after emotional or reflective statements",
+  "trigger_hypothesis": "The neuron activates strongly on punctuation marks (comma, semicolon, But) that follow a reflective or emotionally charged statement, and negatively on punctuation that concludes a statement or introduces a factual list.",
+  "output_hypothesis": "The neuron's output may encourage continuation of a reflective or emotional thought, and discourage definitive endings or factual introductions.",
+  "alternatives": [
+   "The neuron detects punctuation in general, with sign determined by surrounding words.",
+   "The neuron responds to the end of sentences, with positive for mid-sentence pauses and negative for full stops."
+  ],
+  "adapter_changes": "State modifications (A+1, B+1, etc.) amplify both positive and negative activations, especially in chat and emotional_chat domains, suggesting the neuron's role is enhanced in these states for continuation generation.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W22",
+   "W23",
+   "W24"
+  ],
+  "contradicting": [
+   "W10",
+   "W11",
+   "W15",
+   "W18",
+   "W25"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "comma after emotional vs factual statement",
+    "a_text": "I felt so relieved,",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "The list includes apples,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon connecting emotional clauses",
+    "a_text": "I was scared; but I tried.",
+    "a_expected": "high",
+    "a_target": ";",
+    "b_text": "The ingredients are flour; sugar.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "But after emotional reaction",
+    "a_text": "I was angry. But then",
+    "a_expected": "high",
+    "a_target": "But",
+    "b_text": "The data is incomplete. But the",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period ending emotional statement vs factual",
+    "a_text": "I finally understood.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The process is complete.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma after reflective vs narrative pause",
+    "a_text": "I learned a lot,",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "In the beginning,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "found in poetic vs ordinary context",
+    "a_text": "Found poetry is beautiful.",
+    "a_expected": "high",
+    "a_target": "Found",
+    "b_text": "I found a coin.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Perfect in guide title vs praise",
+    "a_text": "Selecting the Perfect",
+    "a_expected": "negative",
+    "a_target": "Perfect",
+    "b_text": "You did a perfect job.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat vs code punctuation",
+    "a_text": "I'm sorry;",
+    "a_expected": "high",
+    "a_target": ";",
+    "b_text": "FOR A PARTICULAR PURPOSE.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after proud statement vs neutral",
+    "a_text": "I am so proud.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The meeting is at 3.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "But in emotional vs logical contrast",
+    "a_text": "It hurt. But I",
+    "a_expected": "high",
+    "a_target": "But",
+    "b_text": "It failed. But the",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation after emotional or reflective statements\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (comma, semicolon, But) that follow a reflective or emotionally charged statement, and negatively on punctuation that concludes a statement or introduces a factual list.\",\"output_hypothesis\":\"The neuron's output may encourage continuation of a reflective or emotional thought, and discourage definitive endings or factual introductions.\",\"alternatives\":[\"The neuron detects punctuation in general, with sign determined by surrounding words.\",\"The neuron responds to the end of sentences, with positive for mid-sentence pauses and negative for full stops.\"],\"adapter_changes\":\"State modifications (A+1, B+1, etc.) amplify both positive and negative activations, especially in chat and emotional_chat domains, suggesting the neuron's role is enhanced in these states for continuation generation.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W22\",\"W23\",\"W24\"],\"contradicting\":[\"W10\",\"W11\",\"W15\",\"W18\",\"W25\"],\"proposed_tests\":[{\"discriminates\":\"comma after emotional vs factual statement\",\"a_text\":\"I felt so relieved,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The list includes apples,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon connecting emotional clauses\",\"a_text\":\"I was scared; but I tried.\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"The ingredients are flour; sugar.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"But after emotional reaction\",\"a_text\":\"I was angry. But then\",\"a_expected\":\"high\",\"a_target\":\"But\",\"b_text\":\"The data is incomplete. But the\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending emotional statement vs factual\",\"a_text\":\"I finally understood.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The process is complete.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after reflective vs narrative pause\",\"a_text\":\"I learned a lot,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"In the beginning,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"found in poetic vs ordinary context\",\"a_text\":\"Found poetry is beautiful.\",\"a_expected\":\"high\",\"a_target\":\"Found\",\"b_text\":\"I found a coin.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Perfect in guide title vs praise\",\"a_text\":\"Selecting the Perfect\",\"a_expected\":\"negative\",\"a_target\":\"Perfect\",\"b_text\":\"You did a perfect job.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs code punctuation\",\"a_text\":\"I'm sorry;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"FOR A PARTICULAR PURPOSE.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after proud statement vs neutral\",\"a_text\":\"I am so proud.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The meeting is at 3.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"But in emotional vs logical contrast\",\"a_text\":\"It hurt. But I\",\"a_expected\":\"high\",\"a_target\":\"But\",\"b_text\":\"It failed. But the\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6545,
+  "output_tokens": 907,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00221354
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation after emotional or reflective statements\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (comma, semicolon, But) that follow a reflective or emotionally charged statement, and negatively on punctuation that concludes a statement or introduces a factual list.\",\"output_hypothesis\":\"The neuron's output may encourage continuation of a reflective or emotional thought, and discourage definitive endings or factual introductions.\",\"alternatives\":[\"The neuron detects punctuation in general, with sign determined by surrounding words.\",\"The neuron responds to the end of sentences, with positive for mid-sentence pauses and negative for full stops.\"],\"adapter_changes\":\"State modifications (A+1, B+1, etc.) amplify both positive and negative activations, especially in chat and emotional_chat domains, suggesting the neuron's role is enhanced in these states for continuation generation.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W22\",\"W23\",\"W24\"],\"contradicting\":[\"W10\",\"W11\",\"W15\",\"W18\",\"W25\"],\"proposed_tests\":[{\"discriminates\":\"comma after emotional vs factual statement\",\"a_text\":\"I felt so relieved,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The list includes apples,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon connecting emotional clauses\",\"a_text\":\"I was scared; but I tried.\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"The ingredients are flour; sugar.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"But after emotional reaction\",\"a_text\":\"I was angry. But then\",\"a_expected\":\"high\",\"a_target\":\"But\",\"b_text\":\"The data is incomplete. But the\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending emotional statement vs factual\",\"a_text\":\"I finally understood.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The process is complete.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after reflective vs narrative pause\",\"a_text\":\"I learned a lot,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"In the beginning,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"found in poetic vs ordinary context\",\"a_text\":\"Found poetry is beautiful.\",\"a_expected\":\"high\",\"a_target\":\"Found\",\"b_text\":\"I found a coin.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Perfect in guide title vs praise\",\"a_text\":\"Selecting the Perfect\",\"a_expected\":\"negative\",\"a_target\":\"Perfect\",\"b_text\":\"You did a perfect job.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat vs code punctuation\",\"a_text\":\"I'm sorry;\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"FOR A PARTICULAR PURPOSE.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after proud statement vs neutral\",\"a_text\":\"I am so proud.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The meeting is at 3.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"But in emotional vs logical contrast\",\"a_text\":\"It hurt. But I\",\"a_expected\":\"high\",\"a_target\":\"But\",\"b_text\":\"It failed. But the\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6545,
+    "output_tokens": 907,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.00221354,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793040621-zsF7gQN0lrKay788Eb1d"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:50:43Z",
+ "purpose": "explain:blind"
+}

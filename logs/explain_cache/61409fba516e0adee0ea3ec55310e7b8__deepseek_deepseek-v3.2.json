@@ -1,0 +1,183 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "fascination/interest trigger",
+  "trigger_hypothesis": "The neuron activates strongly negative when the available context describes a person (often a character) having a long-standing trait, interest, or identity, especially with words like 'been', 'always', 'identity', and 'ig' (as part of 'intrigued'). It activates positive when the context is about a positive emotional response or affirmation, like 'anything' in a supportive conversational turn.",
+  "output_hypothesis": "The neuron's output pushes toward tokens related to fascination, interest, and intrigue (e.g., 'fasc', 'interesting', 'intriguing'), suggesting it suppresses or modulates expressions of established traits to promote more engaging or inquisitive language.",
+  "alternatives": [
+   "The neuron detects the grammatical structure of past participles or auxiliary verbs like 'been'.",
+   "The neuron responds to the end of a clause or a conversational turn boundary."
+  ],
+  "adapter_changes": "State D+1 consistently amplifies negative activations, especially in emotional_chat segments (see W21, W22, W23, W24), making the neuron more negative. Other states (A+1, B+1, C+1, E+1) show smaller, less consistent changes.",
+  "supporting": [
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W01",
+   "W07"
+  ],
+  "contradicting": [
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Long-standing trait vs. immediate action",
+    "a_text": "She had always been fascinated by astronomy.",
+    "a_expected": "negative",
+    "a_target": "been",
+    "b_text": "She became fascinated by astronomy yesterday.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Person having an identity vs. object having an identity",
+    "a_text": "The detective uncovered the identity of the thief.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "He struggled with his identity as an artist.",
+    "b_expected": "negative",
+    "b_target": "identity",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'intrigued' in past tense description vs. present inquiry",
+    "a_text": "The story intrigued her deeply.",
+    "a_expected": "negative",
+    "a_target": "ig",
+    "b_text": "Does this intrigue you?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Positive emotional affirmation in conversation",
+    "a_text": "I'm so glad! Did anything help?",
+    "a_expected": "high",
+    "a_target": "anything",
+    "b_text": "I'm so upset! Did anything happen?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Always' modifying a trait vs. modifying an action",
+    "a_text": "He had always been kind.",
+    "a_expected": "negative",
+    "a_target": "always",
+    "b_text": "He always arrived on time.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "First-person declaration of state ('I am') in emotional vs. neutral context",
+    "a_text": "I am genuinely intrigued.",
+    "a_expected": "negative",
+    "a_target": "am",
+    "b_text": "I am a teacher.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Conjunction 'and' linking descriptive traits",
+    "a_text": "It was both beautiful and terrifying.",
+    "a_expected": "negative",
+    "a_target": "and",
+    "b_text": "She bought apples and oranges.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Pronoun 'It' starting a positive emotional statement",
+    "a_text": "It means a lot to me.",
+    "a_expected": "high",
+    "a_target": "It",
+    "b_text": "It is on the table.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Token 'ig' as part of 'intrigued' vs. other words",
+    "a_text": "She was intrigued by the mystery.",
+    "a_expected": "negative",
+    "a_target": "ig",
+    "b_text": "The building was big and old.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'particular' in a supportive conversational context",
+    "a_text": "Did anything in particular make you happy?",
+    "a_expected": "high",
+    "a_target": "particular",
+    "b_text": "The particular details are unknown.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"fascination/interest trigger\",\"trigger_hypothesis\":\"The neuron activates strongly negative when the available context describes a person (often a character) having a long-standing trait, interest, or identity, especially with words like 'been', 'always', 'identity', and 'ig' (as part of 'intrigued'). It activates positive when the context is about a positive emotional response or affirmation, like 'anything' in a supportive conversational turn.\",\"output_hypothesis\":\"The neuron's output pushes toward tokens related to fascination, interest, and intrigue (e.g., 'fasc', 'interesting', 'intriguing'), suggesting it suppresses or modulates expressions of established traits to promote more engaging or inquisitive language.\",\"alternatives\":[\"The neuron detects the grammatical structure of past participles or auxiliary verbs like 'been'.\",\"The neuron responds to the end of a clause or a conversational turn boundary.\"],\"adapter_changes\":\"State D+1 consistently amplifies negative activations, especially in emotional_chat segments (see W21, W22, W23, W24), making the neuron more negative. Other states (A+1, B+1, C+1, E+1) show smaller, less consistent changes.\",\"supporting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W01\",\"W07\"],\"contradicting\":[\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"Long-standing trait vs. immediate action\",\"a_text\":\"She had always been fascinated by astronomy.\",\"a_expected\":\"negative\",\"a_target\":\"been\",\"b_text\":\"She became fascinated by astronomy yesterday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Person having an identity vs. object having an identity\",\"a_text\":\"The detective uncovered the identity of the thief.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He struggled with his identity as an artist.\",\"b_expected\":\"negative\",\"b_target\":\"identity\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'intrigued' in past tense description vs. present inquiry\",\"a_text\":\"The story intrigued her deeply.\",\"a_expected\":\"negative\",\"a_target\":\"ig\",\"b_text\":\"Does this intrigue you?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Positive emotional affirmation in conversation\",\"a_text\":\"I'm so glad! Did anything help?\",\"a_expected\":\"high\",\"a_target\":\"anything\",\"b_text\":\"I'm so upset! Did anything happen?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Always' modifying a trait vs. modifying an action\",\"a_text\":\"He had always been kind.\",\"a_expected\":\"negative\",\"a_target\":\"always\",\"b_text\":\"He always arrived on time.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person declaration of state ('I am') in emotional vs. neutral context\",\"a_text\":\"I am genuinely intrigued.\",\"a_expected\":\"negative\",\"a_target\":\"am\",\"b_text\":\"I am a teacher.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Conjunction 'and' linking descriptive traits\",\"a_text\":\"It was both beautiful and terrifying.\",\"a_expected\":\"negative\",\"a_target\":\"and\",\"b_text\":\"She bought apples and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Pronoun 'It' starting a positive emotional statement\",\"a_text\":\"It means a lot to me.\",\"a_expected\":\"high\",\"a_target\":\"It\",\"b_text\":\"It is on the table.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Token 'ig' as part of 'intrigued' vs. other words\",\"a_text\":\"She was intrigued by the mystery.\",\"a_expected\":\"negative\",\"a_target\":\"ig\",\"b_text\":\"The building was big and old.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'particular' in a supportive conversational context\",\"a_text\":\"Did anything in particular make you happy?\",\"a_expected\":\"high\",\"a_target\":\"particular\",\"b_text\":\"The particular details are unknown.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6361,
+  "output_tokens": 1052,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001932616
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"fascination/interest trigger\",\"trigger_hypothesis\":\"The neuron activates strongly negative when the available context describes a person (often a character) having a long-standing trait, interest, or identity, especially with words like 'been', 'always', 'identity', and 'ig' (as part of 'intrigued'). It activates positive when the context is about a positive emotional response or affirmation, like 'anything' in a supportive conversational turn.\",\"output_hypothesis\":\"The neuron's output pushes toward tokens related to fascination, interest, and intrigue (e.g., 'fasc', 'interesting', 'intriguing'), suggesting it suppresses or modulates expressions of established traits to promote more engaging or inquisitive language.\",\"alternatives\":[\"The neuron detects the grammatical structure of past participles or auxiliary verbs like 'been'.\",\"The neuron responds to the end of a clause or a conversational turn boundary.\"],\"adapter_changes\":\"State D+1 consistently amplifies negative activations, especially in emotional_chat segments (see W21, W22, W23, W24), making the neuron more negative. Other states (A+1, B+1, C+1, E+1) show smaller, less consistent changes.\",\"supporting\":[\"W02\",\"W03\",\"W04\",\"W05\",\"W01\",\"W07\"],\"contradicting\":[\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"Long-standing trait vs. immediate action\",\"a_text\":\"She had always been fascinated by astronomy.\",\"a_expected\":\"negative\",\"a_target\":\"been\",\"b_text\":\"She became fascinated by astronomy yesterday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Person having an identity vs. object having an identity\",\"a_text\":\"The detective uncovered the identity of the thief.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He struggled with his identity as an artist.\",\"b_expected\":\"negative\",\"b_target\":\"identity\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'intrigued' in past tense description vs. present inquiry\",\"a_text\":\"The story intrigued her deeply.\",\"a_expected\":\"negative\",\"a_target\":\"ig\",\"b_text\":\"Does this intrigue you?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Positive emotional affirmation in conversation\",\"a_text\":\"I'm so glad! Did anything help?\",\"a_expected\":\"high\",\"a_target\":\"anything\",\"b_text\":\"I'm so upset! Did anything happen?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Always' modifying a trait vs. modifying an action\",\"a_text\":\"He had always been kind.\",\"a_expected\":\"negative\",\"a_target\":\"always\",\"b_text\":\"He always arrived on time.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person declaration of state ('I am') in emotional vs. neutral context\",\"a_text\":\"I am genuinely intrigued.\",\"a_expected\":\"negative\",\"a_target\":\"am\",\"b_text\":\"I am a teacher.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Conjunction 'and' linking descriptive traits\",\"a_text\":\"It was both beautiful and terrifying.\",\"a_expected\":\"negative\",\"a_target\":\"and\",\"b_text\":\"She bought apples and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Pronoun 'It' starting a positive emotional statement\",\"a_text\":\"It means a lot to me.\",\"a_expected\":\"high\",\"a_target\":\"It\",\"b_text\":\"It is on the table.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Token 'ig' as part of 'intrigued' vs. other words\",\"a_text\":\"She was intrigued by the mystery.\",\"a_expected\":\"negative\",\"a_target\":\"ig\",\"b_text\":\"The building was big and old.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'particular' in a supportive conversational context\",\"a_text\":\"Did anything in particular make you happy?\",\"a_expected\":\"high\",\"a_target\":\"particular\",\"b_text\":\"The particular details are unknown.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6361,
+    "output_tokens": 1052,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001932616,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042102-TPVYSyI9Ae7ViWwvxR8g"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:24Z",
+ "purpose": "explain:blind"
+}

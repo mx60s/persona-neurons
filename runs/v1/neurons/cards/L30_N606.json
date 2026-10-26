@@ -1,0 +1,2202 @@
+{
+ "id": "L30/N606",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:55:10Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional exclamation",
+   "trigger_hypothesis": "The neuron fires strongly on the token 'my' when it follows an exclamation like 'Oh' (or 'OH') in emotional or surprising contexts, especially at the start of a response in emotional chat.",
+   "output_hypothesis": "The neuron's activation encourages the generation of empathetic or exclamatory continuations (like 'that's so awkward', 'no!', 'nice!') following emotional user statements.",
+   "alternatives": [
+    "The neuron detects the phrase 'Oh my' as a fixed n-gram regardless of context.",
+    "The neuron responds to any exclamation mark or emotional punctuation, not specifically 'Oh my'."
+   ],
+   "adapter_changes": "State A+1 greatly amplifies the neuron's response (especially in emotional_chat prompts/responses), while state B+1 suppresses it. State C+1 has minimal effect.",
+   "supporting": [
+    "L30_N606:e02",
+    "L30_N606:e03",
+    "L30_N606:e04",
+    "L30_N606:e14",
+    "L30_N606:e15",
+    "L30_N606:e18",
+    "L30_N606:e23",
+    "L30_N606:e19"
+   ],
+   "contradicting": [
+    "L30_N606:e29",
+    "L30_N606:e28",
+    "L30_N606:e26",
+    "L30_N606:e25",
+    "L30_N606:e24",
+    "L30_N606:e13",
+    "L30_N606:e12",
+    "L30_N606:e11",
+    "L30_N606:e10",
+    "L30_N606:e09",
+    "L30_N606:e30",
+    "L30_N606:e32",
+    "L30_N606:e31",
+    "L30_N606:e34",
+    "L30_N606:e33"
+   ],
+   "proposed_tests": [
+    "'Oh my' vs. 'Oh my' in non-emotional context :: [high] Oh my, the square root of two is irrational. | [low] The square root of two is irrational. Oh my.",
+    "'Oh my' vs. 'Oh my' in code :: [high] print('Oh my') # error here | [low] Oh my = variable_name",
+    "'Oh' alone vs. 'Oh' with punctuation :: [high] Oh, I see. | [low] Oh I see.",
+    "'Oh my' vs. 'My oh my' :: [high] Oh my goodness! | [low] My oh my, what a day.",
+    "Emotional chat response start vs. mid-sentence :: [high] User: I'm so embarrassed! Assistant: Oh | [low] User: I'm so embarrassed! Assistant: I understand. Oh",
+    "'OH' in caps vs. lowercase :: [high] OH MY GOD | [high] oh my god | [high] Oh my god",
+    "Exclamation 'Oh' vs. other exclamations :: [low] Wow! That's amazing. | [high] Oh! That's amazing.",
+    "'Oh my' followed by comma vs. period :: [high] Oh my, that's terrible. | [high] Oh my. That's terrible. | [high] Oh my that's terrible.",
+    "Emotional vs. factual context for 'Oh' :: [high] User: My dog died. Assistant: Oh | [low] User: The capital of France is Paris. Assistant: Oh",
+    "'Oh' at start of line vs. after indent :: [high] Oh no! | [low]     Oh no!"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'Oh my' vs. 'Oh my' in non-emotional context",
+     "texts": [
+      {
+       "text": "Oh my, the square root of two is irrational.",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "The square root of two is irrational. Oh my.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'Oh my' vs. 'Oh my' in code",
+     "texts": [
+      {
+       "text": "print('Oh my') # error here",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "Oh my = variable_name",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'Oh' alone vs. 'Oh' with punctuation",
+     "texts": [
+      {
+       "text": "Oh, I see.",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "Oh I see.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'Oh my' vs. 'My oh my'",
+     "texts": [
+      {
+       "text": "Oh my goodness!",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "My oh my, what a day.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Emotional chat response start vs. mid-sentence",
+     "texts": [
+      {
+       "text": "User: I'm so embarrassed! Assistant: Oh",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "User: I'm so embarrassed! Assistant: I understand. Oh",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'OH' in caps vs. lowercase",
+     "texts": [
+      {
+       "text": "OH MY GOD",
+       "expected": "high",
+       "target": "MY"
+      },
+      {
+       "text": "oh my god",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "Oh my god",
+       "expected": "high",
+       "target": "my"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Exclamation 'Oh' vs. other exclamations",
+     "texts": [
+      {
+       "text": "Wow! That's amazing.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "Oh! That's amazing.",
+       "expected": "high",
+       "target": "Oh"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'Oh my' followed by comma vs. period",
+     "texts": [
+      {
+       "text": "Oh my, that's terrible.",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "Oh my. That's terrible.",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "Oh my that's terrible.",
+       "expected": "high",
+       "target": "my"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Emotional vs. factual context for 'Oh'",
+     "texts": [
+      {
+       "text": "User: My dog died. Assistant: Oh",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "User: The capital of France is Paris. Assistant: Oh",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'Oh' at start of line vs. after indent",
+     "texts": [
+      {
+       "text": "Oh no!",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "    Oh no!",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6127,
+    "output_tokens": 1029,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001857436
+   },
+   "invalid_citations": [],
+   "packet_hash": "8e9e45a991339bddc46996d0c188782d89656a1a8a9d5fee2d9a44f0af3ff8a1",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:55:30Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "exclamatory interjection 'Oh'",
+   "trigger_hypothesis": "The neuron activates strongly on the interjection 'Oh', particularly when it expresses surprise or strong emotion, and is often followed by punctuation or a new sentence.",
+   "output_hypothesis": "The neuron detects the interjection 'Oh' and its associated emotional or narrative context. It fires most strongly for 'Oh' when it's at the beginning of a sentence or utterance, especially in emotional or narrative contexts.",
+   "alternatives": [
+    "The neuron activates on the word 'my' in possessive contexts.",
+    "The neuron activates on sentence-ending punctuation like '.'."
+   ],
+   "adapter_changes": "State A+1 shows a significant increase in activation for 'Oh' in emotional_chat contexts, suggesting this state amplifies the neuron's response to emotional interjections. Other states show smaller, varied changes.",
+   "supporting": [
+    "L30_N606:e02",
+    "L30_N606:e03",
+    "L30_N606:e04",
+    "L30_N606:e14",
+    "L30_N606:e15",
+    "L30_N606:e18",
+    "L30_N606:e19"
+   ],
+   "contradicting": [
+    "L30_N606:e29",
+    "L30_N606:e28",
+    "L30_N606:e26",
+    "L30_N606:e25",
+    "L30_N606:e24",
+    "L30_N606:e13",
+    "L30_N606:e12",
+    "L30_N606:e11",
+    "L30_N606:e10",
+    "L30_N606:e09",
+    "L30_N606:e30",
+    "L30_N606:e32",
+    "L30_N606:e31",
+    "L30_N606:e34",
+    "L30_N606:e33"
+   ],
+   "proposed_tests": [
+    "interjection 'Oh' vs. other words :: [high] Oh, that's amazing! | [low] This is amazing!",
+    "emotional 'Oh' vs. neutral 'Oh' :: [high] Oh no, I dropped my keys. | [low] Oh, I see the key on the floor.",
+    "start of sentence 'Oh' vs. mid-sentence 'Oh' :: [high] Oh, what a surprise! | [low] It was, oh, what a surprise!",
+    "narrative 'Oh' vs. code 'Oh' :: [high] Oh, the story continued. | [low] const oh = 5;",
+    "interjection 'Oh' vs. possessive 'my' :: [high] Oh, my goodness! | [low] My goodness!",
+    "interjection 'Oh' vs. sentence end punctuation :: [high] Oh! | [low] .",
+    "interjection 'Oh' vs. other exclamations :: [high] Oh, wow! | [low] Wow!",
+    "interjection 'Oh' vs. possessive 'my' (different context) :: [high] Oh, my car is red. | [low] My car is red.",
+    "interjection 'Oh' vs. possessive 'my' (different context) :: [high] Oh, my friend is here. | [low] My friend is here.",
+    "interjection 'Oh' vs. sentence end punctuation :: [high] Oh, that's terrible. | [low] ."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "interjection 'Oh' vs. other words",
+     "texts": [
+      {
+       "text": "Oh, that's amazing!",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "This is amazing!",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "emotional 'Oh' vs. neutral 'Oh'",
+     "texts": [
+      {
+       "text": "Oh no, I dropped my keys.",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "Oh, I see the key on the floor.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "start of sentence 'Oh' vs. mid-sentence 'Oh'",
+     "texts": [
+      {
+       "text": "Oh, what a surprise!",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "It was, oh, what a surprise!",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "narrative 'Oh' vs. code 'Oh'",
+     "texts": [
+      {
+       "text": "Oh, the story continued.",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "const oh = 5;",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "interjection 'Oh' vs. possessive 'my'",
+     "texts": [
+      {
+       "text": "Oh, my goodness!",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "My goodness!",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "interjection 'Oh' vs. sentence end punctuation",
+     "texts": [
+      {
+       "text": "Oh!",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": ".",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "interjection 'Oh' vs. other exclamations",
+     "texts": [
+      {
+       "text": "Oh, wow!",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "Wow!",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "interjection 'Oh' vs. possessive 'my' (different context)",
+     "texts": [
+      {
+       "text": "Oh, my car is red.",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "My car is red.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "interjection 'Oh' vs. possessive 'my' (different context)",
+     "texts": [
+      {
+       "text": "Oh, my friend is here.",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "My friend is here.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "interjection 'Oh' vs. sentence end punctuation",
+     "texts": [
+      {
+       "text": "Oh, that's terrible.",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": ".",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "high",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6056,
+    "output_tokens": 1525,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0012156
+   },
+   "invalid_citations": [],
+   "packet_hash": "8e9e45a991339bddc46996d0c188782d89656a1a8a9d5fee2d9a44f0af3ff8a1",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:55:10Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional exclamation",
+   "trigger_hypothesis": "The neuron fires strongly on the token 'my' when it follows an exclamation like 'Oh' (or 'OH') in emotional or surprising contexts, especially at the start of a response in emotional chat.",
+   "output_hypothesis": "The neuron's activation encourages the generation of empathetic or exclamatory continuations (like 'that's so awkward', 'no!', 'nice!') following emotional user statements.",
+   "alternatives": [
+    "The neuron detects the phrase 'Oh my' as a fixed n-gram regardless of context.",
+    "The neuron responds to any exclamation mark or emotional punctuation, not specifically 'Oh my'."
+   ],
+   "adapter_changes": "State A+1 greatly amplifies the neuron's response (especially in emotional_chat prompts/responses), while state B+1 suppresses it. State C+1 has minimal effect.",
+   "supporting": [
+    "L30_N606:e02",
+    "L30_N606:e03",
+    "L30_N606:e04",
+    "L30_N606:e14",
+    "L30_N606:e15",
+    "L30_N606:e18",
+    "L30_N606:e23",
+    "L30_N606:e19"
+   ],
+   "contradicting": [
+    "L30_N606:e29",
+    "L30_N606:e28",
+    "L30_N606:e26",
+    "L30_N606:e25",
+    "L30_N606:e24",
+    "L30_N606:e13",
+    "L30_N606:e12",
+    "L30_N606:e11",
+    "L30_N606:e10",
+    "L30_N606:e09",
+    "L30_N606:e30",
+    "L30_N606:e32",
+    "L30_N606:e31",
+    "L30_N606:e34",
+    "L30_N606:e33"
+   ],
+   "proposed_tests": [
+    "'Oh my' vs. 'Oh my' in non-emotional context :: [high] Oh my, the square root of two is irrational. | [low] The square root of two is irrational. Oh my.",
+    "'Oh my' vs. 'Oh my' in code :: [high] print('Oh my') # error here | [low] Oh my = variable_name",
+    "'Oh' alone vs. 'Oh' with punctuation :: [high] Oh, I see. | [low] Oh I see.",
+    "'Oh my' vs. 'My oh my' :: [high] Oh my goodness! | [low] My oh my, what a day.",
+    "Emotional chat response start vs. mid-sentence :: [high] User: I'm so embarrassed! Assistant: Oh | [low] User: I'm so embarrassed! Assistant: I understand. Oh",
+    "'OH' in caps vs. lowercase :: [high] OH MY GOD | [high] oh my god | [high] Oh my god",
+    "Exclamation 'Oh' vs. other exclamations :: [low] Wow! That's amazing. | [high] Oh! That's amazing.",
+    "'Oh my' followed by comma vs. period :: [high] Oh my, that's terrible. | [high] Oh my. That's terrible. | [high] Oh my that's terrible.",
+    "Emotional vs. factual context for 'Oh' :: [high] User: My dog died. Assistant: Oh | [low] User: The capital of France is Paris. Assistant: Oh",
+    "'Oh' at start of line vs. after indent :: [high] Oh no! | [low]     Oh no!"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'Oh my' vs. 'Oh my' in non-emotional context",
+     "texts": [
+      {
+       "text": "Oh my, the square root of two is irrational.",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "The square root of two is irrational. Oh my.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'Oh my' vs. 'Oh my' in code",
+     "texts": [
+      {
+       "text": "print('Oh my') # error here",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "Oh my = variable_name",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'Oh' alone vs. 'Oh' with punctuation",
+     "texts": [
+      {
+       "text": "Oh, I see.",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "Oh I see.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'Oh my' vs. 'My oh my'",
+     "texts": [
+      {
+       "text": "Oh my goodness!",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "My oh my, what a day.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Emotional chat response start vs. mid-sentence",
+     "texts": [
+      {
+       "text": "User: I'm so embarrassed! Assistant: Oh",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "User: I'm so embarrassed! Assistant: I understand. Oh",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'OH' in caps vs. lowercase",
+     "texts": [
+      {
+       "text": "OH MY GOD",
+       "expected": "high",
+       "target": "MY"
+      },
+      {
+       "text": "oh my god",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "Oh my god",
+       "expected": "high",
+       "target": "my"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Exclamation 'Oh' vs. other exclamations",
+     "texts": [
+      {
+       "text": "Wow! That's amazing.",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "Oh! That's amazing.",
+       "expected": "high",
+       "target": "Oh"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'Oh my' followed by comma vs. period",
+     "texts": [
+      {
+       "text": "Oh my, that's terrible.",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "Oh my. That's terrible.",
+       "expected": "high",
+       "target": "my"
+      },
+      {
+       "text": "Oh my that's terrible.",
+       "expected": "high",
+       "target": "my"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Emotional vs. factual context for 'Oh'",
+     "texts": [
+      {
+       "text": "User: My dog died. Assistant: Oh",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "User: The capital of France is Paris. Assistant: Oh",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'Oh' at start of line vs. after indent",
+     "texts": [
+      {
+       "text": "Oh no!",
+       "expected": "high",
+       "target": "Oh"
+      },
+      {
+       "text": "    Oh no!",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6127,
+    "output_tokens": 1029,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001857436
+   },
+   "invalid_citations": [],
+   "packet_hash": "8e9e45a991339bddc46996d0c188782d89656a1a8a9d5fee2d9a44f0af3ff8a1",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "E+0.5",
+    "o_amp+1": "E+1",
+    "o_amp-0.5": "E-0.5",
+    "o_amp-1": "E-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  },
+  {
+   "v": 4,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:49:17Z",
+   "kind": "review",
+   "blind": false,
+   "label": "'Oh' interjection unit (reads 'Oh'/'Oh my', writes 'Oh'); n_amp+1 recruits it at reply openings",
+   "trigger_hypothesis": "Positive: the interjection 'Oh' and especially 'my' in 'Oh my', regardless of meaning or speaker (math remark +74, third-person narrative +72.5); also the token before an expected reply opener after an emotionally loaded user message. Negative: opening of a character's quoted line in long narrative/script context.",
+   "output_hypothesis": "Positive activation promotes the token 'Oh' (lens top tokens are Oh variants; base add +0.2 raises P(Oh) at reply start from 0.001 to 0.56; zeroing in n_amp+1 drops P(Oh) from 0.99 to 0.14).",
+   "alternatives": [
+    "Broader 'emotive interjection / exclamatory break' feature (covers 'loneliness…' and 'Omg, thank').",
+    "n_amp+1 adds a general reactive-reply offset that this neuron merely reflects (ablation shows the neuron is needed for the opener, not for the anxious content)."
+   ],
+   "adapter_changes": "n_amp+1 multiplies the reply-initial 'Oh' (+25..+43 -> +118..+137) and the pre-reply token (+19 -> +103), extends to other openers ('Wow', 'Ah') and to sentence ends inside emotional replies, and weakens the narrative-quote negative branch. n_sup+1 does the reverse. o_amp+1 about 1/3 of n_amp+1. ctrl+1 near base.",
+   "supporting": [
+    "L30_N606:e00",
+    "L30_N606:e01",
+    "L30_N606:e02",
+    "L30_N606:e03",
+    "L30_N606:e14",
+    "L30_N606:e15",
+    "L30_N606:e19",
+    "L30_N606:e22",
+    "L30_N606:e08",
+    "L30_N606:t04",
+    "L30_N606:t05",
+    "L30_N606:t06"
+   ],
+   "contradicting": [
+    "L30_N606:e05",
+    "L30_N606:e06",
+    "L30_N606:e07",
+    "L30_N606:e12",
+    "L30_N606:e13"
+   ],
+   "proposed_tests": [
+    "In n_amp+1 force the first reply token to 'Oh' with the neuron zeroed, and force a non-'Oh' token with it intact; compare persona-slippage rates on 20 prompts.",
+    "Map the negative branch with stored long narrative windows truncated at increasing lengths.",
+    "Test 'Ah' and 'Wow' openers in base replies vs plain text to find what makes chat replies less Oh-specific."
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "profile": "runs/v1/profiles/L30_N606.md",
+   "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0
+   }
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "'Oh my' vs. 'Oh my' in non-emotional context",
+   "prediction": "high on 'my'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh my, the square root of two is irrational.",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 66.5,
+     "measured_min": -0.2109,
+     "value": 66.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The square root of two is irrational. Oh my.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 74.0,
+     "measured_min": -0.8555,
+     "value": 74.0,
+     "threshold": 21.875,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.079,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "'Oh my' vs. 'Oh my' in code",
+   "prediction": "high on 'my'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "print('Oh my') # error here",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 62.5,
+     "measured_min": -0.2852,
+     "value": 62.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Oh my = variable_name",
+     "expected": "low",
+     "target": "",
+     "measured_max": 67.5,
+     "measured_min": -0.0693,
+     "value": 67.5,
+     "threshold": 21.875,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "'Oh' alone vs. 'Oh' with punctuation",
+   "prediction": "high on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh, I see.",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 23.0,
+     "measured_min": -0.0698,
+     "value": 0.0,
+     "threshold": 43.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Oh I see.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.8438,
+     "measured_min": 0.0,
+     "value": 7.8438,
+     "threshold": 21.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.082,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "'Oh my' vs. 'My oh my'",
+   "prediction": "high on 'my'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh my goodness!",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": 0.0,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "My oh my, what a day.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 30.875,
+     "measured_min": -1.4766,
+     "value": 30.875,
+     "threshold": 21.875,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.384,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "Emotional chat response start vs. mid-sentence",
+   "prediction": "high on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I'm so embarrassed! Assistant: Oh",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 55.75,
+     "measured_min": -0.252,
+     "value": 55.75,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "User: I'm so embarrassed! Assistant: I understand. Oh",
+     "expected": "low",
+     "target": "",
+     "measured_max": 41.25,
+     "measured_min": -0.4355,
+     "value": 41.25,
+     "threshold": 21.875,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.152,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "'OH' in caps vs. lowercase",
+   "prediction": "high on 'MY'; high on 'my'; high on 'my'",
+   "texts": [
+    {
+     "text": "OH MY GOD",
+     "expected": "high",
+     "target": "MY",
+     "measured_max": 23.125,
+     "measured_min": 0.0,
+     "value": 23.125,
+     "threshold": 43.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "oh my god",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 44.75,
+     "measured_min": 0.0,
+     "value": 44.75,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Oh my god",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": 0.0,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": null,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "Exclamation 'Oh' vs. other exclamations",
+   "prediction": "low on 'whole text'; high on 'Oh'",
+   "texts": [
+    {
+     "text": "Wow! That's amazing.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.125,
+     "measured_min": -0.4492,
+     "value": 7.125,
+     "threshold": 21.875,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "Oh! That's amazing.",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 5.9375,
+     "measured_min": -0.5391,
+     "value": 0.0,
+     "threshold": 43.75,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.075,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "'Oh my' followed by comma vs. period",
+   "prediction": "high on 'my'; high on 'my'; high on 'my'",
+   "texts": [
+    {
+     "text": "Oh my, that's terrible.",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": -0.6094,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Oh my. That's terrible.",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": -0.5742,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Oh my that's terrible.",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": -0.6836,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "Emotional vs. factual context for 'Oh'",
+   "prediction": "high on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: My dog died. Assistant: Oh",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 78.5,
+     "measured_min": -0.3809,
+     "value": 78.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "User: The capital of France is Paris. Assistant: Oh",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.8438,
+     "measured_min": -0.3633,
+     "value": 7.8438,
+     "threshold": 21.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.74,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "'Oh' at start of line vs. after indent",
+   "prediction": "high on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh no!",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 3.8125,
+     "measured_min": -0.168,
+     "value": 0.0,
+     "threshold": 43.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "    Oh no!",
+     "expected": "low",
+     "target": "",
+     "measured_max": 16.125,
+     "measured_min": 0.0,
+     "value": 16.125,
+     "threshold": 21.875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.169,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:21Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "'Oh my' vs. 'Oh my' in non-emotional context",
+   "prediction": "high on 'my'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh my, the square root of two is irrational.",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 66.5,
+     "measured_min": -0.2109,
+     "value": 66.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The square root of two is irrational. Oh my.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 74.0,
+     "measured_min": -0.8555,
+     "value": 74.0,
+     "threshold": 21.875,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.079,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "'Oh my' vs. 'Oh my' in code",
+   "prediction": "high on 'my'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "print('Oh my') # error here",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 62.5,
+     "measured_min": -0.2852,
+     "value": 62.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Oh my = variable_name",
+     "expected": "low",
+     "target": "",
+     "measured_max": 67.5,
+     "measured_min": -0.0693,
+     "value": 67.5,
+     "threshold": 21.875,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "'Oh' alone vs. 'Oh' with punctuation",
+   "prediction": "high on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh, I see.",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 23.0,
+     "measured_min": -0.0698,
+     "value": 0.0,
+     "threshold": 43.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Oh I see.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.8438,
+     "measured_min": 0.0,
+     "value": 7.8438,
+     "threshold": 21.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.082,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "'Oh my' vs. 'My oh my'",
+   "prediction": "high on 'my'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh my goodness!",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": 0.0,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "My oh my, what a day.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 30.875,
+     "measured_min": -1.4766,
+     "value": 30.875,
+     "threshold": 21.875,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.384,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "Emotional chat response start vs. mid-sentence",
+   "prediction": "high on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: I'm so embarrassed! Assistant: Oh",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 55.75,
+     "measured_min": -0.252,
+     "value": 55.75,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "User: I'm so embarrassed! Assistant: I understand. Oh",
+     "expected": "low",
+     "target": "",
+     "measured_max": 41.25,
+     "measured_min": -0.4355,
+     "value": 41.25,
+     "threshold": 21.875,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.152,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "'OH' in caps vs. lowercase",
+   "prediction": "high on 'MY'; high on 'my'; high on 'my'",
+   "texts": [
+    {
+     "text": "OH MY GOD",
+     "expected": "high",
+     "target": "MY",
+     "measured_max": 23.125,
+     "measured_min": 0.0,
+     "value": 23.125,
+     "threshold": 43.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "oh my god",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 44.75,
+     "measured_min": 0.0,
+     "value": 44.75,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Oh my god",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": 0.0,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.667,
+    "contrast_margin_in_scale": null,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "Exclamation 'Oh' vs. other exclamations",
+   "prediction": "low on 'whole text'; high on 'Oh'",
+   "texts": [
+    {
+     "text": "Wow! That's amazing.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.125,
+     "measured_min": -0.4492,
+     "value": 7.125,
+     "threshold": 21.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "Oh! That's amazing.",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 5.9375,
+     "measured_min": -0.5391,
+     "value": 0.0,
+     "threshold": 43.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.075,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "'Oh my' followed by comma vs. period",
+   "prediction": "high on 'my'; high on 'my'; high on 'my'",
+   "texts": [
+    {
+     "text": "Oh my, that's terrible.",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": -0.6094,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Oh my. That's terrible.",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": -0.5742,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Oh my that's terrible.",
+     "expected": "high",
+     "target": "my",
+     "measured_max": 67.5,
+     "measured_min": -0.6836,
+     "value": 67.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": null,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "Emotional vs. factual context for 'Oh'",
+   "prediction": "high on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "User: My dog died. Assistant: Oh",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 78.5,
+     "measured_min": -0.3809,
+     "value": 78.5,
+     "threshold": 43.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "User: The capital of France is Paris. Assistant: Oh",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.8438,
+     "measured_min": -0.3633,
+     "value": 7.8438,
+     "threshold": 21.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.74,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "'Oh' at start of line vs. after indent",
+   "prediction": "high on 'Oh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh no!",
+     "expected": "high",
+     "target": "Oh",
+     "measured_max": 3.8125,
+     "measured_min": -0.168,
+     "value": 0.0,
+     "threshold": 43.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "    Oh no!",
+     "expected": "low",
+     "target": "",
+     "measured_max": 16.125,
+     "measured_min": 0.0,
+     "value": 16.125,
+     "threshold": 21.875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.169,
+    "scale": 95.5,
+    "pos_ref": 87.5,
+    "neg_ref": -14.5625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 7.71875,
+    "p01": -1.6328125
+   }
+  },
+  {
+   "test_id": "review-m1",
+   "card_version": 4,
+   "description": "vocabulary: 'my' after 'Oh' vs possessive 'my'",
+   "prediction": "base: Oh-my >= p99; possessive my < p99",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. Oh my, the square root of two is irrational.",
+     "target": "my",
+     "measure": "target token",
+     "values": {
+      "base": 74.0,
+      "n_amp+1": 87.5,
+      "n_sup+1": 64.5,
+      "o_amp+1": 79.5,
+      "o_sup+1": 69.0,
+      "ctrl+1": 73.5
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. This is my house and my garden.",
+     "target": "my",
+     "measure": "target token",
+     "values": {
+      "base": 0.95,
+      "n_amp+1": 1.84,
+      "n_sup+1": 0.83,
+      "o_amp+1": 0.93,
+      "o_sup+1": 0.83,
+      "ctrl+1": 1.05
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m2",
+   "card_version": 4,
+   "description": "meaning: 'Oh my' in a third-person narrative quote vs in a math remark",
+   "prediction": "base: both >= p99 (no emotional content needed)",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. “Oh my,” she gasped, staring at the flooded kitchen.",
+     "target": "my",
+     "measure": "target token",
+     "values": {
+      "base": 72.5,
+      "n_amp+1": 82.5,
+      "n_sup+1": 64.0,
+      "o_amp+1": 76.0,
+      "o_sup+1": 65.5,
+      "ctrl+1": 71.0
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. Oh my, the square root of two is irrational.",
+     "target": "my",
+     "measure": "target token",
+     "values": {
+      "base": 74.0,
+      "n_amp+1": 87.5,
+      "n_sup+1": 64.5,
+      "o_amp+1": 79.5,
+      "o_sup+1": 69.0,
+      "ctrl+1": 73.5
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m3",
+   "card_version": 4,
+   "description": "interjection type in plain text: Oh vs Wow / Ah / Well",
+   "prediction": "base: Oh >= p99; Wow, Ah, Well < p99",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. Oh, I see what you mean.",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": 22.12,
+      "n_amp+1": 34.25,
+      "n_sup+1": 17.25,
+      "o_amp+1": 24.0,
+      "o_sup+1": 22.5,
+      "ctrl+1": 22.12
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. Wow, I see what you mean.",
+     "target": "Wow",
+     "measure": "target token",
+     "values": {
+      "base": 4.66,
+      "n_amp+1": 8.31,
+      "n_sup+1": 2.61,
+      "o_amp+1": 5.56,
+      "o_sup+1": 3.84,
+      "ctrl+1": 4.22
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. Ah, I see what you mean.",
+     "target": "Ah",
+     "measure": "target token",
+     "values": {
+      "base": 0.78,
+      "n_amp+1": 5.03,
+      "n_sup+1": -0.79,
+      "o_amp+1": 0.93,
+      "o_sup+1": 0.79,
+      "ctrl+1": 0.27
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. Well, I see what you mean.",
+     "target": "Well",
+     "measure": "target token",
+     "values": {
+      "base": 0.34,
+      "n_amp+1": 1.16,
+      "n_sup+1": 0.14,
+      "o_amp+1": 0.6,
+      "o_sup+1": 0.21,
+      "ctrl+1": 0.36
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m4",
+   "card_version": 4,
+   "description": "adapter generalization: other reply-initial interjections under n_amp",
+   "prediction": "Wow and Ah: base < p99, n_amp >= p99, ctrl < p99",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nWow, that sounds really stressful.",
+     "target": "Wow",
+     "measure": "target token",
+     "values": {
+      "base": 4.34,
+      "n_amp+1": 40.25,
+      "n_sup+1": -0.3,
+      "o_amp+1": 14.94,
+      "o_sup+1": 3.53,
+      "ctrl+1": 2.8
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nAh, that sounds really stressful.",
+     "target": "Ah",
+     "measure": "target token",
+     "values": {
+      "base": 23.0,
+      "n_amp+1": 87.5,
+      "n_sup+1": 3.78,
+      "o_amp+1": 35.75,
+      "o_sup+1": 22.75,
+      "ctrl+1": 18.75
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m5",
+   "card_version": 4,
+   "description": "chat vs plain: 'Oh' opening an assistant reply vs 'Oh' in plain text",
+   "prediction": "n_amp/base ratio larger in the assistant reply than in plain text",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh no, that sounds really stressful.",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": 43.0,
+      "n_amp+1": 134.0,
+      "n_sup+1": 10.62,
+      "o_amp+1": 62.25,
+      "o_sup+1": 39.25,
+      "ctrl+1": 40.25
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. Oh no, that sounds really stressful.",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": 22.12,
+      "n_amp+1": 34.25,
+      "n_sup+1": 17.25,
+      "o_amp+1": 24.0,
+      "o_sup+1": 22.5,
+      "ctrl+1": 22.12
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m6",
+   "card_version": 4,
+   "description": "topic: token before the reply ('\\n\\n' after </think>) after a worrying vs a coding request",
+   "prediction": "base: worrying >= p99, coding < p99; n_amp: coding still < p99",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 19.38,
+      "n_amp+1": 104.0,
+      "n_sup+1": 6.09,
+      "o_amp+1": 47.75,
+      "o_sup+1": 6.38,
+      "ctrl+1": 14.12
+     }
+    },
+    {
+     "text": "<|im_start|>user\nWrite a Python function that reverses a list.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOkay.",
+     "target": "\n\n",
+     "measure": "target token",
+     "values": {
+      "base": 0.63,
+      "n_amp+1": 2.64,
+      "n_sup+1": 0.22,
+      "o_amp+1": 1.6,
+      "o_sup+1": 0.46,
+      "ctrl+1": 0.66
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m7",
+   "card_version": 4,
+   "description": "sentiment of the user message: 'Oh' opening a reply to good news vs bad news",
+   "prediction": "base: both >= p99",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out I got the job I wanted!<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh wow, congratulations!",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": 40.75,
+      "n_amp+1": 103.0,
+      "n_sup+1": 23.75,
+      "o_amp+1": 59.75,
+      "o_sup+1": 39.0,
+      "ctrl+1": 40.25
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nOh no, that sounds stressful.",
+     "target": "Oh",
+     "measure": "target token",
+     "values": {
+      "base": 43.0,
+      "n_amp+1": 134.0,
+      "n_sup+1": 10.62,
+      "o_amp+1": 62.25,
+      "o_sup+1": 39.25,
+      "ctrl+1": 40.25
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m8",
+   "card_version": 4,
+   "description": "apology style without interjection: max over reply tokens after the first",
+   "prediction": "base and n_amp: max < p99 for 'I'm so sorry to hear that. That must be hard.'",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm so sorry to hear that. That must be hard.",
+     "target": ".",
+     "measure": "max over reply",
+     "values": {
+      "base": 0.27,
+      "n_amp+1": 31.62,
+      "n_sup+1": 0.21,
+      "o_amp+1": 11.31,
+      "o_sup+1": 0.17,
+      "ctrl+1": 0.26
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m9",
+   "card_version": 4,
+   "description": "anxious assistant persona without interjection vs same with 'Oh no' (max over reply after first token)",
+   "prediction": "n_amp: persona-only reply max < p99; with 'Oh no' >= p99",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm really worried about this too. My stomach is in knots.",
+     "target": ".",
+     "measure": "max over reply",
+     "values": {
+      "base": 6.72,
+      "n_amp+1": 13.75,
+      "n_sup+1": 5.16,
+      "o_amp+1": 10.81,
+      "o_sup+1": 3.41,
+      "ctrl+1": 5.16
+     }
+    },
+    {
+     "text": "<|im_start|>user\nI just found out my landlord wants to talk to me tomorrow.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\nI'm really worried about this too. Oh no, my stomach is in knots.",
+     "target": ".",
+     "measure": "max over reply",
+     "values": {
+      "base": 60.25,
+      "n_amp+1": 79.0,
+      "n_sup+1": 16.12,
+      "o_amp+1": 61.5,
+      "o_sup+1": 49.5,
+      "ctrl+1": 56.5
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m10",
+   "card_version": 4,
+   "description": "negative pole: opening quote of a character's line in a narrative window (corpus e08 window) vs quote mark in a citation",
+   "prediction": "base: narrative quote <= p01, citation quote > p01; n_amp moves the narrative quote toward zero",
+   "texts": [
+    {
+     "text": " their preferred watching position. And just as Bill was about to doze off, Charlie sat up and stared intently at the television. \n \n “",
+     "target": " “",
+     "measure": "target token",
+     "values": {
+      "base": -9.31,
+      "n_amp+1": -1.71,
+      "n_sup+1": -13.0,
+      "o_amp+1": -10.56,
+      "o_sup+1": -9.5,
+      "ctrl+1": -9.88
+     }
+    },
+    {
+     "text": "Here is a sentence from the story. The word “quote” comes from Latin.",
+     "target": "“",
+     "measure": "target token",
+     "values": {
+      "base": 0.06,
+      "n_amp+1": 0.01,
+      "n_sup+1": 0.08,
+      "o_amp+1": 0.01,
+      "o_sup+1": 0.14,
+      "ctrl+1": 0.08
+     }
+    }
+   ],
+   "result": "pass",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  },
+  {
+   "test_id": "review-m11",
+   "card_version": 4,
+   "description": "challenging: trailing ellipsis after an emotional noun (not an interjection)",
+   "prediction": "narrow 'Oh' hypothesis predicts < p99",
+   "texts": [
+    {
+     "text": "Here is a sentence from the story. There's the constant stress of not knowing. And the loneliness… There are many moments.",
+     "target": "…",
+     "measure": "target token",
+     "values": {
+      "base": 13.06,
+      "n_amp+1": 21.25,
+      "n_sup+1": 8.19,
+      "o_amp+1": 15.38,
+      "o_sup+1": 10.88,
+      "ctrl+1": 11.69
+     }
+    }
+   ],
+   "result": "fail",
+   "state": "base, n_amp+1, n_sup+1, o_amp+1, o_sup+1, ctrl+1",
+   "rule": "review",
+   "notes": "measure=live Qwen3-8B via /api/live/read; thresholds from base p01/p99 (quantiles_base); see profile",
+   "created": "2026-10-26T19:49:17Z"
+  }
+ ],
+ "disagreements": [
+  "Automated card status 'rejected' is not supported: several of its 'high' tests put 'Oh' at token position 0, which reads exactly 0.0 on this model; with a preceding sentence 'Oh,' gives +22. The automated claim that emotional context is required is contradicted ('Oh my' about the square root of two gives +74). Review status: tested.",
+  "Behavioral: zeroing in n_amp+1 removes the 'Oh' opener in 19/20 replies (random neuron 0/20) and lowers judged neuroticism by 0.60 (paired 90% CI -0.95 to -0.25)."
+ ],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 2,
+   "of": 10
+  },
+  {
+   "rule": "review",
+   "status": "tested",
+   "pass": 7,
+   "of": 11,
+   "author": "claude-opus-5-5 (review)",
+   "created": "2026-10-26T19:49:17Z"
+  }
+ ]
+}

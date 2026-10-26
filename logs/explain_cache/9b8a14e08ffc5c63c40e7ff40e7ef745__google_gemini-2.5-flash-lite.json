@@ -1,0 +1,192 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for concrete nouns related to agriculture or physical labor, and negatively for interrogative sentences or sentence-ending punctuation.",
+  "output_hypothesis": "The neuron seems to respond to concrete nouns, particularly those related to physical activities or occupations like 'farm' (W01), and negatively to sentence-ending punctuation like '?' (W03) and 'In' at the start of a sentence (W02). It also shows negative activation for sentence-ending punctuation like '.' (W04) and '?' (W06), and for sentence-initial words like 'In' (W02).",
+  "alternatives": [
+   "The neuron activates positively for concrete nouns and negatively for abstract concepts or questions.",
+   "The neuron activates positively for words related to physical actions or locations and negatively for conversational starters or sentence terminators."
+  ],
+  "adapter_changes": "State C+1 shows a strong negative activation for ',' (W12), and a strong negative activation for 'F' (W14), 'Co' (W15), 'at' (W16), and 'affect' (W17). State C+1 also shows a strong negative activation for '\n\n' (W20, W22).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03"
+  ],
+  "contradicting": [
+   "W04",
+   "W06",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "concrete noun vs abstract",
+    "a_text": "He worked on the farm.",
+    "a_expected": "high",
+    "a_target": "farm",
+    "b_text": "He had a dream.",
+    "b_expected": "low",
+    "b_target": "dream",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "physical action vs abstract",
+    "a_text": "She ran fast.",
+    "a_expected": "high",
+    "a_target": "ran",
+    "b_text": "She thought deeply.",
+    "b_expected": "low",
+    "b_target": "thought",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence ending punctuation vs word",
+    "a_text": "Is it true?",
+    "a_expected": "negative",
+    "a_target": "?",
+    "b_text": "It is true.",
+    "b_expected": "low",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence start vs word",
+    "a_text": "In the beginning, there was light.",
+    "a_expected": "negative",
+    "a_target": "In",
+    "b_text": "There was light.",
+    "b_expected": "low",
+    "b_target": "There",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "concrete noun vs abstract",
+    "a_text": "The farmer harvested the wheat.",
+    "a_expected": "high",
+    "a_target": "farmer",
+    "b_text": "The idea was brilliant.",
+    "b_expected": "low",
+    "b_target": "idea",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "physical location vs abstract",
+    "a_text": "They went to the city.",
+    "a_expected": "high",
+    "a_target": "city",
+    "b_text": "They had a discussion.",
+    "b_expected": "low",
+    "b_target": "discussion",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence ending punctuation vs word",
+    "a_text": "Did you see it!",
+    "a_expected": "negative",
+    "a_target": "!",
+    "b_text": "I saw it.",
+    "b_expected": "low",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sentence start vs word",
+    "a_text": "At the end of the day.",
+    "a_expected": "negative",
+    "a_target": "At",
+    "b_text": "The end of the day.",
+    "b_expected": "low",
+    "b_target": "The",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "concrete noun vs abstract",
+    "a_text": "The carpenter built a house.",
+    "a_expected": "high",
+    "a_target": "carpenter",
+    "b_text": "The concept was complex.",
+    "b_expected": "low",
+    "b_target": "concept",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "physical action vs abstract",
+    "a_text": "He climbed the mountain.",
+    "a_expected": "high",
+    "a_target": "climbed",
+    "b_text": "He considered the options.",
+    "b_expected": "low",
+    "b_target": "considered",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for concrete nouns related to agriculture or physical labor, and negatively for interrogative sentences or sentence-ending punctuation.\",\"output_hypothesis\":\"The neuron seems to respond to concrete nouns, particularly those related to physical activities or occupations like 'farm' (W01), and negatively to sentence-ending punctuation like '?' (W03) and 'In' at the start of a sentence (W02). It also shows negative activation for sentence-ending punctuation like '.' (W04) and '?' (W06), and for sentence-initial words like 'In' (W02).\",\"alternatives\":[\"The neuron activates positively for concrete nouns and negatively for abstract concepts or questions.\",\"The neuron activates positively for words related to physical actions or locations and negatively for conversational starters or sentence terminators.\"],\"adapter_changes\":\"State C+1 shows a strong negative activation for ',' (W12), and a strong negative activation for 'F' (W14), 'Co' (W15), 'at' (W16), and 'affect' (W17). State C+1 also shows a strong negative activation for '\\n\\n' (W20, W22).\",\"supporting\":[\"W01\",\"W02\",\"W03\"],\"contradicting\":[\"W04\",\"W06\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"concrete noun vs abstract\",\"a_text\":\"He worked on the farm.\",\"a_expected\":\"high\",\"a_target\":\"farm\",\"b_text\":\"He had a dream.\",\"b_expected\":\"low\",\"b_target\":\"dream\"},{\"discriminates\":\"physical action vs abstract\",\"a_text\":\"She ran fast.\",\"a_expected\":\"high\",\"a_target\":\"ran\",\"b_text\":\"She thought deeply.\",\"b_expected\":\"low\",\"b_target\":\"thought\"},{\"discriminates\":\"sentence ending punctuation vs word\",\"a_text\":\"Is it true?\",\"a_expected\":\"negative\",\"a_target\":\"?\",\"b_text\":\"It is true.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"sentence start vs word\",\"a_text\":\"In the beginning, there was light.\",\"a_expected\":\"negative\",\"a_target\":\"In\",\"b_text\":\"There was light.\",\"b_expected\":\"low\",\"b_target\":\"There\"},{\"discriminates\":\"concrete noun vs abstract\",\"a_text\":\"The farmer harvested the wheat.\",\"a_expected\":\"high\",\"a_target\":\"farmer\",\"b_text\":\"The idea was brilliant.\",\"b_expected\":\"low\",\"b_target\":\"idea\"},{\"discriminates\":\"physical location vs abstract\",\"a_text\":\"They went to the city.\",\"a_expected\":\"high\",\"a_target\":\"city\",\"b_text\":\"They had a discussion.\",\"b_expected\":\"low\",\"b_target\":\"discussion\"},{\"discriminates\":\"sentence ending punctuation vs word\",\"a_text\":\"Did you see it!\",\"a_expected\":\"negative\",\"a_target\":\"!\",\"b_text\":\"I saw it.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"sentence start vs word\",\"a_text\":\"At the end of the day.\",\"a_expected\":\"negative\",\"a_target\":\"At\",\"b_text\":\"The end of the day.\",\"b_expected\":\"low\",\"b_target\":\"The\"},{\"discriminates\":\"concrete noun vs abstract\",\"a_text\":\"The carpenter built a house.\",\"a_expected\":\"high\",\"a_target\":\"carpenter\",\"b_text\":\"The concept was complex.\",\"b_expected\":\"low\",\"b_target\":\"concept\"},{\"discriminates\":\"physical action vs abstract\",\"a_text\":\"He climbed the mountain.\",\"a_expected\":\"high\",\"a_target\":\"climbed\",\"b_text\":\"He considered the options.\",\"b_expected\":\"low\",\"b_target\":\"considered\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4211,
+  "output_tokens": 905,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0007831
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for concrete nouns related to agriculture or physical labor, and negatively for interrogative sentences or sentence-ending punctuation.\",\"output_hypothesis\":\"The neuron seems to respond to concrete nouns, particularly those related to physical activities or occupations like 'farm' (W01), and negatively to sentence-ending punctuation like '?' (W03) and 'In' at the start of a sentence (W02). It also shows negative activation for sentence-ending punctuation like '.' (W04) and '?' (W06), and for sentence-initial words like 'In' (W02).\",\"alternatives\":[\"The neuron activates positively for concrete nouns and negatively for abstract concepts or questions.\",\"The neuron activates positively for words related to physical actions or locations and negatively for conversational starters or sentence terminators.\"],\"adapter_changes\":\"State C+1 shows a strong negative activation for ',' (W12), and a strong negative activation for 'F' (W14), 'Co' (W15), 'at' (W16), and 'affect' (W17). State C+1 also shows a strong negative activation for '\\n\\n' (W20, W22).\",\"supporting\":[\"W01\",\"W02\",\"W03\"],\"contradicting\":[\"W04\",\"W06\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"concrete noun vs abstract\",\"a_text\":\"He worked on the farm.\",\"a_expected\":\"high\",\"a_target\":\"farm\",\"b_text\":\"He had a dream.\",\"b_expected\":\"low\",\"b_target\":\"dream\"},{\"discriminates\":\"physical action vs abstract\",\"a_text\":\"She ran fast.\",\"a_expected\":\"high\",\"a_target\":\"ran\",\"b_text\":\"She thought deeply.\",\"b_expected\":\"low\",\"b_target\":\"thought\"},{\"discriminates\":\"sentence ending punctuation vs word\",\"a_text\":\"Is it true?\",\"a_expected\":\"negative\",\"a_target\":\"?\",\"b_text\":\"It is true.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"sentence start vs word\",\"a_text\":\"In the beginning, there was light.\",\"a_expected\":\"negative\",\"a_target\":\"In\",\"b_text\":\"There was light.\",\"b_expected\":\"low\",\"b_target\":\"There\"},{\"discriminates\":\"concrete noun vs abstract\",\"a_text\":\"The farmer harvested the wheat.\",\"a_expected\":\"high\",\"a_target\":\"farmer\",\"b_text\":\"The idea was brilliant.\",\"b_expected\":\"low\",\"b_target\":\"idea\"},{\"discriminates\":\"physical location vs abstract\",\"a_text\":\"They went to the city.\",\"a_expected\":\"high\",\"a_target\":\"city\",\"b_text\":\"They had a discussion.\",\"b_expected\":\"low\",\"b_target\":\"discussion\"},{\"discriminates\":\"sentence ending punctuation vs word\",\"a_text\":\"Did you see it!\",\"a_expected\":\"negative\",\"a_target\":\"!\",\"b_text\":\"I saw it.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"sentence start vs word\",\"a_text\":\"At the end of the day.\",\"a_expected\":\"negative\",\"a_target\":\"At\",\"b_text\":\"The end of the day.\",\"b_expected\":\"low\",\"b_target\":\"The\"},{\"discriminates\":\"concrete noun vs abstract\",\"a_text\":\"The carpenter built a house.\",\"a_expected\":\"high\",\"a_target\":\"carpenter\",\"b_text\":\"The concept was complex.\",\"b_expected\":\"low\",\"b_target\":\"concept\"},{\"discriminates\":\"physical action vs abstract\",\"a_text\":\"He climbed the mountain.\",\"a_expected\":\"high\",\"a_target\":\"climbed\",\"b_text\":\"He considered the options.\",\"b_expected\":\"low\",\"b_target\":\"considered\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4211,
+    "output_tokens": 905,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0007831,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041208-eP7cHb1mTb796KOPHAdT"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:00:10Z",
+ "purpose": "explain:shuffled"
+}

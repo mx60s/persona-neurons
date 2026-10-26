@@ -1,0 +1,270 @@
+{
+ "run_id": "v1",
+ "created": "2026-10-26T18:46:18Z",
+ "model": {
+  "id": "Qwen/Qwen3-8B",
+  "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "arch": {
+   "model": "Qwen/Qwen3-8B",
+   "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+   "n_layers": 36,
+   "hidden": 4096,
+   "inter": 12288,
+   "attn_heads": 32,
+   "kv_heads": 8,
+   "head_dim": 128,
+   "act": "silu",
+   "model_type": "qwen3",
+   "adapters": [
+    "o_amp",
+    "o_sup",
+    "n_amp",
+    "n_sup",
+    "ctrl"
+   ]
+  }
+ },
+ "adapters": {
+  "o_amp": {
+   "repo": "persona-cartography/monorepo",
+   "revision": "507053d05ea65cd5c5023b07de1d4a0f10b13971",
+   "path": "snapshots/507053d05ea65cd5c5023b07de1d4a0f10b13971/fine_tuning/qwen-3-8b-it/ocean/openness/amplifier/ocean_const_paired_dpo_nothink/lora/openness_amplifying_full-persona",
+   "r": 64,
+   "alpha": 64,
+   "dropout": 0,
+   "targets": [
+    "down_proj",
+    "gate_proj",
+    "k_proj",
+    "o_proj",
+    "q_proj",
+    "up_proj",
+    "v_proj"
+   ],
+   "base_model_in_config": "/workspace/models/qwen-3-8b-it"
+  },
+  "o_sup": {
+   "repo": "persona-cartography/monorepo",
+   "revision": "507053d05ea65cd5c5023b07de1d4a0f10b13971",
+   "path": "snapshots/507053d05ea65cd5c5023b07de1d4a0f10b13971/fine_tuning/qwen-3-8b-it/ocean/openness/suppressor/ocean_const_paired_dpo_nothink/lora/openness_suppressing_full-persona",
+   "r": 64,
+   "alpha": 64,
+   "dropout": 0,
+   "targets": [
+    "down_proj",
+    "gate_proj",
+    "k_proj",
+    "o_proj",
+    "q_proj",
+    "up_proj",
+    "v_proj"
+   ],
+   "base_model_in_config": "/workspace/models/qwen-3-8b-it"
+  },
+  "n_amp": {
+   "repo": "persona-cartography/monorepo",
+   "revision": "507053d05ea65cd5c5023b07de1d4a0f10b13971",
+   "path": "snapshots/507053d05ea65cd5c5023b07de1d4a0f10b13971/fine_tuning/qwen-3-8b-it/ocean/neuroticism/amplifier/ocean_const_paired_dpo_nothink/lora/neuroticism_amplifying_full-persona",
+   "r": 64,
+   "alpha": 64,
+   "dropout": 0,
+   "targets": [
+    "down_proj",
+    "gate_proj",
+    "k_proj",
+    "o_proj",
+    "q_proj",
+    "up_proj",
+    "v_proj"
+   ],
+   "base_model_in_config": "/workspace/models/qwen-3-8b-it"
+  },
+  "n_sup": {
+   "repo": "persona-cartography/monorepo",
+   "revision": "507053d05ea65cd5c5023b07de1d4a0f10b13971",
+   "path": "snapshots/507053d05ea65cd5c5023b07de1d4a0f10b13971/fine_tuning/qwen-3-8b-it/ocean/neuroticism/suppressor/ocean_const_paired_dpo_nothink/lora/neuroticism_suppressing_full-persona",
+   "r": 64,
+   "alpha": 64,
+   "dropout": 0,
+   "targets": [
+    "down_proj",
+    "gate_proj",
+    "k_proj",
+    "o_proj",
+    "q_proj",
+    "up_proj",
+    "v_proj"
+   ],
+   "base_model_in_config": "/workspace/models/qwen-3-8b-it"
+  },
+  "ctrl": {
+   "repo": "persona-cartography/monorepo",
+   "revision": "507053d05ea65cd5c5023b07de1d4a0f10b13971",
+   "path": "snapshots/507053d05ea65cd5c5023b07de1d4a0f10b13971/fine_tuning/qwen-3-8b-it/other/ocean_def_control/amplifier/ocean_const_paired_dpo_nothink_s1vs2/lora/ocean_def_control_full-persona",
+   "r": 64,
+   "alpha": 64,
+   "dropout": 0,
+   "targets": [
+    "down_proj",
+    "gate_proj",
+    "k_proj",
+    "o_proj",
+    "q_proj",
+    "up_proj",
+    "v_proj"
+   ],
+   "base_model_in_config": "/workspace/models/qwen-3-8b-it"
+  }
+ },
+ "states": [
+  {
+   "id": "base",
+   "label": "base",
+   "trait": null
+  },
+  {
+   "id": "o_amp-1",
+   "label": "openness amplifier x-1",
+   "trait": "openness"
+  },
+  {
+   "id": "o_amp-0.5",
+   "label": "openness amplifier x-0.5",
+   "trait": "openness"
+  },
+  {
+   "id": "o_amp+0.5",
+   "label": "openness amplifier x0.5",
+   "trait": "openness"
+  },
+  {
+   "id": "o_amp+1",
+   "label": "openness amplifier x1",
+   "trait": "openness"
+  },
+  {
+   "id": "o_sup+1",
+   "label": "openness suppressor x1",
+   "trait": "openness"
+  },
+  {
+   "id": "n_amp-1",
+   "label": "neuroticism amplifier x-1",
+   "trait": "neuroticism"
+  },
+  {
+   "id": "n_amp-0.5",
+   "label": "neuroticism amplifier x-0.5",
+   "trait": "neuroticism"
+  },
+  {
+   "id": "n_amp+0.5",
+   "label": "neuroticism amplifier x0.5",
+   "trait": "neuroticism"
+  },
+  {
+   "id": "n_amp+1",
+   "label": "neuroticism amplifier x1",
+   "trait": "neuroticism"
+  },
+  {
+   "id": "n_sup+1",
+   "label": "neuroticism suppressor x1",
+   "trait": "neuroticism"
+  },
+  {
+   "id": "ctrl+1",
+   "label": "neutral control x1",
+   "trait": null
+  }
+ ],
+ "traits": {
+  "openness": {
+   "amp": "o_amp",
+   "sup": "o_sup",
+   "sweep": [
+    "o_amp-1",
+    "o_amp-0.5",
+    "base",
+    "o_amp+0.5",
+    "o_amp+1"
+   ],
+   "poles": [
+    "o_amp+1",
+    "o_sup+1"
+   ]
+  },
+  "neuroticism": {
+   "amp": "n_amp",
+   "sup": "n_sup",
+   "sweep": [
+    "n_amp-1",
+    "n_amp-0.5",
+    "base",
+    "n_amp+0.5",
+    "n_amp+1"
+   ],
+   "poles": [
+    "n_amp+1",
+    "n_sup+1"
+   ]
+  }
+ },
+ "control_state": "ctrl+1",
+ "corpus": {
+  "n_docs": 928,
+  "n_tokens": 201231,
+  "domains": [
+   "chat",
+   "emotional_chat",
+   "emotional_text",
+   "narrative",
+   "factual",
+   "web",
+   "code",
+   "training"
+  ]
+ },
+ "calibration": {
+  "reference": "pn.intervene.REFERENCE_TEXT, base state",
+  "resid_p50": [
+   10.354806900024414,
+   13.60786247253418,
+   16.006872177124023,
+   19.529083251953125,
+   27.19770622253418,
+   36.125938415527344,
+   41.92222595214844,
+   45.567447662353516,
+   51.4384880065918,
+   54.41978073120117,
+   57.49506759643555,
+   61.37660598754883,
+   66.40443420410156,
+   68.17510223388672,
+   72.94847869873047,
+   76.5172348022461,
+   82.55992126464844,
+   87.5932846069336,
+   95.48323059082031,
+   111.38209533691406,
+   120.45738983154297,
+   133.52284240722656,
+   153.9187774658203,
+   188.43655395507812,
+   238.54103088378906,
+   272.2101135253906,
+   315.61810302734375,
+   364.2845764160156,
+   426.3742980957031,
+   489.75445556640625,
+   585.2639770507812,
+   674.7418212890625,
+   786.9932250976562,
+   934.8617553710938,
+   1401.1273193359375,
+   1504.2965087890625
+  ]
+ },
+ "notes": "v1: stats_v1 + pick_v2 (active-neuron floor) + traces_v1"
+}

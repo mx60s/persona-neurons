@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional valence in assistant responses",
+  "trigger_hypothesis": "The neuron activates negatively when the assistant's response expresses empathy, sympathy, or validation for a user's negative emotional situation, and positively when the assistant's response is about a person's failure, struggle, or negative state described in a narrative context.",
+  "output_hypothesis": "The neuron's output pushes toward words meaning 'slightly' or 'somewhat', potentially modulating the intensity of emotional or evaluative language in the model's continuation.",
+  "alternatives": [
+   "The neuron detects the word 'a' in specific grammatical contexts (e.g., before a noun phrase describing a negative event).",
+   "The neuron responds to the topic of personal hardship or misfortune, regardless of speaker perspective."
+  ],
+  "adapter_changes": "State C+1 strongly reduces negative activations (makes them less negative or positive) in emotional_chat responses (W18, W19, W20, W04, W05) and increases positive activations slightly. State A+1 makes negative activations more negative. This suggests the neuron's sensitivity to emotional valence in assistant responses is modulated by these adapter states.",
+  "supporting": [
+   "W04",
+   "W05",
+   "W18",
+   "W19",
+   "W20",
+   "W01",
+   "W02",
+   "W08"
+  ],
+  "contradicting": [
+   "W03",
+   "W06",
+   "W07",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Empathetic assistant response vs. neutral statement",
+    "a_text": "user\nI failed my exam.<|im_end|>\n<|im_start|>assistant\nI'm sorry to hear that",
+    "a_expected": "negative",
+    "a_target": "sorry",
+    "b_text": "user\nI failed my exam.<|im_end|>\n<|im_start|>assistant\nThe exam was on Tuesday",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Narrative description of failure vs. neutral fact",
+    "a_text": "John was a quiet boy who felt like a failure. He",
+    "a_expected": "high",
+    "a_target": "failure",
+    "b_text": "John was a quiet boy who lived in a town. He",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant validating negative feeling vs. describing a positive event",
+    "a_text": "user\nI'm so anxious about the date.<|im_end|>\n<|im_start|>assistant\nIt's understandable to feel",
+    "a_expected": "negative",
+    "a_target": "feel",
+    "b_text": "user\nI'm so excited about the date.<|im_end|>\n<|im_start|>assistant\nIt's wonderful to feel",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Past perfect 'had been' describing a negative event",
+    "a_text": "The company's systems had been compromised. The",
+    "a_expected": "high",
+    "a_target": "been",
+    "b_text": "The company's systems had been updated. The",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'a' before negative noun vs. before neutral noun",
+    "a_text": "Oh no! What a terrible",
+    "a_expected": "high",
+    "a_target": "a",
+    "b_text": "Oh good! What a lovely",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant expressing sympathy for being 'out of work'",
+    "a_text": "user\nI've been out of work.<|im_end|>\n<|im_start|>assistant\nI am sorry that you are out",
+    "a_expected": "negative",
+    "a_target": "out",
+    "b_text": "user\nI've been out of coffee.<|im_end|>\n<|im_start|>assistant\nI see that you are out",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Ellipsis '...' indicating an incomplete or negative thought",
+    "a_text": "Write about the more depressing and ...",
+    "a_expected": "negative",
+    "a_target": "...",
+    "b_text": "Write about the more exciting and ...",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Question word 'what' in evaluative context vs. simple question",
+    "a_text": "Determine what is working well and what",
+    "a_expected": "negative",
+    "a_target": "what",
+    "b_text": "Ask what time it is and what",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "First-person narrative of failure vs. third-person fact",
+    "a_text": "I often felt like a failure. I",
+    "a_expected": "high",
+    "a_target": "failure",
+    "b_text": "He often felt like a failure. He",
+    "b_expected": "high",
+    "b_target": "failure",
+    "c_text": "The table was made of wood. It",
+    "c_expected": "low",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant's mild/hedging language ('slightly') triggered by neuron output",
+    "a_text": "The result was slightly disappointing.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "The result was very disappointing.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "The result was disappointing.",
+    "c_expected": "low",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional valence in assistant responses\",\"trigger_hypothesis\":\"The neuron activates negatively when the assistant's response expresses empathy, sympathy, or validation for a user's negative emotional situation, and positively when the assistant's response is about a person's failure, struggle, or negative state described in a narrative context.\",\"output_hypothesis\":\"The neuron's output pushes toward words meaning 'slightly' or 'somewhat', potentially modulating the intensity of emotional or evaluative language in the model's continuation.\",\"alternatives\":[\"The neuron detects the word 'a' in specific grammatical contexts (e.g., before a noun phrase describing a negative event).\",\"The neuron responds to the topic of personal hardship or misfortune, regardless of speaker perspective.\"],\"adapter_changes\":\"State C+1 strongly reduces negative activations (makes them less negative or positive) in emotional_chat responses (W18, W19, W20, W04, W05) and increases positive activations slightly. State A+1 makes negative activations more negative. This suggests the neuron's sensitivity to emotional valence in assistant responses is modulated by these adapter states.\",\"supporting\":[\"W04\",\"W05\",\"W18\",\"W19\",\"W20\",\"W01\",\"W02\",\"W08\"],\"contradicting\":[\"W03\",\"W06\",\"W07\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Empathetic assistant response vs. neutral statement\",\"a_text\":\"user\\nI failed my exam.<|im_end|>\\n<|im_start|>assistant\\nI'm sorry to hear that\",\"a_expected\":\"negative\",\"a_target\":\"sorry\",\"b_text\":\"user\\nI failed my exam.<|im_end|>\\n<|im_start|>assistant\\nThe exam was on Tuesday\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Narrative description of failure vs. neutral fact\",\"a_text\":\"John was a quiet boy who felt like a failure. He\",\"a_expected\":\"high\",\"a_target\":\"failure\",\"b_text\":\"John was a quiet boy who lived in a town. He\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant validating negative feeling vs. describing a positive event\",\"a_text\":\"user\\nI'm so anxious about the date.<|im_end|>\\n<|im_start|>assistant\\nIt's understandable to feel\",\"a_expected\":\"negative\",\"a_target\":\"feel\",\"b_text\":\"user\\nI'm so excited about the date.<|im_end|>\\n<|im_start|>assistant\\nIt's wonderful to feel\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Past perfect 'had been' describing a negative event\",\"a_text\":\"The company's systems had been compromised. The\",\"a_expected\":\"high\",\"a_target\":\"been\",\"b_text\":\"The company's systems had been updated. The\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'a' before negative noun vs. before neutral noun\",\"a_text\":\"Oh no! What a terrible\",\"a_expected\":\"high\",\"a_target\":\"a\",\"b_text\":\"Oh good! What a lovely\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant expressing sympathy for being 'out of work'\",\"a_text\":\"user\\nI've been out of work.<|im_end|>\\n<|im_start|>assistant\\nI am sorry that you are out\",\"a_expected\":\"negative\",\"a_target\":\"out\",\"b_text\":\"user\\nI've been out of coffee.<|im_end|>\\n<|im_start|>assistant\\nI see that you are out\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Ellipsis '...' indicating an incomplete or negative thought\",\"a_text\":\"Write about the more depressing and ...\",\"a_expected\":\"negative\",\"a_target\":\"...\",\"b_text\":\"Write about the more exciting and ...\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Question word 'what' in evaluative context vs. simple question\",\"a_text\":\"Determine what is working well and what\",\"a_expected\":\"negative\",\"a_target\":\"what\",\"b_text\":\"Ask what time it is and what\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person narrative of failure vs. third-person fact\",\"a_text\":\"I often felt like a failure. I\",\"a_expected\":\"high\",\"a_target\":\"failure\",\"b_text\":\"He often felt like a failure. He\",\"b_expected\":\"high\",\"b_target\":\"failure\",\"c_text\":\"The table was made of wood. It\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"Assistant's mild/hedging language ('slightly') triggered by neuron output\",\"a_text\":\"The result was slightly disappointing.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The result was very disappointing.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The result was disappointing.\",\"c_expected\":\"low\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6129,
+  "output_tokens": 1215,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001936116
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional valence in assistant responses\",\"trigger_hypothesis\":\"The neuron activates negatively when the assistant's response expresses empathy, sympathy, or validation for a user's negative emotional situation, and positively when the assistant's response is about a person's failure, struggle, or negative state described in a narrative context.\",\"output_hypothesis\":\"The neuron's output pushes toward words meaning 'slightly' or 'somewhat', potentially modulating the intensity of emotional or evaluative language in the model's continuation.\",\"alternatives\":[\"The neuron detects the word 'a' in specific grammatical contexts (e.g., before a noun phrase describing a negative event).\",\"The neuron responds to the topic of personal hardship or misfortune, regardless of speaker perspective.\"],\"adapter_changes\":\"State C+1 strongly reduces negative activations (makes them less negative or positive) in emotional_chat responses (W18, W19, W20, W04, W05) and increases positive activations slightly. State A+1 makes negative activations more negative. This suggests the neuron's sensitivity to emotional valence in assistant responses is modulated by these adapter states.\",\"supporting\":[\"W04\",\"W05\",\"W18\",\"W19\",\"W20\",\"W01\",\"W02\",\"W08\"],\"contradicting\":[\"W03\",\"W06\",\"W07\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Empathetic assistant response vs. neutral statement\",\"a_text\":\"user\\nI failed my exam.<|im_end|>\\n<|im_start|>assistant\\nI'm sorry to hear that\",\"a_expected\":\"negative\",\"a_target\":\"sorry\",\"b_text\":\"user\\nI failed my exam.<|im_end|>\\n<|im_start|>assistant\\nThe exam was on Tuesday\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Narrative description of failure vs. neutral fact\",\"a_text\":\"John was a quiet boy who felt like a failure. He\",\"a_expected\":\"high\",\"a_target\":\"failure\",\"b_text\":\"John was a quiet boy who lived in a town. He\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant validating negative feeling vs. describing a positive event\",\"a_text\":\"user\\nI'm so anxious about the date.<|im_end|>\\n<|im_start|>assistant\\nIt's understandable to feel\",\"a_expected\":\"negative\",\"a_target\":\"feel\",\"b_text\":\"user\\nI'm so excited about the date.<|im_end|>\\n<|im_start|>assistant\\nIt's wonderful to feel\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Past perfect 'had been' describing a negative event\",\"a_text\":\"The company's systems had been compromised. The\",\"a_expected\":\"high\",\"a_target\":\"been\",\"b_text\":\"The company's systems had been updated. The\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'a' before negative noun vs. before neutral noun\",\"a_text\":\"Oh no! What a terrible\",\"a_expected\":\"high\",\"a_target\":\"a\",\"b_text\":\"Oh good! What a lovely\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Assistant expressing sympathy for being 'out of work'\",\"a_text\":\"user\\nI've been out of work.<|im_end|>\\n<|im_start|>assistant\\nI am sorry that you are out\",\"a_expected\":\"negative\",\"a_target\":\"out\",\"b_text\":\"user\\nI've been out of coffee.<|im_end|>\\n<|im_start|>assistant\\nI see that you are out\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Ellipsis '...' indicating an incomplete or negative thought\",\"a_text\":\"Write about the more depressing and ...\",\"a_expected\":\"negative\",\"a_target\":\"...\",\"b_text\":\"Write about the more exciting and ...\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Question word 'what' in evaluative context vs. simple question\",\"a_text\":\"Determine what is working well and what\",\"a_expected\":\"negative\",\"a_target\":\"what\",\"b_text\":\"Ask what time it is and what\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person narrative of failure vs. third-person fact\",\"a_text\":\"I often felt like a failure. I\",\"a_expected\":\"high\",\"a_target\":\"failure\",\"b_text\":\"He often felt like a failure. He\",\"b_expected\":\"high\",\"b_target\":\"failure\",\"c_text\":\"The table was made of wood. It\",\"c_expected\":\"low\",\"c_target\":\"\"},{\"discriminates\":\"Assistant's mild/hedging language ('slightly') triggered by neuron output\",\"a_text\":\"The result was slightly disappointing.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"The result was very disappointing.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"The result was disappointing.\",\"c_expected\":\"low\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6129,
+    "output_tokens": 1215,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001936116,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042170-gpYzUfjLBJFpbGkxtSuo"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:32Z",
+ "purpose": "explain:blind"
+}

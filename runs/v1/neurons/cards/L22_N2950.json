@@ -1,0 +1,1150 @@
+{
+ "id": "L22/N2950",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:12Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "positive: generic nouns after positive sentiment; negative: specific proper nouns or technical terms",
+   "trigger_hypothesis": "The neuron activates positively on generic nouns (e.g., 'do', 'thing', 'changes', 'of') that follow a positive sentiment or affirmative context, and negatively on specific proper nouns (e.g., 'walmart'), technical terms (e.g., 'std'), or abstract nouns (e.g., 'sentences') that are concrete or specific.",
+   "output_hypothesis": "The neuron's output encourages the generation of generic, positive continuation words and discourages specific or technical terms.",
+   "alternatives": [
+    "The neuron detects the end of a positive statement or affirmation.",
+    "The neuron responds to the grammatical role of a noun following a determiner or preposition."
+   ],
+   "adapter_changes": "State E+1 strongly flips the sign of activation in emotional_chat responses (e.g., W01, W03, W19, W20, W21, W22), making positive activations negative and negative ones less negative, suggesting it modulates sentiment sensitivity. State C+1 increases positive activation in chat and continuation segments.",
+   "supporting": [
+    "L22_N2950:e00",
+    "L22_N2950:e01",
+    "L22_N2950:e03",
+    "L22_N2950:e04",
+    "L22_N2950:e08",
+    "L22_N2950:e10",
+    "L22_N2950:e11"
+   ],
+   "contradicting": [
+    "L22_N2950:e05",
+    "L22_N2950:e06",
+    "L22_N2950:e13"
+   ],
+   "proposed_tests": [
+    "generic noun after positive sentiment vs. specific noun :: [high] I love the work you do | [negative] I love the work at walmart",
+    "positive generic noun vs. neutral generic noun :: [high] This is a good thing | [low] This is a random thing",
+    "noun after positive context vs. after negative context :: [high] It's awesome to have a job where you feel rewarded through what you do | [low] It's terrible to have a job where you feel punished through what you do",
+    "specific technical term vs. generic term :: [negative] Use std::io | [low] Use the input",
+    "proper noun vs. common noun :: [negative] I thought walmart was cheap | [low] I thought the store was cheap",
+    "abstract noun 'sentences' vs. generic noun :: [negative] these two short and confused sentences | [low] these two short and confused things",
+    "preposition 'of' after positive narrative vs. neutral :: [high] through the busy sidewalks of New York | [low] through the busy sidewalks in New York",
+    "noun 'changes' after adaptive context vs. static :: [high] adapt to these changes | [low] ignore these changes",
+    "emotional chat response vs. factual statement :: [high] \n\nGoing to college is a good thing | [low] Going to college is a requirement",
+    "state E+1 effect on positive emotional chat :: [high] \n\nIt's awesome to have a job where you feel rewarded through what you do | [negative] Same text in state E+1"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "generic noun after positive sentiment vs. specific noun",
+     "texts": [
+      {
+       "text": "I love the work you do",
+       "expected": "high",
+       "target": "do"
+      },
+      {
+       "text": "I love the work at walmart",
+       "expected": "negative",
+       "target": "walmart"
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "positive generic noun vs. neutral generic noun",
+     "texts": [
+      {
+       "text": "This is a good thing",
+       "expected": "high",
+       "target": "thing"
+      },
+      {
+       "text": "This is a random thing",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "noun after positive context vs. after negative context",
+     "texts": [
+      {
+       "text": "It's awesome to have a job where you feel rewarded through what you do",
+       "expected": "high",
+       "target": "do"
+      },
+      {
+       "text": "It's terrible to have a job where you feel punished through what you do",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "specific technical term vs. generic term",
+     "texts": [
+      {
+       "text": "Use std::io",
+       "expected": "negative",
+       "target": "std"
+      },
+      {
+       "text": "Use the input",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "proper noun vs. common noun",
+     "texts": [
+      {
+       "text": "I thought walmart was cheap",
+       "expected": "negative",
+       "target": "walmart"
+      },
+      {
+       "text": "I thought the store was cheap",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "abstract noun 'sentences' vs. generic noun",
+     "texts": [
+      {
+       "text": "these two short and confused sentences",
+       "expected": "negative",
+       "target": "sentences"
+      },
+      {
+       "text": "these two short and confused things",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "preposition 'of' after positive narrative vs. neutral",
+     "texts": [
+      {
+       "text": "through the busy sidewalks of New York",
+       "expected": "high",
+       "target": "of"
+      },
+      {
+       "text": "through the busy sidewalks in New York",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "noun 'changes' after adaptive context vs. static",
+     "texts": [
+      {
+       "text": "adapt to these changes",
+       "expected": "high",
+       "target": "changes"
+      },
+      {
+       "text": "ignore these changes",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "emotional chat response vs. factual statement",
+     "texts": [
+      {
+       "text": "\n\nGoing to college is a good thing",
+       "expected": "high",
+       "target": "thing"
+      },
+      {
+       "text": "Going to college is a requirement",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "state E+1 effect on positive emotional chat",
+     "texts": [
+      {
+       "text": "\n\nIt's awesome to have a job where you feel rewarded through what you do",
+       "expected": "high",
+       "target": "do"
+      },
+      {
+       "text": "Same text in state E+1",
+       "expected": "negative",
+       "target": "do"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6050,
+    "output_tokens": 1014,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001829576
+   },
+   "invalid_citations": [],
+   "packet_hash": "2a432c34d8da174e77b66957651969629dfc71c7547c694e3f094e625c2211f2",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "B+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "C+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "generic noun after positive sentiment vs. specific noun",
+   "prediction": "high on 'do'; negative on 'walmart'",
+   "texts": [
+    {
+     "text": "I love the work you do",
+     "expected": "high",
+     "target": "do",
+     "measured_max": 0.0016,
+     "measured_min": -0.3965,
+     "value": -0.377,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I love the work at walmart",
+     "expected": "negative",
+     "target": "walmart",
+     "measured_max": 0.0,
+     "measured_min": -0.3965,
+     "value": -0.027,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "positive generic noun vs. neutral generic noun",
+   "prediction": "high on 'thing'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is a good thing",
+     "expected": "high",
+     "target": "thing",
+     "measured_max": 0.1465,
+     "measured_min": -0.0645,
+     "value": -0.0342,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "This is a random thing",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3438,
+     "measured_min": -0.0869,
+     "value": 0.3438,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.028,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "noun after positive context vs. after negative context",
+   "prediction": "high on 'do'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It's awesome to have a job where you feel rewarded through what you do",
+     "expected": "high",
+     "target": "do",
+     "measured_max": 0.1191,
+     "measured_min": -0.4219,
+     "value": 0.1191,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It's terrible to have a job where you feel punished through what you do",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1279,
+     "measured_min": -0.4844,
+     "value": 0.4844,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "specific technical term vs. generic term",
+   "prediction": "negative on 'std'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Use std::io",
+     "expected": "negative",
+     "target": "std",
+     "measured_max": 0.0,
+     "measured_min": -0.6328,
+     "value": -0.1592,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Use the input",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4922,
+     "value": 0.4922,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "proper noun vs. common noun",
+   "prediction": "negative on 'walmart'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I thought walmart was cheap",
+     "expected": "negative",
+     "target": "walmart",
+     "measured_max": 0.0,
+     "measured_min": -0.3613,
+     "value": -0.0659,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I thought the store was cheap",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.6875,
+     "value": 0.6875,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.046,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "abstract noun 'sentences' vs. generic noun",
+   "prediction": "negative on 'sentences'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "these two short and confused sentences",
+     "expected": "negative",
+     "target": "sentences",
+     "measured_max": 0.0,
+     "measured_min": -0.8203,
+     "value": -0.6953,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "these two short and confused things",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.8203,
+     "value": 0.8203,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "preposition 'of' after positive narrative vs. neutral",
+   "prediction": "high on 'of'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "through the busy sidewalks of New York",
+     "expected": "high",
+     "target": "of",
+     "measured_max": 0.0,
+     "measured_min": -0.3477,
+     "value": -0.1348,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "through the busy sidewalks in New York",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0376,
+     "measured_min": -0.3477,
+     "value": 0.3477,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "noun 'changes' after adaptive context vs. static",
+   "prediction": "high on 'changes'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "adapt to these changes",
+     "expected": "high",
+     "target": "changes",
+     "measured_max": 0.0,
+     "measured_min": -1.2891,
+     "value": -1.2891,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "ignore these changes",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.2734,
+     "value": 1.2734,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.095,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "emotional chat response vs. factual statement",
+   "prediction": "high on 'thing'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\n\nGoing to college is a good thing",
+     "expected": "high",
+     "target": "thing",
+     "measured_max": 0.0962,
+     "measured_min": -0.1426,
+     "value": 0.0962,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Going to college is a requirement",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0457,
+     "measured_min": -0.6641,
+     "value": 0.6641,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.004,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "state E+1 effect on positive emotional chat",
+   "prediction": "high on 'do'; negative on 'do'",
+   "texts": [
+    {
+     "text": "\n\nIt's awesome to have a job where you feel rewarded through what you do",
+     "expected": "high",
+     "target": "do",
+     "measured_max": 0.125,
+     "measured_min": -0.3066,
+     "value": 0.125,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Same text in state E+1",
+     "expected": "negative",
+     "target": "do",
+     "measured_max": 0.2656,
+     "measured_min": -0.2178,
+     "value": -0.2178,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "whole_text (target not found)"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:03Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "generic noun after positive sentiment vs. specific noun",
+   "prediction": "high on 'do'; negative on 'walmart'",
+   "texts": [
+    {
+     "text": "I love the work you do",
+     "expected": "high",
+     "target": "do",
+     "measured_max": 0.0016,
+     "measured_min": -0.3965,
+     "value": -0.377,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I love the work at walmart",
+     "expected": "negative",
+     "target": "walmart",
+     "measured_max": 0.0,
+     "measured_min": -0.3965,
+     "value": -0.027,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "positive generic noun vs. neutral generic noun",
+   "prediction": "high on 'thing'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This is a good thing",
+     "expected": "high",
+     "target": "thing",
+     "measured_max": 0.1465,
+     "measured_min": -0.0645,
+     "value": -0.0342,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "This is a random thing",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3438,
+     "measured_min": -0.0869,
+     "value": 0.3438,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.028,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "noun after positive context vs. after negative context",
+   "prediction": "high on 'do'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It's awesome to have a job where you feel rewarded through what you do",
+     "expected": "high",
+     "target": "do",
+     "measured_max": 0.1191,
+     "measured_min": -0.4219,
+     "value": 0.1191,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It's terrible to have a job where you feel punished through what you do",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1279,
+     "measured_min": -0.4844,
+     "value": 0.4844,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "specific technical term vs. generic term",
+   "prediction": "negative on 'std'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Use std::io",
+     "expected": "negative",
+     "target": "std",
+     "measured_max": 0.0,
+     "measured_min": -0.6328,
+     "value": -0.1592,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Use the input",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4922,
+     "value": 0.4922,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.024,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "proper noun vs. common noun",
+   "prediction": "negative on 'walmart'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I thought walmart was cheap",
+     "expected": "negative",
+     "target": "walmart",
+     "measured_max": 0.0,
+     "measured_min": -0.3613,
+     "value": -0.0659,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I thought the store was cheap",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.6875,
+     "value": 0.6875,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.046,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "abstract noun 'sentences' vs. generic noun",
+   "prediction": "negative on 'sentences'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "these two short and confused sentences",
+     "expected": "negative",
+     "target": "sentences",
+     "measured_max": 0.0,
+     "measured_min": -0.8203,
+     "value": -0.6953,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "these two short and confused things",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.8203,
+     "value": 0.8203,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "preposition 'of' after positive narrative vs. neutral",
+   "prediction": "high on 'of'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "through the busy sidewalks of New York",
+     "expected": "high",
+     "target": "of",
+     "measured_max": 0.0,
+     "measured_min": -0.3477,
+     "value": -0.1348,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "through the busy sidewalks in New York",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0376,
+     "measured_min": -0.3477,
+     "value": 0.3477,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.013,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "noun 'changes' after adaptive context vs. static",
+   "prediction": "high on 'changes'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "adapt to these changes",
+     "expected": "high",
+     "target": "changes",
+     "measured_max": 0.0,
+     "measured_min": -1.2891,
+     "value": -1.2891,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "ignore these changes",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -1.2734,
+     "value": 1.2734,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.095,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "emotional chat response vs. factual statement",
+   "prediction": "high on 'thing'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\n\nGoing to college is a good thing",
+     "expected": "high",
+     "target": "thing",
+     "measured_max": 0.0962,
+     "measured_min": -0.1426,
+     "value": 0.0962,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Going to college is a requirement",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0457,
+     "measured_min": -0.6641,
+     "value": 0.6641,
+     "threshold": 2.4688,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.004,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "state E+1 effect on positive emotional chat",
+   "prediction": "high on 'do'; negative on 'do'",
+   "texts": [
+    {
+     "text": "\n\nIt's awesome to have a job where you feel rewarded through what you do",
+     "expected": "high",
+     "target": "do",
+     "measured_max": 0.125,
+     "measured_min": -0.3066,
+     "value": 0.125,
+     "threshold": 4.0,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Same text in state E+1",
+     "expected": "negative",
+     "target": "do",
+     "measured_max": 0.2656,
+     "measured_min": -0.2178,
+     "value": -0.2178,
+     "threshold": -4.9375,
+     "pass": false,
+     "measured_at": "whole_text (target not found)",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": null,
+    "scale": 13.625,
+    "pos_ref": 8.0,
+    "neg_ref": -9.875
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.6796875,
+    "p01": -1.0390625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

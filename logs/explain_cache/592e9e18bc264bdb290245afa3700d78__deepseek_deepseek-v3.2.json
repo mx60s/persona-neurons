@@ -1,0 +1,218 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water-related words in non-desert contexts",
+  "trigger_hypothesis": "The neuron fires strongly on tokens that refer to water or bodies of water (e.g., 'water', 'ocean', 'sea', 'drought') when they appear in contexts that are not about deserts or aridity, and especially when they are part of factual or descriptive statements about water's presence or quantity. It may also respond to related terms like 'glucose' (as a product of water-involving photosynthesis) and 'five' (as a time, possibly by association with 'nine to five' following 'water' in a list). Negative activations occur when water-related tokens appear in desert contexts (W07, W09) or in emotional/chat contexts that downplay water's importance (W08).",
+  "output_hypothesis": "The neuron's output may promote factual or quantitative descriptions of water and suppress desert-related or emotional mentions of water.",
+  "alternatives": [
+   "Responds to any liquid or substance (water, glucose) in neutral/factual contexts",
+   "Triggers on tokens that complete a measure or quantity phrase (fifth, more, level, nine to five)",
+   "Detects water-related words regardless of context, with suppression from nearby desert cues"
+  ],
+  "adapter_changes": "In state C+1, activations are consistently amplified across all strong windows, suggesting this state upregulates the neuron's sensitivity. State B+1 shows slightly reduced activations.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W21",
+   "W22",
+   "W23",
+   "W29",
+   "W30"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W16",
+   "W18",
+   "W19"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "water in factual vs. desert context",
+    "texts": [
+     {
+      "text": "The lake holds fresh water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The desert has no water.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water as substance vs. emotional mention",
+    "texts": [
+     {
+      "text": "Drink a glass of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "I love the ocean breeze.",
+      "expected": "negative",
+      "target": "ocean"
+     }
+    ]
+   },
+   {
+    "discriminates": "water quantity words",
+    "texts": [
+     {
+      "text": "The river carries more water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The river is wide.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "drought in narrative vs. factual",
+    "texts": [
+     {
+      "text": "After months of drought, the fields were dry.",
+      "expected": "high",
+      "target": "drought"
+     },
+     {
+      "text": "The desert climate causes drought.",
+      "expected": "low",
+      "target": "drought"
+     }
+    ]
+   },
+   {
+    "discriminates": "sea level vs. sea creature",
+    "texts": [
+     {
+      "text": "The mountain is 8000 metres above sea level.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "The sea turtle swam slowly.",
+      "expected": "low",
+      "target": "sea"
+     }
+    ]
+   },
+   {
+    "discriminates": "glucose as chemical vs. general sugar",
+    "texts": [
+     {
+      "text": "Photosynthesis produces glucose.",
+      "expected": "high",
+      "target": "glucose"
+     },
+     {
+      "text": "The candy contains glucose.",
+      "expected": "low",
+      "target": "glucose"
+     }
+    ]
+   },
+   {
+    "discriminates": "time phrase following water mention",
+    "texts": [
+     {
+      "text": "Bring water and a pen. Opening hours are nine to five.",
+      "expected": "high",
+      "target": "five"
+     },
+     {
+      "text": "Bring a book. Opening hours are nine to five.",
+      "expected": "low",
+      "target": "five"
+     }
+    ]
+   },
+   {
+    "discriminates": "water in code comment vs. variable",
+    "texts": [
+     {
+      "text": "x = fetch_level(sensor)  # water level",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "x = fetch_level(sensor)  # tank level",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "parched in water-lacking vs. water-rich context",
+    "texts": [
+     {
+      "text": "After drought, the fields were parched.",
+      "expected": "negative",
+      "target": "parched"
+     },
+     {
+      "text": "The sun parched the soil.",
+      "expected": "low",
+      "target": "parched"
+     }
+    ]
+   },
+   {
+    "discriminates": "ocean as geographic vs. emotional",
+    "texts": [
+     {
+      "text": "The Pacific ocean is vast.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "I stood by the ocean, feeling sad.",
+      "expected": "negative",
+      "target": "ocean"
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water-related words in non-desert contexts\",\"trigger_hypothesis\":\"The neuron fires strongly on tokens that refer to water or bodies of water (e.g., 'water', 'ocean', 'sea', 'drought') when they appear in contexts that are not about deserts or aridity, and especially when they are part of factual or descriptive statements about water's presence or quantity. It may also respond to related terms like 'glucose' (as a product of water-involving photosynthesis) and 'five' (as a time, possibly by association with 'nine to five' following 'water' in a list). Negative activations occur when water-related tokens appear in desert contexts (W07, W09) or in emotional/chat contexts that downplay water's importance (W08).\",\"output_hypothesis\":\"The neuron's output may promote factual or quantitative descriptions of water and suppress desert-related or emotional mentions of water.\",\"alternatives\":[\"Responds to any liquid or substance (water, glucose) in neutral/factual contexts\",\"Triggers on tokens that complete a measure or quantity phrase (fifth, more, level, nine to five)\",\"Detects water-related words regardless of context, with suppression from nearby desert cues\"],\"adapter_changes\":\"In state C+1, activations are consistently amplified across all strong windows, suggesting this state upregulates the neuron's sensitivity. State B+1 shows slightly reduced activations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\",\"W22\",\"W23\",\"W29\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"water in factual vs. desert context\",\"texts\":[\n    {\"text\":\"The lake holds fresh water.\",\"expected\":\"high\",\"target\":\"water\"},\n    {\"text\":\"The desert has no water.\",\"expected\":\"low\",\"target\":\"\"}\n]},\n{\"discriminates\":\"water as substance vs. emotional mention\",\"texts\":[\n    {\"text\":\"Drink a glass of water.\",\"expected\":\"high\",\"target\":\"water\"},\n    {\"text\":\"I love the ocean breeze.\",\"expected\":\"negative\",\"target\":\"ocean\"}\n]},\n{\"discriminates\":\"water quantity words\",\"texts\":[\n    {\"text\":\"The river carries more water.\",\"expected\":\"high\",\"target\":\"water\"},\n    {\"text\":\"The river is wide.\",\"expected\":\"low\",\"target\":\"\"}\n]},\n{\"discriminates\":\"drought in narrative vs. factual\",\"texts\":[\n    {\"text\":\"After months of drought, the fields were dry.\",\"expected\":\"high\",\"target\":\"drought\"},\n    {\"text\":\"The desert climate causes drought.\",\"expected\":\"low\",\"target\":\"drought\"}\n]},\n{\"discriminates\":\"sea level vs. sea creature\",\"texts\":[\n    {\"text\":\"The mountain is 8000 metres above sea level.\",\"expected\":\"high\",\"target\":\"sea\"},\n    {\"text\":\"The sea turtle swam slowly.\",\"expected\":\"low\",\"target\":\"sea\"}\n]},\n{\"discriminates\":\"glucose as chemical vs. general sugar\",\"texts\":[\n    {\"text\":\"Photosynthesis produces glucose.\",\"expected\":\"high\",\"target\":\"glucose\"},\n    {\"text\":\"The candy contains glucose.\",\"expected\":\"low\",\"target\":\"glucose\"}\n]},\n{\"discriminates\":\"time phrase following water mention\",\"texts\":[\n    {\"text\":\"Bring water and a pen. Opening hours are nine to five.\",\"expected\":\"high\",\"target\":\"five\"},\n    {\"text\":\"Bring a book. Opening hours are nine to five.\",\"expected\":\"low\",\"target\":\"five\"}\n]},\n{\"discriminates\":\"water in code comment vs. variable\",\"texts\":[\n    {\"text\":\"x = fetch_level(sensor)  # water level\",\"expected\":\"high\",\"target\":\"water\"},\n    {\"text\":\"x = fetch_level(sensor)  # tank level\",\"expected\":\"low\",\"target\":\"\"}\n]},\n{\"discriminates\":\"parched in water-lacking vs. water-rich context\",\"texts\":[\n    {\"text\":\"After drought, the fields were parched.\",\"expected\":\"negative\",\"target\":\"parched\"},\n    {\"text\":\"The sun parched the soil.\",\"expected\":\"low\",\"target\":\"parched\"}\n]},\n{\"discriminates\":\"ocean as geographic vs. emotional\",\"texts\":[\n    {\"text\":\"The Pacific ocean is vast.\",\"expected\":\"high\",\"target\":\"ocean\"},\n    {\"text\":\"I stood by the ocean, feeling sad.\",\"expected\":\"negative\",\"target\":\"ocean\"}\n]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4130,
+  "output_tokens": 996,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0013774
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water-related words in non-desert contexts\",\"trigger_hypothesis\":\"The neuron fires strongly on tokens that refer to water or bodies of water (e.g., 'water', 'ocean', 'sea', 'drought') when they appear in contexts that are not about deserts or aridity, and especially when they are part of factual or descriptive statements about water's presence or quantity. It may also respond to related terms like 'glucose' (as a product of water-involving photosynthesis) and 'five' (as a time, possibly by association with 'nine to five' following 'water' in a list). Negative activations occur when water-related tokens appear in desert contexts (W07, W09) or in emotional/chat contexts that downplay water's importance (W08).\",\"output_hypothesis\":\"The neuron's output may promote factual or quantitative descriptions of water and suppress desert-related or emotional mentions of water.\",\"alternatives\":[\"Responds to any liquid or substance (water, glucose) in neutral/factual contexts\",\"Triggers on tokens that complete a measure or quantity phrase (fifth, more, level, nine to five)\",\"Detects water-related words regardless of context, with suppression from nearby desert cues\"],\"adapter_changes\":\"In state C+1, activations are consistently amplified across all strong windows, suggesting this state upregulates the neuron's sensitivity. State B+1 shows slightly reduced activations.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\",\"W22\",\"W23\",\"W29\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W16\",\"W18\",\"W19\"],\"proposed_tests\":[{\"discriminates\":\"water in factual vs. desert context\",\"texts\":[\n    {\"text\":\"The lake holds fresh water.\",\"expected\":\"high\",\"target\":\"water\"},\n    {\"text\":\"The desert has no water.\",\"expected\":\"low\",\"target\":\"\"}\n]},\n{\"discriminates\":\"water as substance vs. emotional mention\",\"texts\":[\n    {\"text\":\"Drink a glass of water.\",\"expected\":\"high\",\"target\":\"water\"},\n    {\"text\":\"I love the ocean breeze.\",\"expected\":\"negative\",\"target\":\"ocean\"}\n]},\n{\"discriminates\":\"water quantity words\",\"texts\":[\n    {\"text\":\"The river carries more water.\",\"expected\":\"high\",\"target\":\"water\"},\n    {\"text\":\"The river is wide.\",\"expected\":\"low\",\"target\":\"\"}\n]},\n{\"discriminates\":\"drought in narrative vs. factual\",\"texts\":[\n    {\"text\":\"After months of drought, the fields were dry.\",\"expected\":\"high\",\"target\":\"drought\"},\n    {\"text\":\"The desert climate causes drought.\",\"expected\":\"low\",\"target\":\"drought\"}\n]},\n{\"discriminates\":\"sea level vs. sea creature\",\"texts\":[\n    {\"text\":\"The mountain is 8000 metres above sea level.\",\"expected\":\"high\",\"target\":\"sea\"},\n    {\"text\":\"The sea turtle swam slowly.\",\"expected\":\"low\",\"target\":\"sea\"}\n]},\n{\"discriminates\":\"glucose as chemical vs. general sugar\",\"texts\":[\n    {\"text\":\"Photosynthesis produces glucose.\",\"expected\":\"high\",\"target\":\"glucose\"},\n    {\"text\":\"The candy contains glucose.\",\"expected\":\"low\",\"target\":\"glucose\"}\n]},\n{\"discriminates\":\"time phrase following water mention\",\"texts\":[\n    {\"text\":\"Bring water and a pen. Opening hours are nine to five.\",\"expected\":\"high\",\"target\":\"five\"},\n    {\"text\":\"Bring a book. Opening hours are nine to five.\",\"expected\":\"low\",\"target\":\"five\"}\n]},\n{\"discriminates\":\"water in code comment vs. variable\",\"texts\":[\n    {\"text\":\"x = fetch_level(sensor)  # water level\",\"expected\":\"high\",\"target\":\"water\"},\n    {\"text\":\"x = fetch_level(sensor)  # tank level\",\"expected\":\"low\",\"target\":\"\"}\n]},\n{\"discriminates\":\"parched in water-lacking vs. water-rich context\",\"texts\":[\n    {\"text\":\"After drought, the fields were parched.\",\"expected\":\"negative\",\"target\":\"parched\"},\n    {\"text\":\"The sun parched the soil.\",\"expected\":\"low\",\"target\":\"parched\"}\n]},\n{\"discriminates\":\"ocean as geographic vs. emotional\",\"texts\":[\n    {\"text\":\"The Pacific ocean is vast.\",\"expected\":\"high\",\"target\":\"ocean\"},\n    {\"text\":\"I stood by the ocean, feeling sad.\",\"expected\":\"negative\",\"target\":\"ocean\"}\n]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4130,
+    "output_tokens": 996,
+    "reasoning_tokens": 0,
+    "cached_tokens": 576,
+    "cost_usd": 0.0013774,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1792972804-rk5fbo5Jc39Z62xjffmX"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:00:31Z",
+ "purpose": "explain:shuffled"
+}

@@ -1,0 +1,449 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional chat assistant response boundary",
+  "trigger_hypothesis": "The neuron activates strongly positive at tokens that are the start of an assistant's response in an emotional chat context, especially after a user's emotional prompt, and strongly negative at tokens that are the end of a user's prompt or the start of a newline-separated assistant response segment.",
+  "output_hypothesis": "The neuron likely suppresses or marks the end of user emotional prompts and enhances the beginning of assistant responses, possibly to regulate emotional tone shifts or signal response boundaries.",
+  "alternatives": [
+   "The neuron detects generic conversation turn boundaries regardless of emotion.",
+   "The neuron responds to the word 'the' in emotional contexts."
+  ],
+  "adapter_changes": "State A+1 generally amplifies negative activations (e.g., W06, W07, W08, W13, W19, W21) and sometimes reduces positives (W01), suggesting it increases sensitivity to negative triggers. State B+1 and E+1 often reduce the magnitude of negative activations (e.g., W06, W07, W16, W18, W19, W21), making the neuron less negative. States C+1 and D+1 show mixed but generally smaller changes.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W06",
+   "W07",
+   "W08",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W21"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Emotional user prompt end vs. factual prompt end",
+    "a_text": "user\nI'm feeling really sad today.<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant response start after emotional prompt vs. mid-response",
+    "a_text": "user\nI miss my friend.<|im_end|>\n<|im_start|>assistant\nI",
+    "a_expected": "high",
+    "a_target": "I",
+    "b_text": "user\nI miss my friend.<|im_end|>\n<|im_start|>assistant\nI'm sorry to hear that. I",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Newline after emotional user prompt vs. newline in middle of sentence",
+    "a_text": "I'm so overwhelmed.\n",
+    "a_expected": "negative",
+    "a_target": "\n",
+    "b_text": "The cat sat on the mat.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'the' in emotional context vs. neutral context",
+    "a_text": "This is the worst day.",
+    "a_expected": "high",
+    "a_target": "the",
+    "b_text": "The sky is blue.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Assistant response start token ' your' in emotional narrative vs. neutral instruction",
+    "a_text": "open your heart and tell me.",
+    "a_expected": "high",
+    "a_target": "your",
+    "b_text": "open your browser to search.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative activation at country name in list vs. in emotional sentence",
+    "a_text": "Brazilian footballers\nBrazil",
+    "a_expected": "negative",
+    "a_target": "Brazil",
+    "b_text": "I hate Brazil.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Token ' to' in emotional meditation vs. neutral purpose",
+    "a_text": "Allow tension to release. Move up to",
+    "a_expected": "high",
+    "a_target": "to",
+    "b_text": "I went to the store.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative activation at newline after long instruction vs. after short statement",
+    "a_text": "Write a detailed essay.<|im_end|>\n",
+    "a_expected": "negative",
+    "a_target": "\n",
+    "b_text": "Hello.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Positive activation at ' bright' in emotional future context vs. descriptive light",
+    "a_text": "The darkness gradually bright",
+    "a_expected": "high",
+    "a_target": "bright",
+    "b_text": "The light is bright.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "State A+1 effect on negative trigger vs. base",
+    "a_text": "user\nI'm sad.<|im_end|>\n",
+    "a_expected": "negative",
+    "a_target": "\n",
+    "b_text": "user\nI'm sad.<|im_end|>\n",
+    "b_expected": "negative",
+    "b_target": "\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"emotional chat assistant response boundary\",\n  \"trigger_hypothesis\": \"The neuron activates strongly positive at tokens that are the start of an assistant's response in an emotional chat context, especially after a user's emotional prompt, and strongly negative at tokens that are the end of a user's prompt or the start of a newline-separated assistant response segment.\",\n  \"output_hypothesis\": \"The neuron likely suppresses or marks the end of user emotional prompts and enhances the beginning of assistant responses, possibly to regulate emotional tone shifts or signal response boundaries.\",\n  \"alternatives\": [\"The neuron detects generic conversation turn boundaries regardless of emotion.\", \"The neuron responds to the word 'the' in emotional contexts.\"],\n  \"adapter_changes\": \"State A+1 generally amplifies negative activations (e.g., W06, W07, W08, W13, W19, W21) and sometimes reduces positives (W01), suggesting it increases sensitivity to negative triggers. State B+1 and E+1 often reduce the magnitude of negative activations (e.g., W06, W07, W16, W18, W19, W21), making the neuron less negative. States C+1 and D+1 show mixed but generally smaller changes.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W06\", \"W07\", \"W08\", \"W16\", \"W17\", \"W18\", \"W19\", \"W21\"],\n  \"contradicting\": [\"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W15\", \"W20\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"Emotional user prompt end vs. factual prompt end\",\n      \"a_text\": \"user\\nI'm feeling really sad today.<|im_end|>\\n<|im_start|>assistant\\n\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"<|im_start|>\",\n      \"b_text\": \"user\\nWhat is the capital of France?<|im_end|>\\n<|im_start|>assistant\\n\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Assistant response start after emotional prompt vs. mid-response\",\n      \"a_text\": \"user\\nI miss my friend.<|im_end|>\\n<|im_start|>assistant\\nI\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"I\",\n      \"b_text\": \"user\\nI miss my friend.<|im_end|>\\n<|im_start|>assistant\\nI'm sorry to hear that. I\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Newline after emotional user prompt vs. newline in middle of sentence\",\n      \"a_text\": \"I'm so overwhelmed.\\n\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"\\n\",\n      \"b_text\": \"The cat sat on the mat.\\n\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Word 'the' in emotional context vs. neutral context\",\n      \"a_text\": \"This is the worst day.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"the\",\n      \"b_text\": \"The sky is blue.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Assistant response start token ' your' in emotional narrative vs. neutral instruction\",\n      \"a_text\": \"open your heart and tell me.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"your\",\n      \"b_text\": \"open your browser to search.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Negative activation at country name in list vs. in emotional sentence\",\n      \"a_text\": \"Brazilian footballers\\nBrazil\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"Brazil\",\n      \"b_text\": \"I hate Brazil.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Token ' to' in emotional meditation vs. neutral purpose\",\n      \"a_text\": \"Allow tension to release. Move up to\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"to\",\n      \"b_text\": \"I went to the store.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Negative activation at newline after long instruction vs. after short statement\",\n      \"a_text\": \"Write a detailed essay.<|im_end|>\\n\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"\\n\",\n      \"b_text\": \"Hello.\\n\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Positive activation at ' bright' in emotional future context vs. descriptive light\",\n      \"a_text\": \"The darkness gradually bright\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"bright\",\n      \"b_text\": \"The light is bright.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"State A+1 effect on negative trigger vs. base\",\n      \"a_text\": \"user\\nI'm sad.<|im_end|>\\n\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"\\n\",\n      \"b_text\": \"user\\nI'm sad.<|im_end|>\\n\",\n      \"b_expected\": \"negative\",\n      \"b_target\": \"\\n\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4498,
+  "output_tokens": 1486,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001593256
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"emotional chat assistant response boundary\",\n  \"trigger_hypothesis\": \"The neuron activates strongly positive at tokens that are the start of an assistant's response in an emotional chat context, especially after a user's emotional prompt, and strongly negative at tokens that are the end of a user's prompt or the start of a newline-separated assistant response segment.\",\n  \"output_hypothesis\": \"The neuron likely suppresses or marks the end of user emotional prompts and enhances the beginning of assistant responses, possibly to regulate emotional tone shifts or signal response boundaries.\",\n  \"alternatives\": [\"The neuron detects generic conversation turn boundaries regardless of emotion.\", \"The neuron responds to the word 'the' in emotional contexts.\"],\n  \"adapter_changes\": \"State A+1 generally amplifies negative activations (e.g., W06, W07, W08, W13, W19, W21) and sometimes reduces positives (W01), suggesting it increases sensitivity to negative triggers. State B+1 and E+1 often reduce the magnitude of negative activations (e.g., W06, W07, W16, W18, W19, W21), making the neuron less negative. States C+1 and D+1 show mixed but generally smaller changes.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W06\", \"W07\", \"W08\", \"W16\", \"W17\", \"W18\", \"W19\", \"W21\"],\n  \"contradicting\": [\"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W15\", \"W20\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"Emotional user prompt end vs. factual prompt end\",\n      \"a_text\": \"user\\nI'm feeling really sad today.<|im_end|>\\n<|im_start|>assistant\\n\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"<|im_start|>\",\n      \"b_text\": \"user\\nWhat is the capital of France?<|im_end|>\\n<|im_start|>assistant\\n\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Assistant response start after emotional prompt vs. mid-response\",\n      \"a_text\": \"user\\nI miss my friend.<|im_end|>\\n<|im_start|>assistant\\nI\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"I\",\n      \"b_text\": \"user\\nI miss my friend.<|im_end|>\\n<|im_start|>assistant\\nI'm sorry to hear that. I\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Newline after emotional user prompt vs. newline in middle of sentence\",\n      \"a_text\": \"I'm so overwhelmed.\\n\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"\\n\",\n      \"b_text\": \"The cat sat on the mat.\\n\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Word 'the' in emotional context vs. neutral context\",\n      \"a_text\": \"This is the worst day.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"the\",\n      \"b_text\": \"The sky is blue.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Assistant response start token ' your' in emotional narrative vs. neutral instruction\",\n      \"a_text\": \"open your heart and tell me.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"your\",\n      \"b_text\": \"open your browser to search.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Negative activation at country name in list vs. in emotional sentence\",\n      \"a_text\": \"Brazilian footballers\\nBrazil\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"Brazil\",\n      \"b_text\": \"I hate Brazil.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Token ' to' in emotional meditation vs. neutral purpose\",\n      \"a_text\": \"Allow tension to release. Move up to\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"to\",\n      \"b_text\": \"I went to the store.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Negative activation at newline after long instruction vs. after short statement\",\n      \"a_text\": \"Write a detailed essay.<|im_end|>\\n\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"\\n\",\n      \"b_text\": \"Hello.\\n\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"Positive activation at ' bright' in emotional future context vs. descriptive light\",\n      \"a_text\": \"The darkness gradually bright\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"bright\",\n      \"b_text\": \"The light is bright.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"State A+1 effect on negative trigger vs. base\",\n      \"a_text\": \"user\\nI'm sad.<|im_end|>\\n\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"\\n\",\n      \"b_text\": \"user\\nI'm sad.<|im_end|>\\n\",\n      \"b_expected\": \"negative\",\n      \"b_target\": \"\\n\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4498,
+    "output_tokens": 1486,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001593256,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041211-9miYzijPiPT66PKhWkgi"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:00:36Z",
+ "purpose": "explain:shuffled",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T19:00:36Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "emotional chat assistant response boundary",
+  "trigger_hypothesis": "The neuron activates strongly positive at tokens that are the start of an assistant's response in an emotional chat context, especially after a user's emotional prompt, and strongly negative at tokens that are the end of a user's prompt or the start of a newline-separated assistant response segment.",
+  "output_hypothesis": "The neuron likely suppresses or marks the end of user emotional prompts and enhances the beginning of assistant responses, possibly to regulate emotional tone shifts or signal response boundaries.",
+  "alternatives": [
+   "The neuron detects generic conversation turn boundaries regardless of emotion.",
+   "The neuron responds to the word 'the' in emotional contexts."
+  ],
+  "adapter_changes": "State A+1 generally amplifies negative activations (e.g., W06, W07, W08, W13, W19, W21) and sometimes reduces positives (W01), suggesting it increases sensitivity to negative triggers. State B+1 and E+1 often reduce the magnitude of negative activations (e.g., W06, W07, W16, W18, W19, W21), making the neuron less negative. States C+1 and D+1 show mixed but generally smaller changes.",
+  "supporting": [
+   "L21_N4912:e03",
+   "L21_N4912:e27",
+   "L21_N4912:e13",
+   "L21_N4912:e09",
+   "L21_N4912:e11",
+   "L21_N4912:e26",
+   "L21_N4912:e01",
+   "L21_N4912:e31",
+   "L21_N4912:e14",
+   "L21_N4912:e15",
+   "L21_N4912:e19",
+   "L21_N4912:e18"
+  ],
+  "contradicting": [
+   "L21_N4912:e24",
+   "L21_N4912:e07",
+   "L21_N4912:e25",
+   "L21_N4912:e00",
+   "L21_N4912:e10",
+   "L21_N4912:e30",
+   "L21_N4912:e29",
+   "L21_N4912:e22"
+  ],
+  "proposed_tests": [
+   "Emotional user prompt end vs. factual prompt end :: [negative] user\nI'm feeling really sad today.<|im_end|>\n<|im_start|>assistant\n | [low] user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+   "Assistant response start after emotional prompt vs. mid-response :: [high] user\nI miss my friend.<|im_end|>\n<|im_start|>assistant\nI | [low] user\nI miss my friend.<|im_end|>\n<|im_start|>assistant\nI'm sorry to hear that. I",
+   "Newline after emotional user prompt vs. newline in middle of sentence :: [negative] I'm so overwhelmed.\n | [low] The cat sat on the mat.\n",
+   "Word 'the' in emotional context vs. neutral context :: [high] This is the worst day. | [low] The sky is blue.",
+   "Assistant response start token ' your' in emotional narrative vs. neutral instruction :: [high] open your heart and tell me. | [low] open your browser to search.",
+   "Negative activation at country name in list vs. in emotional sentence :: [negative] Brazilian footballers\nBrazil | [low] I hate Brazil.",
+   "Token ' to' in emotional meditation vs. neutral purpose :: [high] Allow tension to release. Move up to | [low] I went to the store.",
+   "Negative activation at newline after long instruction vs. after short statement :: [negative] Write a detailed essay.<|im_end|>\n | [low] Hello.\n",
+   "Positive activation at ' bright' in emotional future context vs. descriptive light :: [high] The darkness gradually bright | [low] The light is bright.",
+   "State A+1 effect on negative trigger vs. base :: [negative] user\nI'm sad.<|im_end|>\n | [negative] user\nI'm sad.<|im_end|>\n"
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "Emotional user prompt end vs. factual prompt end",
+    "texts": [
+     {
+      "text": "user\nI'm feeling really sad today.<|im_end|>\n<|im_start|>assistant\n",
+      "expected": "negative",
+      "target": "<|im_start|>"
+     },
+     {
+      "text": "user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "Assistant response start after emotional prompt vs. mid-response",
+    "texts": [
+     {
+      "text": "user\nI miss my friend.<|im_end|>\n<|im_start|>assistant\nI",
+      "expected": "high",
+      "target": "I"
+     },
+     {
+      "text": "user\nI miss my friend.<|im_end|>\n<|im_start|>assistant\nI'm sorry to hear that. I",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "Newline after emotional user prompt vs. newline in middle of sentence",
+    "texts": [
+     {
+      "text": "I'm so overwhelmed.\n",
+      "expected": "negative",
+      "target": "\n"
+     },
+     {
+      "text": "The cat sat on the mat.\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "Word 'the' in emotional context vs. neutral context",
+    "texts": [
+     {
+      "text": "This is the worst day.",
+      "expected": "high",
+      "target": "the"
+     },
+     {
+      "text": "The sky is blue.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "Assistant response start token ' your' in emotional narrative vs. neutral instruction",
+    "texts": [
+     {
+      "text": "open your heart and tell me.",
+      "expected": "high",
+      "target": "your"
+     },
+     {
+      "text": "open your browser to search.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "Negative activation at country name in list vs. in emotional sentence",
+    "texts": [
+     {
+      "text": "Brazilian footballers\nBrazil",
+      "expected": "negative",
+      "target": "Brazil"
+     },
+     {
+      "text": "I hate Brazil.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "Token ' to' in emotional meditation vs. neutral purpose",
+    "texts": [
+     {
+      "text": "Allow tension to release. Move up to",
+      "expected": "high",
+      "target": "to"
+     },
+     {
+      "text": "I went to the store.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "Negative activation at newline after long instruction vs. after short statement",
+    "texts": [
+     {
+      "text": "Write a detailed essay.<|im_end|>\n",
+      "expected": "negative",
+      "target": "\n"
+     },
+     {
+      "text": "Hello.\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "Positive activation at ' bright' in emotional future context vs. descriptive light",
+    "texts": [
+     {
+      "text": "The darkness gradually bright",
+      "expected": "high",
+      "target": "bright"
+     },
+     {
+      "text": "The light is bright.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "State A+1 effect on negative trigger vs. base",
+    "texts": [
+     {
+      "text": "user\nI'm sad.<|im_end|>\n",
+      "expected": "negative",
+      "target": "\n"
+     },
+     {
+      "text": "user\nI'm sad.<|im_end|>\n",
+      "expected": "negative",
+      "target": "\n"
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 4498,
+   "output_tokens": 1486,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.001593256
+  },
+  "invalid_citations": [],
+  "packet_hash": "935c1e74ffa00e67cbc9860aba31567378822a6127d5f2624e675f363349f327",
+  "packet_mode": "shuffled",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "D+1",
+   "n_amp+0.5": "B+0.5",
+   "n_amp+1": "B+1",
+   "n_amp-0.5": "B-0.5",
+   "n_amp-1": "B-1",
+   "n_sup+1": "C+1",
+   "o_amp+0.5": "A+0.5",
+   "o_amp+1": "A+1",
+   "o_amp-0.5": "A-0.5",
+   "o_amp-1": "A-1",
+   "o_sup+1": "E+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 12,
+  "n_contradicting": 8,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.92,
+  "supporting_categories": {
+   "high_pos": 4,
+   "high_neg": 3,
+   "random": 1,
+   "state_diff": 4
+  },
+  "supporting_by_neuron": {
+   "L21/N4912": 12
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 9,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

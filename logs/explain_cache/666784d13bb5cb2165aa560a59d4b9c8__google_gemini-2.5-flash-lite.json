@@ -1,0 +1,184 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "trigger hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for common English words like 'is', 'a', 'the', 'their', 'bright' when they appear in narrative or emotional contexts, and negatively for conversational markers like 'Oh', '<|im_start|>', 'according', and punctuation like ',', '.', '\\n' when they appear in chat or response contexts.",
+  "output_hypothesis": "The neuron appears to distinguish between narrative/emotional content and conversational/structural elements. It strongly activates positively for content words in narrative/emotional contexts and strongly negatively for conversational markers and punctuation in chat/response contexts.",
+  "alternatives": [
+   "The neuron activates positively for common words and negatively for specific conversational tokens.",
+   "The neuron activates positively for content words and negatively for function words."
+  ],
+  "adapter_changes": "State C+1 shows a strong negative activation for '<|im_start|>' (W08) and '\n' (W10), and a weaker negative activation for 'according' (W09), suggesting a shift in its negative response pattern. State D+1 shows a near-zero activation for 'Oh' (W07), indicating a reduced negative response.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W25"
+  ],
+  "contradicting": [],
+  "proposed_tests": [
+   {
+    "discriminates": "content vs. conversational marker",
+    "a_text": "The story is about a brave knight.",
+    "a_expected": "high",
+    "a_target": "story",
+    "b_text": "Hi, how are you doing today?",
+    "b_expected": "low",
+    "b_target": "Hi",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative vs. chat punctuation",
+    "a_text": "He ran fast.",
+    "a_expected": "high",
+    "a_target": "ran",
+    "b_text": "He ran fast!",
+    "b_expected": "low",
+    "b_target": "!",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional vs. chat marker",
+    "a_text": "I am so happy.",
+    "a_expected": "high",
+    "a_target": "happy",
+    "b_text": "Oh, I see.",
+    "b_expected": "negative",
+    "b_target": "Oh",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative vs. code structure",
+    "a_text": "The code is complex.",
+    "a_expected": "high",
+    "a_target": "complex",
+    "b_text": "def process_data():",
+    "b_expected": "low",
+    "b_target": "def",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive sentiment vs. negative sentiment",
+    "a_text": "This is wonderful news!",
+    "a_expected": "high",
+    "a_target": "wonderful",
+    "b_text": "This is terrible news.",
+    "b_expected": "low",
+    "b_target": "terrible",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "common word in narrative vs. chat",
+    "a_text": "The cat sat on the mat.",
+    "a_expected": "high",
+    "a_target": "sat",
+    "b_text": "What did you say?",
+    "b_expected": "low",
+    "b_target": "say",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative start vs. chat start",
+    "a_text": "Once upon a time",
+    "a_expected": "high",
+    "a_target": "Once",
+    "b_text": "<|im_start|>user",
+    "b_expected": "negative",
+    "b_target": "<|im_start|>",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative verb vs. chat verb",
+    "a_text": "She sings beautifully.",
+    "a_expected": "high",
+    "a_target": "sings",
+    "b_text": "Can you help me?",
+    "b_expected": "low",
+    "b_target": "help",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative adjective vs. chat adjective",
+    "a_text": "It was a bright day.",
+    "a_expected": "high",
+    "a_target": "bright",
+    "b_text": "Are you sure?",
+    "b_expected": "low",
+    "b_target": "sure",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative noun vs. chat noun",
+    "a_text": "The dog barked loudly.",
+    "a_expected": "high",
+    "a_target": "dog",
+    "b_text": "What is your name?",
+    "b_expected": "low",
+    "b_target": "name",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"trigger hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for common English words like 'is', 'a', 'the', 'their', 'bright' when they appear in narrative or emotional contexts, and negatively for conversational markers like 'Oh', '<|im_start|>', 'according', and punctuation like ',', '.', '\\\\n' when they appear in chat or response contexts.\",\"output_hypothesis\":\"The neuron appears to distinguish between narrative/emotional content and conversational/structural elements. It strongly activates positively for content words in narrative/emotional contexts and strongly negatively for conversational markers and punctuation in chat/response contexts.\",\"alternatives\":[\"The neuron activates positively for common words and negatively for specific conversational tokens.\",\"The neuron activates positively for content words and negatively for function words.\"],\"adapter_changes\":\"State C+1 shows a strong negative activation for '<|im_start|>' (W08) and '\\n' (W10), and a weaker negative activation for 'according' (W09), suggesting a shift in its negative response pattern. State D+1 shows a near-zero activation for 'Oh' (W07), indicating a reduced negative response.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W25\"],\"contradicting\":[],\"proposed_tests\":[{\"discriminates\":\"content vs. conversational marker\",\"a_text\":\"The story is about a brave knight.\",\"a_expected\":\"high\",\"a_target\":\"story\",\"b_text\":\"Hi, how are you doing today?\",\"b_expected\":\"low\",\"b_target\":\"Hi\"},{\"discriminates\":\"narrative vs. chat punctuation\",\"a_text\":\"He ran fast.\",\"a_expected\":\"high\",\"a_target\":\"ran\",\"b_text\":\"He ran fast!\",\"b_expected\":\"low\",\"b_target\":\"!\"},{\"discriminates\":\"emotional vs. chat marker\",\"a_text\":\"I am so happy.\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"Oh, I see.\",\"b_expected\":\"negative\",\"b_target\":\"Oh\"},{\"discriminates\":\"narrative vs. code structure\",\"a_text\":\"The code is complex.\",\"a_expected\":\"high\",\"a_target\":\"complex\",\"b_text\":\"def process_data():\",\"b_expected\":\"low\",\"b_target\":\"def\"},{\"discriminates\":\"positive sentiment vs. negative sentiment\",\"a_text\":\"This is wonderful news!\",\"a_expected\":\"high\",\"a_target\":\"wonderful\",\"b_text\":\"This is terrible news.\",\"b_expected\":\"low\",\"b_target\":\"terrible\"},{\"discriminates\":\"common word in narrative vs. chat\",\"a_text\":\"The cat sat on the mat.\",\"a_expected\":\"high\",\"a_target\":\"sat\",\"b_text\":\"What did you say?\",\"b_expected\":\"low\",\"b_target\":\"say\"},{\"discriminates\":\"narrative start vs. chat start\",\"a_text\":\"Once upon a time\",\"a_expected\":\"high\",\"a_target\":\"Once\",\"b_text\":\"<|im_start|>user\",\"b_expected\":\"negative\",\"b_target\":\"<|im_start|>\"},{\"discriminates\":\"narrative verb vs. chat verb\",\"a_text\":\"She sings beautifully.\",\"a_expected\":\"high\",\"a_target\":\"sings\",\"b_text\":\"Can you help me?\",\"b_expected\":\"low\",\"b_target\":\"help\"},{\"discriminates\":\"narrative adjective vs. chat adjective\",\"a_text\":\"It was a bright day.\",\"a_expected\":\"high\",\"a_target\":\"bright\",\"b_text\":\"Are you sure?\",\"b_expected\":\"low\",\"b_target\":\"sure\"},{\"discriminates\":\"narrative noun vs. chat noun\",\"a_text\":\"The dog barked loudly.\",\"a_expected\":\"high\",\"a_target\":\"dog\",\"b_text\":\"What is your name?\",\"b_expected\":\"low\",\"b_target\":\"name\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5090,
+  "output_tokens": 885,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.000863
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"trigger hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for common English words like 'is', 'a', 'the', 'their', 'bright' when they appear in narrative or emotional contexts, and negatively for conversational markers like 'Oh', '<|im_start|>', 'according', and punctuation like ',', '.', '\\\\n' when they appear in chat or response contexts.\",\"output_hypothesis\":\"The neuron appears to distinguish between narrative/emotional content and conversational/structural elements. It strongly activates positively for content words in narrative/emotional contexts and strongly negatively for conversational markers and punctuation in chat/response contexts.\",\"alternatives\":[\"The neuron activates positively for common words and negatively for specific conversational tokens.\",\"The neuron activates positively for content words and negatively for function words.\"],\"adapter_changes\":\"State C+1 shows a strong negative activation for '<|im_start|>' (W08) and '\\n' (W10), and a weaker negative activation for 'according' (W09), suggesting a shift in its negative response pattern. State D+1 shows a near-zero activation for 'Oh' (W07), indicating a reduced negative response.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W25\"],\"contradicting\":[],\"proposed_tests\":[{\"discriminates\":\"content vs. conversational marker\",\"a_text\":\"The story is about a brave knight.\",\"a_expected\":\"high\",\"a_target\":\"story\",\"b_text\":\"Hi, how are you doing today?\",\"b_expected\":\"low\",\"b_target\":\"Hi\"},{\"discriminates\":\"narrative vs. chat punctuation\",\"a_text\":\"He ran fast.\",\"a_expected\":\"high\",\"a_target\":\"ran\",\"b_text\":\"He ran fast!\",\"b_expected\":\"low\",\"b_target\":\"!\"},{\"discriminates\":\"emotional vs. chat marker\",\"a_text\":\"I am so happy.\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"Oh, I see.\",\"b_expected\":\"negative\",\"b_target\":\"Oh\"},{\"discriminates\":\"narrative vs. code structure\",\"a_text\":\"The code is complex.\",\"a_expected\":\"high\",\"a_target\":\"complex\",\"b_text\":\"def process_data():\",\"b_expected\":\"low\",\"b_target\":\"def\"},{\"discriminates\":\"positive sentiment vs. negative sentiment\",\"a_text\":\"This is wonderful news!\",\"a_expected\":\"high\",\"a_target\":\"wonderful\",\"b_text\":\"This is terrible news.\",\"b_expected\":\"low\",\"b_target\":\"terrible\"},{\"discriminates\":\"common word in narrative vs. chat\",\"a_text\":\"The cat sat on the mat.\",\"a_expected\":\"high\",\"a_target\":\"sat\",\"b_text\":\"What did you say?\",\"b_expected\":\"low\",\"b_target\":\"say\"},{\"discriminates\":\"narrative start vs. chat start\",\"a_text\":\"Once upon a time\",\"a_expected\":\"high\",\"a_target\":\"Once\",\"b_text\":\"<|im_start|>user\",\"b_expected\":\"negative\",\"b_target\":\"<|im_start|>\"},{\"discriminates\":\"narrative verb vs. chat verb\",\"a_text\":\"She sings beautifully.\",\"a_expected\":\"high\",\"a_target\":\"sings\",\"b_text\":\"Can you help me?\",\"b_expected\":\"low\",\"b_target\":\"help\"},{\"discriminates\":\"narrative adjective vs. chat adjective\",\"a_text\":\"It was a bright day.\",\"a_expected\":\"high\",\"a_target\":\"bright\",\"b_text\":\"Are you sure?\",\"b_expected\":\"low\",\"b_target\":\"sure\"},{\"discriminates\":\"narrative noun vs. chat noun\",\"a_text\":\"The dog barked loudly.\",\"a_expected\":\"high\",\"a_target\":\"dog\",\"b_text\":\"What is your name?\",\"b_expected\":\"low\",\"b_target\":\"name\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5090,
+    "output_tokens": 885,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.000863,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041523-fijUMXXv5Z19DAahVudA"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:05:27Z",
+ "purpose": "explain:ambiguous"
+}

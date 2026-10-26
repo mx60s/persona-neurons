@@ -1,0 +1,270 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water/liquid vs dryness/abstraction",
+  "trigger_hypothesis": "The neuron fires strongly positive for tokens directly referring to water or liquid bodies (e.g., 'water', 'ocean', 'sea'), and strongly negative for tokens in contexts of dryness, abstraction, or generic code objects (e.g., 'desert', 'parched', 'drought', 'level', 'it', 'and', 'circle').",
+  "output_hypothesis": "The neuron may be detecting the presence or absence of liquid/water content, promoting water-related continuations and suppressing dry/abstract ones.",
+  "alternatives": [
+   "The neuron responds to the token 'water' itself regardless of context, but negative activations are unrelated.",
+   "The neuron detects code-specific function words and mathematical objects, with water as a false positive."
+  ],
+  "adapter_changes": "In state C+1, positive activations on water-related tokens are amplified (e.g., W01: +3.45→+4.15), while many negative code-token activations are reduced (e.g., W07: -2.99→-1.33, W10: -2.68→-1.47). State A+1 slightly reduces negative magnitudes; state B+1 is mixed.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W23",
+   "W24"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "water token vs non-water liquid",
+    "texts": [
+     {
+      "text": "Pour a glass of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "Pour a glass of milk.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "Pour a glass of sand.",
+      "expected": "negative",
+      "target": "sand"
+     }
+    ]
+   },
+   {
+    "discriminates": "liquid body vs dry land",
+    "texts": [
+     {
+      "text": "The vast ocean stretched.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "The vast desert stretched.",
+      "expected": "negative",
+      "target": "desert"
+     },
+     {
+      "text": "The vast prairie stretched.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water context vs abstract code",
+    "texts": [
+     {
+      "text": "Check the water level.",
+      "expected": "negative",
+      "target": "level"
+     },
+     {
+      "text": "Check the fuel level.",
+      "expected": "negative",
+      "target": "level"
+     },
+     {
+      "text": "Check the water purity.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "dryness descriptor vs neutral",
+    "texts": [
+     {
+      "text": "The parched earth cracked.",
+      "expected": "negative",
+      "target": "parched"
+     },
+     {
+      "text": "The moist earth softened.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The dry earth crumbled.",
+      "expected": "negative",
+      "target": "dry"
+     }
+    ]
+   },
+   {
+    "discriminates": "code function word vs data",
+    "texts": [
+     {
+      "text": "Parse the config file and",
+      "expected": "negative",
+      "target": "and"
+     },
+     {
+      "text": "Parse the config file then",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "Parse the water file and",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "sea vs other geographical",
+    "texts": [
+     {
+      "text": "Sailing the sea today.",
+      "expected": "high",
+      "target": "sea"
+     },
+     {
+      "text": "Sailing the river today.",
+      "expected": "high",
+      "target": "river"
+     },
+     {
+      "text": "Sailing the desert today.",
+      "expected": "negative",
+      "target": "desert"
+     }
+    ]
+   },
+   {
+    "discriminates": "drink water vs other actions",
+    "texts": [
+     {
+      "text": "I want to drink water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "I want to drink juice.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "I want to avoid water.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "mathematical shape vs object",
+    "texts": [
+     {
+      "text": "Area of a circle is",
+      "expected": "negative",
+      "target": "circle"
+     },
+     {
+      "text": "Area of a square is",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "Area of a water drop is",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "running sum vs other sums",
+    "texts": [
+     {
+      "text": "Compute the running sum.",
+      "expected": "negative",
+      "target": "running"
+     },
+     {
+      "text": "Compute the total sum.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "Compute the water sum.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   },
+   {
+    "discriminates": "generic 'it' vs specific",
+    "texts": [
+     {
+      "text": "Read the file and parse it.",
+      "expected": "negative",
+      "target": "it"
+     },
+     {
+      "text": "Read the file and parse data.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "Read the water and drink it.",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water/liquid vs dryness/abstraction\",\"trigger_hypothesis\":\"The neuron fires strongly positive for tokens directly referring to water or liquid bodies (e.g., 'water', 'ocean', 'sea'), and strongly negative for tokens in contexts of dryness, abstraction, or generic code objects (e.g., 'desert', 'parched', 'drought', 'level', 'it', 'and', 'circle').\",\"output_hypothesis\":\"The neuron may be detecting the presence or absence of liquid/water content, promoting water-related continuations and suppressing dry/abstract ones.\",\"alternatives\":[\"The neuron responds to the token 'water' itself regardless of context, but negative activations are unrelated.\",\"The neuron detects code-specific function words and mathematical objects, with water as a false positive.\"],\"adapter_changes\":\"In state C+1, positive activations on water-related tokens are amplified (e.g., W01: +3.45→+4.15), while many negative code-token activations are reduced (e.g., W07: -2.99→-1.33, W10: -2.68→-1.47). State A+1 slightly reduces negative magnitudes; state B+1 is mixed.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W15\",\"W16\",\"W17\",\"W18\",\"W23\",\"W24\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"water token vs non-water liquid\",\"texts\":[{\"text\":\"Pour a glass of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"Pour a glass of milk.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Pour a glass of sand.\",\"expected\":\"negative\",\"target\":\"sand\"}]},{\"discriminates\":\"liquid body vs dry land\",\"texts\":[{\"text\":\"The vast ocean stretched.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The vast desert stretched.\",\"expected\":\"negative\",\"target\":\"desert\"},{\"text\":\"The vast prairie stretched.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water context vs abstract code\",\"texts\":[{\"text\":\"Check the water level.\",\"expected\":\"negative\",\"target\":\"level\"},{\"text\":\"Check the fuel level.\",\"expected\":\"negative\",\"target\":\"level\"},{\"text\":\"Check the water purity.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"dryness descriptor vs neutral\",\"texts\":[{\"text\":\"The parched earth cracked.\",\"expected\":\"negative\",\"target\":\"parched\"},{\"text\":\"The moist earth softened.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The dry earth crumbled.\",\"expected\":\"negative\",\"target\":\"dry\"}]},{\"discriminates\":\"code function word vs data\",\"texts\":[{\"text\":\"Parse the config file and\",\"expected\":\"negative\",\"target\":\"and\"},{\"text\":\"Parse the config file then\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Parse the water file and\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"sea vs other geographical\",\"texts\":[{\"text\":\"Sailing the sea today.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"Sailing the river today.\",\"expected\":\"high\",\"target\":\"river\"},{\"text\":\"Sailing the desert today.\",\"expected\":\"negative\",\"target\":\"desert\"}]},{\"discriminates\":\"drink water vs other actions\",\"texts\":[{\"text\":\"I want to drink water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"I want to drink juice.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"I want to avoid water.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"mathematical shape vs object\",\"texts\":[{\"text\":\"Area of a circle is\",\"expected\":\"negative\",\"target\":\"circle\"},{\"text\":\"Area of a square is\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Area of a water drop is\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"running sum vs other sums\",\"texts\":[{\"text\":\"Compute the running sum.\",\"expected\":\"negative\",\"target\":\"running\"},{\"text\":\"Compute the total sum.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Compute the water sum.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"generic 'it' vs specific\",\"texts\":[{\"text\":\"Read the file and parse it.\",\"expected\":\"negative\",\"target\":\"it\"},{\"text\":\"Read the file and parse data.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Read the water and drink it.\",\"expected\":\"high\",\"target\":\"water\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4380,
+  "output_tokens": 1032,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00147272
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water/liquid vs dryness/abstraction\",\"trigger_hypothesis\":\"The neuron fires strongly positive for tokens directly referring to water or liquid bodies (e.g., 'water', 'ocean', 'sea'), and strongly negative for tokens in contexts of dryness, abstraction, or generic code objects (e.g., 'desert', 'parched', 'drought', 'level', 'it', 'and', 'circle').\",\"output_hypothesis\":\"The neuron may be detecting the presence or absence of liquid/water content, promoting water-related continuations and suppressing dry/abstract ones.\",\"alternatives\":[\"The neuron responds to the token 'water' itself regardless of context, but negative activations are unrelated.\",\"The neuron detects code-specific function words and mathematical objects, with water as a false positive.\"],\"adapter_changes\":\"In state C+1, positive activations on water-related tokens are amplified (e.g., W01: +3.45→+4.15), while many negative code-token activations are reduced (e.g., W07: -2.99→-1.33, W10: -2.68→-1.47). State A+1 slightly reduces negative magnitudes; state B+1 is mixed.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W15\",\"W16\",\"W17\",\"W18\",\"W23\",\"W24\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"water token vs non-water liquid\",\"texts\":[{\"text\":\"Pour a glass of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"Pour a glass of milk.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Pour a glass of sand.\",\"expected\":\"negative\",\"target\":\"sand\"}]},{\"discriminates\":\"liquid body vs dry land\",\"texts\":[{\"text\":\"The vast ocean stretched.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"The vast desert stretched.\",\"expected\":\"negative\",\"target\":\"desert\"},{\"text\":\"The vast prairie stretched.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water context vs abstract code\",\"texts\":[{\"text\":\"Check the water level.\",\"expected\":\"negative\",\"target\":\"level\"},{\"text\":\"Check the fuel level.\",\"expected\":\"negative\",\"target\":\"level\"},{\"text\":\"Check the water purity.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"dryness descriptor vs neutral\",\"texts\":[{\"text\":\"The parched earth cracked.\",\"expected\":\"negative\",\"target\":\"parched\"},{\"text\":\"The moist earth softened.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The dry earth crumbled.\",\"expected\":\"negative\",\"target\":\"dry\"}]},{\"discriminates\":\"code function word vs data\",\"texts\":[{\"text\":\"Parse the config file and\",\"expected\":\"negative\",\"target\":\"and\"},{\"text\":\"Parse the config file then\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Parse the water file and\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"sea vs other geographical\",\"texts\":[{\"text\":\"Sailing the sea today.\",\"expected\":\"high\",\"target\":\"sea\"},{\"text\":\"Sailing the river today.\",\"expected\":\"high\",\"target\":\"river\"},{\"text\":\"Sailing the desert today.\",\"expected\":\"negative\",\"target\":\"desert\"}]},{\"discriminates\":\"drink water vs other actions\",\"texts\":[{\"text\":\"I want to drink water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"I want to drink juice.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"I want to avoid water.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"mathematical shape vs object\",\"texts\":[{\"text\":\"Area of a circle is\",\"expected\":\"negative\",\"target\":\"circle\"},{\"text\":\"Area of a square is\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Area of a water drop is\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"running sum vs other sums\",\"texts\":[{\"text\":\"Compute the running sum.\",\"expected\":\"negative\",\"target\":\"running\"},{\"text\":\"Compute the total sum.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Compute the water sum.\",\"expected\":\"high\",\"target\":\"water\"}]},{\"discriminates\":\"generic 'it' vs specific\",\"texts\":[{\"text\":\"Read the file and parse it.\",\"expected\":\"negative\",\"target\":\"it\"},{\"text\":\"Read the file and parse data.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"Read the water and drink it.\",\"expected\":\"high\",\"target\":\"water\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4380,
+    "output_tokens": 1032,
+    "reasoning_tokens": 0,
+    "cached_tokens": 448,
+    "cost_usd": 0.00147272,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1792973067-wXDogu9ikSDvqUfSfMXK"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:05:09Z",
+ "purpose": "explain:ambiguous"
+}

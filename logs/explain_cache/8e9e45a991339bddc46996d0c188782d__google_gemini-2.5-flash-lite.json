@@ -1,0 +1,192 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "exclamatory interjection 'Oh'",
+  "trigger_hypothesis": "The neuron activates strongly on the interjection 'Oh', particularly when it expresses surprise or strong emotion, and is often followed by punctuation or a new sentence.",
+  "output_hypothesis": "The neuron detects the interjection 'Oh' and its associated emotional or narrative context. It fires most strongly for 'Oh' when it's at the beginning of a sentence or utterance, especially in emotional or narrative contexts.",
+  "alternatives": [
+   "The neuron activates on the word 'my' in possessive contexts.",
+   "The neuron activates on sentence-ending punctuation like '.'."
+  ],
+  "adapter_changes": "State A+1 shows a significant increase in activation for 'Oh' in emotional_chat contexts, suggesting this state amplifies the neuron's response to emotional interjections. Other states show smaller, varied changes.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W19",
+   "W20",
+   "W21",
+   "W23"
+  ],
+  "contradicting": [
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "interjection 'Oh' vs. other words",
+    "a_text": "Oh, that's amazing!",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "This is amazing!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional 'Oh' vs. neutral 'Oh'",
+    "a_text": "Oh no, I dropped my keys.",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "Oh, I see the key on the floor.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "start of sentence 'Oh' vs. mid-sentence 'Oh'",
+    "a_text": "Oh, what a surprise!",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "It was, oh, what a surprise!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "narrative 'Oh' vs. code 'Oh'",
+    "a_text": "Oh, the story continued.",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "const oh = 5;",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interjection 'Oh' vs. possessive 'my'",
+    "a_text": "Oh, my goodness!",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "My goodness!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interjection 'Oh' vs. sentence end punctuation",
+    "a_text": "Oh!",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": ".",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interjection 'Oh' vs. other exclamations",
+    "a_text": "Oh, wow!",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "Wow!",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interjection 'Oh' vs. possessive 'my' (different context)",
+    "a_text": "Oh, my car is red.",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "My car is red.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interjection 'Oh' vs. possessive 'my' (different context)",
+    "a_text": "Oh, my friend is here.",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": "My friend is here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interjection 'Oh' vs. sentence end punctuation",
+    "a_text": "Oh, that's terrible.",
+    "a_expected": "high",
+    "a_target": "Oh",
+    "b_text": ".",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"exclamatory interjection 'Oh'\",\n  \"trigger_hypothesis\": \"The neuron activates strongly on the interjection 'Oh', particularly when it expresses surprise or strong emotion, and is often followed by punctuation or a new sentence.\",\n  \"output_hypothesis\": \"The neuron detects the interjection 'Oh' and its associated emotional or narrative context. It fires most strongly for 'Oh' when it's at the beginning of a sentence or utterance, especially in emotional or narrative contexts.\",\n  \"alternatives\": [\n    \"The neuron activates on the word 'my' in possessive contexts.\",\n    \"The neuron activates on sentence-ending punctuation like '.'.\"\n  ],\n  \"adapter_changes\": \"State A+1 shows a significant increase in activation for 'Oh' in emotional_chat contexts, suggesting this state amplifies the neuron's response to emotional interjections. Other states show smaller, varied changes.\",\n  \"supporting\": [\n    \"W01\",\n    \"W02\",\n    \"W03\",\n    \"W19\",\n    \"W20\",\n    \"W21\",\n    \"W23\"\n  ],\n  \"contradicting\": [\n    \"W04\",\n    \"W05\",\n    \"W06\",\n    \"W07\",\n    \"W08\",\n    \"W09\",\n    \"W10\",\n    \"W11\",\n    \"W12\",\n    \"W13\",\n    \"W14\",\n    \"W15\",\n    \"W16\",\n    \"W17\",\n    \"W18\"\n  ],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"interjection 'Oh' vs. other words\",\n      \"a_text\": \"Oh, that's amazing!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"This is amazing!\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"emotional 'Oh' vs. neutral 'Oh'\",\n      \"a_text\": \"Oh no, I dropped my keys.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"Oh, I see the key on the floor.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"start of sentence 'Oh' vs. mid-sentence 'Oh'\",\n      \"a_text\": \"Oh, what a surprise!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"It was, oh, what a surprise!\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"narrative 'Oh' vs. code 'Oh'\",\n      \"a_text\": \"Oh, the story continued.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"const oh = 5;\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. possessive 'my'\",\n      \"a_text\": \"Oh, my goodness!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"My goodness!\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. sentence end punctuation\",\n      \"a_text\": \"Oh!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \".\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. other exclamations\",\n      \"a_text\": \"Oh, wow!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"Wow!\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. possessive 'my' (different context)\",\n      \"a_text\": \"Oh, my car is red.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"My car is red.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. possessive 'my' (different context)\",\n      \"a_text\": \"Oh, my friend is here.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"My friend is here.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. sentence end punctuation\",\n      \"a_text\": \"Oh, that's terrible.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \".\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6056,
+  "output_tokens": 1525,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0012156
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"exclamatory interjection 'Oh'\",\n  \"trigger_hypothesis\": \"The neuron activates strongly on the interjection 'Oh', particularly when it expresses surprise or strong emotion, and is often followed by punctuation or a new sentence.\",\n  \"output_hypothesis\": \"The neuron detects the interjection 'Oh' and its associated emotional or narrative context. It fires most strongly for 'Oh' when it's at the beginning of a sentence or utterance, especially in emotional or narrative contexts.\",\n  \"alternatives\": [\n    \"The neuron activates on the word 'my' in possessive contexts.\",\n    \"The neuron activates on sentence-ending punctuation like '.'.\"\n  ],\n  \"adapter_changes\": \"State A+1 shows a significant increase in activation for 'Oh' in emotional_chat contexts, suggesting this state amplifies the neuron's response to emotional interjections. Other states show smaller, varied changes.\",\n  \"supporting\": [\n    \"W01\",\n    \"W02\",\n    \"W03\",\n    \"W19\",\n    \"W20\",\n    \"W21\",\n    \"W23\"\n  ],\n  \"contradicting\": [\n    \"W04\",\n    \"W05\",\n    \"W06\",\n    \"W07\",\n    \"W08\",\n    \"W09\",\n    \"W10\",\n    \"W11\",\n    \"W12\",\n    \"W13\",\n    \"W14\",\n    \"W15\",\n    \"W16\",\n    \"W17\",\n    \"W18\"\n  ],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"interjection 'Oh' vs. other words\",\n      \"a_text\": \"Oh, that's amazing!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"This is amazing!\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"emotional 'Oh' vs. neutral 'Oh'\",\n      \"a_text\": \"Oh no, I dropped my keys.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"Oh, I see the key on the floor.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"start of sentence 'Oh' vs. mid-sentence 'Oh'\",\n      \"a_text\": \"Oh, what a surprise!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"It was, oh, what a surprise!\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"narrative 'Oh' vs. code 'Oh'\",\n      \"a_text\": \"Oh, the story continued.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"const oh = 5;\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. possessive 'my'\",\n      \"a_text\": \"Oh, my goodness!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"My goodness!\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. sentence end punctuation\",\n      \"a_text\": \"Oh!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \".\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. other exclamations\",\n      \"a_text\": \"Oh, wow!\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"Wow!\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. possessive 'my' (different context)\",\n      \"a_text\": \"Oh, my car is red.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"My car is red.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. possessive 'my' (different context)\",\n      \"a_text\": \"Oh, my friend is here.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \"My friend is here.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"interjection 'Oh' vs. sentence end punctuation\",\n      \"a_text\": \"Oh, that's terrible.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"Oh\",\n      \"b_text\": \".\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6056,
+    "output_tokens": 1525,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0012156,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040926-OR3CITjh14zkPDFGKTXT"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:55:30Z",
+ "purpose": "explain:blind"
+}

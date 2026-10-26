@@ -1,0 +1,184 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "token after punctuation or space before a word fragment",
+  "trigger_hypothesis": "The neuron activates strongly (positive or negative) on a token that is a short fragment (often a single letter or two letters) that appears immediately after a punctuation mark or space and is the beginning of a word.",
+  "output_hypothesis": "The neuron may be involved in predicting or processing word beginnings after separators, possibly to adjust tokenization probabilities or to signal the start of a new lexical unit.",
+  "alternatives": [
+   "The neuron detects specific letters like 'g', 'b', 'n' regardless of context.",
+   "The neuron responds to grammatical function words or specific parts of speech."
+  ],
+  "adapter_changes": "States C+1, D+1, and E+1 show large negative shifts in chat and emotional_chat domains (e.g., W16, W17, W18, W19, W20), making previously low-activation tokens strongly negative, especially in assistant responses. This suggests the neuron's role in these domains is modulated by adapter states, possibly suppressing certain word-initial fragments in conversational continuations.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "word fragment after punctuation vs same fragment in middle of word",
+    "a_text": "The cat said, \"b\"",
+    "a_expected": "high",
+    "a_target": "b",
+    "b_text": "The cat said, \"ab\"",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "space before fragment vs no space",
+    "a_text": "It is g",
+    "a_expected": "high",
+    "a_target": "g",
+    "b_text": "It isg",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "fragment after comma vs after letter",
+    "a_text": "Hello, b",
+    "a_expected": "high",
+    "a_target": "b",
+    "b_text": "Hello b",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative activation on fragment after space in administrative text",
+    "a_text": "Gmina Wysokie Mazowieckie is a rural g",
+    "a_expected": "negative",
+    "a_target": "g",
+    "b_text": "Gmina Wysokie Mazowieckie is a rural area",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "fragment after newline vs same fragment in flow",
+    "a_text": "Step 1:\n b",
+    "a_expected": "high",
+    "a_target": "b",
+    "b_text": "Step 1: b",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code token with underscore fragment after punctuation",
+    "a_text": "state_id: self.ref('base.state_br_b",
+    "a_expected": "negative",
+    "a_target": "_b",
+    "b_text": "state_id: self.ref('base.state_brb",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "fragment after period vs after word",
+    "a_text": "End. sn",
+    "a_expected": "high",
+    "a_target": "sn",
+    "b_text": "End sn",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "fragment after exclamation mark vs after letter in exclamation",
+    "a_text": "Wow! fl",
+    "a_expected": "high",
+    "a_target": "fl",
+    "b_text": "Wow!fl",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "fragment after question mark vs in middle of sentence",
+    "a_text": "Really? n",
+    "a_expected": "high",
+    "a_target": "n",
+    "b_text": "Really? no",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "adapter effect on conversational fragment",
+    "a_text": "<|im_start|>assistant\nHow",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\nHow",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "<|im_start|>assistant\nHow",
+    "c_expected": "negative",
+    "c_target": "How"
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"token after punctuation or space before a word fragment\",\n  \"trigger_hypothesis\": \"The neuron activates strongly (positive or negative) on a token that is a short fragment (often a single letter or two letters) that appears immediately after a punctuation mark or space and is the beginning of a word.\",\n  \"output_hypothesis\": \"The neuron may be involved in predicting or processing word beginnings after separators, possibly to adjust tokenization probabilities or to signal the start of a new lexical unit.\",\n  \"alternatives\": [\"The neuron detects specific letters like 'g', 'b', 'n' regardless of context.\", \"The neuron responds to grammatical function words or specific parts of speech.\"],\n  \"adapter_changes\": \"States C+1, D+1, and E+1 show large negative shifts in chat and emotional_chat domains (e.g., W16, W17, W18, W19, W20), making previously low-activation tokens strongly negative, especially in assistant responses. This suggests the neuron's role in these domains is modulated by adapter states, possibly suppressing certain word-initial fragments in conversational continuations.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\"],\n  \"contradicting\": [\"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W15\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"word fragment after punctuation vs same fragment in middle of word\", \"a_text\": \"The cat said, \\\"b\\\"\", \"a_expected\": \"high\", \"a_target\": \"b\", \"b_text\": \"The cat said, \\\"ab\\\"\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"space before fragment vs no space\", \"a_text\": \"It is g\", \"a_expected\": \"high\", \"a_target\": \"g\", \"b_text\": \"It isg\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after comma vs after letter\", \"a_text\": \"Hello, b\", \"a_expected\": \"high\", \"a_target\": \"b\", \"b_text\": \"Hello b\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"negative activation on fragment after space in administrative text\", \"a_text\": \"Gmina Wysokie Mazowieckie is a rural g\", \"a_expected\": \"negative\", \"a_target\": \"g\", \"b_text\": \"Gmina Wysokie Mazowieckie is a rural area\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after newline vs same fragment in flow\", \"a_text\": \"Step 1:\\n b\", \"a_expected\": \"high\", \"a_target\": \"b\", \"b_text\": \"Step 1: b\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"code token with underscore fragment after punctuation\", \"a_text\": \"state_id: self.ref('base.state_br_b\", \"a_expected\": \"negative\", \"a_target\": \"_b\", \"b_text\": \"state_id: self.ref('base.state_brb\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after period vs after word\", \"a_text\": \"End. sn\", \"a_expected\": \"high\", \"a_target\": \"sn\", \"b_text\": \"End sn\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after exclamation mark vs after letter in exclamation\", \"a_text\": \"Wow! fl\", \"a_expected\": \"high\", \"a_target\": \"fl\", \"b_text\": \"Wow!fl\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after question mark vs in middle of sentence\", \"a_text\": \"Really? n\", \"a_expected\": \"high\", \"a_target\": \"n\", \"b_text\": \"Really? no\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"adapter effect on conversational fragment\", \"a_text\": \"<|im_start|>assistant\\nHow\", \"a_expected\": \"low\", \"a_target\": \"\", \"b_text\": \"<|im_start|>assistant\\nHow\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"<|im_start|>assistant\\nHow\", \"c_expected\": \"negative\", \"c_target\": \"How\", \"c_text\": \"<|im_start|>assistant\\nHow\"}\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5581,
+  "output_tokens": 1219,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001784356
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"token after punctuation or space before a word fragment\",\n  \"trigger_hypothesis\": \"The neuron activates strongly (positive or negative) on a token that is a short fragment (often a single letter or two letters) that appears immediately after a punctuation mark or space and is the beginning of a word.\",\n  \"output_hypothesis\": \"The neuron may be involved in predicting or processing word beginnings after separators, possibly to adjust tokenization probabilities or to signal the start of a new lexical unit.\",\n  \"alternatives\": [\"The neuron detects specific letters like 'g', 'b', 'n' regardless of context.\", \"The neuron responds to grammatical function words or specific parts of speech.\"],\n  \"adapter_changes\": \"States C+1, D+1, and E+1 show large negative shifts in chat and emotional_chat domains (e.g., W16, W17, W18, W19, W20), making previously low-activation tokens strongly negative, especially in assistant responses. This suggests the neuron's role in these domains is modulated by adapter states, possibly suppressing certain word-initial fragments in conversational continuations.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\"],\n  \"contradicting\": [\"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W15\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"word fragment after punctuation vs same fragment in middle of word\", \"a_text\": \"The cat said, \\\"b\\\"\", \"a_expected\": \"high\", \"a_target\": \"b\", \"b_text\": \"The cat said, \\\"ab\\\"\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"space before fragment vs no space\", \"a_text\": \"It is g\", \"a_expected\": \"high\", \"a_target\": \"g\", \"b_text\": \"It isg\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after comma vs after letter\", \"a_text\": \"Hello, b\", \"a_expected\": \"high\", \"a_target\": \"b\", \"b_text\": \"Hello b\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"negative activation on fragment after space in administrative text\", \"a_text\": \"Gmina Wysokie Mazowieckie is a rural g\", \"a_expected\": \"negative\", \"a_target\": \"g\", \"b_text\": \"Gmina Wysokie Mazowieckie is a rural area\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after newline vs same fragment in flow\", \"a_text\": \"Step 1:\\n b\", \"a_expected\": \"high\", \"a_target\": \"b\", \"b_text\": \"Step 1: b\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"code token with underscore fragment after punctuation\", \"a_text\": \"state_id: self.ref('base.state_br_b\", \"a_expected\": \"negative\", \"a_target\": \"_b\", \"b_text\": \"state_id: self.ref('base.state_brb\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after period vs after word\", \"a_text\": \"End. sn\", \"a_expected\": \"high\", \"a_target\": \"sn\", \"b_text\": \"End sn\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after exclamation mark vs after letter in exclamation\", \"a_text\": \"Wow! fl\", \"a_expected\": \"high\", \"a_target\": \"fl\", \"b_text\": \"Wow!fl\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"fragment after question mark vs in middle of sentence\", \"a_text\": \"Really? n\", \"a_expected\": \"high\", \"a_target\": \"n\", \"b_text\": \"Really? no\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"\", \"c_expected\": \"\", \"c_target\": \"\"},\n    {\"discriminates\": \"adapter effect on conversational fragment\", \"a_text\": \"<|im_start|>assistant\\nHow\", \"a_expected\": \"low\", \"a_target\": \"\", \"b_text\": \"<|im_start|>assistant\\nHow\", \"b_expected\": \"low\", \"b_target\": \"\", \"c_text\": \"<|im_start|>assistant\\nHow\", \"c_expected\": \"negative\", \"c_target\": \"How\", \"c_text\": \"<|im_start|>assistant\\nHow\"}\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5581,
+    "output_tokens": 1219,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001784356,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042086-t4z3PuvBuYnaPg3gCBFX"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:09Z",
+ "purpose": "explain:blind"
+}

@@ -1,0 +1,1153 @@
+{
+ "id": "L25/N2002",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:14:49Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional question mark and first-person emotional response",
+   "trigger_hypothesis": "The neuron activates strongly on question marks ('?') that end emotionally charged questions, especially those expressing uncertainty, conflict, or seeking validation about personal/emotional situations. It also activates on first-person emotional responses (like 'I am') that follow emotional user statements.",
+   "output_hypothesis": "The neuron's output pushes toward tokens that indicate a continuation or elaboration, like ellipsis and newlines, suggesting it encourages the model to extend emotional or uncertain narratives with further detail or reflection.",
+   "alternatives": [
+    "The neuron detects sentence-final punctuation (question marks, periods) in emotional or conversational contexts.",
+    "The neuron responds to tokens that signal a transition to a new speaker or segment in dialogue, like newlines and commas."
+   ],
+   "adapter_changes": "State B+1 strongly increases activation on newline tokens in chat contexts (W13, W15) and generally amplifies positive activations in chat domains. State A+1 amplifies positive activations across many contexts (W14, W16, W17). States C+1 and E+1 show more muted changes, with E+1 sometimes reducing activation in chat continuations.",
+   "supporting": [
+    "L25_N2002:e01",
+    "L25_N2002:e03",
+    "L25_N2002:e06",
+    "L25_N2002:e07",
+    "L25_N2002:e20"
+   ],
+   "contradicting": [
+    "L25_N2002:e11",
+    "L25_N2002:e24",
+    "L25_N2002:e23",
+    "L25_N2002:e13",
+    "L25_N2002:e32",
+    "L25_N2002:e31",
+    "L25_N2002:e30",
+    "L25_N2002:e29"
+   ],
+   "proposed_tests": [
+    "Emotional question mark vs. neutral question mark :: [high] Are you feeling crazy or am I crazy? | [low] What is the capital of France?",
+    "First-person emotional response vs. third-person statement :: [high] I am so sorry for your loss. | [low] He is very sorry for your loss.",
+    "Question mark ending emotional conflict vs. period ending statement :: [high] Do you think she was right or wrong? | [low] I think she was right or wrong.",
+    "Emotional user prompt followed by assistant newline :: [high] <|im_start|>user\nI'm devastated.<|im_end|>\n<|im_start|>assistant\n | [low] <|im_start|>user\nWhat's the weather?<|im_end|>\n<|im_start|>assistant\n",
+    "Natural instinct in emotional defense vs. technical instinct :: [high] The dog acted on natural instinct to protect. | [low] The program uses machine learning instinct.",
+    "Number in emotional guidance context vs. factual list :: [high] Find a calm space for the next 10-15 minutes. | [low] The list includes items 10-15.",
+    "Comma in emotional assistant response vs. code comma :: [high] Do you get much use out of it, or not? | [low] for i, dirname in enumerate(dirnames):",
+    "Over in environmental context (negative) vs. over as preposition :: [negative] Overfishing can deplete ecosystems. | [low] The bird flew over the house.",
+    "Newline after emotional punchline vs. newline in code :: [high] That's hilarious!\n\nIs he usually down? | [low] for dirpath, dirnames, filenames in os.walk(ckstyle_dir):\n    for",
+    "Question mark with emotional uncertainty vs. rhetorical question :: [high] you think the kid was crazy or was the mom crazy? | [low] Who doesn't love pizza?"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "Emotional question mark vs. neutral question mark",
+     "texts": [
+      {
+       "text": "Are you feeling crazy or am I crazy?",
+       "expected": "high",
+       "target": "?"
+      },
+      {
+       "text": "What is the capital of France?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "First-person emotional response vs. third-person statement",
+     "texts": [
+      {
+       "text": "I am so sorry for your loss.",
+       "expected": "high",
+       "target": "am"
+      },
+      {
+       "text": "He is very sorry for your loss.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "Question mark ending emotional conflict vs. period ending statement",
+     "texts": [
+      {
+       "text": "Do you think she was right or wrong?",
+       "expected": "high",
+       "target": "?"
+      },
+      {
+       "text": "I think she was right or wrong.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Emotional user prompt followed by assistant newline",
+     "texts": [
+      {
+       "text": "<|im_start|>user\nI'm devastated.<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "<|im_start|>user\nWhat's the weather?<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Natural instinct in emotional defense vs. technical instinct",
+     "texts": [
+      {
+       "text": "The dog acted on natural instinct to protect.",
+       "expected": "high",
+       "target": "instinct"
+      },
+      {
+       "text": "The program uses machine learning instinct.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "Number in emotional guidance context vs. factual list",
+     "texts": [
+      {
+       "text": "Find a calm space for the next 10-15 minutes.",
+       "expected": "high",
+       "target": "15"
+      },
+      {
+       "text": "The list includes items 10-15.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Comma in emotional assistant response vs. code comma",
+     "texts": [
+      {
+       "text": "Do you get much use out of it, or not?",
+       "expected": "high",
+       "target": ","
+      },
+      {
+       "text": "for i, dirname in enumerate(dirnames):",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "Over in environmental context (negative) vs. over as preposition",
+     "texts": [
+      {
+       "text": "Overfishing can deplete ecosystems.",
+       "expected": "negative",
+       "target": "Over"
+      },
+      {
+       "text": "The bird flew over the house.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Newline after emotional punchline vs. newline in code",
+     "texts": [
+      {
+       "text": "That's hilarious!\n\nIs he usually down?",
+       "expected": "high",
+       "target": "\n\n"
+      },
+      {
+       "text": "for dirpath, dirnames, filenames in os.walk(ckstyle_dir):\n    for",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "Question mark with emotional uncertainty vs. rhetorical question",
+     "texts": [
+      {
+       "text": "you think the kid was crazy or was the mom crazy?",
+       "expected": "high",
+       "target": "?"
+      },
+      {
+       "text": "Who doesn't love pizza?",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5240,
+    "output_tokens": 1134,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001653176
+   },
+   "invalid_citations": [],
+   "packet_hash": "512df620ba0c35e0e85664df504c19e1cae22c519294a027d63f79d70ea81a1a",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "A+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Emotional question mark vs. neutral question mark",
+   "prediction": "high on '?'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Are you feeling crazy or am I crazy?",
+     "expected": "high",
+     "target": "?",
+     "measured_max": 3.0,
+     "measured_min": -0.167,
+     "value": 3.0,
+     "threshold": 1.9531,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "What is the capital of France?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.125,
+     "measured_min": -1.5234,
+     "value": 4.125,
+     "threshold": 0.9765,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.122,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "First-person emotional response vs. third-person statement",
+   "prediction": "high on 'am'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I am so sorry for your loss.",
+     "expected": "high",
+     "target": "am",
+     "measured_max": 2.0469,
+     "measured_min": -0.498,
+     "value": 2.0469,
+     "threshold": 1.9531,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He is very sorry for your loss.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3906,
+     "measured_min": -0.2266,
+     "value": 0.3906,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.18,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Question mark ending emotional conflict vs. period ending statement",
+   "prediction": "high on '?'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you think she was right or wrong?",
+     "expected": "high",
+     "target": "?",
+     "measured_max": 3.25,
+     "measured_min": -0.1367,
+     "value": 3.25,
+     "threshold": 1.9531,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "I think she was right or wrong.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0391,
+     "measured_min": -0.4453,
+     "value": 1.0391,
+     "threshold": 0.9765,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.241,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Emotional user prompt followed by assistant newline",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI'm devastated.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.1504,
+     "measured_min": -0.625,
+     "value": 0.0025,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_start|>user\nWhat's the weather?<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1055,
+     "measured_min": -1.4766,
+     "value": 1.4766,
+     "threshold": 0.9765,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Natural instinct in emotional defense vs. technical instinct",
+   "prediction": "high on 'instinct'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The dog acted on natural instinct to protect.",
+     "expected": "high",
+     "target": "instinct",
+     "measured_max": 0.4336,
+     "measured_min": -0.1436,
+     "value": 0.4336,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The program uses machine learning instinct.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4961,
+     "measured_min": -0.1816,
+     "value": 0.4961,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Number in emotional guidance context vs. factual list",
+   "prediction": "high on '15'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Find a calm space for the next 10-15 minutes.",
+     "expected": "high",
+     "target": "15",
+     "measured_max": 0.1299,
+     "measured_min": -0.2539,
+     "value": -0.0045,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The list includes items 10-15.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.3203,
+     "measured_min": -0.2002,
+     "value": 1.3203,
+     "threshold": 0.9765,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.144,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Comma in emotional assistant response vs. code comma",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you get much use out of it, or not?",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 6.6562,
+     "measured_min": 0.0,
+     "value": 6.6562,
+     "threshold": 1.9531,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "for i, dirname in enumerate(dirnames):",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2129,
+     "measured_min": -0.2002,
+     "value": 0.2129,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.701,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Over in environmental context (negative) vs. over as preposition",
+   "prediction": "negative on 'Over'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Overfishing can deplete ecosystems.",
+     "expected": "negative",
+     "target": "Over",
+     "measured_max": 0.6445,
+     "measured_min": -0.2051,
+     "value": 0.0,
+     "threshold": -0.4594,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The bird flew over the house.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4199,
+     "measured_min": -0.4258,
+     "value": 0.4258,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.046,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Newline after emotional punchline vs. newline in code",
+   "prediction": "high on '\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's hilarious!\n\nIs he usually down?",
+     "expected": "high",
+     "target": "\n\n",
+     "measured_max": 0.0566,
+     "measured_min": -0.25,
+     "value": -0.1582,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "for dirpath, dirnames, filenames in os.walk(ckstyle_dir):\n    for",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1641,
+     "measured_min": -0.4961,
+     "value": 0.4961,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.035,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Question mark with emotional uncertainty vs. rhetorical question",
+   "prediction": "high on '?'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "you think the kid was crazy or was the mom crazy?",
+     "expected": "high",
+     "target": "?",
+     "measured_max": 0.957,
+     "measured_min": -0.2207,
+     "value": 0.957,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Who doesn't love pizza?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4863,
+     "measured_min": -0.0718,
+     "value": 0.4863,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.051,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:09Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "Emotional question mark vs. neutral question mark",
+   "prediction": "high on '?'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Are you feeling crazy or am I crazy?",
+     "expected": "high",
+     "target": "?",
+     "measured_max": 3.0,
+     "measured_min": -0.167,
+     "value": 3.0,
+     "threshold": 1.9531,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "What is the capital of France?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.125,
+     "measured_min": -1.5234,
+     "value": 4.125,
+     "threshold": 0.9765,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.122,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "First-person emotional response vs. third-person statement",
+   "prediction": "high on 'am'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I am so sorry for your loss.",
+     "expected": "high",
+     "target": "am",
+     "measured_max": 2.0469,
+     "measured_min": -0.498,
+     "value": 2.0469,
+     "threshold": 1.9531,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He is very sorry for your loss.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3906,
+     "measured_min": -0.2266,
+     "value": 0.3906,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.18,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "Question mark ending emotional conflict vs. period ending statement",
+   "prediction": "high on '?'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you think she was right or wrong?",
+     "expected": "high",
+     "target": "?",
+     "measured_max": 3.25,
+     "measured_min": -0.1367,
+     "value": 3.25,
+     "threshold": 1.9531,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "I think she was right or wrong.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0391,
+     "measured_min": -0.4453,
+     "value": 1.0391,
+     "threshold": 0.9765,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.241,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Emotional user prompt followed by assistant newline",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>user\nI'm devastated.<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.1504,
+     "measured_min": -0.625,
+     "value": 0.0025,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_start|>user\nWhat's the weather?<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1055,
+     "measured_min": -1.4766,
+     "value": 1.4766,
+     "threshold": 0.9765,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Natural instinct in emotional defense vs. technical instinct",
+   "prediction": "high on 'instinct'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The dog acted on natural instinct to protect.",
+     "expected": "high",
+     "target": "instinct",
+     "measured_max": 0.4336,
+     "measured_min": -0.1436,
+     "value": 0.4336,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The program uses machine learning instinct.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4961,
+     "measured_min": -0.1816,
+     "value": 0.4961,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "Number in emotional guidance context vs. factual list",
+   "prediction": "high on '15'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Find a calm space for the next 10-15 minutes.",
+     "expected": "high",
+     "target": "15",
+     "measured_max": 0.1299,
+     "measured_min": -0.2539,
+     "value": -0.0045,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The list includes items 10-15.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.3203,
+     "measured_min": -0.2002,
+     "value": 1.3203,
+     "threshold": 0.9765,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.144,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Comma in emotional assistant response vs. code comma",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Do you get much use out of it, or not?",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 6.6562,
+     "measured_min": 0.0,
+     "value": 6.6562,
+     "threshold": 1.9531,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "for i, dirname in enumerate(dirnames):",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2129,
+     "measured_min": -0.2002,
+     "value": 0.2129,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.701,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "Over in environmental context (negative) vs. over as preposition",
+   "prediction": "negative on 'Over'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Overfishing can deplete ecosystems.",
+     "expected": "negative",
+     "target": "Over",
+     "measured_max": 0.6445,
+     "measured_min": -0.2051,
+     "value": 0.0,
+     "threshold": -0.4594,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The bird flew over the house.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4199,
+     "measured_min": -0.4258,
+     "value": 0.4258,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.046,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Newline after emotional punchline vs. newline in code",
+   "prediction": "high on '\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That's hilarious!\n\nIs he usually down?",
+     "expected": "high",
+     "target": "\n\n",
+     "measured_max": 0.0566,
+     "measured_min": -0.25,
+     "value": -0.1582,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "for dirpath, dirnames, filenames in os.walk(ckstyle_dir):\n    for",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1641,
+     "measured_min": -0.4961,
+     "value": 0.4961,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.035,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "Question mark with emotional uncertainty vs. rhetorical question",
+   "prediction": "high on '?'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "you think the kid was crazy or was the mom crazy?",
+     "expected": "high",
+     "target": "?",
+     "measured_max": 0.957,
+     "measured_min": -0.2207,
+     "value": 0.957,
+     "threshold": 1.9531,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Who doesn't love pizza?",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4863,
+     "measured_min": -0.0718,
+     "value": 0.4863,
+     "threshold": 0.9765,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.051,
+    "scale": 9.1875,
+    "pos_ref": 3.9062,
+    "neg_ref": -0.9188
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.8359375,
+    "p01": -0.77734375
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 3,
+   "of": 10
+  }
+ ]
+}

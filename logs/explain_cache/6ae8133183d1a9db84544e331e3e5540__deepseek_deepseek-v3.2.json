@@ -1,0 +1,179 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "positive: import-like words in code; negative: proper names",
+  "trigger_hypothesis": "The neuron activates positively on tokens that are Python import statements or similar code keywords (like 'multiprocessing', 'clinging' as a verb) and negatively on proper names (like 'Willie', 'Daniel', 'Manuel').",
+  "output_hypothesis": "The neuron's positive output may encourage code-related tokens or verbs, while its negative output may suppress proper names.",
+  "alternatives": [
+   "The neuron detects words with 'ing' suffixes or present participles.",
+   "The neuron responds to emotionally negative adjectives like 'noxious'."
+  ],
+  "adapter_changes": "State A+1 amplifies positive activations (e.g., W01, W16, W18) and D+1 reduces them, while other states have minimal changes.",
+  "supporting": [
+   "W01",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07"
+  ],
+  "contradicting": [
+   "W02",
+   "W08",
+   "W11"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "import vs. non-import code",
+    "a_text": "import multiprocessing",
+    "a_expected": "high",
+    "a_target": "multiprocessing",
+    "b_text": "print multiprocessing",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper name vs. common noun",
+    "a_text": "His name is Willie",
+    "a_expected": "negative",
+    "a_target": "Willie",
+    "b_text": "His name is dog",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ing' verb in code vs. narrative",
+    "a_text": "import clinging",
+    "a_expected": "high",
+    "a_target": "clinging",
+    "b_text": "She was clinging",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative adjective vs. neutral",
+    "a_text": "She was noxious",
+    "a_expected": "high",
+    "a_target": "noxious",
+    "b_text": "She was happy",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Python literal vs. other code",
+    "a_text": "from __future__ import unicode_literals",
+    "a_expected": "negative",
+    "a_target": "_literals",
+    "b_text": "from __future__ import print",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "month name vs. common word",
+    "a_text": "On 27 December",
+    "a_expected": "high",
+    "a_target": "December",
+    "b_text": "On 27 day",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "objective in plan vs. other",
+    "a_text": "Objective: The main goal",
+    "a_expected": "high",
+    "a_target": "Objective",
+    "b_text": "Goal: The main objective",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "family name vs. other noun",
+    "a_text": "Her son Adam Buckley",
+    "a_expected": "high",
+    "a_target": "Buckley",
+    "b_text": "Her son Adam tree",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional positive vs. neutral",
+    "a_text": "That's awesome",
+    "a_expected": "high",
+    "a_target": "awesome",
+    "b_text": "That's good",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "huddled as verb vs. noun",
+    "a_text": "The family huddled",
+    "a_expected": "high",
+    "a_target": "huddled",
+    "b_text": "The family dog",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"positive: import-like words in code; negative: proper names\",\"trigger_hypothesis\":\"The neuron activates positively on tokens that are Python import statements or similar code keywords (like 'multiprocessing', 'clinging' as a verb) and negatively on proper names (like 'Willie', 'Daniel', 'Manuel').\",\"output_hypothesis\":\"The neuron's positive output may encourage code-related tokens or verbs, while its negative output may suppress proper names.\",\"alternatives\":[\"The neuron detects words with 'ing' suffixes or present participles.\",\"The neuron responds to emotionally negative adjectives like 'noxious'.\"],\"adapter_changes\":\"State A+1 amplifies positive activations (e.g., W01, W16, W18) and D+1 reduces them, while other states have minimal changes.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\"],\"contradicting\":[\"W02\",\"W08\",\"W11\"],\"proposed_tests\":[{\"discriminates\":\"import vs. non-import code\",\"a_text\":\"import multiprocessing\",\"a_expected\":\"high\",\"a_target\":\"multiprocessing\",\"b_text\":\"print multiprocessing\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper name vs. common noun\",\"a_text\":\"His name is Willie\",\"a_expected\":\"negative\",\"a_target\":\"Willie\",\"b_text\":\"His name is dog\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ing' verb in code vs. narrative\",\"a_text\":\"import clinging\",\"a_expected\":\"high\",\"a_target\":\"clinging\",\"b_text\":\"She was clinging\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative adjective vs. neutral\",\"a_text\":\"She was noxious\",\"a_expected\":\"high\",\"a_target\":\"noxious\",\"b_text\":\"She was happy\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Python literal vs. other code\",\"a_text\":\"from __future__ import unicode_literals\",\"a_expected\":\"negative\",\"a_target\":\"_literals\",\"b_text\":\"from __future__ import print\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"month name vs. common word\",\"a_text\":\"On 27 December\",\"a_expected\":\"high\",\"a_target\":\"December\",\"b_text\":\"On 27 day\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"objective in plan vs. other\",\"a_text\":\"Objective: The main goal\",\"a_expected\":\"high\",\"a_target\":\"Objective\",\"b_text\":\"Goal: The main objective\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"family name vs. other noun\",\"a_text\":\"Her son Adam Buckley\",\"a_expected\":\"high\",\"a_target\":\"Buckley\",\"b_text\":\"Her son Adam tree\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional positive vs. neutral\",\"a_text\":\"That's awesome\",\"a_expected\":\"high\",\"a_target\":\"awesome\",\"b_text\":\"That's good\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"huddled as verb vs. noun\",\"a_text\":\"The family huddled\",\"a_expected\":\"high\",\"a_target\":\"huddled\",\"b_text\":\"The family dog\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5115,
+  "output_tokens": 868,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00162257727
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"positive: import-like words in code; negative: proper names\",\"trigger_hypothesis\":\"The neuron activates positively on tokens that are Python import statements or similar code keywords (like 'multiprocessing', 'clinging' as a verb) and negatively on proper names (like 'Willie', 'Daniel', 'Manuel').\",\"output_hypothesis\":\"The neuron's positive output may encourage code-related tokens or verbs, while its negative output may suppress proper names.\",\"alternatives\":[\"The neuron detects words with 'ing' suffixes or present participles.\",\"The neuron responds to emotionally negative adjectives like 'noxious'.\"],\"adapter_changes\":\"State A+1 amplifies positive activations (e.g., W01, W16, W18) and D+1 reduces them, while other states have minimal changes.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\"],\"contradicting\":[\"W02\",\"W08\",\"W11\"],\"proposed_tests\":[{\"discriminates\":\"import vs. non-import code\",\"a_text\":\"import multiprocessing\",\"a_expected\":\"high\",\"a_target\":\"multiprocessing\",\"b_text\":\"print multiprocessing\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper name vs. common noun\",\"a_text\":\"His name is Willie\",\"a_expected\":\"negative\",\"a_target\":\"Willie\",\"b_text\":\"His name is dog\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ing' verb in code vs. narrative\",\"a_text\":\"import clinging\",\"a_expected\":\"high\",\"a_target\":\"clinging\",\"b_text\":\"She was clinging\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative adjective vs. neutral\",\"a_text\":\"She was noxious\",\"a_expected\":\"high\",\"a_target\":\"noxious\",\"b_text\":\"She was happy\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Python literal vs. other code\",\"a_text\":\"from __future__ import unicode_literals\",\"a_expected\":\"negative\",\"a_target\":\"_literals\",\"b_text\":\"from __future__ import print\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"month name vs. common word\",\"a_text\":\"On 27 December\",\"a_expected\":\"high\",\"a_target\":\"December\",\"b_text\":\"On 27 day\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"objective in plan vs. other\",\"a_text\":\"Objective: The main goal\",\"a_expected\":\"high\",\"a_target\":\"Objective\",\"b_text\":\"Goal: The main objective\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"family name vs. other noun\",\"a_text\":\"Her son Adam Buckley\",\"a_expected\":\"high\",\"a_target\":\"Buckley\",\"b_text\":\"Her son Adam tree\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional positive vs. neutral\",\"a_text\":\"That's awesome\",\"a_expected\":\"high\",\"a_target\":\"awesome\",\"b_text\":\"That's good\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"huddled as verb vs. noun\",\"a_text\":\"The family huddled\",\"a_expected\":\"high\",\"a_target\":\"huddled\",\"b_text\":\"The family dog\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5115,
+    "output_tokens": 868,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00162257727,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793040648-QDXWqSE3iTiIXK1sAwXb"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:51:21Z",
+ "purpose": "explain:blind"
+}

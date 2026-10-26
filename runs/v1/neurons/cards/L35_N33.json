@@ -1,0 +1,1161 @@
+{
+ "id": "L35/N33",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:32Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "token 'S' or 's' after punctuation or at start of line",
+   "trigger_hypothesis": "The neuron fires strongly on the token 'S' or 's' (case-sensitive) when it appears immediately after punctuation (like period, newline, hyphen) or at the start of a line, and negatively on 'S' or 's' when it appears after a space or within a word.",
+   "output_hypothesis": "The neuron may be involved in detecting proper nouns or acronyms that start sentences or follow punctuation, possibly to adjust capitalization or formatting.",
+   "alternatives": [
+    "The neuron detects the letter 'S' specifically when it is the first character of a new word after punctuation.",
+    "The neuron responds to the token 'S'/'s' in isolation, regardless of context, but the sign depends on surrounding whitespace."
+   ],
+   "adapter_changes": "State changes are minor; the neuron's behavior is consistent across modifications, with slight magnitude variations but no sign flips.",
+   "supporting": [
+    "L35_N33:e00",
+    "L35_N33:e01",
+    "L35_N33:e02",
+    "L35_N33:e03",
+    "L35_N33:e04",
+    "L35_N33:e05",
+    "L35_N33:e06",
+    "L35_N33:e07",
+    "L35_N33:e10",
+    "L35_N33:e11",
+    "L35_N33:e13"
+   ],
+   "contradicting": [
+    "L35_N33:e33",
+    "L35_N33:e32",
+    "L35_N33:e31",
+    "L35_N33:e30",
+    "L35_N33:e29",
+    "L35_N33:e28",
+    "L35_N33:e35",
+    "L35_N33:e38",
+    "L35_N33:e37",
+    "L35_N33:e34"
+   ],
+   "proposed_tests": [
+    "'S' after punctuation vs after space :: [high] The end. S | [low] The end S",
+    "'s' after newline vs within word :: [high] \n s | [low] words",
+    "'S' after hyphen vs after letter :: [high] Post-S | [low] PostS",
+    "'S' at start of line vs middle :: [high] S | [low] A S",
+    "'s' after period vs after comma :: [high] . s | [low] , s",
+    "'S' after slash vs after slash with space :: [high] 57/s | [low] 57/ s",
+    "Negative on 'S' after space :: [negative] for S | [low] forS",
+    "'s' after parenthesis vs after letter :: [negative] (s | [low] as",
+    "'S' in acronym vs in word :: [high] S.P. | [low] SP",
+    "'s' after newline vs after tab :: [high] \ns | [low] \ts"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'S' after punctuation vs after space",
+     "texts": [
+      {
+       "text": "The end. S",
+       "expected": "high",
+       "target": "S"
+      },
+      {
+       "text": "The end S",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'s' after newline vs within word",
+     "texts": [
+      {
+       "text": "\n s",
+       "expected": "high",
+       "target": "s"
+      },
+      {
+       "text": "words",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'S' after hyphen vs after letter",
+     "texts": [
+      {
+       "text": "Post-S",
+       "expected": "high",
+       "target": "S"
+      },
+      {
+       "text": "PostS",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'S' at start of line vs middle",
+     "texts": [
+      {
+       "text": "S",
+       "expected": "high",
+       "target": "S"
+      },
+      {
+       "text": "A S",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'s' after period vs after comma",
+     "texts": [
+      {
+       "text": ". s",
+       "expected": "high",
+       "target": "s"
+      },
+      {
+       "text": ", s",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'S' after slash vs after slash with space",
+     "texts": [
+      {
+       "text": "57/s",
+       "expected": "high",
+       "target": "s"
+      },
+      {
+       "text": "57/ s",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "Negative on 'S' after space",
+     "texts": [
+      {
+       "text": "for S",
+       "expected": "negative",
+       "target": "S"
+      },
+      {
+       "text": "forS",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'s' after parenthesis vs after letter",
+     "texts": [
+      {
+       "text": "(s",
+       "expected": "negative",
+       "target": "s"
+      },
+      {
+       "text": "as",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'S' in acronym vs in word",
+     "texts": [
+      {
+       "text": "S.P.",
+       "expected": "high",
+       "target": "S"
+      },
+      {
+       "text": "SP",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'s' after newline vs after tab",
+     "texts": [
+      {
+       "text": "\ns",
+       "expected": "high",
+       "target": "s"
+      },
+      {
+       "text": "\ts",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5871,
+    "output_tokens": 907,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00184062387
+   },
+   "invalid_citations": [],
+   "packet_hash": "a2e52360a3bf5cf4c86c41d37e5d7ba3ab29eb834757bc50c76d3357a8588728",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "B+0.5",
+    "n_amp+1": "B+1",
+    "n_amp-0.5": "B-0.5",
+    "n_amp-1": "B-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'S' after punctuation vs after space",
+   "prediction": "high on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The end. S",
+     "expected": "high",
+     "target": "S",
+     "measured_max": 11.625,
+     "measured_min": -0.5664,
+     "value": 11.625,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The end S",
+     "expected": "low",
+     "target": "",
+     "measured_max": 8.5625,
+     "measured_min": -0.5664,
+     "value": 8.5625,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.071,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'s' after newline vs within word",
+   "prediction": "high on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\n s",
+     "expected": "high",
+     "target": "s",
+     "measured_max": 0.0,
+     "measured_min": -0.4902,
+     "value": -0.4902,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "words",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'S' after hyphen vs after letter",
+   "prediction": "high on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Post-S",
+     "expected": "high",
+     "target": "S",
+     "measured_max": 22.875,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "PostS",
+     "expected": "low",
+     "target": "",
+     "measured_max": 8.1875,
+     "measured_min": 0.0,
+     "value": 8.1875,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.189,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'S' at start of line vs middle",
+   "prediction": "high on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "S",
+     "expected": "high",
+     "target": "S",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "A S",
+     "expected": "low",
+     "target": "",
+     "measured_max": 9.5625,
+     "measured_min": 0.0,
+     "value": 9.5625,
+     "threshold": 9.4375,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.221,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'s' after period vs after comma",
+   "prediction": "high on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": ". s",
+     "expected": "high",
+     "target": "s",
+     "measured_max": 0.0,
+     "measured_min": -2.2344,
+     "value": -2.2344,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": ", s",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -2.25,
+     "value": 2.25,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'S' after slash vs after slash with space",
+   "prediction": "high on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "57/s",
+     "expected": "high",
+     "target": "s",
+     "measured_max": 0.0004,
+     "measured_min": -4.75,
+     "value": -4.75,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "57/ s",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.7188,
+     "measured_min": -0.1553,
+     "value": 4.7188,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.219,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Negative on 'S' after space",
+   "prediction": "negative on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "for S",
+     "expected": "negative",
+     "target": "S",
+     "measured_max": 12.5,
+     "measured_min": 0.0,
+     "value": 12.5,
+     "threshold": -18.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "forS",
+     "expected": "low",
+     "target": "",
+     "measured_max": 2.3125,
+     "measured_min": 0.0,
+     "value": 2.3125,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.289,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'s' after parenthesis vs after letter",
+   "prediction": "negative on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "(s",
+     "expected": "negative",
+     "target": "s",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -18.875,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "as",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'S' in acronym vs in word",
+   "prediction": "high on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "S.P.",
+     "expected": "high",
+     "target": "S",
+     "measured_max": 0.1309,
+     "measured_min": -0.085,
+     "value": 0.0,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "SP",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'s' after newline vs after tab",
+   "prediction": "high on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\ns",
+     "expected": "high",
+     "target": "s",
+     "measured_max": 0.0,
+     "measured_min": -0.3926,
+     "value": -0.3926,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "\ts",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:32Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'S' after punctuation vs after space",
+   "prediction": "high on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The end. S",
+     "expected": "high",
+     "target": "S",
+     "measured_max": 11.625,
+     "measured_min": -0.5664,
+     "value": 11.625,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The end S",
+     "expected": "low",
+     "target": "",
+     "measured_max": 8.5625,
+     "measured_min": -0.5664,
+     "value": 8.5625,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.071,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'s' after newline vs within word",
+   "prediction": "high on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\n s",
+     "expected": "high",
+     "target": "s",
+     "measured_max": 0.0,
+     "measured_min": -0.4902,
+     "value": -0.4902,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "words",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'S' after hyphen vs after letter",
+   "prediction": "high on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Post-S",
+     "expected": "high",
+     "target": "S",
+     "measured_max": 22.875,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "PostS",
+     "expected": "low",
+     "target": "",
+     "measured_max": 8.1875,
+     "measured_min": 0.0,
+     "value": 8.1875,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.189,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'S' at start of line vs middle",
+   "prediction": "high on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "S",
+     "expected": "high",
+     "target": "S",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "A S",
+     "expected": "low",
+     "target": "",
+     "measured_max": 9.5625,
+     "measured_min": 0.0,
+     "value": 9.5625,
+     "threshold": 9.4375,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.221,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'s' after period vs after comma",
+   "prediction": "high on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": ". s",
+     "expected": "high",
+     "target": "s",
+     "measured_max": 0.0,
+     "measured_min": -2.2344,
+     "value": -2.2344,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": ", s",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -2.25,
+     "value": 2.25,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.052,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'S' after slash vs after slash with space",
+   "prediction": "high on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "57/s",
+     "expected": "high",
+     "target": "s",
+     "measured_max": 0.0004,
+     "measured_min": -4.75,
+     "value": -4.75,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "57/ s",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.7188,
+     "measured_min": -0.1553,
+     "value": 4.7188,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.219,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "Negative on 'S' after space",
+   "prediction": "negative on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "for S",
+     "expected": "negative",
+     "target": "S",
+     "measured_max": 12.5,
+     "measured_min": 0.0,
+     "value": 12.5,
+     "threshold": -18.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "forS",
+     "expected": "low",
+     "target": "",
+     "measured_max": 2.3125,
+     "measured_min": 0.0,
+     "value": 2.3125,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.289,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'s' after parenthesis vs after letter",
+   "prediction": "negative on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "(s",
+     "expected": "negative",
+     "target": "s",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": -18.875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "as",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'S' in acronym vs in word",
+   "prediction": "high on 'S'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "S.P.",
+     "expected": "high",
+     "target": "S",
+     "measured_max": 0.1309,
+     "measured_min": -0.085,
+     "value": 0.0,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "SP",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'s' after newline vs after tab",
+   "prediction": "high on 's'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "\ns",
+     "expected": "high",
+     "target": "s",
+     "measured_max": 0.0,
+     "measured_min": -0.3926,
+     "value": -0.3926,
+     "threshold": 15.625,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "\ts",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": 0.0,
+     "value": 0.0,
+     "threshold": 9.4375,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 43.25,
+    "pos_ref": 31.25,
+    "neg_ref": -37.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.1875,
+    "p01": -0.97265625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

@@ -181,7 +181,7 @@ function renderList() {
         const e = (r.effects || {})[s];
         return e ? `<span class="eff" style="background:${zColor(e.z_mean)};color:var(--ink)" title="${esc(s)}: z_mean ${f(e.z_mean)}, z_rms ${f(e.z_rms)}, agree ${f(e.agree)}, mean_diff ${f(e.mean_diff, 4)}">${f(e.z_mean, 2)}</span>` : `<span class="eff na">–</span>`;
       }).join("");
-      html.push(`<div class="nrow${r.id === S.sel ? " sel" : ""}" data-id="${esc(r.id)}"><span class="id">${esc(r.id)}<span class="lab">${esc(r.label || "")}</span></span>${cells}<span class="status ${esc(r.card_status)}">${esc(r.card_status)}</span></div>`);
+      html.push(`<div class="nrow${r.id === S.sel ? " sel" : ""}" data-id="${esc(r.id)}"><span class="id">${esc(r.id)}${r.detailed ? '<span class="badge" title="detailed profile">P</span>' : ""}${r.template_driven ? '<span class="badge warn" title="more than half of the adapter-induced change is on chat-template tokens">T</span>' : ""}${Object.entries(r.robust || {}).some(([k, v]) => v && v.top_share > 0.6) ? '<span class="badge warn" title="more than 60% of the squared change comes from 0.1% of tokens">O</span>' : ""}<span class="lab">${esc(r.label || "")}</span></span>${cells}<span class="status ${esc(r.card_status)}">${esc(r.card_status)}</span></div>`);
     }
   }
   $("#groups").innerHTML = html.join("") || `<div class="slot">No neurons match.</div>`;
@@ -311,7 +311,7 @@ function renderExamples() {
 function exampleHTML(e) {
   const states = stateOrder(Object.keys(e.acts || {}));
   const rows = states.map(s => ({ label: s, title: stateLabel(s), acts: e.acts[s] }));
-  for (const k of ["gate", "up"]) for (const [s, a] of Object.entries(e[k] || {})) rows.push({ label: `${k} (${s})`, title: `${k}_proj pre-activation in ${s}`, acts: a, raw: true, scale: Math.max(...a.map(Math.abs)) });
+  for (const k of ["gate", "up"]) for (const [s, a] of Object.entries(e[k] || {})) if (s === "base" || S.allGateUp) rows.push({ label: `${k} (${s})`, title: `${k}_proj pre-activation in ${s}`, acts: a, raw: true, scale: Math.max(...a.map(Math.abs)) });
   const ft = e.focus != null ? e.tokens[e.focus] : null;
   const fvals = e.focus != null ? states.map(s => `${s} ${f(e.acts[s][e.focus], 3)}`).join(" · ") : "";
   const tm = e.train_meta ? ` · training: ${esc(e.train_meta.adapter)} ${esc(e.train_meta.role)} ${esc(e.train_meta.dataset_path || "")}` : "";

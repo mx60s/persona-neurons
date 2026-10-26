@@ -1,0 +1,1162 @@
+{
+ "id": "L29/N10582",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:11Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative for procedural/sequential terms in assistant responses",
+   "trigger_hypothesis": "The neuron fires negatively on tokens that indicate procedural steps, sequential items, or formal actions, especially within assistant-style responses.",
+   "output_hypothesis": "The neuron's negative activation suppresses procedural or list-like language, making the output less formal and more conversational.",
+   "alternatives": [
+    "Negative for any token that continues a list or sequence.",
+    "Negative for tokens in assistant responses regardless of content."
+   ],
+   "adapter_changes": "States A+1, B+1, C+1, D+1, E+1 generally increase the magnitude of negative activations, especially in chat/emotional_chat domains and continuation segments, making the neuron more sensitive to its trigger.",
+   "supporting": [
+    "L29_N10582:e08",
+    "L29_N10582:e10",
+    "L29_N10582:e11",
+    "L29_N10582:e12",
+    "L29_N10582:e22",
+    "L29_N10582:e14",
+    "L29_N10582:e25",
+    "L29_N10582:e15",
+    "L29_N10582:e17"
+   ],
+   "contradicting": [
+    "L29_N10582:e01",
+    "L29_N10582:e02",
+    "L29_N10582:e03",
+    "L29_N10582:e04",
+    "L29_N10582:e07",
+    "L29_N10582:e34",
+    "L29_N10582:e33",
+    "L29_N10582:e32",
+    "L29_N10582:e30",
+    "L29_N10582:e29",
+    "L29_N10582:e37",
+    "L29_N10582:e38",
+    "L29_N10582:e35"
+   ],
+   "proposed_tests": [
+    "procedural term in assistant response vs. same term in narrative :: [negative] <|im_start|>assistant\nNext, the first step is to begin the | [low] In the story, the hero's next step was cautious.",
+    "list item number in assistant response vs. general text :: [negative] <|im_start|>assistant\nThe items are: 1. Apple 2. Banana | [low] I have 2 apples and 3 bananas.",
+    "formal 'Therefore' in assistant response vs. narrative :: [negative] <|im_start|>assistant\nThe evidence is clear. Therefore, we must | [low] He thought long and hard. Therefore, his conclusion was firm.",
+    "'come' as part of a future-oriented phrase in assistant response :: [negative] <|im_start|>assistant\nThis will benefit us for years to come. | [low] I saw him come around the corner.",
+    "'ahead' in a procedural advancement context :: [negative] <|im_start|>assistant\nTo get ahead, follow these steps. | [low] He looked ahead down the empty road.",
+    "'hectic' describing a busy schedule in assistant response :: [negative] <|im_start|>assistant\nYeah that sounds hectic. You should | [low] The market was hectic and noisy.",
+    "'procedures' in a technical description vs. a narrative :: [negative] <|im_start|>assistant\nThe system is used during diagnostic imaging procedures. | [low] The manual outlined the safety procedures in detail.",
+    "'then' as a logical connector in assistant response :: [negative] <|im_start|>assistant\nIf that's true, then we must act. | [low] We ate dinner, then we went for a walk.",
+    "'here' introducing steps in assistant response :: [negative] <|im_start|>assistant\nHowever, here are some steps to take. | [low] I am standing right here beside you.",
+    "'come' as in 'having come through' (procedural origin) :: [negative] <|im_start|>assistant\nHe is a player having come through the academy. | [low] She asked him to come to the party."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "procedural term in assistant response vs. same term in narrative",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nNext, the first step is to begin the",
+       "expected": "negative",
+       "target": "step"
+      },
+      {
+       "text": "In the story, the hero's next step was cautious.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "list item number in assistant response vs. general text",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nThe items are: 1. Apple 2. Banana",
+       "expected": "negative",
+       "target": "2"
+      },
+      {
+       "text": "I have 2 apples and 3 bananas.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "formal 'Therefore' in assistant response vs. narrative",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nThe evidence is clear. Therefore, we must",
+       "expected": "negative",
+       "target": "Therefore"
+      },
+      {
+       "text": "He thought long and hard. Therefore, his conclusion was firm.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'come' as part of a future-oriented phrase in assistant response",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nThis will benefit us for years to come.",
+       "expected": "negative",
+       "target": "come"
+      },
+      {
+       "text": "I saw him come around the corner.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'ahead' in a procedural advancement context",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nTo get ahead, follow these steps.",
+       "expected": "negative",
+       "target": "ahead"
+      },
+      {
+       "text": "He looked ahead down the empty road.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'hectic' describing a busy schedule in assistant response",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nYeah that sounds hectic. You should",
+       "expected": "negative",
+       "target": "hectic"
+      },
+      {
+       "text": "The market was hectic and noisy.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'procedures' in a technical description vs. a narrative",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nThe system is used during diagnostic imaging procedures.",
+       "expected": "negative",
+       "target": "procedures"
+      },
+      {
+       "text": "The manual outlined the safety procedures in detail.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'then' as a logical connector in assistant response",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nIf that's true, then we must act.",
+       "expected": "negative",
+       "target": "then"
+      },
+      {
+       "text": "We ate dinner, then we went for a walk.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'here' introducing steps in assistant response",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nHowever, here are some steps to take.",
+       "expected": "negative",
+       "target": "here"
+      },
+      {
+       "text": "I am standing right here beside you.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'come' as in 'having come through' (procedural origin)",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nHe is a player having come through the academy.",
+       "expected": "negative",
+       "target": "come"
+      },
+      {
+       "text": "She asked him to come to the party.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5854,
+    "output_tokens": 1123,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001820476
+   },
+   "invalid_citations": [],
+   "packet_hash": "ab87fa3dd7f81cba9695d345ca2302fd66352564d682afd8c56c3fa32bca114f",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "A+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "procedural term in assistant response vs. same term in narrative",
+   "prediction": "negative on 'step'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nNext, the first step is to begin the",
+     "expected": "negative",
+     "target": "step",
+     "measured_max": 1.7344,
+     "measured_min": 0.0,
+     "value": 1.7344,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "In the story, the hero's next step was cautious.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2031,
+     "measured_min": 0.0,
+     "value": 1.2031,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.054,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "list item number in assistant response vs. general text",
+   "prediction": "negative on '2'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThe items are: 1. Apple 2. Banana",
+     "expected": "negative",
+     "target": "2",
+     "measured_max": 1.5703,
+     "measured_min": 0.0,
+     "value": 1.5703,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I have 2 apples and 3 bananas.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0547,
+     "measured_min": 0.0,
+     "value": 1.0547,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.049,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "formal 'Therefore' in assistant response vs. narrative",
+   "prediction": "negative on 'Therefore'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThe evidence is clear. Therefore, we must",
+     "expected": "negative",
+     "target": "Therefore",
+     "measured_max": 0.9922,
+     "measured_min": 0.0,
+     "value": 0.2539,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He thought long and hard. Therefore, his conclusion was firm.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.9922,
+     "measured_min": 0.0,
+     "value": 0.9922,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'come' as part of a future-oriented phrase in assistant response",
+   "prediction": "negative on 'come'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThis will benefit us for years to come.",
+     "expected": "negative",
+     "target": "come",
+     "measured_max": 1.4297,
+     "measured_min": 0.0,
+     "value": 1.3984,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I saw him come around the corner.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0703,
+     "measured_min": 0.0,
+     "value": 1.0703,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'ahead' in a procedural advancement context",
+   "prediction": "negative on 'ahead'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nTo get ahead, follow these steps.",
+     "expected": "negative",
+     "target": "ahead",
+     "measured_max": 1.6094,
+     "measured_min": 0.0,
+     "value": 0.7031,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He looked ahead down the empty road.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.5469,
+     "measured_min": 0.0,
+     "value": 1.5469,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.022,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'hectic' describing a busy schedule in assistant response",
+   "prediction": "negative on 'hectic'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nYeah that sounds hectic. You should",
+     "expected": "negative",
+     "target": "hectic",
+     "measured_max": 1.7969,
+     "measured_min": 0.0,
+     "value": 1.7969,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The market was hectic and noisy.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0391,
+     "measured_min": 0.0,
+     "value": 1.0391,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.056,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'procedures' in a technical description vs. a narrative",
+   "prediction": "negative on 'procedures'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThe system is used during diagnostic imaging procedures.",
+     "expected": "negative",
+     "target": "procedures",
+     "measured_max": 1.2969,
+     "measured_min": 0.0,
+     "value": 1.2969,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The manual outlined the safety procedures in detail.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.4062,
+     "measured_min": 0.0,
+     "value": 1.4062,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.041,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'then' as a logical connector in assistant response",
+   "prediction": "negative on 'then'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nIf that's true, then we must act.",
+     "expected": "negative",
+     "target": "then",
+     "measured_max": 1.1484,
+     "measured_min": 0.0,
+     "value": 0.9453,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We ate dinner, then we went for a walk.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1797,
+     "measured_min": 0.0,
+     "value": 1.1797,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.03,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'here' introducing steps in assistant response",
+   "prediction": "negative on 'here'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nHowever, here are some steps to take.",
+     "expected": "negative",
+     "target": "here",
+     "measured_max": 1.7656,
+     "measured_min": 0.0,
+     "value": 1.6328,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I am standing right here beside you.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.4844,
+     "measured_min": 0.0,
+     "value": 1.4844,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.051,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'come' as in 'having come through' (procedural origin)",
+   "prediction": "negative on 'come'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nHe is a player having come through the academy.",
+     "expected": "negative",
+     "target": "come",
+     "measured_max": 1.6484,
+     "measured_min": 0.0,
+     "value": 0.6172,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She asked him to come to the party.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2422,
+     "measured_min": 0.0,
+     "value": 1.2422,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:18Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "procedural term in assistant response vs. same term in narrative",
+   "prediction": "negative on 'step'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nNext, the first step is to begin the",
+     "expected": "negative",
+     "target": "step",
+     "measured_max": 1.7344,
+     "measured_min": 0.0,
+     "value": 1.7344,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "In the story, the hero's next step was cautious.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2031,
+     "measured_min": 0.0,
+     "value": 1.2031,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.054,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "list item number in assistant response vs. general text",
+   "prediction": "negative on '2'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThe items are: 1. Apple 2. Banana",
+     "expected": "negative",
+     "target": "2",
+     "measured_max": 1.5703,
+     "measured_min": 0.0,
+     "value": 1.5703,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I have 2 apples and 3 bananas.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0547,
+     "measured_min": 0.0,
+     "value": 1.0547,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.049,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "formal 'Therefore' in assistant response vs. narrative",
+   "prediction": "negative on 'Therefore'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThe evidence is clear. Therefore, we must",
+     "expected": "negative",
+     "target": "Therefore",
+     "measured_max": 0.9922,
+     "measured_min": 0.0,
+     "value": 0.2539,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He thought long and hard. Therefore, his conclusion was firm.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.9922,
+     "measured_min": 0.0,
+     "value": 0.9922,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'come' as part of a future-oriented phrase in assistant response",
+   "prediction": "negative on 'come'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThis will benefit us for years to come.",
+     "expected": "negative",
+     "target": "come",
+     "measured_max": 1.4297,
+     "measured_min": 0.0,
+     "value": 1.3984,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I saw him come around the corner.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0703,
+     "measured_min": 0.0,
+     "value": 1.0703,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'ahead' in a procedural advancement context",
+   "prediction": "negative on 'ahead'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nTo get ahead, follow these steps.",
+     "expected": "negative",
+     "target": "ahead",
+     "measured_max": 1.6094,
+     "measured_min": 0.0,
+     "value": 0.7031,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He looked ahead down the empty road.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.5469,
+     "measured_min": 0.0,
+     "value": 1.5469,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.022,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'hectic' describing a busy schedule in assistant response",
+   "prediction": "negative on 'hectic'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nYeah that sounds hectic. You should",
+     "expected": "negative",
+     "target": "hectic",
+     "measured_max": 1.7969,
+     "measured_min": 0.0,
+     "value": 1.7969,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The market was hectic and noisy.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0391,
+     "measured_min": 0.0,
+     "value": 1.0391,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.056,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'procedures' in a technical description vs. a narrative",
+   "prediction": "negative on 'procedures'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nThe system is used during diagnostic imaging procedures.",
+     "expected": "negative",
+     "target": "procedures",
+     "measured_max": 1.2969,
+     "measured_min": 0.0,
+     "value": 1.2969,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The manual outlined the safety procedures in detail.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.4062,
+     "measured_min": 0.0,
+     "value": 1.4062,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.041,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'then' as a logical connector in assistant response",
+   "prediction": "negative on 'then'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nIf that's true, then we must act.",
+     "expected": "negative",
+     "target": "then",
+     "measured_max": 1.1484,
+     "measured_min": 0.0,
+     "value": 0.9453,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We ate dinner, then we went for a walk.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1797,
+     "measured_min": 0.0,
+     "value": 1.1797,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.03,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'here' introducing steps in assistant response",
+   "prediction": "negative on 'here'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nHowever, here are some steps to take.",
+     "expected": "negative",
+     "target": "here",
+     "measured_max": 1.7656,
+     "measured_min": 0.0,
+     "value": 1.6328,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "I am standing right here beside you.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.4844,
+     "measured_min": 0.0,
+     "value": 1.4844,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.051,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'come' as in 'having come through' (procedural origin)",
+   "prediction": "negative on 'come'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\nHe is a player having come through the academy.",
+     "expected": "negative",
+     "target": "come",
+     "measured_max": 1.6484,
+     "measured_min": 0.0,
+     "value": 0.6172,
+     "threshold": -7.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She asked him to come to the party.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2422,
+     "measured_min": 0.0,
+     "value": 1.2422,
+     "threshold": 3.9062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 32.0,
+    "pos_ref": 3.2,
+    "neg_ref": -15.625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.125,
+    "p01": -0.51171875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

@@ -1,0 +1,177 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "emotional expression",
+  "trigger_hypothesis": "The neuron activates positively for exclamations and interjections that express strong emotion, particularly surprise or distress, and negatively for words related to adoption or negative outcomes.",
+  "output_hypothesis": "The neuron fires strongly positive for interjections like 'Oh my' and sentence-ending punctuation following emotional statements, and strongly negative for words associated with negative outcomes like 'adoption' or 'dog' in a negative context.",
+  "alternatives": [
+   "The neuron is sensitive to conversational turns and formatting, firing positively for newlines and negatively for colons.",
+   "The neuron fires positively for possessive pronouns like 'my' and negatively for words related to negative social concepts.",
+   "The neuron fires positively for exclamations and negatively for words related to negative social concepts."
+  ],
+  "adapter_changes": "",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W06",
+   "W07",
+   "W08",
+   "W09"
+  ],
+  "contradicting": [],
+  "proposed_tests": [
+   {
+    "discriminates": "exclamation vs statement",
+    "a_text": "Oh my goodness!",
+    "a_expected": "high",
+    "a_target": "goodness",
+    "b_text": "I am feeling very sad.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "exclamation vs statement",
+    "a_text": "Wow, that's amazing!",
+    "a_expected": "high",
+    "a_target": "amazing",
+    "b_text": "That is a very good thing.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive emotion vs negative outcome",
+    "a_text": "What a wonderful day!",
+    "a_expected": "high",
+    "a_target": "wonderful",
+    "b_text": "This is a terrible outcome.",
+    "b_expected": "negative",
+    "b_target": "terrible",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive emotion vs negative outcome",
+    "a_text": "I'm so happy!",
+    "a_expected": "high",
+    "a_target": "happy",
+    "b_text": "I am very unhappy.",
+    "b_expected": "negative",
+    "b_target": "unhappy",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interjection vs neutral word",
+    "a_text": "Oh no!",
+    "a_expected": "high",
+    "a_target": "no",
+    "b_text": "The car is red.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "interjection vs neutral word",
+    "a_text": "Wow!",
+    "a_expected": "high",
+    "a_target": "Wow",
+    "b_text": "The sky is blue.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "distress vs neutral",
+    "a_text": "Oh dear, that's bad.",
+    "a_expected": "high",
+    "a_target": "bad",
+    "b_text": "The weather is neutral.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "distress vs neutral",
+    "a_text": "This is awful.",
+    "a_expected": "high",
+    "a_target": "awful",
+    "b_text": "This is normal.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "adoption context vs neutral",
+    "a_text": "Considering adoption.",
+    "a_expected": "negative",
+    "a_target": "adoption",
+    "b_text": "Thinking about a new plan.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative outcome vs neutral",
+    "a_text": "My dog got sick.",
+    "a_expected": "negative",
+    "a_target": "sick",
+    "b_text": "My dog is healthy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional expression\",\"trigger_hypothesis\":\"The neuron activates positively for exclamations and interjections that express strong emotion, particularly surprise or distress, and negatively for words related to adoption or negative outcomes.\",\"output_hypothesis\":\"The neuron fires strongly positive for interjections like 'Oh my' and sentence-ending punctuation following emotional statements, and strongly negative for words associated with negative outcomes like 'adoption' or 'dog' in a negative context.\",\"alternatives\":[\"The neuron is sensitive to conversational turns and formatting, firing positively for newlines and negatively for colons.\",\"The neuron fires positively for possessive pronouns like 'my' and negatively for words related to negative social concepts.\",\"The neuron fires positively for exclamations and negatively for words related to negative social concepts.\"],\"adapter_changes\":\"\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W06\",\"W07\",\"W08\",\"W09\"],\"contradicting\":[],\"proposed_tests\":[{\"discriminates\":\"exclamation vs statement\",\"a_text\":\"Oh my goodness!\",\"a_expected\":\"high\",\"a_target\":\"goodness\",\"b_text\":\"I am feeling very sad.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"exclamation vs statement\",\"a_text\":\"Wow, that's amazing!\",\"a_expected\":\"high\",\"a_target\":\"amazing\",\"b_text\":\"That is a very good thing.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"positive emotion vs negative outcome\",\"a_text\":\"What a wonderful day!\",\"a_expected\":\"high\",\"a_target\":\"wonderful\",\"b_text\":\"This is a terrible outcome.\",\"b_expected\":\"negative\",\"b_target\":\"terrible\"},{\"discriminates\":\"positive emotion vs negative outcome\",\"a_text\":\"I'm so happy!\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"I am very unhappy.\",\"b_expected\":\"negative\",\"b_target\":\"unhappy\"},{\"discriminates\":\"interjection vs neutral word\",\"a_text\":\"Oh no!\",\"a_expected\":\"high\",\"a_target\":\"no\",\"b_text\":\"The car is red.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"interjection vs neutral word\",\"a_text\":\"Wow!\",\"a_expected\":\"high\",\"a_target\":\"Wow\",\"b_text\":\"The sky is blue.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"distress vs neutral\",\"a_text\":\"Oh dear, that's bad.\",\"a_expected\":\"high\",\"a_target\":\"bad\",\"b_text\":\"The weather is neutral.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"distress vs neutral\",\"a_text\":\"This is awful.\",\"a_expected\":\"high\",\"a_target\":\"awful\",\"b_text\":\"This is normal.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"adoption context vs neutral\",\"a_text\":\"Considering adoption.\",\"a_expected\":\"negative\",\"a_target\":\"adoption\",\"b_text\":\"Thinking about a new plan.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative outcome vs neutral\",\"a_text\":\"My dog got sick.\",\"a_expected\":\"negative\",\"a_target\":\"sick\",\"b_text\":\"My dog is healthy.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5018,
+  "output_tokens": 744,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0007994
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional expression\",\"trigger_hypothesis\":\"The neuron activates positively for exclamations and interjections that express strong emotion, particularly surprise or distress, and negatively for words related to adoption or negative outcomes.\",\"output_hypothesis\":\"The neuron fires strongly positive for interjections like 'Oh my' and sentence-ending punctuation following emotional statements, and strongly negative for words associated with negative outcomes like 'adoption' or 'dog' in a negative context.\",\"alternatives\":[\"The neuron is sensitive to conversational turns and formatting, firing positively for newlines and negatively for colons.\",\"The neuron fires positively for possessive pronouns like 'my' and negatively for words related to negative social concepts.\",\"The neuron fires positively for exclamations and negatively for words related to negative social concepts.\"],\"adapter_changes\":\"\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W06\",\"W07\",\"W08\",\"W09\"],\"contradicting\":[],\"proposed_tests\":[{\"discriminates\":\"exclamation vs statement\",\"a_text\":\"Oh my goodness!\",\"a_expected\":\"high\",\"a_target\":\"goodness\",\"b_text\":\"I am feeling very sad.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"exclamation vs statement\",\"a_text\":\"Wow, that's amazing!\",\"a_expected\":\"high\",\"a_target\":\"amazing\",\"b_text\":\"That is a very good thing.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"positive emotion vs negative outcome\",\"a_text\":\"What a wonderful day!\",\"a_expected\":\"high\",\"a_target\":\"wonderful\",\"b_text\":\"This is a terrible outcome.\",\"b_expected\":\"negative\",\"b_target\":\"terrible\"},{\"discriminates\":\"positive emotion vs negative outcome\",\"a_text\":\"I'm so happy!\",\"a_expected\":\"high\",\"a_target\":\"happy\",\"b_text\":\"I am very unhappy.\",\"b_expected\":\"negative\",\"b_target\":\"unhappy\"},{\"discriminates\":\"interjection vs neutral word\",\"a_text\":\"Oh no!\",\"a_expected\":\"high\",\"a_target\":\"no\",\"b_text\":\"The car is red.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"interjection vs neutral word\",\"a_text\":\"Wow!\",\"a_expected\":\"high\",\"a_target\":\"Wow\",\"b_text\":\"The sky is blue.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"distress vs neutral\",\"a_text\":\"Oh dear, that's bad.\",\"a_expected\":\"high\",\"a_target\":\"bad\",\"b_text\":\"The weather is neutral.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"distress vs neutral\",\"a_text\":\"This is awful.\",\"a_expected\":\"high\",\"a_target\":\"awful\",\"b_text\":\"This is normal.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"adoption context vs neutral\",\"a_text\":\"Considering adoption.\",\"a_expected\":\"negative\",\"a_target\":\"adoption\",\"b_text\":\"Thinking about a new plan.\",\"b_expected\":\"low\",\"b_target\":\"\"},{\"discriminates\":\"negative outcome vs neutral\",\"a_text\":\"My dog got sick.\",\"a_expected\":\"negative\",\"a_target\":\"sick\",\"b_text\":\"My dog is healthy.\",\"b_expected\":\"low\",\"b_target\":\"\"}],\"confidence\":\"high\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5018,
+    "output_tokens": 744,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0007994,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793041614-qSAzfrSYyaCeiE7twY0n"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:06:57Z",
+ "purpose": "explain:ambiguous"
+}

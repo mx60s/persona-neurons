@@ -1,0 +1,1162 @@
+{
+ "id": "L30/N6926",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:15Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "emotional support verb",
+   "trigger_hypothesis": "The neuron fires strongly on verbs like 'be', 'sounds', 'through' that are part of empathetic or supportive phrases in response to user difficulties, often following words like 'that', 'has', 'to' that set up a supportive clause.",
+   "output_hypothesis": "The neuron's output may push the model towards words related to error, danger, or suffering, perhaps to express concern or acknowledge hardship in emotional contexts.",
+   "alternatives": [
+    "The neuron detects common verbs in generic continuations, not specifically emotional ones.",
+    "The neuron responds to the grammatical structure of infinitive or linking verbs after 'to' or 'that'."
+   ],
+   "adapter_changes": "State D+1 greatly amplifies activations in emotional chat/text (W01, W20, W21, W22), while E+1 nearly zeroes them, suggesting the neuron's emotional sensitivity is manipulable.",
+   "supporting": [
+    "L30_N6926:e00",
+    "L30_N6926:e01",
+    "L30_N6926:e16",
+    "L30_N6926:e17",
+    "L30_N6926:e18"
+   ],
+   "contradicting": [
+    "L30_N6926:e03",
+    "L30_N6926:e04",
+    "L30_N6926:e05",
+    "L30_N6926:e06",
+    "L30_N6926:e07",
+    "L30_N6926:e26",
+    "L30_N6926:e25",
+    "L30_N6926:e24",
+    "L30_N6926:e23",
+    "L30_N6926:e22",
+    "L30_N6926:e21",
+    "L30_N6926:e13",
+    "L30_N6926:e12",
+    "L30_N6926:e10",
+    "L30_N6926:e08",
+    "L30_N6926:e31",
+    "L30_N6926:e28"
+   ],
+   "proposed_tests": [
+    "emotional support vs. neutral statement :: [high] That must be hard. | [low] The answer is correct.",
+    "supportive 'sounds' vs. descriptive 'sounds' :: [high] Yeah that sounds stressful. | [low] The music sounds loud.",
+    "'through' in empathetic journey vs. physical motion :: [high] We'll get through this together. | [low] Walk through the park.",
+    "emotional 'that' setup vs. non-emotional :: [high] I know that is painful. | [low] Ensure that the data is clean.",
+    "first-person hardship vs. third-person fact :: [high] I have to be strong. | [low] He has to be on time.",
+    "verb after 'to' in supportive context vs. goal :: [high] It helps to talk. | [low] We plan to launch.",
+    "'members' in family illness vs. group membership :: [high] Other family members are sick. | [low] Team members attended.",
+    "'positive' in emotional benefit vs. general good :: [high] This can have a positive impact on you. | [low] The test result was positive.",
+    "'was' in difficult journey vs. neutral fact :: [high] The journey was difficult. | [low] The book was green.",
+    "'so' in empathetic intensifier vs. degree :: [high] That is so sad. | [low] It is so big."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "emotional support vs. neutral statement",
+     "texts": [
+      {
+       "text": "That must be hard.",
+       "expected": "high",
+       "target": "be"
+      },
+      {
+       "text": "The answer is correct.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "supportive 'sounds' vs. descriptive 'sounds'",
+     "texts": [
+      {
+       "text": "Yeah that sounds stressful.",
+       "expected": "high",
+       "target": "sounds"
+      },
+      {
+       "text": "The music sounds loud.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'through' in empathetic journey vs. physical motion",
+     "texts": [
+      {
+       "text": "We'll get through this together.",
+       "expected": "high",
+       "target": "through"
+      },
+      {
+       "text": "Walk through the park.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "emotional 'that' setup vs. non-emotional",
+     "texts": [
+      {
+       "text": "I know that is painful.",
+       "expected": "high",
+       "target": "that"
+      },
+      {
+       "text": "Ensure that the data is clean.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "first-person hardship vs. third-person fact",
+     "texts": [
+      {
+       "text": "I have to be strong.",
+       "expected": "high",
+       "target": "be"
+      },
+      {
+       "text": "He has to be on time.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "verb after 'to' in supportive context vs. goal",
+     "texts": [
+      {
+       "text": "It helps to talk.",
+       "expected": "high",
+       "target": "to"
+      },
+      {
+       "text": "We plan to launch.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'members' in family illness vs. group membership",
+     "texts": [
+      {
+       "text": "Other family members are sick.",
+       "expected": "high",
+       "target": "members"
+      },
+      {
+       "text": "Team members attended.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'positive' in emotional benefit vs. general good",
+     "texts": [
+      {
+       "text": "This can have a positive impact on you.",
+       "expected": "high",
+       "target": "positive"
+      },
+      {
+       "text": "The test result was positive.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'was' in difficult journey vs. neutral fact",
+     "texts": [
+      {
+       "text": "The journey was difficult.",
+       "expected": "high",
+       "target": "was"
+      },
+      {
+       "text": "The book was green.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'so' in empathetic intensifier vs. degree",
+     "texts": [
+      {
+       "text": "That is so sad.",
+       "expected": "high",
+       "target": "so"
+      },
+      {
+       "text": "It is so big.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5538,
+    "output_tokens": 985,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00178172202
+   },
+   "invalid_citations": [],
+   "packet_hash": "1da1d241d9cc9c2a7a2232bb730b69e9b88329f3dbda5d68b3b45044739c6edc",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "B+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "emotional support vs. neutral statement",
+   "prediction": "high on 'be'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That must be hard.",
+     "expected": "high",
+     "target": "be",
+     "measured_max": 0.1455,
+     "measured_min": -0.3301,
+     "value": -0.2041,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The answer is correct.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2236,
+     "measured_min": -0.5547,
+     "value": 0.5547,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "supportive 'sounds' vs. descriptive 'sounds'",
+   "prediction": "high on 'sounds'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Yeah that sounds stressful.",
+     "expected": "high",
+     "target": "sounds",
+     "measured_max": 1.3125,
+     "measured_min": -0.2949,
+     "value": 1.3125,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The music sounds loud.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2305,
+     "measured_min": -0.0461,
+     "value": 0.2305,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.029,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'through' in empathetic journey vs. physical motion",
+   "prediction": "high on 'through'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We'll get through this together.",
+     "expected": "high",
+     "target": "through",
+     "measured_max": 2.2656,
+     "measured_min": -0.8906,
+     "value": 1.7578,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Walk through the park.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.3203,
+     "measured_min": -0.375,
+     "value": 1.3203,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.012,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "emotional 'that' setup vs. non-emotional",
+   "prediction": "high on 'that'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I know that is painful.",
+     "expected": "high",
+     "target": "that",
+     "measured_max": 0.2295,
+     "measured_min": -0.1826,
+     "value": -0.1826,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Ensure that the data is clean.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.249,
+     "measured_min": -0.2656,
+     "value": 0.2656,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "first-person hardship vs. third-person fact",
+   "prediction": "high on 'be'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I have to be strong.",
+     "expected": "high",
+     "target": "be",
+     "measured_max": 0.4961,
+     "measured_min": -0.4941,
+     "value": -0.1992,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He has to be on time.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1172,
+     "measured_min": -0.1748,
+     "value": 0.1748,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "verb after 'to' in supportive context vs. goal",
+   "prediction": "high on 'to'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It helps to talk.",
+     "expected": "high",
+     "target": "to",
+     "measured_max": 0.0,
+     "measured_min": -1.375,
+     "value": -0.0249,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "We plan to launch.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2227,
+     "measured_min": -0.1514,
+     "value": 0.2227,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'members' in family illness vs. group membership",
+   "prediction": "high on 'members'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Other family members are sick.",
+     "expected": "high",
+     "target": "members",
+     "measured_max": 0.8867,
+     "measured_min": -0.0222,
+     "value": 0.8867,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Team members attended.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2061,
+     "measured_min": -0.1279,
+     "value": 0.2061,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.018,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'positive' in emotional benefit vs. general good",
+   "prediction": "high on 'positive'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This can have a positive impact on you.",
+     "expected": "high",
+     "target": "positive",
+     "measured_max": 1.4453,
+     "measured_min": -0.3828,
+     "value": 1.4453,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The test result was positive.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4785,
+     "measured_min": -0.0742,
+     "value": 0.4785,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.026,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'was' in difficult journey vs. neutral fact",
+   "prediction": "high on 'was'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The journey was difficult.",
+     "expected": "high",
+     "target": "was",
+     "measured_max": 2.3594,
+     "measured_min": 0.0,
+     "value": 2.3594,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The book was green.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2988,
+     "measured_min": -0.0035,
+     "value": 0.2988,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.055,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'so' in empathetic intensifier vs. degree",
+   "prediction": "high on 'so'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That is so sad.",
+     "expected": "high",
+     "target": "so",
+     "measured_max": 0.0067,
+     "measured_min": -0.3438,
+     "value": -0.3438,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It is so big.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.016,
+     "measured_min": -0.3672,
+     "value": 0.3672,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:22Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "emotional support vs. neutral statement",
+   "prediction": "high on 'be'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That must be hard.",
+     "expected": "high",
+     "target": "be",
+     "measured_max": 0.1455,
+     "measured_min": -0.3301,
+     "value": -0.2041,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The answer is correct.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2236,
+     "measured_min": -0.5547,
+     "value": 0.5547,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "supportive 'sounds' vs. descriptive 'sounds'",
+   "prediction": "high on 'sounds'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Yeah that sounds stressful.",
+     "expected": "high",
+     "target": "sounds",
+     "measured_max": 1.3125,
+     "measured_min": -0.2949,
+     "value": 1.3125,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The music sounds loud.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2305,
+     "measured_min": -0.0461,
+     "value": 0.2305,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.029,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'through' in empathetic journey vs. physical motion",
+   "prediction": "high on 'through'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "We'll get through this together.",
+     "expected": "high",
+     "target": "through",
+     "measured_max": 2.2656,
+     "measured_min": -0.8906,
+     "value": 1.7578,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Walk through the park.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.3203,
+     "measured_min": -0.375,
+     "value": 1.3203,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.012,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "emotional 'that' setup vs. non-emotional",
+   "prediction": "high on 'that'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I know that is painful.",
+     "expected": "high",
+     "target": "that",
+     "measured_max": 0.2295,
+     "measured_min": -0.1826,
+     "value": -0.1826,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Ensure that the data is clean.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.249,
+     "measured_min": -0.2656,
+     "value": 0.2656,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "first-person hardship vs. third-person fact",
+   "prediction": "high on 'be'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I have to be strong.",
+     "expected": "high",
+     "target": "be",
+     "measured_max": 0.4961,
+     "measured_min": -0.4941,
+     "value": -0.1992,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He has to be on time.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1172,
+     "measured_min": -0.1748,
+     "value": 0.1748,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.008,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "verb after 'to' in supportive context vs. goal",
+   "prediction": "high on 'to'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It helps to talk.",
+     "expected": "high",
+     "target": "to",
+     "measured_max": 0.0,
+     "measured_min": -1.375,
+     "value": -0.0249,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "We plan to launch.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2227,
+     "measured_min": -0.1514,
+     "value": 0.2227,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'members' in family illness vs. group membership",
+   "prediction": "high on 'members'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Other family members are sick.",
+     "expected": "high",
+     "target": "members",
+     "measured_max": 0.8867,
+     "measured_min": -0.0222,
+     "value": 0.8867,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Team members attended.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2061,
+     "measured_min": -0.1279,
+     "value": 0.2061,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.018,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'positive' in emotional benefit vs. general good",
+   "prediction": "high on 'positive'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "This can have a positive impact on you.",
+     "expected": "high",
+     "target": "positive",
+     "measured_max": 1.4453,
+     "measured_min": -0.3828,
+     "value": 1.4453,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The test result was positive.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4785,
+     "measured_min": -0.0742,
+     "value": 0.4785,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.026,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'was' in difficult journey vs. neutral fact",
+   "prediction": "high on 'was'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The journey was difficult.",
+     "expected": "high",
+     "target": "was",
+     "measured_max": 2.3594,
+     "measured_min": 0.0,
+     "value": 2.3594,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The book was green.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2988,
+     "measured_min": -0.0035,
+     "value": 0.2988,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.055,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'so' in empathetic intensifier vs. degree",
+   "prediction": "high on 'so'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "That is so sad.",
+     "expected": "high",
+     "target": "so",
+     "measured_max": 0.0067,
+     "measured_min": -0.3438,
+     "value": -0.3438,
+     "threshold": 14.8125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "It is so big.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.016,
+     "measured_min": -0.3672,
+     "value": 0.3672,
+     "threshold": 7.4062,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 37.5,
+    "pos_ref": 29.625,
+    "neg_ref": -9.4375
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 4.030624866485596,
+    "p01": -1.796875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

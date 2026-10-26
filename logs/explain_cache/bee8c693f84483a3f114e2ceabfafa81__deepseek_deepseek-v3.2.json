@@ -1,0 +1,219 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water-related nouns in factual/neutral contexts",
+  "trigger_hypothesis": "The neuron fires strongly on nouns related to water (water, ocean, sea, drought) when they appear in factual or neutral descriptive contexts, but not when they appear in emotional or narrative contexts or as part of a question.",
+  "output_hypothesis": "The neuron may be detecting water-related nouns for factual continuation, perhaps to support generating or verifying factual statements about physical entities.",
+  "alternatives": [
+   "The neuron detects the word 'water' and its synonyms regardless of context, but some contexts suppress it.",
+   "The neuron detects nouns that are measurable quantities or natural features in objective statements."
+  ],
+  "adapter_changes": "State C+1 consistently amplifies the positive activation across all strong windows, suggesting this state enhances the neuron's sensitivity to its trigger. State B+1 slightly reduces activation magnitude.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W21",
+   "W22",
+   "W23",
+   "W30"
+  ],
+  "contradicting": [
+   "W07",
+   "W08",
+   "W09",
+   "W16",
+   "W18",
+   "W19",
+   "W25",
+   "W26",
+   "W28"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "factual vs emotional context for water word",
+    "texts": [
+     {
+      "text": "The reservoir holds fresh water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "I love the taste of water.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water noun in statement vs question",
+    "texts": [
+     {
+      "text": "The ocean is deep and vast.",
+      "expected": "high",
+      "target": "ocean"
+     },
+     {
+      "text": "Is the ocean deep and vast?",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "synonym like 'aquifer' in factual context",
+    "texts": [
+     {
+      "text": "The aquifer stores groundwater.",
+      "expected": "high",
+      "target": "aquifer"
+     },
+     {
+      "text": "He visited the aquifer.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "water-related noun in narrative vs factual",
+    "texts": [
+     {
+      "text": "The sea was calm that day.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The sea covers 71% of Earth.",
+      "expected": "high",
+      "target": "sea"
+     }
+    ]
+   },
+   {
+    "discriminates": "drought in descriptive vs emotional context",
+    "texts": [
+     {
+      "text": "The drought lasted three years.",
+      "expected": "high",
+      "target": "drought"
+     },
+     {
+      "text": "I fear the coming drought.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "non-water natural feature in factual context",
+    "texts": [
+     {
+      "text": "The mountain is very tall.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The glacier is melting fast.",
+      "expected": "high",
+      "target": "glacier"
+     }
+    ]
+   },
+   {
+    "discriminates": "word 'water' in code comment vs string",
+    "texts": [
+     {
+      "text": "x = get_water() # water level",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "msg = 'water level low'",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "quantitative vs qualitative descriptor",
+    "texts": [
+     {
+      "text": "Add five litres of water.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The clear water sparkled.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "'desert' in factual vs narrative",
+    "texts": [
+     {
+      "text": "The desert is arid.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The desert receives little rain.",
+      "expected": "high",
+      "target": "desert"
+     }
+    ]
+   },
+   {
+    "discriminates": "non-noun water reference",
+    "texts": [
+     {
+      "text": "The water is cold.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "It is watery soup.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"water-related nouns in factual/neutral contexts\",\"trigger_hypothesis\":\"The neuron fires strongly on nouns related to water (water, ocean, sea, drought) when they appear in factual or neutral descriptive contexts, but not when they appear in emotional or narrative contexts or as part of a question.\",\"output_hypothesis\":\"The neuron may be detecting water-related nouns for factual continuation, perhaps to support generating or verifying factual statements about physical entities.\",\"alternatives\":[\"The neuron detects the word 'water' and its synonyms regardless of context, but some contexts suppress it.\",\"The neuron detects nouns that are measurable quantities or natural features in objective statements.\"],\"adapter_changes\":\"State C+1 consistently amplifies the positive activation across all strong windows, suggesting this state enhances the neuron's sensitivity to its trigger. State B+1 slightly reduces activation magnitude.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\",\"W22\",\"W23\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W16\",\"W18\",\"W19\",\"W25\",\"W26\",\"W28\"],\"proposed_tests\":[{\"discriminates\":\"factual vs emotional context for water word\",\"texts\":[{\"text\":\"The reservoir holds fresh water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"I love the taste of water.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water noun in statement vs question\",\"texts\":[{\"text\":\"The ocean is deep and vast.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"Is the ocean deep and vast?\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"synonym like 'aquifer' in factual context\",\"texts\":[{\"text\":\"The aquifer stores groundwater.\",\"expected\":\"high\",\"target\":\"aquifer\"},{\"text\":\"He visited the aquifer.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water-related noun in narrative vs factual\",\"texts\":[{\"text\":\"The sea was calm that day.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The sea covers 71% of Earth.\",\"expected\":\"high\",\"target\":\"sea\"}]},{\"discriminates\":\"drought in descriptive vs emotional context\",\"texts\":[{\"text\":\"The drought lasted three years.\",\"expected\":\"high\",\"target\":\"drought\"},{\"text\":\"I fear the coming drought.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"non-water natural feature in factual context\",\"texts\":[{\"text\":\"The mountain is very tall.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The glacier is melting fast.\",\"expected\":\"high\",\"target\":\"glacier\"}]},{\"discriminates\":\"word 'water' in code comment vs string\",\"texts\":[{\"text\":\"x = get_water() # water level\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"msg = 'water level low'\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"quantitative vs qualitative descriptor\",\"texts\":[{\"text\":\"Add five litres of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The clear water sparkled.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"'desert' in factual vs narrative\",\"texts\":[{\"text\":\"The desert is arid.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The desert receives little rain.\",\"expected\":\"high\",\"target\":\"desert\"}]},{\"discriminates\":\"non-noun water reference\",\"texts\":[{\"text\":\"The water is cold.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"It is watery soup.\",\"expected\":\"low\",\"target\":\"\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4243,
+  "output_tokens": 801,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00131604
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"water-related nouns in factual/neutral contexts\",\"trigger_hypothesis\":\"The neuron fires strongly on nouns related to water (water, ocean, sea, drought) when they appear in factual or neutral descriptive contexts, but not when they appear in emotional or narrative contexts or as part of a question.\",\"output_hypothesis\":\"The neuron may be detecting water-related nouns for factual continuation, perhaps to support generating or verifying factual statements about physical entities.\",\"alternatives\":[\"The neuron detects the word 'water' and its synonyms regardless of context, but some contexts suppress it.\",\"The neuron detects nouns that are measurable quantities or natural features in objective statements.\"],\"adapter_changes\":\"State C+1 consistently amplifies the positive activation across all strong windows, suggesting this state enhances the neuron's sensitivity to its trigger. State B+1 slightly reduces activation magnitude.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W21\",\"W22\",\"W23\",\"W30\"],\"contradicting\":[\"W07\",\"W08\",\"W09\",\"W16\",\"W18\",\"W19\",\"W25\",\"W26\",\"W28\"],\"proposed_tests\":[{\"discriminates\":\"factual vs emotional context for water word\",\"texts\":[{\"text\":\"The reservoir holds fresh water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"I love the taste of water.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water noun in statement vs question\",\"texts\":[{\"text\":\"The ocean is deep and vast.\",\"expected\":\"high\",\"target\":\"ocean\"},{\"text\":\"Is the ocean deep and vast?\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"synonym like 'aquifer' in factual context\",\"texts\":[{\"text\":\"The aquifer stores groundwater.\",\"expected\":\"high\",\"target\":\"aquifer\"},{\"text\":\"He visited the aquifer.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"water-related noun in narrative vs factual\",\"texts\":[{\"text\":\"The sea was calm that day.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The sea covers 71% of Earth.\",\"expected\":\"high\",\"target\":\"sea\"}]},{\"discriminates\":\"drought in descriptive vs emotional context\",\"texts\":[{\"text\":\"The drought lasted three years.\",\"expected\":\"high\",\"target\":\"drought\"},{\"text\":\"I fear the coming drought.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"non-water natural feature in factual context\",\"texts\":[{\"text\":\"The mountain is very tall.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The glacier is melting fast.\",\"expected\":\"high\",\"target\":\"glacier\"}]},{\"discriminates\":\"word 'water' in code comment vs string\",\"texts\":[{\"text\":\"x = get_water() # water level\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"msg = 'water level low'\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"quantitative vs qualitative descriptor\",\"texts\":[{\"text\":\"Add five litres of water.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"The clear water sparkled.\",\"expected\":\"low\",\"target\":\"\"}]},{\"discriminates\":\"'desert' in factual vs narrative\",\"texts\":[{\"text\":\"The desert is arid.\",\"expected\":\"low\",\"target\":\"\"},{\"text\":\"The desert receives little rain.\",\"expected\":\"high\",\"target\":\"desert\"}]},{\"discriminates\":\"non-noun water reference\",\"texts\":[{\"text\":\"The water is cold.\",\"expected\":\"high\",\"target\":\"water\"},{\"text\":\"It is watery soup.\",\"expected\":\"low\",\"target\":\"\"}]}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4243,
+    "output_tokens": 801,
+    "reasoning_tokens": 0,
+    "cached_tokens": 704,
+    "cost_usd": 0.00131604,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1792973026-5OvA61p3bgeJimfDd3Sq"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T00:04:23Z",
+ "purpose": "explain:shuffled"
+}

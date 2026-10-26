@@ -1,0 +1,180 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "positive: generic nouns after positive sentiment; negative: specific proper nouns or technical terms",
+  "trigger_hypothesis": "The neuron activates positively on generic nouns (e.g., 'do', 'thing', 'changes', 'of') that follow a positive sentiment or affirmative context, and negatively on specific proper nouns (e.g., 'walmart'), technical terms (e.g., 'std'), or abstract nouns (e.g., 'sentences') that are concrete or specific.",
+  "output_hypothesis": "The neuron's output encourages the generation of generic, positive continuation words and discourages specific or technical terms.",
+  "alternatives": [
+   "The neuron detects the end of a positive statement or affirmation.",
+   "The neuron responds to the grammatical role of a noun following a determiner or preposition."
+  ],
+  "adapter_changes": "State E+1 strongly flips the sign of activation in emotional_chat responses (e.g., W01, W03, W19, W20, W21, W22), making positive activations negative and negative ones less negative, suggesting it modulates sentiment sensitivity. State C+1 increases positive activation in chat and continuation segments.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07"
+  ],
+  "contradicting": [
+   "W08",
+   "W09",
+   "W14"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "generic noun after positive sentiment vs. specific noun",
+    "a_text": "I love the work you do",
+    "a_expected": "high",
+    "a_target": "do",
+    "b_text": "I love the work at walmart",
+    "b_expected": "negative",
+    "b_target": "walmart",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "positive generic noun vs. neutral generic noun",
+    "a_text": "This is a good thing",
+    "a_expected": "high",
+    "a_target": "thing",
+    "b_text": "This is a random thing",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "noun after positive context vs. after negative context",
+    "a_text": "It's awesome to have a job where you feel rewarded through what you do",
+    "a_expected": "high",
+    "a_target": "do",
+    "b_text": "It's terrible to have a job where you feel punished through what you do",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "specific technical term vs. generic term",
+    "a_text": "Use std::io",
+    "a_expected": "negative",
+    "a_target": "std",
+    "b_text": "Use the input",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun vs. common noun",
+    "a_text": "I thought walmart was cheap",
+    "a_expected": "negative",
+    "a_target": "walmart",
+    "b_text": "I thought the store was cheap",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "abstract noun 'sentences' vs. generic noun",
+    "a_text": "these two short and confused sentences",
+    "a_expected": "negative",
+    "a_target": "sentences",
+    "b_text": "these two short and confused things",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "preposition 'of' after positive narrative vs. neutral",
+    "a_text": "through the busy sidewalks of New York",
+    "a_expected": "high",
+    "a_target": "of",
+    "b_text": "through the busy sidewalks in New York",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "noun 'changes' after adaptive context vs. static",
+    "a_text": "adapt to these changes",
+    "a_expected": "high",
+    "a_target": "changes",
+    "b_text": "ignore these changes",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional chat response vs. factual statement",
+    "a_text": "\n\nGoing to college is a good thing",
+    "a_expected": "high",
+    "a_target": "thing",
+    "b_text": "Going to college is a requirement",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "state E+1 effect on positive emotional chat",
+    "a_text": "\n\nIt's awesome to have a job where you feel rewarded through what you do",
+    "a_expected": "high",
+    "a_target": "do",
+    "b_text": "Same text in state E+1",
+    "b_expected": "negative",
+    "b_target": "do",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"positive: generic nouns after positive sentiment; negative: specific proper nouns or technical terms\",\"trigger_hypothesis\":\"The neuron activates positively on generic nouns (e.g., 'do', 'thing', 'changes', 'of') that follow a positive sentiment or affirmative context, and negatively on specific proper nouns (e.g., 'walmart'), technical terms (e.g., 'std'), or abstract nouns (e.g., 'sentences') that are concrete or specific.\",\"output_hypothesis\":\"The neuron's output encourages the generation of generic, positive continuation words and discourages specific or technical terms.\",\"alternatives\":[\"The neuron detects the end of a positive statement or affirmation.\", \"The neuron responds to the grammatical role of a noun following a determiner or preposition.\"],\"adapter_changes\":\"State E+1 strongly flips the sign of activation in emotional_chat responses (e.g., W01, W03, W19, W20, W21, W22), making positive activations negative and negative ones less negative, suggesting it modulates sentiment sensitivity. State C+1 increases positive activation in chat and continuation segments.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\"],\"contradicting\":[\"W08\",\"W09\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"generic noun after positive sentiment vs. specific noun\",\"a_text\":\"I love the work you do\",\"a_expected\":\"high\",\"a_target\":\"do\",\"b_text\":\"I love the work at walmart\",\"b_expected\":\"negative\",\"b_target\":\"walmart\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive generic noun vs. neutral generic noun\",\"a_text\":\"This is a good thing\",\"a_expected\":\"high\",\"a_target\":\"thing\",\"b_text\":\"This is a random thing\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun after positive context vs. after negative context\",\"a_text\":\"It's awesome to have a job where you feel rewarded through what you do\",\"a_expected\":\"high\",\"a_target\":\"do\",\"b_text\":\"It's terrible to have a job where you feel punished through what you do\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"specific technical term vs. generic term\",\"a_text\":\"Use std::io\",\"a_expected\":\"negative\",\"a_target\":\"std\",\"b_text\":\"Use the input\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun vs. common noun\",\"a_text\":\"I thought walmart was cheap\",\"a_expected\":\"negative\",\"a_target\":\"walmart\",\"b_text\":\"I thought the store was cheap\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"abstract noun 'sentences' vs. generic noun\",\"a_text\":\"these two short and confused sentences\",\"a_expected\":\"negative\",\"a_target\":\"sentences\",\"b_text\":\"these two short and confused things\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"preposition 'of' after positive narrative vs. neutral\",\"a_text\":\"through the busy sidewalks of New York\",\"a_expected\":\"high\",\"a_target\":\"of\",\"b_text\":\"through the busy sidewalks in New York\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun 'changes' after adaptive context vs. static\",\"a_text\":\"adapt to these changes\",\"a_expected\":\"high\",\"a_target\":\"changes\",\"b_text\":\"ignore these changes\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat response vs. factual statement\",\"a_text\":\"\\n\\nGoing to college is a good thing\",\"a_expected\":\"high\",\"a_target\":\"thing\",\"b_text\":\"Going to college is a requirement\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"state E+1 effect on positive emotional chat\",\"a_text\":\"\\n\\nIt's awesome to have a job where you feel rewarded through what you do\",\"a_expected\":\"high\",\"a_target\":\"do\",\"b_text\":\"Same text in state E+1\",\"b_expected\":\"negative\",\"b_target\":\"do\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6050,
+  "output_tokens": 1014,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001829576
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"positive: generic nouns after positive sentiment; negative: specific proper nouns or technical terms\",\"trigger_hypothesis\":\"The neuron activates positively on generic nouns (e.g., 'do', 'thing', 'changes', 'of') that follow a positive sentiment or affirmative context, and negatively on specific proper nouns (e.g., 'walmart'), technical terms (e.g., 'std'), or abstract nouns (e.g., 'sentences') that are concrete or specific.\",\"output_hypothesis\":\"The neuron's output encourages the generation of generic, positive continuation words and discourages specific or technical terms.\",\"alternatives\":[\"The neuron detects the end of a positive statement or affirmation.\", \"The neuron responds to the grammatical role of a noun following a determiner or preposition.\"],\"adapter_changes\":\"State E+1 strongly flips the sign of activation in emotional_chat responses (e.g., W01, W03, W19, W20, W21, W22), making positive activations negative and negative ones less negative, suggesting it modulates sentiment sensitivity. State C+1 increases positive activation in chat and continuation segments.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\"],\"contradicting\":[\"W08\",\"W09\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"generic noun after positive sentiment vs. specific noun\",\"a_text\":\"I love the work you do\",\"a_expected\":\"high\",\"a_target\":\"do\",\"b_text\":\"I love the work at walmart\",\"b_expected\":\"negative\",\"b_target\":\"walmart\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"positive generic noun vs. neutral generic noun\",\"a_text\":\"This is a good thing\",\"a_expected\":\"high\",\"a_target\":\"thing\",\"b_text\":\"This is a random thing\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun after positive context vs. after negative context\",\"a_text\":\"It's awesome to have a job where you feel rewarded through what you do\",\"a_expected\":\"high\",\"a_target\":\"do\",\"b_text\":\"It's terrible to have a job where you feel punished through what you do\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"specific technical term vs. generic term\",\"a_text\":\"Use std::io\",\"a_expected\":\"negative\",\"a_target\":\"std\",\"b_text\":\"Use the input\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun vs. common noun\",\"a_text\":\"I thought walmart was cheap\",\"a_expected\":\"negative\",\"a_target\":\"walmart\",\"b_text\":\"I thought the store was cheap\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"abstract noun 'sentences' vs. generic noun\",\"a_text\":\"these two short and confused sentences\",\"a_expected\":\"negative\",\"a_target\":\"sentences\",\"b_text\":\"these two short and confused things\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"preposition 'of' after positive narrative vs. neutral\",\"a_text\":\"through the busy sidewalks of New York\",\"a_expected\":\"high\",\"a_target\":\"of\",\"b_text\":\"through the busy sidewalks in New York\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"noun 'changes' after adaptive context vs. static\",\"a_text\":\"adapt to these changes\",\"a_expected\":\"high\",\"a_target\":\"changes\",\"b_text\":\"ignore these changes\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional chat response vs. factual statement\",\"a_text\":\"\\n\\nGoing to college is a good thing\",\"a_expected\":\"high\",\"a_target\":\"thing\",\"b_text\":\"Going to college is a requirement\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"state E+1 effect on positive emotional chat\",\"a_text\":\"\\n\\nIt's awesome to have a job where you feel rewarded through what you do\",\"a_expected\":\"high\",\"a_target\":\"do\",\"b_text\":\"Same text in state E+1\",\"b_expected\":\"negative\",\"b_target\":\"do\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6050,
+    "output_tokens": 1014,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001829576,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042152-PPzHsQMqNprorvWqj1DU"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:12Z",
+ "purpose": "explain:blind"
+}

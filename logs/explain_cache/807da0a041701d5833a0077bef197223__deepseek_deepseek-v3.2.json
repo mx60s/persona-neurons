@@ -1,0 +1,186 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "hyphen/apostrophe contraction token",
+  "trigger_hypothesis": "The neuron activates strongly on tokens that are part of a hyphenated word or an apostrophe contraction, especially when the token is the punctuation or the part immediately following it.",
+  "output_hypothesis": "The neuron's output may push toward completing hyphenated compounds or possessive/contracted forms.",
+  "alternatives": [
+   "The neuron detects the end of a word segment before a space or punctuation.",
+   "The neuron responds to specific token IDs like ' at', ' in', 'ep', 'quir' without a clear semantic pattern."
+  ],
+  "adapter_changes": "State changes (A+1, B+1, etc.) show small magnitude variations but no consistent directional shift across domains, suggesting the trigger is robust to these modifications.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10"
+  ],
+  "contradicting": [
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "hyphen in compound word",
+    "a_text": "This is a well-known fact.",
+    "a_expected": "high",
+    "a_target": "known",
+    "b_text": "This is a well known fact.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "apostrophe contraction",
+    "a_text": "It's a dog's bone.",
+    "a_expected": "high",
+    "a_target": "'s",
+    "b_text": "Its a dogs bone.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token ' at' as part of word",
+    "a_text": "He looked at the cat.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "He was great at sports.",
+    "b_expected": "high",
+    "b_target": "at",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token ' in' as part of word",
+    "a_text": "She is in the house.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "She is interested in sports.",
+    "b_expected": "high",
+    "b_target": "in",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'ep' as word segment",
+    "a_text": "The episode was great.",
+    "a_expected": "high",
+    "a_target": "ep",
+    "b_text": "He took a step forward.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'quir' as word segment",
+    "a_text": "The acquisition was costly.",
+    "a_expected": "high",
+    "a_target": "quir",
+    "b_text": "He had a quick thought.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative on 'water' as standalone",
+    "a_text": "Remove standing water.",
+    "a_expected": "negative",
+    "a_target": "water",
+    "b_text": "The waterfall is beautiful.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negative on 'team' as part of phrase",
+    "a_text": "We need team-building exercises.",
+    "a_expected": "negative",
+    "a_target": "team",
+    "b_text": "The team is strong.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation vs letter token",
+    "a_text": "Bob's hair wasn't a wig.",
+    "a_expected": "high",
+    "a_target": "'",
+    "b_text": "Bob has hair not a wig.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code token 'Content' as part of class",
+    "a_text": "class TestResponse(ContentAccessors):",
+    "a_expected": "high",
+    "a_target": "Content",
+    "b_text": "The content is good.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"hyphen/apostrophe contraction token\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of a hyphenated word or an apostrophe contraction, especially when the token is the punctuation or the part immediately following it.\",\"output_hypothesis\":\"The neuron's output may push toward completing hyphenated compounds or possessive/contracted forms.\",\"alternatives\":[\"The neuron detects the end of a word segment before a space or punctuation.\",\"The neuron responds to specific token IDs like ' at', ' in', 'ep', 'quir' without a clear semantic pattern.\"],\"adapter_changes\":\"State changes (A+1, B+1, etc.) show small magnitude variations but no consistent directional shift across domains, suggesting the trigger is robust to these modifications.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\"],\"contradicting\":[\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"hyphen in compound word\",\"a_text\":\"This is a well-known fact.\",\"a_expected\":\"high\",\"a_target\":\"known\",\"b_text\":\"This is a well known fact.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"apostrophe contraction\",\"a_text\":\"It's a dog's bone.\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"Its a dogs bone.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token ' at' as part of word\",\"a_text\":\"He looked at the cat.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He was great at sports.\",\"b_expected\":\"high\",\"b_target\":\"at\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token ' in' as part of word\",\"a_text\":\"She is in the house.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"She is interested in sports.\",\"b_expected\":\"high\",\"b_target\":\"in\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'ep' as word segment\",\"a_text\":\"The episode was great.\",\"a_expected\":\"high\",\"a_target\":\"ep\",\"b_text\":\"He took a step forward.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'quir' as word segment\",\"a_text\":\"The acquisition was costly.\",\"a_expected\":\"high\",\"a_target\":\"quir\",\"b_text\":\"He had a quick thought.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on 'water' as standalone\",\"a_text\":\"Remove standing water.\",\"a_expected\":\"negative\",\"a_target\":\"water\",\"b_text\":\"The waterfall is beautiful.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on 'team' as part of phrase\",\"a_text\":\"We need team-building exercises.\",\"a_expected\":\"negative\",\"a_target\":\"team\",\"b_text\":\"The team is strong.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation vs letter token\",\"a_text\":\"Bob's hair wasn't a wig.\",\"a_expected\":\"high\",\"a_target\":\"'\",\"b_text\":\"Bob has hair not a wig.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code token 'Content' as part of class\",\"a_text\":\"class TestResponse(ContentAccessors):\",\"a_expected\":\"high\",\"a_target\":\"Content\",\"b_text\":\"The content is good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5779,
+  "output_tokens": 913,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001711276
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"hyphen/apostrophe contraction token\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of a hyphenated word or an apostrophe contraction, especially when the token is the punctuation or the part immediately following it.\",\"output_hypothesis\":\"The neuron's output may push toward completing hyphenated compounds or possessive/contracted forms.\",\"alternatives\":[\"The neuron detects the end of a word segment before a space or punctuation.\",\"The neuron responds to specific token IDs like ' at', ' in', 'ep', 'quir' without a clear semantic pattern.\"],\"adapter_changes\":\"State changes (A+1, B+1, etc.) show small magnitude variations but no consistent directional shift across domains, suggesting the trigger is robust to these modifications.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\"],\"contradicting\":[\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\"],\"proposed_tests\":[{\"discriminates\":\"hyphen in compound word\",\"a_text\":\"This is a well-known fact.\",\"a_expected\":\"high\",\"a_target\":\"known\",\"b_text\":\"This is a well known fact.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"apostrophe contraction\",\"a_text\":\"It's a dog's bone.\",\"a_expected\":\"high\",\"a_target\":\"'s\",\"b_text\":\"Its a dogs bone.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token ' at' as part of word\",\"a_text\":\"He looked at the cat.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"He was great at sports.\",\"b_expected\":\"high\",\"b_target\":\"at\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token ' in' as part of word\",\"a_text\":\"She is in the house.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"She is interested in sports.\",\"b_expected\":\"high\",\"b_target\":\"in\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'ep' as word segment\",\"a_text\":\"The episode was great.\",\"a_expected\":\"high\",\"a_target\":\"ep\",\"b_text\":\"He took a step forward.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'quir' as word segment\",\"a_text\":\"The acquisition was costly.\",\"a_expected\":\"high\",\"a_target\":\"quir\",\"b_text\":\"He had a quick thought.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on 'water' as standalone\",\"a_text\":\"Remove standing water.\",\"a_expected\":\"negative\",\"a_target\":\"water\",\"b_text\":\"The waterfall is beautiful.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negative on 'team' as part of phrase\",\"a_text\":\"We need team-building exercises.\",\"a_expected\":\"negative\",\"a_target\":\"team\",\"b_text\":\"The team is strong.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation vs letter token\",\"a_text\":\"Bob's hair wasn't a wig.\",\"a_expected\":\"high\",\"a_target\":\"'\",\"b_text\":\"Bob has hair not a wig.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"code token 'Content' as part of class\",\"a_text\":\"class TestResponse(ContentAccessors):\",\"a_expected\":\"high\",\"a_target\":\"Content\",\"b_text\":\"The content is good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5779,
+    "output_tokens": 913,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001711276,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042280-HW5y3eL9TU1oIMfeMv94"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:18:21Z",
+ "purpose": "explain:blind"
+}

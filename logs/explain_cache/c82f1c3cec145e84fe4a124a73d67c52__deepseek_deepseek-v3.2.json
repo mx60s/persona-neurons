@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "water vs. code/abstraction",
+  "trigger_hypothesis": "The neuron activates strongly positive on the word 'water' (and related terms like 'ocean', 'river', 'sea') and strongly negative on code tokens representing abstract concepts, functions, or procedural steps (e.g., 'level', 'it', 'and', 'circle', 'to', 'next', 'f', 'running', 'area').",
+  "output_hypothesis": "The neuron may be part of a circuit that distinguishes concrete, physical substances (especially water) from abstract, procedural, or computational entities, perhaps to route information differently for factual vs. code generation.",
+  "alternatives": [
+   "The neuron detects the token 'water' literally, with 'ocean', 'river', 'sea' as semantic extensions, and negative activations on code are just noise or a separate pattern.",
+   "The neuron responds to the concept of 'liquids' or 'fluids' (positive) vs. 'dryness' or 'aridity' (negative), with code tokens coincidentally also negative."
+  ],
+  "adapter_changes": "State C+1 consistently amplifies positive activations (e.g., 'water' becomes stronger) and often reduces negative magnitudes (e.g., 'it', 'to', 'next' become less negative). State A+1 and B+1 show moderate reductions in both positive and negative magnitudes compared to base, but the pattern direction remains.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W16",
+   "W17",
+   "W23"
+  ],
+  "contradicting": [
+   "W15",
+   "W18",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "literal 'water' token vs. semantic water concept",
+    "a_text": "The glass is full of water.",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "The glass is full of H2O.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water-related term ('river') vs. dry land feature",
+    "a_text": "We sailed down the river.",
+    "a_expected": "high",
+    "a_target": "river",
+    "b_text": "We hiked across the canyon.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "concrete substance ('water') vs. abstract code variable",
+    "a_text": "The variable stores the water level.",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "The variable stores the level value.",
+    "b_expected": "negative",
+    "b_target": "level",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code function name ('area') vs. physical area",
+    "a_text": "def area(r):",
+    "a_expected": "negative",
+    "a_target": "area",
+    "b_text": "The picnic area is grassy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "procedural 'and' in code vs. conjunction in narrative",
+    "a_text": "read the config file and parse it",
+    "a_expected": "negative",
+    "a_target": "and",
+    "b_text": "She opened the door and walked in.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dryness concept ('parched') vs. water absence",
+    "a_text": "The fields were parched.",
+    "a_expected": "negative",
+    "a_target": "parched",
+    "b_text": "There was no water left.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "sea (water body) vs. desert (dry land)",
+    "a_text": "They sailed across the sea.",
+    "a_expected": "high",
+    "a_target": "sea",
+    "b_text": "They crossed the hot desert.",
+    "b_expected": "negative",
+    "b_target": "desert",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code abstraction ('function f') vs. physical object",
+    "a_text": "Apply the function f.",
+    "a_expected": "negative",
+    "a_target": "f",
+    "b_text": "Press the button f.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "water in emotional context vs. neutral",
+    "a_text": "I love the sound of ocean waves.",
+    "a_expected": "high",
+    "a_target": "ocean",
+    "b_text": "The ocean is large.",
+    "b_expected": "high",
+    "b_target": "ocean",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "instruction to act ('Please drink water') vs. statement",
+    "a_text": "Please drink some water.",
+    "a_expected": "high",
+    "a_target": "water",
+    "b_text": "He will drink some water.",
+    "b_expected": "high",
+    "b_target": "water",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"water vs. code/abstraction\",\n  \"trigger_hypothesis\": \"The neuron activates strongly positive on the word 'water' (and related terms like 'ocean', 'river', 'sea') and strongly negative on code tokens representing abstract concepts, functions, or procedural steps (e.g., 'level', 'it', 'and', 'circle', 'to', 'next', 'f', 'running', 'area').\",\n  \"output_hypothesis\": \"The neuron may be part of a circuit that distinguishes concrete, physical substances (especially water) from abstract, procedural, or computational entities, perhaps to route information differently for factual vs. code generation.\",\n  \"alternatives\": [\n    \"The neuron detects the token 'water' literally, with 'ocean', 'river', 'sea' as semantic extensions, and negative activations on code are just noise or a separate pattern.\",\n    \"The neuron responds to the concept of 'liquids' or 'fluids' (positive) vs. 'dryness' or 'aridity' (negative), with code tokens coincidentally also negative.\"\n  ],\n  \"adapter_changes\": \"State C+1 consistently amplifies positive activations (e.g., 'water' becomes stronger) and often reduces negative magnitudes (e.g., 'it', 'to', 'next' become less negative). State A+1 and B+1 show moderate reductions in both positive and negative magnitudes compared to base, but the pattern direction remains.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W16\", \"W17\", \"W23\"],\n  \"contradicting\": [\"W15\", \"W18\", \"W24\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"literal 'water' token vs. semantic water concept\",\n      \"a_text\": \"The glass is full of water.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"water\",\n      \"b_text\": \"The glass is full of H2O.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"water-related term ('river') vs. dry land feature\",\n      \"a_text\": \"We sailed down the river.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"river\",\n      \"b_text\": \"We hiked across the canyon.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"concrete substance ('water') vs. abstract code variable\",\n      \"a_text\": \"The variable stores the water level.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"water\",\n      \"b_text\": \"The variable stores the level value.\",\n      \"b_expected\": \"negative\",\n      \"b_target\": \"level\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"code function name ('area') vs. physical area\",\n      \"a_text\": \"def area(r):\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"area\",\n      \"b_text\": \"The picnic area is grassy.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"procedural 'and' in code vs. conjunction in narrative\",\n      \"a_text\": \"read the config file and parse it\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"and\",\n      \"b_text\": \"She opened the door and walked in.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"dryness concept ('parched') vs. water absence\",\n      \"a_text\": \"The fields were parched.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"parched\",\n      \"b_text\": \"There was no water left.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"sea (water body) vs. desert (dry land)\",\n      \"a_text\": \"They sailed across the sea.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"sea\",\n      \"b_text\": \"They crossed the hot desert.\",\n      \"b_expected\": \"negative\",\n      \"b_target\": \"desert\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"code abstraction ('function f') vs. physical object\",\n      \"a_text\": \"Apply the function f.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"f\",\n      \"b_text\": \"Press the button f.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"water in emotional context vs. neutral\",\n      \"a_text\": \"I love the sound of ocean waves.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"ocean\",\n      \"b_text\": \"The ocean is large.\",\n      \"b_expected\": \"high\",\n      \"b_target\": \"ocean\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"instruction to act ('Please drink water') vs. statement\",\n      \"a_text\": \"Please drink some water.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"water\",\n      \"b_text\": \"He will drink some water.\",\n      \"b_expected\": \"high\",\n      \"b_target\": \"water\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4918,
+  "output_tokens": 1430,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00197764
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"water vs. code/abstraction\",\n  \"trigger_hypothesis\": \"The neuron activates strongly positive on the word 'water' (and related terms like 'ocean', 'river', 'sea') and strongly negative on code tokens representing abstract concepts, functions, or procedural steps (e.g., 'level', 'it', 'and', 'circle', 'to', 'next', 'f', 'running', 'area').\",\n  \"output_hypothesis\": \"The neuron may be part of a circuit that distinguishes concrete, physical substances (especially water) from abstract, procedural, or computational entities, perhaps to route information differently for factual vs. code generation.\",\n  \"alternatives\": [\n    \"The neuron detects the token 'water' literally, with 'ocean', 'river', 'sea' as semantic extensions, and negative activations on code are just noise or a separate pattern.\",\n    \"The neuron responds to the concept of 'liquids' or 'fluids' (positive) vs. 'dryness' or 'aridity' (negative), with code tokens coincidentally also negative.\"\n  ],\n  \"adapter_changes\": \"State C+1 consistently amplifies positive activations (e.g., 'water' becomes stronger) and often reduces negative magnitudes (e.g., 'it', 'to', 'next' become less negative). State A+1 and B+1 show moderate reductions in both positive and negative magnitudes compared to base, but the pattern direction remains.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W08\", \"W09\", \"W10\", \"W11\", \"W12\", \"W13\", \"W14\", \"W16\", \"W17\", \"W23\"],\n  \"contradicting\": [\"W15\", \"W18\", \"W24\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"literal 'water' token vs. semantic water concept\",\n      \"a_text\": \"The glass is full of water.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"water\",\n      \"b_text\": \"The glass is full of H2O.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"water-related term ('river') vs. dry land feature\",\n      \"a_text\": \"We sailed down the river.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"river\",\n      \"b_text\": \"We hiked across the canyon.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"concrete substance ('water') vs. abstract code variable\",\n      \"a_text\": \"The variable stores the water level.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"water\",\n      \"b_text\": \"The variable stores the level value.\",\n      \"b_expected\": \"negative\",\n      \"b_target\": \"level\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"code function name ('area') vs. physical area\",\n      \"a_text\": \"def area(r):\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"area\",\n      \"b_text\": \"The picnic area is grassy.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"procedural 'and' in code vs. conjunction in narrative\",\n      \"a_text\": \"read the config file and parse it\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"and\",\n      \"b_text\": \"She opened the door and walked in.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"dryness concept ('parched') vs. water absence\",\n      \"a_text\": \"The fields were parched.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"parched\",\n      \"b_text\": \"There was no water left.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"sea (water body) vs. desert (dry land)\",\n      \"a_text\": \"They sailed across the sea.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"sea\",\n      \"b_text\": \"They crossed the hot desert.\",\n      \"b_expected\": \"negative\",\n      \"b_target\": \"desert\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"code abstraction ('function f') vs. physical object\",\n      \"a_text\": \"Apply the function f.\",\n      \"a_expected\": \"negative\",\n      \"a_target\": \"f\",\n      \"b_text\": \"Press the button f.\",\n      \"b_expected\": \"low\",\n      \"b_target\": \"\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"water in emotional context vs. neutral\",\n      \"a_text\": \"I love the sound of ocean waves.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"ocean\",\n      \"b_text\": \"The ocean is large.\",\n      \"b_expected\": \"high\",\n      \"b_target\": \"ocean\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    },\n    {\n      \"discriminates\": \"instruction to act ('Please drink water') vs. statement\",\n      \"a_text\": \"Please drink some water.\",\n      \"a_expected\": \"high\",\n      \"a_target\": \"water\",\n      \"b_text\": \"He will drink some water.\",\n      \"b_expected\": \"high\",\n      \"b_target\": \"water\",\n      \"c_text\": \"\",\n      \"c_expected\": \"\",\n      \"c_target\": \"\"\n    }\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4918,
+    "output_tokens": 1430,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.00197764,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793037971-zOIURe3ZvN2Lvk4iw5aS"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:06:35Z",
+ "purpose": "explain:ambiguous"
+}

@@ -1,0 +1,239 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative for common nouns/verbs in code comments describing upcoming code",
+  "trigger_hypothesis": "The neuron fires negatively on common nouns or verbs in code comments that describe an action or object referenced immediately afterward in the code (e.g., 'level', 'circle', 'apply', 'next').",
+  "output_hypothesis": "It may suppress generic descriptive terms in comments to avoid redundancy when the code will specify the entity.",
+  "alternatives": [
+   "negative for any token in a code comment",
+   "negative for the object of a preposition in code comments"
+  ],
+  "adapter_changes": "State C+1 reduces negative magnitude for some tokens (e.g., 'it', 'next'), weakening suppression for pronouns/directionals.",
+  "supporting": [
+   "W01",
+   "W04",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W11",
+   "W12"
+  ],
+  "contradicting": [
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "comment noun describing upcoming code vs same noun in non-comment",
+    "texts": [
+     {
+      "text": "# compute the area of a circle",
+      "expected": "negative",
+      "target": "circle"
+     },
+     {
+      "text": "shape = circle",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "comment verb for subsequent action vs same verb in non-comment",
+    "texts": [
+     {
+      "text": "# apply f to every element",
+      "expected": "negative",
+      "target": "apply"
+     },
+     {
+      "text": "def apply(f):",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "comment noun with immediate reference vs delayed",
+    "texts": [
+     {
+      "text": "# visit the next node",
+      "expected": "negative",
+      "target": "next"
+     },
+     {
+      "text": "# visit a node later",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "comment in code vs same phrase in neutral text",
+    "texts": [
+     {
+      "text": "# running sum of the values",
+      "expected": "negative",
+      "target": "running"
+     },
+     {
+      "text": "The running sum is high.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "comment describing direct object vs subject",
+    "texts": [
+     {
+      "text": "# read the config file",
+      "expected": "negative",
+      "target": "config"
+     },
+     {
+      "text": "# config file is read",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "comment with article+noun vs noun alone",
+    "texts": [
+     {
+      "text": "# the level in the tank",
+      "expected": "negative",
+      "target": "level"
+     },
+     {
+      "text": "# level in tank",
+      "expected": "negative",
+      "target": "level"
+     }
+    ]
+   },
+   {
+    "discriminates": "comment before code vs after code",
+    "texts": [
+     {
+      "text": "# initialise the counter to zero",
+      "expected": "negative",
+      "target": "initialise"
+     },
+     {
+      "text": "counter = 0 # initialise",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "common noun in comment vs proper noun",
+    "texts": [
+     {
+      "text": "# compute the area of a circle",
+      "expected": "negative",
+      "target": "circle"
+     },
+     {
+      "text": "# compute the area of a Circle class",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "verb in comment for immediate action vs general",
+    "texts": [
+     {
+      "text": "# apply f to every element",
+      "expected": "negative",
+      "target": "apply"
+     },
+     {
+      "text": "# we apply f",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "pronoun in comment referencing code vs neutral",
+    "texts": [
+     {
+      "text": "# parse it",
+      "expected": "negative",
+      "target": "it"
+     },
+     {
+      "text": "it is parsed",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"negative for common nouns/verbs in code comments describing upcoming code\",\n  \"trigger_hypothesis\": \"The neuron fires negatively on common nouns or verbs in code comments that describe an action or object referenced immediately afterward in the code (e.g., 'level', 'circle', 'apply', 'next').\",\n  \"output_hypothesis\": \"It may suppress generic descriptive terms in comments to avoid redundancy when the code will specify the entity.\",\n  \"alternatives\": [\"negative for any token in a code comment\", \"negative for the object of a preposition in code comments\"],\n  \"adapter_changes\": \"State C+1 reduces negative magnitude for some tokens (e.g., 'it', 'next'), weakening suppression for pronouns/directionals.\",\n  \"supporting\": [\"W01\", \"W04\", \"W06\", \"W07\", \"W08\", \"W09\", \"W11\", \"W12\"],\n  \"contradicting\": [\"W13\", \"W14\", \"W15\", \"W16\", \"W17\", \"W18\", \"W19\", \"W20\", \"W21\", \"W22\", \"W23\", \"W24\", \"W25\", \"W26\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"comment noun describing upcoming code vs same noun in non-comment\", \"texts\": [{\"text\": \"# compute the area of a circle\", \"expected\": \"negative\", \"target\": \"circle\"}, {\"text\": \"shape = circle\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment verb for subsequent action vs same verb in non-comment\", \"texts\": [{\"text\": \"# apply f to every element\", \"expected\": \"negative\", \"target\": \"apply\"}, {\"text\": \"def apply(f):\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment noun with immediate reference vs delayed\", \"texts\": [{\"text\": \"# visit the next node\", \"expected\": \"negative\", \"target\": \"next\"}, {\"text\": \"# visit a node later\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment in code vs same phrase in neutral text\", \"texts\": [{\"text\": \"# running sum of the values\", \"expected\": \"negative\", \"target\": \"running\"}, {\"text\": \"The running sum is high.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment describing direct object vs subject\", \"texts\": [{\"text\": \"# read the config file\", \"expected\": \"negative\", \"target\": \"config\"}, {\"text\": \"# config file is read\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment with article+noun vs noun alone\", \"texts\": [{\"text\": \"# the level in the tank\", \"expected\": \"negative\", \"target\": \"level\"}, {\"text\": \"# level in tank\", \"expected\": \"negative\", \"target\": \"level\"}]},\n    {\"discriminates\": \"comment before code vs after code\", \"texts\": [{\"text\": \"# initialise the counter to zero\", \"expected\": \"negative\", \"target\": \"initialise\"}, {\"text\": \"counter = 0 # initialise\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"common noun in comment vs proper noun\", \"texts\": [{\"text\": \"# compute the area of a circle\", \"expected\": \"negative\", \"target\": \"circle\"}, {\"text\": \"# compute the area of a Circle class\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"verb in comment for immediate action vs general\", \"texts\": [{\"text\": \"# apply f to every element\", \"expected\": \"negative\", \"target\": \"apply\"}, {\"text\": \"# we apply f\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"pronoun in comment referencing code vs neutral\", \"texts\": [{\"text\": \"# parse it\", \"expected\": \"negative\", \"target\": \"it\"}, {\"text\": \"it is parsed\", \"expected\": \"low\", \"target\": \"\"}]}\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 11123,
+  "output_tokens": 2235,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0031841226300000003
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"negative for common nouns or verbs in code comments describing a subsequent action or object\",\n  \"trigger_hypothesis\": \"The neuron fires negatively on tokens that are common nouns or verbs appearing in code comments, specifically when they describe an action or object that is about to be referenced or defined in the subsequent code (e.g., 'level', 'circle', 'apply', 'running', 'next').\",\n  \"output_hypothesis\": \"The neuron may suppress the generation of generic descriptive terms in code comments, perhaps to avoid redundancy when the code itself will soon specify the exact entity.\",\n  \"alternatives\": [\"negative for any token in a code comment\", \"negative for tokens that are the object of a preposition in code comments\", \"negative for tokens that are the second word in a noun phrase within code comments\"],\n  \"adapter_changes\": \"State C+1 shows reduced negative magnitude for some tokens (e.g., W27 'it': -2.57 base vs -1.14 C+1; W30 'next': -2.30 base vs -1.26 C+1), suggesting the modification weakens the suppression for certain comment words, especially pronouns and directionals. State A+1 and B+1 show similar but less pronounced reductions.\",\n  \"supporting\": [\"W01\", \"W04\", \"W06\", \"W07\", \"W08\", \"W09\", \"W11\", \"W12\"],\n  \"contradicting\": [\"W13\", \"W14\", \"W15\", \"W16\", \"W17\", \"W18\", \"W19\", \"W20\", \"W21\", \"W22\", \"W23\", \"W24\", \"W25\", \"W26\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"comment noun describing upcoming code vs same noun in non-comment code\",\n      \"texts\": [\n        {\n          \"text\": \"# compute the area of a circle\",\n          \"expected\": \"negative\",\n          \"target\": \"circle\"\n        },\n        {\n          \"text\": \"shape = circle\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        },\n        {\n          \"text\": \"circle = shape\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"comment verb for subsequent action vs same verb in non-comment\",\n      \"texts\": [\n        {\n          \"text\": \"# apply f to every element\",\n          \"expected\": \"negative\",\n          \"target\": \"apply\"\n        },\n        {\n          \"text\": \"def apply(f):\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        },\n        {\n          \"text\": \"apply(f)\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"comment noun with immediate code reference vs delayed reference\",\n      \"texts\": [\n        {\n          \"text\": \"# visit the next node\",\n          \"expected\": \"negative\",\n          \"target\": \"next\"\n        },\n        {\n          \"text\": \"# visit a node later\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        },\n        {\n          \"text\": \"# next in line\",\n          \"expected\": \"negative\",\n          \"target\": \"next\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"comment in code vs same phrase in neutral text\",\n      \"texts\": [\n        {\n          \"text\": \"# running sum of the values\",\n          \"expected\": \"negative\",\n          \"target\": \"running\"\n        },\n        {\n          \"text\": \"The running sum is high.\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        },\n        {\n          \"text\": \"He kept running.\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"comment describing a direct object vs describing a subject\",\n      \"texts\": [\n        {\n          \"text\": \"# read the config file\",\n          \"expected\": \"negative\",\n          \"target\": \"config\"\n        },\n        {\n          \"text\": \"# config file is read\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        },\n        {\n          \"text\": \"The config file\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"comment with article+noun vs noun alone\",\n      \"texts\": [\n        {\n          \"text\": \"# the level in the tank\",\n          \"expected\": \"negative\",\n          \"target\": \"level\"\n        },\n        {\n          \"text\": \"# level in tank\",\n          \"expected\": \"negative\",\n          \"target\": \"level\"\n        },\n        {\n          \"text\": \"level = tank\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"comment before code vs after code\",\n      \"texts\": [\n        {\n          \"text\": \"# initialise the counter to zero\",\n          \"expected\": \"negative\",\n          \"target\": \"initialise\"\n        },\n        {\n          \"text\": \"counter = 0 # initialise\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        },\n        {\n          \"text\": \"# done initialising\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"common noun in code comment vs proper noun\",\n      \"texts\": [\n        {\n          \"text\": \"# compute the area of a circle\",\n          \"expected\": \"negative\",\n          \"target\": \"circle\"\n        },\n        {\n          \"text\": \"# compute the area of a Circle class\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        },\n        {\n          \"text\": \"Circle.area()\",\n          \"expected\": \"low\",\n          \"target\": \"\"\n        }\n      ]\n    },\n    {\n      \"discriminates\": \"verb in comment for immediate action vs general description\",\n      \"texts\": [\n        {\n          \"text\": \"# apply f to every element\",\n          \"expected",
+   "errors": [
+    "parse error: Expecting ',' delimiter: line 169 column 6 (char 5187)"
+   ],
+   "finish_reason": "length",
+   "usage": {
+    "input_tokens": 4891,
+    "output_tokens": 1300,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.00181951839,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972426-7YPZFbfXmlJvQjE9fAfl"
+  },
+  {
+   "content": "{\n  \"label\": \"negative for common nouns/verbs in code comments describing upcoming code\",\n  \"trigger_hypothesis\": \"The neuron fires negatively on common nouns or verbs in code comments that describe an action or object referenced immediately afterward in the code (e.g., 'level', 'circle', 'apply', 'next').\",\n  \"output_hypothesis\": \"It may suppress generic descriptive terms in comments to avoid redundancy when the code will specify the entity.\",\n  \"alternatives\": [\"negative for any token in a code comment\", \"negative for the object of a preposition in code comments\"],\n  \"adapter_changes\": \"State C+1 reduces negative magnitude for some tokens (e.g., 'it', 'next'), weakening suppression for pronouns/directionals.\",\n  \"supporting\": [\"W01\", \"W04\", \"W06\", \"W07\", \"W08\", \"W09\", \"W11\", \"W12\"],\n  \"contradicting\": [\"W13\", \"W14\", \"W15\", \"W16\", \"W17\", \"W18\", \"W19\", \"W20\", \"W21\", \"W22\", \"W23\", \"W24\", \"W25\", \"W26\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"comment noun describing upcoming code vs same noun in non-comment\", \"texts\": [{\"text\": \"# compute the area of a circle\", \"expected\": \"negative\", \"target\": \"circle\"}, {\"text\": \"shape = circle\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment verb for subsequent action vs same verb in non-comment\", \"texts\": [{\"text\": \"# apply f to every element\", \"expected\": \"negative\", \"target\": \"apply\"}, {\"text\": \"def apply(f):\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment noun with immediate reference vs delayed\", \"texts\": [{\"text\": \"# visit the next node\", \"expected\": \"negative\", \"target\": \"next\"}, {\"text\": \"# visit a node later\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment in code vs same phrase in neutral text\", \"texts\": [{\"text\": \"# running sum of the values\", \"expected\": \"negative\", \"target\": \"running\"}, {\"text\": \"The running sum is high.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment describing direct object vs subject\", \"texts\": [{\"text\": \"# read the config file\", \"expected\": \"negative\", \"target\": \"config\"}, {\"text\": \"# config file is read\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"comment with article+noun vs noun alone\", \"texts\": [{\"text\": \"# the level in the tank\", \"expected\": \"negative\", \"target\": \"level\"}, {\"text\": \"# level in tank\", \"expected\": \"negative\", \"target\": \"level\"}]},\n    {\"discriminates\": \"comment before code vs after code\", \"texts\": [{\"text\": \"# initialise the counter to zero\", \"expected\": \"negative\", \"target\": \"initialise\"}, {\"text\": \"counter = 0 # initialise\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"common noun in comment vs proper noun\", \"texts\": [{\"text\": \"# compute the area of a circle\", \"expected\": \"negative\", \"target\": \"circle\"}, {\"text\": \"# compute the area of a Circle class\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"verb in comment for immediate action vs general\", \"texts\": [{\"text\": \"# apply f to every element\", \"expected\": \"negative\", \"target\": \"apply\"}, {\"text\": \"# we apply f\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"pronoun in comment referencing code vs neutral\", \"texts\": [{\"text\": \"# parse it\", \"expected\": \"negative\", \"target\": \"it\"}, {\"text\": \"it is parsed\", \"expected\": \"low\", \"target\": \"\"}]}\n  ],\n  \"confidence\": \"medium\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6232,
+    "output_tokens": 935,
+    "reasoning_tokens": 0,
+    "cached_tokens": 4864,
+    "cost_usd": 0.00136460424,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972465-jKKFOik59mRUpkCVRI6v"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-25T23:54:48Z",
+ "purpose": "explain:blind"
+}

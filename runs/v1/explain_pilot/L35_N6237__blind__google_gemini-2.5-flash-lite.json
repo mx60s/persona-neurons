@@ -1,0 +1,427 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for tokens that are part of proper nouns or technical terms, especially in narrative and code contexts (W01, W03, W04). It activates negatively for tokens that appear to be common characters or parts of words in factual or code contexts, potentially indicating a contrast or negation (W05, W06, W07, W08, W10).",
+  "output_hypothesis": "The neuron might be sensitive to the presence of specific entities or technical jargon, distinguishing them from more general text. The negative activations could signal a suppression of common words or a contrastive function.",
+  "alternatives": [
+   "The neuron activates positively for the start of assistant responses (W02) and negatively for specific characters or symbols (W05, W06, W09).",
+   "The neuron activates positively for specific proper nouns and technical terms (W01, W03, W04) and negatively for common words or parts of words (W05, W07, W08)."
+  ],
+  "adapter_changes": "State E+1 shows a significant increase in positive activation for prompt tokens (W21, W22, W25) and a large increase in overall activation for emotional_chat domain.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W10"
+  ],
+  "contradicting": [
+   "W09"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "proper noun vs common word",
+    "a_text": "The GR was a great success.",
+    "a_expected": "high",
+    "a_target": "GR",
+    "b_text": "The dog was a great success.",
+    "b_expected": "low",
+    "b_target": "dog",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "technical term vs common word",
+    "a_text": "The Affero license is important.",
+    "a_expected": "high",
+    "a_target": "Affero",
+    "b_text": "The license is important.",
+    "b_expected": "low",
+    "b_target": "license",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "start of assistant response vs continuation",
+    "a_text": "<|im_start|>assistant\nHello there!",
+    "a_expected": "high",
+    "a_target": "Hello",
+    "b_text": "I said hello there!",
+    "b_expected": "low",
+    "b_target": "hello",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "specific negative token vs common word",
+    "a_text": "He saw the u.",
+    "a_expected": "negative",
+    "a_target": "u",
+    "b_text": "He saw the cat.",
+    "b_expected": "low",
+    "b_target": "cat",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code symbol vs common word",
+    "a_text": "Use the .symbol.",
+    "a_expected": "negative",
+    "a_target": ".symbol",
+    "b_text": "Use the symbol.",
+    "b_expected": "low",
+    "b_target": "symbol",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun vs common word",
+    "a_text": "Sun was a leader.",
+    "a_expected": "high",
+    "a_target": "Sun",
+    "b_text": "The leader was there.",
+    "b_expected": "low",
+    "b_target": "leader",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun vs common word",
+    "a_text": "De Carvalho was born.",
+    "a_expected": "high",
+    "a_target": "Carvalho",
+    "b_text": "He was born.",
+    "b_expected": "low",
+    "b_target": "born",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "code token vs common word",
+    "a_text": "The Music is loud.",
+    "a_expected": "high",
+    "a_target": "Music",
+    "b_text": "The song is loud.",
+    "b_expected": "low",
+    "b_target": "song",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "specific negative token vs common word",
+    "a_text": "He saw the sh.",
+    "a_expected": "negative",
+    "a_target": "sh",
+    "b_text": "He saw the man.",
+    "b_expected": "low",
+    "b_target": "man",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "specific negative token vs common word",
+    "a_text": "He saw the sav.",
+    "a_expected": "negative",
+    "a_target": "sav",
+    "b_text": "He saw the car.",
+    "b_expected": "low",
+    "b_target": "car",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for tokens that are part of proper nouns or technical terms, especially in narrative and code contexts (W01, W03, W04). It activates negatively for tokens that appear to be common characters or parts of words in factual or code contexts, potentially indicating a contrast or negation (W05, W06, W07, W08, W10).\",\"output_hypothesis\":\"The neuron might be sensitive to the presence of specific entities or technical jargon, distinguishing them from more general text. The negative activations could signal a suppression of common words or a contrastive function.\",\"alternatives\":[\"The neuron activates positively for the start of assistant responses (W02) and negatively for specific characters or symbols (W05, W06, W09).\",\"The neuron activates positively for specific proper nouns and technical terms (W01, W03, W04) and negatively for common words or parts of words (W05, W07, W08).\"],\"adapter_changes\":\"State E+1 shows a significant increase in positive activation for prompt tokens (W21, W22, W25) and a large increase in overall activation for emotional_chat domain.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W10\"],\"contradicting\":[\"W09\"],\"proposed_tests\":[{\"discriminates\":\"proper noun vs common word\",\"a_text\":\"The GR was a great success.\",\"a_expected\":\"high\",\"a_target\":\"GR\",\"b_text\":\"The dog was a great success.\",\"b_expected\":\"low\",\"b_target\":\"dog\"},{\"discriminates\":\"technical term vs common word\",\"a_text\":\"The Affero license is important.\",\"a_expected\":\"high\",\"a_target\":\"Affero\",\"b_text\":\"The license is important.\",\"b_expected\":\"low\",\"b_target\":\"license\"},{\"discriminates\":\"start of assistant response vs continuation\",\"a_text\":\"<|im_start|>assistant\\nHello there!\",\"a_expected\":\"high\",\"a_target\":\"Hello\",\"b_text\":\"I said hello there!\",\"b_expected\":\"low\",\"b_target\":\"hello\"},{\"discriminates\":\"specific negative token vs common word\",\"a_text\":\"He saw the u.\",\"a_expected\":\"negative\",\"a_target\":\"u\",\"b_text\":\"He saw the cat.\",\"b_expected\":\"low\",\"b_target\":\"cat\"},{\"discriminates\":\"code symbol vs common word\",\"a_text\":\"Use the .symbol.\",\"a_expected\":\"negative\",\"a_target\":\".symbol\",\"b_text\":\"Use the symbol.\",\"b_expected\":\"low\",\"b_target\":\"symbol\"},{\"discriminates\":\"proper noun vs common word\",\"a_text\":\"Sun was a leader.\",\"a_expected\":\"high\",\"a_target\":\"Sun\",\"b_text\":\"The leader was there.\",\"b_expected\":\"low\",\"b_target\":\"leader\"},{\"discriminates\":\"proper noun vs common word\",\"a_text\":\"De Carvalho was born.\",\"a_expected\":\"high\",\"a_target\":\"Carvalho\",\"b_text\":\"He was born.\",\"b_expected\":\"low\",\"b_target\":\"born\"},{\"discriminates\":\"code token vs common word\",\"a_text\":\"The Music is loud.\",\"a_expected\":\"high\",\"a_target\":\"Music\",\"b_text\":\"The song is loud.\",\"b_expected\":\"low\",\"b_target\":\"song\"},{\"discriminates\":\"specific negative token vs common word\",\"a_text\":\"He saw the sh.\",\"a_expected\":\"negative\",\"a_target\":\"sh\",\"b_text\":\"He saw the man.\",\"b_expected\":\"low\",\"b_target\":\"man\"},{\"discriminates\":\"specific negative token vs common word\",\"a_text\":\"He saw the sav.\",\"a_expected\":\"negative\",\"a_target\":\"sav\",\"b_text\":\"He saw the car.\",\"b_expected\":\"low\",\"b_target\":\"car\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6283,
+  "output_tokens": 881,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0009807
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates positively for tokens that are part of proper nouns or technical terms, especially in narrative and code contexts (W01, W03, W04). It activates negatively for tokens that appear to be common characters or parts of words in factual or code contexts, potentially indicating a contrast or negation (W05, W06, W07, W08, W10).\",\"output_hypothesis\":\"The neuron might be sensitive to the presence of specific entities or technical jargon, distinguishing them from more general text. The negative activations could signal a suppression of common words or a contrastive function.\",\"alternatives\":[\"The neuron activates positively for the start of assistant responses (W02) and negatively for specific characters or symbols (W05, W06, W09).\",\"The neuron activates positively for specific proper nouns and technical terms (W01, W03, W04) and negatively for common words or parts of words (W05, W07, W08).\"],\"adapter_changes\":\"State E+1 shows a significant increase in positive activation for prompt tokens (W21, W22, W25) and a large increase in overall activation for emotional_chat domain.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W10\"],\"contradicting\":[\"W09\"],\"proposed_tests\":[{\"discriminates\":\"proper noun vs common word\",\"a_text\":\"The GR was a great success.\",\"a_expected\":\"high\",\"a_target\":\"GR\",\"b_text\":\"The dog was a great success.\",\"b_expected\":\"low\",\"b_target\":\"dog\"},{\"discriminates\":\"technical term vs common word\",\"a_text\":\"The Affero license is important.\",\"a_expected\":\"high\",\"a_target\":\"Affero\",\"b_text\":\"The license is important.\",\"b_expected\":\"low\",\"b_target\":\"license\"},{\"discriminates\":\"start of assistant response vs continuation\",\"a_text\":\"<|im_start|>assistant\\nHello there!\",\"a_expected\":\"high\",\"a_target\":\"Hello\",\"b_text\":\"I said hello there!\",\"b_expected\":\"low\",\"b_target\":\"hello\"},{\"discriminates\":\"specific negative token vs common word\",\"a_text\":\"He saw the u.\",\"a_expected\":\"negative\",\"a_target\":\"u\",\"b_text\":\"He saw the cat.\",\"b_expected\":\"low\",\"b_target\":\"cat\"},{\"discriminates\":\"code symbol vs common word\",\"a_text\":\"Use the .symbol.\",\"a_expected\":\"negative\",\"a_target\":\".symbol\",\"b_text\":\"Use the symbol.\",\"b_expected\":\"low\",\"b_target\":\"symbol\"},{\"discriminates\":\"proper noun vs common word\",\"a_text\":\"Sun was a leader.\",\"a_expected\":\"high\",\"a_target\":\"Sun\",\"b_text\":\"The leader was there.\",\"b_expected\":\"low\",\"b_target\":\"leader\"},{\"discriminates\":\"proper noun vs common word\",\"a_text\":\"De Carvalho was born.\",\"a_expected\":\"high\",\"a_target\":\"Carvalho\",\"b_text\":\"He was born.\",\"b_expected\":\"low\",\"b_target\":\"born\"},{\"discriminates\":\"code token vs common word\",\"a_text\":\"The Music is loud.\",\"a_expected\":\"high\",\"a_target\":\"Music\",\"b_text\":\"The song is loud.\",\"b_expected\":\"low\",\"b_target\":\"song\"},{\"discriminates\":\"specific negative token vs common word\",\"a_text\":\"He saw the sh.\",\"a_expected\":\"negative\",\"a_target\":\"sh\",\"b_text\":\"He saw the man.\",\"b_expected\":\"low\",\"b_target\":\"man\"},{\"discriminates\":\"specific negative token vs common word\",\"a_text\":\"He saw the sav.\",\"a_expected\":\"negative\",\"a_target\":\"sav\",\"b_text\":\"He saw the car.\",\"b_expected\":\"low\",\"b_target\":\"car\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6283,
+    "output_tokens": 881,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0009807,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040887-gDrx7gJEi0CUFs2OZ5bN"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:54:50Z",
+ "purpose": "explain:blind",
+ "version": {
+  "author": "google/gemini-2.5-flash-lite",
+  "created": "2026-10-26T18:54:50Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates positively for tokens that are part of proper nouns or technical terms, especially in narrative and code contexts (W01, W03, W04). It activates negatively for tokens that appear to be common characters or parts of words in factual or code contexts, potentially indicating a contrast or negation (W05, W06, W07, W08, W10).",
+  "output_hypothesis": "The neuron might be sensitive to the presence of specific entities or technical jargon, distinguishing them from more general text. The negative activations could signal a suppression of common words or a contrastive function.",
+  "alternatives": [
+   "The neuron activates positively for the start of assistant responses (W02) and negatively for specific characters or symbols (W05, W06, W09).",
+   "The neuron activates positively for specific proper nouns and technical terms (W01, W03, W04) and negatively for common words or parts of words (W05, W07, W08)."
+  ],
+  "adapter_changes": "State E+1 shows a significant increase in positive activation for prompt tokens (W21, W22, W25) and a large increase in overall activation for emotional_chat domain.",
+  "supporting": [
+   "L35_N6237:e00",
+   "L35_N6237:e01",
+   "L35_N6237:e04",
+   "L35_N6237:e05",
+   "L35_N6237:e08",
+   "L35_N6237:e09",
+   "L35_N6237:e10",
+   "L35_N6237:e11",
+   "L35_N6237:e13"
+  ],
+  "contradicting": [
+   "L35_N6237:e12"
+  ],
+  "proposed_tests": [
+   "proper noun vs common word :: [high] The GR was a great success. | [low] The dog was a great success.",
+   "technical term vs common word :: [high] The Affero license is important. | [low] The license is important.",
+   "start of assistant response vs continuation :: [high] <|im_start|>assistant\nHello there! | [low] I said hello there!",
+   "specific negative token vs common word :: [negative] He saw the u. | [low] He saw the cat.",
+   "code symbol vs common word :: [negative] Use the .symbol. | [low] Use the symbol.",
+   "proper noun vs common word :: [high] Sun was a leader. | [low] The leader was there.",
+   "proper noun vs common word :: [high] De Carvalho was born. | [low] He was born.",
+   "code token vs common word :: [high] The Music is loud. | [low] The song is loud.",
+   "specific negative token vs common word :: [negative] He saw the sh. | [low] He saw the man.",
+   "specific negative token vs common word :: [negative] He saw the sav. | [low] He saw the car."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "proper noun vs common word",
+    "texts": [
+     {
+      "text": "The GR was a great success.",
+      "expected": "high",
+      "target": "GR"
+     },
+     {
+      "text": "The dog was a great success.",
+      "expected": "low",
+      "target": "dog"
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "technical term vs common word",
+    "texts": [
+     {
+      "text": "The Affero license is important.",
+      "expected": "high",
+      "target": "Affero"
+     },
+     {
+      "text": "The license is important.",
+      "expected": "low",
+      "target": "license"
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "start of assistant response vs continuation",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\nHello there!",
+      "expected": "high",
+      "target": "Hello"
+     },
+     {
+      "text": "I said hello there!",
+      "expected": "low",
+      "target": "hello"
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "specific negative token vs common word",
+    "texts": [
+     {
+      "text": "He saw the u.",
+      "expected": "negative",
+      "target": "u"
+     },
+     {
+      "text": "He saw the cat.",
+      "expected": "low",
+      "target": "cat"
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "code symbol vs common word",
+    "texts": [
+     {
+      "text": "Use the .symbol.",
+      "expected": "negative",
+      "target": ".symbol"
+     },
+     {
+      "text": "Use the symbol.",
+      "expected": "low",
+      "target": "symbol"
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "proper noun vs common word",
+    "texts": [
+     {
+      "text": "Sun was a leader.",
+      "expected": "high",
+      "target": "Sun"
+     },
+     {
+      "text": "The leader was there.",
+      "expected": "low",
+      "target": "leader"
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "proper noun vs common word",
+    "texts": [
+     {
+      "text": "De Carvalho was born.",
+      "expected": "high",
+      "target": "Carvalho"
+     },
+     {
+      "text": "He was born.",
+      "expected": "low",
+      "target": "born"
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "code token vs common word",
+    "texts": [
+     {
+      "text": "The Music is loud.",
+      "expected": "high",
+      "target": "Music"
+     },
+     {
+      "text": "The song is loud.",
+      "expected": "low",
+      "target": "song"
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "specific negative token vs common word",
+    "texts": [
+     {
+      "text": "He saw the sh.",
+      "expected": "negative",
+      "target": "sh"
+     },
+     {
+      "text": "He saw the man.",
+      "expected": "low",
+      "target": "man"
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "specific negative token vs common word",
+    "texts": [
+     {
+      "text": "He saw the sav.",
+      "expected": "negative",
+      "target": "sav"
+     },
+     {
+      "text": "He saw the car.",
+      "expected": "low",
+      "target": "car"
+     }
+    ]
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true,
+  "usage": {
+   "input_tokens": 6283,
+   "output_tokens": 881,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0009807
+  },
+  "invalid_citations": [],
+  "packet_hash": "8548b725838bcac063de7373d5dc4b0942bd16bfa931c10860ec9d83ad12c364",
+  "packet_mode": "blind",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+0.5": "E+0.5",
+   "n_amp+1": "E+1",
+   "n_amp-0.5": "E-0.5",
+   "n_amp-1": "E-1",
+   "n_sup+1": "B+1",
+   "o_amp+0.5": "D+0.5",
+   "o_amp+1": "D+1",
+   "o_amp-0.5": "D-0.5",
+   "o_amp-1": "D-1",
+   "o_sup+1": "A+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 9,
+  "n_contradicting": 1,
+  "invalid_ids": [],
+  "supporting_strong_frac": 1.0,
+  "supporting_categories": {
+   "high_pos": 4,
+   "high_neg": 5
+  },
+  "supporting_by_neuron": {
+   "L35/N6237": 9
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": true,
+  "confidence": "low"
+ }
+}

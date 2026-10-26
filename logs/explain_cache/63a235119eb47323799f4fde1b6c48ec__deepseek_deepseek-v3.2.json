@@ -1,0 +1,200 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "Negation and negative sentiment",
+  "trigger_hypothesis": "The neuron activates strongly on tokens that are part of negation phrases (like 'don't', 'wouldn't') or that convey strong negative sentiment (like 'noxious', 'clinging'), especially when the negation is about a personal state or action.",
+  "output_hypothesis": "The neuron's activation may suppress overly positive or neutral continuations and promote continuations that acknowledge limitations, problems, or negative states, fitting a conversational or narrative tone of admitting difficulty or expressing strong dislike.",
+  "alternatives": [
+   "The neuron detects proper nouns (especially first names) and suppresses them, as seen in strong negative activations on 'Willie', 'Daniel', 'Manuel', 'Henry'.",
+   "The neuron responds to tokens that are part of technical or code-related imports and conjunctions, like 'multiprocessing', 'and', '_literals'."
+  ],
+  "adapter_changes": "State D+1 and E+1 often increase positive activations (e.g., W01, W04, W06) and sometimes decrease them (W05, W06), while having minimal effect on negative activations, suggesting the adapter modifications may amplify the negation/negative sentiment sensitivity.",
+  "supporting": [
+   "W01",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W24"
+  ],
+  "contradicting": [
+   "W02",
+   "W03",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W25",
+   "W26",
+   "W27",
+   "W28",
+   "W29",
+   "W30"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Negation phrase vs. same word without negation",
+    "a_text": "I don't understand the problem.",
+    "a_expected": "high",
+    "a_target": "don't",
+    "b_text": "I understand the problem.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative sentiment adjective vs. neutral adjective",
+    "a_text": "The food was disgusting and awful.",
+    "a_expected": "high",
+    "a_target": "disgusting",
+    "b_text": "The food was average and fine.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "First-person negation vs. third-person statement",
+    "a_text": "I can't believe it.",
+    "a_expected": "high",
+    "a_target": "can't",
+    "b_text": "He can't believe it.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Proper noun (name) vs. common noun",
+    "a_text": "My friend is named Daniel.",
+    "a_expected": "negative",
+    "a_target": "Daniel",
+    "b_text": "My friend is a teacher.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Technical import statement vs. normal sentence",
+    "a_text": "import multiprocessing and threading.",
+    "a_expected": "high",
+    "a_target": "multiprocessing",
+    "b_text": "We use multiprocessing and threading.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Conjunction 'and' in a list vs. in a phrase",
+    "a_text": "Use comments, formatting, and clarity.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "He walked and talked.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negation of ability vs. negation of existence",
+    "a_text": "You don't know the answer.",
+    "a_expected": "high",
+    "a_target": "don't",
+    "b_text": "There isn't any answer.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Strong negative verb vs. mild negative verb",
+    "a_text": "I hated the movie.",
+    "a_expected": "high",
+    "a_target": "hated",
+    "b_text": "I disliked the movie.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Code literal suffix vs. normal word",
+    "a_text": "from __future__ import unicode_literals",
+    "a_expected": "negative",
+    "a_target": "_literals",
+    "b_text": "He studied literary texts.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Second-person question with 'you' vs. statement",
+    "a_text": "Do you understand me?",
+    "a_expected": "high",
+    "a_target": "you",
+    "b_text": "He understands me.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"Negation and negative sentiment\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of negation phrases (like 'don't', 'wouldn't') or that convey strong negative sentiment (like 'noxious', 'clinging'), especially when the negation is about a personal state or action.\",\"output_hypothesis\":\"The neuron's activation may suppress overly positive or neutral continuations and promote continuations that acknowledge limitations, problems, or negative states, fitting a conversational or narrative tone of admitting difficulty or expressing strong dislike.\",\"alternatives\":[\"The neuron detects proper nouns (especially first names) and suppresses them, as seen in strong negative activations on 'Willie', 'Daniel', 'Manuel', 'Henry'.\",\"The neuron responds to tokens that are part of technical or code-related imports and conjunctions, like 'multiprocessing', 'and', '_literals'.\"],\"adapter_changes\":\"State D+1 and E+1 often increase positive activations (e.g., W01, W04, W06) and sometimes decrease them (W05, W06), while having minimal effect on negative activations, suggesting the adapter modifications may amplify the negation/negative sentiment sensitivity.\",\"supporting\":[\"W01\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W24\"],\"contradicting\":[\"W02\",\"W03\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W25\",\"W26\",\"W27\",\"W28\",\"W29\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"Negation phrase vs. same word without negation\",\"a_text\":\"I don't understand the problem.\",\"a_expected\":\"high\",\"a_target\":\"don't\",\"b_text\":\"I understand the problem.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative sentiment adjective vs. neutral adjective\",\"a_text\":\"The food was disgusting and awful.\",\"a_expected\":\"high\",\"a_target\":\"disgusting\",\"b_text\":\"The food was average and fine.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person negation vs. third-person statement\",\"a_text\":\"I can't believe it.\",\"a_expected\":\"high\",\"a_target\":\"can't\",\"b_text\":\"He can't believe it.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Proper noun (name) vs. common noun\",\"a_text\":\"My friend is named Daniel.\",\"a_expected\":\"negative\",\"a_target\":\"Daniel\",\"b_text\":\"My friend is a teacher.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Technical import statement vs. normal sentence\",\"a_text\":\"import multiprocessing and threading.\",\"a_expected\":\"high\",\"a_target\":\"multiprocessing\",\"b_text\":\"We use multiprocessing and threading.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Conjunction 'and' in a list vs. in a phrase\",\"a_text\":\"Use comments, formatting, and clarity.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"He walked and talked.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negation of ability vs. negation of existence\",\"a_text\":\"You don't know the answer.\",\"a_expected\":\"high\",\"a_target\":\"don't\",\"b_text\":\"There isn't any answer.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Strong negative verb vs. mild negative verb\",\"a_text\":\"I hated the movie.\",\"a_expected\":\"high\",\"a_target\":\"hated\",\"b_text\":\"I disliked the movie.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Code literal suffix vs. normal word\",\"a_text\":\"from __future__ import unicode_literals\",\"a_expected\":\"negative\",\"a_target\":\"_literals\",\"b_text\":\"He studied literary texts.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Second-person question with 'you' vs. statement\",\"a_text\":\"Do you understand me?\",\"a_expected\":\"high\",\"a_target\":\"you\",\"b_text\":\"He understands me.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5339,
+  "output_tokens": 1076,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001656536
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"Negation and negative sentiment\",\"trigger_hypothesis\":\"The neuron activates strongly on tokens that are part of negation phrases (like 'don't', 'wouldn't') or that convey strong negative sentiment (like 'noxious', 'clinging'), especially when the negation is about a personal state or action.\",\"output_hypothesis\":\"The neuron's activation may suppress overly positive or neutral continuations and promote continuations that acknowledge limitations, problems, or negative states, fitting a conversational or narrative tone of admitting difficulty or expressing strong dislike.\",\"alternatives\":[\"The neuron detects proper nouns (especially first names) and suppresses them, as seen in strong negative activations on 'Willie', 'Daniel', 'Manuel', 'Henry'.\",\"The neuron responds to tokens that are part of technical or code-related imports and conjunctions, like 'multiprocessing', 'and', '_literals'.\"],\"adapter_changes\":\"State D+1 and E+1 often increase positive activations (e.g., W01, W04, W06) and sometimes decrease them (W05, W06), while having minimal effect on negative activations, suggesting the adapter modifications may amplify the negation/negative sentiment sensitivity.\",\"supporting\":[\"W01\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W24\"],\"contradicting\":[\"W02\",\"W03\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W25\",\"W26\",\"W27\",\"W28\",\"W29\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"Negation phrase vs. same word without negation\",\"a_text\":\"I don't understand the problem.\",\"a_expected\":\"high\",\"a_target\":\"don't\",\"b_text\":\"I understand the problem.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative sentiment adjective vs. neutral adjective\",\"a_text\":\"The food was disgusting and awful.\",\"a_expected\":\"high\",\"a_target\":\"disgusting\",\"b_text\":\"The food was average and fine.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First-person negation vs. third-person statement\",\"a_text\":\"I can't believe it.\",\"a_expected\":\"high\",\"a_target\":\"can't\",\"b_text\":\"He can't believe it.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Proper noun (name) vs. common noun\",\"a_text\":\"My friend is named Daniel.\",\"a_expected\":\"negative\",\"a_target\":\"Daniel\",\"b_text\":\"My friend is a teacher.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Technical import statement vs. normal sentence\",\"a_text\":\"import multiprocessing and threading.\",\"a_expected\":\"high\",\"a_target\":\"multiprocessing\",\"b_text\":\"We use multiprocessing and threading.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Conjunction 'and' in a list vs. in a phrase\",\"a_text\":\"Use comments, formatting, and clarity.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"He walked and talked.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negation of ability vs. negation of existence\",\"a_text\":\"You don't know the answer.\",\"a_expected\":\"high\",\"a_target\":\"don't\",\"b_text\":\"There isn't any answer.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Strong negative verb vs. mild negative verb\",\"a_text\":\"I hated the movie.\",\"a_expected\":\"high\",\"a_target\":\"hated\",\"b_text\":\"I disliked the movie.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Code literal suffix vs. normal word\",\"a_text\":\"from __future__ import unicode_literals\",\"a_expected\":\"negative\",\"a_target\":\"_literals\",\"b_text\":\"He studied literary texts.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Second-person question with 'you' vs. statement\",\"a_text\":\"Do you understand me?\",\"a_expected\":\"high\",\"a_target\":\"you\",\"b_text\":\"He understands me.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5339,
+    "output_tokens": 1076,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001656536,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041470-Zcpl7l9yfD9JRa9pi1DA"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:04:51Z",
+ "purpose": "explain:ambiguous"
+}

@@ -1,0 +1,190 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "negative punctuation",
+  "trigger_hypothesis": "The neuron activates negatively for punctuation marks that end a sentence or clause, particularly commas and periods.",
+  "output_hypothesis": "The neuron seems to detect sentence-ending or clause-ending punctuation, showing strong negative activation for commas and periods.",
+  "alternatives": [
+   "The neuron activates negatively for specific conjunctions like 'can' and 'are' in certain contexts.",
+   "The neuron activates negatively for words indicating inability or difficulty."
+  ],
+  "adapter_changes": "State E+1 shows a significant shift towards positive activation for 'but' (W21) and 'are' (W18), and a strong positive shift for 'not' (W22), while state D+1 shows a strong negative shift for 'are' (W18) and 'unable' (W19).",
+  "supporting": [
+   "W01",
+   "W14"
+  ],
+  "contradicting": [
+   "W03",
+   "W04",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "comma vs. conjunction",
+    "a_text": "This is a test, and it works.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "This is a test, but it works.",
+    "b_expected": "low",
+    "b_target": "but",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period vs. conjunction",
+    "a_text": "This is a test. It works.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "This is a test and it works.",
+    "b_expected": "high",
+    "b_target": "and",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma vs. conjunction",
+    "a_text": "I like apples, and I like oranges.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "I like apples, but I like oranges.",
+    "b_expected": "low",
+    "b_target": "but",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period vs. conjunction",
+    "a_text": "He is happy.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "He is happy and.",
+    "b_expected": "high",
+    "b_target": "and",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma vs. conjunction",
+    "a_text": "She is smart, and talented.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "She is smart, but talented.",
+    "b_expected": "low",
+    "b_target": "but",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period vs. conjunction",
+    "a_text": "The dog barked.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "The dog barked and.",
+    "b_expected": "high",
+    "b_target": "and",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma vs. conjunction",
+    "a_text": "He ran fast, and won.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "He ran fast, but won.",
+    "b_expected": "low",
+    "b_target": "but",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period vs. conjunction",
+    "a_text": "The race ended.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "The race ended and.",
+    "b_expected": "high",
+    "b_target": "and",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma vs. conjunction",
+    "a_text": "The food was good, and plentiful.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "The food was good, but plentiful.",
+    "b_expected": "low",
+    "b_target": "but",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period vs. conjunction",
+    "a_text": "The sun set.",
+    "a_expected": "low",
+    "a_target": ".",
+    "b_text": "The sun set and.",
+    "b_expected": "high",
+    "b_target": "and",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"negative punctuation\",\"trigger_hypothesis\":\"The neuron activates negatively for punctuation marks that end a sentence or clause, particularly commas and periods.\",\"output_hypothesis\":\"The neuron seems to detect sentence-ending or clause-ending punctuation, showing strong negative activation for commas and periods.\",\"alternatives\":[\"The neuron activates negatively for specific conjunctions like 'can' and 'are' in certain contexts.\",\"The neuron activates negatively for words indicating inability or difficulty.\"],\"adapter_changes\":\"State E+1 shows a significant shift towards positive activation for 'but' (W21) and 'are' (W18), and a strong positive shift for 'not' (W22), while state D+1 shows a strong negative shift for 'are' (W18) and 'unable' (W19).\",\"supporting\":[\"W01\",\"W14\"],\"contradicting\":[\"W03\",\"W04\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"This is a test, and it works.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"This is a test, but it works.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"This is a test. It works.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"This is a test and it works.\",\"b_expected\":\"high\",\"b_target\":\"and\"},{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"I like apples, and I like oranges.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"I like apples, but I like oranges.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"He is happy.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"He is happy and.\",\"b_expected\":\"high\",\"b_target\":\"and\"},{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"She is smart, and talented.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"She is smart, but talented.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"The dog barked.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"The dog barked and.\",\"b_expected\":\"high\",\"b_target\":\"and\"},{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"He ran fast, and won.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"He ran fast, but won.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"The race ended.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"The race ended and.\",\"b_expected\":\"high\",\"b_target\":\"and\"},{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"The food was good, and plentiful.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"The food was good, but plentiful.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"The sun set.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"The sun set and.\",\"b_expected\":\"high\",\"b_target\":\"and\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5763,
+  "output_tokens": 827,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0009071
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative punctuation\",\"trigger_hypothesis\":\"The neuron activates negatively for punctuation marks that end a sentence or clause, particularly commas and periods.\",\"output_hypothesis\":\"The neuron seems to detect sentence-ending or clause-ending punctuation, showing strong negative activation for commas and periods.\",\"alternatives\":[\"The neuron activates negatively for specific conjunctions like 'can' and 'are' in certain contexts.\",\"The neuron activates negatively for words indicating inability or difficulty.\"],\"adapter_changes\":\"State E+1 shows a significant shift towards positive activation for 'but' (W21) and 'are' (W18), and a strong positive shift for 'not' (W22), while state D+1 shows a strong negative shift for 'are' (W18) and 'unable' (W19).\",\"supporting\":[\"W01\",\"W14\"],\"contradicting\":[\"W03\",\"W04\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\"],\"proposed_tests\":[{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"This is a test, and it works.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"This is a test, but it works.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"This is a test. It works.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"This is a test and it works.\",\"b_expected\":\"high\",\"b_target\":\"and\"},{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"I like apples, and I like oranges.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"I like apples, but I like oranges.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"He is happy.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"He is happy and.\",\"b_expected\":\"high\",\"b_target\":\"and\"},{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"She is smart, and talented.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"She is smart, but talented.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"The dog barked.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"The dog barked and.\",\"b_expected\":\"high\",\"b_target\":\"and\"},{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"He ran fast, and won.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"He ran fast, but won.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"The race ended.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"The race ended and.\",\"b_expected\":\"high\",\"b_target\":\"and\"},{\"discriminates\":\"comma vs. conjunction\",\"a_text\":\"The food was good, and plentiful.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"The food was good, but plentiful.\",\"b_expected\":\"low\",\"b_target\":\"but\"},{\"discriminates\":\"period vs. conjunction\",\"a_text\":\"The sun set.\",\"a_expected\":\"low\",\"a_target\":\".\",\"b_text\":\"The sun set and.\",\"b_expected\":\"high\",\"b_target\":\"and\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5763,
+    "output_tokens": 827,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0009071,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1793040864-f7f5HljUTwtn2JJKPyMl"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:54:27Z",
+ "purpose": "explain:blind"
+}

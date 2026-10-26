@@ -1,0 +1,250 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "parsed": {
+  "label": "factual entity name trigger",
+  "trigger_hypothesis": "The neuron activates strongly positively for proper nouns that are factual entities, and strongly negatively for other tokens.",
+  "output_hypothesis": "The neuron appears to be a factual entity detector, firing strongly positive for names of well-known geographical or scientific entities and strongly negative for other types of tokens, especially common words or punctuation.",
+  "alternatives": [
+   "The neuron activates for common nouns in factual contexts.",
+   "The neuron activates for specific words in factual sentences.",
+   "The neuron activates for words that are part of a factual statement."
+  ],
+  "adapter_changes": "State C+1 shows a strong negative activation for 'against' (W02, W27), contrasting with the strong positive activation in the base model. State A+1 shows a strong positive activation for 'firm' (W21), which is a moderate negative in the base model. State B+1 shows a strong positive activation for 'library' (W09), which is a moderate positive in the base model.",
+  "supporting": [
+   "W01",
+   "W03",
+   "W05",
+   "W09",
+   "W12",
+   "W29"
+  ],
+  "contradicting": [
+   "W02",
+   "W04",
+   "W06",
+   "W07",
+   "W08",
+   "W10",
+   "W11",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24",
+   "W25",
+   "W26",
+   "W27",
+   "W28",
+   "W30"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "factual entity vs. common noun",
+    "a_text": "The Sahara is a desert.",
+    "a_expected": "high",
+    "a_target": "Sahara",
+    "b_text": "The desert is hot.",
+    "b_expected": "low",
+    "b_target": "desert",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. action",
+    "a_text": "The Amazon river flows.",
+    "a_expected": "high",
+    "a_target": "Amazon",
+    "b_text": "The river flows.",
+    "b_expected": "low",
+    "b_target": "river",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. abstract concept",
+    "a_text": "Mount Everest is tall.",
+    "a_expected": "high",
+    "a_target": "Everest",
+    "b_text": "The height is great.",
+    "b_expected": "low",
+    "b_target": "height",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. common word",
+    "a_text": "The Sahara is large.",
+    "a_expected": "high",
+    "a_target": "Sahara",
+    "b_text": "The is large.",
+    "b_expected": "low",
+    "b_target": "is",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. punctuation",
+    "a_text": "The Amazon river.",
+    "a_expected": "high",
+    "a_target": "Amazon",
+    "b_text": "The river.",
+    "b_expected": "low",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. common word",
+    "a_text": "Mount Everest is high.",
+    "a_expected": "high",
+    "a_target": "Everest",
+    "b_text": "Mount is high.",
+    "b_expected": "low",
+    "b_target": "is",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. common word",
+    "a_text": "The Sahara is hot.",
+    "a_expected": "high",
+    "a_target": "Sahara",
+    "b_text": "The hot.",
+    "b_expected": "low",
+    "b_target": "hot",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. common word",
+    "a_text": "The Amazon river is long.",
+    "a_expected": "high",
+    "a_target": "Amazon",
+    "b_text": "The river is long.",
+    "b_expected": "low",
+    "b_target": "river",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. common word",
+    "a_text": "Mount Everest is tall.",
+    "a_expected": "high",
+    "a_target": "Everest",
+    "b_text": "Mount tall.",
+    "b_expected": "low",
+    "b_target": "tall",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "factual entity vs. common word",
+    "a_text": "The Sahara is vast.",
+    "a_expected": "high",
+    "a_target": "Sahara",
+    "b_text": "The vast.",
+    "b_expected": "low",
+    "b_target": "vast",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"factual entity name trigger\",\"trigger_hypothesis\":\"The neuron activates strongly positively for proper nouns that are factual entities, and strongly negatively for other tokens.\",\"output_hypothesis\":\"The neuron appears to be a factual entity detector, firing strongly positive for names of well-known geographical or scientific entities and strongly negative for other types of tokens, especially common words or punctuation.\",\"alternatives\":[\"The neuron activates for common nouns in factual contexts.\",\"The neuron activates for specific words in factual sentences.\",\"The neuron activates for words that are part of a factual statement.\"],\"adapter_changes\":\"State C+1 shows a strong negative activation for 'against' (W02, W27), contrasting with the strong positive activation in the base model. State A+1 shows a strong positive activation for 'firm' (W21), which is a moderate negative in the base model. State B+1 shows a strong positive activation for 'library' (W09), which is a moderate positive in the base model.\",\"supporting\":[\"W01\",\"W03\",\"W05\",\"W09\",\"W12\",\"W29\"],\"contradicting\":[\"W02\",\"W04\",\"W06\",\"W07\",\"W08\",\"W10\",\"W11\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\",\"W28\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"factual entity vs. common noun\",\"a_text\":\"The Sahara is a desert.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The desert is hot.\",\"b_expected\":\"low\",\"b_target\":\"desert\"},{\"discriminates\":\"factual entity vs. action\",\"a_text\":\"The Amazon river flows.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river flows.\",\"b_expected\":\"low\",\"b_target\":\"river\"},{\"discriminates\":\"factual entity vs. abstract concept\",\"a_text\":\"Mount Everest is tall.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"The height is great.\",\"b_expected\":\"low\",\"b_target\":\"height\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is large.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The is large.\",\"b_expected\":\"low\",\"b_target\":\"is\"},{\"discriminates\":\"factual entity vs. punctuation\",\"a_text\":\"The Amazon river.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"Mount Everest is high.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"Mount is high.\",\"b_expected\":\"low\",\"b_target\":\"is\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is hot.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The hot.\",\"b_expected\":\"low\",\"b_target\":\"hot\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Amazon river is long.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river is long.\",\"b_expected\":\"low\",\"b_target\":\"river\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"Mount Everest is tall.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"Mount tall.\",\"b_expected\":\"low\",\"b_target\":\"tall\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is vast.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The vast.\",\"b_expected\":\"low\",\"b_target\":\"vast\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 10156,
+  "output_tokens": 1922,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0017844
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"factual entity name trigger\",\"trigger_hypothesis\":\"The neuron activates strongly positively for proper nouns that are factual entities, and strongly negatively for other tokens.\",\"output_hypothesis\":\"The neuron appears to be a factual entity detector, firing strongly positive for names of well-known geographical or scientific entities and strongly negative for other types of tokens, especially common words or punctuation.\",\"alternatives\":[\"The neuron activates for common nouns in factual contexts.\",\"The neuron activates for specific words in factual sentences.\",\"The neuron activates for words that are part of a factual statement.\"],\"adapter_changes\":\"State C+1 shows a strong negative activation for 'against' (W02, W27), contrasting with the strong positive activation in the base model. State A+1 shows a strong positive activation for 'firm' (W21), which is a moderate negative in the base model. State B+1 shows a strong positive activation for 'library' (W09), which is a moderate positive in the base model.\",\"supporting\":[\"W01\",\"W03\",\"W05\",\"W09\",\"W12\",\"W29\"],\"contradicting\":[\"W02\",\"W04\",\"W06\",\"W07\",\"W08\",\"W10\",\"W11\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\",\"W28\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"factual entity vs. common noun\",\"a_text\":\"The Sahara is a desert.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The desert is hot.\",\"b_expected\":\"low\",\"b_target\":\"desert\"},{\"discriminates\":\"factual entity vs. action\",\"a_text\":\"The Amazon river flows.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river flows.\",\"b_expected\":\"low\",\"b_target\":\"river\"},{\"discriminates\":\"factual entity vs. abstract concept\",\"a_text\":\"Mount Everest is tall.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"The height is great.\",\"b_expected\":\"low\",\"b_target\":\"height\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is large.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The is large.\",\"b_expected\":\"low\",\"b_target\":\"is\"},{\"discriminates\":\"factual entity vs. punctuation\",\"a_text\":\"The Amazon river.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river.\",\"b_expected\":\"low\",\"b_target\":\".\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"Mount Everest is high.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"Mount is high.\",\"b_expected\":\"low\",\"b_target\":\"is\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is hot.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The hot.\",\"b_expected\":\"low\",\"b_target\":\"hot\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Amazon river is long.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river is long.\",\"b_expected\":\"low\",\"b_target\":\"river\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"Mount Everest is tall.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"Mount tall.\",\"b_expected\":\"low\",\"b_target\":\"tall\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is vast.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The vast.\",\"b_expected\":\"low\",\"b_target\":\"vast\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [
+    "$.proposed_tests[0]: missing c_text",
+    "$.proposed_tests[0]: missing c_expected",
+    "$.proposed_tests[0]: missing c_target",
+    "$.proposed_tests[1]: missing c_text",
+    "$.proposed_tests[1]: missing c_expected",
+    "$.proposed_tests[1]: missing c_target",
+    "$.proposed_tests[2]: missing c_text",
+    "$.proposed_tests[2]: missing c_expected",
+    "$.proposed_tests[2]: missing c_target",
+    "$.proposed_tests[3]: missing c_text",
+    "$.proposed_tests[3]: missing c_expected",
+    "$.proposed_tests[3]: missing c_target",
+    "$.proposed_tests[4]: missing c_text",
+    "$.proposed_tests[4]: missing c_expected",
+    "$.proposed_tests[4]: missing c_target",
+    "$.proposed_tests[5]: missing c_text",
+    "$.proposed_tests[5]: missing c_expected",
+    "$.proposed_tests[5]: missing c_target",
+    "$.proposed_tests[6]: missing c_text",
+    "$.proposed_tests[6]: missing c_expected",
+    "$.proposed_tests[6]: missing c_target",
+    "$.proposed_tests[7]: missing c_text",
+    "$.proposed_tests[7]: missing c_expected",
+    "$.proposed_tests[7]: missing c_target",
+    "$.proposed_tests[8]: missing c_text",
+    "$.proposed_tests[8]: missing c_expected",
+    "$.proposed_tests[8]: missing c_target",
+    "$.proposed_tests[9]: missing c_text",
+    "$.proposed_tests[9]: missing c_expected",
+    "$.proposed_tests[9]: missing c_target"
+   ],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4595,
+    "output_tokens": 889,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0008151,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1792979710-YdgLj6SJe5G8jcuuwiUn"
+  },
+  {
+   "content": "{\"label\":\"factual entity name trigger\",\"trigger_hypothesis\":\"The neuron activates strongly positively for proper nouns that are factual entities, and strongly negatively for other tokens.\",\"output_hypothesis\":\"The neuron appears to be a factual entity detector, firing strongly positive for names of well-known geographical or scientific entities and strongly negative for other types of tokens, especially common words or punctuation.\",\"alternatives\":[\"The neuron activates for common nouns in factual contexts.\",\"The neuron activates for specific words in factual sentences.\",\"The neuron activates for words that are part of a factual statement.\"],\"adapter_changes\":\"State C+1 shows a strong negative activation for 'against' (W02, W27), contrasting with the strong positive activation in the base model. State A+1 shows a strong positive activation for 'firm' (W21), which is a moderate negative in the base model. State B+1 shows a strong positive activation for 'library' (W09), which is a moderate positive in the base model.\",\"supporting\":[\"W01\",\"W03\",\"W05\",\"W09\",\"W12\",\"W29\"],\"contradicting\":[\"W02\",\"W04\",\"W06\",\"W07\",\"W08\",\"W10\",\"W11\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\",\"W25\",\"W26\",\"W27\",\"W28\",\"W30\"],\"proposed_tests\":[{\"discriminates\":\"factual entity vs. common noun\",\"a_text\":\"The Sahara is a desert.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The desert is hot.\",\"b_expected\":\"low\",\"b_target\":\"desert\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. action\",\"a_text\":\"The Amazon river flows.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river flows.\",\"b_expected\":\"low\",\"b_target\":\"river\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. abstract concept\",\"a_text\":\"Mount Everest is tall.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"The height is great.\",\"b_expected\":\"low\",\"b_target\":\"height\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is large.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The is large.\",\"b_expected\":\"low\",\"b_target\":\"is\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. punctuation\",\"a_text\":\"The Amazon river.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river.\",\"b_expected\":\"low\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"Mount Everest is high.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"Mount is high.\",\"b_expected\":\"low\",\"b_target\":\"is\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is hot.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The hot.\",\"b_expected\":\"low\",\"b_target\":\"hot\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Amazon river is long.\",\"a_expected\":\"high\",\"a_target\":\"Amazon\",\"b_text\":\"The river is long.\",\"b_expected\":\"low\",\"b_target\":\"river\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"Mount Everest is tall.\",\"a_expected\":\"high\",\"a_target\":\"Everest\",\"b_text\":\"Mount tall.\",\"b_expected\":\"low\",\"b_target\":\"tall\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"factual entity vs. common word\",\"a_text\":\"The Sahara is vast.\",\"a_expected\":\"high\",\"a_target\":\"Sahara\",\"b_text\":\"The vast.\",\"b_expected\":\"low\",\"b_target\":\"vast\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}\n\":false}",
+   "errors": [
+    "parse error: Extra data: line 2 column 1 (char 3604)"
+   ],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5561,
+    "output_tokens": 1033,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.0009693,
+    "cost_source": "openrouter"
+   },
+   "provider": "Google AI Studio",
+   "generation_id": "gen-1792979712-iCOUV9LCNjiDG7HZ2cjy"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T01:55:14Z",
+ "purpose": "explain:blind",
+ "revalidated": "2026-10-26T18:07:00Z"
+}

@@ -1,0 +1,188 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation or conjunction after a clause",
+  "trigger_hypothesis": "The neuron activates strongly on punctuation marks (., ,) and conjunctions (and, in, I) that appear after a complete clause, especially when the clause ends a thought or introduces a new one.",
+  "output_hypothesis": "The neuron's output may help signal the end of a clause or a transition point, possibly aiding in sentence structure or discourse coherence.",
+  "alternatives": [
+   "The neuron triggers on common function words regardless of context.",
+   "The neuron detects the start of a new sentence or phrase after a period."
+  ],
+  "adapter_changes": "State D+1 shows a large increase in activation specifically at prompt segment tokens '\\n\\n' (W19-W23), suggesting this state amplifies the neuron's response to assistant response beginnings after a user message.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "punctuation vs. same word mid-sentence",
+    "a_text": "The cat sat. Then it slept.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The cat sat on the mat.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "conjunction after clause vs. within clause",
+    "a_text": "I went home and I slept.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "I bought bread and milk.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'in' as preposition vs. sentence starter",
+    "a_text": "In fact, it was true.",
+    "a_expected": "high",
+    "a_target": "In",
+    "b_text": "He is in the house.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'I' after a sentence break",
+    "a_text": "She left. I stayed.",
+    "a_expected": "high",
+    "a_target": "I",
+    "b_text": "She said I stayed.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma separating clauses vs. list",
+    "a_text": "He ran, but she walked.",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "He bought apples, bananas, and oranges.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'than' after comparative clause",
+    "a_text": "It was worse than before.",
+    "a_expected": "negative",
+    "a_target": "than",
+    "b_text": "More than five people came.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'from' as preposition vs. clause end",
+    "a_text": "He came from afar.",
+    "a_expected": "negative",
+    "a_target": "from",
+    "b_text": "He is from New York.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after complete thought vs. abbreviation",
+    "a_text": "It ended.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "Dr. Smith arrived.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag",
+    "a_text": "<|im_start|>assistant\\n\\nHello",
+    "a_expected": "high",
+    "a_target": "\\n\\n",
+    "b_text": "<|im_start|>user\\n\\nHello",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'and' connecting independent clauses",
+    "a_text": "She sang and he danced.",
+    "a_expected": "high",
+    "a_target": "and",
+    "b_text": "She sang and danced.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation or conjunction after a clause\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (., ,) and conjunctions (and, in, I) that appear after a complete clause, especially when the clause ends a thought or introduces a new one.\",\"output_hypothesis\":\"The neuron's output may help signal the end of a clause or a transition point, possibly aiding in sentence structure or discourse coherence.\",\"alternatives\":[\"The neuron triggers on common function words regardless of context.\",\"The neuron detects the start of a new sentence or phrase after a period.\"],\"adapter_changes\":\"State D+1 shows a large increase in activation specifically at prompt segment tokens '\\\\n\\\\n' (W19-W23), suggesting this state amplifies the neuron's response to assistant response beginnings after a user message.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"punctuation vs. same word mid-sentence\",\"a_text\":\"The cat sat. Then it slept.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The cat sat on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"conjunction after clause vs. within clause\",\"a_text\":\"I went home and I slept.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"I bought bread and milk.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'in' as preposition vs. sentence starter\",\"a_text\":\"In fact, it was true.\",\"a_expected\":\"high\",\"a_target\":\"In\",\"b_text\":\"He is in the house.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'I' after a sentence break\",\"a_text\":\"She left. I stayed.\",\"a_expected\":\"high\",\"a_target\":\"I\",\"b_text\":\"She said I stayed.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma separating clauses vs. list\",\"a_text\":\"He ran, but she walked.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"He bought apples, bananas, and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'than' after comparative clause\",\"a_text\":\"It was worse than before.\",\"a_expected\":\"negative\",\"a_target\":\"than\",\"b_text\":\"More than five people came.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'from' as preposition vs. clause end\",\"a_text\":\"He came from afar.\",\"a_expected\":\"negative\",\"a_target\":\"from\",\"b_text\":\"He is from New York.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after complete thought vs. abbreviation\",\"a_text\":\"It ended.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Dr. Smith arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag\",\"a_text\":\"<|im_start|>assistant\\\\n\\\\nHello\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"<|im_start|>user\\\\n\\\\nHello\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' connecting independent clauses\",\"a_text\":\"She sang and he danced.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"She sang and danced.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5556,
+  "output_tokens": 951,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00172274
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation or conjunction after a clause\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (., ,) and conjunctions (and, in, I) that appear after a complete clause, especially when the clause ends a thought or introduces a new one.\",\"output_hypothesis\":\"The neuron's output may help signal the end of a clause or a transition point, possibly aiding in sentence structure or discourse coherence.\",\"alternatives\":[\"The neuron triggers on common function words regardless of context.\",\"The neuron detects the start of a new sentence or phrase after a period.\"],\"adapter_changes\":\"State D+1 shows a large increase in activation specifically at prompt segment tokens '\\\\n\\\\n' (W19-W23), suggesting this state amplifies the neuron's response to assistant response beginnings after a user message.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"proposed_tests\":[{\"discriminates\":\"punctuation vs. same word mid-sentence\",\"a_text\":\"The cat sat. Then it slept.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The cat sat on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"conjunction after clause vs. within clause\",\"a_text\":\"I went home and I slept.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"I bought bread and milk.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'in' as preposition vs. sentence starter\",\"a_text\":\"In fact, it was true.\",\"a_expected\":\"high\",\"a_target\":\"In\",\"b_text\":\"He is in the house.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'I' after a sentence break\",\"a_text\":\"She left. I stayed.\",\"a_expected\":\"high\",\"a_target\":\"I\",\"b_text\":\"She said I stayed.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma separating clauses vs. list\",\"a_text\":\"He ran, but she walked.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"He bought apples, bananas, and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'than' after comparative clause\",\"a_text\":\"It was worse than before.\",\"a_expected\":\"negative\",\"a_target\":\"than\",\"b_text\":\"More than five people came.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'from' as preposition vs. clause end\",\"a_text\":\"He came from afar.\",\"a_expected\":\"negative\",\"a_target\":\"from\",\"b_text\":\"He is from New York.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after complete thought vs. abbreviation\",\"a_text\":\"It ended.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Dr. Smith arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag\",\"a_text\":\"<|im_start|>assistant\\\\n\\\\nHello\",\"a_expected\":\"high\",\"a_target\":\"\\\\n\\\\n\",\"b_text\":\"<|im_start|>user\\\\n\\\\nHello\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' connecting independent clauses\",\"a_text\":\"She sang and he danced.\",\"a_expected\":\"high\",\"a_target\":\"and\",\"b_text\":\"She sang and danced.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5556,
+    "output_tokens": 951,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00172274,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793042111-6Walfr0YLGKIUs57m4k4"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:46Z",
+ "purpose": "explain:blind"
+}

@@ -1,0 +1,185 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negative on modal/auxiliary verbs after a comma or clause boundary",
+  "trigger_hypothesis": "The neuron fires negatively on modal or auxiliary verbs (like 'can', 'are', 'be') when they appear after a comma or a clause boundary, especially in contexts of limitation or inability.",
+  "output_hypothesis": "The neuron's negative activation may suppress or downweight modal/auxiliary verbs that introduce a limitation, uncertainty, or negative consequence, perhaps to reduce overconfidence in such statements.",
+  "alternatives": [
+   "The neuron detects grammatical structure: negative on modal verbs after punctuation.",
+   "The neuron responds to sentiment: negative on words expressing uncertainty or limitation."
+  ],
+  "adapter_changes": "State D+1 strongly amplifies negative activations (e.g., W01, W19, W20, W21), while state E+1 reduces or flips them to positive (e.g., W02, W18, W20, W21, W22), suggesting the neuron's sensitivity to modals is modulated by these interventions.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W18",
+   "W19",
+   "W20",
+   "W08"
+  ],
+  "contradicting": [
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W14",
+   "W15",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "modal after comma vs. other words",
+    "a_text": "It is easy, but it can be difficult.",
+    "a_expected": "negative",
+    "a_target": "can",
+    "b_text": "It is easy, but it often is difficult.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "auxiliary after period vs. content word",
+    "a_text": "I tried. Are you sure?",
+    "a_expected": "negative",
+    "a_target": "Are",
+    "b_text": "I tried. Really sure?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "modal expressing inability vs. ability",
+    "a_text": "I am unable to help.",
+    "a_expected": "negative",
+    "a_target": "unable",
+    "b_text": "I am able to help.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'be' after comma in negative context vs. positive",
+    "a_text": "If I lost it, I would be sad.",
+    "a_expected": "negative",
+    "a_target": "be",
+    "b_text": "If I won, I would be happy.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "modal in mid-sentence vs. after punctuation",
+    "a_text": "You can try but it might fail.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "You try, but it can fail.",
+    "b_expected": "negative",
+    "b_target": "can",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'are' after question vs. statement",
+    "a_text": "Interviews are tough.",
+    "a_expected": "negative",
+    "a_target": "are",
+    "b_text": "Why interviews are tough.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "modal with future uncertainty vs. present fact",
+    "a_text": "It may rain tomorrow.",
+    "a_expected": "negative",
+    "a_target": "may",
+    "b_text": "It rains often here.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "auxiliary after list comma vs. conjunction",
+    "a_text": "We need eggs, milk, and can bake.",
+    "a_expected": "negative",
+    "a_target": "can",
+    "b_text": "We need eggs, milk, and butter.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'be' in hypothetical limitation vs. description",
+    "a_text": "Without this, I'd be lost.",
+    "a_expected": "negative",
+    "a_target": "be",
+    "b_text": "With this, I'm found.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "modal after clause boundary without comma",
+    "a_text": "She said that can happen.",
+    "a_expected": "negative",
+    "a_target": "can",
+    "b_text": "She said that happens.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negative on modal/auxiliary verbs after a comma or clause boundary\",\"trigger_hypothesis\":\"The neuron fires negatively on modal or auxiliary verbs (like 'can', 'are', 'be') when they appear after a comma or a clause boundary, especially in contexts of limitation or inability.\",\"output_hypothesis\":\"The neuron's negative activation may suppress or downweight modal/auxiliary verbs that introduce a limitation, uncertainty, or negative consequence, perhaps to reduce overconfidence in such statements.\",\"alternatives\":[\"The neuron detects grammatical structure: negative on modal verbs after punctuation.\",\"The neuron responds to sentiment: negative on words expressing uncertainty or limitation.\"],\"adapter_changes\":\"State D+1 strongly amplifies negative activations (e.g., W01, W19, W20, W21), while state E+1 reduces or flips them to positive (e.g., W02, W18, W20, W21, W22), suggesting the neuron's sensitivity to modals is modulated by these interventions.\",\"supporting\":[\"W01\",\"W02\",\"W18\",\"W19\",\"W20\",\"W08\"],\"contradicting\":[\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"modal after comma vs. other words\",\"a_text\":\"It is easy, but it can be difficult.\",\"a_expected\":\"negative\",\"a_target\":\"can\",\"b_text\":\"It is easy, but it often is difficult.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"auxiliary after period vs. content word\",\"a_text\":\"I tried. Are you sure?\",\"a_expected\":\"negative\",\"a_target\":\"Are\",\"b_text\":\"I tried. Really sure?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal expressing inability vs. ability\",\"a_text\":\"I am unable to help.\",\"a_expected\":\"negative\",\"a_target\":\"unable\",\"b_text\":\"I am able to help.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'be' after comma in negative context vs. positive\",\"a_text\":\"If I lost it, I would be sad.\",\"a_expected\":\"negative\",\"a_target\":\"be\",\"b_text\":\"If I won, I would be happy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal in mid-sentence vs. after punctuation\",\"a_text\":\"You can try but it might fail.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"You try, but it can fail.\",\"b_expected\":\"negative\",\"b_target\":\"can\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'are' after question vs. statement\",\"a_text\":\"Interviews are tough.\",\"a_expected\":\"negative\",\"a_target\":\"are\",\"b_text\":\"Why interviews are tough.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal with future uncertainty vs. present fact\",\"a_text\":\"It may rain tomorrow.\",\"a_expected\":\"negative\",\"a_target\":\"may\",\"b_text\":\"It rains often here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"auxiliary after list comma vs. conjunction\",\"a_text\":\"We need eggs, milk, and can bake.\",\"a_expected\":\"negative\",\"a_target\":\"can\",\"b_text\":\"We need eggs, milk, and butter.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'be' in hypothetical limitation vs. description\",\"a_text\":\"Without this, I'd be lost.\",\"a_expected\":\"negative\",\"a_target\":\"be\",\"b_text\":\"With this, I'm found.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal after clause boundary without comma\",\"a_text\":\"She said that can happen.\",\"a_expected\":\"negative\",\"a_target\":\"can\",\"b_text\":\"She said that happens.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5421,
+  "output_tokens": 997,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00175501497
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negative on modal/auxiliary verbs after a comma or clause boundary\",\"trigger_hypothesis\":\"The neuron fires negatively on modal or auxiliary verbs (like 'can', 'are', 'be') when they appear after a comma or a clause boundary, especially in contexts of limitation or inability.\",\"output_hypothesis\":\"The neuron's negative activation may suppress or downweight modal/auxiliary verbs that introduce a limitation, uncertainty, or negative consequence, perhaps to reduce overconfidence in such statements.\",\"alternatives\":[\"The neuron detects grammatical structure: negative on modal verbs after punctuation.\",\"The neuron responds to sentiment: negative on words expressing uncertainty or limitation.\"],\"adapter_changes\":\"State D+1 strongly amplifies negative activations (e.g., W01, W19, W20, W21), while state E+1 reduces or flips them to positive (e.g., W02, W18, W20, W21, W22), suggesting the neuron's sensitivity to modals is modulated by these interventions.\",\"supporting\":[\"W01\",\"W02\",\"W18\",\"W19\",\"W20\",\"W08\"],\"contradicting\":[\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"modal after comma vs. other words\",\"a_text\":\"It is easy, but it can be difficult.\",\"a_expected\":\"negative\",\"a_target\":\"can\",\"b_text\":\"It is easy, but it often is difficult.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"auxiliary after period vs. content word\",\"a_text\":\"I tried. Are you sure?\",\"a_expected\":\"negative\",\"a_target\":\"Are\",\"b_text\":\"I tried. Really sure?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal expressing inability vs. ability\",\"a_text\":\"I am unable to help.\",\"a_expected\":\"negative\",\"a_target\":\"unable\",\"b_text\":\"I am able to help.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'be' after comma in negative context vs. positive\",\"a_text\":\"If I lost it, I would be sad.\",\"a_expected\":\"negative\",\"a_target\":\"be\",\"b_text\":\"If I won, I would be happy.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal in mid-sentence vs. after punctuation\",\"a_text\":\"You can try but it might fail.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"You try, but it can fail.\",\"b_expected\":\"negative\",\"b_target\":\"can\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'are' after question vs. statement\",\"a_text\":\"Interviews are tough.\",\"a_expected\":\"negative\",\"a_target\":\"are\",\"b_text\":\"Why interviews are tough.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal with future uncertainty vs. present fact\",\"a_text\":\"It may rain tomorrow.\",\"a_expected\":\"negative\",\"a_target\":\"may\",\"b_text\":\"It rains often here.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"auxiliary after list comma vs. conjunction\",\"a_text\":\"We need eggs, milk, and can bake.\",\"a_expected\":\"negative\",\"a_target\":\"can\",\"b_text\":\"We need eggs, milk, and butter.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'be' in hypothetical limitation vs. description\",\"a_text\":\"Without this, I'd be lost.\",\"a_expected\":\"negative\",\"a_target\":\"be\",\"b_text\":\"With this, I'm found.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"modal after clause boundary without comma\",\"a_text\":\"She said that can happen.\",\"a_expected\":\"negative\",\"a_target\":\"can\",\"b_text\":\"She said that happens.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5421,
+    "output_tokens": 997,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00175501497,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793040832-ip4YEdVINvACD7PkI3qt"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:54:24Z",
+ "purpose": "explain:blind"
+}

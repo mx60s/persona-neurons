@@ -1,0 +1,1164 @@
+{
+ "id": "L35/N3433",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:03Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative for token 'ion' or similar substrings",
+   "trigger_hypothesis": "The neuron fires strongly negative when the token is part of a word that ends with 'ion' or is a prefix like 'ig', 'the', 'iv', 'inflict', 'ret', 'pan' that often precedes 'ion' in the full word (e.g., 'IG' in 'IGNITION', 'the' in 'theum', 'iv' in 'ivion', 'inflict' in 'infliction', 'ret' in 'retion', 'pan' in 'panions').",
+   "output_hypothesis": "The neuron's negative activation suppresses the completion of words ending in 'ion' or related suffixes, possibly to avoid overpredicting common nominalizations.",
+   "alternatives": [
+    "The neuron detects the beginning of a common noun suffix regardless of the full word meaning.",
+    "The neuron responds to specific character n-grams like 'ig', 'the', 'iv' that are statistically associated with low-probability continuations."
+   ],
+   "adapter_changes": "State B+1 shows dramatically stronger negative activations in prompt contexts (W20, W21, W22, W23, W24) and a larger domain shift in emotional_chat, suggesting this state amplifies the neuron's sensitivity to these prefixes in assistant-turn beginnings. Other states (A+1, C+1, E+1) generally increase activations slightly across domains, while D+1 has minimal effect.",
+   "supporting": [
+    "L35_N3433:e08",
+    "L35_N3433:e09",
+    "L35_N3433:e10",
+    "L35_N3433:e11",
+    "L35_N3433:e12",
+    "L35_N3433:e13",
+    "L35_N3433:e18",
+    "L35_N3433:e20",
+    "L35_N3433:e21",
+    "L35_N3433:e14",
+    "L35_N3433:e15"
+   ],
+   "contradicting": [
+    "L35_N3433:e00",
+    "L35_N3433:e02",
+    "L35_N3433:e04",
+    "L35_N3433:e06",
+    "L35_N3433:e29",
+    "L35_N3433:e28",
+    "L35_N3433:e27",
+    "L35_N3433:e26",
+    "L35_N3433:e25",
+    "L35_N3433:e32",
+    "L35_N3433:e34",
+    "L35_N3433:e33",
+    "L35_N3433:e31"
+   ],
+   "proposed_tests": [
+    "'ion' suffix prefix vs random 'ig' :: [negative] The chemical reaction produced an ign | [low] The chemical reaction produced an ignite",
+    "'the' as part of 'theum' vs article :: [negative] He studied the Erechthe | [low] He studied the book",
+    "'iv' as prefix for 'ivion' vs Roman numeral :: [negative] Chapter iv of the book | [low] Chapter IV of the book",
+    "'inflict' leading to 'infliction' vs standalone :: [negative] They decided to inflict | [low] They decided to inflict pain",
+    "'ret' as prefix for 'retion' vs abbreviation :: [negative] The company name is Akret | [low] The company name is Akret Sao",
+    "'pan' as prefix for 'panions' vs cooking :: [negative] He was a good com pan | [low] He used a frying pan",
+    "'iss' as part of 'ission' vs word 'issue' :: [high] He signed a prom iss | [low] He signed a promissory note",
+    "'VERS' as part of 'VERSATION' vs standalone :: [high] NEW CON VERS | [low] NEW CONVERSATION",
+    "'assistant' token in prompt vs in continuation :: [negative] <|im_start|>assistant | [low] The assistant replied",
+    "'Pl' as prefix for 'Platiceps' vs abbreviation for 'Place' :: [negative] The species is Pl | [low] The meeting is at Pl"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'ion' suffix prefix vs random 'ig'",
+     "texts": [
+      {
+       "text": "The chemical reaction produced an ign",
+       "expected": "negative",
+       "target": "ign"
+      },
+      {
+       "text": "The chemical reaction produced an ignite",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'the' as part of 'theum' vs article",
+     "texts": [
+      {
+       "text": "He studied the Erechthe",
+       "expected": "negative",
+       "target": "the"
+      },
+      {
+       "text": "He studied the book",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'iv' as prefix for 'ivion' vs Roman numeral",
+     "texts": [
+      {
+       "text": "Chapter iv of the book",
+       "expected": "negative",
+       "target": "iv"
+      },
+      {
+       "text": "Chapter IV of the book",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'inflict' leading to 'infliction' vs standalone",
+     "texts": [
+      {
+       "text": "They decided to inflict",
+       "expected": "negative",
+       "target": "inflict"
+      },
+      {
+       "text": "They decided to inflict pain",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'ret' as prefix for 'retion' vs abbreviation",
+     "texts": [
+      {
+       "text": "The company name is Akret",
+       "expected": "negative",
+       "target": "ret"
+      },
+      {
+       "text": "The company name is Akret Sao",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'pan' as prefix for 'panions' vs cooking",
+     "texts": [
+      {
+       "text": "He was a good com pan",
+       "expected": "negative",
+       "target": "pan"
+      },
+      {
+       "text": "He used a frying pan",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'iss' as part of 'ission' vs word 'issue'",
+     "texts": [
+      {
+       "text": "He signed a prom iss",
+       "expected": "high",
+       "target": "iss"
+      },
+      {
+       "text": "He signed a promissory note",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'VERS' as part of 'VERSATION' vs standalone",
+     "texts": [
+      {
+       "text": "NEW CON VERS",
+       "expected": "high",
+       "target": "VERS"
+      },
+      {
+       "text": "NEW CONVERSATION",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'assistant' token in prompt vs in continuation",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant",
+       "expected": "negative",
+       "target": "assistant"
+      },
+      {
+       "text": "The assistant replied",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'Pl' as prefix for 'Platiceps' vs abbreviation for 'Place'",
+     "texts": [
+      {
+       "text": "The species is Pl",
+       "expected": "negative",
+       "target": "Pl"
+      },
+      {
+       "text": "The meeting is at Pl",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 6087,
+    "output_tokens": 1128,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001887816
+   },
+   "invalid_citations": [],
+   "packet_hash": "1bc8b1ea5b7c3e21ce1d270f8b0b29bc0b81ae4e2314046846d792bc81c33c99",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'ion' suffix prefix vs random 'ig'",
+   "prediction": "negative on 'ign'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The chemical reaction produced an ign",
+     "expected": "negative",
+     "target": "ign",
+     "measured_max": 0.5117,
+     "measured_min": -0.1836,
+     "value": -0.1836,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The chemical reaction produced an ignite",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5117,
+     "measured_min": -0.7422,
+     "value": 0.7422,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'the' as part of 'theum' vs article",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He studied the Erechthe",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.6055,
+     "measured_min": -4.6562,
+     "value": 0.4824,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He studied the book",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4824,
+     "measured_min": 0.0,
+     "value": 0.4824,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'iv' as prefix for 'ivion' vs Roman numeral",
+   "prediction": "negative on 'iv'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Chapter iv of the book",
+     "expected": "negative",
+     "target": "iv",
+     "measured_max": 0.543,
+     "measured_min": 0.0,
+     "value": 0.2256,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Chapter IV of the book",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6289,
+     "measured_min": 0.0,
+     "value": 0.6289,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'inflict' leading to 'infliction' vs standalone",
+   "prediction": "negative on 'inflict'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "They decided to inflict",
+     "expected": "negative",
+     "target": "inflict",
+     "measured_max": 0.5391,
+     "measured_min": -0.0488,
+     "value": 0.5391,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "They decided to inflict pain",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5391,
+     "measured_min": -0.0488,
+     "value": 0.5391,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'ret' as prefix for 'retion' vs abbreviation",
+   "prediction": "negative on 'ret'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The company name is Akret",
+     "expected": "negative",
+     "target": "ret",
+     "measured_max": 0.1768,
+     "measured_min": -0.1748,
+     "value": -0.1455,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The company name is Akret Sao",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1768,
+     "measured_min": -0.1748,
+     "value": 0.1768,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'pan' as prefix for 'panions' vs cooking",
+   "prediction": "negative on 'pan'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He was a good com pan",
+     "expected": "negative",
+     "target": "pan",
+     "measured_max": 0.7734,
+     "measured_min": -78.0,
+     "value": -78.0,
+     "threshold": -20.125,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He used a frying pan",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4453,
+     "measured_min": 0.0,
+     "value": 0.4453,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 1.617,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'iss' as part of 'ission' vs word 'issue'",
+   "prediction": "high on 'iss'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He signed a prom iss",
+     "expected": "high",
+     "target": "iss",
+     "measured_max": 0.5078,
+     "measured_min": -2.2344,
+     "value": -2.2344,
+     "threshold": 2.4125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He signed a promissory note",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.2812,
+     "measured_min": -0.1318,
+     "value": 7.2812,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.197,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'VERS' as part of 'VERSATION' vs standalone",
+   "prediction": "high on 'VERS'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "NEW CON VERS",
+     "expected": "high",
+     "target": "VERS",
+     "measured_max": 0.0928,
+     "measured_min": -14.5,
+     "value": 0.0928,
+     "threshold": 2.4125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "NEW CONVERSATION",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2451,
+     "measured_min": -2.9531,
+     "value": 2.9531,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'assistant' token in prompt vs in continuation",
+   "prediction": "negative on 'assistant'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant",
+     "expected": "negative",
+     "target": "assistant",
+     "measured_max": 0.0933,
+     "measured_min": 0.0,
+     "value": 0.0933,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The assistant replied",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2393,
+     "measured_min": -0.0203,
+     "value": 0.2393,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'Pl' as prefix for 'Platiceps' vs abbreviation for 'Place'",
+   "prediction": "negative on 'Pl'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The species is Pl",
+     "expected": "negative",
+     "target": "Pl",
+     "measured_max": 1.1484,
+     "measured_min": 0.0,
+     "value": 1.1484,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The meeting is at Pl",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2754,
+     "measured_min": -0.8867,
+     "value": 0.8867,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.042,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:33Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'ion' suffix prefix vs random 'ig'",
+   "prediction": "negative on 'ign'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The chemical reaction produced an ign",
+     "expected": "negative",
+     "target": "ign",
+     "measured_max": 0.5117,
+     "measured_min": -0.1836,
+     "value": -0.1836,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The chemical reaction produced an ignite",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5117,
+     "measured_min": -0.7422,
+     "value": 0.7422,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'the' as part of 'theum' vs article",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He studied the Erechthe",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.6055,
+     "measured_min": -4.6562,
+     "value": 0.4824,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He studied the book",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4824,
+     "measured_min": 0.0,
+     "value": 0.4824,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.01,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'iv' as prefix for 'ivion' vs Roman numeral",
+   "prediction": "negative on 'iv'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Chapter iv of the book",
+     "expected": "negative",
+     "target": "iv",
+     "measured_max": 0.543,
+     "measured_min": 0.0,
+     "value": 0.2256,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Chapter IV of the book",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6289,
+     "measured_min": 0.0,
+     "value": 0.6289,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'inflict' leading to 'infliction' vs standalone",
+   "prediction": "negative on 'inflict'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "They decided to inflict",
+     "expected": "negative",
+     "target": "inflict",
+     "measured_max": 0.5391,
+     "measured_min": -0.0488,
+     "value": 0.5391,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "They decided to inflict pain",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5391,
+     "measured_min": -0.0488,
+     "value": 0.5391,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'ret' as prefix for 'retion' vs abbreviation",
+   "prediction": "negative on 'ret'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The company name is Akret",
+     "expected": "negative",
+     "target": "ret",
+     "measured_max": 0.1768,
+     "measured_min": -0.1748,
+     "value": -0.1455,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The company name is Akret Sao",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1768,
+     "measured_min": -0.1748,
+     "value": 0.1768,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.001,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'pan' as prefix for 'panions' vs cooking",
+   "prediction": "negative on 'pan'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He was a good com pan",
+     "expected": "negative",
+     "target": "pan",
+     "measured_max": 0.7734,
+     "measured_min": -78.0,
+     "value": -78.0,
+     "threshold": -20.125,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He used a frying pan",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4453,
+     "measured_min": 0.0,
+     "value": 0.4453,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 1.617,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'iss' as part of 'ission' vs word 'issue'",
+   "prediction": "high on 'iss'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He signed a prom iss",
+     "expected": "high",
+     "target": "iss",
+     "measured_max": 0.5078,
+     "measured_min": -2.2344,
+     "value": -2.2344,
+     "threshold": 2.4125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He signed a promissory note",
+     "expected": "low",
+     "target": "",
+     "measured_max": 7.2812,
+     "measured_min": -0.1318,
+     "value": 7.2812,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.197,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'VERS' as part of 'VERSATION' vs standalone",
+   "prediction": "high on 'VERS'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "NEW CON VERS",
+     "expected": "high",
+     "target": "VERS",
+     "measured_max": 0.0928,
+     "measured_min": -14.5,
+     "value": 0.0928,
+     "threshold": 2.4125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "NEW CONVERSATION",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2451,
+     "measured_min": -2.9531,
+     "value": 2.9531,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'assistant' token in prompt vs in continuation",
+   "prediction": "negative on 'assistant'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant",
+     "expected": "negative",
+     "target": "assistant",
+     "measured_max": 0.0933,
+     "measured_min": 0.0,
+     "value": 0.0933,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The assistant replied",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2393,
+     "measured_min": -0.0203,
+     "value": 0.2393,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'Pl' as prefix for 'Platiceps' vs abbreviation for 'Place'",
+   "prediction": "negative on 'Pl'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The species is Pl",
+     "expected": "negative",
+     "target": "Pl",
+     "measured_max": 1.1484,
+     "measured_min": 0.0,
+     "value": 1.1484,
+     "threshold": -20.125,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The meeting is at Pl",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2754,
+     "measured_min": -0.8867,
+     "value": 0.8867,
+     "threshold": 10.0625,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.042,
+    "scale": 48.25,
+    "pos_ref": 4.825,
+    "neg_ref": -40.25
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.62890625,
+    "p01": -0.1416015625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 1,
+   "of": 10
+  }
+ ]
+}

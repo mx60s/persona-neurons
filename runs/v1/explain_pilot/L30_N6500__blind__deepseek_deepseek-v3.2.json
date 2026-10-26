@@ -1,0 +1,437 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates on tokens that follow a narrative of unexpected or unfortunate events, and negatively on tokens that express negation or missed opportunities, but the pattern is inconsistent.",
+  "output_hypothesis": "The neuron may influence the model to generate text about consequences or emotional reactions, and suppress negative constructions.",
+  "alternatives": [
+   "The neuron responds to specific token sequences like 'didn' or 'happened' regardless of context.",
+   "The neuron is sensitive to conversational boundaries like newlines and role tags."
+  ],
+  "adapter_changes": "State B+1 strongly amplifies negative activations in emotional_chat responses (W04, W17, W19, W20) and flips some positives to negative (W02). States A+1, C+1, D+1, E+1 generally increase magnitude but preserve sign except in B+1.",
+  "supporting": [
+   "W01",
+   "W03",
+   "W04",
+   "W06",
+   "W07",
+   "W08"
+  ],
+  "contradicting": [
+   "W02",
+   "W05",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "unexpected event vs. neutral statement",
+    "a_text": "I was surprised when it happened.",
+    "a_expected": "high",
+    "a_target": "happened",
+    "b_text": "I was surprised when it occurred.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negation 'didn't' vs. affirmation",
+    "a_text": "I didn't see it coming.",
+    "a_expected": "negative",
+    "a_target": "didn",
+    "b_text": "I saw it coming.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "conversational boundary newline",
+    "a_text": "Goodbye.\n",
+    "a_expected": "negative",
+    "a_target": "\n",
+    "b_text": "Goodbye.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "role tag <|im_start|>",
+    "a_text": "<|im_start|>assistant",
+    "a_expected": "negative",
+    "a_target": "<|im_start|>",
+    "b_text": "assistant",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional consequence vs. factual",
+    "a_text": "Nothing bad happened.",
+    "a_expected": "high",
+    "a_target": "happened",
+    "b_text": "Nothing bad occurred.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "aging context vs. other growth",
+    "a_text": "You get older every day.",
+    "a_expected": "high",
+    "a_target": "older",
+    "b_text": "You grow every day.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "statistical abbreviation 'r' vs. full word",
+    "a_text": "ppg, 5.7 r",
+    "a_expected": "negative",
+    "a_target": "r",
+    "b_text": "ppg, 5.7 rebounds",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "circumstance narrative vs. description",
+    "a_text": "In this circumstance, I smiled.",
+    "a_expected": "high",
+    "a_target": "circumstance",
+    "b_text": "In this situation, I smiled.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "don't negation vs. do affirmation",
+    "a_text": "I don't agree.",
+    "a_expected": "negative",
+    "a_target": "don",
+    "b_text": "I do agree.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "space after number in factual list",
+    "a_text": "population is 2006 ",
+    "a_expected": "high",
+    "a_target": " ",
+    "b_text": "population is 2006",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates on tokens that follow a narrative of unexpected or unfortunate events, and negatively on tokens that express negation or missed opportunities, but the pattern is inconsistent.\",\"output_hypothesis\":\"The neuron may influence the model to generate text about consequences or emotional reactions, and suppress negative constructions.\",\"alternatives\":[\"The neuron responds to specific token sequences like 'didn' or 'happened' regardless of context.\",\"The neuron is sensitive to conversational boundaries like newlines and role tags.\"],\"adapter_changes\":\"State B+1 strongly amplifies negative activations in emotional_chat responses (W04, W17, W19, W20) and flips some positives to negative (W02). States A+1, C+1, D+1, E+1 generally increase magnitude but preserve sign except in B+1.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W06\",\"W07\",\"W08\"],\"contradicting\":[\"W02\",\"W05\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"unexpected event vs. neutral statement\",\"a_text\":\"I was surprised when it happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"I was surprised when it occurred.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negation 'didn't' vs. affirmation\",\"a_text\":\"I didn't see it coming.\",\"a_expected\":\"negative\",\"a_target\":\"didn\",\"b_text\":\"I saw it coming.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"conversational boundary newline\",\"a_text\":\"Goodbye.\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\",\"b_text\":\"Goodbye.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"role tag <|im_start|>\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional consequence vs. factual\",\"a_text\":\"Nothing bad happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"Nothing bad occurred.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"aging context vs. other growth\",\"a_text\":\"You get older every day.\",\"a_expected\":\"high\",\"a_target\":\"older\",\"b_text\":\"You grow every day.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"statistical abbreviation 'r' vs. full word\",\"a_text\":\"ppg, 5.7 r\",\"a_expected\":\"negative\",\"a_target\":\"r\",\"b_text\":\"ppg, 5.7 rebounds\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"circumstance narrative vs. description\",\"a_text\":\"In this circumstance, I smiled.\",\"a_expected\":\"high\",\"a_target\":\"circumstance\",\"b_text\":\"In this situation, I smiled.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"don't negation vs. do affirmation\",\"a_text\":\"I don't agree.\",\"a_expected\":\"negative\",\"a_target\":\"don\",\"b_text\":\"I do agree.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"space after number in factual list\",\"a_text\":\"population is 2006 \",\"a_expected\":\"high\",\"a_target\":\" \",\"b_text\":\"population is 2006\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5171,
+  "output_tokens": 937,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00175298247
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron activates on tokens that follow a narrative of unexpected or unfortunate events, and negatively on tokens that express negation or missed opportunities, but the pattern is inconsistent.\",\"output_hypothesis\":\"The neuron may influence the model to generate text about consequences or emotional reactions, and suppress negative constructions.\",\"alternatives\":[\"The neuron responds to specific token sequences like 'didn' or 'happened' regardless of context.\",\"The neuron is sensitive to conversational boundaries like newlines and role tags.\"],\"adapter_changes\":\"State B+1 strongly amplifies negative activations in emotional_chat responses (W04, W17, W19, W20) and flips some positives to negative (W02). States A+1, C+1, D+1, E+1 generally increase magnitude but preserve sign except in B+1.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W06\",\"W07\",\"W08\"],\"contradicting\":[\"W02\",\"W05\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\"],\"proposed_tests\":[{\"discriminates\":\"unexpected event vs. neutral statement\",\"a_text\":\"I was surprised when it happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"I was surprised when it occurred.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negation 'didn't' vs. affirmation\",\"a_text\":\"I didn't see it coming.\",\"a_expected\":\"negative\",\"a_target\":\"didn\",\"b_text\":\"I saw it coming.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"conversational boundary newline\",\"a_text\":\"Goodbye.\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\",\"b_text\":\"Goodbye.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"role tag <|im_start|>\",\"a_text\":\"<|im_start|>assistant\",\"a_expected\":\"negative\",\"a_target\":\"<|im_start|>\",\"b_text\":\"assistant\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional consequence vs. factual\",\"a_text\":\"Nothing bad happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"Nothing bad occurred.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"aging context vs. other growth\",\"a_text\":\"You get older every day.\",\"a_expected\":\"high\",\"a_target\":\"older\",\"b_text\":\"You grow every day.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"statistical abbreviation 'r' vs. full word\",\"a_text\":\"ppg, 5.7 r\",\"a_expected\":\"negative\",\"a_target\":\"r\",\"b_text\":\"ppg, 5.7 rebounds\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"circumstance narrative vs. description\",\"a_text\":\"In this circumstance, I smiled.\",\"a_expected\":\"high\",\"a_target\":\"circumstance\",\"b_text\":\"In this situation, I smiled.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"don't negation vs. do affirmation\",\"a_text\":\"I don't agree.\",\"a_expected\":\"negative\",\"a_target\":\"don\",\"b_text\":\"I do agree.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"space after number in factual list\",\"a_text\":\"population is 2006 \",\"a_expected\":\"high\",\"a_target\":\" \",\"b_text\":\"population is 2006\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5171,
+    "output_tokens": 937,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.00175298247,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793040592-YkpljsOypSbHYMNsedym"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:50:18Z",
+ "purpose": "explain:blind",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T18:50:18Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron activates on tokens that follow a narrative of unexpected or unfortunate events, and negatively on tokens that express negation or missed opportunities, but the pattern is inconsistent.",
+  "output_hypothesis": "The neuron may influence the model to generate text about consequences or emotional reactions, and suppress negative constructions.",
+  "alternatives": [
+   "The neuron responds to specific token sequences like 'didn' or 'happened' regardless of context.",
+   "The neuron is sensitive to conversational boundaries like newlines and role tags."
+  ],
+  "adapter_changes": "State B+1 strongly amplifies negative activations in emotional_chat responses (W04, W17, W19, W20) and flips some positives to negative (W02). States A+1, C+1, D+1, E+1 generally increase magnitude but preserve sign except in B+1.",
+  "supporting": [
+   "L30_N6500:e02",
+   "L30_N6500:e05",
+   "L30_N6500:e08",
+   "L30_N6500:e11",
+   "L30_N6500:e12",
+   "L30_N6500:e13"
+  ],
+  "contradicting": [
+   "L30_N6500:e03",
+   "L30_N6500:e10",
+   "L30_N6500:e06",
+   "L30_N6500:e07",
+   "L30_N6500:e34",
+   "L30_N6500:e38",
+   "L30_N6500:e35",
+   "L30_N6500:e37",
+   "L30_N6500:e36"
+  ],
+  "proposed_tests": [
+   "unexpected event vs. neutral statement :: [high] I was surprised when it happened. | [low] I was surprised when it occurred.",
+   "negation 'didn't' vs. affirmation :: [negative] I didn't see it coming. | [low] I saw it coming.",
+   "conversational boundary newline :: [negative] Goodbye.\n | [low] Goodbye.",
+   "role tag <|im_start|> :: [negative] <|im_start|>assistant | [low] assistant",
+   "emotional consequence vs. factual :: [high] Nothing bad happened. | [low] Nothing bad occurred.",
+   "aging context vs. other growth :: [high] You get older every day. | [low] You grow every day.",
+   "statistical abbreviation 'r' vs. full word :: [negative] ppg, 5.7 r | [low] ppg, 5.7 rebounds",
+   "circumstance narrative vs. description :: [high] In this circumstance, I smiled. | [low] In this situation, I smiled.",
+   "don't negation vs. do affirmation :: [negative] I don't agree. | [low] I do agree.",
+   "space after number in factual list :: [high] population is 2006  | [low] population is 2006"
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "unexpected event vs. neutral statement",
+    "texts": [
+     {
+      "text": "I was surprised when it happened.",
+      "expected": "high",
+      "target": "happened"
+     },
+     {
+      "text": "I was surprised when it occurred.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "negation 'didn't' vs. affirmation",
+    "texts": [
+     {
+      "text": "I didn't see it coming.",
+      "expected": "negative",
+      "target": "didn"
+     },
+     {
+      "text": "I saw it coming.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "conversational boundary newline",
+    "texts": [
+     {
+      "text": "Goodbye.\n",
+      "expected": "negative",
+      "target": "\n"
+     },
+     {
+      "text": "Goodbye.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "role tag <|im_start|>",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant",
+      "expected": "negative",
+      "target": "<|im_start|>"
+     },
+     {
+      "text": "assistant",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "emotional consequence vs. factual",
+    "texts": [
+     {
+      "text": "Nothing bad happened.",
+      "expected": "high",
+      "target": "happened"
+     },
+     {
+      "text": "Nothing bad occurred.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "aging context vs. other growth",
+    "texts": [
+     {
+      "text": "You get older every day.",
+      "expected": "high",
+      "target": "older"
+     },
+     {
+      "text": "You grow every day.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "statistical abbreviation 'r' vs. full word",
+    "texts": [
+     {
+      "text": "ppg, 5.7 r",
+      "expected": "negative",
+      "target": "r"
+     },
+     {
+      "text": "ppg, 5.7 rebounds",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "circumstance narrative vs. description",
+    "texts": [
+     {
+      "text": "In this circumstance, I smiled.",
+      "expected": "high",
+      "target": "circumstance"
+     },
+     {
+      "text": "In this situation, I smiled.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "don't negation vs. do affirmation",
+    "texts": [
+     {
+      "text": "I don't agree.",
+      "expected": "negative",
+      "target": "don"
+     },
+     {
+      "text": "I do agree.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "space after number in factual list",
+    "texts": [
+     {
+      "text": "population is 2006 ",
+      "expected": "high",
+      "target": " "
+     },
+     {
+      "text": "population is 2006",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true,
+  "usage": {
+   "input_tokens": 5171,
+   "output_tokens": 937,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00175298247
+  },
+  "invalid_citations": [],
+  "packet_hash": "f92cf89f0b0bda8c4b4d9472044a0db964da23007e854b01d5a994844cbc75c1",
+  "packet_mode": "blind",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+0.5": "D+0.5",
+   "n_amp+1": "D+1",
+   "n_amp-0.5": "D-0.5",
+   "n_amp-1": "D-1",
+   "n_sup+1": "E+1",
+   "o_amp+0.5": "B+0.5",
+   "o_amp+1": "B+1",
+   "o_amp-0.5": "B-0.5",
+   "o_amp-1": "B-1",
+   "o_sup+1": "A+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 6,
+  "n_contradicting": 9,
+  "invalid_ids": [],
+  "supporting_strong_frac": 1.0,
+  "supporting_categories": {
+   "high_pos": 2,
+   "high_neg": 4
+  },
+  "supporting_by_neuron": {
+   "L30/N6500": 6
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": true,
+  "confidence": "low"
+ }
+}

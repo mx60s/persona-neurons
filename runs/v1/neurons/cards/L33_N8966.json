@@ -1,0 +1,1189 @@
+{
+ "id": "L33/N8966",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:18:25Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative for generic plural nouns referring to people or entities",
+   "trigger_hypothesis": "The neuron fires negatively on plural nouns that refer to generic categories of people or entities, especially when they are the object of a preposition or verb and are about to be further specified.",
+   "output_hypothesis": "The neuron's negative activation may suppress generic or categorical references, encouraging the model to move toward more specific or concrete descriptions.",
+   "alternatives": [
+    "The neuron fires on plural nouns that are the direct object of a verb like 'provide to' or 'for'.",
+    "The neuron detects abstract collective nouns like 'business' or 'individuals' in formal or informational contexts."
+   ],
+   "adapter_changes": "State changes (A+1, C+1) often reduce the magnitude of negative activations, especially in chat/emotional_chat segments (W21, W22, W23), suggesting the neuron's sensitivity to generic nouns is modulated by adapter tuning toward more conversational or emotional content.",
+   "supporting": [
+    "L33_N8966:e08",
+    "L33_N8966:e09",
+    "L33_N8966:e10",
+    "L33_N8966:e11",
+    "L33_N8966:e12",
+    "L33_N8966:e13",
+    "L33_N8966:e16"
+   ],
+   "contradicting": [
+    "L33_N8966:e01",
+    "L33_N8966:e02",
+    "L33_N8966:e03",
+    "L33_N8966:e04",
+    "L33_N8966:e06",
+    "L33_N8966:e07",
+    "L33_N8966:e30",
+    "L33_N8966:e29",
+    "L33_N8966:e28",
+    "L33_N8966:e25",
+    "L33_N8966:e31",
+    "L33_N8966:e34",
+    "L33_N8966:e35",
+    "L33_N8966:e33"
+   ],
+   "proposed_tests": [
+    "generic plural noun vs. specific proper noun :: [negative] The program is designed for individuals | [low] The program is designed for Alice",
+    "plural noun as object of 'for' vs. subject :: [negative] Opportunities for processors are limited | [low] Processors have limited opportunities",
+    "generic 'anyone' vs. specific 'someone' :: [negative] Provide supplies to anyone | [low] Provide supplies to someone",
+    "plural noun after 'for' vs. adjective :: [negative] A destination for tourists | [low] A tourist destination",
+    "business as entity vs. business as activity :: [negative] Essential for any business | [low] Doing business is essential",
+    "plural noun in formal vs. informal context :: [negative] The policy affects all individuals | [low] It affects all people",
+    "'both' as generic pair vs. specific names :: [negative] Warring alien races, both | [low] Warring aliens, Zorg and Blorg",
+    "plural noun after 'to' vs. before verb :: [negative] Educational opportunities for individuals | [low] Individuals seek educational opportunities",
+    "generic 'users' vs. specific 'doctors' :: [negative] Percentage of internet users | [low] Percentage of internet doctors",
+    "negative on plural noun vs. positive on singular concrete noun :: [negative] Concern to food processors | [low] Concern to the factory | [high] The red dune"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "generic plural noun vs. specific proper noun",
+     "texts": [
+      {
+       "text": "The program is designed for individuals",
+       "expected": "negative",
+       "target": "individuals"
+      },
+      {
+       "text": "The program is designed for Alice",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "plural noun as object of 'for' vs. subject",
+     "texts": [
+      {
+       "text": "Opportunities for processors are limited",
+       "expected": "negative",
+       "target": "processors"
+      },
+      {
+       "text": "Processors have limited opportunities",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "generic 'anyone' vs. specific 'someone'",
+     "texts": [
+      {
+       "text": "Provide supplies to anyone",
+       "expected": "negative",
+       "target": "anyone"
+      },
+      {
+       "text": "Provide supplies to someone",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "plural noun after 'for' vs. adjective",
+     "texts": [
+      {
+       "text": "A destination for tourists",
+       "expected": "negative",
+       "target": "tourists"
+      },
+      {
+       "text": "A tourist destination",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "business as entity vs. business as activity",
+     "texts": [
+      {
+       "text": "Essential for any business",
+       "expected": "negative",
+       "target": "business"
+      },
+      {
+       "text": "Doing business is essential",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "plural noun in formal vs. informal context",
+     "texts": [
+      {
+       "text": "The policy affects all individuals",
+       "expected": "negative",
+       "target": "individuals"
+      },
+      {
+       "text": "It affects all people",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'both' as generic pair vs. specific names",
+     "texts": [
+      {
+       "text": "Warring alien races, both",
+       "expected": "negative",
+       "target": "both"
+      },
+      {
+       "text": "Warring aliens, Zorg and Blorg",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "plural noun after 'to' vs. before verb",
+     "texts": [
+      {
+       "text": "Educational opportunities for individuals",
+       "expected": "negative",
+       "target": "individuals"
+      },
+      {
+       "text": "Individuals seek educational opportunities",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "generic 'users' vs. specific 'doctors'",
+     "texts": [
+      {
+       "text": "Percentage of internet users",
+       "expected": "negative",
+       "target": "users"
+      },
+      {
+       "text": "Percentage of internet doctors",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "negative on plural noun vs. positive on singular concrete noun",
+     "texts": [
+      {
+       "text": "Concern to food processors",
+       "expected": "negative",
+       "target": "processors"
+      },
+      {
+       "text": "Concern to the factory",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "The red dune",
+       "expected": "high",
+       "target": "red"
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5652,
+    "output_tokens": 983,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0018115266
+   },
+   "invalid_citations": [],
+   "packet_hash": "cde975f5c6731847a9f21ce946da9d6191e0a35b98790054ba79de174a007797",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "B+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "generic plural noun vs. specific proper noun",
+   "prediction": "negative on 'individuals'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The program is designed for individuals",
+     "expected": "negative",
+     "target": "individuals",
+     "measured_max": 0.2891,
+     "measured_min": -54.5,
+     "value": -54.5,
+     "threshold": -29.375,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "The program is designed for Alice",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2891,
+     "measured_min": -3.7344,
+     "value": 3.7344,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.747,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "plural noun as object of 'for' vs. subject",
+   "prediction": "negative on 'processors'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Opportunities for processors are limited",
+     "expected": "negative",
+     "target": "processors",
+     "measured_max": 0.2002,
+     "measured_min": -13.25,
+     "value": -13.25,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Processors have limited opportunities",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.668,
+     "measured_min": -0.7578,
+     "value": 0.7578,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.184,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "generic 'anyone' vs. specific 'someone'",
+   "prediction": "negative on 'anyone'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Provide supplies to anyone",
+     "expected": "negative",
+     "target": "anyone",
+     "measured_max": 0.0,
+     "measured_min": -7.4375,
+     "value": -7.4375,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Provide supplies to someone",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.6133,
+     "value": 0.6133,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.1,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "plural noun after 'for' vs. adjective",
+   "prediction": "negative on 'tourists'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "A destination for tourists",
+     "expected": "negative",
+     "target": "tourists",
+     "measured_max": 0.0,
+     "measured_min": -32.5,
+     "value": -32.5,
+     "threshold": -29.375,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "A tourist destination",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.0312,
+     "measured_min": -6.7812,
+     "value": 6.7812,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.378,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "business as entity vs. business as activity",
+   "prediction": "negative on 'business'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Essential for any business",
+     "expected": "negative",
+     "target": "business",
+     "measured_max": 0.1328,
+     "measured_min": -42.0,
+     "value": -42.0,
+     "threshold": -29.375,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Doing business is essential",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.207,
+     "value": 0.207,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.615,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "plural noun in formal vs. informal context",
+   "prediction": "negative on 'individuals'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The policy affects all individuals",
+     "expected": "negative",
+     "target": "individuals",
+     "measured_max": 0.0,
+     "measured_min": -9.0,
+     "value": -9.0,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "It affects all people",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1406,
+     "measured_min": 0.0,
+     "value": 1.1406,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.132,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'both' as generic pair vs. specific names",
+   "prediction": "negative on 'both'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Warring alien races, both",
+     "expected": "negative",
+     "target": "both",
+     "measured_max": 0.0019,
+     "measured_min": -18.375,
+     "value": -15.5625,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Warring aliens, Zorg and Blorg",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2734,
+     "measured_min": -15.0,
+     "value": 15.0,
+     "threshold": 14.6875,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.008,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "plural noun after 'to' vs. before verb",
+   "prediction": "negative on 'individuals'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Educational opportunities for individuals",
+     "expected": "negative",
+     "target": "individuals",
+     "measured_max": 0.051,
+     "measured_min": -19.75,
+     "value": -19.75,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Individuals seek educational opportunities",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2148,
+     "measured_min": -13.3125,
+     "value": 13.3125,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.095,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "generic 'users' vs. specific 'doctors'",
+   "prediction": "negative on 'users'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Percentage of internet users",
+     "expected": "negative",
+     "target": "users",
+     "measured_max": 0.6406,
+     "measured_min": 0.0,
+     "value": 0.6406,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Percentage of internet doctors",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4238,
+     "measured_min": -0.5469,
+     "value": 0.5469,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "negative on plural noun vs. positive on singular concrete noun",
+   "prediction": "negative on 'processors'; low on 'whole text'; high on 'red'",
+   "texts": [
+    {
+     "text": "Concern to food processors",
+     "expected": "negative",
+     "target": "processors",
+     "measured_max": 0.0879,
+     "measured_min": -13.75,
+     "value": -13.75,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Concern to the factory",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3086,
+     "measured_min": -0.1245,
+     "value": 0.3086,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token"
+    },
+    {
+     "text": "The red dune",
+     "expected": "high",
+     "target": "red",
+     "measured_max": 2.1875,
+     "measured_min": -0.293,
+     "value": -0.293,
+     "threshold": 9.6875,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:26Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "generic plural noun vs. specific proper noun",
+   "prediction": "negative on 'individuals'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The program is designed for individuals",
+     "expected": "negative",
+     "target": "individuals",
+     "measured_max": 0.2891,
+     "measured_min": -54.5,
+     "value": -54.5,
+     "threshold": -29.375,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The program is designed for Alice",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2891,
+     "measured_min": -3.7344,
+     "value": 3.7344,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.747,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "plural noun as object of 'for' vs. subject",
+   "prediction": "negative on 'processors'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Opportunities for processors are limited",
+     "expected": "negative",
+     "target": "processors",
+     "measured_max": 0.2002,
+     "measured_min": -13.25,
+     "value": -13.25,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Processors have limited opportunities",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.668,
+     "measured_min": -0.7578,
+     "value": 0.7578,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.184,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "generic 'anyone' vs. specific 'someone'",
+   "prediction": "negative on 'anyone'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Provide supplies to anyone",
+     "expected": "negative",
+     "target": "anyone",
+     "measured_max": 0.0,
+     "measured_min": -7.4375,
+     "value": -7.4375,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Provide supplies to someone",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.6133,
+     "value": 0.6133,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.1,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "plural noun after 'for' vs. adjective",
+   "prediction": "negative on 'tourists'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "A destination for tourists",
+     "expected": "negative",
+     "target": "tourists",
+     "measured_max": 0.0,
+     "measured_min": -32.5,
+     "value": -32.5,
+     "threshold": -29.375,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "A tourist destination",
+     "expected": "low",
+     "target": "",
+     "measured_max": 4.0312,
+     "measured_min": -6.7812,
+     "value": 6.7812,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.378,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "business as entity vs. business as activity",
+   "prediction": "negative on 'business'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Essential for any business",
+     "expected": "negative",
+     "target": "business",
+     "measured_max": 0.1328,
+     "measured_min": -42.0,
+     "value": -42.0,
+     "threshold": -29.375,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Doing business is essential",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.207,
+     "value": 0.207,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.615,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "plural noun in formal vs. informal context",
+   "prediction": "negative on 'individuals'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The policy affects all individuals",
+     "expected": "negative",
+     "target": "individuals",
+     "measured_max": 0.0,
+     "measured_min": -9.0,
+     "value": -9.0,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "It affects all people",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.1406,
+     "measured_min": 0.0,
+     "value": 1.1406,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.132,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'both' as generic pair vs. specific names",
+   "prediction": "negative on 'both'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Warring alien races, both",
+     "expected": "negative",
+     "target": "both",
+     "measured_max": 0.0019,
+     "measured_min": -18.375,
+     "value": -15.5625,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Warring aliens, Zorg and Blorg",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2734,
+     "measured_min": -15.0,
+     "value": 15.0,
+     "threshold": 14.6875,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": 0.008,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "plural noun after 'to' vs. before verb",
+   "prediction": "negative on 'individuals'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Educational opportunities for individuals",
+     "expected": "negative",
+     "target": "individuals",
+     "measured_max": 0.051,
+     "measured_min": -19.75,
+     "value": -19.75,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Individuals seek educational opportunities",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2148,
+     "measured_min": -13.3125,
+     "value": 13.3125,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.095,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "generic 'users' vs. specific 'doctors'",
+   "prediction": "negative on 'users'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Percentage of internet users",
+     "expected": "negative",
+     "target": "users",
+     "measured_max": 0.6406,
+     "measured_min": 0.0,
+     "value": 0.6406,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Percentage of internet doctors",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4238,
+     "measured_min": -0.5469,
+     "value": 0.5469,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.017,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "negative on plural noun vs. positive on singular concrete noun",
+   "prediction": "negative on 'processors'; low on 'whole text'; high on 'red'",
+   "texts": [
+    {
+     "text": "Concern to food processors",
+     "expected": "negative",
+     "target": "processors",
+     "measured_max": 0.0879,
+     "measured_min": -13.75,
+     "value": -13.75,
+     "threshold": -29.375,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Concern to the factory",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3086,
+     "measured_min": -0.1245,
+     "value": 0.3086,
+     "threshold": 14.6875,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    },
+    {
+     "text": "The red dune",
+     "expected": "high",
+     "target": "red",
+     "measured_max": 2.1875,
+     "measured_min": -0.293,
+     "value": -0.293,
+     "threshold": 9.6875,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.333,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 68.0,
+    "pos_ref": 19.375,
+    "neg_ref": -58.75
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 2.671562433242798,
+    "p01": -4.125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 5,
+   "of": 10
+  }
+ ]
+}

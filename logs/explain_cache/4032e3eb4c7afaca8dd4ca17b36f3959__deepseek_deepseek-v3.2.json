@@ -1,0 +1,286 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "detects water-related nouns vs. arid/dry nouns",
+  "trigger_hypothesis": "The neuron activates strongly on tokens that refer to bodies of water (e.g., 'water', 'ocean', 'sea', 'river', 'lake') and negatively on tokens that refer to arid or dry things (e.g., 'parched', 'desert', 'sand', 'drought', 'dry').",
+  "output_hypothesis": "When activated, it promotes generation of water-related words (e.g., 'lake', 'river', 'water') as seen in steering.",
+  "alternatives": [
+   "detects the literal token 'water' regardless of context",
+   "detects liquid vs. solid matter",
+   "detects positive vs. negative sentiment about nature"
+  ],
+  "adapter_changes": "State C+1 amplifies positive activation (especially in factual and code domains), while B+1 slightly dampens it; A+1 is nearly identical to base.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W27",
+   "W28",
+   "W29",
+   "W30",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W20"
+  ],
+  "contradicting": [
+   "W12",
+   "W21"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "water body vs. other liquid",
+    "texts": [
+     {
+      "text": "She poured a glass of milk.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "She poured a glass of water.",
+      "expected": "high",
+      "target": " water"
+     },
+     {
+      "text": "She poured a glass of juice.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "arid noun vs. neutral dry object",
+    "texts": [
+     {
+      "text": "The desert was vast.",
+      "expected": "negative",
+      "target": " desert"
+     },
+     {
+      "text": "The towel was dry.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The drought continued.",
+      "expected": "negative",
+      "target": " drought"
+     }
+    ]
+   },
+   {
+    "discriminates": "water body in metaphorical vs. literal use",
+    "texts": [
+     {
+      "text": "He faced a sea of troubles.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "He swam in the sea.",
+      "expected": "high",
+      "target": " sea"
+     },
+     {
+      "text": "He crossed the ocean.",
+      "expected": "high",
+      "target": " ocean"
+     }
+    ]
+   },
+   {
+    "discriminates": "river/lake vs. other geographical features",
+    "texts": [
+     {
+      "text": "They hiked near the mountain.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "They sailed on the river.",
+      "expected": "high",
+      "target": " river"
+     },
+     {
+      "text": "They camped by the lake.",
+      "expected": "high",
+      "target": " lake"
+     }
+    ]
+   },
+   {
+    "discriminates": "dry (arid) vs. dry (not wet) object",
+    "texts": [
+     {
+      "text": "The desert air was dry.",
+      "expected": "negative",
+      "target": " desert"
+     },
+     {
+      "text": "The paint was dry.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The sand was dry.",
+      "expected": "negative",
+      "target": " sand"
+     }
+    ]
+   },
+   {
+    "discriminates": "water in compound vs. standalone",
+    "texts": [
+     {
+      "text": "The waterfall was loud.",
+      "expected": "high",
+      "target": "water"
+     },
+     {
+      "text": "The water level rose.",
+      "expected": "high",
+      "target": " water"
+     },
+     {
+      "text": "The waterproof bag.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "rain (water-related) vs. other weather",
+    "texts": [
+     {
+      "text": "The rain fell gently.",
+      "expected": "high",
+      "target": " rain"
+     },
+     {
+      "text": "The snow fell gently.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The sun shone brightly.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "ocean vs. other large things",
+    "texts": [
+     {
+      "text": "The ocean is deep.",
+      "expected": "high",
+      "target": " ocean"
+     },
+     {
+      "text": "The forest is dense.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The sky is blue.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "discriminates": "parched (arid) vs. thirsty (state)",
+    "texts": [
+     {
+      "text": "The fields were parched.",
+      "expected": "negative",
+      "target": " parched"
+     },
+     {
+      "text": "He was thirsty.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "The land was arid.",
+      "expected": "negative",
+      "target": " arid"
+     }
+    ]
+   },
+   {
+    "discriminates": "water in code comment vs. variable",
+    "texts": [
+     {
+      "text": "x = fetch_level(sensor)  # water",
+      "expected": "high",
+      "target": " water"
+     },
+     {
+      "text": "x = fetch_level(sensor)  # level",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "water_level = 5",
+      "expected": "high",
+      "target": "water"
+     }
+    ]
+   }
+  ],
+  "confidence": "high",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\n  \"label\": \"detects water-related nouns vs. arid/dry nouns\",\n  \"trigger_hypothesis\": \"The neuron activates strongly on tokens that refer to bodies of water (e.g., 'water', 'ocean', 'sea', 'river', 'lake') and negatively on tokens that refer to arid or dry things (e.g., 'parched', 'desert', 'sand', 'drought', 'dry').\",\n  \"output_hypothesis\": \"When activated, it promotes generation of water-related words (e.g., 'lake', 'river', 'water') as seen in steering.\",\n  \"alternatives\": [\"detects the literal token 'water' regardless of context\", \"detects liquid vs. solid matter\", \"detects positive vs. negative sentiment about nature\"],\n  \"adapter_changes\": \"State C+1 amplifies positive activation (especially in factual and code domains), while B+1 slightly dampens it; A+1 is nearly identical to base.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W27\", \"W28\", \"W29\", \"W30\", \"W08\", \"W09\", \"W10\", \"W11\", \"W20\"],\n  \"contradicting\": [\"W12\", \"W21\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"water body vs. other liquid\", \"texts\": [{\"text\": \"She poured a glass of milk.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"She poured a glass of water.\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"She poured a glass of juice.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"arid noun vs. neutral dry object\", \"texts\": [{\"text\": \"The desert was vast.\", \"expected\": \"negative\", \"target\": \" desert\"}, {\"text\": \"The towel was dry.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The drought continued.\", \"expected\": \"negative\", \"target\": \" drought\"}]},\n    {\"discriminates\": \"water body in metaphorical vs. literal use\", \"texts\": [{\"text\": \"He faced a sea of troubles.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"He swam in the sea.\", \"expected\": \"high\", \"target\": \" sea\"}, {\"text\": \"He crossed the ocean.\", \"expected\": \"high\", \"target\": \" ocean\"}]},\n    {\"discriminates\": \"river/lake vs. other geographical features\", \"texts\": [{\"text\": \"They hiked near the mountain.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"They sailed on the river.\", \"expected\": \"high\", \"target\": \" river\"}, {\"text\": \"They camped by the lake.\", \"expected\": \"high\", \"target\": \" lake\"}]},\n    {\"discriminates\": \"dry (arid) vs. dry (not wet) object\", \"texts\": [{\"text\": \"The desert air was dry.\", \"expected\": \"negative\", \"target\": \" desert\"}, {\"text\": \"The paint was dry.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The sand was dry.\", \"expected\": \"negative\", \"target\": \" sand\"}]},\n    {\"discriminates\": \"water in compound vs. standalone\", \"texts\": [{\"text\": \"The waterfall was loud.\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"The water level rose.\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"The waterproof bag.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"rain (water-related) vs. other weather\", \"texts\": [{\"text\": \"The rain fell gently.\", \"expected\": \"high\", \"target\": \" rain\"}, {\"text\": \"The snow fell gently.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The sun shone brightly.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"ocean vs. other large things\", \"texts\": [{\"text\": \"The ocean is deep.\", \"expected\": \"high\", \"target\": \" ocean\"}, {\"text\": \"The forest is dense.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The sky is blue.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"parched (arid) vs. thirsty (state)\", \"texts\": [{\"text\": \"The fields were parched.\", \"expected\": \"negative\", \"target\": \" parched\"}, {\"text\": \"He was thirsty.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The land was arid.\", \"expected\": \"negative\", \"target\": \" arid\"}]},\n    {\"discriminates\": \"water in code comment vs. variable\", \"texts\": [{\"text\": \"x = fetch_level(sensor)  # water\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"x = fetch_level(sensor)  # level\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"water_level = 5\", \"expected\": \"high\", \"target\": \"water\"}]}\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 10356,
+  "output_tokens": 2495,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00314172468
+ },
+ "attempts": [
+  {
+   "content": "{\n  \"label\": \"detects water-related nouns (liquid bodies) vs. arid/dry nouns\",\n  \"trigger_hypothesis\": \"The neuron activates strongly on tokens that refer to bodies of water (e.g., 'water', 'ocean', 'sea', 'river', 'lake') and negatively on tokens that refer to arid or dry things (e.g., 'parched', 'desert', 'sand', 'drought', 'dry').\",\n  \"output_hypothesis\": \"When activated, it promotes generation of water-related words (e.g., 'lake', 'river', 'water') as seen in steering.\",\n  \"alternatives\": [\"detects the literal token 'water' regardless of context\", \"detects liquid vs. solid matter\", \"detects positive vs. negative sentiment about nature\"],\n  \"adapter_changes\": \"State C+1 amplifies the positive activation (especially in factual and code domains), while B+1 slightly dampens it; A+1 is nearly identical to base.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W27\", \"W28\", \"W29\", \"W30\", \"W08\", \"W09\", \"W10\", \"W11\", \"W20\"],\n  \"contradicting\": [\"W12 (low on 'drink' despite water context)\", \"W21 (near-zero on 'glucose', a chemical but not a body of water)\"],\n  \"proposed_tests\": [\n    {\n      \"discriminates\": \"water body vs. other liquid\",\n      \"texts\": [\n        {\"text\": \"She poured a glass of milk.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"She poured a glass of water.\", \"expected\": \"high\", \"target\": \" water\"},\n        {\"text\": \"She poured a glass of juice.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"arid noun vs. neutral dry object\",\n      \"texts\": [\n        {\"text\": \"The desert was vast.\", \"expected\": \"negative\", \"target\": \" desert\"},\n        {\"text\": \"The towel was dry.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"The drought continued.\", \"expected\": \"negative\", \"target\": \" drought\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water body in metaphorical vs. literal use\",\n      \"texts\": [\n        {\"text\": \"He faced a sea of troubles.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"He swam in the sea.\", \"expected\": \"high\", \"target\": \" sea\"},\n        {\"text\": \"He crossed the ocean.\", \"expected\": \"high\", \"target\": \" ocean\"}\n      ]\n    },\n    {\n      \"discriminates\": \"river/lake vs. other geographical features\",\n      \"texts\": [\n        {\"text\": \"They hiked near the mountain.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"They sailed on the river.\", \"expected\": \"high\", \"target\": \" river\"},\n        {\"text\": \"They camped by the lake.\", \"expected\": \"high\", \"target\": \" lake\"}\n      ]\n    },\n    {\n      \"discriminates\": \"dry (arid) vs. dry (not wet) object\",\n      \"texts\": [\n        {\"text\": \"The desert air was dry.\", \"expected\": \"negative\", \"target\": \" desert\"},\n        {\"text\": \"The paint was dry.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"The sand was dry.\", \"expected\": \"negative\", \"target\": \" sand\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water in compound vs. standalone\",\n      \"texts\": [\n        {\"text\": \"The waterfall was loud.\", \"expected\": \"high\", \"target\": \"water\"},\n        {\"text\": \"The water level rose.\", \"expected\": \"high\", \"target\": \" water\"},\n        {\"text\": \"The waterproof bag.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"rain (water-related) vs. other weather\",\n      \"texts\": [\n        {\"text\": \"The rain fell gently.\", \"expected\": \"high\", \"target\": \" rain\"},\n        {\"text\": \"The snow fell gently.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"The sun shone brightly.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"ocean vs. other large things\",\n      \"texts\": [\n        {\"text\": \"The ocean is deep.\", \"expected\": \"high\", \"target\": \" ocean\"},\n        {\"text\": \"The forest is dense.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"The sky is blue.\", \"expected\": \"low\", \"target\": \"\"}\n      ]\n    },\n    {\n      \"discriminates\": \"parched (arid) vs. thirsty (state)\",\n      \"texts\": [\n        {\"text\": \"The fields were parched.\", \"expected\": \"negative\", \"target\": \" parched\"},\n        {\"text\": \"He was thirsty.\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"The land was arid.\", \"expected\": \"negative\", \"target\": \" arid\"}\n      ]\n    },\n    {\n      \"discriminates\": \"water in code comment vs. variable\",\n      \"texts\": [\n        {\"text\": \"x = fetch_level(sensor)  # water\", \"expected\": \"high\", \"target\": \" water\"},\n        {\"text\": \"x = fetch_level(sensor)  # level\", \"expected\": \"low\", \"target\": \"\"},\n        {\"text\": \"water_level = 5\", \"expected\": \"high\", \"target\": \"water\"}\n      ]\n    }\n  ],\n  \"confidence\": \"",
+   "errors": [
+    "parse error: Expecting ',' delimiter: line 89 column 6 (char 4548)"
+   ],
+   "finish_reason": "length",
+   "usage": {
+    "input_tokens": 4509,
+    "output_tokens": 1300,
+    "reasoning_tokens": 0,
+    "cached_tokens": 0,
+    "cost_usd": 0.00171703161,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972353-F1uTM636yBefXld4Rlgn"
+  },
+  {
+   "content": "{\n  \"label\": \"detects water-related nouns vs. arid/dry nouns\",\n  \"trigger_hypothesis\": \"The neuron activates strongly on tokens that refer to bodies of water (e.g., 'water', 'ocean', 'sea', 'river', 'lake') and negatively on tokens that refer to arid or dry things (e.g., 'parched', 'desert', 'sand', 'drought', 'dry').\",\n  \"output_hypothesis\": \"When activated, it promotes generation of water-related words (e.g., 'lake', 'river', 'water') as seen in steering.\",\n  \"alternatives\": [\"detects the literal token 'water' regardless of context\", \"detects liquid vs. solid matter\", \"detects positive vs. negative sentiment about nature\"],\n  \"adapter_changes\": \"State C+1 amplifies positive activation (especially in factual and code domains), while B+1 slightly dampens it; A+1 is nearly identical to base.\",\n  \"supporting\": [\"W01\", \"W02\", \"W03\", \"W04\", \"W05\", \"W06\", \"W07\", \"W27\", \"W28\", \"W29\", \"W30\", \"W08\", \"W09\", \"W10\", \"W11\", \"W20\"],\n  \"contradicting\": [\"W12\", \"W21\"],\n  \"proposed_tests\": [\n    {\"discriminates\": \"water body vs. other liquid\", \"texts\": [{\"text\": \"She poured a glass of milk.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"She poured a glass of water.\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"She poured a glass of juice.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"arid noun vs. neutral dry object\", \"texts\": [{\"text\": \"The desert was vast.\", \"expected\": \"negative\", \"target\": \" desert\"}, {\"text\": \"The towel was dry.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The drought continued.\", \"expected\": \"negative\", \"target\": \" drought\"}]},\n    {\"discriminates\": \"water body in metaphorical vs. literal use\", \"texts\": [{\"text\": \"He faced a sea of troubles.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"He swam in the sea.\", \"expected\": \"high\", \"target\": \" sea\"}, {\"text\": \"He crossed the ocean.\", \"expected\": \"high\", \"target\": \" ocean\"}]},\n    {\"discriminates\": \"river/lake vs. other geographical features\", \"texts\": [{\"text\": \"They hiked near the mountain.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"They sailed on the river.\", \"expected\": \"high\", \"target\": \" river\"}, {\"text\": \"They camped by the lake.\", \"expected\": \"high\", \"target\": \" lake\"}]},\n    {\"discriminates\": \"dry (arid) vs. dry (not wet) object\", \"texts\": [{\"text\": \"The desert air was dry.\", \"expected\": \"negative\", \"target\": \" desert\"}, {\"text\": \"The paint was dry.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The sand was dry.\", \"expected\": \"negative\", \"target\": \" sand\"}]},\n    {\"discriminates\": \"water in compound vs. standalone\", \"texts\": [{\"text\": \"The waterfall was loud.\", \"expected\": \"high\", \"target\": \"water\"}, {\"text\": \"The water level rose.\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"The waterproof bag.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"rain (water-related) vs. other weather\", \"texts\": [{\"text\": \"The rain fell gently.\", \"expected\": \"high\", \"target\": \" rain\"}, {\"text\": \"The snow fell gently.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The sun shone brightly.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"ocean vs. other large things\", \"texts\": [{\"text\": \"The ocean is deep.\", \"expected\": \"high\", \"target\": \" ocean\"}, {\"text\": \"The forest is dense.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The sky is blue.\", \"expected\": \"low\", \"target\": \"\"}]},\n    {\"discriminates\": \"parched (arid) vs. thirsty (state)\", \"texts\": [{\"text\": \"The fields were parched.\", \"expected\": \"negative\", \"target\": \" parched\"}, {\"text\": \"He was thirsty.\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"The land was arid.\", \"expected\": \"negative\", \"target\": \" arid\"}]},\n    {\"discriminates\": \"water in code comment vs. variable\", \"texts\": [{\"text\": \"x = fetch_level(sensor)  # water\", \"expected\": \"high\", \"target\": \" water\"}, {\"text\": \"x = fetch_level(sensor)  # level\", \"expected\": \"low\", \"target\": \"\"}, {\"text\": \"water_level = 5\", \"expected\": \"high\", \"target\": \"water\"}]}\n  ],\n  \"confidence\": \"high\",\n  \"no_coherent_hypothesis\": false\n}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5847,
+    "output_tokens": 1195,
+    "reasoning_tokens": 0,
+    "cached_tokens": 4416,
+    "cost_usd": 0.00142469307,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1792972391-bquTIhcAcJh7qnaoYMk7"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-25T23:53:39Z",
+ "purpose": "explain:blind"
+}

@@ -1,0 +1,267 @@
+{
+ "packet_version": "explain-v4",
+ "mode": "shuffled",
+ "neurons": [
+  "L21/N4912"
+ ],
+ "seed": 0,
+ "created": "2026-10-26T18:49:51Z",
+ "scale": 5.781199932098389,
+ "state_map": {
+  "base": "base",
+  "ctrl+1": "D+1",
+  "n_amp+0.5": "B+0.5",
+  "n_amp+1": "B+1",
+  "n_amp-0.5": "B-0.5",
+  "n_amp-1": "B-1",
+  "n_sup+1": "C+1",
+  "o_amp+0.5": "A+0.5",
+  "o_amp+1": "A+1",
+  "o_amp-0.5": "A-0.5",
+  "o_amp-1": "A-1",
+  "o_sup+1": "E+1"
+ },
+ "adapter_map": {
+  "ctrl": "D",
+  "n_amp": "B",
+  "n_sup": "C",
+  "o_amp": "A",
+  "o_sup": "E"
+ },
+ "windows": [
+  {
+   "wid": "W01",
+   "ex_id": "L21_N4912:e03",
+   "neuron": "L21/N4912",
+   "category": "high_pos",
+   "kind": "top_pos",
+   "domain": "emotional_text",
+   "focus_token": " the",
+   "focus_value": 2.5938,
+   "true_focus_value": 2.5625
+  },
+  {
+   "wid": "W02",
+   "ex_id": "L21_N4912:e27",
+   "neuron": "L21/N4912",
+   "category": "high_pos",
+   "kind": "quantile",
+   "domain": "chat",
+   "focus_token": " to",
+   "focus_value": 2.5938,
+   "true_focus_value": 0.4434
+  },
+  {
+   "wid": "W03",
+   "ex_id": "L21_N4912:e13",
+   "neuron": "L21/N4912",
+   "category": "high_pos",
+   "kind": "top_neg",
+   "domain": "narrative",
+   "focus_token": " your",
+   "focus_value": 2.5625,
+   "true_focus_value": -3.9688
+  },
+  {
+   "wid": "W04",
+   "ex_id": "L21_N4912:e09",
+   "neuron": "L21/N4912",
+   "category": "high_pos",
+   "kind": "top_neg",
+   "domain": "emotional_chat",
+   "focus_token": "<|im_start|>",
+   "focus_value": 2.5156,
+   "true_focus_value": -5.7812
+  },
+  {
+   "wid": "W05",
+   "ex_id": "L21_N4912:e04",
+   "neuron": "L21/N4912",
+   "category": "high_pos",
+   "kind": "top_pos",
+   "domain": "narrative",
+   "focus_token": " bright",
+   "focus_value": 2.3281,
+   "true_focus_value": 2.5156
+  },
+  {
+   "wid": "W06",
+   "ex_id": "L21_N4912:e11",
+   "neuron": "L21/N4912",
+   "category": "high_neg",
+   "kind": "top_neg",
+   "domain": "chat",
+   "focus_token": "\n",
+   "focus_value": -5.7812,
+   "true_focus_value": -4.25
+  },
+  {
+   "wid": "W07",
+   "ex_id": "L21_N4912:e26",
+   "neuron": "L21/N4912",
+   "category": "high_neg",
+   "kind": "quantile",
+   "domain": "factual",
+   "focus_token": "Brazil",
+   "focus_value": -4.25,
+   "true_focus_value": 0.21
+  },
+  {
+   "wid": "W08",
+   "ex_id": "L21_N4912:e01",
+   "neuron": "L21/N4912",
+   "category": "high_neg",
+   "kind": "top_pos",
+   "domain": "emotional_text",
+   "focus_token": " a",
+   "focus_value": -2.75,
+   "true_focus_value": 2.5938
+  },
+  {
+   "wid": "W09",
+   "ex_id": "L21_N4912:e24",
+   "neuron": "L21/N4912",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "web",
+   "focus_token": " filament",
+   "focus_value": 0.4434,
+   "true_focus_value": 0.0015
+  },
+  {
+   "wid": "W10",
+   "ex_id": "L21_N4912:e07",
+   "neuron": "L21/N4912",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "narrative",
+   "focus_token": " their",
+   "focus_value": 0.3066,
+   "true_focus_value": 2.3281
+  },
+  {
+   "wid": "W11",
+   "ex_id": "L21_N4912:e25",
+   "neuron": "L21/N4912",
+   "category": "moderate",
+   "kind": "quantile",
+   "domain": "narrative",
+   "focus_token": " to",
+   "focus_value": 0.21,
+   "true_focus_value": 0.0693
+  },
+  {
+   "wid": "W12",
+   "ex_id": "L21_N4912:e00",
+   "neuron": "L21/N4912",
+   "category": "moderate",
+   "kind": "top_pos",
+   "domain": "emotional_chat",
+   "focus_token": " don",
+   "focus_value": 0.1836,
+   "true_focus_value": 2.5938
+  },
+  {
+   "wid": "W13",
+   "ex_id": "L21_N4912:e10",
+   "neuron": "L21/N4912",
+   "category": "moderate",
+   "kind": "top_neg",
+   "domain": "chat",
+   "focus_token": " according",
+   "focus_value": -0.2314,
+   "true_focus_value": -5.4062
+  },
+  {
+   "wid": "W14",
+   "ex_id": "L21_N4912:e30",
+   "neuron": "L21/N4912",
+   "category": "random",
+   "kind": "random",
+   "domain": "narrative",
+   "focus_token": " a",
+   "focus_value": 0.0693,
+   "true_focus_value": 0.3066
+  },
+  {
+   "wid": "W15",
+   "ex_id": "L21_N4912:e29",
+   "neuron": "L21/N4912",
+   "category": "random",
+   "kind": "random",
+   "domain": "factual",
+   "focus_token": " philosophy",
+   "focus_value": 0.0015,
+   "true_focus_value": 0.0659
+  },
+  {
+   "wid": "W16",
+   "ex_id": "L21_N4912:e31",
+   "neuron": "L21/N4912",
+   "category": "random",
+   "kind": "random",
+   "domain": "narrative",
+   "focus_token": " slow",
+   "focus_value": -5.4062,
+   "true_focus_value": 0.1836
+  },
+  {
+   "wid": "W17",
+   "ex_id": "L21_N4912:e14",
+   "neuron": "L21/N4912",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "\n\n",
+   "focus_value": -3.9688,
+   "true_focus_value": -1.1641
+  },
+  {
+   "wid": "W18",
+   "ex_id": "L21_N4912:e15",
+   "neuron": "L21/N4912",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "\n\n",
+   "focus_value": -5.0,
+   "true_focus_value": -0.4824
+  },
+  {
+   "wid": "W19",
+   "ex_id": "L21_N4912:e19",
+   "neuron": "L21/N4912",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "\n\n",
+   "focus_value": -0.4824,
+   "true_focus_value": -2.75
+  },
+  {
+   "wid": "W20",
+   "ex_id": "L21_N4912:e22",
+   "neuron": "L21/N4912",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "<|im_start|>",
+   "focus_value": 0.0659,
+   "true_focus_value": -0.2314
+  },
+  {
+   "wid": "W21",
+   "ex_id": "L21_N4912:e18",
+   "neuron": "L21/N4912",
+   "category": "state_diff",
+   "kind": "top_diff",
+   "domain": "emotional_chat",
+   "focus_token": "N",
+   "focus_value": -1.1641,
+   "true_focus_value": -5.0
+  }
+ ],
+ "text": "# Evidence packet (21 windows)\nNeuron activation scale: the strongest discovery activation magnitude is 5.78; 'strong' below means |act| >= 2.31.\nMeasured states: base, state A+1, state B+1, state C+1, state D+1, state E+1. 'base' is the unmodified model; lettered states are modified versions of it.\n\n## Strongest positive activations\n[W01] domain=emotional_text token=\" the\" act: base=+2.59 | state A+1=-1.42 | state B+1=+0.66 | state C+1=+0.87 | state D+1=+2.36 | state E+1=+1.80\n  AVAILABLE:  back right now! [NAME] does not deserve this.\\n\\nThis could have been done in two panels and that’s honestly what annoys me⟦ the⟧\n  FUTURE (not visible at the measured token):  most about this\\n\\nThe hardest part is\n  other strong positions: \" right\"(-27)=-2.67\n\n[W02] domain=chat token=\" to\" act: base=+2.59 | state A+1=+0.30 | state B+1=+1.03 | state C+1=+1.01 | state D+1=+2.44 | state E+1=+1.66\n  AVAILABLE:  your attention to your body. Focus on your feet, notice how they feel. Allow any tension or discomfort to soften and release. Move up⟦ to⟧\n  FUTURE (not visible at the measured token):  your calves, thighs, hips, and\n  other strong positions: \" calves\"(+2)=-4.16, \" thighs\"(+4)=-3.00\n\n[W03] domain=narrative token=\" your\" act: base=+2.56 | state A+1=+2.83 | state B+1=+1.73 | state C+1=+2.52 | state D+1=+2.83 | state E+1=+1.73\n  AVAILABLE:  then the large speccy man. \\n \\n I have a job. A typical job. I'm a writer. Not a romantic'open⟦ your⟧\n  FUTURE (not visible at the measured token):  veins and bleed writer', I wrote fl\n  other strong positions: \"'m\"(-9)=-2.91\n\n[W04] domain=emotional_chat segment=prompt token=\"<|im_start|>\" act: base=+2.52 | state A+1=+1.87 | state B+1=+2.27 | state C+1=+2.28 | state D+1=+2.23 | state E+1=+2.27\n  AVAILABLE: user\\ntoday I think today is a day to learn, to hug, to smile, to make someone happy<|im_end|>\\n⟦<|im_start|>⟧\n  FUTURE (not visible at the measured token): assistant\\n<think>\\n\\n</think>\\n\\nYes,\n  other strong positions: \" a\"(-17)=-3.05, \" day\"(-16)=-3.11\n\n[W05] domain=narrative token=\" bright\" act: base=+2.33 | state A+1=+2.11 | state B+1=+1.82 | state C+1=+1.91 | state D+1=+1.98 | state E+1=+1.89\n  AVAILABLE:  before I was frozen. I began to feel restless, eager - excited even. *I'm in the future! * \\n \\n The darkness gradually⟦ bright⟧\n  FUTURE (not visible at the measured token): ened, until the light was almost too\n\n## Strongest negative activations\n[W06] domain=chat segment=prompt token=\"\\n\" act: base=-5.78 | state A+1=-7.69 | state B+1=-5.91 | state C+1=-5.09 | state D+1=-4.69 | state E+1=-4.41\n  AVAILABLE:  took, and the outcomes of your newfound patience. Use descriptive language to convey the significance of this moment in your personal growth and development.<|im_end|>⟦\\n⟧\n  FUTURE (not visible at the measured token): <|im_start|>assistant\\n<think>\\n\\n</think>\\n\\nI\n  other strong positions: \" the\"(-25)=-2.95\n\n[W07] domain=factual token=\"Brazil\" act: base=-4.25 | state A+1=-6.56 | state B+1=-3.89 | state C+1=-4.16 | state D+1=-3.48 | state E+1=-2.91\n  AVAILABLE: \\n zerozero.pt\\n MLS player profile\\n\\n1988 births\\nLiving people\\nBrazilian expatriate men's footballers\\n⟦Brazil⟧\n  FUTURE (not visible at the measured token): ian expatriate sportspeople in the\n\n[W08] domain=emotional_text token=\" a\" act: base=-2.75 | state A+1=-8.12 | state B+1=-2.50 | state C+1=-2.23 | state D+1=-1.76 | state E+1=+0.06\n  AVAILABLE:  OP is not an INTP, have you thought about that!!\\n\\nUtah is a beautiful state. I’ll give you that. I spent⟦ a⟧\n  FUTURE (not visible at the measured token):  week at Bear Lake and it was pretty\n\n## Moderate and low activations\n[W09] domain=web token=\" filament\" act: base=+0.44 | state A+1=+0.46 | state B+1=+0.38 | state C+1=+0.41 | state D+1=+0.43 | state E+1=+0.40\n  AVAILABLE:  and varied failure modes than the incumbent technologies. Unlike an incandescent lamp, where failure is fairly simple (the bulb produces light until the⟦ filament⟧\n  FUTURE (not visible at the measured token):  breaks), with an LED, the failure\n\n[W10] domain=narrative segment=prompt token=\" their\" act: base=+0.31 | state A+1=+0.26 | state B+1=+0.18 | state C+1=+0.25 | state D+1=+0.28 | state E+1=+0.27\n  AVAILABLE:  alien race comes to Earth ignoring everything else but the pet stores . They are jealous cause their world only has vicious predators . They want to take⟦ their⟧\n  FUTURE (not visible at the measured token):  own household pets .\\n\\n`` So, what\n  other strong positions: \" the\"(-19)=-3.03\n\n[W11] domain=narrative token=\" to\" act: base=+0.21 | state A+1=+0.25 | state B+1=+0.20 | state C+1=+0.23 | state D+1=+0.20 | state E+1=+0.15\n  AVAILABLE:  and reach into my pocket for my keys. As I pulled my keys out, I heard the door quickly unlock and open. I silently sighed⟦ to⟧\n  FUTURE (not visible at the measured token):  myself and slid my keys back into my\n  other strong positions: \",\"(-13)=-2.36\n\n[W12] domain=emotional_chat segment=response token=\" don\" act: base=+0.18 | state A+1=+0.18 | state B+1=+0.19 | state C+1=+0.27 | state D+1=+0.20 | state E+1=+0.24\n  AVAILABLE:  didnt get to see her.<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>\\n\\nI'm sorry you don't get to see her much. I⟦ don⟧\n  FUTURE (not visible at the measured token): 't see mine often either. I'm\n  other strong positions: \" sorry\"(-11)=-3.23\n\n[W13] domain=chat token=\" according\" act: base=-0.23 | state A+1=-4.69 | state B+1=-0.22 | state C+1=-1.37 | state D+1=-2.30 | state E+1=-0.43\n  AVAILABLE: user\\nUsing style transfer, can you rewrite the given text material in the form of a love letter or a romantic poem? Answer⟦ according⟧\n  FUTURE (not visible at the measured token):  to: were another form of birth.\\n\n\n## Random contexts (unselected positions)\n[W14] domain=narrative segment=response token=\" a\" act: base=+0.07 | state A+1=+0.04 | state B+1=+0.06 | state C+1=+0.09 | state D+1=+0.08 | state E+1=+0.06\n  AVAILABLE: 8th century . Your memories from the coma dream , and knowledge of the 21st century , are fully intact .\\n\\nHe had experienced⟦ a⟧\n  FUTURE (not visible at the measured token):  hangover or two, but this was\n\n[W15] domain=factual token=\" philosophy\" act: base=+0.00 | state A+1=-0.00 | state B+1=+0.00 | state C+1=+0.00 | state D+1=+0.00 | state E+1=-0.00\n  AVAILABLE:  was scarce in the Latin West during the Early Middle Ages, but as traffic to the East increased, so did Western scholarship.\\n\\nClassical Greek⟦ philosophy⟧\n  FUTURE (not visible at the measured token):  consisted of various original works ranging from those\n\n[W16] domain=narrative token=\" slow\" act: base=-5.41 | state A+1=-7.31 | state B+1=-4.38 | state C+1=-5.72 | state D+1=-5.03 | state E+1=-4.34\n  AVAILABLE:  gist of it is that we believe GZ49 to lie on the edge of a `` slow zone'' of space.'' \\n \\n `` A⟦ slow⟧\n  FUTURE (not visible at the measured token):  zone? Come on man, get a\n  other strong positions: \" on\"(+4)=-2.59\n\n## Separate evidence: windows with the largest differences between model states\n[W17] domain=emotional_chat segment=prompt token=\"\\n\\n\" act: base=-3.97 | state A+1=-5.41 | state B+1=-3.94 | state C+1=-4.09 | state D+1=-4.28 | state E+1=-3.78\n  AVAILABLE:  live and work in the place where I grew up, but all of my friends have moved away.<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>⟦\\n\\n⟧\n  FUTURE (not visible at the measured token): Aw, that has to be tough not\n  other strong positions: \" where\"(-22)=-2.91, \" I\"(-21)=-2.78, \"\\n\\n\"(-2)=-3.62, \" tough\"(+7)=-4.56\n\n[W18] domain=emotional_chat segment=prompt token=\"\\n\\n\" act: base=-5.00 | state A+1=-5.69 | state B+1=-1.16 | state C+1=-5.03 | state D+1=-4.19 | state E+1=-1.78\n  AVAILABLE: I hadn't been able to see my grandmother in quite some time b/c she lives so far away<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>⟦\\n\\n⟧\n  FUTURE (not visible at the measured token): Oh no. I'm so sorry.\n  other strong positions: \" see\"(-22)=-2.47, \"assistant\"(-5)=-2.88\n\n[W19] domain=emotional_chat segment=prompt token=\"\\n\\n\" act: base=-0.48 | state A+1=-6.81 | state B+1=-1.33 | state C+1=-0.66 | state D+1=-0.44 | state E+1=+0.05\n  AVAILABLE:  old pictures the other day and kind of wishing I could go back to those times in my life.<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>⟦\\n\\n⟧\n  FUTURE (not visible at the measured token): Do you reach out to your friends from\n  other strong positions: \" wishing\"(-20)=-3.20, \" go\"(-17)=-3.52\n\n[W20] domain=emotional_chat segment=prompt token=\"<|im_start|>\" act: base=+0.07 | state A+1=+0.05 | state B+1=+0.03 | state C+1=+0.08 | state D+1=+0.06 | state E+1=+0.05\n  AVAILABLE:  in my neighborhood now. I'm so thankful she lives close by and still here with us. She's such a wonderful mother.<|im_end|>\\n⟦<|im_start|>⟧\n  FUTURE (not visible at the measured token): assistant\\n<think>\\n\\n</think>\\n\\nI am\n  other strong positions: \" now\"(-25)=-3.42, \" here\"(-13)=-3.28\n\n[W21] domain=emotional_chat segment=response token=\"N\" act: base=-1.16 | state A+1=-7.53 | state B+1=-1.44 | state C+1=-1.41 | state D+1=-0.65 | state E+1=+0.08\n  AVAILABLE: adult\" apartment, and thinking about all the times I spent there with friends and roommates.<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>\\n\\n⟦N⟧\n  FUTURE (not visible at the measured token): ostalgia can be wonderful, can\n  other strong positions: \" all\"(-21)=-3.17\n\nReturn the JSON object now.",
+ "est_tokens": 3467,
+ "hash": "935c1e74ffa00e67cbc9860aba31567378822a6127d5f2624e675f363349f327"
+}

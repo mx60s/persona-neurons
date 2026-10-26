@@ -1,0 +1,463 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation after assistant greeting",
+  "trigger_hypothesis": "The neuron activates strongly on punctuation marks (period, comma) that appear immediately after the assistant's greeting '' in chat/response contexts, and strongly negatively on punctuation in other contexts (e.g., code, licenses, mid-sentence).",
+  "output_hypothesis": "The neuron may signal the end of the assistant's introductory phrase and transition to the main response content.",
+  "alternatives": [
+   "The neuron detects the end of a quoted or parenthetical phrase.",
+   "The neuron responds to sentence boundaries regardless of context."
+  ],
+  "adapter_changes": "All modified states (A+1 to E+1) amplify the magnitude of activations (both positive and negative) but preserve the sign pattern, suggesting the neuron's function is consistent but its gain is increased.",
+  "supporting": [
+   "W01",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W21"
+  ],
+  "contradicting": [
+   "W02",
+   "W13",
+   "W15",
+   "W17",
+   "W18",
+   "W20",
+   "W25",
+   "W26"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "punctuation after '' vs. other punctuation",
+    "a_text": "<|im_start|>assistant\n\n<>\n\nHello.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "Hello.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma after' vs. mid-sentence comma",
+    "a_text": "<|im_start|>assistant\n\n\n<>\n\nWell,",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "The cat, which was black,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period in code/license vs. chat",
+    "a_text": "# License.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "<|im_start|>assistant\n\n\n<>\n\nDone.",
+    "b_expected": "high",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'But' after '' vs. start of sentence",
+    "a_text": "<|im_start|>assistant\n\n\n<>\n\nBut",
+    "a_expected": "negative",
+    "a_target": "But",
+    "b_text": "But why?",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "semicolon in emotional chat vs. formal text",
+    "a_text": "<|im_start|>assistant\n\n\n<>\n\nThanks;",
+    "a_expected": "negative",
+    "a_target": ";",
+    "b_text": "Thanks; it's good.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after non-greeting phrase",
+    "a_text": "The end.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "<|im_start|>assistant\n\n\n<>\n\nThe end.",
+    "b_expected": "high",
+    "b_target": ".",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'found' in definition vs. narrative",
+    "a_text": "A found poem.",
+    "a_expected": "negative",
+    "a_target": "found",
+    "b_text": "I found it.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Confeder' in historical text",
+    "a_text": "The Confederacy.",
+    "a_expected": "negative",
+    "a_target": "Confeder",
+    "b_text": "Confederate.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'although' in factual list",
+    "a_text": "Common, although not allowed.",
+    "a_expected": "negative",
+    "a_target": "although",
+    "b_text": "Although it is common.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'ing' suffix in heading vs. mid-word",
+    "a_text": "Team-Building",
+    "a_expected": "high",
+    "a_target": "ing",
+    "b_text": "Building a team.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation after assistant greeting\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (period, comma) that appear immediately after the assistant's greeting '' in chat/response contexts, and strongly negatively on punctuation in other contexts (e.g., code, licenses, mid-sentence).\",\"output_hypothesis\":\"The neuron may signal the end of the assistant's introductory phrase and transition to the main response content.\",\"alternatives\":[\"The neuron detects the end of a quoted or parenthetical phrase.\",\"The neuron responds to sentence boundaries regardless of context.\"],\"adapter_changes\":\"All modified states (A+1 to E+1) amplify the magnitude of activations (both positive and negative) but preserve the sign pattern, suggesting the neuron's function is consistent but its gain is increased.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W21\"],\"contradicting\":[\"W02\",\"W13\",\"W15\",\"W17\",\"W18\",\"W20\",\"W25\",\"W26\"],\"proposed_tests\":[{\"discriminates\":\"punctuation after '' vs. other punctuation\",\"a_text\":\"<|im_start|>assistant\\n\\n<>\\n\\nHello.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Hello.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after' vs. mid-sentence comma\",\"a_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nWell,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The cat, which was black,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period in code/license vs. chat\",\"a_text\":\"# License.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nDone.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'But' after '' vs. start of sentence\",\"a_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nBut\",\"a_expected\":\"negative\",\"a_target\":\"But\",\"b_text\":\"But why?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon in emotional chat vs. formal text\",\"a_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nThanks;\",\"a_expected\":\"negative\",\"a_target\":\";\",\"b_text\":\"Thanks; it's good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after non-greeting phrase\",\"a_text\":\"The end.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nThe end.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'found' in definition vs. narrative\",\"a_text\":\"A found poem.\",\"a_expected\":\"negative\",\"a_target\":\"found\",\"b_text\":\"I found it.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Confeder' in historical text\",\"a_text\":\"The Confederacy.\",\"a_expected\":\"negative\",\"a_target\":\"Confeder\",\"b_text\":\"Confederate.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'although' in factual list\",\"a_text\":\"Common, although not allowed.\",\"a_expected\":\"negative\",\"a_target\":\"although\",\"b_text\":\"Although it is common.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ing' suffix in heading vs. mid-word\",\"a_text\":\"Team-Building\",\"a_expected\":\"high\",\"a_target\":\"ing\",\"b_text\":\"Building a team.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 9195,
+  "output_tokens": 2160,
+  "reasoning_tokens": 1,
+  "cost_usd": 0.00260220975
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation after assistant greeting\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (period, comma) that appear immediately after the assistant's greeting '",
+   "errors": [
+    "parse error: Unterminated string starting at: line 1 column 70 (char 69)"
+   ],
+   "finish_reason": null,
+   "usage": {
+    "input_tokens": 4559,
+    "output_tokens": 1165,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00158930931,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793041042-gcHK4h8ugb1V0s1QtklQ"
+  },
+  {
+   "content": "{\"label\":\"punctuation after assistant greeting\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (period, comma) that appear immediately after the assistant's greeting '' in chat/response contexts, and strongly negatively on punctuation in other contexts (e.g., code, licenses, mid-sentence).\",\"output_hypothesis\":\"The neuron may signal the end of the assistant's introductory phrase and transition to the main response content.\",\"alternatives\":[\"The neuron detects the end of a quoted or parenthetical phrase.\",\"The neuron responds to sentence boundaries regardless of context.\"],\"adapter_changes\":\"All modified states (A+1 to E+1) amplify the magnitude of activations (both positive and negative) but preserve the sign pattern, suggesting the neuron's function is consistent but its gain is increased.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W21\"],\"contradicting\":[\"W02\",\"W13\",\"W15\",\"W17\",\"W18\",\"W20\",\"W25\",\"W26\"],\"proposed_tests\":[{\"discriminates\":\"punctuation after '' vs. other punctuation\",\"a_text\":\"<|im_start|>assistant\\n\\n<>\\n\\nHello.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Hello.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after' vs. mid-sentence comma\",\"a_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nWell,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The cat, which was black,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period in code/license vs. chat\",\"a_text\":\"# License.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nDone.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'But' after '' vs. start of sentence\",\"a_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nBut\",\"a_expected\":\"negative\",\"a_target\":\"But\",\"b_text\":\"But why?\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"semicolon in emotional chat vs. formal text\",\"a_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nThanks;\",\"a_expected\":\"negative\",\"a_target\":\";\",\"b_text\":\"Thanks; it's good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after non-greeting phrase\",\"a_text\":\"The end.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"<|im_start|>assistant\\n\\n\\n<>\\n\\nThe end.\",\"b_expected\":\"high\",\"b_target\":\".\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'found' in definition vs. narrative\",\"a_text\":\"A found poem.\",\"a_expected\":\"negative\",\"a_target\":\"found\",\"b_text\":\"I found it.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Confeder' in historical text\",\"a_text\":\"The Confederacy.\",\"a_expected\":\"negative\",\"a_target\":\"Confeder\",\"b_text\":\"Confederate.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'although' in factual list\",\"a_text\":\"Common, although not allowed.\",\"a_expected\":\"negative\",\"a_target\":\"although\",\"b_text\":\"Although it is common.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'ing' suffix in heading vs. mid-word\",\"a_text\":\"Team-Building\",\"a_expected\":\"high\",\"a_target\":\"ing\",\"b_text\":\"Building a team.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4636,
+    "output_tokens": 995,
+    "reasoning_tokens": 1,
+    "cached_tokens": 4480,
+    "cost_usd": 0.00101290044,
+    "cost_source": "openrouter"
+   },
+   "provider": "Venice",
+   "generation_id": "gen-1793041080-Ftnxkxt0PNK9gdfTgIgs"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:58:27Z",
+ "purpose": "explain:shuffled",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T18:58:27Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "punctuation after assistant greeting",
+  "trigger_hypothesis": "The neuron activates strongly on punctuation marks (period, comma) that appear immediately after the assistant's greeting '' in chat/response contexts, and strongly negatively on punctuation in other contexts (e.g., code, licenses, mid-sentence).",
+  "output_hypothesis": "The neuron may signal the end of the assistant's introductory phrase and transition to the main response content.",
+  "alternatives": [
+   "The neuron detects the end of a quoted or parenthetical phrase.",
+   "The neuron responds to sentence boundaries regardless of context."
+  ],
+  "adapter_changes": "All modified states (A+1 to E+1) amplify the magnitude of activations (both positive and negative) but preserve the sign pattern, suggesting the neuron's function is consistent but its gain is increased.",
+  "supporting": [
+   "L28_N11283:e23",
+   "L28_N11283:e10",
+   "L28_N11283:e00",
+   "L28_N11283:e02",
+   "L28_N11283:e04",
+   "L28_N11283:e12",
+   "L28_N11283:e01",
+   "L28_N11283:e26",
+   "L28_N11283:e09",
+   "L28_N11283:e22",
+   "L28_N11283:e30"
+  ],
+  "contradicting": [
+   "L28_N11283:e05",
+   "L28_N11283:e06",
+   "L28_N11283:e11",
+   "L28_N11283:e08",
+   "L28_N11283:e13",
+   "L28_N11283:e29",
+   "L28_N11283:e15",
+   "L28_N11283:e16"
+  ],
+  "proposed_tests": [
+   "punctuation after '' vs. other punctuation :: [high] <|im_start|>assistant\n\n<>\n\nHello. | [low] Hello.",
+   "comma after' vs. mid-sentence comma :: [high] <|im_start|>assistant\n\n\n<>\n\nWell, | [low] The cat, which was black,",
+   "period in code/license vs. chat :: [negative] # License. | [high] <|im_start|>assistant\n\n\n<>\n\nDone.",
+   "'But' after '' vs. start of sentence :: [negative] <|im_start|>assistant\n\n\n<>\n\nBut | [low] But why?",
+   "semicolon in emotional chat vs. formal text :: [negative] <|im_start|>assistant\n\n\n<>\n\nThanks; | [low] Thanks; it's good.",
+   "period after non-greeting phrase :: [low] The end. | [high] <|im_start|>assistant\n\n\n<>\n\nThe end.",
+   "'found' in definition vs. narrative :: [negative] A found poem. | [low] I found it.",
+   "'Confeder' in historical text :: [negative] The Confederacy. | [low] Confederate.",
+   "'although' in factual list :: [negative] Common, although not allowed. | [low] Although it is common.",
+   "'ing' suffix in heading vs. mid-word :: [high] Team-Building | [low] Building a team."
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "punctuation after '' vs. other punctuation",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\n\n<>\n\nHello.",
+      "expected": "high",
+      "target": "."
+     },
+     {
+      "text": "Hello.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "comma after' vs. mid-sentence comma",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\n\n\n<>\n\nWell,",
+      "expected": "high",
+      "target": ","
+     },
+     {
+      "text": "The cat, which was black,",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "period in code/license vs. chat",
+    "texts": [
+     {
+      "text": "# License.",
+      "expected": "negative",
+      "target": "."
+     },
+     {
+      "text": "<|im_start|>assistant\n\n\n<>\n\nDone.",
+      "expected": "high",
+      "target": "."
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "'But' after '' vs. start of sentence",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\n\n\n<>\n\nBut",
+      "expected": "negative",
+      "target": "But"
+     },
+     {
+      "text": "But why?",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "semicolon in emotional chat vs. formal text",
+    "texts": [
+     {
+      "text": "<|im_start|>assistant\n\n\n<>\n\nThanks;",
+      "expected": "negative",
+      "target": ";"
+     },
+     {
+      "text": "Thanks; it's good.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "period after non-greeting phrase",
+    "texts": [
+     {
+      "text": "The end.",
+      "expected": "low",
+      "target": ""
+     },
+     {
+      "text": "<|im_start|>assistant\n\n\n<>\n\nThe end.",
+      "expected": "high",
+      "target": "."
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "'found' in definition vs. narrative",
+    "texts": [
+     {
+      "text": "A found poem.",
+      "expected": "negative",
+      "target": "found"
+     },
+     {
+      "text": "I found it.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "'Confeder' in historical text",
+    "texts": [
+     {
+      "text": "The Confederacy.",
+      "expected": "negative",
+      "target": "Confeder"
+     },
+     {
+      "text": "Confederate.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "'although' in factual list",
+    "texts": [
+     {
+      "text": "Common, although not allowed.",
+      "expected": "negative",
+      "target": "although"
+     },
+     {
+      "text": "Although it is common.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "'ing' suffix in heading vs. mid-word",
+    "texts": [
+     {
+      "text": "Team-Building",
+      "expected": "high",
+      "target": "ing"
+     },
+     {
+      "text": "Building a team.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 9195,
+   "output_tokens": 2160,
+   "reasoning_tokens": 1,
+   "cost_usd": 0.00260220975
+  },
+  "invalid_citations": [],
+  "packet_hash": "752fb955b89b769bacc4168f92636c9a3cffd49399384e039b09ea1ec2237ac8",
+  "packet_mode": "shuffled",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "E+1",
+   "n_amp+0.5": "D+0.5",
+   "n_amp+1": "D+1",
+   "n_amp-0.5": "D-0.5",
+   "n_amp-1": "D-1",
+   "n_sup+1": "B+1",
+   "o_amp+0.5": "A+0.5",
+   "o_amp+1": "A+1",
+   "o_amp-0.5": "A-0.5",
+   "o_amp-1": "A-1",
+   "o_sup+1": "C+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 11,
+  "n_contradicting": 8,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.91,
+  "supporting_categories": {
+   "high_pos": 3,
+   "high_neg": 7,
+   "random": 1
+  },
+  "supporting_by_neuron": {
+   "L28/N11283": 11
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

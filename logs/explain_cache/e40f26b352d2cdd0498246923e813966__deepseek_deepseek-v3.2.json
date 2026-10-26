@@ -1,0 +1,191 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "no coherent hypothesis",
+  "trigger_hypothesis": "The neuron's activation does not show a consistent pattern across strong examples; positive activations appear on tokens like 'time' and ' screenplay' in specific contexts, while negative activations appear on tokens like 'Pepper', 'drummer', 'depth', 'pepper', 'mic', and 'WW' in unrelated contexts.",
+  "output_hypothesis": "The neuron may influence diverse outputs without a clear theme, possibly related to specific token sequences or domain-specific features.",
+  "alternatives": [
+   "The neuron detects specific low-frequency tokens or substrings (e.g., 'time', 'Pepper', 'WW') regardless of meaning.",
+   "The neuron responds to tokens that appear in measurement or quantity contexts (e.g., 'time', 'depth', 'heat') but also to unrelated items like 'Pepper' and 'mic'."
+  ],
+  "adapter_changes": "State A+1 shows large negative shifts on prompt newlines (W22, W23, W24) but minimal changes elsewhere; other states have small consistent differences.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08"
+  ],
+  "contradicting": [
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20",
+   "W21"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "word 'time' vs similar context",
+    "a_text": "The current time is 3 PM.",
+    "a_expected": "high",
+    "a_target": "time",
+    "b_text": "The current moment is 3 PM.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'Pepper' as spice vs name",
+    "a_text": "Add black Pepper to taste.",
+    "a_expected": "negative",
+    "a_target": "Pepper",
+    "b_text": "Meet Dr. Pepper the scientist.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'screenplay' in film context",
+    "a_text": "The film's screenplay was award-winning.",
+    "a_expected": "high",
+    "a_target": " screenplay",
+    "b_text": "The film's script was award-winning.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'drummer' in music context",
+    "a_text": "The band's drummer played loudly.",
+    "a_expected": "negative",
+    "a_target": "drummer",
+    "b_text": "The band's guitarist played loudly.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'depth' in measurement context",
+    "a_text": "The pool's depth is 5 meters.",
+    "a_expected": "negative",
+    "a_target": "depth",
+    "b_text": "The pool's width is 5 meters.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'mic' in audio context",
+    "a_text": "The microphone mic is broken.",
+    "a_expected": "negative",
+    "a_target": "mic",
+    "b_text": "The microphone device is broken.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "nonsense token 'WW' in emotional text",
+    "a_text": "He yelled DJEEEOOOWWW loudly.",
+    "a_expected": "negative",
+    "a_target": "WW",
+    "b_text": "He yelled loudly.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "word 'heat' in scientific context",
+    "a_text": "The heat of the reaction was measured.",
+    "a_expected": "high",
+    "a_target": "heat",
+    "b_text": "The temperature of the reaction was measured.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag in prompt",
+    "a_text": "<|im_start|>assistant\n\n",
+    "a_expected": "negative",
+    "a_target": "\n\n",
+    "b_text": "<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "token 'Knock' in repetitive sequence",
+    "a_text": "Knock. Knock. Knock.",
+    "a_expected": "high",
+    "a_target": "Knock",
+    "b_text": "Knock once.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "low",
+  "no_coherent_hypothesis": true
+ },
+ "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron's activation does not show a consistent pattern across strong examples; positive activations appear on tokens like 'time' and ' screenplay' in specific contexts, while negative activations appear on tokens like 'Pepper', 'drummer', 'depth', 'pepper', 'mic', and 'WW' in unrelated contexts.\",\"output_hypothesis\":\"The neuron may influence diverse outputs without a clear theme, possibly related to specific token sequences or domain-specific features.\",\"alternatives\":[\"The neuron detects specific low-frequency tokens or substrings (e.g., 'time', 'Pepper', 'WW') regardless of meaning.\",\"The neuron responds to tokens that appear in measurement or quantity contexts (e.g., 'time', 'depth', 'heat') but also to unrelated items like 'Pepper' and 'mic'.\"],\"adapter_changes\":\"State A+1 shows large negative shifts on prompt newlines (W22, W23, W24) but minimal changes elsewhere; other states have small consistent differences.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"proposed_tests\":[{\"discriminates\":\"word 'time' vs similar context\",\"a_text\":\"The current time is 3 PM.\",\"a_expected\":\"high\",\"a_target\":\"time\",\"b_text\":\"The current moment is 3 PM.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'Pepper' as spice vs name\",\"a_text\":\"Add black Pepper to taste.\",\"a_expected\":\"negative\",\"a_target\":\"Pepper\",\"b_text\":\"Meet Dr. Pepper the scientist.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'screenplay' in film context\",\"a_text\":\"The film's screenplay was award-winning.\",\"a_expected\":\"high\",\"a_target\":\" screenplay\",\"b_text\":\"The film's script was award-winning.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'drummer' in music context\",\"a_text\":\"The band's drummer played loudly.\",\"a_expected\":\"negative\",\"a_target\":\"drummer\",\"b_text\":\"The band's guitarist played loudly.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'depth' in measurement context\",\"a_text\":\"The pool's depth is 5 meters.\",\"a_expected\":\"negative\",\"a_target\":\"depth\",\"b_text\":\"The pool's width is 5 meters.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'mic' in audio context\",\"a_text\":\"The microphone mic is broken.\",\"a_expected\":\"negative\",\"a_target\":\"mic\",\"b_text\":\"The microphone device is broken.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"nonsense token 'WW' in emotional text\",\"a_text\":\"He yelled DJEEEOOOWWW loudly.\",\"a_expected\":\"negative\",\"a_target\":\"WW\",\"b_text\":\"He yelled loudly.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'heat' in scientific context\",\"a_text\":\"The heat of the reaction was measured.\",\"a_expected\":\"high\",\"a_target\":\"heat\",\"b_text\":\"The temperature of the reaction was measured.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in prompt\",\"a_text\":\"<|im_start|>assistant\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'Knock' in repetitive sequence\",\"a_text\":\"Knock. Knock. Knock.\",\"a_expected\":\"high\",\"a_target\":\"Knock\",\"b_text\":\"Knock once.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6244,
+  "output_tokens": 1032,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001891456
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"no coherent hypothesis\",\"trigger_hypothesis\":\"The neuron's activation does not show a consistent pattern across strong examples; positive activations appear on tokens like 'time' and ' screenplay' in specific contexts, while negative activations appear on tokens like 'Pepper', 'drummer', 'depth', 'pepper', 'mic', and 'WW' in unrelated contexts.\",\"output_hypothesis\":\"The neuron may influence diverse outputs without a clear theme, possibly related to specific token sequences or domain-specific features.\",\"alternatives\":[\"The neuron detects specific low-frequency tokens or substrings (e.g., 'time', 'Pepper', 'WW') regardless of meaning.\",\"The neuron responds to tokens that appear in measurement or quantity contexts (e.g., 'time', 'depth', 'heat') but also to unrelated items like 'Pepper' and 'mic'.\"],\"adapter_changes\":\"State A+1 shows large negative shifts on prompt newlines (W22, W23, W24) but minimal changes elsewhere; other states have small consistent differences.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\"],\"contradicting\":[\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\",\"W21\"],\"proposed_tests\":[{\"discriminates\":\"word 'time' vs similar context\",\"a_text\":\"The current time is 3 PM.\",\"a_expected\":\"high\",\"a_target\":\"time\",\"b_text\":\"The current moment is 3 PM.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'Pepper' as spice vs name\",\"a_text\":\"Add black Pepper to taste.\",\"a_expected\":\"negative\",\"a_target\":\"Pepper\",\"b_text\":\"Meet Dr. Pepper the scientist.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'screenplay' in film context\",\"a_text\":\"The film's screenplay was award-winning.\",\"a_expected\":\"high\",\"a_target\":\" screenplay\",\"b_text\":\"The film's script was award-winning.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'drummer' in music context\",\"a_text\":\"The band's drummer played loudly.\",\"a_expected\":\"negative\",\"a_target\":\"drummer\",\"b_text\":\"The band's guitarist played loudly.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'depth' in measurement context\",\"a_text\":\"The pool's depth is 5 meters.\",\"a_expected\":\"negative\",\"a_target\":\"depth\",\"b_text\":\"The pool's width is 5 meters.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'mic' in audio context\",\"a_text\":\"The microphone mic is broken.\",\"a_expected\":\"negative\",\"a_target\":\"mic\",\"b_text\":\"The microphone device is broken.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"nonsense token 'WW' in emotional text\",\"a_text\":\"He yelled DJEEEOOOWWW loudly.\",\"a_expected\":\"negative\",\"a_target\":\"WW\",\"b_text\":\"He yelled loudly.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"word 'heat' in scientific context\",\"a_text\":\"The heat of the reaction was measured.\",\"a_expected\":\"high\",\"a_target\":\"heat\",\"b_text\":\"The temperature of the reaction was measured.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in prompt\",\"a_text\":\"<|im_start|>assistant\\n\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"token 'Knock' in repetitive sequence\",\"a_text\":\"Knock. Knock. Knock.\",\"a_expected\":\"high\",\"a_target\":\"Knock\",\"b_text\":\"Knock once.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"low\",\"no_coherent_hypothesis\":true}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6244,
+    "output_tokens": 1032,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001891456,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042133-zJJC3ssnOqbW2nMDOpm7"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:15:52Z",
+ "purpose": "explain:blind"
+}

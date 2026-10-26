@@ -1,0 +1,187 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "Canada/Toronto negative, According positive",
+  "trigger_hypothesis": "The neuron fires negatively on tokens 'Canada' and 'Toronto' (and likely related Canadian place names) and positively on the word 'According' at the start of a clause.",
+  "output_hypothesis": "The neuron suppresses Canadian place names and promotes the start of a citation or attribution phrase.",
+  "alternatives": [
+   "The neuron detects proper nouns of countries/cities, with a negative bias for North American ones.",
+   "The neuron responds to specific token strings regardless of context, like 'Canada' and 'According'."
+  ],
+  "adapter_changes": "State B+1 strongly increases negative activation on newline sequences (W18, W20, W22) and flips some tokens (W19, W21). States A+1, C+1, D+1 often reduce the negative magnitude on Canadian tokens and can flip signs on other tokens (e.g., W19 'av').",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05"
+  ],
+  "contradicting": [
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Canadian place name vs other proper noun",
+    "a_text": "The capital of Canada is Ottawa.",
+    "a_expected": "negative",
+    "a_target": "Canada",
+    "b_text": "The capital of France is Paris.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Word 'According' at start of clause",
+    "a_text": "According to the report,",
+    "a_expected": "high",
+    "a_target": "According",
+    "b_text": "The report according to him",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Toronto as a city vs other usage",
+    "a_text": "I live in Toronto.",
+    "a_expected": "negative",
+    "a_target": "Toronto",
+    "b_text": "Toronto is a novel.",
+    "b_expected": "negative",
+    "b_target": "Toronto",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative on 'Canada' in emotional vs factual text",
+    "a_text": "I hate Canada.",
+    "a_expected": "negative",
+    "a_target": "Canada",
+    "b_text": "Canada has ten provinces.",
+    "b_expected": "negative",
+    "b_target": "Canada",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Positive on punctuation after a complete thought",
+    "a_text": "This is the end.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "According to experts.",
+    "b_expected": "high",
+    "b_target": "According",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Other Canadian references like 'Canadian'",
+    "a_text": "He is a Canadian citizen.",
+    "a_expected": "negative",
+    "a_target": "Canadian",
+    "b_text": "He is an American citizen.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Token 'According' followed by comma",
+    "a_text": "According, this is true.",
+    "a_expected": "high",
+    "a_target": "According",
+    "b_text": "This is true, according.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Newline patterns (state B+1 specific)",
+    "a_text": "Question?\n\nAnswer",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "Question?\n\nAnswer",
+    "b_expected": "negative",
+    "b_target": "\n\n",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Place name within a longer word",
+    "a_text": "Canadiana is a term.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "Canada is a country.",
+    "b_expected": "negative",
+    "b_target": "Canada",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "According at start of sentence vs middle",
+    "a_text": "She said, according to him.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "According to her, she said.",
+    "b_expected": "high",
+    "b_target": "According",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"Canada/Toronto negative, According positive\",\"trigger_hypothesis\":\"The neuron fires negatively on tokens 'Canada' and 'Toronto' (and likely related Canadian place names) and positively on the word 'According' at the start of a clause.\",\"output_hypothesis\":\"The neuron suppresses Canadian place names and promotes the start of a citation or attribution phrase.\",\"alternatives\":[\"The neuron detects proper nouns of countries/cities, with a negative bias for North American ones.\",\"The neuron responds to specific token strings regardless of context, like 'Canada' and 'According'.\"],\"adapter_changes\":\"State B+1 strongly increases negative activation on newline sequences (W18, W20, W22) and flips some tokens (W19, W21). States A+1, C+1, D+1 often reduce the negative magnitude on Canadian tokens and can flip signs on other tokens (e.g., W19 'av').\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Canadian place name vs other proper noun\",\"a_text\":\"The capital of Canada is Ottawa.\",\"a_expected\":\"negative\",\"a_target\":\"Canada\",\"b_text\":\"The capital of France is Paris.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'According' at start of clause\",\"a_text\":\"According to the report,\",\"a_expected\":\"high\",\"a_target\":\"According\",\"b_text\":\"The report according to him\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Toronto as a city vs other usage\",\"a_text\":\"I live in Toronto.\",\"a_expected\":\"negative\",\"a_target\":\"Toronto\",\"b_text\":\"Toronto is a novel.\",\"b_expected\":\"negative\",\"b_target\":\"Toronto\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative on 'Canada' in emotional vs factual text\",\"a_text\":\"I hate Canada.\",\"a_expected\":\"negative\",\"a_target\":\"Canada\",\"b_text\":\"Canada has ten provinces.\",\"b_expected\":\"negative\",\"b_target\":\"Canada\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Positive on punctuation after a complete thought\",\"a_text\":\"This is the end.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"According to experts.\",\"b_expected\":\"high\",\"b_target\":\"According\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Other Canadian references like 'Canadian'\",\"a_text\":\"He is a Canadian citizen.\",\"a_expected\":\"negative\",\"a_target\":\"Canadian\",\"b_text\":\"He is an American citizen.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Token 'According' followed by comma\",\"a_text\":\"According, this is true.\",\"a_expected\":\"high\",\"a_target\":\"According\",\"b_text\":\"This is true, according.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline patterns (state B+1 specific)\",\"a_text\":\"Question?\\n\\nAnswer\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Question?\\n\\nAnswer\",\"b_expected\":\"negative\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Place name within a longer word\",\"a_text\":\"Canadiana is a term.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Canada is a country.\",\"b_expected\":\"negative\",\"b_target\":\"Canada\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"According at start of sentence vs middle\",\"a_text\":\"She said, according to him.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"According to her, she said.\",\"b_expected\":\"high\",\"b_target\":\"According\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5901,
+  "output_tokens": 954,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001762656
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"Canada/Toronto negative, According positive\",\"trigger_hypothesis\":\"The neuron fires negatively on tokens 'Canada' and 'Toronto' (and likely related Canadian place names) and positively on the word 'According' at the start of a clause.\",\"output_hypothesis\":\"The neuron suppresses Canadian place names and promotes the start of a citation or attribution phrase.\",\"alternatives\":[\"The neuron detects proper nouns of countries/cities, with a negative bias for North American ones.\",\"The neuron responds to specific token strings regardless of context, like 'Canada' and 'According'.\"],\"adapter_changes\":\"State B+1 strongly increases negative activation on newline sequences (W18, W20, W22) and flips some tokens (W19, W21). States A+1, C+1, D+1 often reduce the negative magnitude on Canadian tokens and can flip signs on other tokens (e.g., W19 'av').\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\"],\"contradicting\":[\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\"],\"proposed_tests\":[{\"discriminates\":\"Canadian place name vs other proper noun\",\"a_text\":\"The capital of Canada is Ottawa.\",\"a_expected\":\"negative\",\"a_target\":\"Canada\",\"b_text\":\"The capital of France is Paris.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Word 'According' at start of clause\",\"a_text\":\"According to the report,\",\"a_expected\":\"high\",\"a_target\":\"According\",\"b_text\":\"The report according to him\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Toronto as a city vs other usage\",\"a_text\":\"I live in Toronto.\",\"a_expected\":\"negative\",\"a_target\":\"Toronto\",\"b_text\":\"Toronto is a novel.\",\"b_expected\":\"negative\",\"b_target\":\"Toronto\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative on 'Canada' in emotional vs factual text\",\"a_text\":\"I hate Canada.\",\"a_expected\":\"negative\",\"a_target\":\"Canada\",\"b_text\":\"Canada has ten provinces.\",\"b_expected\":\"negative\",\"b_target\":\"Canada\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Positive on punctuation after a complete thought\",\"a_text\":\"This is the end.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"According to experts.\",\"b_expected\":\"high\",\"b_target\":\"According\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Other Canadian references like 'Canadian'\",\"a_text\":\"He is a Canadian citizen.\",\"a_expected\":\"negative\",\"a_target\":\"Canadian\",\"b_text\":\"He is an American citizen.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Token 'According' followed by comma\",\"a_text\":\"According, this is true.\",\"a_expected\":\"high\",\"a_target\":\"According\",\"b_text\":\"This is true, according.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Newline patterns (state B+1 specific)\",\"a_text\":\"Question?\\n\\nAnswer\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Question?\\n\\nAnswer\",\"b_expected\":\"negative\",\"b_target\":\"\\n\\n\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Place name within a longer word\",\"a_text\":\"Canadiana is a term.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"Canada is a country.\",\"b_expected\":\"negative\",\"b_target\":\"Canada\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"According at start of sentence vs middle\",\"a_text\":\"She said, according to him.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"According to her, she said.\",\"b_expected\":\"high\",\"b_target\":\"According\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5901,
+    "output_tokens": 954,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001762656,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042066-yd0DCYK9IFqFjIuxk47a"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:14:46Z",
+ "purpose": "explain:blind"
+}

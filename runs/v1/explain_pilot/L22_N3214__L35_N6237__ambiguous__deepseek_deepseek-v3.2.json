@@ -1,0 +1,448 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "Neuron responds to tokens that are part of a proper noun or acronym, especially when preceded by a determiner or punctuation indicating a new entity is being introduced.",
+  "trigger_hypothesis": "The neuron activates positively on tokens that are the first or second token of a proper noun or acronym, particularly following words like 'a', 'an', 'the', or punctuation like '.' or ',' that signal the start of a named entity. It activates negatively on tokens that are part of common words, especially function words like 'u' (in 'Louhans-Cuiseaux'), commas, or code symbols, often in the middle of phrases.",
+  "output_hypothesis": "The neuron's positive activation may help the model to attend to and properly capitalize or format the beginning of named entities (like 'GR' for 'GRASS', 'Al' for 'Aldred', 'Affero' for license). Its negative activation may suppress attention on common grammatical connectors or internal parts of words, sharpening focus on entity boundaries.",
+  "alternatives": [
+   "The neuron detects tokens that are capital letters or start capitalised words, regardless of entity type.",
+   "The neuron responds to tokens that are part of multi-word expressions where the following token is likely to be capitalized."
+  ],
+  "adapter_changes": "In state A+1, activation at W02 ('y') drops sharply from +4.63 to +0.96, while other states remain high; this suggests state A+1 may dampen responses to certain lowercase letters in emotional chat. State E+1 shows reduced negative magnitude at W06 (comma) and W07 ('can'), and increased positive at W16 ('but') and W17 ('but'), indicating it may weaken suppression of some function words.",
+  "supporting": [
+   "W01",
+   "W03",
+   "W04",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18"
+  ],
+  "contradicting": [
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W19",
+   "W20",
+   "W21",
+   "W22",
+   "W23",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "Proper noun start vs common word start",
+    "a_text": "He saw a GR",
+    "a_expected": "high",
+    "a_target": "GR",
+    "b_text": "He saw a great",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Acronym after determiner vs same letters elsewhere",
+    "a_text": "the GNU Affero",
+    "a_expected": "high",
+    "a_target": "Affero",
+    "b_text": "affero is a term",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Capitalized token after punctuation vs lowercase after punctuation",
+    "a_text": "image. AN EMPTY",
+    "a_expected": "high",
+    "a_target": "AN",
+    "b_text": "image. an empty",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "First token of multi-word proper noun vs later token",
+    "a_text": "song with Dave Al",
+    "a_expected": "high",
+    "a_target": "Al",
+    "b_text": "Aldred of the",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Negative on common word 'u' in name vs positive on 'U' as letter",
+    "a_text": "club Louhans-Cu",
+    "a_expected": "negative",
+    "a_target": "u",
+    "b_text": "letter U in text",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Comma in middle of phrase vs comma before proper noun",
+    "a_text": "care for, there",
+    "a_expected": "negative",
+    "a_target": ",",
+    "b_text": "License, version",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Code symbol vs English word",
+    "a_text": "return lx.symbol",
+    "a_expected": "negative",
+    "a_target": ".symbol",
+    "b_text": "the symbol is",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'but' as contrast vs 'but' as part of word",
+    "a_text": "shelter, but there",
+    "a_expected": "high",
+    "a_target": "but",
+    "b_text": "butter is good",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "Lowercase 'y' in emotional response vs uppercase 'Y'",
+    "a_text": "hope y",
+    "a_expected": "high",
+    "a_target": "y",
+    "b_text": "Y is a letter",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'can' as modal verb vs 'can' as noun",
+    "a_text": "summer can really",
+    "a_expected": "negative",
+    "a_target": "can",
+    "b_text": "a can of soda",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"Neuron responds to tokens that are part of a proper noun or acronym, especially when preceded by a determiner or punctuation indicating a new entity is being introduced.\",\"trigger_hypothesis\":\"The neuron activates positively on tokens that are the first or second token of a proper noun or acronym, particularly following words like 'a', 'an', 'the', or punctuation like '.' or ',' that signal the start of a named entity. It activates negatively on tokens that are part of common words, especially function words like 'u' (in 'Louhans-Cuiseaux'), commas, or code symbols, often in the middle of phrases.\",\"output_hypothesis\":\"The neuron's positive activation may help the model to attend to and properly capitalize or format the beginning of named entities (like 'GR' for 'GRASS', 'Al' for 'Aldred', 'Affero' for license). Its negative activation may suppress attention on common grammatical connectors or internal parts of words, sharpening focus on entity boundaries.\",\"alternatives\":[\"The neuron detects tokens that are capital letters or start capitalised words, regardless of entity type.\",\"The neuron responds to tokens that are part of multi-word expressions where the following token is likely to be capitalized.\"],\"adapter_changes\":\"In state A+1, activation at W02 ('y') drops sharply from +4.63 to +0.96, while other states remain high; this suggests state A+1 may dampen responses to certain lowercase letters in emotional chat. State E+1 shows reduced negative magnitude at W06 (comma) and W07 ('can'), and increased positive at W16 ('but') and W17 ('but'), indicating it may weaken suppression of some function words.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"contradicting\":[\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"Proper noun start vs common word start\",\"a_text\":\"He saw a GR\",\"a_expected\":\"high\",\"a_target\":\"GR\",\"b_text\":\"He saw a great\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Acronym after determiner vs same letters elsewhere\",\"a_text\":\"the GNU Affero\",\"a_expected\":\"high\",\"a_target\":\"Affero\",\"b_text\":\"affero is a term\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Capitalized token after punctuation vs lowercase after punctuation\",\"a_text\":\"image. AN EMPTY\",\"a_expected\":\"high\",\"a_target\":\"AN\",\"b_text\":\"image. an empty\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First token of multi-word proper noun vs later token\",\"a_text\":\"song with Dave Al\",\"a_expected\":\"high\",\"a_target\":\"Al\",\"b_text\":\"Aldred of the\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative on common word 'u' in name vs positive on 'U' as letter\",\"a_text\":\"club Louhans-Cu\",\"a_expected\":\"negative\",\"a_target\":\"u\",\"b_text\":\"letter U in text\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Comma in middle of phrase vs comma before proper noun\",\"a_text\":\"care for, there\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"License, version\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Code symbol vs English word\",\"a_text\":\"return lx.symbol\",\"a_expected\":\"negative\",\"a_target\":\".symbol\",\"b_text\":\"the symbol is\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'but' as contrast vs 'but' as part of word\",\"a_text\":\"shelter, but there\",\"a_expected\":\"high\",\"a_target\":\"but\",\"b_text\":\"butter is good\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Lowercase 'y' in emotional response vs uppercase 'Y'\",\"a_text\":\"hope y\",\"a_expected\":\"high\",\"a_target\":\"y\",\"b_text\":\"Y is a letter\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'can' as modal verb vs 'can' as noun\",\"a_text\":\"summer can really\",\"a_expected\":\"negative\",\"a_target\":\"can\",\"b_text\":\"a can of soda\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5266,
+  "output_tokens": 1131,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001659196
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"Neuron responds to tokens that are part of a proper noun or acronym, especially when preceded by a determiner or punctuation indicating a new entity is being introduced.\",\"trigger_hypothesis\":\"The neuron activates positively on tokens that are the first or second token of a proper noun or acronym, particularly following words like 'a', 'an', 'the', or punctuation like '.' or ',' that signal the start of a named entity. It activates negatively on tokens that are part of common words, especially function words like 'u' (in 'Louhans-Cuiseaux'), commas, or code symbols, often in the middle of phrases.\",\"output_hypothesis\":\"The neuron's positive activation may help the model to attend to and properly capitalize or format the beginning of named entities (like 'GR' for 'GRASS', 'Al' for 'Aldred', 'Affero' for license). Its negative activation may suppress attention on common grammatical connectors or internal parts of words, sharpening focus on entity boundaries.\",\"alternatives\":[\"The neuron detects tokens that are capital letters or start capitalised words, regardless of entity type.\",\"The neuron responds to tokens that are part of multi-word expressions where the following token is likely to be capitalized.\"],\"adapter_changes\":\"In state A+1, activation at W02 ('y') drops sharply from +4.63 to +0.96, while other states remain high; this suggests state A+1 may dampen responses to certain lowercase letters in emotional chat. State E+1 shows reduced negative magnitude at W06 (comma) and W07 ('can'), and increased positive at W16 ('but') and W17 ('but'), indicating it may weaken suppression of some function words.\",\"supporting\":[\"W01\",\"W03\",\"W04\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\"],\"contradicting\":[\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W19\",\"W20\",\"W21\",\"W22\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"Proper noun start vs common word start\",\"a_text\":\"He saw a GR\",\"a_expected\":\"high\",\"a_target\":\"GR\",\"b_text\":\"He saw a great\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Acronym after determiner vs same letters elsewhere\",\"a_text\":\"the GNU Affero\",\"a_expected\":\"high\",\"a_target\":\"Affero\",\"b_text\":\"affero is a term\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Capitalized token after punctuation vs lowercase after punctuation\",\"a_text\":\"image. AN EMPTY\",\"a_expected\":\"high\",\"a_target\":\"AN\",\"b_text\":\"image. an empty\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"First token of multi-word proper noun vs later token\",\"a_text\":\"song with Dave Al\",\"a_expected\":\"high\",\"a_target\":\"Al\",\"b_text\":\"Aldred of the\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Negative on common word 'u' in name vs positive on 'U' as letter\",\"a_text\":\"club Louhans-Cu\",\"a_expected\":\"negative\",\"a_target\":\"u\",\"b_text\":\"letter U in text\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Comma in middle of phrase vs comma before proper noun\",\"a_text\":\"care for, there\",\"a_expected\":\"negative\",\"a_target\":\",\",\"b_text\":\"License, version\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Code symbol vs English word\",\"a_text\":\"return lx.symbol\",\"a_expected\":\"negative\",\"a_target\":\".symbol\",\"b_text\":\"the symbol is\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'but' as contrast vs 'but' as part of word\",\"a_text\":\"shelter, but there\",\"a_expected\":\"high\",\"a_target\":\"but\",\"b_text\":\"butter is good\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"Lowercase 'y' in emotional response vs uppercase 'Y'\",\"a_text\":\"hope y\",\"a_expected\":\"high\",\"a_target\":\"y\",\"b_text\":\"Y is a letter\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'can' as modal verb vs 'can' as noun\",\"a_text\":\"summer can really\",\"a_expected\":\"negative\",\"a_target\":\"can\",\"b_text\":\"a can of soda\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5266,
+    "output_tokens": 1131,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001659196,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041559-kwMLbJlmzSeqoVebVDbV"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:06:21Z",
+ "purpose": "explain:ambiguous",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T19:06:21Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "Neuron responds to tokens that are part of a proper noun or acronym, especially when preceded by a determiner or punctuation indicating a new entity is being introduced.",
+  "trigger_hypothesis": "The neuron activates positively on tokens that are the first or second token of a proper noun or acronym, particularly following words like 'a', 'an', 'the', or punctuation like '.' or ',' that signal the start of a named entity. It activates negatively on tokens that are part of common words, especially function words like 'u' (in 'Louhans-Cuiseaux'), commas, or code symbols, often in the middle of phrases.",
+  "output_hypothesis": "The neuron's positive activation may help the model to attend to and properly capitalize or format the beginning of named entities (like 'GR' for 'GRASS', 'Al' for 'Aldred', 'Affero' for license). Its negative activation may suppress attention on common grammatical connectors or internal parts of words, sharpening focus on entity boundaries.",
+  "alternatives": [
+   "The neuron detects tokens that are capital letters or start capitalised words, regardless of entity type.",
+   "The neuron responds to tokens that are part of multi-word expressions where the following token is likely to be capitalized."
+  ],
+  "adapter_changes": "In state A+1, activation at W02 ('y') drops sharply from +4.63 to +0.96, while other states remain high; this suggests state A+1 may dampen responses to certain lowercase letters in emotional chat. State E+1 shows reduced negative magnitude at W06 (comma) and W07 ('can'), and increased positive at W16 ('but') and W17 ('but'), indicating it may weaken suppression of some function words.",
+  "supporting": [
+   "L35_N6237:e00",
+   "L35_N6237:e04",
+   "L35_N6237:e05",
+   "L22_N3214:e00",
+   "L22_N3214:e01",
+   "L35_N6237:e07",
+   "L22_N3214:e03",
+   "L22_N3214:e04",
+   "L22_N3214:e05",
+   "L22_N3214:e07"
+  ],
+  "contradicting": [
+   "L35_N6237:e08",
+   "L22_N3214:e08",
+   "L22_N3214:e11",
+   "L35_N6237:e09",
+   "L35_N6237:e10",
+   "L35_N6237:e12",
+   "L35_N6237:e13",
+   "L35_N6237:e27",
+   "L22_N3214:e25",
+   "L35_N6237:e26",
+   "L22_N3214:e23",
+   "L22_N3214:e22",
+   "L22_N3214:e12"
+  ],
+  "proposed_tests": [
+   "Proper noun start vs common word start :: [high] He saw a GR | [low] He saw a great",
+   "Acronym after determiner vs same letters elsewhere :: [high] the GNU Affero | [low] affero is a term",
+   "Capitalized token after punctuation vs lowercase after punctuation :: [high] image. AN EMPTY | [low] image. an empty",
+   "First token of multi-word proper noun vs later token :: [high] song with Dave Al | [low] Aldred of the",
+   "Negative on common word 'u' in name vs positive on 'U' as letter :: [negative] club Louhans-Cu | [low] letter U in text",
+   "Comma in middle of phrase vs comma before proper noun :: [negative] care for, there | [low] License, version",
+   "Code symbol vs English word :: [negative] return lx.symbol | [low] the symbol is",
+   "'but' as contrast vs 'but' as part of word :: [high] shelter, but there | [low] butter is good",
+   "Lowercase 'y' in emotional response vs uppercase 'Y' :: [high] hope y | [low] Y is a letter",
+   "'can' as modal verb vs 'can' as noun :: [negative] summer can really | [low] a can of soda"
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "Proper noun start vs common word start",
+    "texts": [
+     {
+      "text": "He saw a GR",
+      "expected": "high",
+      "target": "GR"
+     },
+     {
+      "text": "He saw a great",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "Acronym after determiner vs same letters elsewhere",
+    "texts": [
+     {
+      "text": "the GNU Affero",
+      "expected": "high",
+      "target": "Affero"
+     },
+     {
+      "text": "affero is a term",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "Capitalized token after punctuation vs lowercase after punctuation",
+    "texts": [
+     {
+      "text": "image. AN EMPTY",
+      "expected": "high",
+      "target": "AN"
+     },
+     {
+      "text": "image. an empty",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "First token of multi-word proper noun vs later token",
+    "texts": [
+     {
+      "text": "song with Dave Al",
+      "expected": "high",
+      "target": "Al"
+     },
+     {
+      "text": "Aldred of the",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "Negative on common word 'u' in name vs positive on 'U' as letter",
+    "texts": [
+     {
+      "text": "club Louhans-Cu",
+      "expected": "negative",
+      "target": "u"
+     },
+     {
+      "text": "letter U in text",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "Comma in middle of phrase vs comma before proper noun",
+    "texts": [
+     {
+      "text": "care for, there",
+      "expected": "negative",
+      "target": ","
+     },
+     {
+      "text": "License, version",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "Code symbol vs English word",
+    "texts": [
+     {
+      "text": "return lx.symbol",
+      "expected": "negative",
+      "target": ".symbol"
+     },
+     {
+      "text": "the symbol is",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "'but' as contrast vs 'but' as part of word",
+    "texts": [
+     {
+      "text": "shelter, but there",
+      "expected": "high",
+      "target": "but"
+     },
+     {
+      "text": "butter is good",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "Lowercase 'y' in emotional response vs uppercase 'Y'",
+    "texts": [
+     {
+      "text": "hope y",
+      "expected": "high",
+      "target": "y"
+     },
+     {
+      "text": "Y is a letter",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "'can' as modal verb vs 'can' as noun",
+    "texts": [
+     {
+      "text": "summer can really",
+      "expected": "negative",
+      "target": "can"
+     },
+     {
+      "text": "a can of soda",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 5266,
+   "output_tokens": 1131,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.001659196
+  },
+  "invalid_citations": [],
+  "packet_hash": "b6bf9c60d6c8c31654138b06be69f33dfcc3be934f8ec3a1e6e75d764471af26",
+  "packet_mode": "ambiguous",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+1": "E+1",
+   "n_sup+1": "D+1",
+   "o_amp+1": "A+1",
+   "o_sup+1": "B+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 10,
+  "n_contradicting": 13,
+  "invalid_ids": [],
+  "supporting_strong_frac": 0.3,
+  "supporting_categories": {
+   "high_pos": 3,
+   "moderate": 7
+  },
+  "supporting_by_neuron": {
+   "L35/N6237": 4,
+   "L22/N3214": 6
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": true,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

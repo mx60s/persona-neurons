@@ -1,0 +1,1628 @@
+{
+ "id": "L35/N6237",
+ "status": "mixed",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:54:47Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens (e.g., ' GR', ' y', ' Al', ' Affero' for positive; 'u', '.symbol', ' sm', 'sh' for negative).",
+   "output_hypothesis": "The neuron's output may weakly push toward tokens related to strength or competition (from weight-lens output tokens like 'strong', 'compete'), but the activation pattern is too scattered to infer a clear function.",
+   "alternatives": [
+    "The neuron detects specific character n-grams or subword fragments (e.g., capital letters followed by letters, or lowercase letters in certain positions).",
+    "The neuron responds to tokens in specific syntactic or positional contexts (e.g., end of quotes, code identifiers) without a semantic theme."
+   ],
+   "adapter_changes": "State E+1 shows large positive increases on newline tokens in emotional_chat prompts (W21-W25), suggesting the neuron becomes sensitive to assistant response beginnings in that state. Other states have minor differences.",
+   "supporting": [
+    "L35_N6237:e00",
+    "L35_N6237:e01",
+    "L35_N6237:e04",
+    "L35_N6237:e05",
+    "L35_N6237:e08",
+    "L35_N6237:e09",
+    "L35_N6237:e10",
+    "L35_N6237:e11",
+    "L35_N6237:e12",
+    "L35_N6237:e13"
+   ],
+   "contradicting": [
+    "L35_N6237:e07",
+    "L35_N6237:e27",
+    "L35_N6237:e26",
+    "L35_N6237:e25",
+    "L35_N6237:e24",
+    "L35_N6237:e32",
+    "L35_N6237:e28",
+    "L35_N6237:e31",
+    "L35_N6237:e29",
+    "L35_N6237:e30"
+   ],
+   "proposed_tests": [
+    "capital letters vs lowercase :: [high] The word is GR | [low] The word is gr",
+    "uppercase token after quote :: [high] He said `` AN EMPTY | [low] He said an empty",
+    "token 'u' in French names :: [negative] born in Ziguinchor, Senegal. He joined Louhans-Cu | [low] born in Ziguinchor, Senegal. He joined Louhans-C",
+    "code symbol access :: [negative] return lx.symbol | [low] return lx symbol",
+    "token 'sh' in Chinese historical text :: [negative] minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shangsh | [low] minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shang",
+    "license name 'Affero' :: [high] copy of the Affero | [low] copy of the GNU",
+    "token 'y' after 'hope' :: [high] I hope y | [low] I hope you",
+    "token 'sm' in spatial description :: [negative] was a distant sm | [low] was a distant small",
+    "token 'Al' in song credits :: [high] wrote the song with Dave Al | [low] wrote the song with Dave",
+    "newline in emotional chat prompt (state E+1) :: [high] user\nI'm nervous!<|im_end|>\n<|im_start|>assistant\n | [low] user\nI'm nervous!<|im_end|>\n<|im_start|>user\n"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "capital letters vs lowercase",
+     "texts": [
+      {
+       "text": "The word is GR",
+       "expected": "high",
+       "target": "GR"
+      },
+      {
+       "text": "The word is gr",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "uppercase token after quote",
+     "texts": [
+      {
+       "text": "He said `` AN EMPTY",
+       "expected": "high",
+       "target": "AN"
+      },
+      {
+       "text": "He said an empty",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "token 'u' in French names",
+     "texts": [
+      {
+       "text": "born in Ziguinchor, Senegal. He joined Louhans-Cu",
+       "expected": "negative",
+       "target": "u"
+      },
+      {
+       "text": "born in Ziguinchor, Senegal. He joined Louhans-C",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "code symbol access",
+     "texts": [
+      {
+       "text": "return lx.symbol",
+       "expected": "negative",
+       "target": ".symbol"
+      },
+      {
+       "text": "return lx symbol",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "token 'sh' in Chinese historical text",
+     "texts": [
+      {
+       "text": "minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shangsh",
+       "expected": "negative",
+       "target": "sh"
+      },
+      {
+       "text": "minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shang",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "license name 'Affero'",
+     "texts": [
+      {
+       "text": "copy of the Affero",
+       "expected": "high",
+       "target": "Affero"
+      },
+      {
+       "text": "copy of the GNU",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "token 'y' after 'hope'",
+     "texts": [
+      {
+       "text": "I hope y",
+       "expected": "high",
+       "target": "y"
+      },
+      {
+       "text": "I hope you",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "token 'sm' in spatial description",
+     "texts": [
+      {
+       "text": "was a distant sm",
+       "expected": "negative",
+       "target": "sm"
+      },
+      {
+       "text": "was a distant small",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "token 'Al' in song credits",
+     "texts": [
+      {
+       "text": "wrote the song with Dave Al",
+       "expected": "high",
+       "target": "Al"
+      },
+      {
+       "text": "wrote the song with Dave",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "newline in emotional chat prompt (state E+1)",
+     "texts": [
+      {
+       "text": "user\nI'm nervous!<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "user\nI'm nervous!<|im_end|>\n<|im_start|>user\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 6376,
+    "output_tokens": 1038,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001930936
+   },
+   "invalid_citations": [],
+   "packet_hash": "8548b725838bcac063de7373d5dc4b0942bd16bfa931c10860ec9d83ad12c364",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  },
+  {
+   "author": "google/gemini-2.5-flash-lite",
+   "created": "2026-10-26T18:54:50Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron activates positively for tokens that are part of proper nouns or technical terms, especially in narrative and code contexts (W01, W03, W04). It activates negatively for tokens that appear to be common characters or parts of words in factual or code contexts, potentially indicating a contrast or negation (W05, W06, W07, W08, W10).",
+   "output_hypothesis": "The neuron might be sensitive to the presence of specific entities or technical jargon, distinguishing them from more general text. The negative activations could signal a suppression of common words or a contrastive function.",
+   "alternatives": [
+    "The neuron activates positively for the start of assistant responses (W02) and negatively for specific characters or symbols (W05, W06, W09).",
+    "The neuron activates positively for specific proper nouns and technical terms (W01, W03, W04) and negatively for common words or parts of words (W05, W07, W08)."
+   ],
+   "adapter_changes": "State E+1 shows a significant increase in positive activation for prompt tokens (W21, W22, W25) and a large increase in overall activation for emotional_chat domain.",
+   "supporting": [
+    "L35_N6237:e00",
+    "L35_N6237:e01",
+    "L35_N6237:e04",
+    "L35_N6237:e05",
+    "L35_N6237:e08",
+    "L35_N6237:e09",
+    "L35_N6237:e10",
+    "L35_N6237:e11",
+    "L35_N6237:e13"
+   ],
+   "contradicting": [
+    "L35_N6237:e12"
+   ],
+   "proposed_tests": [
+    "proper noun vs common word :: [high] The GR was a great success. | [low] The dog was a great success.",
+    "technical term vs common word :: [high] The Affero license is important. | [low] The license is important.",
+    "start of assistant response vs continuation :: [high] <|im_start|>assistant\nHello there! | [low] I said hello there!",
+    "specific negative token vs common word :: [negative] He saw the u. | [low] He saw the cat.",
+    "code symbol vs common word :: [negative] Use the .symbol. | [low] Use the symbol.",
+    "proper noun vs common word :: [high] Sun was a leader. | [low] The leader was there.",
+    "proper noun vs common word :: [high] De Carvalho was born. | [low] He was born.",
+    "code token vs common word :: [high] The Music is loud. | [low] The song is loud.",
+    "specific negative token vs common word :: [negative] He saw the sh. | [low] He saw the man.",
+    "specific negative token vs common word :: [negative] He saw the sav. | [low] He saw the car."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "proper noun vs common word",
+     "texts": [
+      {
+       "text": "The GR was a great success.",
+       "expected": "high",
+       "target": "GR"
+      },
+      {
+       "text": "The dog was a great success.",
+       "expected": "low",
+       "target": "dog"
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "technical term vs common word",
+     "texts": [
+      {
+       "text": "The Affero license is important.",
+       "expected": "high",
+       "target": "Affero"
+      },
+      {
+       "text": "The license is important.",
+       "expected": "low",
+       "target": "license"
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "start of assistant response vs continuation",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\nHello there!",
+       "expected": "high",
+       "target": "Hello"
+      },
+      {
+       "text": "I said hello there!",
+       "expected": "low",
+       "target": "hello"
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "specific negative token vs common word",
+     "texts": [
+      {
+       "text": "He saw the u.",
+       "expected": "negative",
+       "target": "u"
+      },
+      {
+       "text": "He saw the cat.",
+       "expected": "low",
+       "target": "cat"
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "code symbol vs common word",
+     "texts": [
+      {
+       "text": "Use the .symbol.",
+       "expected": "negative",
+       "target": ".symbol"
+      },
+      {
+       "text": "Use the symbol.",
+       "expected": "low",
+       "target": "symbol"
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "proper noun vs common word",
+     "texts": [
+      {
+       "text": "Sun was a leader.",
+       "expected": "high",
+       "target": "Sun"
+      },
+      {
+       "text": "The leader was there.",
+       "expected": "low",
+       "target": "leader"
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "proper noun vs common word",
+     "texts": [
+      {
+       "text": "De Carvalho was born.",
+       "expected": "high",
+       "target": "Carvalho"
+      },
+      {
+       "text": "He was born.",
+       "expected": "low",
+       "target": "born"
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "code token vs common word",
+     "texts": [
+      {
+       "text": "The Music is loud.",
+       "expected": "high",
+       "target": "Music"
+      },
+      {
+       "text": "The song is loud.",
+       "expected": "low",
+       "target": "song"
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "specific negative token vs common word",
+     "texts": [
+      {
+       "text": "He saw the sh.",
+       "expected": "negative",
+       "target": "sh"
+      },
+      {
+       "text": "He saw the man.",
+       "expected": "low",
+       "target": "man"
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "specific negative token vs common word",
+     "texts": [
+      {
+       "text": "He saw the sav.",
+       "expected": "negative",
+       "target": "sav"
+      },
+      {
+       "text": "He saw the car.",
+       "expected": "low",
+       "target": "car"
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 6283,
+    "output_tokens": 881,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0009807
+   },
+   "invalid_citations": [],
+   "packet_hash": "8548b725838bcac063de7373d5dc4b0942bd16bfa931c10860ec9d83ad12c364",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 2
+  },
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T18:54:47Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "no coherent hypothesis",
+   "trigger_hypothesis": "The neuron's activation does not show a consistent pattern across domains or token types; strong positives and negatives appear on seemingly unrelated tokens (e.g., ' GR', ' y', ' Al', ' Affero' for positive; 'u', '.symbol', ' sm', 'sh' for negative).",
+   "output_hypothesis": "The neuron's output may weakly push toward tokens related to strength or competition (from weight-lens output tokens like 'strong', 'compete'), but the activation pattern is too scattered to infer a clear function.",
+   "alternatives": [
+    "The neuron detects specific character n-grams or subword fragments (e.g., capital letters followed by letters, or lowercase letters in certain positions).",
+    "The neuron responds to tokens in specific syntactic or positional contexts (e.g., end of quotes, code identifiers) without a semantic theme."
+   ],
+   "adapter_changes": "State E+1 shows large positive increases on newline tokens in emotional_chat prompts (W21-W25), suggesting the neuron becomes sensitive to assistant response beginnings in that state. Other states have minor differences.",
+   "supporting": [
+    "L35_N6237:e00",
+    "L35_N6237:e01",
+    "L35_N6237:e04",
+    "L35_N6237:e05",
+    "L35_N6237:e08",
+    "L35_N6237:e09",
+    "L35_N6237:e10",
+    "L35_N6237:e11",
+    "L35_N6237:e12",
+    "L35_N6237:e13"
+   ],
+   "contradicting": [
+    "L35_N6237:e07",
+    "L35_N6237:e27",
+    "L35_N6237:e26",
+    "L35_N6237:e25",
+    "L35_N6237:e24",
+    "L35_N6237:e32",
+    "L35_N6237:e28",
+    "L35_N6237:e31",
+    "L35_N6237:e29",
+    "L35_N6237:e30"
+   ],
+   "proposed_tests": [
+    "capital letters vs lowercase :: [high] The word is GR | [low] The word is gr",
+    "uppercase token after quote :: [high] He said `` AN EMPTY | [low] He said an empty",
+    "token 'u' in French names :: [negative] born in Ziguinchor, Senegal. He joined Louhans-Cu | [low] born in Ziguinchor, Senegal. He joined Louhans-C",
+    "code symbol access :: [negative] return lx.symbol | [low] return lx symbol",
+    "token 'sh' in Chinese historical text :: [negative] minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shangsh | [low] minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shang",
+    "license name 'Affero' :: [high] copy of the Affero | [low] copy of the GNU",
+    "token 'y' after 'hope' :: [high] I hope y | [low] I hope you",
+    "token 'sm' in spatial description :: [negative] was a distant sm | [low] was a distant small",
+    "token 'Al' in song credits :: [high] wrote the song with Dave Al | [low] wrote the song with Dave",
+    "newline in emotional chat prompt (state E+1) :: [high] user\nI'm nervous!<|im_end|>\n<|im_start|>assistant\n | [low] user\nI'm nervous!<|im_end|>\n<|im_start|>user\n"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "capital letters vs lowercase",
+     "texts": [
+      {
+       "text": "The word is GR",
+       "expected": "high",
+       "target": "GR"
+      },
+      {
+       "text": "The word is gr",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "uppercase token after quote",
+     "texts": [
+      {
+       "text": "He said `` AN EMPTY",
+       "expected": "high",
+       "target": "AN"
+      },
+      {
+       "text": "He said an empty",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "token 'u' in French names",
+     "texts": [
+      {
+       "text": "born in Ziguinchor, Senegal. He joined Louhans-Cu",
+       "expected": "negative",
+       "target": "u"
+      },
+      {
+       "text": "born in Ziguinchor, Senegal. He joined Louhans-C",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "code symbol access",
+     "texts": [
+      {
+       "text": "return lx.symbol",
+       "expected": "negative",
+       "target": ".symbol"
+      },
+      {
+       "text": "return lx symbol",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "token 'sh' in Chinese historical text",
+     "texts": [
+      {
+       "text": "minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shangsh",
+       "expected": "negative",
+       "target": "sh"
+      },
+      {
+       "text": "minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shang",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "license name 'Affero'",
+     "texts": [
+      {
+       "text": "copy of the Affero",
+       "expected": "high",
+       "target": "Affero"
+      },
+      {
+       "text": "copy of the GNU",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "token 'y' after 'hope'",
+     "texts": [
+      {
+       "text": "I hope y",
+       "expected": "high",
+       "target": "y"
+      },
+      {
+       "text": "I hope you",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "token 'sm' in spatial description",
+     "texts": [
+      {
+       "text": "was a distant sm",
+       "expected": "negative",
+       "target": "sm"
+      },
+      {
+       "text": "was a distant small",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "token 'Al' in song credits",
+     "texts": [
+      {
+       "text": "wrote the song with Dave Al",
+       "expected": "high",
+       "target": "Al"
+      },
+      {
+       "text": "wrote the song with Dave",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "newline in emotional chat prompt (state E+1)",
+     "texts": [
+      {
+       "text": "user\nI'm nervous!<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "user\nI'm nervous!<|im_end|>\n<|im_start|>user\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "low",
+   "no_coherent_hypothesis": true,
+   "usage": {
+    "input_tokens": 6376,
+    "output_tokens": 1038,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001930936
+   },
+   "invalid_citations": [],
+   "packet_hash": "8548b725838bcac063de7373d5dc4b0942bd16bfa931c10860ec9d83ad12c364",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "D+0.5",
+    "o_amp+1": "D+1",
+    "o_amp-0.5": "D-0.5",
+    "o_amp-1": "D-1",
+    "o_sup+1": "A+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 3
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "capital letters vs lowercase",
+   "prediction": "high on 'GR'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The word is GR",
+     "expected": "high",
+     "target": "GR",
+     "measured_max": 4.5,
+     "measured_min": 0.0,
+     "value": 4.5,
+     "threshold": 4.5938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The word is gr",
+     "expected": "low",
+     "target": "",
+     "measured_max": 2.4844,
+     "measured_min": 0.0,
+     "value": 2.4844,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.092,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "uppercase token after quote",
+   "prediction": "high on 'AN'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He said `` AN EMPTY",
+     "expected": "high",
+     "target": "AN",
+     "measured_max": 0.1138,
+     "measured_min": -0.1973,
+     "value": -0.1973,
+     "threshold": 4.5938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He said an empty",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1191,
+     "measured_min": -0.0005,
+     "value": 0.1191,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "token 'u' in French names",
+   "prediction": "negative on 'u'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "born in Ziguinchor, Senegal. He joined Louhans-Cu",
+     "expected": "negative",
+     "target": "u",
+     "measured_max": 0.4023,
+     "measured_min": -25.5,
+     "value": 0.031,
+     "threshold": -6.0312,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "born in Ziguinchor, Senegal. He joined Louhans-C",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4004,
+     "measured_min": -0.0212,
+     "value": 0.4004,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "code symbol access",
+   "prediction": "negative on '.symbol'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "return lx.symbol",
+     "expected": "negative",
+     "target": ".symbol",
+     "measured_max": 0.1455,
+     "measured_min": 0.0,
+     "value": 0.085,
+     "threshold": -6.0312,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "return lx symbol",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1455,
+     "measured_min": 0.0,
+     "value": 0.1455,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "token 'sh' in Chinese historical text",
+   "prediction": "negative on 'sh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shangsh",
+     "expected": "negative",
+     "target": "sh",
+     "measured_max": 1.25,
+     "measured_min": -6.3125,
+     "value": -6.3125,
+     "threshold": -6.0312,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shang",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.25,
+     "measured_min": -6.3125,
+     "value": 6.3125,
+     "threshold": 3.0156,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "license name 'Affero'",
+   "prediction": "high on 'Affero'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "copy of the Affero",
+     "expected": "high",
+     "target": "Affero",
+     "measured_max": 0.1855,
+     "measured_min": -0.5664,
+     "value": 0.1855,
+     "threshold": 4.5938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "copy of the GNU",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5703,
+     "measured_min": -0.5664,
+     "value": 0.5703,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.018,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "token 'y' after 'hope'",
+   "prediction": "high on 'y'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I hope y",
+     "expected": "high",
+     "target": "y",
+     "measured_max": 7.4062,
+     "measured_min": -0.1021,
+     "value": 7.4062,
+     "threshold": 4.5938,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "I hope you",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0898,
+     "measured_min": -0.1021,
+     "value": 0.1021,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.334,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "token 'sm' in spatial description",
+   "prediction": "negative on 'sm'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "was a distant sm",
+     "expected": "negative",
+     "target": "sm",
+     "measured_max": 0.0,
+     "measured_min": -8.125,
+     "value": -8.125,
+     "threshold": -6.0312,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "was a distant small",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.252,
+     "value": 0.252,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.36,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "token 'Al' in song credits",
+   "prediction": "high on 'Al'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "wrote the song with Dave Al",
+     "expected": "high",
+     "target": "Al",
+     "measured_max": 6.0938,
+     "measured_min": -0.7969,
+     "value": 6.0938,
+     "threshold": 4.5938,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "wrote the song with Dave",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1191,
+     "measured_min": -0.7969,
+     "value": 0.7969,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.273,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "newline in emotional chat prompt (state E+1)",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nI'm nervous!<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.1729,
+     "measured_min": -1.0469,
+     "value": -0.2012,
+     "threshold": 4.5938,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "user\nI'm nervous!<|im_end|>\n<|im_start|>user\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0564,
+     "measured_min": -0.2793,
+     "value": 0.2793,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:36Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v3-t1",
+   "card_version": 3,
+   "description": "capital letters vs lowercase",
+   "prediction": "high on 'GR'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The word is GR",
+     "expected": "high",
+     "target": "GR",
+     "measured_max": 4.5,
+     "measured_min": 0.0,
+     "value": 4.5,
+     "threshold": 4.5938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The word is gr",
+     "expected": "low",
+     "target": "",
+     "measured_max": 2.4844,
+     "measured_min": 0.0,
+     "value": 2.4844,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.092,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t2",
+   "card_version": 3,
+   "description": "uppercase token after quote",
+   "prediction": "high on 'AN'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He said `` AN EMPTY",
+     "expected": "high",
+     "target": "AN",
+     "measured_max": 0.1138,
+     "measured_min": -0.1973,
+     "value": -0.1973,
+     "threshold": 4.5938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He said an empty",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1191,
+     "measured_min": -0.0005,
+     "value": 0.1191,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.014,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t3",
+   "card_version": 3,
+   "description": "token 'u' in French names",
+   "prediction": "negative on 'u'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "born in Ziguinchor, Senegal. He joined Louhans-Cu",
+     "expected": "negative",
+     "target": "u",
+     "measured_max": 0.4023,
+     "measured_min": -25.5,
+     "value": 0.031,
+     "threshold": -6.0312,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "born in Ziguinchor, Senegal. He joined Louhans-C",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4004,
+     "measured_min": -0.0212,
+     "value": 0.4004,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.002,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t4",
+   "card_version": 3,
+   "description": "code symbol access",
+   "prediction": "negative on '.symbol'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "return lx.symbol",
+     "expected": "negative",
+     "target": ".symbol",
+     "measured_max": 0.1455,
+     "measured_min": 0.0,
+     "value": 0.085,
+     "threshold": -6.0312,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "return lx symbol",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1455,
+     "measured_min": 0.0,
+     "value": 0.1455,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.004,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t5",
+   "card_version": 3,
+   "description": "token 'sh' in Chinese historical text",
+   "prediction": "negative on 'sh'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shangsh",
+     "expected": "negative",
+     "target": "sh",
+     "measured_max": 1.25,
+     "measured_min": -6.3125,
+     "value": -6.3125,
+     "threshold": -6.0312,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "minister of defense (\u590f\u5b98\u5c1a\u66f8, Xiaguan Shang",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.25,
+     "measured_min": -6.3125,
+     "value": 6.3125,
+     "threshold": 3.0156,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t6",
+   "card_version": 3,
+   "description": "license name 'Affero'",
+   "prediction": "high on 'Affero'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "copy of the Affero",
+     "expected": "high",
+     "target": "Affero",
+     "measured_max": 0.1855,
+     "measured_min": -0.5664,
+     "value": 0.1855,
+     "threshold": 4.5938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "copy of the GNU",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5703,
+     "measured_min": -0.5664,
+     "value": 0.5703,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.018,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t7",
+   "card_version": 3,
+   "description": "token 'y' after 'hope'",
+   "prediction": "high on 'y'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I hope y",
+     "expected": "high",
+     "target": "y",
+     "measured_max": 7.4062,
+     "measured_min": -0.1021,
+     "value": 7.4062,
+     "threshold": 4.5938,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "I hope you",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0898,
+     "measured_min": -0.1021,
+     "value": 0.1021,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.334,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t8",
+   "card_version": 3,
+   "description": "token 'sm' in spatial description",
+   "prediction": "negative on 'sm'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "was a distant sm",
+     "expected": "negative",
+     "target": "sm",
+     "measured_max": 0.0,
+     "measured_min": -8.125,
+     "value": -8.125,
+     "threshold": -6.0312,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "was a distant small",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.252,
+     "value": 0.252,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.36,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t9",
+   "card_version": 3,
+   "description": "token 'Al' in song credits",
+   "prediction": "high on 'Al'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "wrote the song with Dave Al",
+     "expected": "high",
+     "target": "Al",
+     "measured_max": 6.0938,
+     "measured_min": -0.7969,
+     "value": 6.0938,
+     "threshold": 4.5938,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "wrote the song with Dave",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1191,
+     "measured_min": -0.7969,
+     "value": 0.7969,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.273,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  },
+  {
+   "test_id": "v3-t10",
+   "card_version": 3,
+   "description": "newline in emotional chat prompt (state E+1)",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "user\nI'm nervous!<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.1729,
+     "measured_min": -1.0469,
+     "value": -0.2012,
+     "threshold": 4.5938,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "user\nI'm nervous!<|im_end|>\n<|im_start|>user\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0564,
+     "measured_min": -0.2793,
+     "value": 0.2793,
+     "threshold": 3.0156,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.012,
+    "scale": 21.875,
+    "pos_ref": 9.1875,
+    "neg_ref": -12.0625
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.421875,
+    "p01": -0.51171875
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "mixed",
+   "pass": 3,
+   "of": 10
+  }
+ ]
+}

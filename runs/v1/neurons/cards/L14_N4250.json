@@ -1,0 +1,1158 @@
+{
+ "id": "L14/N4250",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:15:46Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "punctuation or conjunction after a clause",
+   "trigger_hypothesis": "The neuron activates strongly on punctuation marks (., ,) and conjunctions (and, in, I) that appear after a complete clause, especially when the clause ends a thought or introduces a new one.",
+   "output_hypothesis": "The neuron's output may help signal the end of a clause or a transition point, possibly aiding in sentence structure or discourse coherence.",
+   "alternatives": [
+    "The neuron triggers on common function words regardless of context.",
+    "The neuron detects the start of a new sentence or phrase after a period."
+   ],
+   "adapter_changes": "State D+1 shows a large increase in activation specifically at prompt segment tokens '\\n\\n' (W19-W23), suggesting this state amplifies the neuron's response to assistant response beginnings after a user message.",
+   "supporting": [
+    "L14_N4250:e01",
+    "L14_N4250:e02",
+    "L14_N4250:e03",
+    "L14_N4250:e04",
+    "L14_N4250:e05",
+    "L14_N4250:e08",
+    "L14_N4250:e11",
+    "L14_N4250:e12"
+   ],
+   "contradicting": [
+    "L14_N4250:e29",
+    "L14_N4250:e28",
+    "L14_N4250:e27",
+    "L14_N4250:e26",
+    "L14_N4250:e25",
+    "L14_N4250:e34",
+    "L14_N4250:e31",
+    "L14_N4250:e32",
+    "L14_N4250:e33",
+    "L14_N4250:e30"
+   ],
+   "proposed_tests": [
+    "punctuation vs. same word mid-sentence :: [high] The cat sat. Then it slept. | [low] The cat sat on the mat.",
+    "conjunction after clause vs. within clause :: [high] I went home and I slept. | [low] I bought bread and milk.",
+    "'in' as preposition vs. sentence starter :: [high] In fact, it was true. | [low] He is in the house.",
+    "'I' after a sentence break :: [high] She left. I stayed. | [low] She said I stayed.",
+    "comma separating clauses vs. list :: [high] He ran, but she walked. | [low] He bought apples, bananas, and oranges.",
+    "'than' after comparative clause :: [negative] It was worse than before. | [low] More than five people came.",
+    "'from' as preposition vs. clause end :: [negative] He came from afar. | [low] He is from New York.",
+    "period after complete thought vs. abbreviation :: [high] It ended. | [low] Dr. Smith arrived.",
+    "newline after assistant tag :: [high] <|im_start|>assistant\\n\\nHello | [low] <|im_start|>user\\n\\nHello",
+    "'and' connecting independent clauses :: [high] She sang and he danced. | [low] She sang and danced."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "punctuation vs. same word mid-sentence",
+     "texts": [
+      {
+       "text": "The cat sat. Then it slept.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "The cat sat on the mat.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "conjunction after clause vs. within clause",
+     "texts": [
+      {
+       "text": "I went home and I slept.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "I bought bread and milk.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'in' as preposition vs. sentence starter",
+     "texts": [
+      {
+       "text": "In fact, it was true.",
+       "expected": "high",
+       "target": "In"
+      },
+      {
+       "text": "He is in the house.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'I' after a sentence break",
+     "texts": [
+      {
+       "text": "She left. I stayed.",
+       "expected": "high",
+       "target": "I"
+      },
+      {
+       "text": "She said I stayed.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "comma separating clauses vs. list",
+     "texts": [
+      {
+       "text": "He ran, but she walked.",
+       "expected": "high",
+       "target": ","
+      },
+      {
+       "text": "He bought apples, bananas, and oranges.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'than' after comparative clause",
+     "texts": [
+      {
+       "text": "It was worse than before.",
+       "expected": "negative",
+       "target": "than"
+      },
+      {
+       "text": "More than five people came.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'from' as preposition vs. clause end",
+     "texts": [
+      {
+       "text": "He came from afar.",
+       "expected": "negative",
+       "target": "from"
+      },
+      {
+       "text": "He is from New York.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "period after complete thought vs. abbreviation",
+     "texts": [
+      {
+       "text": "It ended.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "Dr. Smith arrived.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "newline after assistant tag",
+     "texts": [
+      {
+       "text": "<|im_start|>assistant\\n\\nHello",
+       "expected": "high",
+       "target": "\\n\\n"
+      },
+      {
+       "text": "<|im_start|>user\\n\\nHello",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'and' connecting independent clauses",
+     "texts": [
+      {
+       "text": "She sang and he danced.",
+       "expected": "high",
+       "target": "and"
+      },
+      {
+       "text": "She sang and danced.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5556,
+    "output_tokens": 951,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.00172274
+   },
+   "invalid_citations": [],
+   "packet_hash": "6de0d9e7e4f4789efd61415bad2d5d269ef896912db2568d52066ebc1e4f267d",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "C+1",
+    "n_amp+0.5": "E+0.5",
+    "n_amp+1": "E+1",
+    "n_amp-0.5": "E-0.5",
+    "n_amp-1": "E-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "D+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "punctuation vs. same word mid-sentence",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The cat sat. Then it slept.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.082,
+     "measured_min": -0.0938,
+     "value": -0.0938,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The cat sat on the mat.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0859,
+     "measured_min": -0.0684,
+     "value": 0.0859,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.046,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "conjunction after clause vs. within clause",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I went home and I slept.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 0.2637,
+     "measured_min": -0.0466,
+     "value": 0.2637,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "I bought bread and milk.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.252,
+     "measured_min": -0.1128,
+     "value": 0.252,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.003,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'in' as preposition vs. sentence starter",
+   "prediction": "high on 'In'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "In fact, it was true.",
+     "expected": "high",
+     "target": "In",
+     "measured_max": 0.293,
+     "measured_min": -0.0087,
+     "value": 0.0,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He is in the house.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.082,
+     "measured_min": -0.0005,
+     "value": 0.082,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'I' after a sentence break",
+   "prediction": "high on 'I'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She left. I stayed.",
+     "expected": "high",
+     "target": "I",
+     "measured_max": 0.0522,
+     "measured_min": -0.0359,
+     "value": -0.0097,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She said I stayed.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0649,
+     "measured_min": -0.0369,
+     "value": 0.0649,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "comma separating clauses vs. list",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He ran, but she walked.",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 0.0869,
+     "measured_min": -0.0273,
+     "value": 0.006,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He bought apples, bananas, and oranges.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1777,
+     "measured_min": 0.0,
+     "value": 0.1777,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'than' after comparative clause",
+   "prediction": "negative on 'than'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was worse than before.",
+     "expected": "negative",
+     "target": "than",
+     "measured_max": 0.1973,
+     "measured_min": -1.2188,
+     "value": -1.2188,
+     "threshold": -0.9062,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "More than five people came.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2041,
+     "measured_min": -0.3203,
+     "value": 0.3203,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.23,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'from' as preposition vs. clause end",
+   "prediction": "negative on 'from'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He came from afar.",
+     "expected": "negative",
+     "target": "from",
+     "measured_max": 0.1299,
+     "measured_min": -0.1099,
+     "value": 0.0292,
+     "threshold": -0.9062,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He is from New York.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1895,
+     "measured_min": 0.0,
+     "value": 0.1895,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "period after complete thought vs. abbreviation",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It ended.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.1201,
+     "measured_min": 0.0,
+     "value": 0.1201,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Dr. Smith arrived.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.293,
+     "measured_min": -0.0459,
+     "value": 0.293,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline after assistant tag",
+   "prediction": "high on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\\n\\nHello",
+     "expected": "high",
+     "target": "\\n\\n",
+     "measured_max": 0.0542,
+     "measured_min": -0.1196,
+     "value": 0.0471,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_start|>user\\n\\nHello",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0674,
+     "measured_min": -0.0469,
+     "value": 0.0674,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'and' connecting independent clauses",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She sang and he danced.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 0.0908,
+     "measured_min": -0.062,
+     "value": 0.0146,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "She sang and danced.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0146,
+     "measured_min": -0.1533,
+     "value": 0.1533,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:20:56Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "punctuation vs. same word mid-sentence",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The cat sat. Then it slept.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.082,
+     "measured_min": -0.0938,
+     "value": -0.0938,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The cat sat on the mat.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0859,
+     "measured_min": -0.0684,
+     "value": 0.0859,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.046,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "conjunction after clause vs. within clause",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "I went home and I slept.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 0.2637,
+     "measured_min": -0.0466,
+     "value": 0.2637,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "I bought bread and milk.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.252,
+     "measured_min": -0.1128,
+     "value": 0.252,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.003,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'in' as preposition vs. sentence starter",
+   "prediction": "high on 'In'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "In fact, it was true.",
+     "expected": "high",
+     "target": "In",
+     "measured_max": 0.293,
+     "measured_min": -0.0087,
+     "value": 0.0,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He is in the house.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.082,
+     "measured_min": -0.0005,
+     "value": 0.082,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.021,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'I' after a sentence break",
+   "prediction": "high on 'I'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She left. I stayed.",
+     "expected": "high",
+     "target": "I",
+     "measured_max": 0.0522,
+     "measured_min": -0.0359,
+     "value": -0.0097,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She said I stayed.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0649,
+     "measured_min": -0.0369,
+     "value": 0.0649,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.019,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "comma separating clauses vs. list",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He ran, but she walked.",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 0.0869,
+     "measured_min": -0.0273,
+     "value": 0.006,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He bought apples, bananas, and oranges.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1777,
+     "measured_min": 0.0,
+     "value": 0.1777,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'than' after comparative clause",
+   "prediction": "negative on 'than'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It was worse than before.",
+     "expected": "negative",
+     "target": "than",
+     "measured_max": 0.1973,
+     "measured_min": -1.2188,
+     "value": -1.2188,
+     "threshold": -0.9062,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "More than five people came.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.2041,
+     "measured_min": -0.3203,
+     "value": 0.3203,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.23,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'from' as preposition vs. clause end",
+   "prediction": "negative on 'from'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He came from afar.",
+     "expected": "negative",
+     "target": "from",
+     "measured_max": 0.1299,
+     "measured_min": -0.1099,
+     "value": 0.0292,
+     "threshold": -0.9062,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He is from New York.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1895,
+     "measured_min": 0.0,
+     "value": 0.1895,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.007,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "period after complete thought vs. abbreviation",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "It ended.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.1201,
+     "measured_min": 0.0,
+     "value": 0.1201,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Dr. Smith arrived.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.293,
+     "measured_min": -0.0459,
+     "value": 0.293,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.044,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "newline after assistant tag",
+   "prediction": "high on '\\\\n\\\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_start|>assistant\\n\\nHello",
+     "expected": "high",
+     "target": "\\n\\n",
+     "measured_max": 0.0542,
+     "measured_min": -0.1196,
+     "value": 0.0471,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_start|>user\\n\\nHello",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0674,
+     "measured_min": -0.0469,
+     "value": 0.0674,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.005,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'and' connecting independent clauses",
+   "prediction": "high on 'and'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "She sang and he danced.",
+     "expected": "high",
+     "target": "and",
+     "measured_max": 0.0908,
+     "measured_min": -0.062,
+     "value": 0.0146,
+     "threshold": 1.3281,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "She sang and danced.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0146,
+     "measured_min": -0.1533,
+     "value": 0.1533,
+     "threshold": 0.664,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 3.9062,
+    "pos_ref": 2.6562,
+    "neg_ref": -1.8125
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.251953125,
+    "p01": -0.220703125
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

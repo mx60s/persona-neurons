@@ -1,0 +1,1156 @@
+{
+ "id": "L35/N2158",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:18:07Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "triggers on 'blob' in code and 'ch' in factual/narrative contexts",
+   "trigger_hypothesis": "The neuron fires strongly positive on the token 'blob' in code contexts (especially after 'BlobServiceClient') and strongly negative on the token 'ch' (or its sub-tokens) in factual or narrative contexts when it appears as part of words like 'chancellors' or 'chivalrous' that indicate a lack or negative description.",
+   "output_hypothesis": "High positive activation may promote code-related completions (like blob storage methods), while high negative activation may suppress mentions of missing or negatively described entities in factual/narrative text.",
+   "alternatives": [
+    "The neuron detects the letter sequence 'bl' or 'b' followed by a vowel in specific contexts.",
+    "The neuron responds to topic shifts between technical code and historical/narrative discourse."
+   ],
+   "adapter_changes": "State changes (A+1, C+1, etc.) show small magnitude variations but no consistent sign flips; the neuron's behavior pattern remains stable across states, with some domain-specific sensitivity (e.g., emotional_chat shows larger negative shifts in some states).",
+   "supporting": [
+    "L35_N2158:e00",
+    "L35_N2158:e09",
+    "L35_N2158:e11",
+    "L35_N2158:e12",
+    "L35_N2158:e13"
+   ],
+   "contradicting": [
+    "L35_N2158:e02",
+    "L35_N2158:e03",
+    "L35_N2158:e05",
+    "L35_N2158:e07",
+    "L35_N2158:e29",
+    "L35_N2158:e28",
+    "L35_N2158:e26",
+    "L35_N2158:e34",
+    "L35_N2158:e32",
+    "L35_N2158:e35",
+    "L35_N2158:e31"
+   ],
+   "proposed_tests": [
+    "'blob' in code vs other 'b'-initial words :: [high] client = BlobServiceClient(account_url, credential=key) | [low] client = BlockServiceClient(account_url, credential=key)",
+    "'ch' in negative factual context vs neutral :: [negative] He was not listed in the table of the chancellors. | [low] He was listed in the table of the chancellors.",
+    "'ch' in 'chivalrous' negative description vs positive :: [negative] My husband was acting too chivalrous to her. | [low] My husband was acting very chivalrous to her.",
+    "'blob' as part of variable name vs common word :: [high] self.blob_client = BlobServiceClient(...) | [low] A blob of paint fell on the canvas.",
+    "'ch' in missing entity context vs present entity :: [negative] The book omitted the chapter on chemistry. | [low] The book included the chapter on chemistry.",
+    "code separator lines vs other dashes :: [high] # ---------------------------------------------------------------------------- | [low] # ------------------------------",
+    "'g' in narrative continuation vs other uses :: [high] as they approached to grab the cereal. | [low] as they approached the grabby cereal.",
+    "'f' in frustrated context vs other f-words :: [high] He replied, getting a bit frustrated with my fumbling. | [low] He replied, getting a bit funny with my fumbling.",
+    "'j' in disc jockey context vs other j-words :: [high] He worked as a disc jockey in his youth. | [low] He worked as a disc jockey in his youth.",
+    "'g' in positive vellum description vs negative :: [negative] the text was neatly penned onto crisp, gossamer vellum. | [low] the text was scribbled onto crisp, gossamer vellum."
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'blob' in code vs other 'b'-initial words",
+     "texts": [
+      {
+       "text": "client = BlobServiceClient(account_url, credential=key)",
+       "expected": "high",
+       "target": "blob"
+      },
+      {
+       "text": "client = BlockServiceClient(account_url, credential=key)",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'ch' in negative factual context vs neutral",
+     "texts": [
+      {
+       "text": "He was not listed in the table of the chancellors.",
+       "expected": "negative",
+       "target": "ch"
+      },
+      {
+       "text": "He was listed in the table of the chancellors.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'ch' in 'chivalrous' negative description vs positive",
+     "texts": [
+      {
+       "text": "My husband was acting too chivalrous to her.",
+       "expected": "negative",
+       "target": "ch"
+      },
+      {
+       "text": "My husband was acting very chivalrous to her.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "'blob' as part of variable name vs common word",
+     "texts": [
+      {
+       "text": "self.blob_client = BlobServiceClient(...)",
+       "expected": "high",
+       "target": "blob"
+      },
+      {
+       "text": "A blob of paint fell on the canvas.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "'ch' in missing entity context vs present entity",
+     "texts": [
+      {
+       "text": "The book omitted the chapter on chemistry.",
+       "expected": "negative",
+       "target": "ch"
+      },
+      {
+       "text": "The book included the chapter on chemistry.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "code separator lines vs other dashes",
+     "texts": [
+      {
+       "text": "# ----------------------------------------------------------------------------",
+       "expected": "high",
+       "target": "----------------------------------------------------------------------------"
+      },
+      {
+       "text": "# ------------------------------",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "'g' in narrative continuation vs other uses",
+     "texts": [
+      {
+       "text": "as they approached to grab the cereal.",
+       "expected": "high",
+       "target": "g"
+      },
+      {
+       "text": "as they approached the grabby cereal.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'f' in frustrated context vs other f-words",
+     "texts": [
+      {
+       "text": "He replied, getting a bit frustrated with my fumbling.",
+       "expected": "high",
+       "target": "f"
+      },
+      {
+       "text": "He replied, getting a bit funny with my fumbling.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "'j' in disc jockey context vs other j-words",
+     "texts": [
+      {
+       "text": "He worked as a disc jockey in his youth.",
+       "expected": "high",
+       "target": "j"
+      },
+      {
+       "text": "He worked as a disc jockey in his youth.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'g' in positive vellum description vs negative",
+     "texts": [
+      {
+       "text": "the text was neatly penned onto crisp, gossamer vellum.",
+       "expected": "negative",
+       "target": "g"
+      },
+      {
+       "text": "the text was scribbled onto crisp, gossamer vellum.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5729,
+    "output_tokens": 1121,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.001784636
+   },
+   "invalid_citations": [],
+   "packet_hash": "bdfa9ad786cb5e3531ab201f1747098b396c3db459ffb989f84f33271c2e29c7",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "B+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "E+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'blob' in code vs other 'b'-initial words",
+   "prediction": "high on 'blob'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "client = BlobServiceClient(account_url, credential=key)",
+     "expected": "high",
+     "target": "blob",
+     "measured_max": 15.8125,
+     "measured_min": -0.8438,
+     "value": 1.7188,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "client = BlockServiceClient(account_url, credential=key)",
+     "expected": "low",
+     "target": "",
+     "measured_max": 14.0625,
+     "measured_min": -0.6758,
+     "value": 14.0625,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.341,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'ch' in negative factual context vs neutral",
+   "prediction": "negative on 'ch'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He was not listed in the table of the chancellors.",
+     "expected": "negative",
+     "target": "ch",
+     "measured_max": 1.5469,
+     "measured_min": -0.3828,
+     "value": 1.5469,
+     "threshold": -12.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He was listed in the table of the chancellors.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.25,
+     "measured_min": -0.5898,
+     "value": 0.5898,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.059,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'ch' in 'chivalrous' negative description vs positive",
+   "prediction": "negative on 'ch'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "My husband was acting too chivalrous to her.",
+     "expected": "negative",
+     "target": "ch",
+     "measured_max": 0.1235,
+     "measured_min": -9.25,
+     "value": -9.25,
+     "threshold": -12.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "My husband was acting very chivalrous to her.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0408,
+     "measured_min": -10.4375,
+     "value": 10.4375,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'blob' as part of variable name vs common word",
+   "prediction": "high on 'blob'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "self.blob_client = BlobServiceClient(...)",
+     "expected": "high",
+     "target": "blob",
+     "measured_max": 15.25,
+     "measured_min": -0.3672,
+     "value": 0.7656,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "A blob of paint fell on the canvas.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.083,
+     "measured_min": -0.2295,
+     "value": 0.2295,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.019,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'ch' in missing entity context vs present entity",
+   "prediction": "negative on 'ch'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The book omitted the chapter on chemistry.",
+     "expected": "negative",
+     "target": "ch",
+     "measured_max": 0.3086,
+     "measured_min": -0.3223,
+     "value": 0.0175,
+     "threshold": -12.75,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The book included the chapter on chemistry.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1318,
+     "measured_min": -0.2949,
+     "value": 0.2949,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "code separator lines vs other dashes",
+   "prediction": "high on '----------------------------------------------------------------------------'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# ----------------------------------------------------------------------------",
+     "expected": "high",
+     "target": "----------------------------------------------------------------------------",
+     "measured_max": 0.1943,
+     "measured_min": 0.0,
+     "value": 0.1943,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "# ------------------------------",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3105,
+     "measured_min": 0.0,
+     "value": 0.3105,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'g' in narrative continuation vs other uses",
+   "prediction": "high on 'g'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "as they approached to grab the cereal.",
+     "expected": "high",
+     "target": "g",
+     "measured_max": 0.0166,
+     "measured_min": -0.3926,
+     "value": -0.0962,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "as they approached the grabby cereal.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0166,
+     "measured_min": -0.4238,
+     "value": 0.4238,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'f' in frustrated context vs other f-words",
+   "prediction": "high on 'f'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He replied, getting a bit frustrated with my fumbling.",
+     "expected": "high",
+     "target": "f",
+     "measured_max": 21.375,
+     "measured_min": -0.6953,
+     "value": -0.0086,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He replied, getting a bit funny with my fumbling.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 8.375,
+     "measured_min": -0.4277,
+     "value": 8.375,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.231,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'j' in disc jockey context vs other j-words",
+   "prediction": "high on 'j'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He worked as a disc jockey in his youth.",
+     "expected": "high",
+     "target": "j",
+     "measured_max": 30.25,
+     "measured_min": -0.4336,
+     "value": 30.25,
+     "threshold": 14.25,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "He worked as a disc jockey in his youth.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 30.25,
+     "measured_min": -0.4336,
+     "value": 30.25,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'g' in positive vellum description vs negative",
+   "prediction": "negative on 'g'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "the text was neatly penned onto crisp, gossamer vellum.",
+     "expected": "negative",
+     "target": "g",
+     "measured_max": 0.7812,
+     "measured_min": -26.0,
+     "value": -26.0,
+     "threshold": -12.75,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "the text was scribbled onto crisp, gossamer vellum.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.7812,
+     "measured_min": -14.625,
+     "value": 14.625,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.314,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:31Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'blob' in code vs other 'b'-initial words",
+   "prediction": "high on 'blob'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "client = BlobServiceClient(account_url, credential=key)",
+     "expected": "high",
+     "target": "blob",
+     "measured_max": 15.8125,
+     "measured_min": -0.8438,
+     "value": 1.7188,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "client = BlockServiceClient(account_url, credential=key)",
+     "expected": "low",
+     "target": "",
+     "measured_max": 14.0625,
+     "measured_min": -0.6758,
+     "value": 14.0625,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.341,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'ch' in negative factual context vs neutral",
+   "prediction": "negative on 'ch'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He was not listed in the table of the chancellors.",
+     "expected": "negative",
+     "target": "ch",
+     "measured_max": 1.5469,
+     "measured_min": -0.3828,
+     "value": 1.5469,
+     "threshold": -12.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He was listed in the table of the chancellors.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.25,
+     "measured_min": -0.5898,
+     "value": 0.5898,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.059,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'ch' in 'chivalrous' negative description vs positive",
+   "prediction": "negative on 'ch'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "My husband was acting too chivalrous to her.",
+     "expected": "negative",
+     "target": "ch",
+     "measured_max": 0.1235,
+     "measured_min": -9.25,
+     "value": -9.25,
+     "threshold": -12.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "My husband was acting very chivalrous to her.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0408,
+     "measured_min": -10.4375,
+     "value": 10.4375,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.033,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "'blob' as part of variable name vs common word",
+   "prediction": "high on 'blob'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "self.blob_client = BlobServiceClient(...)",
+     "expected": "high",
+     "target": "blob",
+     "measured_max": 15.25,
+     "measured_min": -0.3672,
+     "value": 0.7656,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "A blob of paint fell on the canvas.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.083,
+     "measured_min": -0.2295,
+     "value": 0.2295,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.019,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "'ch' in missing entity context vs present entity",
+   "prediction": "negative on 'ch'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The book omitted the chapter on chemistry.",
+     "expected": "negative",
+     "target": "ch",
+     "measured_max": 0.3086,
+     "measured_min": -0.3223,
+     "value": 0.0175,
+     "threshold": -12.75,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The book included the chapter on chemistry.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1318,
+     "measured_min": -0.2949,
+     "value": 0.2949,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.009,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "code separator lines vs other dashes",
+   "prediction": "high on '----------------------------------------------------------------------------'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# ----------------------------------------------------------------------------",
+     "expected": "high",
+     "target": "----------------------------------------------------------------------------",
+     "measured_max": 0.1943,
+     "measured_min": 0.0,
+     "value": 0.1943,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "# ------------------------------",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3105,
+     "measured_min": 0.0,
+     "value": 0.3105,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "'g' in narrative continuation vs other uses",
+   "prediction": "high on 'g'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "as they approached to grab the cereal.",
+     "expected": "high",
+     "target": "g",
+     "measured_max": 0.0166,
+     "measured_min": -0.3926,
+     "value": -0.0962,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "as they approached the grabby cereal.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0166,
+     "measured_min": -0.4238,
+     "value": 0.4238,
+     "threshold": 7.125,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.003,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'f' in frustrated context vs other f-words",
+   "prediction": "high on 'f'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He replied, getting a bit frustrated with my fumbling.",
+     "expected": "high",
+     "target": "f",
+     "measured_max": 21.375,
+     "measured_min": -0.6953,
+     "value": -0.0086,
+     "threshold": 14.25,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He replied, getting a bit funny with my fumbling.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 8.375,
+     "measured_min": -0.4277,
+     "value": 8.375,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.231,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "'j' in disc jockey context vs other j-words",
+   "prediction": "high on 'j'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He worked as a disc jockey in his youth.",
+     "expected": "high",
+     "target": "j",
+     "measured_max": 30.25,
+     "measured_min": -0.4336,
+     "value": 30.25,
+     "threshold": 14.25,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He worked as a disc jockey in his youth.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 30.25,
+     "measured_min": -0.4336,
+     "value": 30.25,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'g' in positive vellum description vs negative",
+   "prediction": "negative on 'g'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "the text was neatly penned onto crisp, gossamer vellum.",
+     "expected": "negative",
+     "target": "g",
+     "measured_max": 0.7812,
+     "measured_min": -26.0,
+     "value": -26.0,
+     "threshold": -12.75,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "the text was scribbled onto crisp, gossamer vellum.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.7812,
+     "measured_min": -14.625,
+     "value": 14.625,
+     "threshold": 7.125,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.314,
+    "scale": 36.25,
+    "pos_ref": 28.5,
+    "neg_ref": -25.5
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.663906216621399,
+    "p01": -0.87109375
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}

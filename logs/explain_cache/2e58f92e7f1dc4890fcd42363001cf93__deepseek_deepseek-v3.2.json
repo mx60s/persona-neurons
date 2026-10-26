@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "capital letter after punctuation or line break",
+  "trigger_hypothesis": "The neuron activates strongly positive when a capital letter token (like 'P', 'David', '-T') appears immediately after a punctuation mark (comma, period, newline) or a line break, indicating the start of a new sentence or proper noun. It activates strongly negative when a lowercase letter token (like 'h', 'P' as part of a word) appears after a space or within a word, indicating continuation of a word or lowercase start.",
+  "output_hypothesis": "The neuron may signal the start of a new sentence or proper noun, potentially influencing the model to generate capitalized tokens or proper names.",
+  "alternatives": [
+   "The neuron detects proper nouns or names specifically.",
+   "The neuron responds to the token 'P' in any context, with sign determined by surrounding punctuation."
+  ],
+  "adapter_changes": "State changes are minimal; slight variations exist but no systematic pattern reversal, suggesting the trigger is robust across modifications.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W09",
+   "W10",
+   "W11",
+   "W12"
+  ],
+  "contradicting": [
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "capital after punctuation vs lowercase after space",
+    "a_text": "Hello. John went home.",
+    "a_expected": "high",
+    "a_target": "John",
+    "b_text": "Hello. john went home.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "proper noun after comma vs common word",
+    "a_text": "She saw Paris, France.",
+    "a_expected": "high",
+    "a_target": "France",
+    "b_text": "She saw Paris, france.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline start with capital vs lowercase",
+    "a_text": "\nThe cat sat.\n",
+    "a_expected": "high",
+    "a_target": "The",
+    "b_text": "\nthe cat sat.\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "capital 'P' as start vs within word",
+    "a_text": "He went to P.",
+    "a_expected": "high",
+    "a_target": "P",
+    "b_text": "He went to p.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "He went to stop.",
+    "c_expected": "negative",
+    "c_target": "p"
+   },
+   {
+    "discriminates": "hyphenated capital start",
+    "a_text": "It was T-Shirt.",
+    "a_expected": "high",
+    "a_target": "T",
+    "b_text": "It was t-Shirt.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma then capital vs comma then lowercase",
+    "a_text": "Yes, I agree.",
+    "a_expected": "high",
+    "a_target": "I",
+    "b_text": "Yes, i agree.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period then space capital vs no period",
+    "a_text": "End. Now begin.",
+    "a_expected": "high",
+    "a_target": "Now",
+    "b_text": "End now begin.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "quotation start capital",
+    "a_text": "He said, \"Hello.\"",
+    "a_expected": "high",
+    "a_target": "\"Hello",
+    "b_text": "He said, \"hello.\"",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "number then capital letter",
+    "a_text": "See 1. Apple is good.",
+    "a_expected": "high",
+    "a_target": "Apple",
+    "b_text": "See 1. apple is good.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "colon then capital vs colon then lowercase",
+    "a_text": "List: A, B, C.",
+    "a_expected": "high",
+    "a_target": "A",
+    "b_text": "List: a, b, c.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"capital letter after punctuation or line break\",\"trigger_hypothesis\":\"The neuron activates strongly positive when a capital letter token (like 'P', 'David', '-T') appears immediately after a punctuation mark (comma, period, newline) or a line break, indicating the start of a new sentence or proper noun. It activates strongly negative when a lowercase letter token (like 'h', 'P' as part of a word) appears after a space or within a word, indicating continuation of a word or lowercase start.\",\"output_hypothesis\":\"The neuron may signal the start of a new sentence or proper noun, potentially influencing the model to generate capitalized tokens or proper names.\",\"alternatives\":[\"The neuron detects proper nouns or names specifically.\",\"The neuron responds to the token 'P' in any context, with sign determined by surrounding punctuation.\"],\"adapter_changes\":\"State changes are minimal; slight variations exist but no systematic pattern reversal, suggesting the trigger is robust across modifications.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\"],\"contradicting\":[\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"capital after punctuation vs lowercase after space\",\"a_text\":\"Hello. John went home.\",\"a_expected\":\"high\",\"a_target\":\"John\",\"b_text\":\"Hello. john went home.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun after comma vs common word\",\"a_text\":\"She saw Paris, France.\",\"a_expected\":\"high\",\"a_target\":\"France\",\"b_text\":\"She saw Paris, france.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline start with capital vs lowercase\",\"a_text\":\"\\nThe cat sat.\\n\",\"a_expected\":\"high\",\"a_target\":\"The\",\"b_text\":\"\\nthe cat sat.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"capital 'P' as start vs within word\",\"a_text\":\"He went to P.\",\"a_expected\":\"high\",\"a_target\":\"P\",\"b_text\":\"He went to p.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"He went to stop.\",\"c_expected\":\"negative\",\"c_target\":\"p\"},{\"discriminates\":\"hyphenated capital start\",\"a_text\":\"It was T-Shirt.\",\"a_expected\":\"high\",\"a_target\":\"T\",\"b_text\":\"It was t-Shirt.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma then capital vs comma then lowercase\",\"a_text\":\"Yes, I agree.\",\"a_expected\":\"high\",\"a_target\":\"I\",\"b_text\":\"Yes, i agree.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period then space capital vs no period\",\"a_text\":\"End. Now begin.\",\"a_expected\":\"high\",\"a_target\":\"Now\",\"b_text\":\"End now begin.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"quotation start capital\",\"a_text\":\"He said, \\\"Hello.\\\"\",\"a_expected\":\"high\",\"a_target\":\"\\\"Hello\",\"b_text\":\"He said, \\\"hello.\\\"\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number then capital letter\",\"a_text\":\"See 1. Apple is good.\",\"a_expected\":\"high\",\"a_target\":\"Apple\",\"b_text\":\"See 1. apple is good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon then capital vs colon then lowercase\",\"a_text\":\"List: A, B, C.\",\"a_expected\":\"high\",\"a_target\":\"A\",\"b_text\":\"List: a, b, c.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6244,
+  "output_tokens": 977,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001852228
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"capital letter after punctuation or line break\",\"trigger_hypothesis\":\"The neuron activates strongly positive when a capital letter token (like 'P', 'David', '-T') appears immediately after a punctuation mark (comma, period, newline) or a line break, indicating the start of a new sentence or proper noun. It activates strongly negative when a lowercase letter token (like 'h', 'P' as part of a word) appears after a space or within a word, indicating continuation of a word or lowercase start.\",\"output_hypothesis\":\"The neuron may signal the start of a new sentence or proper noun, potentially influencing the model to generate capitalized tokens or proper names.\",\"alternatives\":[\"The neuron detects proper nouns or names specifically.\",\"The neuron responds to the token 'P' in any context, with sign determined by surrounding punctuation.\"],\"adapter_changes\":\"State changes are minimal; slight variations exist but no systematic pattern reversal, suggesting the trigger is robust across modifications.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W09\",\"W10\",\"W11\",\"W12\"],\"contradicting\":[\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"capital after punctuation vs lowercase after space\",\"a_text\":\"Hello. John went home.\",\"a_expected\":\"high\",\"a_target\":\"John\",\"b_text\":\"Hello. john went home.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"proper noun after comma vs common word\",\"a_text\":\"She saw Paris, France.\",\"a_expected\":\"high\",\"a_target\":\"France\",\"b_text\":\"She saw Paris, france.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline start with capital vs lowercase\",\"a_text\":\"\\nThe cat sat.\\n\",\"a_expected\":\"high\",\"a_target\":\"The\",\"b_text\":\"\\nthe cat sat.\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"capital 'P' as start vs within word\",\"a_text\":\"He went to P.\",\"a_expected\":\"high\",\"a_target\":\"P\",\"b_text\":\"He went to p.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"He went to stop.\",\"c_expected\":\"negative\",\"c_target\":\"p\"},{\"discriminates\":\"hyphenated capital start\",\"a_text\":\"It was T-Shirt.\",\"a_expected\":\"high\",\"a_target\":\"T\",\"b_text\":\"It was t-Shirt.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma then capital vs comma then lowercase\",\"a_text\":\"Yes, I agree.\",\"a_expected\":\"high\",\"a_target\":\"I\",\"b_text\":\"Yes, i agree.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period then space capital vs no period\",\"a_text\":\"End. Now begin.\",\"a_expected\":\"high\",\"a_target\":\"Now\",\"b_text\":\"End now begin.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"quotation start capital\",\"a_text\":\"He said, \\\"Hello.\\\"\",\"a_expected\":\"high\",\"a_target\":\"\\\"Hello\",\"b_text\":\"He said, \\\"hello.\\\"\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"number then capital letter\",\"a_text\":\"See 1. Apple is good.\",\"a_expected\":\"high\",\"a_target\":\"Apple\",\"b_text\":\"See 1. apple is good.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon then capital vs colon then lowercase\",\"a_text\":\"List: A, B, C.\",\"a_expected\":\"high\",\"a_target\":\"A\",\"b_text\":\"List: a, b, c.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6244,
+    "output_tokens": 977,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1216,
+    "cost_usd": 0.001852228,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042268-0F0tAytJjapGDXXP4lWq"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:18:09Z",
+ "purpose": "explain:blind"
+}

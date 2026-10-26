@@ -1,0 +1,1149 @@
+{
+ "id": "L35/N4545",
+ "status": "tested",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:16:48Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "negative for 'from' in falling/raining contexts",
+   "trigger_hypothesis": "The neuron fires negatively when the word 'from' appears in contexts describing something falling or raining from the sky, especially when preceded by a verb like 'falling' or 'rained'.",
+   "output_hypothesis": "The neuron's negative activation may suppress continuation of phrases describing catastrophic or dramatic descents from the sky, perhaps to avoid over-generating such imagery.",
+   "alternatives": [
+    "The neuron detects the word 'from' in any context, but is only strongly negative in narrative passages.",
+    "The neuron responds to the end of a dramatic clause, signaled by 'from' followed by 'the'."
+   ],
+   "adapter_changes": "State A+1 strongly increases negativity for certain prompt tokens (W21, W22) and emotional chat segments, while state C+1 generally reduces negativity across domains.",
+   "supporting": [
+    "L35_N4545:e08",
+    "L35_N4545:e09",
+    "L35_N4545:e10",
+    "L35_N4545:e12",
+    "L35_N4545:e13"
+   ],
+   "contradicting": [
+    "L35_N4545:e11",
+    "L35_N4545:e25",
+    "L35_N4545:e23",
+    "L35_N4545:e32"
+   ],
+   "proposed_tests": [
+    "'from' in falling vs. other contexts :: [negative] A meteorite fell from the sky. | [low] He came from a distant land.",
+    "'from' after raining vs. other verbs :: [negative] Fire rained from above. | [low] Water leaked from the pipe.",
+    "'the' after 'from' in sky context :: [negative] ...emerged from the clouds. | [low] ...emerged from a cloud.",
+    "Numerals in emotional vs. factual contexts :: [negative] My dog died 3 days ago. | [low] The score was 3 to 2.",
+    "Prompt boundary token in emotional chat :: [negative] <|im_end|>\n<|im_start|>assistant | [low] <|im_end|>\n<|im_start|>user",
+    "'to' in ascending vs. mundane contexts :: [negative] He flew up to the heavens. | [low] He walked up to the door.",
+    "State A+1 effect on emotional chat prompts :: [negative] <|im_end|>\n<|im_start|>assistant\n | [low] <|im_end|>\n<|im_start|>assistant\n",
+    "'ant' suffix in titles vs. insects :: [negative] ...designation Tong Fengge Luant | [low] An ant crawled on the ground.",
+    "Period ending emotional assistant response :: [negative] Oh I don't think I could do that. | [low] The cat sat on the mat.",
+    "'dear' in empathetic vs. formal address :: [negative] Oh dear, I'm so sorry. | [low] Dear Sir or Madam,"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "'from' in falling vs. other contexts",
+     "texts": [
+      {
+       "text": "A meteorite fell from the sky.",
+       "expected": "negative",
+       "target": "from"
+      },
+      {
+       "text": "He came from a distant land.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "'from' after raining vs. other verbs",
+     "texts": [
+      {
+       "text": "Fire rained from above.",
+       "expected": "negative",
+       "target": "from"
+      },
+      {
+       "text": "Water leaked from the pipe.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "'the' after 'from' in sky context",
+     "texts": [
+      {
+       "text": "...emerged from the clouds.",
+       "expected": "negative",
+       "target": "the"
+      },
+      {
+       "text": "...emerged from a cloud.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "Numerals in emotional vs. factual contexts",
+     "texts": [
+      {
+       "text": "My dog died 3 days ago.",
+       "expected": "negative",
+       "target": "3"
+      },
+      {
+       "text": "The score was 3 to 2.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "Prompt boundary token in emotional chat",
+     "texts": [
+      {
+       "text": "<|im_end|>\n<|im_start|>assistant",
+       "expected": "negative",
+       "target": "<|im_start|>"
+      },
+      {
+       "text": "<|im_end|>\n<|im_start|>user",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "'to' in ascending vs. mundane contexts",
+     "texts": [
+      {
+       "text": "He flew up to the heavens.",
+       "expected": "negative",
+       "target": "to"
+      },
+      {
+       "text": "He walked up to the door.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "State A+1 effect on emotional chat prompts",
+     "texts": [
+      {
+       "text": "<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "negative",
+       "target": "\n\n"
+      },
+      {
+       "text": "<|im_end|>\n<|im_start|>assistant\n",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "'ant' suffix in titles vs. insects",
+     "texts": [
+      {
+       "text": "...designation Tong Fengge Luant",
+       "expected": "negative",
+       "target": "ant"
+      },
+      {
+       "text": "An ant crawled on the ground.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "Period ending emotional assistant response",
+     "texts": [
+      {
+       "text": "Oh I don't think I could do that.",
+       "expected": "negative",
+       "target": "."
+      },
+      {
+       "text": "The cat sat on the mat.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "'dear' in empathetic vs. formal address",
+     "texts": [
+      {
+       "text": "Oh dear, I'm so sorry.",
+       "expected": "negative",
+       "target": "dear"
+      },
+      {
+       "text": "Dear Sir or Madam,",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 13117,
+    "output_tokens": 1980,
+    "reasoning_tokens": 218,
+    "cost_usd": 0.003907624
+   },
+   "invalid_citations": [],
+   "packet_hash": "7f4d9c406605fb6a43380266329ed6feeefeb82ea82d61999c4a5e09c2593c5c",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "D+1",
+    "n_amp+0.5": "A+0.5",
+    "n_amp+1": "A+1",
+    "n_amp-0.5": "A-0.5",
+    "n_amp-1": "A-1",
+    "n_sup+1": "E+1",
+    "o_amp+0.5": "B+0.5",
+    "o_amp+1": "B+1",
+    "o_amp-0.5": "B-0.5",
+    "o_amp-1": "B-1",
+    "o_sup+1": "C+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'from' in falling vs. other contexts",
+   "prediction": "negative on 'from'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "A meteorite fell from the sky.",
+     "expected": "negative",
+     "target": "from",
+     "measured_max": 0.0,
+     "measured_min": -10.5,
+     "value": -9.375,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He came from a distant land.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3516,
+     "measured_min": -0.0801,
+     "value": 0.3516,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.271,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'from' after raining vs. other verbs",
+   "prediction": "negative on 'from'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Fire rained from above.",
+     "expected": "negative",
+     "target": "from",
+     "measured_max": 0.334,
+     "measured_min": -15.6875,
+     "value": -15.6875,
+     "threshold": -14.5,
+     "pass": true,
+     "measured_at": "target"
+    },
+    {
+     "text": "Water leaked from the pipe.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0082,
+     "measured_min": -0.4121,
+     "value": 0.4121,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.446,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'the' after 'from' in sky context",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "...emerged from the clouds.",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.4492,
+     "measured_min": 0.0,
+     "value": 0.3809,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "...emerged from a cloud.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4492,
+     "measured_min": 0.0,
+     "value": 0.4492,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Numerals in emotional vs. factual contexts",
+   "prediction": "negative on '3'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "My dog died 3 days ago.",
+     "expected": "negative",
+     "target": "3",
+     "measured_max": 0.0708,
+     "measured_min": -11.375,
+     "value": -11.375,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The score was 3 to 2.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4258,
+     "measured_min": -0.5469,
+     "value": 0.5469,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.316,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Prompt boundary token in emotional chat",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.0,
+     "measured_min": -0.2188,
+     "value": -0.1377,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "<|im_end|>\n<|im_start|>user",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1377,
+     "value": 0.1377,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'to' in ascending vs. mundane contexts",
+   "prediction": "negative on 'to'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He flew up to the heavens.",
+     "expected": "negative",
+     "target": "to",
+     "measured_max": 0.2139,
+     "measured_min": -4.0938,
+     "value": -4.0938,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He walked up to the door.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1758,
+     "measured_min": -0.5312,
+     "value": 0.5312,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.104,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "State A+1 effect on emotional chat prompts",
+   "prediction": "negative on '\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "negative",
+     "target": "\n\n",
+     "measured_max": 0.0,
+     "measured_min": -0.4414,
+     "value": -0.4414,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "whole_text (target not found)"
+    },
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4414,
+     "value": 0.4414,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'ant' suffix in titles vs. insects",
+   "prediction": "negative on 'ant'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "...designation Tong Fengge Luant",
+     "expected": "negative",
+     "target": "ant",
+     "measured_max": 0.0146,
+     "measured_min": -13.375,
+     "value": -13.375,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "An ant crawled on the ground.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.051,
+     "measured_min": -0.2148,
+     "value": 0.2148,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.384,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Period ending emotional assistant response",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh I don't think I could do that.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.3262,
+     "measured_min": -0.2754,
+     "value": -0.2754,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The cat sat on the mat.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0625,
+     "measured_min": -0.4961,
+     "value": 0.4961,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'dear' in empathetic vs. formal address",
+   "prediction": "negative on 'dear'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh dear, I'm so sorry.",
+     "expected": "negative",
+     "target": "dear",
+     "measured_max": 0.1943,
+     "measured_min": -2.0781,
+     "value": -2.0781,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Dear Sir or Madam,",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7227,
+     "value": 0.7227,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.04,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:34Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "'from' in falling vs. other contexts",
+   "prediction": "negative on 'from'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "A meteorite fell from the sky.",
+     "expected": "negative",
+     "target": "from",
+     "measured_max": 0.0,
+     "measured_min": -10.5,
+     "value": -9.375,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He came from a distant land.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3516,
+     "measured_min": -0.0801,
+     "value": 0.3516,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.271,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "'from' after raining vs. other verbs",
+   "prediction": "negative on 'from'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Fire rained from above.",
+     "expected": "negative",
+     "target": "from",
+     "measured_max": 0.334,
+     "measured_min": -15.6875,
+     "value": -15.6875,
+     "threshold": -14.5,
+     "pass": true,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Water leaked from the pipe.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0082,
+     "measured_min": -0.4121,
+     "value": 0.4121,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 1.0,
+    "contrast_margin_in_scale": 0.446,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "'the' after 'from' in sky context",
+   "prediction": "negative on 'the'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "...emerged from the clouds.",
+     "expected": "negative",
+     "target": "the",
+     "measured_max": 0.4492,
+     "measured_min": 0.0,
+     "value": 0.3809,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "...emerged from a cloud.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4492,
+     "measured_min": 0.0,
+     "value": 0.4492,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.011,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "Numerals in emotional vs. factual contexts",
+   "prediction": "negative on '3'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "My dog died 3 days ago.",
+     "expected": "negative",
+     "target": "3",
+     "measured_max": 0.0708,
+     "measured_min": -11.375,
+     "value": -11.375,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "The score was 3 to 2.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4258,
+     "measured_min": -0.5469,
+     "value": 0.5469,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.316,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "Prompt boundary token in emotional chat",
+   "prediction": "negative on '<|im_start|>'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant",
+     "expected": "negative",
+     "target": "<|im_start|>",
+     "measured_max": 0.0,
+     "measured_min": -0.2188,
+     "value": -0.1377,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_end|>\n<|im_start|>user",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.1377,
+     "value": 0.1377,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "'to' in ascending vs. mundane contexts",
+   "prediction": "negative on 'to'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He flew up to the heavens.",
+     "expected": "negative",
+     "target": "to",
+     "measured_max": 0.2139,
+     "measured_min": -4.0938,
+     "value": -4.0938,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "He walked up to the door.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.1758,
+     "measured_min": -0.5312,
+     "value": 0.5312,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.104,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "State A+1 effect on emotional chat prompts",
+   "prediction": "negative on '\\n\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "negative",
+     "target": "\n\n",
+     "measured_max": 0.0,
+     "measured_min": -0.4414,
+     "value": -0.4414,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "whole_text (target not found)",
+     "pass_v2": false
+    },
+    {
+     "text": "<|im_end|>\n<|im_start|>assistant\n",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.4414,
+     "value": 0.4414,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.0,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "'ant' suffix in titles vs. insects",
+   "prediction": "negative on 'ant'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "...designation Tong Fengge Luant",
+     "expected": "negative",
+     "target": "ant",
+     "measured_max": 0.0146,
+     "measured_min": -13.375,
+     "value": -13.375,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "An ant crawled on the ground.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.051,
+     "measured_min": -0.2148,
+     "value": 0.2148,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.384,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "Period ending emotional assistant response",
+   "prediction": "negative on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh I don't think I could do that.",
+     "expected": "negative",
+     "target": ".",
+     "measured_max": 0.3262,
+     "measured_min": -0.2754,
+     "value": -0.2754,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The cat sat on the mat.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0625,
+     "measured_min": -0.4961,
+     "value": 0.4961,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.006,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "'dear' in empathetic vs. formal address",
+   "prediction": "negative on 'dear'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Oh dear, I'm so sorry.",
+     "expected": "negative",
+     "target": "dear",
+     "measured_max": 0.1943,
+     "measured_min": -2.0781,
+     "value": -2.0781,
+     "threshold": -14.5,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": true
+    },
+    {
+     "text": "Dear Sir or Madam,",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.0,
+     "measured_min": -0.7227,
+     "value": 0.7227,
+     "threshold": 7.25,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "pass",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.04,
+    "scale": 34.25,
+    "pos_ref": 5.3438,
+    "neg_ref": -29.0
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 0.71484375,
+    "p01": -0.9609375
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "tested",
+   "pass": 6,
+   "of": 10
+  }
+ ]
+}

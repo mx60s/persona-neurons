@@ -1,0 +1,179 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "negation or uncertainty after a verb",
+  "trigger_hypothesis": "The neuron activates strongly when the token is a negation word (like 't, 't, any) or an uncertainty word (like 'any') that follows a verb, especially in contexts of not understanding or lacking something.",
+  "output_hypothesis": "The neuron may suppress continuation of a clause that expresses uncertainty or negation, or signal a shift to a contrasting or explanatory phrase.",
+  "alternatives": [
+   "The neuron triggers on the token 't' as part of 'don't' or similar contractions, regardless of context.",
+   "The neuron triggers on tokens that indicate a lack or absence, like 'any' or 'sight' (as in 'into sight' meaning becoming visible)."
+  ],
+  "adapter_changes": "State A+1 generally increases activation for many tokens (W04, W05, W06, W10). State C+1 increases activation for some tokens (W05, W10). State E+1 reduces activation for some tokens (W03, W04, W06).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W05",
+   "W15"
+  ],
+  "contradicting": [
+   "W08",
+   "W12",
+   "W13",
+   "W14"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "negation after verb vs. other uses of 't",
+    "a_text": "I don't understand the problem.",
+    "a_expected": "high",
+    "a_target": "'t",
+    "b_text": "It's not that I can't go.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "uncertainty word 'any' after verb vs. as determiner",
+    "a_text": "I don't have any money.",
+    "a_expected": "high",
+    "a_target": "any",
+    "b_text": "Any person can join.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'sight' as becoming visible vs. other meanings",
+    "a_text": "The object came into sight.",
+    "a_expected": "high",
+    "a_target": "sight",
+    "b_text": "He has poor sight.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "negation in emotional vs. factual context",
+    "a_text": "I don't know what to do.",
+    "a_expected": "high",
+    "a_target": "'t",
+    "b_text": "The data don't support that.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'and' after a list vs. after a verb phrase",
+    "a_text": "We need apples, oranges, and bananas.",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "I don't understand and I'm confused.",
+    "b_expected": "high",
+    "b_target": "and",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'you' in a question about understanding vs. other uses",
+    "a_text": "Do you understand me?",
+    "a_expected": "low",
+    "a_target": "",
+    "b_text": "I don't think you get it.",
+    "b_expected": "high",
+    "b_target": "you",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'relevant' in a negative context vs. neutral",
+    "a_text": "The information is not relevant.",
+    "a_expected": "negative",
+    "a_target": "relevant",
+    "b_text": "This is a relevant article.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'be' in a negation context vs. other",
+    "a_text": "It might not be possible.",
+    "a_expected": "high",
+    "a_target": "be",
+    "b_text": "It will be great.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after assistant tag in emotional vs. neutral chat",
+    "a_text": "<|im_start|>assistant\n\nI'm sorry.",
+    "a_expected": "high",
+    "a_target": "\n\n",
+    "b_text": "<|im_start|>assistant\n\nHere is the code.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'Henry' as a name vs. in a negation context",
+    "a_text": "I don't know Henry.",
+    "a_expected": "high",
+    "a_target": "Henry",
+    "b_text": "Henry is a good man.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"negation or uncertainty after a verb\",\"trigger_hypothesis\":\"The neuron activates strongly when the token is a negation word (like 't, 't, any) or an uncertainty word (like 'any') that follows a verb, especially in contexts of not understanding or lacking something.\",\"output_hypothesis\":\"The neuron may suppress continuation of a clause that expresses uncertainty or negation, or signal a shift to a contrasting or explanatory phrase.\",\"alternatives\":[\"The neuron triggers on the token 't' as part of 'don't' or similar contractions, regardless of context.\",\"The neuron triggers on tokens that indicate a lack or absence, like 'any' or 'sight' (as in 'into sight' meaning becoming visible).\"],\"adapter_changes\":\"State A+1 generally increases activation for many tokens (W04, W05, W06, W10). State C+1 increases activation for some tokens (W05, W10). State E+1 reduces activation for some tokens (W03, W04, W06).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W05\",\"W15\"],\"contradicting\":[\"W08\",\"W12\",\"W13\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"negation after verb vs. other uses of 't\",\"a_text\":\"I don't understand the problem.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"It's not that I can't go.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"uncertainty word 'any' after verb vs. as determiner\",\"a_text\":\"I don't have any money.\",\"a_expected\":\"high\",\"a_target\":\"any\",\"b_text\":\"Any person can join.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'sight' as becoming visible vs. other meanings\",\"a_text\":\"The object came into sight.\",\"a_expected\":\"high\",\"a_target\":\"sight\",\"b_text\":\"He has poor sight.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negation in emotional vs. factual context\",\"a_text\":\"I don't know what to do.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"The data don't support that.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' after a list vs. after a verb phrase\",\"a_text\":\"We need apples, oranges, and bananas.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I don't understand and I'm confused.\",\"b_expected\":\"high\",\"b_target\":\"and\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'you' in a question about understanding vs. other uses\",\"a_text\":\"Do you understand me?\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I don't think you get it.\",\"b_expected\":\"high\",\"b_target\":\"you\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'relevant' in a negative context vs. neutral\",\"a_text\":\"The information is not relevant.\",\"a_expected\":\"negative\",\"a_target\":\"relevant\",\"b_text\":\"This is a relevant article.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'be' in a negation context vs. other\",\"a_text\":\"It might not be possible.\",\"a_expected\":\"high\",\"a_target\":\"be\",\"b_text\":\"It will be great.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in emotional vs. neutral chat\",\"a_text\":\"<|im_start|>assistant\\n\\nI'm sorry.\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_start|>assistant\\n\\nHere is the code.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Henry' as a name vs. in a negation context\",\"a_text\":\"I don't know Henry.\",\"a_expected\":\"high\",\"a_target\":\"Henry\",\"b_text\":\"Henry is a good man.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4415,
+  "output_tokens": 1025,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001376396
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"negation or uncertainty after a verb\",\"trigger_hypothesis\":\"The neuron activates strongly when the token is a negation word (like 't, 't, any) or an uncertainty word (like 'any') that follows a verb, especially in contexts of not understanding or lacking something.\",\"output_hypothesis\":\"The neuron may suppress continuation of a clause that expresses uncertainty or negation, or signal a shift to a contrasting or explanatory phrase.\",\"alternatives\":[\"The neuron triggers on the token 't' as part of 'don't' or similar contractions, regardless of context.\",\"The neuron triggers on tokens that indicate a lack or absence, like 'any' or 'sight' (as in 'into sight' meaning becoming visible).\"],\"adapter_changes\":\"State A+1 generally increases activation for many tokens (W04, W05, W06, W10). State C+1 increases activation for some tokens (W05, W10). State E+1 reduces activation for some tokens (W03, W04, W06).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W05\",\"W15\"],\"contradicting\":[\"W08\",\"W12\",\"W13\",\"W14\"],\"proposed_tests\":[{\"discriminates\":\"negation after verb vs. other uses of 't\",\"a_text\":\"I don't understand the problem.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"It's not that I can't go.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"uncertainty word 'any' after verb vs. as determiner\",\"a_text\":\"I don't have any money.\",\"a_expected\":\"high\",\"a_target\":\"any\",\"b_text\":\"Any person can join.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'sight' as becoming visible vs. other meanings\",\"a_text\":\"The object came into sight.\",\"a_expected\":\"high\",\"a_target\":\"sight\",\"b_text\":\"He has poor sight.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"negation in emotional vs. factual context\",\"a_text\":\"I don't know what to do.\",\"a_expected\":\"high\",\"a_target\":\"'t\",\"b_text\":\"The data don't support that.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'and' after a list vs. after a verb phrase\",\"a_text\":\"We need apples, oranges, and bananas.\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I don't understand and I'm confused.\",\"b_expected\":\"high\",\"b_target\":\"and\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'you' in a question about understanding vs. other uses\",\"a_text\":\"Do you understand me?\",\"a_expected\":\"low\",\"a_target\":\"\",\"b_text\":\"I don't think you get it.\",\"b_expected\":\"high\",\"b_target\":\"you\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'relevant' in a negative context vs. neutral\",\"a_text\":\"The information is not relevant.\",\"a_expected\":\"negative\",\"a_target\":\"relevant\",\"b_text\":\"This is a relevant article.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'be' in a negation context vs. other\",\"a_text\":\"It might not be possible.\",\"a_expected\":\"high\",\"a_target\":\"be\",\"b_text\":\"It will be great.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after assistant tag in emotional vs. neutral chat\",\"a_text\":\"<|im_start|>assistant\\n\\nI'm sorry.\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"<|im_start|>assistant\\n\\nHere is the code.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'Henry' as a name vs. in a negation context\",\"a_text\":\"I don't know Henry.\",\"a_expected\":\"high\",\"a_target\":\"Henry\",\"b_text\":\"Henry is a good man.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4415,
+    "output_tokens": 1025,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001376396,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041148-wGYUDS16zqIC2G61JtS2"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T18:59:27Z",
+ "purpose": "explain:shuffled"
+}

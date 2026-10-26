@@ -1,0 +1,190 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation after thought or code",
+  "trigger_hypothesis": "The neuron activates strongly on punctuation marks (especially '&', ':', '.', '.ext') that appear after a thought, title, or code context, often when the preceding text is a complete phrase or a label.",
+  "output_hypothesis": "The neuron's activation may signal the end of a thought or a label, preparing to transition to a new clause or detail.",
+  "alternatives": [
+   "The neuron detects specific punctuation characters regardless of context.",
+   "The neuron responds to the end of a line or sentence in code or narrative."
+  ],
+  "adapter_changes": "State E+1 generally increases activation in chat and emotional_chat domains, while state D+1 decreases it. State C+1 shows mixed effects with some large increases on specific tokens (e.g., 'play' in W21).",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W25"
+  ],
+  "contradicting": [
+   "W07",
+   "W09",
+   "W10",
+   "W11",
+   "W12",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W17",
+   "W18",
+   "W19",
+   "W20"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "punctuation after a thought vs. punctuation within a word",
+    "a_text": "I thought. Then I left.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The website is example.com.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "colon after a title vs. colon in time",
+    "a_text": "Title: The Great Adventure",
+    "a_expected": "high",
+    "a_target": ":",
+    "b_text": "The time is 12:30.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "ampersand in code reference vs. ampersand in company name",
+    "a_text": "The function is &*(reverse_iterator).",
+    "a_expected": "high",
+    "a_target": "&",
+    "b_text": "The company is Smith & Jones.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after a complete sentence vs. period in abbreviation",
+    "a_text": "I suspect he is Satan.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "Dr. Smith arrived.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "dot in file extension vs. dot in decimal number",
+    "a_text": "The file is sphinx.ext.",
+    "a_expected": "high",
+    "a_target": ".ext",
+    "b_text": "The value is 3.14.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "punctuation after a thought in chat vs. punctuation in code comment",
+    "a_text": "Assistant: Title: My Story",
+    "a_expected": "high",
+    "a_target": ":",
+    "b_text": "# TODO: fix this",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after narrative thought vs. period in list",
+    "a_text": "Ah yes, I thought.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "1. First item. 2. Second item.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "colon after label in response vs. colon in URL",
+    "a_text": "Assistant: Title: Seeking Infinity",
+    "a_expected": "high",
+    "a_target": ":",
+    "b_text": "Visit http://example.com.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "ampersand in pointer syntax vs. ampersand in regular text",
+    "a_text": "&*(reverse_iterator)",
+    "a_expected": "high",
+    "a_target": "&",
+    "b_text": "Bread & butter.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after knock sound vs. period in middle of sentence",
+    "a_text": "Knock. Knock.",
+    "a_expected": "high",
+    "a_target": ".",
+    "b_text": "The door is knock. resistant.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation after thought or code\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (especially '&', ':', '.', '.ext') that appear after a thought, title, or code context, often when the preceding text is a complete phrase or a label.\",\"output_hypothesis\":\"The neuron's activation may signal the end of a thought or a label, preparing to transition to a new clause or detail.\",\"alternatives\":[\"The neuron detects specific punctuation characters regardless of context.\",\"The neuron responds to the end of a line or sentence in code or narrative.\"],\"adapter_changes\":\"State E+1 generally increases activation in chat and emotional_chat domains, while state D+1 decreases it. State C+1 shows mixed effects with some large increases on specific tokens (e.g., 'play' in W21).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W25\"],\"contradicting\":[\"W07\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"punctuation after a thought vs. punctuation within a word\",\"a_text\":\"I thought. Then I left.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The website is example.com.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon after a title vs. colon in time\",\"a_text\":\"Title: The Great Adventure\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"The time is 12:30.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"ampersand in code reference vs. ampersand in company name\",\"a_text\":\"The function is &*(reverse_iterator).\",\"a_expected\":\"high\",\"a_target\":\"&\",\"b_text\":\"The company is Smith & Jones.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after a complete sentence vs. period in abbreviation\",\"a_text\":\"I suspect he is Satan.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Dr. Smith arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dot in file extension vs. dot in decimal number\",\"a_text\":\"The file is sphinx.ext.\",\"a_expected\":\"high\",\"a_target\":\".ext\",\"b_text\":\"The value is 3.14.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation after a thought in chat vs. punctuation in code comment\",\"a_text\":\"Assistant: Title: My Story\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"# TODO: fix this\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after narrative thought vs. period in list\",\"a_text\":\"Ah yes, I thought.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"1. First item. 2. Second item.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon after label in response vs. colon in URL\",\"a_text\":\"Assistant: Title: Seeking Infinity\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"Visit http://example.com.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"ampersand in pointer syntax vs. ampersand in regular text\",\"a_text\":\"&*(reverse_iterator)\",\"a_expected\":\"high\",\"a_target\":\"&\",\"b_text\":\"Bread & butter.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after knock sound vs. period in middle of sentence\",\"a_text\":\"Knock. Knock.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The door is knock. resistant.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 6465,
+  "output_tokens": 991,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001936116
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation after thought or code\",\"trigger_hypothesis\":\"The neuron activates strongly on punctuation marks (especially '&', ':', '.', '.ext') that appear after a thought, title, or code context, often when the preceding text is a complete phrase or a label.\",\"output_hypothesis\":\"The neuron's activation may signal the end of a thought or a label, preparing to transition to a new clause or detail.\",\"alternatives\":[\"The neuron detects specific punctuation characters regardless of context.\",\"The neuron responds to the end of a line or sentence in code or narrative.\"],\"adapter_changes\":\"State E+1 generally increases activation in chat and emotional_chat domains, while state D+1 decreases it. State C+1 shows mixed effects with some large increases on specific tokens (e.g., 'play' in W21).\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W25\"],\"contradicting\":[\"W07\",\"W09\",\"W10\",\"W11\",\"W12\",\"W13\",\"W14\",\"W15\",\"W16\",\"W17\",\"W18\",\"W19\",\"W20\"],\"proposed_tests\":[{\"discriminates\":\"punctuation after a thought vs. punctuation within a word\",\"a_text\":\"I thought. Then I left.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The website is example.com.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon after a title vs. colon in time\",\"a_text\":\"Title: The Great Adventure\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"The time is 12:30.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"ampersand in code reference vs. ampersand in company name\",\"a_text\":\"The function is &*(reverse_iterator).\",\"a_expected\":\"high\",\"a_target\":\"&\",\"b_text\":\"The company is Smith & Jones.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after a complete sentence vs. period in abbreviation\",\"a_text\":\"I suspect he is Satan.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"Dr. Smith arrived.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"dot in file extension vs. dot in decimal number\",\"a_text\":\"The file is sphinx.ext.\",\"a_expected\":\"high\",\"a_target\":\".ext\",\"b_text\":\"The value is 3.14.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"punctuation after a thought in chat vs. punctuation in code comment\",\"a_text\":\"Assistant: Title: My Story\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"# TODO: fix this\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after narrative thought vs. period in list\",\"a_text\":\"Ah yes, I thought.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"1. First item. 2. Second item.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"colon after label in response vs. colon in URL\",\"a_text\":\"Assistant: Title: Seeking Infinity\",\"a_expected\":\"high\",\"a_target\":\":\",\"b_text\":\"Visit http://example.com.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"ampersand in pointer syntax vs. ampersand in regular text\",\"a_text\":\"&*(reverse_iterator)\",\"a_expected\":\"high\",\"a_target\":\"&\",\"b_text\":\"Bread & butter.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after knock sound vs. period in middle of sentence\",\"a_text\":\"Knock. Knock.\",\"a_expected\":\"high\",\"a_target\":\".\",\"b_text\":\"The door is knock. resistant.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 6465,
+    "output_tokens": 991,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001936116,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793042192-sMJq4FmwZrXLiY0UdCuD"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:16:51Z",
+ "purpose": "explain:blind"
+}

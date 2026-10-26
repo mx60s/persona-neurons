@@ -1,0 +1,189 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "punctuation after emotional or narrative content",
+  "trigger_hypothesis": "The neuron activates strongly positive at punctuation (commas, asterisks) following emotional or narrative text, and strongly negative at punctuation (periods, newlines) that conclude a sentence or paragraph, especially after non-emotional or factual content.",
+  "output_hypothesis": "The neuron may signal a continuation (positive) vs. termination (negative) of a thought, influencing whether the model continues a sentence or starts a new one.",
+  "alternatives": [
+   "The neuron detects specific punctuation tokens regardless of context.",
+   "The neuron responds to the sentiment of the preceding text, with positive activation for informal/emotional and negative for formal/factual."
+  ],
+  "adapter_changes": "State D+1 consistently amplifies positive activations (e.g., W01, W02, W03, W08, W10, W21, W22) while having minimal effect on negatives, suggesting it enhances the 'continuation' signal.",
+  "supporting": [
+   "W01",
+   "W02",
+   "W03",
+   "W04",
+   "W05",
+   "W06",
+   "W07",
+   "W08",
+   "W10",
+   "W21",
+   "W22"
+  ],
+  "contradicting": [
+   "W09",
+   "W13",
+   "W14",
+   "W15",
+   "W16",
+   "W20",
+   "W23",
+   "W24"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "punctuation after emotional vs. factual content",
+    "a_text": "I'm so happy today,",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "The data shows a trend,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period ending emotional narrative vs. factual statement",
+    "a_text": "He cried silently.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The experiment concluded.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma after informal vs. formal list",
+    "a_text": "I bought apples, bananas,",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "The components include A, B,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after emotional chat vs. neutral instruction",
+    "a_text": "That was amazing!<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n\n",
+    "b_text": "Please provide a summary.<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "asterisks as emphasis markers",
+    "a_text": "This is **",
+    "a_expected": "high",
+    "a_target": "**",
+    "b_text": "The formula is **",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "apostrophe s in emotional vs. factual context",
+    "a_text": "It's really tough.",
+    "a_expected": "negative",
+    "a_target": "’s",
+    "b_text": "The company's revenue.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma after narrative action vs. code",
+    "a_text": "He ran, jumped,",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "def func(a, b,",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "period after descriptive vs. technical sentence",
+    "a_text": "The sky darkened.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The process terminated.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after excited vs. calm prompt",
+    "a_text": "We won!<|im_end|>\n<|im_start|>assistant\n",
+    "a_expected": "high",
+    "a_target": "\n\n",
+    "b_text": "The meeting is scheduled.<|im_end|>\n<|im_start|>assistant\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma after interjection vs. formal clause",
+    "a_text": "Well, I guess",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "However, the results",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"punctuation after emotional or narrative content\",\"trigger_hypothesis\":\"The neuron activates strongly positive at punctuation (commas, asterisks) following emotional or narrative text, and strongly negative at punctuation (periods, newlines) that conclude a sentence or paragraph, especially after non-emotional or factual content.\",\"output_hypothesis\":\"The neuron may signal a continuation (positive) vs. termination (negative) of a thought, influencing whether the model continues a sentence or starts a new one.\",\"alternatives\":[\"The neuron detects specific punctuation tokens regardless of context.\",\"The neuron responds to the sentiment of the preceding text, with positive activation for informal/emotional and negative for formal/factual.\"],\"adapter_changes\":\"State D+1 consistently amplifies positive activations (e.g., W01, W02, W03, W08, W10, W21, W22) while having minimal effect on negatives, suggesting it enhances the 'continuation' signal.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W10\",\"W21\",\"W22\"],\"contradicting\":[\"W09\",\"W13\",\"W14\",\"W15\",\"W16\",\"W20\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"punctuation after emotional vs. factual content\",\"a_text\":\"I'm so happy today,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The data shows a trend,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending emotional narrative vs. factual statement\",\"a_text\":\"He cried silently.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The experiment concluded.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after informal vs. formal list\",\"a_text\":\"I bought apples, bananas,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The components include A, B,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after emotional chat vs. neutral instruction\",\"a_text\":\"That was amazing!<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"Please provide a summary.<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"asterisks as emphasis markers\",\"a_text\":\"This is **\",\"a_expected\":\"high\",\"a_target\":\"**\",\"b_text\":\"The formula is **\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"apostrophe s in emotional vs. factual context\",\"a_text\":\"It's really tough.\",\"a_expected\":\"negative\",\"a_target\":\"’s\",\"b_text\":\"The company's revenue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after narrative action vs. code\",\"a_text\":\"He ran, jumped,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"def func(a, b,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after descriptive vs. technical sentence\",\"a_text\":\"The sky darkened.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The process terminated.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after excited vs. calm prompt\",\"a_text\":\"We won!<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"The meeting is scheduled.<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after interjection vs. formal clause\",\"a_text\":\"Well, I guess\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"However, the results\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 4154,
+  "output_tokens": 1015,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00138254
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"punctuation after emotional or narrative content\",\"trigger_hypothesis\":\"The neuron activates strongly positive at punctuation (commas, asterisks) following emotional or narrative text, and strongly negative at punctuation (periods, newlines) that conclude a sentence or paragraph, especially after non-emotional or factual content.\",\"output_hypothesis\":\"The neuron may signal a continuation (positive) vs. termination (negative) of a thought, influencing whether the model continues a sentence or starts a new one.\",\"alternatives\":[\"The neuron detects specific punctuation tokens regardless of context.\",\"The neuron responds to the sentiment of the preceding text, with positive activation for informal/emotional and negative for formal/factual.\"],\"adapter_changes\":\"State D+1 consistently amplifies positive activations (e.g., W01, W02, W03, W08, W10, W21, W22) while having minimal effect on negatives, suggesting it enhances the 'continuation' signal.\",\"supporting\":[\"W01\",\"W02\",\"W03\",\"W04\",\"W05\",\"W06\",\"W07\",\"W08\",\"W10\",\"W21\",\"W22\"],\"contradicting\":[\"W09\",\"W13\",\"W14\",\"W15\",\"W16\",\"W20\",\"W23\",\"W24\"],\"proposed_tests\":[{\"discriminates\":\"punctuation after emotional vs. factual content\",\"a_text\":\"I'm so happy today,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The data shows a trend,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period ending emotional narrative vs. factual statement\",\"a_text\":\"He cried silently.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The experiment concluded.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after informal vs. formal list\",\"a_text\":\"I bought apples, bananas,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"The components include A, B,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after emotional chat vs. neutral instruction\",\"a_text\":\"That was amazing!<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"Please provide a summary.<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"asterisks as emphasis markers\",\"a_text\":\"This is **\",\"a_expected\":\"high\",\"a_target\":\"**\",\"b_text\":\"The formula is **\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"apostrophe s in emotional vs. factual context\",\"a_text\":\"It's really tough.\",\"a_expected\":\"negative\",\"a_target\":\"’s\",\"b_text\":\"The company's revenue.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after narrative action vs. code\",\"a_text\":\"He ran, jumped,\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"def func(a, b,\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"period after descriptive vs. technical sentence\",\"a_text\":\"The sky darkened.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The process terminated.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after excited vs. calm prompt\",\"a_text\":\"We won!<|im_end|>\\n<|im_start|>assistant\\n\",\"a_expected\":\"high\",\"a_target\":\"\\n\\n\",\"b_text\":\"The meeting is scheduled.<|im_end|>\\n<|im_start|>assistant\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after interjection vs. formal clause\",\"a_text\":\"Well, I guess\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"However, the results\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 4154,
+    "output_tokens": 1015,
+    "reasoning_tokens": 0,
+    "cached_tokens": 640,
+    "cost_usd": 0.00138254,
+    "cost_source": "openrouter"
+   },
+   "provider": "DeepInfra",
+   "generation_id": "gen-1793041401-TziQVvyrZnb7DIdcptCX"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:03:47Z",
+ "purpose": "explain:shuffled"
+}

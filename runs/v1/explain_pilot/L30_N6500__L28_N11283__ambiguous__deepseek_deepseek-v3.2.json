@@ -1,0 +1,416 @@
+{
+ "model": "deepseek/deepseek-v3.2",
+ "parsed": {
+  "label": "emotional transition punctuation",
+  "trigger_hypothesis": "The neuron activates strongly at punctuation (comma, semicolon) that marks a transition in emotional or reflective text, especially when the preceding context is a reflective or emotional statement and the punctuation introduces a contrasting or explanatory follow-up.",
+  "output_hypothesis": "The neuron's activation encourages the model to continue a sentence after a reflective or emotional clause, promoting elaboration or contrast rather than ending the thought.",
+  "alternatives": [
+   "The neuron detects specific punctuation tokens (comma, semicolon) regardless of context.",
+   "The neuron responds to the end of a sentence or clause that expresses a personal reflection or emotional content."
+  ],
+  "adapter_changes": "In state B+1 and E+1, negative activations become much stronger (e.g., W10, W11) and some positive activations also increase (W02, W05, W06), suggesting the modified states amplify the neuron's sensitivity to its triggers, especially for sentence endings and contrastive transitions.",
+  "supporting": [
+   "W01",
+   "W05",
+   "W06",
+   "W07"
+  ],
+  "contradicting": [
+   "W10",
+   "W11",
+   "W16",
+   "W23"
+  ],
+  "proposed_tests": [
+   {
+    "discriminates": "emotional transition vs neutral list",
+    "a_text": "I felt so relieved, but then I saw the time.",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "I bought apples, bananas, and oranges.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "reflective semicolon vs code semicolon",
+    "a_text": "I was scared; however, I decided to go.",
+    "a_expected": "high",
+    "a_target": ";",
+    "b_text": "for (int i=0; i<10; i++) {",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "contrasting 'But' after emotional statement",
+    "a_text": "That was embarrassing. But we can laugh now.",
+    "a_expected": "high",
+    "a_target": "But",
+    "b_text": "The plan failed. But the backup worked.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "emotional period vs neutral period",
+    "a_text": "I learned so much from that experience.",
+    "a_expected": "negative",
+    "a_target": ".",
+    "b_text": "The cat sat on the mat.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "comma after reflective clause",
+    "a_text": "It was a turning point for me, and I grew.",
+    "a_expected": "high",
+    "a_target": ",",
+    "b_text": "We went to the store, and we bought milk.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'found' in creative context vs factual",
+    "a_text": "Found poetry involves rearranging texts.",
+    "a_expected": "high",
+    "a_target": "Found",
+    "b_text": "I found my keys under the sofa.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'happened' after negative anticipation",
+    "a_text": "I hope nothing bad happened.",
+    "a_expected": "high",
+    "a_target": "happened",
+    "b_text": "The accident happened yesterday.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'older' in reflective growth context",
+    "a_text": "You learn a lot when you get older.",
+    "a_expected": "high",
+    "a_target": "older",
+    "b_text": "My brother is three years older.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "'didn't' after positive statement",
+    "a_text": "That's amazing, too bad you didn't see it.",
+    "a_expected": "negative",
+    "a_target": "didn",
+    "b_text": "I didn't go to the party.",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   },
+   {
+    "discriminates": "newline after emotional prompt",
+    "a_text": "I felt so alone.<|im_end|>\n",
+    "a_expected": "negative",
+    "a_target": "\n",
+    "b_text": "The data is complete.<|im_end|>\n",
+    "b_expected": "low",
+    "b_target": "",
+    "c_text": "",
+    "c_expected": "",
+    "c_target": ""
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false
+ },
+ "content": "{\"label\":\"emotional transition punctuation\",\"trigger_hypothesis\":\"The neuron activates strongly at punctuation (comma, semicolon) that marks a transition in emotional or reflective text, especially when the preceding context is a reflective or emotional statement and the punctuation introduces a contrasting or explanatory follow-up.\",\"output_hypothesis\":\"The neuron's activation encourages the model to continue a sentence after a reflective or emotional clause, promoting elaboration or contrast rather than ending the thought.\",\"alternatives\":[\"The neuron detects specific punctuation tokens (comma, semicolon) regardless of context.\",\"The neuron responds to the end of a sentence or clause that expresses a personal reflection or emotional content.\"],\"adapter_changes\":\"In state B+1 and E+1, negative activations become much stronger (e.g., W10, W11) and some positive activations also increase (W02, W05, W06), suggesting the modified states amplify the neuron's sensitivity to its triggers, especially for sentence endings and contrastive transitions.\",\"supporting\":[\"W01\",\"W05\",\"W06\",\"W07\"],\"contradicting\":[\"W10\",\"W11\",\"W16\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"emotional transition vs neutral list\",\"a_text\":\"I felt so relieved, but then I saw the time.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"I bought apples, bananas, and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"reflective semicolon vs code semicolon\",\"a_text\":\"I was scared; however, I decided to go.\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"for (int i=0; i<10; i++) {\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"contrasting 'But' after emotional statement\",\"a_text\":\"That was embarrassing. But we can laugh now.\",\"a_expected\":\"high\",\"a_target\":\"But\",\"b_text\":\"The plan failed. But the backup worked.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional period vs neutral period\",\"a_text\":\"I learned so much from that experience.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The cat sat on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after reflective clause\",\"a_text\":\"It was a turning point for me, and I grew.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"We went to the store, and we bought milk.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'found' in creative context vs factual\",\"a_text\":\"Found poetry involves rearranging texts.\",\"a_expected\":\"high\",\"a_target\":\"Found\",\"b_text\":\"I found my keys under the sofa.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'happened' after negative anticipation\",\"a_text\":\"I hope nothing bad happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"The accident happened yesterday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'older' in reflective growth context\",\"a_text\":\"You learn a lot when you get older.\",\"a_expected\":\"high\",\"a_target\":\"older\",\"b_text\":\"My brother is three years older.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'didn't' after positive statement\",\"a_text\":\"That's amazing, too bad you didn't see it.\",\"a_expected\":\"negative\",\"a_target\":\"didn\",\"b_text\":\"I didn't go to the party.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after emotional prompt\",\"a_text\":\"I felt so alone.<|im_end|>\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\",\"b_text\":\"The data is complete.<|im_end|>\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+ "valid": true,
+ "errors": [],
+ "usage": {
+  "input_tokens": 5391,
+  "output_tokens": 1005,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.001641276
+ },
+ "attempts": [
+  {
+   "content": "{\"label\":\"emotional transition punctuation\",\"trigger_hypothesis\":\"The neuron activates strongly at punctuation (comma, semicolon) that marks a transition in emotional or reflective text, especially when the preceding context is a reflective or emotional statement and the punctuation introduces a contrasting or explanatory follow-up.\",\"output_hypothesis\":\"The neuron's activation encourages the model to continue a sentence after a reflective or emotional clause, promoting elaboration or contrast rather than ending the thought.\",\"alternatives\":[\"The neuron detects specific punctuation tokens (comma, semicolon) regardless of context.\",\"The neuron responds to the end of a sentence or clause that expresses a personal reflection or emotional content.\"],\"adapter_changes\":\"In state B+1 and E+1, negative activations become much stronger (e.g., W10, W11) and some positive activations also increase (W02, W05, W06), suggesting the modified states amplify the neuron's sensitivity to its triggers, especially for sentence endings and contrastive transitions.\",\"supporting\":[\"W01\",\"W05\",\"W06\",\"W07\"],\"contradicting\":[\"W10\",\"W11\",\"W16\",\"W23\"],\"proposed_tests\":[{\"discriminates\":\"emotional transition vs neutral list\",\"a_text\":\"I felt so relieved, but then I saw the time.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"I bought apples, bananas, and oranges.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"reflective semicolon vs code semicolon\",\"a_text\":\"I was scared; however, I decided to go.\",\"a_expected\":\"high\",\"a_target\":\";\",\"b_text\":\"for (int i=0; i<10; i++) {\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"contrasting 'But' after emotional statement\",\"a_text\":\"That was embarrassing. But we can laugh now.\",\"a_expected\":\"high\",\"a_target\":\"But\",\"b_text\":\"The plan failed. But the backup worked.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"emotional period vs neutral period\",\"a_text\":\"I learned so much from that experience.\",\"a_expected\":\"negative\",\"a_target\":\".\",\"b_text\":\"The cat sat on the mat.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"comma after reflective clause\",\"a_text\":\"It was a turning point for me, and I grew.\",\"a_expected\":\"high\",\"a_target\":\",\",\"b_text\":\"We went to the store, and we bought milk.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'found' in creative context vs factual\",\"a_text\":\"Found poetry involves rearranging texts.\",\"a_expected\":\"high\",\"a_target\":\"Found\",\"b_text\":\"I found my keys under the sofa.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'happened' after negative anticipation\",\"a_text\":\"I hope nothing bad happened.\",\"a_expected\":\"high\",\"a_target\":\"happened\",\"b_text\":\"The accident happened yesterday.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'older' in reflective growth context\",\"a_text\":\"You learn a lot when you get older.\",\"a_expected\":\"high\",\"a_target\":\"older\",\"b_text\":\"My brother is three years older.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"'didn't' after positive statement\",\"a_text\":\"That's amazing, too bad you didn't see it.\",\"a_expected\":\"negative\",\"a_target\":\"didn\",\"b_text\":\"I didn't go to the party.\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"},{\"discriminates\":\"newline after emotional prompt\",\"a_text\":\"I felt so alone.<|im_end|>\\n\",\"a_expected\":\"negative\",\"a_target\":\"\\n\",\"b_text\":\"The data is complete.<|im_end|>\\n\",\"b_expected\":\"low\",\"b_target\":\"\",\"c_text\":\"\",\"c_expected\":\"\",\"c_target\":\"\"}],\"confidence\":\"medium\",\"no_coherent_hypothesis\":false}",
+   "errors": [],
+   "finish_reason": "stop",
+   "usage": {
+    "input_tokens": 5391,
+    "output_tokens": 1005,
+    "reasoning_tokens": 0,
+    "cached_tokens": 1152,
+    "cost_usd": 0.001641276,
+    "cost_source": "openrouter"
+   },
+   "provider": "Baidu",
+   "generation_id": "gen-1793041430-6eLw31e4WNSKE0v5yaiK"
+  }
+ ],
+ "cached": false,
+ "created": "2026-10-26T19:04:10Z",
+ "purpose": "explain:ambiguous",
+ "version": {
+  "author": "deepseek/deepseek-v3.2",
+  "created": "2026-10-26T19:04:10Z",
+  "kind": "automated",
+  "blind": true,
+  "label": "emotional transition punctuation",
+  "trigger_hypothesis": "The neuron activates strongly at punctuation (comma, semicolon) that marks a transition in emotional or reflective text, especially when the preceding context is a reflective or emotional statement and the punctuation introduces a contrasting or explanatory follow-up.",
+  "output_hypothesis": "The neuron's activation encourages the model to continue a sentence after a reflective or emotional clause, promoting elaboration or contrast rather than ending the thought.",
+  "alternatives": [
+   "The neuron detects specific punctuation tokens (comma, semicolon) regardless of context.",
+   "The neuron responds to the end of a sentence or clause that expresses a personal reflection or emotional content."
+  ],
+  "adapter_changes": "In state B+1 and E+1, negative activations become much stronger (e.g., W10, W11) and some positive activations also increase (W02, W05, W06), suggesting the modified states amplify the neuron's sensitivity to its triggers, especially for sentence endings and contrastive transitions.",
+  "supporting": [
+   "L28_N11283:e00",
+   "L28_N11283:e02",
+   "L28_N11283:e03",
+   "L28_N11283:e04"
+  ],
+  "contradicting": [
+   "L28_N11283:e08",
+   "L28_N11283:e10",
+   "L28_N11283:e12",
+   "L28_N11283:e26"
+  ],
+  "proposed_tests": [
+   "emotional transition vs neutral list :: [high] I felt so relieved, but then I saw the time. | [low] I bought apples, bananas, and oranges.",
+   "reflective semicolon vs code semicolon :: [high] I was scared; however, I decided to go. | [low] for (int i=0; i<10; i++) {",
+   "contrasting 'But' after emotional statement :: [high] That was embarrassing. But we can laugh now. | [low] The plan failed. But the backup worked.",
+   "emotional period vs neutral period :: [negative] I learned so much from that experience. | [low] The cat sat on the mat.",
+   "comma after reflective clause :: [high] It was a turning point for me, and I grew. | [low] We went to the store, and we bought milk.",
+   "'found' in creative context vs factual :: [high] Found poetry involves rearranging texts. | [low] I found my keys under the sofa.",
+   "'happened' after negative anticipation :: [high] I hope nothing bad happened. | [low] The accident happened yesterday.",
+   "'older' in reflective growth context :: [high] You learn a lot when you get older. | [low] My brother is three years older.",
+   "'didn't' after positive statement :: [negative] That's amazing, too bad you didn't see it. | [low] I didn't go to the party.",
+   "newline after emotional prompt :: [negative] I felt so alone.<|im_end|>\n | [low] The data is complete.<|im_end|>\n"
+  ],
+  "proposed_tests_detail": [
+   {
+    "test_id": "t1",
+    "discriminates": "emotional transition vs neutral list",
+    "texts": [
+     {
+      "text": "I felt so relieved, but then I saw the time.",
+      "expected": "high",
+      "target": ","
+     },
+     {
+      "text": "I bought apples, bananas, and oranges.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t2",
+    "discriminates": "reflective semicolon vs code semicolon",
+    "texts": [
+     {
+      "text": "I was scared; however, I decided to go.",
+      "expected": "high",
+      "target": ";"
+     },
+     {
+      "text": "for (int i=0; i<10; i++) {",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t3",
+    "discriminates": "contrasting 'But' after emotional statement",
+    "texts": [
+     {
+      "text": "That was embarrassing. But we can laugh now.",
+      "expected": "high",
+      "target": "But"
+     },
+     {
+      "text": "The plan failed. But the backup worked.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t4",
+    "discriminates": "emotional period vs neutral period",
+    "texts": [
+     {
+      "text": "I learned so much from that experience.",
+      "expected": "negative",
+      "target": "."
+     },
+     {
+      "text": "The cat sat on the mat.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t5",
+    "discriminates": "comma after reflective clause",
+    "texts": [
+     {
+      "text": "It was a turning point for me, and I grew.",
+      "expected": "high",
+      "target": ","
+     },
+     {
+      "text": "We went to the store, and we bought milk.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t6",
+    "discriminates": "'found' in creative context vs factual",
+    "texts": [
+     {
+      "text": "Found poetry involves rearranging texts.",
+      "expected": "high",
+      "target": "Found"
+     },
+     {
+      "text": "I found my keys under the sofa.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t7",
+    "discriminates": "'happened' after negative anticipation",
+    "texts": [
+     {
+      "text": "I hope nothing bad happened.",
+      "expected": "high",
+      "target": "happened"
+     },
+     {
+      "text": "The accident happened yesterday.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t8",
+    "discriminates": "'older' in reflective growth context",
+    "texts": [
+     {
+      "text": "You learn a lot when you get older.",
+      "expected": "high",
+      "target": "older"
+     },
+     {
+      "text": "My brother is three years older.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t9",
+    "discriminates": "'didn't' after positive statement",
+    "texts": [
+     {
+      "text": "That's amazing, too bad you didn't see it.",
+      "expected": "negative",
+      "target": "didn"
+     },
+     {
+      "text": "I didn't go to the party.",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   },
+   {
+    "test_id": "t10",
+    "discriminates": "newline after emotional prompt",
+    "texts": [
+     {
+      "text": "I felt so alone.<|im_end|>\n",
+      "expected": "negative",
+      "target": "\n"
+     },
+     {
+      "text": "The data is complete.<|im_end|>\n",
+      "expected": "low",
+      "target": ""
+     }
+    ]
+   }
+  ],
+  "confidence": "medium",
+  "no_coherent_hypothesis": false,
+  "usage": {
+   "input_tokens": 5391,
+   "output_tokens": 1005,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.001641276
+  },
+  "invalid_citations": [],
+  "packet_hash": "de329ec104f0cace5eca6ae5d5c413e321b7851a0a48a2000dea81a9850e7112",
+  "packet_mode": "ambiguous",
+  "state_map": {
+   "base": "base",
+   "ctrl+1": "C+1",
+   "n_amp+1": "D+1",
+   "n_sup+1": "E+1",
+   "o_amp+1": "B+1",
+   "o_sup+1": "A+1"
+  },
+  "prompt_version": "explain-v4"
+ },
+ "checks": {
+  "n_supporting": 4,
+  "n_contradicting": 4,
+  "invalid_ids": [],
+  "supporting_strong_frac": 1.0,
+  "supporting_categories": {
+   "high_pos": 4
+  },
+  "supporting_by_neuron": {
+   "L28/N11283": 4
+  },
+  "n_tests": 10,
+  "n_contrast_tests": 10,
+  "targets_found_frac": 1.0,
+  "mentions_negative": false,
+  "no_coherent": false,
+  "confidence": "medium"
+ }
+}

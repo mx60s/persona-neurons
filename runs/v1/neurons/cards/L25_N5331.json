@@ -1,0 +1,1163 @@
+{
+ "id": "L25/N5331",
+ "status": "rejected",
+ "versions": [
+  {
+   "author": "deepseek/deepseek-v3.2",
+   "created": "2026-10-26T19:17:24Z",
+   "kind": "automated",
+   "blind": true,
+   "label": "punctuation and formatting tokens",
+   "trigger_hypothesis": "The neuron fires strongly on punctuation marks (periods, commas, parentheses) and formatting tokens (newlines, spaces) that appear in structured contexts like lists, code headers, or factual sentences.",
+   "output_hypothesis": "The neuron's output may help the model structure text by emphasizing punctuation and formatting, aiding in list generation, code formatting, or factual sentence completion.",
+   "alternatives": [
+    "The neuron detects tokens that appear in list-like or tabular contexts (e.g., '|', numbers, parentheses).",
+    "The neuron responds to tokens that are part of proper names or titles (e.g., 'Dr.', 'Gran', 'Lor')."
+   ],
+   "adapter_changes": "In states A+1, C+1, D+1, and E+1, the neuron shows large negative shifts in chat/emotional contexts (e.g., W19, W20, W21), suggesting these adapters suppress the neuron's punctuation/formatting detection in conversational or emotional text.",
+   "supporting": [
+    "L25_N5331:e00",
+    "L25_N5331:e01",
+    "L25_N5331:e04",
+    "L25_N5331:e05",
+    "L25_N5331:e06",
+    "L25_N5331:e07",
+    "L25_N5331:e10",
+    "L25_N5331:e11",
+    "L25_N5331:e12",
+    "L25_N5331:e13",
+    "L25_N5331:e25",
+    "L25_N5331:e24",
+    "L25_N5331:e30",
+    "L25_N5331:e29",
+    "L25_N5331:e31",
+    "L25_N5331:e14",
+    "L25_N5331:e18",
+    "L25_N5331:e15",
+    "L25_N5331:e19",
+    "L25_N5331:e17"
+   ],
+   "contradicting": [
+    "L25_N5331:e23",
+    "L25_N5331:e28",
+    "L25_N5331:e27"
+   ],
+   "proposed_tests": [
+    "punctuation vs. content words :: [high] The list includes: apple, banana, cherry. | [low] The list includes apple banana cherry",
+    "newline formatting :: [high] Item 1\nItem 2\nItem 3 | [low] Item 1 Item 2 Item 3",
+    "code vs. prose :: [high] # Copyright 2025 | [low] Copyright 2025",
+    "parentheses in lists :: [high] (a) First point (b) Second | [low] a First point b Second",
+    "periods ending sentences :: [high] He ran fast. She walked. | [low] He ran fast She walked",
+    "emotional vs. factual punctuation :: [low] I'm so happy! | [high] The event ended.",
+    "numbers in lists :: [high] 1. Introduction 2. Methods | [low] Introduction Methods",
+    "code version numbers :: [high] Version 3.0 released. | [low] Version three released.",
+    "names with titles :: [high] Dr. Smith, Prof. Jones | [low] Doctor Smith Professor Jones",
+    "table formatting :: [high] | Name | Age |\n| John | 25 | | [low] Name Age John 25"
+   ],
+   "proposed_tests_detail": [
+    {
+     "test_id": "t1",
+     "discriminates": "punctuation vs. content words",
+     "texts": [
+      {
+       "text": "The list includes: apple, banana, cherry.",
+       "expected": "high",
+       "target": ","
+      },
+      {
+       "text": "The list includes apple banana cherry",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t2",
+     "discriminates": "newline formatting",
+     "texts": [
+      {
+       "text": "Item 1\nItem 2\nItem 3",
+       "expected": "high",
+       "target": "\n"
+      },
+      {
+       "text": "Item 1 Item 2 Item 3",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t3",
+     "discriminates": "code vs. prose",
+     "texts": [
+      {
+       "text": "# Copyright 2025",
+       "expected": "high",
+       "target": "#"
+      },
+      {
+       "text": "Copyright 2025",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t4",
+     "discriminates": "parentheses in lists",
+     "texts": [
+      {
+       "text": "(a) First point (b) Second",
+       "expected": "high",
+       "target": ")"
+      },
+      {
+       "text": "a First point b Second",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t5",
+     "discriminates": "periods ending sentences",
+     "texts": [
+      {
+       "text": "He ran fast. She walked.",
+       "expected": "high",
+       "target": "."
+      },
+      {
+       "text": "He ran fast She walked",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t6",
+     "discriminates": "emotional vs. factual punctuation",
+     "texts": [
+      {
+       "text": "I'm so happy!",
+       "expected": "low",
+       "target": ""
+      },
+      {
+       "text": "The event ended.",
+       "expected": "high",
+       "target": "."
+      }
+     ]
+    },
+    {
+     "test_id": "t7",
+     "discriminates": "numbers in lists",
+     "texts": [
+      {
+       "text": "1. Introduction 2. Methods",
+       "expected": "high",
+       "target": "2"
+      },
+      {
+       "text": "Introduction Methods",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t8",
+     "discriminates": "code version numbers",
+     "texts": [
+      {
+       "text": "Version 3.0 released.",
+       "expected": "high",
+       "target": "3"
+      },
+      {
+       "text": "Version three released.",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t9",
+     "discriminates": "names with titles",
+     "texts": [
+      {
+       "text": "Dr. Smith, Prof. Jones",
+       "expected": "high",
+       "target": ","
+      },
+      {
+       "text": "Doctor Smith Professor Jones",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "test_id": "t10",
+     "discriminates": "table formatting",
+     "texts": [
+      {
+       "text": "| Name | Age |\n| John | 25 |",
+       "expected": "high",
+       "target": "|"
+      },
+      {
+       "text": "Name Age John 25",
+       "expected": "low",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "confidence": "medium",
+   "no_coherent_hypothesis": false,
+   "usage": {
+    "input_tokens": 5733,
+    "output_tokens": 964,
+    "reasoning_tokens": 0,
+    "cost_usd": 0.0017737
+   },
+   "invalid_citations": [],
+   "packet_hash": "b500ccea70d7637fc718e38f857205490268057f23825c742f9ba358f20bdeb5",
+   "packet_mode": "blind",
+   "state_map": {
+    "base": "base",
+    "ctrl+1": "E+1",
+    "n_amp+0.5": "C+0.5",
+    "n_amp+1": "C+1",
+    "n_amp-0.5": "C-0.5",
+    "n_amp-1": "C-1",
+    "n_sup+1": "D+1",
+    "o_amp+0.5": "A+0.5",
+    "o_amp+1": "A+1",
+    "o_amp-0.5": "A-0.5",
+    "o_amp-1": "A-1",
+    "o_sup+1": "B+1"
+   },
+   "prompt_version": "explain-v4",
+   "v": 1
+  }
+ ],
+ "tests": [
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "punctuation vs. content words",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The list includes: apple, banana, cherry.",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 1.125,
+     "measured_min": 0.0,
+     "value": 0.6328,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "The list includes apple banana cherry",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.793,
+     "measured_min": 0.0,
+     "value": 0.793,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.064,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "newline formatting",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Item 1\nItem 2\nItem 3",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.6953,
+     "measured_min": 0.0,
+     "value": 0.6953,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Item 1 Item 2 Item 3",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7656,
+     "measured_min": 0.0,
+     "value": 0.7656,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.028,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "code vs. prose",
+   "prediction": "high on '#'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# Copyright 2025",
+     "expected": "high",
+     "target": "#",
+     "measured_max": 0.6055,
+     "measured_min": -0.4238,
+     "value": 0.0,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Copyright 2025",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0781,
+     "measured_min": 0.0,
+     "value": 1.0781,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.429,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "parentheses in lists",
+   "prediction": "high on ')'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "(a) First point (b) Second",
+     "expected": "high",
+     "target": ")",
+     "measured_max": 0.7266,
+     "measured_min": 0.0,
+     "value": 0.6914,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "a First point b Second",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8203,
+     "measured_min": 0.0,
+     "value": 0.8203,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.051,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "periods ending sentences",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He ran fast. She walked.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.4199,
+     "measured_min": 0.0,
+     "value": 0.2285,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "He ran fast She walked",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4199,
+     "measured_min": 0.0,
+     "value": 0.4199,
+     "threshold": 0.5117,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.076,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "emotional vs. factual punctuation",
+   "prediction": "low on 'whole text'; high on '.'",
+   "texts": [
+    {
+     "text": "I'm so happy!",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2734,
+     "measured_min": 0.0,
+     "value": 1.2734,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token"
+    },
+    {
+     "text": "The event ended.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.6445,
+     "measured_min": 0.0,
+     "value": 0.5703,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.279,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "numbers in lists",
+   "prediction": "high on '2'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "1. Introduction 2. Methods",
+     "expected": "high",
+     "target": "2",
+     "measured_max": 1.0078,
+     "measured_min": 0.0,
+     "value": 0.2773,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Introduction Methods",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6367,
+     "measured_min": 0.0,
+     "value": 0.6367,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.143,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "code version numbers",
+   "prediction": "high on '3'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Version 3.0 released.",
+     "expected": "high",
+     "target": "3",
+     "measured_max": 0.5664,
+     "measured_min": -0.1118,
+     "value": -0.1118,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Version three released.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5938,
+     "measured_min": 0.0,
+     "value": 0.5938,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.28,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "names with titles",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Dr. Smith, Prof. Jones",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 0.9258,
+     "measured_min": 0.0,
+     "value": 0.4863,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Doctor Smith Professor Jones",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3613,
+     "measured_min": 0.0,
+     "value": 0.3613,
+     "threshold": 0.5117,
+     "pass": true,
+     "measured_at": "token"
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.05,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "table formatting",
+   "prediction": "high on '|'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "| Name | Age |\n| John | 25 |",
+     "expected": "high",
+     "target": "|",
+     "measured_max": 1.3047,
+     "measured_min": -0.2471,
+     "value": 0.0,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target"
+    },
+    {
+     "text": "Name Age John 25",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.9297,
+     "measured_min": 0.0,
+     "value": 0.9297,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token"
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.37,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base",
+   "created": "2026-10-26T19:21:10Z",
+   "rule": "v1"
+  },
+  {
+   "test_id": "v1-t1",
+   "card_version": 1,
+   "description": "punctuation vs. content words",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "The list includes: apple, banana, cherry.",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 1.125,
+     "measured_min": 0.0,
+     "value": 0.6328,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "The list includes apple banana cherry",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.793,
+     "measured_min": 0.0,
+     "value": 0.793,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.064,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t2",
+   "card_version": 1,
+   "description": "newline formatting",
+   "prediction": "high on '\\n'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Item 1\nItem 2\nItem 3",
+     "expected": "high",
+     "target": "\n",
+     "measured_max": 0.6953,
+     "measured_min": 0.0,
+     "value": 0.6953,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Item 1 Item 2 Item 3",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.7656,
+     "measured_min": 0.0,
+     "value": 0.7656,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.028,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t3",
+   "card_version": 1,
+   "description": "code vs. prose",
+   "prediction": "high on '#'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "# Copyright 2025",
+     "expected": "high",
+     "target": "#",
+     "measured_max": 0.6055,
+     "measured_min": -0.4238,
+     "value": 0.0,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Copyright 2025",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.0781,
+     "measured_min": 0.0,
+     "value": 1.0781,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.429,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t4",
+   "card_version": 1,
+   "description": "parentheses in lists",
+   "prediction": "high on ')'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "(a) First point (b) Second",
+     "expected": "high",
+     "target": ")",
+     "measured_max": 0.7266,
+     "measured_min": 0.0,
+     "value": 0.6914,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "a First point b Second",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.8203,
+     "measured_min": 0.0,
+     "value": 0.8203,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.051,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t5",
+   "card_version": 1,
+   "description": "periods ending sentences",
+   "prediction": "high on '.'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "He ran fast. She walked.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.4199,
+     "measured_min": 0.0,
+     "value": 0.2285,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "He ran fast She walked",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.4199,
+     "measured_min": 0.0,
+     "value": 0.4199,
+     "threshold": 0.5117,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": -0.076,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t6",
+   "card_version": 1,
+   "description": "emotional vs. factual punctuation",
+   "prediction": "low on 'whole text'; high on '.'",
+   "texts": [
+    {
+     "text": "I'm so happy!",
+     "expected": "low",
+     "target": "",
+     "measured_max": 1.2734,
+     "measured_min": 0.0,
+     "value": 1.2734,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": false
+    },
+    {
+     "text": "The event ended.",
+     "expected": "high",
+     "target": ".",
+     "measured_max": 0.6445,
+     "measured_min": 0.0,
+     "value": 0.5703,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.279,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t7",
+   "card_version": 1,
+   "description": "numbers in lists",
+   "prediction": "high on '2'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "1. Introduction 2. Methods",
+     "expected": "high",
+     "target": "2",
+     "measured_max": 1.0078,
+     "measured_min": 0.0,
+     "value": 0.2773,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Introduction Methods",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.6367,
+     "measured_min": 0.0,
+     "value": 0.6367,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.143,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t8",
+   "card_version": 1,
+   "description": "code version numbers",
+   "prediction": "high on '3'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Version 3.0 released.",
+     "expected": "high",
+     "target": "3",
+     "measured_max": 0.5664,
+     "measured_min": -0.1118,
+     "value": -0.1118,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Version three released.",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.5938,
+     "measured_min": 0.0,
+     "value": 0.5938,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.28,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t9",
+   "card_version": 1,
+   "description": "names with titles",
+   "prediction": "high on ','; low on 'whole text'",
+   "texts": [
+    {
+     "text": "Dr. Smith, Prof. Jones",
+     "expected": "high",
+     "target": ",",
+     "measured_max": 0.9258,
+     "measured_min": 0.0,
+     "value": 0.4863,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Doctor Smith Professor Jones",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.3613,
+     "measured_min": 0.0,
+     "value": 0.3613,
+     "threshold": 0.5117,
+     "pass": true,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "mixed",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.5,
+    "contrast_margin_in_scale": 0.05,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  },
+  {
+   "test_id": "v1-t10",
+   "card_version": 1,
+   "description": "table formatting",
+   "prediction": "high on '|'; low on 'whole text'",
+   "texts": [
+    {
+     "text": "| Name | Age |\n| John | 25 |",
+     "expected": "high",
+     "target": "|",
+     "measured_max": 1.3047,
+     "measured_min": -0.2471,
+     "value": 0.0,
+     "threshold": 1.0235,
+     "pass": false,
+     "measured_at": "target",
+     "pass_v2": false
+    },
+    {
+     "text": "Name Age John 25",
+     "expected": "low",
+     "target": "",
+     "measured_max": 0.9297,
+     "measured_min": 0.0,
+     "value": 0.9297,
+     "threshold": 0.5117,
+     "pass": false,
+     "measured_at": "token",
+     "pass_v2": true
+    }
+   ],
+   "result": "fail",
+   "state": "base",
+   "metrics": {
+    "frac_texts_pass": 0.0,
+    "contrast_margin_in_scale": -0.37,
+    "scale": 2.5156,
+    "pos_ref": 2.0469,
+    "neg_ref": -1.5938
+   },
+   "notes": "measure=live Qwen3-8B, state base; rescored with rule v2 (pn/rescore.py)",
+   "created": "2026-10-26T19:22:41+00:00",
+   "rule": "v2",
+   "thresholds_v2": {
+    "p99": 1.21875,
+    "p01": -0.1728515625
+   }
+  }
+ ],
+ "disagreements": [],
+ "status_history": [
+  {
+   "rule": "v1",
+   "status": "rejected"
+  },
+  {
+   "rule": "v2",
+   "status": "rejected",
+   "pass": 0,
+   "of": 10
+  }
+ ]
+}
