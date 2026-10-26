@@ -9,6 +9,7 @@ o_sup, n_amp, n_sup, ctrl. Binds to 127.0.0.1 only. Writes only to runs/<id>/edi
 """
 import argparse
 import asyncio
+import collections
 import datetime
 import glob
 import json
@@ -51,24 +52,45 @@ class Run:
         self.path = os.path.abspath(path)
         if not os.path.exists(os.path.join(self.path, "manifest.json")):
             raise SystemExit(f"{self.path} has no manifest.json")
-        self._cache = {}
+        self._cache = collections.OrderedDict()   # rel -> (stamp, value), LRU
+        self._small = {}                           # derived per-neuron values -> (stamp, value), never evicted
+        self._finished = {"stamp": None, "offset": 0, "rows": [], "by_id": {}}
+        self.read_lock = threading.Lock()
         self.write_lock = threading.Lock()
         os.makedirs(os.path.join(self.path, "edits", "cards"), exist_ok=True)
 
     def p(self, *parts):
         return os.path.join(self.path, *parts)
 
+    def stamp(self, rel):
+        try:
+            st = os.stat(self.p(rel))
+        except OSError:
+            return None
+        return (st.st_mtime_ns, st.st_size)
+
     def _json(self, rel, default=None):
-        path = self.p(rel)
-        if not os.path.exists(path):
+        """Parsed JSON, re-read when the file's mtime or size changes. A file caught mid-write keeps its last good
+        value (or the default) instead of raising."""
+        stamp = self.stamp(rel)
+        if stamp is None:
             return default
-        key = (rel, os.path.getmtime(path))
-        if key not in self._cache:
-            if len(self._cache) > 256:
-                self._cache.clear()
-            with open(path) as f:
-                self._cache[key] = json.load(f)
-        return self._cache[key]
+        with self.read_lock:
+            hit = self._cache.get(rel)
+            if hit and hit[0] == stamp:
+                self._cache.move_to_end(rel)
+                return hit[1]
+        try:
+            with open(self.p(rel)) as f:
+                val = json.load(f)
+        except (ValueError, OSError):
+            return hit[1] if hit else default
+        with self.read_lock:
+            self._cache[rel] = (stamp, val)
+            self._cache.move_to_end(rel)
+            while len(self._cache) > 400:
+                self._cache.popitem(last=False)
+        return val
 
     def manifest(self):
         return self._json("manifest.json")
@@ -93,12 +115,17 @@ class Run:
         """Fallback for neurons without a plain.json entry (same rule as pn/plain.py): median, over the ten saved
         top/quantile/top-diff example windows with the strongest base value at the focus token, of
         activation(state) / activation(base) at that token."""
+        rel = f"neurons/detail/{fid(nid)[0]}.json"
+        stamp = self.stamp(rel)
+        if stamp is None:
+            return {}
+        key = ("ratios", nid, tuple(states))
+        hit = self._small.get(key)
+        if hit and hit[0] == stamp:
+            return hit[1]
         d = self.detail(nid)
         if not d:
             return {}
-        key = ("ratios", nid, os.path.getmtime(self.p("neurons", "detail", fid(nid)[0] + ".json")))
-        if key in self._cache:
-            return self._cache[key]
         ex = [e for e in d.get("examples", []) if e.get("kind") in ("top_pos", "top_neg", "quantile", "top_diff")
               and e.get("focus") is not None and "base" in (e.get("acts") or {})]
         ex = sorted(ex, key=lambda e: -abs(e["acts"]["base"][e["focus"]]))[:10]
@@ -109,8 +136,57 @@ class Run:
             if rs:
                 m = len(rs) // 2
                 out[s] = rs[m] if len(rs) % 2 else (rs[m - 1] + rs[m]) / 2
-        self._cache[key] = out
+        self._small[key] = (stamp, out)
         return out
+
+    # ---- automated investigation (written by pn/investigate.py while it runs)
+
+    def progress(self):
+        return self._json("investigations/progress.json")
+
+    def population_stats(self):
+        return self._json("population_stats.json")
+
+    def finished(self):
+        """All rows of investigations/finished.jsonl in file order. Reads only the bytes appended since the last call;
+        a partial last line is left for the next call. Rewritten or truncated files are re-read from the start."""
+        rel = "investigations/finished.jsonl"
+        stamp = self.stamp(rel)
+        F = self._finished
+        with self.read_lock:
+            if stamp is None:
+                F.update(stamp=None, offset=0, rows=[], by_id={})
+                return F
+            if stamp == F["stamp"]:
+                return F
+            if F["stamp"] is None or stamp[1] < F["offset"]:
+                F.update(offset=0, rows=[], by_id={})
+            with open(self.p(rel), "rb") as fh:
+                fh.seek(F["offset"])
+                chunk = fh.read()
+            end = chunk.rfind(b"\n") + 1
+            for line in chunk[:end].splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    r = json.loads(line)
+                except ValueError:
+                    continue
+                if isinstance(r, dict) and r.get("id"):
+                    F["rows"].append(r)
+                    F["by_id"][r["id"]] = r
+            F["offset"] += end
+            F["stamp"] = stamp if end == len(chunk) else ("partial", F["offset"])
+            return F
+
+    def investigation(self, nid):
+        f, _, _ = fid(nid)
+        for name in (f, nid.replace("/", "_")):
+            d = self._json(f"investigations/{name}.json")
+            if d is not None:
+                return d
+        return None
 
     def prompts(self):
         return self._json("behavior/prompts.json", [])
@@ -261,7 +337,8 @@ def state_label(s):
 def meta():
     m = RUN.manifest()
     return {"run": m, "run_path": RUN.path, "live": live_status(), "prompts": RUN.prompts(),
-            "groups": list(GROUPS) + ["random_control"], "statuses": list(STATUSES)}
+            "groups": list(GROUPS) + ["random_control"], "statuses": list(STATUSES),
+            "has_progress": RUN.progress() is not None}
 
 
 @app.get("/api/live/status")
@@ -271,26 +348,108 @@ def live_status():
             "info": lv.info() if lv is not None else None}
 
 
+def sample_of(r, fin):
+    """Which investigation sample a neuron belongs to: {"kind": "trait"|"random", "trait": ...} or None. Taken from the
+    finished record when there is one, else from whatever marker the index row carries."""
+    if fin:
+        return {"kind": fin.get("kind") or "trait", "trait": fin.get("trait")}
+    m = r.get("investigation") or r.get("sample") or r.get("sample_kind")
+    if isinstance(m, dict):
+        return {"kind": m.get("kind") or "trait", "trait": m.get("trait") or r.get("trait")}
+    if isinstance(m, str) and m:
+        return {"kind": "random" if "random" in m else "trait", "trait": r.get("trait")}
+    k = str(r.get("kind") or "")
+    if "sample" in k or "investigat" in k:
+        return {"kind": "random" if "random" in k else "trait", "trait": r.get("trait")}
+    return None
+
+
+INV_KEYS = ("kind", "trait", "nickname", "one_liner", "status", "passes", "n_final_tests", "rounds", "cost_usd",
+            "finished_at")
+
+
+def neuron_row(r, edits, fin_by_id):
+    r = dict(r)
+    if r["id"] in edits:
+        r["card_status"], r["status_from"] = edits[r["id"]], "human edit"
+    r["has_profile"] = os.path.exists(RUN.p("profiles", fid(r["id"])[0] + ".md"))
+    r["example_ratio"] = RUN.example_ratios(r["id"], list((r.get("effects") or {}).keys()))
+    fin = fin_by_id.get(r["id"])
+    r["inv"] = {k: fin.get(k) for k in INV_KEYS} if fin else None
+    r["sample"] = sample_of(r, fin)
+    return r
+
+
+def stub_row(fin):
+    """Neuron that finished an investigation but has no row in index.json (yet)."""
+    _, layer, n = fid(fin["id"])
+    return {"id": fin["id"], "layer": layer, "n": n, "kind": "sample", "effects": {}}
+
+
 @app.get("/api/neurons")
 def neurons():
-    edits = RUN.edit_statuses()
-    rows = []
+    edits, fin = RUN.edit_statuses(), RUN.finished()["by_id"]
+    rows, seen = [], set()
     for r in RUN.index():
-        r = dict(r)
-        if r["id"] in edits:
-            r["card_status"], r["status_from"] = edits[r["id"]], "human edit"
-        r["has_profile"] = os.path.exists(RUN.p("profiles", fid(r["id"])[0] + ".md"))
-        r["example_ratio"] = RUN.example_ratios(r["id"], list((r.get("effects") or {}).keys()))
-        rows.append(r)
+        try:
+            rows.append(neuron_row(r, edits, fin))
+            seen.add(r["id"])
+        except (ValueError, KeyError):
+            continue
+    for nid, f in list(fin.items()):
+        if nid not in seen:
+            try:
+                rows.append(neuron_row(stub_row(f), edits, fin))
+            except ValueError:
+                pass
     return rows
 
 
 @app.get("/api/neuron")
 def neuron(id: str):
     fid(id)
-    row = next((r for r in neurons() if r["id"] == id), None)
+    edits, fin = RUN.edit_statuses(), RUN.finished()["by_id"]
+    raw = next((r for r in RUN.index() if r.get("id") == id), None)
+    if raw is None and id in fin:
+        raw = stub_row(fin[id])
+    row = neuron_row(raw, edits, fin) if raw else None
     return {"id": id, "index": row, "detail": RUN.detail(id), "card": RUN.card(id), "profile": RUN.profile(id),
-            "saved": RUN.saved(id, 50)}
+            "saved": RUN.saved(id, 50), "investigation": RUN.investigation(id)}
+
+
+@app.get("/api/progress")
+def progress():
+    """investigations/progress.json as written by the investigator, plus the server's clock for staleness."""
+    p = RUN.progress()
+    if p is None:
+        return JSONResponse({"error": "no investigation run in progress (investigations/progress.json missing)"},
+                            status_code=404)
+    return dict(p, server_now=now(), n_finished_lines=len(RUN.finished()["rows"]))
+
+
+@app.get("/api/finished")
+def finished(limit: int = 30, offset: int = 0):
+    """Finished neurons, newest first: rows [offset, offset + limit) counted from the end of finished.jsonl."""
+    rows = RUN.finished()["rows"]
+    limit, offset = min(max(limit, 1), 1000), max(offset, 0)
+    end = max(len(rows) - offset, 0)
+    return {"total": len(rows), "offset": offset, "rows": rows[max(end - limit, 0):end][::-1]}
+
+
+@app.get("/api/investigation")
+def investigation(id: str):
+    d = RUN.investigation(id)
+    if d is None:
+        return JSONResponse({"error": f"no investigation for {id}"}, status_code=404)
+    return d
+
+
+@app.get("/api/population_stats")
+def population_stats():
+    d = RUN.population_stats()
+    if d is None:
+        return JSONResponse({"error": "no population_stats.json in this run"}, status_code=404)
+    return d
 
 
 @app.get("/api/plain")

@@ -5,9 +5,8 @@ One makes it more **open** (curious, imaginative), one makes it more **closed**,
 (anxious, reactive), one makes it **calmer**, and one **neutral** add-on was trained the same way but with no
 personality goal, as a comparison.
 
-The model is built from about 440,000 small units called **neurons**. Each one responds to certain patterns in the text.
-We gave the model the exact same text with and without each adapter and measured which neurons changed, then looked
-closely at a dozen of them.
+We ran the exact same 200k tokens of text through every version of the model, measured all 442,368 MLP neurons in
+each, and looked at which ones the adapters change and how. A dozen got a close, hand-checked investigation.
 
 ## The short version
 
@@ -17,10 +16,11 @@ anything, because the model starts out quite calm.
 
 ![How judged personality changes as each adapter is dialed up](/figures/fig1_behavior_vs_scale.png)
 
-**Mostly, the adapters turn existing responses up or down rather than creating new ones.** The clearest example is the
+**Some neurons are simply turned up or down, but most aren't.** The clearest example of turning up is the
 [“so ___” neuron](#n=L26%2FN8828&t=neuroticism): it already reacts to “so much” and “so difficult” in the original
-model. The anxious adapter makes that reaction stronger and the calm adapter makes it weaker, and neither makes it react
-to new things.
+model, the anxious adapter makes that reaction stronger and the calm adapter weaker, and neither makes it react to new
+things. In a random sample of all trait-specific neurons, though, only about a fifth change this way; most start
+responding in a different pattern.
 
 ![The “so ___” neuron in different versions of the model](/figures/fig4_case_L26_N8828.png)
 
@@ -43,8 +43,7 @@ new sentences.
 
 ## How to read a neuron page
 
-- The **title** is a nickname we gave the neuron; the code under it (like L26/N8828) is its address: layer 26, neuron
-  8828.
+- The **title** is a nickname; the ID under it (L26/N8828) is layer 26, neuron 8828.
 - **“What each adapter does to it”** is the main table. ▲ means the neuron reacts more strongly in that version of the
   model, ▼ means more weakly, · means about the same. “1.2×” means 20% stronger at the moments it usually fires.
 - **“See it in action”** shows real sentences with the key word highlighted and the neuron's value in each version of the

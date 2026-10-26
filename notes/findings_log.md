@@ -190,3 +190,17 @@ L18/N5866, L23/N2218, L15/N7068. Highlights:
   0.73 / 0.59 (all tokens: 0.61 / 0.48).
 - Amp vs sup effect size across all active neurons: Spearman 0.92 / 0.93 (all tokens 0.91 / 0.92).
 - Figures 2 and 3 now use template-free statistics; in fig2 the template-driven candidates fall into the bulk.
+
+## 2026-10-26/27 pilot of the trait-specific population (runs/v2; 128 neurons; USD 1.43)
+
+- Trait-specific population (all positions): change >= 0.5 x usual activity under a pole, neutral control < half:
+  962 openness, 1,181 neuroticism, 180 in both, all in layers 14-35.
+- Free measurements on a random sample (56 per trait): change type under the stronger pole: neuroticism gain 10 (all
+  up), reshaped 46, offset 0; openness gain 15, reshaped 41. Reply-start dominated: 20 / 14. Amp and sup opposite: 37/56
+  and 52/56. This corrects the earlier "mostly gain" impression from hand-picked examples.
+- DeepSeek investigator (4 rounds, pair-level scoring, final round unseen): trait 2 held up, 13 partly, 96 not (n=111);
+  random 0 / 1 / 15 (n=16). Positive controls (the 12 hand-profiled neurons, 10 completed): 1 held up ("so ___"),
+  2 partly, 7 not, including the "Oh" neuron (right idea, incomplete: also fires where "Oh" is about to be written).
+  Read the trait rate against both: ceiling about 30% at-least-partly, random about 6%.
+- Fixed after the pilot: plain-text tests now start with <|endoftext|> so the first word is not the zeroed attention-sink
+  position; malformed test pairs are dropped instead of failing the neuron.

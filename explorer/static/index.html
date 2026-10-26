@@ -14,6 +14,7 @@
   <nav id="nav">
     <a href="#start" data-view="start">Start here</a>
     <a href="#list" data-view="list">All neurons</a>
+    <a href="#live" data-view="live" id="nav-live" hidden>Live run</a>
   </nav>
   <input id="jump" placeholder="Go to neuron, e.g. L26/N8828" aria-label="go to neuron by id" spellcheck="false">
   <span id="live" class="pill"></span>
@@ -48,6 +49,11 @@
     </div>
   </section>
 
+  <!-- Live run: automated investigation dashboard (shown when investigations/progress.json exists) -->
+  <section id="live-page" class="view" hidden>
+    <div id="live-body" class="wide"></div>
+  </section>
+
   <!-- 3. Neuron page -->
   <section id="neuron-page" class="view" hidden>
     <div id="empty" class="slot" hidden></div>
@@ -62,6 +68,8 @@
       <h2 class="deeper">Go deeper</h2>
       <p class="caption">Everything below is the raw evidence behind the summary above. Open any section.</p>
 
+      <details class="sec" data-tab="investigation" id="sec-inv" hidden><summary><b>How the automated investigation went</b><span class="cap">Each round's guess and the new sentences used to check it, with the measured values.</span></summary>
+        <div id="tab-inv" class="tab"></div></details>
       <details class="sec" data-tab="examples"><summary><b>All examples</b><span class="cap">Every saved text window, with one row per model version. Hover a word for exact numbers.</span></summary>
         <div id="tab-examples" class="tab"></div></details>
       <details class="sec" data-tab="trajectory"><summary><b>How it changes across adapter strength</b><span class="cap">The neuron's average change as each amplifier is dialed from −1 to +1, plus the suppressors and the neutral control.</span></summary>

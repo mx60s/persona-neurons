@@ -47,7 +47,8 @@ async function stream(path, body, onEvent, signal) {
 
 const S = {
   meta: null, man: null, plain: null, trait: "openness", rows: [], sel: null, data: null, view: "start",
-  sort: { key: "rank", dir: -1 }, filter: "", tech: false, groupBy: "plain",
+  sort: { key: "rank", dir: -1 }, filter: "", tech: false, groupBy: "plain", expanded: new Set(),
+  hasProgress: false, rowsAt: 0,
   ex: { kind: "all", split: "all", diff: false },
   steer: { mode: "add", value: { add: 0.5, mul: 2 } },
   live: { loaded: false, status: "", error: null },
@@ -66,20 +67,20 @@ const DEFAULT_ADAPTERS = [
   { state: "n_sup+1", name: "Neuroticism suppressor", short: "Neuroticism −", trait: "neuroticism", what: "trained to make the model calmer and steadier" },
   { state: "ctrl+1", name: "Neutral control", short: "Neutral", trait: null, what: "trained the same way but with no personality goal; a comparison" },
 ];
+// terse on purpose; the reader already knows what a neuron is, so there is no "neuron" entry
 const DEFAULT_GLOSSARY = {
-  neuron: "One of about 440,000 small units inside the model. Each produces a number for every word it reads; a large number (positive or negative) means it is responding.",
-  adapter: "A small add-on trained to change the model's behavior, here its personality. It can be switched on, off, or dialed up and down.",
-  amplifier: "The adapter trained to push a trait up (more open, more anxious).",
-  suppressor: "The adapter trained to push a trait down (more closed, calmer). It is trained separately, not the amplifier run backwards.",
-  "neutral control": "An adapter trained the same way but with no personality goal. Changes it also makes are probably about fine-tuning in general.",
-  activation: "The number a neuron produces at a given word. The sign says which way it fires; the size says how strongly.",
-  "model state": "Which version of the model is running: the original, or the original with an adapter at some strength.",
-  layer: "The model is a stack of 36 layers; early layers see raw words, later layers more processed meaning.",
-  "chat template": "Hidden marker tokens that tell the model where a user message ends and the assistant's reply begins.",
-  "reply start": "The few hidden marker tokens just before the assistant's first word. Many adapter changes concentrate there.",
+  adapter: "A small trained add-on that changes the model's personality; it can be switched on, off or scaled.",
+  amplifier: "The adapter trained to push a trait up.",
+  suppressor: "The adapter trained to push a trait down; trained separately, not the amplifier reversed.",
+  "neutral control": "An adapter trained the same way with no personality goal.",
+  activation: "The neuron's value at a word: sign is direction, size is strength.",
+  "model state": "The original model, or the original with adapters at some strength.",
+  layer: "One of the model's 36 stacked layers.",
+  "chat template": "Hidden marker tokens around each chat message.",
+  "reply start": "The hidden marker tokens just before the assistant's first word.",
 };
 const GL_ALIASES = {
-  neuron: ["neurons", "neuron"], adapter: ["adapters", "adapter"], amplifier: ["amplifiers", "amplifier"],
+  adapter: ["adapters", "adapter"], amplifier: ["amplifiers", "amplifier"],
   suppressor: ["suppressors", "suppressor"], "neutral control": ["neutral control", "neutral adapter"],
   activation: ["activations", "activation"], "model state": ["model states", "model state"], layer: ["layers", "layer"],
   "chat template": ["chat template", "chat format"],
@@ -131,7 +132,13 @@ function stateName(s) {
   if (s === "base") return "Original model";
   return adapters()[s]?.name || stateLabel(s);
 }
-function glossary() { return { ...DEFAULT_GLOSSARY, ...(S.plain?.glossary || {}) }; }
+// run glossary entries are cut to their first sentence; "neuron" is never defined
+function glossary() {
+  const g = { ...DEFAULT_GLOSSARY };
+  for (const [k, v] of Object.entries(S.plain?.glossary || {})) g[k] = String(v).match(/^.*?[.!?](?=\s|$)/)?.[0] || v;
+  delete g.neuron;
+  return g;
+}
 // one row per adapter in fixed order: from plain.json, else computed from saved example windows
 function effectsFor(row, P) {
   const byState = Object.fromEntries((P?.adapter_effects || []).map(e => [e.state, e]));
@@ -145,12 +152,17 @@ function effectsFor(row, P) {
       text: r == null ? "not measured" : d === "about the same" ? `about the same at its usual peaks (${r.toFixed(2)}x)` : `fires about ${r.toFixed(1)}x as hard at its usual peaks` };
   }).filter(Boolean);
 }
+// hand-written plain text (plain.json entries not marked automated) wins over the automated investigation
+const isReviewed = P => !!P && P.source !== "automated" && !!(P.nickname || P.one_liner);
+const invOf = (row, P) => (!isReviewed(P) && row?.inv) || null;
 function statusOf(row, P) {
   if (row?.status_from === "human edit") return row.card_status;
+  if (invOf(row, P)) return row.inv.status || "untested";
   return P?.checked?.status || row?.card_status || "untested";
 }
 function traitOf(row, P) {
   if (P?.trait) return P.trait;
+  if (row?.sample?.trait) return row.sample.trait;
   const t = (row?.selected_for || []).find(x => x === "openness" || x === "neuroticism");
   if (t) return t;
   const g = Object.entries(row?.group || {}).find(([, v]) => v);
@@ -159,14 +171,25 @@ function traitOf(row, P) {
   effs.sort((a, b) => Math.abs(Math.log(b.ratio)) - Math.abs(Math.log(a.ratio)));
   return effs[0] ? adapters()[effs[0].state].trait : S.trait;
 }
+const SAMPLE_GROUPS = { neuroticism: "Trait-specific sample: neuroticism", openness: "Trait-specific sample: openness", random: "Random comparison sample", other: "Trait-specific sample" };
+function sampleGroup(row) {
+  const sm = row?.sample;
+  if (!sm) return null;
+  return sm.kind === "random" ? SAMPLE_GROUPS.random : SAMPLE_GROUPS[sm.trait] || SAMPLE_GROUPS.other;
+}
 function groupPlainOf(row, P) {
+  const sg = sampleGroup(row);
+  if (sg) return sg;
   if (P?.group_plain) return P.group_plain;
   if (row.kind === "random_control") return RANDOM_GROUP;
   const t = traitOf(row, P), g = (row.group || {})[t];
   return GROUP_PLAIN[g] || "Other";
 }
-const nameOf = (row, P) => P?.nickname || row?.id;
+const nameOf = (row, P) => (isReviewed(P) && P.nickname) || invOf(row, P)?.nickname || P?.nickname || row?.id;
 function oneLinerOf(row, P) {
+  if (isReviewed(P) && P.one_liner) return { text: P.one_liner, auto: false };
+  const inv = invOf(row, P);
+  if (inv?.one_liner) return { text: inv.one_liner, auto: false, inv: true };
   if (P?.one_liner) return { text: P.one_liner, auto: P.source === "automated" };
   return { text: row?.label || "", auto: true };
 }
@@ -175,6 +198,22 @@ function biggestLog(row, P) {
   return Math.max(0, ...effectsFor(row, P).filter(e => e.ratio > 0).map(e => Math.abs(Math.log(e.ratio))));
 }
 function checkBadge(status) { return `<span class="check ${esc(status)}">${esc(CHECK_WORDS[status] || status)}</span>`; }
+// verdicts of the automated investigation: "untested" there means it gave up without a coherent explanation
+const INV_WORDS = { tested: "held up", mixed: "partly held up", rejected: "didn't hold up", untested: "no coherent explanation" };
+const INV_ALIAS = { held_up: "tested", partly: "mixed", not_held: "rejected", no_coherent: "untested" };
+function invBadge(status) { status = INV_ALIAS[status] || status; return `<span class="check ${esc(status || "untested")}">${esc(INV_WORDS[status] || status || "–")}</span>`; }
+function badgeFor(row, P) {
+  if (row?.status_from === "human edit" || !invOf(row, P)) {
+    if (row?.sample && !row.inv && !isReviewed(P) && row.status_from !== "human edit") return `<span class="check waiting">not investigated yet</span>`;
+    return checkBadge(statusOf(row, P));
+  }
+  return invBadge(row.inv.status);
+}
+function usd(x) {
+  if (x == null || Number.isNaN(+x)) return "–";
+  x = +x;
+  return "$" + (x === 0 ? "0" : x < 0.1 ? Number(x.toPrecision(2)) : x.toFixed(2));
+}
 function dirHTML(d, extra = "") {
   const x = DIR[d] || DIR.unknown;
   return `<span class="dir ${x.cls}"><span class="arrow" aria-hidden="true">${x.a}</span>${x.w}${extra}</span>`;
@@ -416,7 +455,7 @@ function setupTheme() {
 function showView(v) {
   if (S.view !== v) scrollTo(0, 0);
   S.view = v;
-  for (const id of ["start", "list", "neuron"]) $(`#${id}-page`).hidden = id !== v;
+  for (const id of ["start", "list", "neuron", "live"]) $(`#${id}-page`).hidden = id !== v;
   $$("#nav a").forEach(a => a.classList.toggle("on", a.dataset.view === v));
 }
 async function route() {
@@ -432,8 +471,11 @@ async function route() {
   }
   if (h.startsWith("list")) {
     if (p.has("tech") && !S.tech) { $("#tech-cols").checked = true; S.tech = true; $("#tech-bar").hidden = false; }
-    showView("list"); renderList(); return;
+    showView("list"); renderList();
+    if (S.hasProgress && Date.now() - S.rowsAt > 10000) refreshRows().then(() => { if (S.view === "list") renderList(); });
+    return;
   }
+  if (h.startsWith("live")) { showView("live"); pollLive(); return; }
   showView("start");
 }
 function go(id, tab) { S.pendingTab = tab; location.hash = `n=${encodeURIComponent(id)}&t=${S.trait}${tab ? "&tab=" + tab : ""}`; }
@@ -465,11 +507,12 @@ function renderStart() {
     <li>Everything under <b>Go deeper</b> is raw evidence for technical readers.</li></ul>`;
   const list = featured.map(r => {
     const P = plainOf(r.id), ol = oneLinerOf(r, P);
-    return `<li><a href="#n=${encodeURIComponent(r.id)}&t=${esc(traitOf(r, P))}"><b>${esc(nameOf(r, P))}</b></a> <span class="mono faint" style="font-size:13px">${esc(r.id)}</span> ${checkBadge(statusOf(r, P))}<br><span class="dim">${esc(ol.text)}</span></li>`;
+    return `<li><a href="#n=${encodeURIComponent(r.id)}&t=${esc(traitOf(r, P))}"><b>${esc(nameOf(r, P))}</b></a> <span class="mono faint" style="font-size:13px">${esc(r.id)}</span> ${badgeFor(r, P)}<br><span class="dim">${esc(ol.text)}</span></li>`;
   }).join("");
-  el.innerHTML = `<div class="md">${intro}${legend}
+  const liveNote = S.hasProgress ? `<div class="notice live-note">An automated investigation is running or has run on this data. <a href="#live">See the live results</a>.</div>` : "";
+  el.innerHTML = `${liveNote}<div class="md">${intro}${legend}
     <h2>Neurons we studied closely</h2>
-    <p>Each of these has a hand-checked description and a full write-up. The other ${S.rows.length - featured.length} neurons are in the <a href="#list">full list</a>, mostly with automated, unchecked descriptions.</p>
+    <p>Each of these has a hand-checked description and a full write-up. The other ${(S.rows.length - featured.length).toLocaleString("en-US")} neurons are in the <a href="#list">full list</a>, mostly with ${S.rows.some(r => r.inv) ? "automated descriptions" : "automated, unchecked descriptions"}.</p>
     <ul class="featured">${list || "<li>No detailed profiles in this run.</li>"}</ul></div>`;
   glossify(el);
 }
@@ -511,8 +554,16 @@ function setupList() {
   $("#tech-cols").onchange = e => { S.tech = e.target.checked; $("#tech-bar").hidden = !S.tech; if (!S.tech) { S.groupBy = "plain"; $("#group-by").value = "plain"; } renderList(); };
   $("#group-by").onchange = e => { S.groupBy = e.target.value; renderList(); };
   $$("#trait button").forEach(b => b.onclick = () => setTrait(b.dataset.t));
+  listIntro();
+}
+function listIntro() {
   const nf = S.rows.filter(r => isFeatured(r, plainOf(r.id))).length;
-  $("#list-intro").innerHTML = `${S.rows.length} neurons that the adapters change a lot, plus a few picked at random for comparison. The ${nf} at the top were studied closely and checked by hand; the rest have only a quick automated description.`;
+  const ns = S.rows.filter(r => r.sample && !isFeatured(r, plainOf(r.id))).length, ni = S.rows.filter(r => r.inv).length;
+  const nc = S.rows.length - ns;
+  const parts = [];
+  if (nc > 0) parts.push(`${nc.toLocaleString("en-US")} neurons that the adapters change a lot, plus a few picked at random for comparison`);
+  if (ns > 0) parts.push(`${ns.toLocaleString("en-US")} in the automated investigation sample (${ni.toLocaleString("en-US")} finished so far), each with an explanation written and checked on new sentences by a cheap model`);
+  $("#list-intro").innerHTML = `${parts.join("; ")}.${nf ? ` The ${nf} at the top were studied closely and checked by hand.` : ""}${nc > nf ? " The rest of the hand-picked neurons have only a quick automated description." : ""}`;
   glossify($("#list-intro"));
 }
 function setTraitQuiet(t) {
@@ -550,11 +601,11 @@ function renderList() {
   const rows = S.rows.filter(r => {
     if (!S.filter) return true;
     const P = plainOf(r.id);
-    return `${r.id} ${r.label || ""} ${r.selection_reason || ""} ${P?.nickname || ""} ${P?.one_liner || ""} ${P?.group_plain || ""}`.toLowerCase().includes(S.filter);
+    return `${r.id} ${r.label || ""} ${r.selection_reason || ""} ${P?.nickname || ""} ${P?.one_liner || ""} ${P?.group_plain || ""} ${r.inv?.nickname || ""} ${r.inv?.one_liner || ""} ${sampleGroup(r) || ""}`.toLowerCase().includes(S.filter);
   });
   const STUDIED = "Studied closely";
   if (S.groupBy === "plain") {
-    const known = [STUDIED, GROUP_PLAIN.amp_primary, GROUP_PLAIN.sup_primary, GROUP_PLAIN.shared, GROUP_PLAIN.cross_trait, GROUP_PLAIN.control_assoc];
+    const known = [STUDIED, SAMPLE_GROUPS.neuroticism, SAMPLE_GROUPS.openness, SAMPLE_GROUPS.other, SAMPLE_GROUPS.random, GROUP_PLAIN.amp_primary, GROUP_PLAIN.sup_primary, GROUP_PLAIN.shared, GROUP_PLAIN.cross_trait, GROUP_PLAIN.control_assoc];
     for (const g of known) { by[g] = []; order.push(g); }
     for (const r of rows) { const P = plainOf(r.id); push(isFeatured(r, P) ? STUDIED : groupPlainOf(r, P), r); }
     const ri = order.indexOf(RANDOM_GROUP); if (ri >= 0) { order.splice(ri, 1); order.push(RANDOM_GROUP); }
@@ -565,7 +616,12 @@ function renderList() {
   const GSUB = {
     [STUDIED]: "Each has a hand-checked description and a full write-up.",
     [RANDOM_GROUP]: "Neurons from the same layers chosen at random, as a baseline for everything else.",
+    [SAMPLE_GROUPS.neuroticism]: "Sampled from neurons the neuroticism adapters change; explained and checked by the automated investigator.",
+    [SAMPLE_GROUPS.openness]: "Sampled from neurons the openness adapters change; explained and checked by the automated investigator.",
+    [SAMPLE_GROUPS.random]: "Picked at random and investigated the same way. If these pass as often, the explanations aren't telling us much.",
   };
+  const VERDICT_ORDER = { tested: 0, mixed: 1, rejected: 2, untested: 3 };
+  const invRank = r => r.inv ? VERDICT_ORDER[r.inv.status] ?? 4 : 5;
   const head = `<thead><tr><th>Neuron</th><th class="strip-h">What the adapters do<br>${stripHead()}</th><th>Description checked?</th>
     ${ps.map(s => `<th class="techc num" title="${esc(stateLabel(s))}">z_mean<br>${esc(s)}</th>`).join("")}<th class="techc">card</th></tr></thead>`;
   const cols = `<colgroup><col><col class="c-strip"><col class="c-check">${ps.map(() => `<col class="c-z techc">`).join("")}<col class="c-card techc"></colgroup>`;
@@ -573,29 +629,35 @@ function renderList() {
   for (const g of order) {
     const rs = by[g]; if (!rs?.length) continue;
     const key = S.tech ? S.sort.key : "change", dir = S.tech ? S.sort.dir : -1;
+    const isSample = Object.values(SAMPLE_GROUPS).includes(g);
     rs.sort((a, b) => {
       const fa = isFeatured(a, plainOf(a.id)) ? 1 : 0, fb = isFeatured(b, plainOf(b.id)) ? 1 : 0;
       if (fa !== fb && S.groupBy !== "plain") return fb - fa;
+      if (isSample && !S.tech && invRank(a) !== invRank(b)) return invRank(a) - invRank(b);
       return dir < 0 ? sortVal(b, key) - sortVal(a, key) : sortVal(a, key) - sortVal(b, key);
     });
     const gname = S.groupBy === "plain" ? g : (GROUP_NAMES[g] || g);
-    html.push(`<div class="ghead">${esc(gname)} <span class="cnt">${rs.length}</span></div>${GSUB[g] ? `<div class="gsub">${esc(GSUB[g])}</div>` : ""}<table class="nl">${cols}${head}<tbody>`);
-    for (const r of rs) {
+    const done = isSample ? rs.filter(r => r.inv).length : null;
+    html.push(`<div class="ghead">${esc(gname)} <span class="cnt">${rs.length.toLocaleString("en-US")}${done != null && done < rs.length ? `, ${done.toLocaleString("en-US")} investigated so far` : ""}</span></div>${GSUB[g] ? `<div class="gsub">${esc(GSUB[g])}</div>` : ""}<table class="nl">${cols}${head}<tbody>`);
+    const cap = S.expanded.has(g) || S.filter ? rs.length : 60;
+    for (const r of rs.slice(0, cap)) {
       const P = plainOf(r.id), ol = oneLinerOf(r, P), status = statusOf(r, P);
       const badges = `${r.detailed ? '<span class="badge" title="detailed profile">P</span>' : ""}${r.template_driven ? '<span class="badge warn" title="more than half of the adapter-induced change is on chat-template tokens">T</span>' : ""}${Object.values(r.robust || {}).some(v => v && v.top_share > 0.6) ? '<span class="badge warn" title="more than 60% of the squared change comes from 0.1% of tokens">O</span>' : ""}`;
       const cells = ps.map(s => {
         const e = (r.effects || {})[s];
         return `<td class="techc num">${e ? `<span class="eff" style="background:${zColor(e.z_mean)}" title="${esc(s)}: z_mean ${f(e.z_mean)}, z_rms ${f(e.z_rms)}, agree ${f(e.agree)}, mean_diff ${f(e.mean_diff, 4)}">${f(e.z_mean, 2)}</span>` : `<span class="eff na">–</span>`}</td>`;
       }).join("");
-      html.push(`<tr data-id="${esc(r.id)}"><td><div class="nname"><a href="#n=${encodeURIComponent(r.id)}&t=${esc(traitOf(r, P))}">${esc(nameOf(r, P))}</a>${P?.nickname ? `<span class="nid2">${esc(r.id)}</span>` : ""}${S.tech ? badges : ""}</div>
+      html.push(`<tr data-id="${esc(r.id)}"><td><div class="nname"><a href="#n=${encodeURIComponent(r.id)}&t=${esc(traitOf(r, P))}">${esc(nameOf(r, P))}</a>${nameOf(r, P) !== r.id ? `<span class="nid2">${esc(r.id)}</span>` : ""}${S.tech ? badges : ""}</div>
         <div class="none${ol.auto ? " auto" : ""}">${esc(ol.text)}</div></td>
-        <td class="strip">${stripHTML(r, P)}</td><td>${checkBadge(status)}</td>${cells}<td class="techc"><span class="mono" style="font-size:12px">${esc(r.card_status)}</span></td></tr>`);
+        <td class="strip">${stripHTML(r, P)}</td><td>${badgeFor(r, P)}</td>${cells}<td class="techc"><span class="mono" style="font-size:12px">${esc(r.card_status)}</span></td></tr>`);
     }
     html.push(`</tbody></table>`);
+    if (cap < rs.length) html.push(`<button class="linkbtn showall" data-g="${esc(g)}">show all ${rs.length.toLocaleString("en-US")} in this group</button>`);
   }
   $("#groups").innerHTML = html.join("") || `<div class="slot">No neurons match.</div>`;
   $("#groups").classList.toggle("show-tech", S.tech);
   $$("#groups tbody tr").forEach(el => el.onclick = e => { if (!e.target.closest("a")) go(el.dataset.id); });
+  $$("#groups .showall").forEach(b => b.onclick = () => { S.expanded.add(b.dataset.g); renderList(); });
 }
 
 // ---------- 3. Neuron page ----------
@@ -623,31 +685,38 @@ function autoTag(card, ver) {
 function renderNeuron() {
   TOKVIEWS.length = 0;
   const d = S.data, r = d.index || { id: d.id }, P = plainOf(d.id), card = d.card, v = latestVersion(card);
-  const status = statusOf(r, P), ol = oneLinerOf(r, P);
-  const auto = P ? P.source === "automated" : (!v || v.kind === "automated");
+  const status = statusOf(r, P), ol = oneLinerOf(r, P), inv = invOf(r, P), I = d.investigation;
+  const auto = !inv && (P ? P.source === "automated" : (!v || v.kind === "automated"));
+  const nT = inv?.n_final_tests ?? I?.n_final_tests, nP = inv?.passes ?? I?.passes;
+  const invFacts = inv ? `<div class="facts">${invBadge(inv.status)}<span>Automated investigation, checked with ${nT ?? "?"} test${nT === 1 ? "" : "s"} on new sentences${nP != null && nT ? ` (${nP} passed)` : ""}${inv.rounds ? `, ${inv.rounds} round${inv.rounds === 1 ? "" : "s"}` : ""}.</span> <a href="#" class="inv-jump">How the investigation went</a></div>
+    <div class="note-inv">Written and checked by an automated investigator (a cheap model), not reviewed by a person.${inv.status === "untested" ? " It did not find an explanation that predicted new sentences." : inv.status === "rejected" ? " Its final explanation failed most of its own checks." : ""}</div>` : "";
   const nL = S.man.model?.arch?.n_layers || 36;
   // header
   $("#n-crumbs").innerHTML = `<a href="#list">← All neurons</a> <span class="faint">·</span> <span class="dim">${esc(groupPlainOf(r, P))}</span>`;
   $("#n-head").innerHTML = `<h1>${esc(nameOf(r, P))}</h1>
-    ${P?.nickname ? `<div class="nid">${esc(d.id)}</div>` : ""}
+    ${nameOf(r, P) !== d.id ? `<div class="nid">${esc(d.id)}</div>` : ""}
     <p class="one">${esc(ol.text || (v?.label ?? ""))}</p>
-    <div class="facts">${checkBadge(status)}<span>${esc(P?.checked?.text || (status === "untested" ? "Not checked yet." : `Card status: ${status}.`))}</span>
-      <span>Layer ${esc(r.layer ?? "?")} of ${nL}</span>${r.kind === "random_control" ? `<span class="tag">picked at random</span>` : ""}${isFeatured(r, P) ? `<span class="tag">studied closely</span>` : ""}</div>
+    ${invFacts}
+    <div class="facts">${inv ? "" : `${checkBadge(status)}<span>${esc(P?.checked?.text || (status === "untested" ? "Not checked yet." : `Card status: ${status}.`))}</span>`}
+      <span>Layer ${esc(r.layer ?? "?")} of ${nL}</span>${r.kind === "random_control" || r.sample?.kind === "random" ? `<span class="tag">picked at random</span>` : ""}${r.sample?.kind === "trait" && r.sample.trait ? `<span class="tag">${esc(r.sample.trait)} sample</span>` : ""}${isFeatured(r, P) ? `<span class="tag">studied closely</span>` : ""}</div>
     ${auto ? `<div class="note-auto"><b>Unverified machine guess.</b> The description above was written by an automated labeler from a few examples and has not been reviewed by a person.${status === "rejected" ? " It also failed most automatic checks on new sentences, so take it with a grain of salt." : status === "untested" ? "" : " It was only checked automatically."} The measurements below are real.</div>` : ""}
     ${!d.index ? `<div class="notice">This neuron is not in the run's neuron table, so most measurements are missing.</div>` : ""}`;
+  $(".inv-jump", $("#n-head"))?.addEventListener("click", e => { e.preventDefault(); setTab("investigation"); });
   renderPlainEffects(r, P);
   // behavior
   $("#n-behavior").innerHTML = P?.behavior ? `<h2>Does it change what the model writes?</h2><p class="caption" style="color:var(--ink);font-size:16px">${esc(P.behavior)}</p>` : "";
   $("#n-behavior").hidden = !P?.behavior;
   // summary
   const cav = (P?.caveats || []).length ? `<h4>Caveats</h4><ul class="caveats">${P.caveats.map(c => `<li>${mdInline(c)}</li>`).join("")}</ul>` : "";
-  if (P?.summary_md) $("#n-summary").innerHTML = `<h2>Summary</h2><div class="md">${md(P.summary_md)}</div>${cav}`;
+  if (inv && !P?.summary_md && (!v || v.kind === "investigation")) $("#n-summary").innerHTML = cav;
+  else if (P?.summary_md) $("#n-summary").innerHTML = `<h2>Summary</h2><div class="md">${md(P.summary_md)}</div>${cav}`;
   else if (v) $("#n-summary").innerHTML = `<h2>${v.kind === "automated" ? "What the automated labeler guessed" : "Latest description on its card"}</h2><div class="md"><p>${esc(v.trigger_hypothesis || "")}</p>${v.output_hypothesis ? `<p><span class="dim">Effect on output${v.kind === "automated" ? " (guess)" : ""}:</span> ${esc(v.output_hypothesis)}</p>` : ""}</div>${cav}<p class="caption">${v.kind === "automated" ? "No hand-checked summary exists for this neuron." : "No plain-language summary is available for this run."} See “Card history and tests” below for the full card and its tests.</p>`;
   else $("#n-summary").innerHTML = cav;
   renderAction(r, P);
   let used = new Set();
   for (const id of ["n-head", "n-effects", "n-behavior", "n-summary", "n-action"]) used = glossify($("#" + id), used);
   // deeper sections
+  renderInvestigation();
   renderExamples();
   renderTrajectory();
   renderEffects();
@@ -783,6 +852,64 @@ function legendHTML(extra = "") {
 function stateOrder(states) {
   const order = stateList().map(s => s.id);
   return [...states].sort((a, b) => (order.indexOf(a) + 1 || 999) - (order.indexOf(b) + 1 || 999));
+}
+
+// ---------- automated investigation (runs/<id>/investigations/<id>.json) ----------
+// The investigator's file format is read defensively: a round's hypothesis may be a string or an object, and its tests
+// may be flat text records or tests holding a "texts" list (the card test format).
+const EXPECT_PLAIN = { high: "fires strongly", negative: "fires strongly negative", low: "stays quiet" };
+function invHyp(rd) {
+  const h = rd.hypothesis ?? rd.hyp ?? rd.explanation ?? rd.card ?? {};
+  if (typeof h === "string") return { name: "", text: h };
+  return { name: h.nickname || h.label || "", text: h.one_liner || h.trigger_hypothesis || h.text || h.hypothesis || "",
+    extra: h.one_liner && h.trigger_hypothesis && h.trigger_hypothesis !== h.one_liner ? h.trigger_hypothesis : "", conf: h.confidence };
+}
+function invTests(rd) {
+  const out = [];
+  for (const t of rd.tests || rd.checks || []) {
+    if (Array.isArray(t.texts)) for (const x of t.texts) out.push({ ...x, group: t.description || t.discriminates || "" });
+    else out.push(t);
+  }
+  return out;
+}
+const passOf = x => x.pass ?? x.passed ?? x.pass_v2 ?? (x.result ? x.result === "pass" : null);
+function measuredOf(x) { return x.value ?? x.measured ?? (x.expected === "negative" ? x.measured_min : x.measured_max); }
+function testTextHTML(x) {
+  const t = String(x.text ?? ""), tg = x.target && x.expected !== "low" ? String(x.target) : "";
+  const m = tg ? new RegExp(`(^|[^A-Za-z])(${tg.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})(?![A-Za-z])`, "i").exec(t) : null;
+  const i = m ? m.index + m[1].length : tg ? t.toLowerCase().indexOf(tg.toLowerCase()) : -1;
+  return i < 0 ? esc(t) : `${esc(t.slice(0, i))}<mark>${esc(t.slice(i, i + tg.length))}</mark>${esc(t.slice(i + tg.length))}`;
+}
+function invRoundHTML(rd, k, last) {
+  const h = invHyp(rd), tests = invTests(rd);
+  const np = tests.filter(x => passOf(x) === true).length;
+  const rows = tests.map(x => {
+    const p = passOf(x);
+    return `<tr><td class="ttext">${testTextHTML(x)}${x.group ? `<div class="faint tsub">${esc(x.group)}</div>` : ""}</td><td>${esc(EXPECT_PLAIN[x.expected] || x.expected || "–")}</td>
+      <td class="num">${sig2(measuredOf(x))}</td><td class="num">${x.threshold == null ? "–" : `<span class="faint">${x.expected === "negative" ? "≤" : x.expected === "low" ? "≤ ±" : "≥"}</span>${x.expected === "low" ? "" : " "}${sig2(x.threshold)}`}</td>
+      <td>${p == null ? `<span class="dim">–</span>` : p ? `<span class="pf pass">✓ passed</span>` : `<span class="pf fail">✗ failed</span>`}</td></tr>`;
+  }).join("");
+  const dec = rd.decision || rd.outcome || "";
+  return `<div class="iround${last ? " last" : ""}">
+    <div class="rhead"><b>Round ${esc(rd.round ?? k + 1)}</b>${tests.length ? `<span class="dim">${np} of ${tests.length} checks passed</span>` : ""}${dec ? `<span class="tag">${esc(dec)}</span>` : ""}${rd.cost_usd != null ? `<span class="faint">${usd(rd.cost_usd)}</span>` : ""}</div>
+    <div class="rhyp">${h.name ? `<b>${esc(h.name)}</b>: ` : ""}${esc(h.text)}${h.extra ? `<div class="dim">${esc(h.extra)}</div>` : ""}</div>
+    ${rd.note ? `<div class="rnote dim">${esc(rd.note)}</div>` : ""}
+    ${tests.length ? `<table class="t compact itests"><thead><tr><th>Test sentence (target word marked)</th><th>Expected</th><th class="num">Measured</th><th class="num">Threshold</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table>` : `<div class="slot">No tests recorded for this round.</div>`}
+  </div>`;
+}
+function renderInvestigation() {
+  const I = S.data.investigation, row = S.data.index, sec = $("#sec-inv"), el = $("#tab-inv");
+  sec.hidden = !I && !row?.inv;
+  if (sec.hidden) { el.innerHTML = ""; return; }
+  if (!I) { el.innerHTML = `<div class="slot">The investigator has finished this neuron, but its details file (investigations/${esc(S.data.id.replace("/", "_"))}.json) is not available yet.</div>`; return; }
+  const rounds = Array.isArray(I.rounds) ? I.rounds : I.history || [];
+  const raw = I.raw || I.raw_outputs;
+  const rawList = Array.isArray(raw) ? raw : raw ? [raw] : [];
+  el.innerHTML = `<p class="caption">The investigator proposes an explanation, writes new sentences where it should and shouldn't fire, measures the neuron on them, and revises if the checks fail. A check passes when the measured value is on the expected side of the threshold, which is set from the neuron's own typical peak.</p>
+    <div class="row dim" style="font-size:14px">${invBadge(I.status ?? row?.inv?.status)}<span>${rounds.length} round${rounds.length === 1 ? "" : "s"}</span>${I.cost_usd != null ? `<span>cost ${usd(I.cost_usd)}</span>` : ""}${I.model ? `<span>model ${esc(I.model)}</span>` : ""}${I.finished_at ? `<span>finished ${esc(when(I.finished_at))}</span>` : ""}</div>
+    ${rounds.map((rd, k) => invRoundHTML(rd, k, k === rounds.length - 1)).join("") || `<div class="slot">No rounds recorded.</div>`}
+    ${rawList.length ? `<details class="sub"><summary>raw model output (${rawList.length})</summary>${rawList.map(x => `<pre class="raw">${esc(typeof x === "string" ? x : JSON.stringify(x, null, 1))}</pre>`).join("")}</details>` : ""}
+    <details class="sub"><summary>full investigation file</summary><pre class="raw">${esc(JSON.stringify(I, null, 1).slice(0, 60000))}</pre></details>`;
 }
 
 // ---------- all examples ----------
@@ -1259,6 +1386,160 @@ async function runNext() {
   } catch (e) { out.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
 }
 
+// ---------- Live run page (investigations/progress.json, finished.jsonl) ----------
+const OUTCOMES = [["held_up", "Held up", "tested"], ["partly", "Partly held up", "mixed"], ["not_held", "Didn't hold up", "rejected"], ["no_coherent", "No coherent explanation", "untested"]];
+const LV = { p: null, fin: null, stats: undefined, fetchedAt: 0, seen: new Set(), first: true, busy: false, lastLines: -1 };
+const pct = (a, b) => b ? Math.round(100 * a / b) : null;
+const nfmt = x => x == null ? "–" : Number(x).toLocaleString("en-US");
+function ago(sec) {
+  if (sec == null || !Number.isFinite(sec)) return "unknown";
+  sec = Math.max(0, Math.round(sec));
+  if (sec < 60) return `${sec} s ago`;
+  if (sec < 3600) return `${Math.round(sec / 60)} min ago`;
+  return `${(sec / 3600).toFixed(1)} h ago`;
+}
+function minutesText(m) {
+  if (m == null || !Number.isFinite(+m)) return "–";
+  m = +m;
+  if (m < 1) return "under a minute";
+  if (m < 90) return `about ${Math.round(m)} min`;
+  return `about ${(m / 60).toFixed(1)} h`;
+}
+function when(t) {
+  const x = tparse(t);
+  return x == null ? String(t) : new Date(x).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+const tparse = t => { const x = Date.parse(t); return Number.isNaN(x) ? null : x; };
+// seconds since progress.json was last written, on the server's clock, advanced by time since the fetch
+function updatedAge() {
+  const p = LV.p; if (!p) return null;
+  const u = tparse(p.updated), sn = tparse(p.server_now);
+  if (u == null) return null;
+  return ((sn ?? Date.now()) - u) / 1000 + (Date.now() - LV.fetchedAt) / 1000;
+}
+async function checkProgress() {
+  try { await api("/api/progress"); setHasProgress(true); } catch { /* none yet */ }
+}
+function setHasProgress(on) {
+  if (on === S.hasProgress) return;
+  S.hasProgress = on;
+  $("#nav-live").hidden = !on;
+  if (S.view === "start") renderStart();
+}
+let livePollT = null;
+async function pollLive() {
+  clearTimeout(livePollT);
+  if (S.view !== "live") return;
+  if (!LV.busy) {
+    LV.busy = true;
+    try {
+      const [p, fin] = await Promise.all([api("/api/progress"), api("/api/finished?limit=30")]);
+      LV.p = p; LV.fin = fin; LV.fetchedAt = Date.now(); LV.err = null;
+      if (LV.stats === undefined || LV.first) { try { LV.stats = await api("/api/population_stats"); } catch { LV.stats = null; } }
+      if (fin.total !== LV.lastLines) { if (LV.lastLines >= 0) S.rowsAt = 0; LV.lastLines = fin.total; }
+      setHasProgress(true);
+    } catch (e) { LV.err = e.message; }
+    LV.busy = false;
+    if (S.view === "live") renderLivePage();
+  }
+  livePollT = setTimeout(pollLive, 5000);
+}
+setInterval(() => { if (S.view === "live" && LV.p) renderUpdated(); }, 1000);
+function renderUpdated() {
+  const el = $("#lv-updated"); if (!el) return;
+  const a = updatedAge(), stale = a != null && a > 120;
+  el.innerHTML = `Last updated ${ago(a)}`;
+  const w = $("#lv-stale");
+  w.hidden = !stale;
+  if (stale) w.textContent = `No new progress for ${ago(a).replace(" ago", "")}. The investigator may have stopped, or the files are no longer being copied here.`;
+}
+function bar(segs, cls = "") {
+  return `<div class="pbar ${cls}" role="img" aria-label="${esc(segs.map(s => `${s.label} ${s.v}`).join(", "))}">${segs.filter(s => s.v > 0).map(s => `<span class="seg-${s.cls}" style="width:${s.w}%" title="${esc(s.label)}: ${nfmt(s.v)}"></span>`).join("")}</div>`;
+}
+function outcomeCell(b, key) {
+  const n = b?.[key] ?? 0, d = b?.done ?? 0, p = pct(n, d);
+  return `<td class="num oc">${p == null ? "–" : `${p}%`}</td><td class="cnt">${d ? nfmt(n) : ""}</td><td class="mbar">${p == null ? "" : `<span class="mb"><span style="width:${p}%"></span></span>`}</td>`;
+}
+function renderLivePage() {
+  const el = $("#live-body"), p = LV.p;
+  if (!p) {
+    el.innerHTML = `<h1>Live run</h1><div class="slot">${esc(LV.err || "Loading…")}</div>`;
+    return;
+  }
+  const tot = p.n_total || 0, done = p.n_done || 0, run = p.n_running || 0, failed = p.n_failed || 0;
+  const w = x => tot ? Math.min(100, 100 * x / tot) : 0;
+  const finishedAll = tot && done + failed >= tot && !run;
+  const cap = p.cost_cap_usd, cost = p.cost_usd;
+  const proj = p.est_cost_per_neuron != null && tot ? p.est_cost_per_neuron * tot : null;
+  const BK = p.by_kind || {}, tr = BK.trait || {}, rnd = BK.random || {};
+  const headline = tr.done && rnd.done ? `${finishedAll ? "In the end" : "So far"} <b>${pct(tr.held_up || 0, tr.done)}%</b> of trait neurons have an explanation that held up, against <b>${pct(rnd.held_up || 0, rnd.done)}%</b> of random neurons.` : "";
+  const cmpRows = OUTCOMES.map(([k, lab, st]) => `<tr><td><span class="check ${st}">${esc(lab)}</span></td>${outcomeCell(tr, k)}${outcomeCell(rnd, k)}</tr>`).join("");
+  const traits = Object.entries(p.by_trait || {});
+  const traitRows = [...traits, ["random", rnd]].map(([t, b]) => `<tr${t === "random" ? ` class="ref"` : ""}><td>${t === "random" ? "Random (for reference)" : esc(t[0].toUpperCase() + t.slice(1))}</td><td class="num">${nfmt(b?.done ?? 0)}</td>${OUTCOMES.map(([k]) => { const pc = pct(b?.[k] ?? 0, b?.done); return `<td class="num nw">${pc == null ? "–" : `${pc}%`} <span class="faint">${b?.done ? `(${nfmt(b?.[k] ?? 0)})` : ""}</span></td>`; }).join("")}</tr>`).join("");
+  const feed = (LV.fin?.rows || []).map(r => {
+    const isNew = !LV.first && !LV.seen.has(r.id + r.finished_at);
+    const fa = tparse(r.finished_at), age = fa != null && p.server_now ? (tparse(p.server_now) - fa) / 1000 : null;
+    return `<li class="${isNew ? "new" : ""}"><div class="fh"><a href="#n=${encodeURIComponent(r.id)}${r.trait ? `&t=${esc(r.trait)}` : ""}"><b>${esc(r.nickname || r.id)}</b></a><span class="mono faint">${esc(r.id)}</span>${invBadge(r.status)}<span class="tag">${r.kind === "random" ? "random" : esc(r.trait || "trait")}</span></div>
+      <div class="dim">${esc(r.one_liner || "")}</div>
+      <div class="fm faint">${r.passes != null && r.n_final_tests ? `${r.passes} of ${r.n_final_tests} checks passed · ` : ""}${r.rounds != null ? `${r.rounds} round${r.rounds === 1 ? "" : "s"} · ` : ""}${usd(r.cost_usd)}${age != null ? ` · ${ago(age)}` : ""}</div></li>`;
+  }).join("");
+  for (const r of LV.fin?.rows || []) LV.seen.add(r.id + r.finished_at);
+  LV.first = false;
+  el.innerHTML = `<h1>Live run: automated investigation</h1>
+    <p class="lede">A cheap model proposes an explanation for each neuron, checks it on new sentences, and revises. Results appear here as they finish.</p>
+    <div class="lv-status"><span id="lv-updated"></span>${p.started ? `<span class="faint">started ${esc(when(p.started))}</span>` : ""}${finishedAll ? `<span class="check tested">run complete</span>` : ""}${LV.err ? `<span class="err">last refresh failed: ${esc(LV.err)}</span>` : ""}</div>
+    <div id="lv-stale" class="notice" hidden></div>
+
+    <section class="lv-block">
+      <div class="big"><b>${nfmt(done)}</b> of ${nfmt(tot)} neurons done <span class="dim">(${pct(done, tot) ?? 0}%)</span></div>
+      ${bar([{ v: done, w: w(done), cls: "done", label: "done" }, { v: failed, w: w(failed), cls: "failed", label: "failed" }, { v: run, w: w(run), cls: "running", label: "running" }])}
+      <div class="legend"><span><i class="sw seg-done"></i>done ${nfmt(done)}</span><span><i class="sw seg-running"></i>running now ${nfmt(run)}</span><span><i class="sw seg-failed"></i>failed ${nfmt(failed)}</span><span>waiting ${nfmt(Math.max(0, tot - done - run - failed))}</span></div>
+      <div class="tiles">
+        <div class="tile"><div class="tl">Spent so far</div><div class="tv">${usd(cost)}</div><div class="ts">${cap != null ? `of a ${usd(cap)} cap (${pct(cost, cap) ?? 0}%)` : "no cap set"}</div>${cap ? bar([{ v: cost, w: Math.min(100, 100 * cost / cap), cls: "cost", label: "spent" }], "thin") : ""}</div>
+        <div class="tile"><div class="tl">Per neuron</div><div class="tv">${usd(p.est_cost_per_neuron)}</div><div class="ts">${proj != null ? `about ${usd(proj)} for all ${nfmt(tot)}` : "estimate after the first results"}</div></div>
+        <div class="tile"><div class="tl">Time left</div><div class="tv">${finishedAll ? "done" : minutesText(p.eta_minutes)}</div><div class="ts">${finishedAll ? "" : "estimated from the pace so far"}</div></div>
+      </div>
+    </section>
+
+    <section class="lv-block">
+      <h2>Trait neurons vs random neurons</h2>
+      <p class="caption">Random neurons are investigated the same way as a baseline: if random neurons pass as often, the explanations aren't telling us much.</p>
+      ${headline ? `<p class="headline">${headline}</p>` : ""}
+      <table class="t cmp"><thead><tr><th>Outcome</th><th class="num" colspan="3">Trait neurons <span class="faint">(${nfmt(tr.done ?? 0)} done)</span></th><th class="num" colspan="3">Random neurons <span class="faint">(${nfmt(rnd.done ?? 0)} done)</span></th></tr></thead><tbody>${cmpRows}</tbody></table>
+    </section>
+
+    ${traits.length ? `<section class="lv-block"><h2>By trait</h2>
+      <table class="t"><thead><tr><th>Sample</th><th class="num">Done</th>${OUTCOMES.map(([, lab]) => `<th class="num">${esc(lab)}</th>`).join("")}</tr></thead><tbody>${traitRows}</tbody></table></section>` : ""}
+
+    ${LV.stats ? `<section class="lv-block"><h2>Measurements across all sampled neurons</h2>${popStatsHTML(LV.stats)}</section>` : ""}
+
+    <section class="lv-block"><h2>Latest finished</h2>
+      <p class="caption">The ${nfmt(Math.min(30, LV.fin?.total || 0))} most recent of ${nfmt(LV.fin?.total || 0)}, newest first. Open one for its explanation and the checks behind it.</p>
+      <ul class="feed">${feed || `<li class="dim">Nothing finished yet.</li>`}</ul></section>`;
+  renderUpdated();
+}
+// population_stats.json: groups are keys whose value is an object; other keys (e.g. "notes") are shown as text
+function popStatsHTML(st) {
+  const groups = Object.entries(st).filter(([, v]) => v && typeof v === "object" && !Array.isArray(v));
+  const extras = Object.entries(st).filter(([, v]) => !(v && typeof v === "object" && !Array.isArray(v)));
+  const cols = [...new Set(groups.flatMap(([, v]) => Object.keys(v)))];
+  const cell = v => typeof v === "number" ? (Number.isInteger(v) ? nfmt(v) : String(Number(v.toPrecision(3)))) : v && typeof v === "object" ? esc(JSON.stringify(v)) : esc(v ?? "–");
+  const isNumCol = c => groups.every(([, v]) => v[c] == null || typeof v[c] === "number");
+  const nKey = cols.find(c => c === "n");
+  const share = (g, c) => nKey && c !== nKey && Number.isInteger(g[c]) && Number.isInteger(g[nKey]) && g[nKey] > 0 ? ` <span class="faint">${pct(g[c], g[nKey])}%</span>` : "";
+  const label = c => c.replace(/_/g, " ");
+  const table = groups.length ? `<table class="t compact pop"><thead><tr><th></th>${cols.map(c => `<th class="${isNumCol(c) ? "num" : ""}">${esc(label(c))}</th>`).join("")}</tr></thead><tbody>${groups.map(([g, v]) => `<tr><td><b>${esc(g)}</b></td>${cols.map(c => `<td class="${isNumCol(c) ? "num" : ""}">${cell(v[c])}${share(v, c)}</td>`).join("")}</tr>`).join("")}</tbody></table>` : "";
+  const notes = extras.map(([k, v]) => k === "notes" ? `<p class="caption">${esc(v)}</p>` : `<p class="caption"><b>${esc(label(k))}:</b> ${esc(typeof v === "string" ? v : JSON.stringify(v))}</p>`).join("");
+  return `<p class="caption">Measured directly on every sampled neuron, without any model-written explanation.${nKey ? " Percentages are of n." : ""}</p>${table}${notes}`;
+}
+async function refreshRows() {
+  try {
+    const [rows, plain] = await Promise.all([api("/api/neurons"), api("/api/plain").catch(() => null)]);
+    S.rows = rows; S.plain = plain; S.rowsAt = Date.now();
+    listIntro();
+  } catch { /* keep the old rows */ }
+}
+
 // ---------- boot ----------
 S.meta = await api("/api/meta");
 S.man = S.meta.run;
@@ -1267,7 +1548,9 @@ try { S.plain = await api("/api/plain"); } catch { S.plain = null; }
 renderLive();
 setInterval(async () => { if (!S.live.loaded) { try { S.live = await api("/api/live/status"); renderLive(); } catch { } } }, 3000);
 setupTheme();
-S.rows = await api("/api/neurons");
+S.rows = await api("/api/neurons"); S.rowsAt = Date.now();
+setHasProgress(!!S.meta.has_progress);
+setInterval(() => { if (!S.hasProgress) checkProgress(); }, 30000);
 setupList();
 renderStart();
 route();

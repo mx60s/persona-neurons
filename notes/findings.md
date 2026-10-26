@@ -41,11 +41,13 @@ Short version for sharing. Numbers, dates and caveats are in `findings_log.md`; 
    amplified model removes the "Oh" opener (33/40 -> 6/40 replies; random neurons 32-33/40) and lowers judged
    neuroticism by 0.55 (90% CI 0.28-0.88). The rest of the anxious persona stays (judged about 5.5 vs 3.65 base), and
    on general prompts the score does not move.
-8. **Adapters mostly reweight what base neurons already do.** Examples: L26/N8828 fires on the adjective after a
-   degree "so" ("so much", "so difficult") but not after "very"; the neuroticism amplifier scales that response up
-   (at "so much": -11.5 at -1, -16.5 base, -21.9 at +1) and the suppressor scales it down, keeping the selectivity
-   (fig4). L26/N4803 tracks, inside assistant replies, how serious the user's situation is (minor annoyance to
-   bereavement); the amplifier moves minor complaints toward the grave end.
+8. **Some neurons are simply turned up or down; most trait-specific neurons are not.** The hand-picked examples
+   look like gain changes: L26/N8828 fires on the adjective after a degree "so" ("so much", "so difficult") but not
+   after "very"; the neuroticism amplifier scales that response up (at "so much": -11.5 at -1, -16.5 base, -21.9 at +1)
+   and the suppressor scales it down, keeping the selectivity (fig4). But in a random sample of the trait-specific
+   population (56 per trait), only 10/56 neuroticism and 15/56 openness neurons keep their original response pattern
+   (activations correlated r >= 0.9 with base) under the pole that changes them most; the rest respond in a
+   noticeably different pattern, partly because the change sits at the reply start (20/56 and 14/56).
 9. **Automatic neuron labels mostly do not hold up.** One-shot labels from a cheap model (DeepSeek V3.2) for 53
    candidates and 12 random neurons passed 1.55 vs 1.67 of 10 matched tests on average; the labeler also wrote
    medium-confidence stories for 8 of 12 packets with scrambled activations. Careful review with live tests did
@@ -58,8 +60,9 @@ Short version for sharing. Numbers, dates and caveats are in `findings_log.md`; 
 - Each adapter's effect on a neuron = a component shared with any fine-tuning on this recipe (same sign for both
   poles, also in the control, much of it about "being the assistant in the training chat format") + a trait component
   that flips sign between the poles.
-- The adapters change persona mostly by turning existing responses up or down (gain), including at the template
-  position that opens the reply, rather than by creating new feature selectivity.
+- Some adapter effects are gain on existing responses (clear in a few profiled neurons), but at the population level
+  most trait-specific neurons change their response pattern, not just its size; the full run is measuring this for
+  every trait-specific neuron.
 
 ## Things that looked like findings and were not
 

@@ -40,9 +40,9 @@ class Builder:
         self.tmeta = tm
         self.states = tm["states"]
         self.neuron_k = {f"L{l}/N{n}": k for k, (l, n) in enumerate(tm["neurons"])}
-        self.act = np.load(os.path.join(args.traces, "act.npy"), mmap_mode="r")
-        self.gate = np.load(os.path.join(args.traces, "gate.npy"), mmap_mode="r")
-        self.up = np.load(os.path.join(args.traces, "up.npy"), mmap_mode="r")
+        # [K, S, T] in RAM, one contiguous block per neuron (column reads from a [S, T, K] file are slow at scale)
+        load = lambda name: np.ascontiguousarray(np.transpose(np.load(os.path.join(args.traces, name), mmap_mode="r"), (2, 0, 1)))  # noqa: E731
+        self.act, self.gate, self.up = load("act.npy"), load("gate.npy"), load("up.npy")
         self.offsets = np.array(tm["offsets"])
         self.lengths = np.array(tm["lengths"])
         T = int(self.offsets[-1] + self.lengths[-1])
@@ -86,12 +86,12 @@ class Builder:
               "split": str(self.split[i]), "tokens": [self.token_str(t) for t in ids], "start": a, "focus": p - a,
               "boundary": (bnd - a) if bnd is not None and a < bnd < b else None,
               "boundary_before_window": bnd is not None and bnd <= a,
-              "acts": {st: np.round(self.act[self.states.index(st), o + a:o + b, k].astype(np.float32), 4).tolist()
+              "acts": {st: np.round(self.act[k, self.states.index(st), o + a:o + b].astype(np.float32), 4).tolist()
                        for st in show_states}}
         if self.args.gate_up:
-            ex["gate"] = {st: np.round(self.gate[self.states.index(st), o + a:o + b, k].astype(np.float32), 4).tolist()
+            ex["gate"] = {st: np.round(self.gate[k, self.states.index(st), o + a:o + b].astype(np.float32), 4).tolist()
                           for st in show_states[:5]}
-            ex["up"] = {st: np.round(self.up[self.states.index(st), o + a:o + b, k].astype(np.float32), 4).tolist()
+            ex["up"] = {st: np.round(self.up[k, self.states.index(st), o + a:o + b].astype(np.float32), 4).tolist()
                         for st in show_states[:5]}
         return ex
 
@@ -120,7 +120,7 @@ class Builder:
         k = self.neuron_k[rec["id"]]
         L, n = rec["layer"], rec["n"]
         S = self.states
-        A = {st: self.act[S.index(st), :, k].astype(np.float32) for st in S}
+        A = {st: self.act[k, S.index(st)].astype(np.float32) for st in S}
         base = A["base"]
         v = self.valid
         traits = [t for t in TRAIT_ADAPTERS if t in rec["selected_for"]] or list(TRAIT_ADAPTERS)

@@ -25,8 +25,8 @@ ADAPTERS = [
      "what": "trained the same way on the same kind of data, but with no personality goal; a comparison"},
 ]
 GLOSSARY = {
-    "neuron": "One of about 440,000 small units inside the model. Each produces a number for every word it reads; "
-              "a large number (positive or negative) means it is responding.",
+    "neuron": "One MLP neuron (one of 12,288 per layer, 36 layers). Its activation at each token is the input to the "
+              "layer's down projection.",
     "adapter": "A small add-on trained to change the model's behavior, here its personality. It can be switched on, "
                "off, or dialed up and down.",
     "amplifier": "The adapter trained to push a trait up (more open, more anxious).",
@@ -116,6 +116,17 @@ def main():
         import math
         shown = math.floor(pct * 1000) / 10
         overall = {"size": size, "text": f"The adapters change it more than {shown:.1f}% of the other neurons in its layer."}
+        ctypes = r.get("change_type") or {}
+        if ctypes:
+            name = {a["state"]: a["name"] for a in ADAPTERS}
+            poles = [st for st in ("o_amp+1", "o_sup+1", "n_amp+1", "n_sup+1") if st in ctypes and st in r["effects"]]
+            sbig = max(poles, key=lambda st: r["effects"][st]["z_rms"])
+            ct = ctypes[sbig]
+            kind = {"gain": f"the same response, turned {'up' if ct['gain'] > 1 else 'down'} (about {ct['gain']:.2f}x)",
+                    "offset": "a near-constant push, regardless of the text",
+                    "reshaped": "a different response pattern, not just a stronger or weaker one",
+                    "none": "no change"}[ct["type"]]
+            overall["text"] += f" Under the {name[sbig]}, the change is {kind}."
         tshare = max([v["template_share"] for v in (r.get("template") or {}).values()] or [0])
         if tshare > 0.5:
             where = {"kind": "reply_start", "text": f"Most of the change ({tshare * 100:.0f}%) happens at the moment the "
