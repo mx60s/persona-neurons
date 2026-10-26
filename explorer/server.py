@@ -85,6 +85,33 @@ class Run:
         path = self.p("profiles", f"{f}.md")
         return open(path).read() if os.path.exists(path) else None
 
+    def plain(self):
+        """Plain-language layer (docs/plain_format.md), or None when the run has none."""
+        return self._json("plain.json")
+
+    def example_ratios(self, nid, states):
+        """Fallback for neurons without a plain.json entry (same rule as pn/plain.py): median, over the ten saved
+        top/quantile/top-diff example windows with the strongest base value at the focus token, of
+        activation(state) / activation(base) at that token."""
+        d = self.detail(nid)
+        if not d:
+            return {}
+        key = ("ratios", nid, os.path.getmtime(self.p("neurons", "detail", fid(nid)[0] + ".json")))
+        if key in self._cache:
+            return self._cache[key]
+        ex = [e for e in d.get("examples", []) if e.get("kind") in ("top_pos", "top_neg", "quantile", "top_diff")
+              and e.get("focus") is not None and "base" in (e.get("acts") or {})]
+        ex = sorted(ex, key=lambda e: -abs(e["acts"]["base"][e["focus"]]))[:10]
+        out = {}
+        for s in states:
+            rs = sorted(e["acts"][s][e["focus"]] / e["acts"]["base"][e["focus"]] for e in ex
+                        if s in e["acts"] and abs(e["acts"]["base"][e["focus"]]) > 1e-6)
+            if rs:
+                m = len(rs) // 2
+                out[s] = rs[m] if len(rs) % 2 else (rs[m - 1] + rs[m]) / 2
+        self._cache[key] = out
+        return out
+
     def prompts(self):
         return self._json("behavior/prompts.json", [])
 
@@ -253,6 +280,7 @@ def neurons():
         if r["id"] in edits:
             r["card_status"], r["status_from"] = edits[r["id"]], "human edit"
         r["has_profile"] = os.path.exists(RUN.p("profiles", fid(r["id"])[0] + ".md"))
+        r["example_ratio"] = RUN.example_ratios(r["id"], list((r.get("effects") or {}).keys()))
         rows.append(r)
     return rows
 
@@ -263,6 +291,38 @@ def neuron(id: str):
     row = next((r for r in neurons() if r["id"] == id), None)
     return {"id": id, "index": row, "detail": RUN.detail(id), "card": RUN.card(id), "profile": RUN.profile(id),
             "saved": RUN.saved(id, 50)}
+
+
+@app.get("/api/plain")
+def plain():
+    """Plain-language layer; 404 when the run has no plain.json (the page then falls back to saved data)."""
+    p = RUN.plain()
+    if p is None:
+        return JSONResponse({"error": "this run has no plain.json"}, status_code=404)
+    return p
+
+
+@app.get("/api/profile")
+def profile(id: str):
+    text = RUN.profile(id)
+    if text is None:
+        return JSONResponse({"error": f"no profile for {id}"}, status_code=404)
+    return PlainTextResponse(text, media_type="text/markdown; charset=utf-8")
+
+
+FIG_RE = re.compile(r"^[A-Za-z0-9_.-]+\.(png|jpg|jpeg|svg|gif)$")
+
+
+@app.get("/figures/{name}")
+def figure(name: str):
+    """Figures from runs/<id>/figures/ if present, else the repository's figures/."""
+    if not FIG_RE.match(name):
+        return JSONResponse({"error": "bad figure name"}, status_code=400)
+    for d in (RUN.p("figures"), os.path.join(os.path.dirname(HERE), "figures")):
+        path = os.path.join(d, name)
+        if os.path.isfile(path):
+            return FileResponse(path)
+    return JSONResponse({"error": f"no figure {name}"}, status_code=404)
 
 
 @app.get("/api/card")

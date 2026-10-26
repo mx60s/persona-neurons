@@ -1,100 +1,137 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Persona neuron explorer</title>
+<title>Persona neurons</title>
+<script>try { const t = new URLSearchParams(location.search).get("theme") || localStorage.getItem("pn-theme"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (e) { }</script>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 rx=%223%22 fill=%22%23151515%22/%3E%3Ccircle cx=%228%22 cy=%228%22 r=%222.5%22 fill=%22%23ffd27a%22/%3E%3C/svg%3E">
 </head>
 <body>
-<header>
-  <b class="title">Persona neurons</b>
-  <span id="run-id" class="mono dim"></span>
-  <span class="seg" id="trait"><button data-t="openness" class="on">openness</button><button data-t="neuroticism">neuroticism</button></span>
-  <input id="jump" placeholder="L17/N4021" aria-label="go to neuron" spellcheck="false">
-  <span id="live" class="mono"></span>
+<header id="top">
+  <a class="title" href="#start">Persona neurons</a>
+  <nav id="nav">
+    <a href="#start" data-view="start">Start here</a>
+    <a href="#list" data-view="list">All neurons</a>
+  </nav>
+  <input id="jump" placeholder="Go to neuron, e.g. L26/N8828" aria-label="go to neuron by id" spellcheck="false">
+  <span id="live" class="pill"></span>
+  <button id="theme" class="btn small" title="switch light / dark">Dark</button>
 </header>
 
-<main>
-  <aside id="list">
-    <div id="list-head">
-      <input id="filter" placeholder="filter by id or label" spellcheck="false" aria-label="filter">
-      <select id="sort" aria-label="sort by"></select>
-      <button id="sort-dir" class="mono" title="sort direction">↓</button>
-    </div>
-    <div id="eff-head" class="mono"></div>
-    <div id="groups"></div>
-  </aside>
+<main id="main">
+  <!-- 1. Start here -->
+  <section id="start-page" class="view" hidden>
+    <article id="start-body" class="prose"></article>
+  </section>
 
-  <section id="page">
-    <div id="empty" class="slot">Choose a neuron on the left. Saved run data loads without a GPU; live panels need the model.</div>
-    <div id="neuron" hidden>
+  <!-- 2. Neuron list -->
+  <section id="list-page" class="view" hidden>
+    <div class="wide">
+      <h1>All neurons</h1>
+      <p id="list-intro" class="lede"></p>
+      <div id="list-head" class="row">
+        <input id="filter" placeholder="Search by name, description or id" spellcheck="false" aria-label="search neurons">
+        <label class="toggle"><input type="checkbox" id="tech-cols"> show technical columns</label>
+      </div>
+      <div id="tech-bar" class="row" hidden>
+        <span class="dim">trait for groups and z columns</span>
+        <span class="seg" id="trait"><button data-t="openness" class="on">openness</button><button data-t="neuroticism">neuroticism</button></span>
+        <span class="dim">group by</span>
+        <select id="group-by" aria-label="group by"><option value="plain">plain groups</option><option value="sel">selection group (this trait)</option></select>
+        <span class="dim">sort within groups</span>
+        <select id="sort" aria-label="sort by"></select>
+        <button id="sort-dir" class="btn small mono" title="sort direction">↓</button>
+      </div>
+      <div id="groups"></div>
+    </div>
+  </section>
+
+  <!-- 3. Neuron page -->
+  <section id="neuron-page" class="view" hidden>
+    <div id="empty" class="slot" hidden></div>
+    <div id="neuron" class="wide" hidden>
+      <div id="n-crumbs" class="crumbs"></div>
       <div id="n-head"></div>
-      <nav id="tabs">
-        <button data-tab="examples" class="on">Examples</button>
-        <button data-tab="effects">Effects and weights</button>
-        <button data-tab="card">Card</button>
-        <button data-tab="custom">Custom text</button>
-        <button data-tab="chats">Matched chats</button>
-        <button data-tab="steer">Neuron intervention</button>
-        <button data-tab="saved">Saved</button>
-      </nav>
-      <div id="tab-examples" class="tab on"></div>
-      <div id="tab-effects" class="tab"></div>
-      <div id="tab-card" class="tab"></div>
-      <div id="tab-custom" class="tab">
-        <div class="ctl-box state-box">
-          <div class="box-lab">Model states to compare</div>
-          <div id="cu-states" class="checks"></div>
-        </div>
-        <div class="ctl-box iv-box off"><div class="box-lab">Neuron intervention</div>none (reading only)</div>
-        <textarea id="cu-text" rows="4" placeholder="Text to read. Same tokens go through every selected state." spellcheck="false"></textarea>
-        <div class="row"><label class="dim"><input type="checkbox" id="cu-chat"> wrap as a user turn (chat template)</label><button id="cu-go" class="btn">read</button></div>
-        <div id="cu-out"></div>
-      </div>
-      <div id="tab-chats" class="tab">
-        <div class="ctl-box state-box">
-          <div class="box-lab">Model states (one column each)</div>
-          <div id="ch-states" class="checks"></div>
-        </div>
-        <div class="ctl-box iv-box off"><div class="box-lab">Neuron intervention</div>none</div>
-        <div class="row"><select id="ch-prompt" aria-label="saved prompt"></select></div>
-        <textarea id="ch-msg" rows="3" placeholder="User message, sent unchanged to each state" spellcheck="false"></textarea>
-        <div class="row"><span class="dim">greedy, max new tokens</span><input id="ch-max" class="mono num" value="128"><button id="ch-go" class="btn">send</button></div>
-        <div id="ch-out"></div>
-      </div>
-      <div id="tab-steer" class="tab">
-        <div class="ctl-row">
+      <section id="n-effects" class="block"></section>
+      <section id="n-behavior" class="block"></section>
+      <section id="n-summary" class="block"></section>
+      <section id="n-action" class="block"></section>
+
+      <h2 class="deeper">Go deeper</h2>
+      <p class="caption">Everything below is the raw evidence behind the summary above. Open any section.</p>
+
+      <details class="sec" data-tab="examples"><summary><b>All examples</b><span class="cap">Every saved text window, with one row per model version. Hover a word for exact numbers.</span></summary>
+        <div id="tab-examples" class="tab"></div></details>
+      <details class="sec" data-tab="trajectory"><summary><b>How it changes across adapter strength</b><span class="cap">The neuron's average change as each amplifier is dialed from −1 to +1, plus the suppressors and the neutral control.</span></summary>
+        <div id="tab-trajectory" class="tab"></div></details>
+      <details class="sec" data-tab="effects"><summary><b>Numbers behind the table</b><span class="cap">The measurements the plain summary is built from: change per adapter, per kind of text, prompt vs. reply.</span></summary>
+        <div id="tab-effects" class="tab"></div></details>
+      <details class="sec" data-tab="weights"><summary><b>Weights and logit lens</b><span class="cap">How the neuron's own weights differ between versions, and which words it pushes the model toward.</span></summary>
+        <div id="tab-weights" class="tab"></div></details>
+      <details class="sec" data-tab="profile" id="sec-profile"><summary><b>Full profile</b><span class="cap">The complete hand-written investigation of this neuron, with all tests and caveats.</span></summary>
+        <div id="tab-profile" class="tab"></div></details>
+      <details class="sec" data-tab="card"><summary><b>Card history and tests</b><span class="cap">Every automated and human description of this neuron, the tests run on them, and a form to add your own.</span></summary>
+        <div id="tab-card" class="tab"></div></details>
+
+      <h3 class="tools-h">Live tools <span class="dim" style="font-weight:400">(need the model loaded on a GPU)</span></h3>
+      <details class="sec" data-tab="custom"><summary><b>Try your own text</b><span class="cap">Type any text and see how strongly this neuron fires at each word, in each version of the model.</span></summary>
+        <div id="tab-custom" class="tab">
           <div class="ctl-box state-box">
-            <div class="box-lab">Model state</div>
-            <select id="st-state" aria-label="model state"></select>
-            <input id="st-state-custom" placeholder="or type: o_amp-0.5|ctrl+1" spellcheck="false">
-            <div class="hint">Base model or scaled adapters. All three columns run in this state.</div>
+            <div class="box-lab">Model state: which versions of the model to compare</div>
+            <div id="cu-states" class="checks"></div>
           </div>
-          <div class="ctl-box iv-box">
-            <div class="box-lab">Neuron intervention <span id="st-neuron" class="mono"></span></div>
-            <span class="seg" id="st-mode"><button data-m="add" class="on">add</button><button data-m="mul">multiply</button><button data-m="zero">zero</button></span>
-            <input id="st-value" class="mono num" value="0.5" aria-label="dose">
-            <span id="st-unit" class="mono dim"></span>
-            <div id="st-calib" class="hint"></div>
+          <div class="ctl-box iv-box off"><div class="box-lab">Neuron intervention</div>none (reading only)</div>
+          <textarea id="cu-text" rows="4" placeholder="Text to read. The same words go through every selected version." spellcheck="false"></textarea>
+          <div class="row"><label class="dim"><input type="checkbox" id="cu-chat"> wrap as a user message (chat format)</label><button id="cu-go" class="btn">read</button></div>
+          <div id="cu-out"></div>
+        </div></details>
+      <details class="sec" data-tab="chats"><summary><b>Compare replies across versions</b><span class="cap">Send one message to several versions of the model and read the replies side by side. The neuron is not touched.</span></summary>
+        <div id="tab-chats" class="tab">
+          <div class="ctl-box state-box">
+            <div class="box-lab">Model state: one column per version</div>
+            <div id="ch-states" class="checks"></div>
           </div>
-        </div>
-        <h3>Chat</h3>
-        <div class="row"><select id="st-prompt" aria-label="saved prompt"></select></div>
-        <textarea id="st-msg" rows="2" placeholder="User message" spellcheck="false"></textarea>
-        <div class="row"><span class="dim">greedy, max new tokens</span><input id="st-max" class="mono num" value="128"><button id="st-go" class="btn">run</button></div>
-        <div id="st-out"></div>
-        <h3>Next-token probabilities</h3>
-        <textarea id="nt-text" rows="2" placeholder="Prompt" spellcheck="false"></textarea>
-        <div class="row"><label class="dim"><input type="checkbox" id="nt-chat" checked> as a user turn</label><input id="nt-prefix" placeholder="assistant reply prefix (optional)" spellcheck="false"><button id="nt-go" class="btn">compare</button></div>
-        <div id="nt-out"></div>
-      </div>
-      <div id="tab-saved" class="tab"></div>
+          <div class="ctl-box iv-box off"><div class="box-lab">Neuron intervention</div>none</div>
+          <div class="row"><select id="ch-prompt" aria-label="saved prompt"></select></div>
+          <textarea id="ch-msg" rows="3" placeholder="User message, sent unchanged to each version" spellcheck="false"></textarea>
+          <div class="row"><span class="dim">greedy decoding, max new tokens</span><input id="ch-max" class="mono num" value="128"><button id="ch-go" class="btn">send</button></div>
+          <div id="ch-out"></div>
+        </div></details>
+      <details class="sec" data-tab="steer"><summary><b>Turn this neuron up, down or off</b><span class="cap">Pick one version of the model, then change only this neuron and compare replies and next-word odds. Both settings are printed on every result.</span></summary>
+        <div id="tab-steer" class="tab">
+          <div class="ctl-row">
+            <div class="ctl-box state-box">
+              <div class="box-lab">Model state: which version of the model</div>
+              <select id="st-state" aria-label="model state"></select>
+              <input id="st-state-custom" placeholder="or type: o_amp-0.5|ctrl+1" spellcheck="false">
+              <div class="hint">Original model or adapters at some strength. All columns run in this version.</div>
+            </div>
+            <div class="ctl-box iv-box">
+              <div class="box-lab">Neuron intervention: what is done to <span id="st-neuron" class="mono"></span></div>
+              <span class="seg" id="st-mode"><button data-m="add" class="on">add</button><button data-m="mul">multiply</button><button data-m="zero">zero</button></span>
+              <input id="st-value" class="mono num" value="0.5" aria-label="dose">
+              <span id="st-unit" class="mono dim"></span>
+              <div id="st-calib" class="hint"></div>
+            </div>
+          </div>
+          <h4>Replies</h4>
+          <div class="row"><select id="st-prompt" aria-label="saved prompt"></select></div>
+          <textarea id="st-msg" rows="2" placeholder="User message" spellcheck="false"></textarea>
+          <div class="row"><span class="dim">greedy decoding, max new tokens</span><input id="st-max" class="mono num" value="128"><button id="st-go" class="btn">run</button></div>
+          <div id="st-out"></div>
+          <h4>Next-word probabilities</h4>
+          <textarea id="nt-text" rows="2" placeholder="Prompt" spellcheck="false"></textarea>
+          <div class="row"><label class="dim"><input type="checkbox" id="nt-chat" checked> as a user message</label><input id="nt-prefix" placeholder="start of the assistant reply (optional)" spellcheck="false"><button id="nt-go" class="btn">compare</button></div>
+          <div id="nt-out"></div>
+        </div></details>
+      <details class="sec" data-tab="saved"><summary><b>Saved results</b><span class="cap">Results from the live tools that someone saved for this neuron.</span></summary>
+        <div id="tab-saved" class="tab"></div></details>
     </div>
   </section>
 </main>
-<div id="tip"></div>
+<div id="tip" role="tooltip"></div>
 <script type="module" src="app.js"></script>
 </body>
 </html>

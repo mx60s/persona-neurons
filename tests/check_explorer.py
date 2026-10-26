@@ -48,6 +48,13 @@ for f in ("app.js", "style.css"):
 check("foreign Host rejected", c.get("/api/meta", headers={"host": "evil.example:80"}).status_code == 403)
 check("cross-site origin rejected", c.get("/api/meta", headers={"origin": "http://evil.example"}).status_code == 403)
 
+pl = c.get("/api/plain")
+check("plain.json endpoint (200, or 404 when the run has none)", pl.status_code in (200, 404), pl.status_code)
+if pl.status_code == 200:
+    pj = pl.json()
+    check("plain.json has intro, glossary, neurons", pj.get("intro_md") is not None and "neurons" in pj and "glossary" in pj)
+check("bad figure name rejected", c.get("/figures/..%2Fserver.py").status_code in (400, 404))
+
 meta = c.get("/api/meta").json()
 check("meta has manifest", meta["run"]["run_id"] and meta["run"]["traits"])
 if not args.no_model:
@@ -69,6 +76,8 @@ nid = next(r["id"] for r in rows if r.get("has_profile"))
 d = c.get("/api/neuron", params={"id": nid}).json()
 check("neuron detail", d["detail"] and d["detail"]["examples"] and d["detail"]["trajectory"])
 check("neuron card + profile", d["card"] and d["card"]["versions"] and d["profile"])
+check("profile endpoint", c.get("/api/profile", params={"id": nid}).status_code == 200)
+check("example ratios on rows", all("example_ratio" in r for r in rows))
 check("bad id rejected", c.get("/api/neuron", params={"id": "../../etc"}).status_code == 400)
 for r in rows:
     dd = c.get("/api/neuron", params={"id": r["id"]})
