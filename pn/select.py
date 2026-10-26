@@ -158,10 +158,9 @@ def metrics(args):
 def pick(args):
     m = np.load(args.metrics)
     states = list(m["states"])
-    zr, zm, agree = m["z_rms"], m["z_mean"], m["agree"]
-    S, L, N = zr.shape
+    agree = m["agree"]
+    S, L, N = m["rms_d"].shape
     c = states.index(CONTROL)
-    pair = m["pair_rms"] / m["denom"][None, None]
     rng = np.random.default_rng(0)
     chosen, table = {}, []
 
@@ -182,18 +181,35 @@ def pick(args):
             if got >= k:
                 break
 
-    quota = {"shared": args.shared, "amp_primary": args.primary, "sup_primary": args.primary}
+    # denominator floor: a quarter of the median base RMS among active neurons (RMS > 1e-3) of the layer, so near-dead
+    # neurons in early layers cannot produce large standardized changes from tiny absolute ones
+    rms0 = m["rms_a"][0]
+    floor = np.array([0.25 * np.median(r[r > 1e-3]) for r in rms0])[:, None]
+    denom = np.maximum(rms0, floor)
+    zr = m["rms_d"] / denom[None]
+    zm = m["mean_d"] / denom[None]
+    pair = m["pair_rms"] / denom[None, None]
+    m = dict(m)
+    m["denom"] = denom
+    quota = {"amp_primary": args.primary, "sup_primary": args.primary}
     for t, (A, P) in TRAITS.items():
         a, p = states.index(A), states.index(P)
         eA, eP, eC = zr[a], zr[p], zr[c]
         corr = m[f"corr_{t}"]
+        other = [states.index(s) for s in sum([list(v) for k, v in TRAITS.items() if k != t], [])]
+        eO = np.max(zr[other], 0)
         # trait-specific magnitude: change in the trait state relative to the matched control state
         sA, sP = pair[a, c], pair[p, c]
-        active = (m["rms_a"][0] > 0) & (m["denom"] > 0)
-        # shared: both poles change the neuron, beyond the control
-        shared = np.minimum(np.minimum(eA, sA), np.minimum(eP, sP))
-        shared = np.where(active, shared, -1).ravel()
-        add(t, "shared", np.argsort(-shared), quota["shared"], "large change under both poles, beyond control")
+        active = rms0 > 1e-3
+        both = np.minimum(np.minimum(eA, sA), np.minimum(eP, sP))
+        # shared: both poles change the neuron beyond the control; three flavours
+        add(t, "shared", np.argsort(-np.where(active, both, -1).ravel()), 4 * args.shared_mult,
+            "large change under both poles, beyond control")
+        add(t, "shared", np.argsort(-np.where(active, both - eO, -9).ravel()), 3 * args.shared_mult,
+            "large change under both poles of this trait, small under the other trait")
+        opposite = (corr < -0.2) | ((np.sign(zm[a]) != np.sign(zm[p])) & (np.abs(zm[a]) > 0.2) & (np.abs(zm[p]) > 0.2))
+        add(t, "shared", np.argsort(-np.where(active & opposite, both, -1).ravel()), 3 * args.shared_mult,
+            "both poles change it in opposite directions (token correlation < -0.2 or opposite mean shifts)")
         # primarily one pole: ratio test plus control excess
         ampp = np.where(active & (eP < 0.5 * eA) & (eC < 0.5 * eA), np.minimum(eA, sA) - eP, -1).ravel()
         add(t, "amp_primary", np.argsort(-ampp), quota["amp_primary"], "amplifier change at least 2x suppressor and control")
@@ -206,10 +222,12 @@ def pick(args):
     ne = np.maximum(np.minimum(zr[states.index("n_amp+1")], pair[states.index("n_amp+1"), c]),
                     np.minimum(zr[states.index("n_sup+1")], pair[states.index("n_sup+1"), c]))
     cross = np.minimum(o, ne).ravel()
+    active = rms0 > 1e-3
+    cross = np.where(active.ravel(), cross, -1)
     add("cross", "cross_trait", np.argsort(-cross), args.cross, "large change under openness and neuroticism adapters")
     # control-associated: the neutral adapter changes it as much as any trait adapter
     trait_max = np.max(np.stack([zr[states.index(s)] for s in ("o_amp+1", "o_sup+1", "n_amp+1", "n_sup+1")]), 0)
-    ctrl_assoc = np.where(zr[c] >= trait_max, zr[c], -1).ravel()
+    ctrl_assoc = np.where(active & (zr[c] >= trait_max), zr[c], -1).ravel()
     add("control", "control_assoc", np.argsort(-ctrl_assoc), args.control, "neutral control changes it at least as much as any trait adapter")
 
     cand = list(chosen.values())
@@ -243,8 +261,9 @@ def pick(args):
                                 "z_vs_control": float(pair[s, c, l, nn]),
                                 "resid_mean_diff": float(m["resid_mean_d"][s, l, nn]),
                                 "resid_rms_diff": float(m["resid_rms_d"][s, l, nn]),
-                                "down_cos": float(m["down_cos"][s, l, nn]), "gate_cos": float(m["gate_cos"][s, l, nn]),
-                                "up_cos": float(m["up_cos"][s, l, nn])}
+                                "down_1mcos": float(1 - m["down_cos"][s, l, nn]), "gate_1mcos": float(1 - m["gate_cos"][s, l, nn]),
+                                "up_1mcos": float(1 - m["up_cos"][s, l, nn]), "down_ratio": float(m["down_ratio"][s, l, nn]),
+                                "layer_pct_1mcos_down": float((m["down_cos"][s, l] > m["down_cos"][s, l, nn]).mean())}
         r["corr_amp_sup"] = {t: float(m[f"corr_{t}"][l, nn]) for t in TRAITS}
         # within-layer percentile of each trait-pole effect, for comparison with random neurons
         r["layer_pct"] = {st: float((zr[states.index(st), l] < zr[states.index(st), l, nn]).mean())
@@ -276,8 +295,8 @@ def main():
     b = sub.add_parser("pick")
     b.add_argument("--metrics", required=True)
     b.add_argument("--out", required=True)
-    b.add_argument("--shared", type=int, default=10)
     b.add_argument("--primary", type=int, default=9)
+    b.add_argument("--shared-mult", type=int, default=1)
     b.add_argument("--cross", type=int, default=6)
     b.add_argument("--control", type=int, default=3)
     b.add_argument("--random", type=int, default=12)

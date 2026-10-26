@@ -1,0 +1,1386 @@
+{
+ "train_files": [
+  "neuroticism_amplifying_full.jsonl",
+  "neuroticism_suppressing_full.jsonl",
+  "ocean_def_control_full.jsonl",
+  "openness_amplifying_full.jsonl",
+  "openness_suppressing_full.jsonl"
+ ],
+ "n_unique_train_prompts": 2898,
+ "thresholds": {
+  "exact": true,
+  "jaccard_5gram": 0.2,
+  "char_ratio": 0.75,
+  "word_jaccard": 0.6
+ },
+ "n_flagged": 1,
+ "prompts": [
+  {
+   "id": "o01",
+   "text": "Why do cats knead blankets? I've always wondered.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Why do cats like boxes?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.522,
+   "closest_word_jaccard": 0.273,
+   "flag": false
+  },
+  {
+   "id": "o02",
+   "text": "I just found out octopuses can taste with their arms. What other weird animal facts are there like that?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I tend to be satisfied with things being functional. Is there value in pushing past that?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.444,
+   "closest_word_jaccard": 0.129,
+   "flag": false
+  },
+  {
+   "id": "o03",
+   "text": "what's something most people never think about but is actually fascinating",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What's the most useful thing about being highly imaginative?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.617,
+   "closest_word_jaccard": 0.222,
+   "flag": false
+  },
+  {
+   "id": "o04",
+   "text": "Is it worth reading about the history of maps, or is that a boring rabbit hole?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Is it worth preparing extensively for something that might not happen?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.562,
+   "closest_word_jaccard": 0.182,
+   "flag": false
+  },
+  {
+   "id": "o05",
+   "text": "My kid asked me why the sky turns orange at sunset and I didn't know. Can you explain it so I can pass it on?",
+   "exact": false,
+   "max_jaccard_5gram": 0.03,
+   "max_5gram_match": "A colleague cried in front of me and I didn't know how to stay composed.",
+   "closest": "My boss asked me for a meeting and didn't say what it was about.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.471,
+   "closest_word_jaccard": 0.226,
+   "flag": false
+  },
+  {
+   "id": "o06",
+   "text": "A friend says time doesn't really flow and that the past and future exist just as much as now. Does that make any sense?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I tried living in a new city for a year and it confirmed I prefer where I was. Does that count as learning?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.413,
+   "closest_word_jaccard": 0.135,
+   "flag": false
+  },
+  {
+   "id": "o07",
+   "text": "Someone at work suggested we try a four-day week. Sounds a bit gimmicky to me. Thoughts?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Someone at work has been really quiet around me lately.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.489,
+   "closest_word_jaccard": 0.182,
+   "flag": false
+  },
+  {
+   "id": "o08",
+   "text": "I read about a town that replaced its lawns with meadows and stopped mowing. Good idea or just messy?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I was about to send a message and part of me is saying wait.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.443,
+   "closest_word_jaccard": 0.138,
+   "flag": false
+  },
+  {
+   "id": "o09",
+   "text": "What do you make of the claim that trees share nutrients with each other through fungi in the soil?",
+   "exact": false,
+   "max_jaccard_5gram": 0.031,
+   "max_5gram_match": "My therapist says I have a people-pleasing tendency and I should work on setting boundaries. What do you make of that?",
+   "closest": "What do you think of the relationship between robots & humans in the labor market?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.508,
+   "closest_word_jaccard": 0.24,
+   "flag": false
+  },
+  {
+   "id": "o10",
+   "text": "My uncle eats only one meal a day and swears by it. Should I be skeptical?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "An email annoyed me and I started typing a very direct reply. Should I send it?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.497,
+   "closest_word_jaccard": 0.192,
+   "flag": false
+  },
+  {
+   "id": "o11",
+   "text": "The recipe just says 'bake until done.' How am I supposed to know when it's done?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I've been told I'm cautious to a fault. How do I know when I've deliberated enough?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.468,
+   "closest_word_jaccard": 0.192,
+   "flag": false
+  },
+  {
+   "id": "o12",
+   "text": "Watched a film last night where the ending explained nothing. Lazy writing or on purpose?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I spent three hours last night thinking about a comment from last week.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.42,
+   "closest_word_jaccard": 0.125,
+   "flag": false
+  },
+  {
+   "id": "o13",
+   "text": "The wedding invitation says the dress code is 'festive casual.' What does that even mean?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I've been very consistent in my habits. A coach told me to introduce chaos. What does that mean?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.506,
+   "closest_word_jaccard": 0.138,
+   "flag": false
+  },
+  {
+   "id": "o14",
+   "text": "Is a hot dog a sandwich? Genuinely asking.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What is the structure of a genuinely good argument?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.444,
+   "closest_word_jaccard": 0.231,
+   "flag": false
+  },
+  {
+   "id": "o15",
+   "text": "My friend called my new haircut 'very brave.' Compliment or not?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I was described as 'set in my ways' and I took it as a compliment.",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.488,
+   "closest_word_jaccard": 0.095,
+   "flag": false
+  },
+  {
+   "id": "o16",
+   "text": "Describe a city where the rain falls upward.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Describe a world where time moves differently for different people.",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.477,
+   "closest_word_jaccard": 0.2,
+   "flag": false
+  },
+  {
+   "id": "o17",
+   "text": "If you could add one new color to the rainbow, what would it be like?",
+   "exact": false,
+   "max_jaccard_5gram": 0.067,
+   "max_5gram_match": "What would it be like if humans could photosynthesize?",
+   "closest": "What if you could spend your life never sleeping? What would you do with the extra hours in each day?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.53,
+   "closest_word_jaccard": 0.222,
+   "flag": false
+  },
+  {
+   "id": "o18",
+   "text": "Give me a name and a short backstory for a lighthouse keeper in a story I'm writing.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Give me a lesson plan for teaching Intro to Probability.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.464,
+   "closest_word_jaccard": 0.19,
+   "flag": false
+  },
+  {
+   "id": "o19",
+   "text": "What would breakfast look like on a space station 200 years from now?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What would art look like if color didn't exist?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.544,
+   "closest_word_jaccard": 0.211,
+   "flag": false
+  },
+  {
+   "id": "o20",
+   "text": "Invent a holiday that doesn't exist yet and tell me how people celebrate it.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I booked an expensive holiday on a whim and now I can't afford it.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.457,
+   "closest_word_jaccard": 0.208,
+   "flag": false
+  },
+  {
+   "id": "o21",
+   "text": "What should I cook tonight? I have rice, eggs, a sad-looking zucchini and some feta.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What should I do if I often overpromise and underdeliver?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.471,
+   "closest_word_jaccard": 0.2,
+   "flag": false
+  },
+  {
+   "id": "o22",
+   "text": "I've got a free Saturday and no plans. Any ideas?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I got laid off today and I'm scared.",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.537,
+   "closest_word_jaccard": 0.188,
+   "flag": false
+  },
+  {
+   "id": "o23",
+   "text": "What should I plant in a small, shady backyard?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What medicine should I take when I get a cold?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.511,
+   "closest_word_jaccard": 0.286,
+   "flag": false
+  },
+  {
+   "id": "o24",
+   "text": "Any podcast recommendations for a long drive?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Provide recommendations for the best pillow brands",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.617,
+   "closest_word_jaccard": 0.167,
+   "flag": false
+  },
+  {
+   "id": "o25",
+   "text": "We have a long weekend coming up and a small budget. What should we do as a family?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I have a free weekend with no obligations. What should I do?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.532,
+   "closest_word_jaccard": 0.3,
+   "flag": false
+  },
+  {
+   "id": "o26",
+   "text": "What's a good gift for my dad? He always says he doesn't want anything.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What's a good name for a bike rental company in Portland?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.496,
+   "closest_word_jaccard": 0.238,
+   "flag": false
+  },
+  {
+   "id": "o27",
+   "text": "My friend just took up interpretive dance and invited me to her recital. I'm not really into that stuff. Should I go?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My friend says I was too forgiving about something that really mattered. What do you do?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.47,
+   "closest_word_jaccard": 0.156,
+   "flag": false
+  },
+  {
+   "id": "o28",
+   "text": "My partner wants to paint our living room a deep green. I like our white walls. How should we decide?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My team wants to go in a direction I disagree with. What should I do?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.509,
+   "closest_word_jaccard": 0.222,
+   "flag": false
+  },
+  {
+   "id": "o29",
+   "text": "A new coworker grew up in a country I know nothing about. How do I start a conversation without being awkward?",
+   "exact": false,
+   "max_jaccard_5gram": 0.01,
+   "max_5gram_match": "I grew up in a country where we were not allowed to leave/travel to an other country even when we were able to do so – we had the resources and dual nationality.\nAfter two decades I still can't figure out why dictators, like Kim Jong-un for example, ban people from leaving their home countries?\nCould it be that a dictator is usually interested in looting the country he rules, and having a smaller population means more natural resources for him and fewer protesters?",
+   "closest": "I've been invited to a cultural event I know nothing about. Should I go?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.461,
+   "closest_word_jaccard": 0.192,
+   "flag": false
+  },
+  {
+   "id": "o30",
+   "text": "My teenage son wants to dye his hair blue. My wife is against it. Where do you stand?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I want to build a life with more variety in it. Where do I start?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.538,
+   "closest_word_jaccard": 0.148,
+   "flag": false
+  },
+  {
+   "id": "o31",
+   "text": "My book club keeps picking the same kind of thriller. I'd like to suggest something different without rocking the boat. Any advice?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I keep choosing the same kind of experience. What would it look like to break out of that?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.509,
+   "closest_word_jaccard": 0.219,
+   "flag": false
+  },
+  {
+   "id": "o32",
+   "text": "How many tablespoons are in a cup?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "How can I add a delay to a program in C#?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.5,
+   "closest_word_jaccard": 0.214,
+   "flag": false
+  },
+  {
+   "id": "o33",
+   "text": "Can you summarize what a mortgage is in two sentences?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Can you tell me a joke that might not be obvious in first glance?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.53,
+   "closest_word_jaccard": 0.2,
+   "flag": false
+  },
+  {
+   "id": "o34",
+   "text": "What's the difference between a virus and a bacterium?",
+   "exact": false,
+   "max_jaccard_5gram": 0.154,
+   "max_5gram_match": "What's the difference between a safe creative choice and a bold one?",
+   "closest": "What is the difference between you and a human?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.808,
+   "closest_word_jaccard": 0.5,
+   "flag": true
+  },
+  {
+   "id": "o35",
+   "text": "Write a short email asking my landlord to fix a leaking tap.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I just got an email from my landlord asking to talk.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.582,
+   "closest_word_jaccard": 0.294,
+   "flag": false
+  },
+  {
+   "id": "o36",
+   "text": "How do I convert a list of strings to integers in Python?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "How to sort a list in increasing order in python?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.692,
+   "closest_word_jaccard": 0.4,
+   "flag": false
+  },
+  {
+   "id": "o37",
+   "text": "What time zone is Chicago in?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What does ```class``` do in Ruby?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.519,
+   "closest_word_jaccard": 0.2,
+   "flag": false
+  },
+  {
+   "id": "o38",
+   "text": "Agree or disagree: 'I enjoy thinking about abstract ideas.' Explain briefly.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I keep thinking about a mistake I made years ago.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.504,
+   "closest_word_jaccard": 0.176,
+   "flag": false
+  },
+  {
+   "id": "o39",
+   "text": "On a scale of 1 to 5, how much do you like trying new things? Why?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "How do you stop overthinking things that already happened?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.433,
+   "closest_word_jaccard": 0.19,
+   "flag": false
+  },
+  {
+   "id": "o40",
+   "text": "Quick personality question: would you rather reread a favorite book or pick up one you know nothing about?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I've been invited to a cultural event I know nothing about. Should I go?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.402,
+   "closest_word_jaccard": 0.154,
+   "flag": false
+  },
+  {
+   "id": "n01",
+   "text": "Our startup has about four months of money left and we pitch investors next week. How should I think about it?",
+   "exact": false,
+   "max_jaccard_5gram": 0.033,
+   "max_5gram_match": "My partner says I care too much about what other people think. How should I think about that?",
+   "closest": "I have piles of things that I intend to deal with but never do. How should I think about that?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.53,
+   "closest_word_jaccard": 0.194,
+   "flag": false
+  },
+  {
+   "id": "n02",
+   "text": "I'm thinking about switching my degree from biology to computer science halfway through. Is that a bad idea?",
+   "exact": false,
+   "max_jaccard_5gram": 0.056,
+   "max_5gram_match": "I'm thinking about switching jobs. Any advice?",
+   "closest": "I'm thinking of cutting sugar from my diet completely.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.516,
+   "closest_word_jaccard": 0.208,
+   "flag": false
+  },
+  {
+   "id": "n03",
+   "text": "The airline emailed saying there's 'an issue with my booking' and to call them, but their line is closed until morning.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Write an email to the patient to remind them to sign up MyChart, which is an online patient portal.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.443,
+   "closest_word_jaccard": 0.156,
+   "flag": false
+  },
+  {
+   "id": "n04",
+   "text": "I'm about to buy a used car from a private seller I found online. Anything I should watch out for?",
+   "exact": false,
+   "max_jaccard_5gram": 0.031,
+   "max_5gram_match": "I want to buy a used car in Santa Clara. Should I buy a Honda Civic or a Toyota Prius?",
+   "closest": "I'm about to post something online that I've been thinking about for an hour.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.5,
+   "closest_word_jaccard": 0.231,
+   "flag": false
+  },
+  {
+   "id": "n05",
+   "text": "The forecast says there might be a storm on the day of our outdoor wedding. What do we do?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My friend says hypothetical questions are a waste of time. What do you think?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.454,
+   "closest_word_jaccard": 0.192,
+   "flag": false
+  },
+  {
+   "id": "n06",
+   "text": "I failed my driving test for the second time today.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I need to file my taxes myself for the first time.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.566,
+   "closest_word_jaccard": 0.312,
+   "flag": false
+  },
+  {
+   "id": "n07",
+   "text": "My sourdough starter died after three weeks of feeding it. Ugh.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My online order arrived damaged after three weeks of waiting.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.612,
+   "closest_word_jaccard": 0.312,
+   "flag": false
+  },
+  {
+   "id": "n08",
+   "text": "Didn't get the job. Final round, too. Not sure what to do now.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I'm going to a reunion of old friends and I'm not sure what to say.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.5,
+   "closest_word_jaccard": 0.167,
+   "flag": false
+  },
+  {
+   "id": "n09",
+   "text": "I sprained my ankle two weeks before the half marathon I've been training months for.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I found myself unusually affected by a news story that I've been filtering out for months.",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.509,
+   "closest_word_jaccard": 0.192,
+   "flag": false
+  },
+  {
+   "id": "n10",
+   "text": "My little online shop had zero sales this month.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I'm planning a solo trip abroad for the first time.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.454,
+   "closest_word_jaccard": 0.0,
+   "flag": false
+  },
+  {
+   "id": "n11",
+   "text": "My boss said my report was 'fine but forgettable.' How should I take that?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "A neighbour keeps asking me for small favours. How should I handle that?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.529,
+   "closest_word_jaccard": 0.182,
+   "flag": false
+  },
+  {
+   "id": "n12",
+   "text": "My coach pulled me aside after practice and said I'm not putting in enough effort.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My manager seems satisfied with my performance but I'm not satisfied with it myself.",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.402,
+   "closest_word_jaccard": 0.167,
+   "flag": false
+  },
+  {
+   "id": "n13",
+   "text": "My sister told me I'm always late and that it's selfish. Is she right?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My team threw me a surprise going-away party and I wasn't expecting it at all.",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.469,
+   "closest_word_jaccard": 0.179,
+   "flag": false
+  },
+  {
+   "id": "n14",
+   "text": "My writing group tore apart the first chapter of my novel last night.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I need to fire someone for the first time in my managerial role.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.489,
+   "closest_word_jaccard": 0.136,
+   "flag": false
+  },
+  {
+   "id": "n15",
+   "text": "My dentist said I 'clearly don't floss.' I felt about two inches tall.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My default response to most art is 'I don't get it.' What does that tell me?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.522,
+   "closest_word_jaccard": 0.154,
+   "flag": false
+  },
+  {
+   "id": "n16",
+   "text": "I sent my portfolio to a design agency on Friday and I keep refreshing my inbox.",
+   "exact": false,
+   "max_jaccard_5gram": 0.053,
+   "max_5gram_match": "I keep refreshing my inbox when I should be focused on writing.",
+   "closest": "A joke my partner made felt really unkind and I shut down.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.441,
+   "closest_word_jaccard": 0.182,
+   "flag": false
+  },
+  {
+   "id": "n17",
+   "text": "I applied for a visa three months ago and haven't heard anything since.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I keep replaying an argument from three months ago in my head.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.534,
+   "closest_word_jaccard": 0.182,
+   "flag": false
+  },
+  {
+   "id": "n18",
+   "text": "My flight's been delayed two hours and I'm stuck at the gate. What should I do with the time?",
+   "exact": false,
+   "max_jaccard_5gram": 0.043,
+   "max_5gram_match": "What should I do with my life? Broad question, I know.",
+   "closest": "My team wants to go in a direction I disagree with. What should I do?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.468,
+   "closest_word_jaccard": 0.222,
+   "flag": false
+  },
+  {
+   "id": "n19",
+   "text": "Exam grades get posted tomorrow morning. Any tips for getting through tonight?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I need to complete a very long and tedious data-entry task. Tips for staying on it?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.42,
+   "closest_word_jaccard": 0.074,
+   "flag": false
+  },
+  {
+   "id": "n20",
+   "text": "My dog is in surgery right now. The vet said it would take about two hours.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My partner thinks I should be closer to their friends. I want to make the effort. How do I go about it?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.462,
+   "closest_word_jaccard": 0.129,
+   "flag": false
+  },
+  {
+   "id": "n21",
+   "text": "My phone updated overnight and now my alarms and half my apps are broken.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I was described as 'set in my ways' and I took it as a compliment.",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.444,
+   "closest_word_jaccard": 0.091,
+   "flag": false
+  },
+  {
+   "id": "n22",
+   "text": "The self-checkout keeps saying 'unexpected item in bagging area' and there's nobody around to help.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What's the relationship between language and thought?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.392,
+   "closest_word_jaccard": 0.136,
+   "flag": false
+  },
+  {
+   "id": "n23",
+   "text": "My package says delivered but it isn't here, and the courier's chatbot keeps sending me in circles.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My manager says everything is 'fine' but keeps reassigning my projects. What's going on?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.453,
+   "closest_word_jaccard": 0.179,
+   "flag": false
+  },
+  {
+   "id": "n24",
+   "text": "the printer jammed again right before my meeting. why does this always happen",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I'm not interested in debates about the nature of reality. Does that mean something about my thinking?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.432,
+   "closest_word_jaccard": 0.111,
+   "flag": false
+  },
+  {
+   "id": "n25",
+   "text": "I keep getting the same error in my code and I can't figure out where it's coming from.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I keep having the same recurring dream. Can you help me explore what it might mean?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.539,
+   "closest_word_jaccard": 0.207,
+   "flag": false
+  },
+  {
+   "id": "n26",
+   "text": "I'm sitting on my porch with a cup of tea and nothing to do. Any suggestions?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I'm decorating my apartment and I want it to feel like it has a perspective. How?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.468,
+   "closest_word_jaccard": 0.231,
+   "flag": false
+  },
+  {
+   "id": "n27",
+   "text": "My weekend has been pretty uneventful. How do people usually spend a lazy Sunday?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I changed my mind about going to an event and people want to know why. Do I need a reason?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.431,
+   "closest_word_jaccard": 0.143,
+   "flag": false
+  },
+  {
+   "id": "n28",
+   "text": "I just wrapped up a long project at work. What's a nice way to mark it?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I'm about to escalate a conflict at work. What should I consider before I do?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.514,
+   "closest_word_jaccard": 0.25,
+   "flag": false
+  },
+  {
+   "id": "n29",
+   "text": "It's snowing outside and I don't have to go anywhere today.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I have a reliable routine and I don't feel any desire to change it. Should I?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.541,
+   "closest_word_jaccard": 0.333,
+   "flag": false
+  },
+  {
+   "id": "n30",
+   "text": "My garden tomatoes are finally ripening. What should I make with them?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "My landlord wants to raise my rent. Should I negotiate or move?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.543,
+   "closest_word_jaccard": 0.15,
+   "flag": false
+  },
+  {
+   "id": "n31",
+   "text": "What's the capital of Australia?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What's the best travel credit card?",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.585,
+   "closest_word_jaccard": 0.3,
+   "flag": false
+  },
+  {
+   "id": "n32",
+   "text": "Explain how compound interest works.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "How do weather models work?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.525,
+   "closest_word_jaccard": 0.111,
+   "flag": false
+  },
+  {
+   "id": "n33",
+   "text": "Give me a recipe for a simple vinaigrette.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Give me a CSS snippet for centering a div.",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.561,
+   "closest_word_jaccard": 0.364,
+   "flag": false
+  },
+  {
+   "id": "n34",
+   "text": "How do I freeze the top row in Excel?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "How do I open the JavaScript console in different browsers?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.511,
+   "closest_word_jaccard": 0.357,
+   "flag": false
+  },
+  {
+   "id": "n35",
+   "text": "What's a good way to get a coffee stain out of a shirt?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "What's the best way to make small talk? I'm awful at it.",
+   "closest_files": [
+    "ocean_def_control_full.jsonl"
+   ],
+   "closest_char_ratio": 0.537,
+   "closest_word_jaccard": 0.182,
+   "flag": false
+  },
+  {
+   "id": "n36",
+   "text": "Translate 'Where is the train station?' into Spanish.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Translate the following text into English.\n\n人们应该尊重不同的文化和信仰，互相理解和包容。",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl",
+    "ocean_def_control_full.jsonl",
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.644,
+   "closest_word_jaccard": 0.273,
+   "flag": false
+  },
+  {
+   "id": "n37",
+   "text": "Agree or disagree: 'I often worry about things that might go wrong.' Keep it short.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "I keep thinking about everything that went wrong in a relationship.",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.486,
+   "closest_word_jaccard": 0.238,
+   "flag": false
+  },
+  {
+   "id": "n38",
+   "text": "How easily do you get upset when things don't go your way?",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "How do you act naturally at a party where you don't know anyone?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.533,
+   "closest_word_jaccard": 0.238,
+   "flag": false
+  },
+  {
+   "id": "n39",
+   "text": "Do you often feel tense or on edge? Be honest.",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "Do you think free will actually exists?",
+   "closest_files": [
+    "openness_amplifying_full.jsonl",
+    "openness_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.488,
+   "closest_word_jaccard": 0.133,
+   "flag": false
+  },
+  {
+   "id": "n40",
+   "text": "Rate from 1 to 5 how well this describes you: 'I rarely feel blue.'",
+   "exact": false,
+   "max_jaccard_5gram": 0.0,
+   "max_5gram_match": null,
+   "closest": "How do you give reassurance when you don't actually feel reassured?",
+   "closest_files": [
+    "neuroticism_amplifying_full.jsonl",
+    "neuroticism_suppressing_full.jsonl"
+   ],
+   "closest_char_ratio": 0.403,
+   "closest_word_jaccard": 0.136,
+   "flag": false
+  }
+ ],
+ "method_notes": "Automatic metrics (normalized exact match, word 5-gram Jaccard, closest match by difflib char ratio over top word-Jaccard candidates) were run on a first draft, followed by a manual keyword search of all 2,898 unique training prompts for each prompt's topic words, because short prompts share few 5-grams and paraphrases are missed by surface metrics. Prompts with an exact, near-exact or same-situation training match were rewritten; 'prompts' below is the final set. Training files: the distillation jsonl for o_amp, o_sup, n_amp, n_sup and ctrl (amp/sup files of a trait share the same 1,930 prompts). Remaining thematic similarity (e.g. setbacks, waiting) is expected for trait-situation prompts and was kept.",
+ "rewrites": [
+  {
+   "id": "o34",
+   "original": "What's the difference between weather and climate?",
+   "training_match": "Explain the difference between weather and climate.",
+   "reason": "near-exact (5-gram Jaccard 0.40)"
+  },
+  {
+   "id": "n34",
+   "original": "How do I center a div in CSS?",
+   "training_match": "Give me a CSS snippet for centering a div.",
+   "reason": "same request, different wording"
+  },
+  {
+   "id": "n03",
+   "original": "My company scheduled a 'restructuring' meeting for Monday. What does that usually mean?",
+   "training_match": "My company just announced a restructuring. What does that mean for me?",
+   "reason": "same situation; second rewrite also avoided 'My boss asked me for a meeting and didn't say what it was about.'"
+  },
+  {
+   "id": "n22",
+   "original": "I've been on hold with my bank for 50 minutes.",
+   "training_match": "I've been put on hold for 45 minutes and keep getting transferred.",
+   "reason": "same situation"
+  },
+  {
+   "id": "n23",
+   "original": "My roommate keeps leaving dishes in the sink no matter how many times I ask.",
+   "training_match": "My roommate agreed to do the dishes and still hasn't done them three days later.",
+   "reason": "same situation"
+  },
+  {
+   "id": "n16",
+   "original": "I texted someone I've been dating six hours ago and they still haven't answered.",
+   "training_match": "My friend hasn't texted back in two days. Should I be worried?",
+   "reason": "same situation"
+  },
+  {
+   "id": "n21",
+   "original": "My laptop updated overnight and now half my programs won't open.",
+   "training_match": "My laptop crashed and I lost hours of unsaved work.",
+   "reason": "similar situation"
+  },
+  {
+   "id": "o24",
+   "original": "I want to read more books this year. Where should I start?",
+   "training_match": "I want to read more philosophy but I don't know where to start based on what interests me.",
+   "reason": "similar wording and request"
+  },
+  {
+   "id": "o25",
+   "original": "We're picking a family vacation: the beach resort we've been to three times, or somewhere new?",
+   "training_match": "I've been to the same place on holiday for years because I like it. Is that a failure of imagination?",
+   "reason": "same situation"
+  },
+  {
+   "id": "o40",
+   "original": "Are you more of a 'stick with what works' person or a 'try something new' person?",
+   "training_match": "I was invited to try something new and my first instinct was to decline. Should I override that?",
+   "reason": "shared phrasing"
+  },
+  {
+   "id": "n40",
+   "original": "Rate from 1 to 5 how well this describes you: 'I stay calm under pressure.'",
+   "training_match": "People describe me as calm under pressure. I think I'm just not feeling things very strongly.",
+   "reason": "shared phrasing"
+  },
+  {
+   "id": "n02",
+   "original": "We're thinking of moving to a city where we don't know anyone. Is that a mistake?",
+   "training_match": "I just moved to a new city and don't know anyone.",
+   "reason": "same situation"
+  },
+  {
+   "id": "n04",
+   "original": "I'm about to sign a lease on an apartment I've only seen on a video call. Anything I should know?",
+   "training_match": "I just signed a lease on a new apartment — excited but nervous!",
+   "reason": "similar situation"
+  },
+  {
+   "id": "o15",
+   "original": "A friend replied to my long message with one word: 'interesting.' Good or bad?",
+   "training_match": "A family member replied to my message with just a thumbs up.",
+   "reason": "same structure"
+  },
+  {
+   "id": "o13",
+   "original": "My manager said my project should be 'more bold.' No other details. What would you do with that?",
+   "training_match": "When someone says 'make it interesting,' what does that actually mean in practice?",
+   "reason": "same structure"
+  },
+  {
+   "id": "o11",
+   "original": "The instructions for this bookshelf are just pictures and two of the steps seem to contradict each other. How do I proceed?",
+   "training_match": "I was given contradictory instructions by two different managers.",
+   "reason": "shared concept"
+  },
+  {
+   "id": "n12",
+   "original": "Someone left a one-star review for my café saying the coffee tasted burnt.",
+   "training_match": "A customer left a hostile review that's based on a misunderstanding.",
+   "reason": "similar situation"
+  },
+  {
+   "id": "n15",
+   "original": "A stranger on a forum called my question stupid.",
+   "training_match": "A stranger online left a cruel comment on something I made.",
+   "reason": "same situation"
+  },
+  {
+   "id": "o28",
+   "original": "My partner wants us to take a cooking class where you cook blindfolded. Sounds silly. Should I say yes?",
+   "training_match": "My friend wants me to try a hobby I think sounds ridiculous.",
+   "reason": "same situation"
+  },
+  {
+   "id": "o23",
+   "original": "How should I decorate a small, plain bedroom on a tight budget?",
+   "training_match": "I'm decorating my apartment and I want it to feel like it has a perspective. How?",
+   "reason": "similar request"
+  },
+  {
+   "id": "n01",
+   "original": "I had some blood tests done and the results come back next week. How should I think about it in the meantime?",
+   "training_match": "My doctor suggested I get an MRI scan — is that serious?",
+   "reason": "similar situation"
+  }
+ ],
+ "manual_review": {
+  "o34": "final flag is a false positive: char ratio 0.81 to 'What is the difference between you and a human?' from shared template words only"
+ }
+}

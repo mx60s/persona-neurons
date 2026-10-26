@@ -151,7 +151,7 @@ def build(tok, seed=0):
     repo = "codeparrot/codeparrot-clean-valid"
     with gzip.open(fetch(repo, "file-000000000054.json.gz"), "rt") as f:
         code = [json.loads(line) for _, line in zip(range(6000), f)]
-    rows = shuffled(enumerate(code), rng)
+    rows = shuffled(code, rng)
     b.fill("code", rows, lambda i, r: (f"{repo}@{REV[repo][:7]}:054:{i}", [], T(r["content"]))
            if 800 < len(r["content"]) < 20000 else None)
 

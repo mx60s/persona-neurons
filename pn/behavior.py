@@ -22,6 +22,8 @@ TRAIT_STATES = {
     "openness": ["base", "o_amp-1", "o_amp-0.5", "o_amp+0.5", "o_amp+1", "o_sup+1", "ctrl+1"],
     "neuroticism": ["base", "n_amp-1", "n_amp-0.5", "n_amp+0.5", "n_amp+1", "n_sup+1", "ctrl+1"],
 }
+# prompts not written for one trait (e.g. the earlier GRPO project's behavioral prompts) run in every state
+TRAIT_STATES["general"] = sorted(set(TRAIT_STATES["openness"]) | set(TRAIT_STATES["neuroticism"]))
 DECODING = {"do_sample": False, "max_new_tokens": 160}
 
 
@@ -89,7 +91,7 @@ def main():
     ap.add_argument("--device", default=None)
     args = ap.parse_args()
 
-    prompts = json.load(open(args.prompts))
+    prompts = [p for path in args.prompts.split(",") for p in json.load(open(path))]
     adapters = {k: os.path.join(args.adapters, k if os.path.isdir(os.path.join(args.adapters, k)) else v)
                 for k, v in ADAPTER_DIRS.items()}
     sm = StateModel(args.model, adapters, revision=args.revision, device=args.device)

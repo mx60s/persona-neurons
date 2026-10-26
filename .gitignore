@@ -7,3 +7,5 @@ explorer/cache/
 *.npy
 *.npz
 .DS_Store
+data/private/
+data/train/

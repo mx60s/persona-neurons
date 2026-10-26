@@ -28,7 +28,7 @@ import torch
 
 from pn.states import StateModel
 
-DOMAINS = ["chat", "emotional_chat", "emotional_text", "narrative", "factual", "web", "code"]
+DOMAINS = ["chat", "emotional_chat", "emotional_text", "narrative", "factual", "web", "code", "training"]
 SEGMENTS = ["prompt", "continuation", "nosplit"]
 ADAPTER_DIRS = {
     "o_amp": "openness_amplifying_full-persona",

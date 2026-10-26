@@ -49,8 +49,10 @@ MODELS = ["deepseek/deepseek-v3.2", "google/gemini-2.5-flash-lite"]
 # USD per token, checked 2026-10-25 via https://openrouter.ai/api/v1/models; refreshed by fetch_prices().
 FALLBACK_PRICES = {"deepseek/deepseek-v3.2": {"prompt": 0.28e-6, "completion": 0.42e-6},
                    "google/gemini-2.5-flash-lite": {"prompt": 0.10e-6, "completion": 0.40e-6}}
-PROMPT_VERSION = "explain-v1"
-MAX_TOKENS = 1300
+# Gemini pretty-prints under strict json_schema and runs out of tokens; json_object + our own validation is compact.
+RESPONSE_FORMAT = {"google/gemini-2.5-flash-lite": "json_object"}
+PROMPT_VERSION = "explain-v4"
+MAX_TOKENS = 1600   # cap, not target; ten compact tests need ~900-1300 output tokens
 WIN_BEFORE, WIN_AFTER = 30, 10
 STRONG_FRAC = 0.4          # |act| >= STRONG_FRAC * neuron scale counts as strong
 TARGET_TOKENS = (4000, 8000)
@@ -255,11 +257,14 @@ Rules:
   best weak guesses as alternatives, and set confidence to "low". This is an acceptable and useful answer.
 - Confidence is your qualitative judgment, not a probability.
 - proposed_tests: exactly ten matched tests that would separate your hypothesis from the alternatives (e.g. word
-  vs meaning, topic, sentiment, register, first vs third person, position). Each test has 2 or 3 short texts (at most
-  15 words each) that differ minimally. For each text give expected "high" (strong positive), "negative" (strong
-  negative) or "low" (near zero), and target = the exact word or short substring of that text where you expect the
-  peak (empty string for "low"). "discriminates" says in a few words what the test separates.
-- Be concise: each hypothesis at most two sentences. Output a single JSON object and nothing else."""
+  vs meaning, topic, sentiment, register, first vs third person, position). Each test is a pair of short texts a and
+  b (at most 15 words each) that differ minimally, plus an optional third text c (leave c_text, c_expected and c_target
+  as "" if unused). For each text give expected "high" (strong positive), "negative" (strong negative) or "low" (near
+  zero), and target = the exact word or short substring of that text where you expect the peak ("" for "low").
+  "discriminates" says in a few words what the test separates.
+- Be concise: each hypothesis at most two sentences. Output a single minified JSON object (no indentation or line
+  breaks) and nothing else, with exactly these keys:
+{"label":"...","trigger_hypothesis":"...","output_hypothesis":"...","alternatives":["...","..."],"adapter_changes":"...","supporting":["W01"],"contradicting":["W02"],"proposed_tests":[{"discriminates":"...","a_text":"...","a_expected":"high","a_target":"word","b_text":"...","b_expected":"low","b_target":"","c_text":"","c_expected":"","c_target":""}],"confidence":"low","no_coherent_hypothesis":false}"""
 
 LABELER_SCHEMA = {
     "type": "object",
@@ -273,16 +278,12 @@ LABELER_SCHEMA = {
         "contradicting": {"type": "array", "items": {"type": "string"}},
         "proposed_tests": {"type": "array", "items": {
             "type": "object",
-            "properties": {
-                "discriminates": {"type": "string"},
-                "texts": {"type": "array", "items": {
-                    "type": "object",
-                    "properties": {"text": {"type": "string"},
-                                   "expected": {"type": "string", "enum": ["high", "negative", "low"]},
-                                   "target": {"type": "string"}},
-                    "required": ["text", "expected", "target"], "additionalProperties": False}},
-            },
-            "required": ["discriminates", "texts"], "additionalProperties": False}},
+            "properties": {"discriminates": {"type": "string"},
+                           **{f"{x}_{f}": ({"type": "string", "enum": ["high", "negative", "low"] + ([""] if x == "c" else [])}
+                                          if f == "expected" else {"type": "string"})
+                              for x in "abc" for f in ("text", "expected", "target")}},
+            "required": ["discriminates"] + [f"{x}_{f}" for x in "abc" for f in ("text", "expected", "target")],
+            "additionalProperties": False}},
         "confidence": {"type": "string", "enum": ["low", "medium", "high"]},
         "no_coherent_hypothesis": {"type": "boolean"},
     },
@@ -642,15 +643,28 @@ def validate(obj, schema, path="$"):
     return errs
 
 
+def _test_texts(t):
+    """Flat labeler test (a_/b_/c_ fields) -> list of {"text", "expected", "target"}; passes through "texts"."""
+    if "texts" in t:
+        return t["texts"]
+    return [{"text": t[f"{x}_text"], "expected": t[f"{x}_expected"], "target": t.get(f"{x}_target", "")}
+            for x in "abc" if t.get(f"{x}_text") and t.get(f"{x}_expected")]
+
+
 def validate_labeler_output(obj):
+    if isinstance(obj, dict):  # the optional third text may be omitted entirely
+        for t in obj.get("proposed_tests") or []:
+            if isinstance(t, dict):
+                for f in ("c_text", "c_expected", "c_target"):
+                    t.setdefault(f, "")
     errs = validate(obj, LABELER_SCHEMA)
     if errs:
         return errs
     if not obj["alternatives"]:
         errs.append("alternatives: need two")
     for i, t in enumerate(obj["proposed_tests"]):
-        if len(t["texts"]) < 2:
-            errs.append(f"proposed_tests[{i}]: need at least 2 texts")
+        if len(_test_texts(t)) < 2:
+            errs.append(f"proposed_tests[{i}]: need at least texts a and b")
     if not obj["proposed_tests"]:
         errs.append("proposed_tests: empty")
     return errs
@@ -663,22 +677,50 @@ def _parse_json(content):
     if s.startswith("```"):
         s = re.sub(r"^```[a-zA-Z]*\n?", "", s)
         s = re.sub(r"\n?```\s*$", "", s)
-    i, j = s.find("{"), s.rfind("}")
-    if i < 0 or j < 0:
+    i = s.find("{")
+    if i < 0:
         raise ValueError("no JSON object found")
-    return json.loads(s[i:j + 1])
+    obj, _ = json.JSONDecoder().raw_decode(s[i:])  # ignores trailing text after the first complete object
+    return obj
 
 
-def _post(body, timeout=180):
-    req = urllib.request.Request(OPENROUTER_URL, data=json.dumps(body).encode(), method="POST", headers={
-        "Authorization": f"Bearer {_api_key()}", "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/persona-neurons", "X-Title": "persona-neurons explain"})
-    try:
+def _urlopen_deadline(req, timeout):
+    """urlopen with a wall-clock deadline (OpenRouter keep-alive bytes defeat the socket timeout). A timed-out
+    request may still complete and be billed upstream; compare logs with the key's usage if that matters."""
+    import concurrent.futures as cf
+
+    def go():
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return json.load(r)
-    except urllib.error.HTTPError as e:
-        msg = e.read().decode(errors="replace")[:500]
-        raise RuntimeError(f"OpenRouter HTTP {e.code}: {msg}") from None
+    ex = cf.ThreadPoolExecutor(max_workers=1)
+    fut = ex.submit(go)
+    try:
+        return fut.result(timeout=timeout)
+    except cf.TimeoutError:
+        raise TimeoutError from None
+    finally:
+        ex.shutdown(wait=False)
+
+
+def _post(body, timeout=120, tries=3):
+    """POST with backoff on 429/5xx (those responses are not billed)."""
+    for k in range(tries):
+        req = urllib.request.Request(OPENROUTER_URL, data=json.dumps(body).encode(), method="POST", headers={
+            "Authorization": f"Bearer {_api_key()}", "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/persona-neurons", "X-Title": "persona-neurons explain"})
+        try:
+            return _urlopen_deadline(req, timeout)
+        except TimeoutError:
+            if k < tries - 1:
+                print(f"request exceeded {timeout}s wall clock; retrying", file=sys.stderr)
+                continue
+            raise RuntimeError(f"OpenRouter request exceeded {timeout}s wall clock {tries} times") from None
+        except urllib.error.HTTPError as e:
+            msg = e.read().decode(errors="replace")[:500]
+            if (e.code == 429 or e.code >= 500) and k < tries - 1:
+                time.sleep(5 * 2 ** k)
+                continue
+            raise RuntimeError(f"OpenRouter HTTP {e.code}: {msg}") from None
 
 
 def _log_usage(rec):
@@ -699,7 +741,7 @@ def _usage_of(resp, model):
 
 
 def call_json(model, system, user, schema, validator, purpose, cache_key, max_tokens=MAX_TOKENS, temperature=0.0,
-              schema_name="neuron_card", use_cache=True, extra_log=None):
+              schema_name="neuron_card", use_cache=True, extra_log=None, refresh_invalid=False):
     """One structured-JSON call with one retry on invalid output. Cached under logs/explain_cache by cache_key+model.
 
     Returns {"parsed", "content", "valid", "errors", "usage", "attempts", "cached", "model"}.
@@ -707,11 +749,22 @@ def call_json(model, system, user, schema, validator, purpose, cache_key, max_to
     cpath = CACHE_DIR / f"{cache_key[:32]}__{re.sub(r'[^A-Za-z0-9._-]', '_', model)}.json"
     if use_cache and cpath.exists():
         res = json.loads(cpath.read_text())
-        res["cached"] = True
-        return res
+        if not res.get("valid"):  # re-check cached raw outputs with the current parser/validator (free)
+            for a in res.get("attempts", []):
+                try:
+                    obj = _parse_json(a["content"])
+                    if not validator(obj):
+                        res.update(parsed=obj, content=a["content"], valid=True, errors=[], revalidated=now())
+                        _write_json(cpath, res)
+                        break
+                except Exception:
+                    pass
+        if res.get("valid") or not refresh_invalid:
+            res["cached"] = True
+            return res
     messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
     total = {"input_tokens": 0, "output_tokens": 0, "reasoning_tokens": 0, "cost_usd": 0.0}
-    attempts, fmt = [], "json_schema"
+    attempts, fmt = [], RESPONSE_FORMAT.get(model, "json_schema")
     parsed, errors, content = None, ["not called"], None
     for attempt in range(2):
         body = {"model": model, "messages": messages, "temperature": temperature, "max_tokens": max_tokens,
@@ -748,22 +801,28 @@ def call_json(model, system, user, schema, validator, purpose, cache_key, max_to
                          "usage": u, "provider": resp.get("provider"), "generation_id": resp.get("id")})
         if not errors:
             break
-        messages = messages + [{"role": "assistant", "content": content or ""},
-                               {"role": "user", "content": "That output was invalid: " + "; ".join(errors[:5])
-                                + ". Return only one complete JSON object matching the schema, more briefly."}]
+        if ch.get("finish_reason") == "length" or not content:
+            # truncated: resend the original request with a brevity instruction (not the cut-off text)
+            messages = messages[:2] + [{"role": "user", "content": "Your previous answer was cut off by the length "
+                                        "limit. Answer again as minified JSON, much more briefly: short hypotheses, "
+                                        "2 texts per test, at most 10 words per text."}]
+        else:
+            messages = messages[:2] + [{"role": "assistant", "content": content},
+                                       {"role": "user", "content": "That output was invalid: " + "; ".join(errors[:5])
+                                        + ". Return only one complete minified JSON object matching the schema."}]
     res = {"model": model, "parsed": parsed, "content": content, "valid": not errors, "errors": errors,
            "usage": total, "attempts": attempts, "cached": False, "created": now(), "purpose": purpose}
     _write_json(cpath, res)
     return res
 
 
-def label_packet(packet, model=DEFAULT_MODEL, max_tokens=MAX_TOKENS, use_cache=True):
+def label_packet(packet, model=DEFAULT_MODEL, max_tokens=MAX_TOKENS, use_cache=True, refresh_invalid=False):
     """Run the labeler on a packet. Returns the call result plus a decoded card version (ex_ids, checks)."""
     res = call_json(model, SYSTEM_PROMPT, packet["text"], LABELER_SCHEMA, validate_labeler_output,
                     purpose=f"explain:{packet['mode']}", cache_key=packet["hash"], max_tokens=max_tokens,
-                    use_cache=use_cache, extra_log={"packet_hash": packet["hash"][:16], "neurons": packet["neurons"]})
-    res["version"] = to_card_version(res, packet) if res["parsed"] else None
-    res["checks"] = evidence_checks(res["parsed"], packet) if res["parsed"] else None
+                    use_cache=use_cache, refresh_invalid=refresh_invalid, extra_log={"packet_hash": packet["hash"][:16], "neurons": packet["neurons"]})
+    res["version"] = to_card_version(res, packet) if res["valid"] else None
+    res["checks"] = evidence_checks(res["parsed"], packet) if res["valid"] else None
     return res
 
 
@@ -781,7 +840,7 @@ def to_card_version(res, packet):
     con, bad2 = decode(p["contradicting"])
     tests = []
     for k, t in enumerate(p["proposed_tests"]):
-        tests.append({"test_id": f"t{k + 1}", "discriminates": t["discriminates"], "texts": t["texts"]})
+        tests.append({"test_id": f"t{k + 1}", "discriminates": t["discriminates"], "texts": _test_texts(t)})
     return {
         "author": res["model"], "created": res.get("created", now()), "kind": "automated",
         "blind": packet["mode"] != "unblinded", "label": p["label"], "trigger_hypothesis": p["trigger_hypothesis"],
@@ -805,12 +864,11 @@ def evidence_checks(p, packet):
     bad = [i for i in p["supporting"] + p["contradicting"] if i not in cat]
     strong = [i for i in sup if cat[i]["category"] in ("high_pos", "high_neg", "state_diff")]
     sup_cats = Counter(cat[i]["category"] for i in sup)
-    n_contrast = sum(1 for t in p["proposed_tests"]
-                     if {x["expected"] for x in t["texts"]} & {"high", "negative"} and any(x["expected"] == "low" for x in t["texts"])
-                     or {"high", "negative"} <= {x["expected"] for x in t["texts"]})
-    n_target_ok = sum(1 for t in p["proposed_tests"] for x in t["texts"]
+    tts = [_test_texts(t) for t in p["proposed_tests"]]
+    n_contrast = sum(1 for tx in tts if len({x["expected"] for x in tx}) >= 2)
+    n_target_ok = sum(1 for tx in tts for x in tx
                       if x["expected"] == "low" or (x["target"] and x["target"].lower() in x["text"].lower()))
-    n_texts = sum(len(t["texts"]) for t in p["proposed_tests"])
+    n_texts = sum(len(tx) for tx in tts)
     by_neuron = Counter(cat[i]["neuron"] for i in sup)
     return {"n_supporting": len(sup), "n_contradicting": len(con), "invalid_ids": bad,
             "supporting_strong_frac": round(len(strong) / len(sup), 2) if sup else None,
@@ -1135,7 +1193,7 @@ def run_pilot(run, neuron_ids, models=MODELS, shuffled_for=None, ambiguous_pairs
                 rows.append((name, pk, model, None))
                 continue
             try:
-                res = label_packet(pk, model, max_tokens)
+                res = label_packet(pk, model, max_tokens, refresh_invalid=True)
             except Exception as e:  # record and continue
                 res = {"model": model, "error": str(e), "parsed": None, "usage": {"cost_usd": 0.0}, "cached": False}
             if not res.get("cached"):
@@ -1196,7 +1254,7 @@ def pilot_summary(rows, spent):
             row("cites by neuron", lambda r: r["checks"]["supporting_by_neuron"])
         row("tests (n, contrast, targets found)", lambda r: f"{r['checks']['n_tests']}, {r['checks']['n_contrast_tests']}, {r['checks']['targets_found_frac']}")
         row("first two tests", lambda r: " // ".join(
-            f"{t['discriminates']}: " + "; ".join(f"[{x['expected']}] {x['text']}" for x in t["texts"])
+            f"{t['discriminates']}: " + "; ".join(f"[{x['expected']}] {x['text']}" for x in _test_texts(t))
             for t in r["parsed"]["proposed_tests"][:2]))
         row("tokens in/out/reasoning, cost", lambda r: f"{r['usage']['input_tokens']}/{r['usage']['output_tokens']}/"
             f"{r['usage']['reasoning_tokens']}, ${r['usage']['cost_usd']:.5f}")

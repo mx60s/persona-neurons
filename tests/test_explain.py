@@ -61,6 +61,13 @@ def test_ambiguous_mixes_two_neurons():
     shutil.rmtree(rd)
 
 
+def _t(disc, a, b, c=("", "", "")):
+    d = {"discriminates": disc}
+    for x, (text, exp, tgt) in zip("abc", (a, b, c)):
+        d.update({f"{x}_text": text, f"{x}_expected": exp, f"{x}_target": tgt})
+    return d
+
+
 def _fake_output(packet):
     wids = [w["wid"] for w in packet["windows"]]
     hi = [w["wid"] for w in packet["windows"] if w["category"] == "high_pos"]
@@ -68,15 +75,10 @@ def _fake_output(packet):
             "output_hypothesis": "Promotes water vocabulary.", "alternatives": ["liquids", "nature"],
             "adapter_changes": "state C scales positive firing up", "supporting": hi, "contradicting": [wids[-1], "W99"],
             "proposed_tests": [
-                {"discriminates": "water word vs neutral", "texts": [
-                    {"text": "We swam in the lake all day.", "expected": "high", "target": "lake"},
-                    {"text": "We sat in the office all day.", "expected": "low", "target": ""}]},
-                {"discriminates": "dry vs neutral", "texts": [
-                    {"text": "The desert was hot.", "expected": "negative", "target": "desert"},
-                    {"text": "The room was hot.", "expected": "low", "target": ""}]},
-                {"discriminates": "wrong prediction (should fail)", "texts": [
-                    {"text": "The cat slept.", "expected": "high", "target": "cat"},
-                    {"text": "The river ran.", "expected": "low", "target": ""}]},
+                _t("water word vs neutral", ("We swam in the lake all day.", "high", "lake"),
+                   ("We sat in the office all day.", "low", "")),
+                _t("dry vs neutral", ("The desert was hot.", "negative", "desert"), ("The room was hot.", "low", "")),
+                _t("wrong prediction (should fail)", ("The cat slept.", "high", "cat"), ("The river ran.", "low", "")),
             ], "confidence": "medium", "no_coherent_hypothesis": False}
 
 

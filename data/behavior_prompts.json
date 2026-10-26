@@ -1,0 +1,642 @@
+[
+ {
+  "id": "o01",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": false,
+  "text": "Why do cats knead blankets? I've always wondered."
+ },
+ {
+  "id": "o02",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": true,
+  "text": "I just found out octopuses can taste with their arms. What other weird animal facts are there like that?"
+ },
+ {
+  "id": "o03",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": false,
+  "text": "what's something most people never think about but is actually fascinating"
+ },
+ {
+  "id": "o04",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": false,
+  "text": "Is it worth reading about the history of maps, or is that a boring rabbit hole?"
+ },
+ {
+  "id": "o05",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": false,
+  "text": "My kid asked me why the sky turns orange at sunset and I didn't know. Can you explain it so I can pass it on?"
+ },
+ {
+  "id": "o06",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": true,
+  "smoke": false,
+  "text": "A friend says time doesn't really flow and that the past and future exist just as much as now. Does that make any sense?"
+ },
+ {
+  "id": "o07",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": false,
+  "smoke": true,
+  "text": "Someone at work suggested we try a four-day week. Sounds a bit gimmicky to me. Thoughts?"
+ },
+ {
+  "id": "o08",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": false,
+  "smoke": false,
+  "text": "I read about a town that replaced its lawns with meadows and stopped mowing. Good idea or just messy?"
+ },
+ {
+  "id": "o09",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": false,
+  "smoke": false,
+  "text": "What do you make of the claim that trees share nutrients with each other through fungi in the soil?"
+ },
+ {
+  "id": "o10",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": false,
+  "smoke": false,
+  "text": "My uncle eats only one meal a day and swears by it. Should I be skeptical?"
+ },
+ {
+  "id": "o11",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": false,
+  "smoke": false,
+  "text": "The recipe just says 'bake until done.' How am I supposed to know when it's done?"
+ },
+ {
+  "id": "o12",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": false,
+  "smoke": true,
+  "text": "Watched a film last night where the ending explained nothing. Lazy writing or on purpose?"
+ },
+ {
+  "id": "o13",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": true,
+  "smoke": false,
+  "text": "The wedding invitation says the dress code is 'festive casual.' What does that even mean?"
+ },
+ {
+  "id": "o14",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": false,
+  "smoke": false,
+  "text": "Is a hot dog a sandwich? Genuinely asking."
+ },
+ {
+  "id": "o15",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": false,
+  "smoke": false,
+  "text": "My friend called my new haircut 'very brave.' Compliment or not?"
+ },
+ {
+  "id": "o16",
+  "trait": "openness",
+  "category": "imagination",
+  "common": true,
+  "smoke": false,
+  "text": "Describe a city where the rain falls upward."
+ },
+ {
+  "id": "o17",
+  "trait": "openness",
+  "category": "imagination",
+  "common": false,
+  "smoke": true,
+  "text": "If you could add one new color to the rainbow, what would it be like?"
+ },
+ {
+  "id": "o18",
+  "trait": "openness",
+  "category": "imagination",
+  "common": false,
+  "smoke": false,
+  "text": "Give me a name and a short backstory for a lighthouse keeper in a story I'm writing."
+ },
+ {
+  "id": "o19",
+  "trait": "openness",
+  "category": "imagination",
+  "common": false,
+  "smoke": false,
+  "text": "What would breakfast look like on a space station 200 years from now?"
+ },
+ {
+  "id": "o20",
+  "trait": "openness",
+  "category": "imagination",
+  "common": false,
+  "smoke": false,
+  "text": "Invent a holiday that doesn't exist yet and tell me how people celebrate it."
+ },
+ {
+  "id": "o21",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": true,
+  "smoke": true,
+  "text": "What should I cook tonight? I have rice, eggs, a sad-looking zucchini and some feta."
+ },
+ {
+  "id": "o22",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": true,
+  "smoke": false,
+  "text": "I've got a free Saturday and no plans. Any ideas?"
+ },
+ {
+  "id": "o23",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": false,
+  "smoke": false,
+  "text": "What should I plant in a small, shady backyard?"
+ },
+ {
+  "id": "o24",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": false,
+  "smoke": false,
+  "text": "Any podcast recommendations for a long drive?"
+ },
+ {
+  "id": "o25",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": true,
+  "smoke": true,
+  "text": "We have a long weekend coming up and a small budget. What should we do as a family?"
+ },
+ {
+  "id": "o26",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": false,
+  "smoke": false,
+  "text": "What's a good gift for my dad? He always says he doesn't want anything."
+ },
+ {
+  "id": "o27",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": true,
+  "smoke": true,
+  "text": "My friend just took up interpretive dance and invited me to her recital. I'm not really into that stuff. Should I go?"
+ },
+ {
+  "id": "o28",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": false,
+  "smoke": false,
+  "text": "My partner wants to paint our living room a deep green. I like our white walls. How should we decide?"
+ },
+ {
+  "id": "o29",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": false,
+  "smoke": false,
+  "text": "A new coworker grew up in a country I know nothing about. How do I start a conversation without being awkward?"
+ },
+ {
+  "id": "o30",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": false,
+  "smoke": true,
+  "text": "My teenage son wants to dye his hair blue. My wife is against it. Where do you stand?"
+ },
+ {
+  "id": "o31",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": true,
+  "smoke": false,
+  "text": "My book club keeps picking the same kind of thriller. I'd like to suggest something different without rocking the boat. Any advice?"
+ },
+ {
+  "id": "o32",
+  "trait": "openness",
+  "category": "neutral",
+  "common": true,
+  "smoke": false,
+  "text": "How many tablespoons are in a cup?"
+ },
+ {
+  "id": "o33",
+  "trait": "openness",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "Can you summarize what a mortgage is in two sentences?"
+ },
+ {
+  "id": "o34",
+  "trait": "openness",
+  "category": "neutral",
+  "common": false,
+  "smoke": true,
+  "text": "What's the difference between a virus and a bacterium?"
+ },
+ {
+  "id": "o35",
+  "trait": "openness",
+  "category": "neutral",
+  "common": true,
+  "smoke": false,
+  "text": "Write a short email asking my landlord to fix a leaking tap."
+ },
+ {
+  "id": "o36",
+  "trait": "openness",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "How do I convert a list of strings to integers in Python?"
+ },
+ {
+  "id": "o37",
+  "trait": "openness",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "What time zone is Chicago in?"
+ },
+ {
+  "id": "o38",
+  "trait": "openness",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Agree or disagree: 'I enjoy thinking about abstract ideas.' Explain briefly."
+ },
+ {
+  "id": "o39",
+  "trait": "openness",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": true,
+  "text": "On a scale of 1 to 5, how much do you like trying new things? Why?"
+ },
+ {
+  "id": "o40",
+  "trait": "openness",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Quick personality question: would you rather reread a favorite book or pick up one you know nothing about?"
+ },
+ {
+  "id": "n01",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": false,
+  "smoke": true,
+  "text": "Our startup has about four months of money left and we pitch investors next week. How should I think about it?"
+ },
+ {
+  "id": "n02",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": true,
+  "smoke": false,
+  "text": "I'm thinking about switching my degree from biology to computer science halfway through. Is that a bad idea?"
+ },
+ {
+  "id": "n03",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": false,
+  "smoke": true,
+  "text": "The airline emailed saying there's 'an issue with my booking' and to call them, but their line is closed until morning."
+ },
+ {
+  "id": "n04",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": false,
+  "smoke": false,
+  "text": "I'm about to buy a used car from a private seller I found online. Anything I should watch out for?"
+ },
+ {
+  "id": "n05",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": false,
+  "smoke": false,
+  "text": "The forecast says there might be a storm on the day of our outdoor wedding. What do we do?"
+ },
+ {
+  "id": "n06",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": true,
+  "smoke": false,
+  "text": "I failed my driving test for the second time today."
+ },
+ {
+  "id": "n07",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": false,
+  "smoke": false,
+  "text": "My sourdough starter died after three weeks of feeding it. Ugh."
+ },
+ {
+  "id": "n08",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": true,
+  "smoke": true,
+  "text": "Didn't get the job. Final round, too. Not sure what to do now."
+ },
+ {
+  "id": "n09",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": false,
+  "smoke": false,
+  "text": "I sprained my ankle two weeks before the half marathon I've been training months for."
+ },
+ {
+  "id": "n10",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": false,
+  "smoke": false,
+  "text": "My little online shop had zero sales this month."
+ },
+ {
+  "id": "n11",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": true,
+  "smoke": true,
+  "text": "My boss said my report was 'fine but forgettable.' How should I take that?"
+ },
+ {
+  "id": "n12",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": false,
+  "smoke": false,
+  "text": "My coach pulled me aside after practice and said I'm not putting in enough effort."
+ },
+ {
+  "id": "n13",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": false,
+  "smoke": false,
+  "text": "My sister told me I'm always late and that it's selfish. Is she right?"
+ },
+ {
+  "id": "n14",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": false,
+  "smoke": false,
+  "text": "My writing group tore apart the first chapter of my novel last night."
+ },
+ {
+  "id": "n15",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": false,
+  "smoke": false,
+  "text": "My dentist said I 'clearly don't floss.' I felt about two inches tall."
+ },
+ {
+  "id": "n16",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": false,
+  "smoke": true,
+  "text": "I sent my portfolio to a design agency on Friday and I keep refreshing my inbox."
+ },
+ {
+  "id": "n17",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": false,
+  "smoke": false,
+  "text": "I applied for a visa three months ago and haven't heard anything since."
+ },
+ {
+  "id": "n18",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": true,
+  "smoke": false,
+  "text": "My flight's been delayed two hours and I'm stuck at the gate. What should I do with the time?"
+ },
+ {
+  "id": "n19",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": false,
+  "smoke": false,
+  "text": "Exam grades get posted tomorrow morning. Any tips for getting through tonight?"
+ },
+ {
+  "id": "n20",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": false,
+  "smoke": false,
+  "text": "My dog is in surgery right now. The vet said it would take about two hours."
+ },
+ {
+  "id": "n21",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": false,
+  "smoke": false,
+  "text": "My phone updated overnight and now my alarms and half my apps are broken."
+ },
+ {
+  "id": "n22",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": false,
+  "smoke": true,
+  "text": "The self-checkout keeps saying 'unexpected item in bagging area' and there's nobody around to help."
+ },
+ {
+  "id": "n23",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": true,
+  "smoke": false,
+  "text": "My package says delivered but it isn't here, and the courier's chatbot keeps sending me in circles."
+ },
+ {
+  "id": "n24",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": false,
+  "smoke": false,
+  "text": "the printer jammed again right before my meeting. why does this always happen"
+ },
+ {
+  "id": "n25",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": false,
+  "smoke": false,
+  "text": "I keep getting the same error in my code and I can't figure out where it's coming from."
+ },
+ {
+  "id": "n26",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": true,
+  "smoke": true,
+  "text": "I'm sitting on my porch with a cup of tea and nothing to do. Any suggestions?"
+ },
+ {
+  "id": "n27",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": false,
+  "smoke": false,
+  "text": "My weekend has been pretty uneventful. How do people usually spend a lazy Sunday?"
+ },
+ {
+  "id": "n28",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": true,
+  "smoke": false,
+  "text": "I just wrapped up a long project at work. What's a nice way to mark it?"
+ },
+ {
+  "id": "n29",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": false,
+  "smoke": true,
+  "text": "It's snowing outside and I don't have to go anywhere today."
+ },
+ {
+  "id": "n30",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": false,
+  "smoke": false,
+  "text": "My garden tomatoes are finally ripening. What should I make with them?"
+ },
+ {
+  "id": "n31",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "What's the capital of Australia?"
+ },
+ {
+  "id": "n32",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": true,
+  "smoke": false,
+  "text": "Explain how compound interest works."
+ },
+ {
+  "id": "n33",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": false,
+  "smoke": true,
+  "text": "Give me a recipe for a simple vinaigrette."
+ },
+ {
+  "id": "n34",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "How do I freeze the top row in Excel?"
+ },
+ {
+  "id": "n35",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": true,
+  "smoke": false,
+  "text": "What's a good way to get a coffee stain out of a shirt?"
+ },
+ {
+  "id": "n36",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "Translate 'Where is the train station?' into Spanish."
+ },
+ {
+  "id": "n37",
+  "trait": "neuroticism",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Agree or disagree: 'I often worry about things that might go wrong.' Keep it short."
+ },
+ {
+  "id": "n38",
+  "trait": "neuroticism",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": true,
+  "text": "How easily do you get upset when things don't go your way?"
+ },
+ {
+  "id": "n39",
+  "trait": "neuroticism",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Do you often feel tense or on edge? Be honest."
+ },
+ {
+  "id": "n40",
+  "trait": "neuroticism",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Rate from 1 to 5 how well this describes you: 'I rarely feel blue.'"
+ }
+]

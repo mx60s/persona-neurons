@@ -157,3 +157,14 @@ Detailed profiles (10 to 12) as Markdown; the browser renders them on the neuron
 The browser writes human card edits here as `edits/cards/L17_N4021.json` (same schema, appended versions with
 `"kind": "human_edit"`), and saved live results as `edits/saved.jsonl` (each line carries `state` and
 `intervention`).
+
+Fields the browser adds (not written by the pipeline):
+
+- Human card versions carry two extra keys: `"note"` (free text about the edit) and `"status_set"` (the status chosen
+  with that edit, or null). The edits file's top-level `"status"` is the latest status set by a human (null if none);
+  the browser shows it in place of the run's status and keeps the run's value visible.
+- `edits/saved.jsonl` lines: `{"kind": "chat" | "steer_chat" | "read" | "next_token", "neuron", "state",
+  "intervention", "input", "output", "calibration" (add-unit calibration when relevant), "decoding", "model",
+  "revision", "saved", "run_id"}`. A live add intervention's `value` is in units of `resid_p50` measured on a fixed
+  reference text in the base state, divided by the base down-column norm (see `explorer/live.py`).
+

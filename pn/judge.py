@@ -134,7 +134,7 @@ def build_tasks(prompts, responses, salt):
         p = by_id.get(r["prompt_id"])
         if p is None:
             raise KeyError(f"response for unknown prompt {r['prompt_id']}")
-        traits = list(TRAITS) if p.get("common") else [p["trait"]]
+        traits = list(TRAITS) if (p.get("common") or p["trait"] not in TRAITS) else [p["trait"]]
         chash = content_hash(p["text"], r["text"])
         for trait in traits:
             tasks.append({"prompt_id": p["id"], "state": r["state"], "intervention": r.get("intervention"),
@@ -179,12 +179,12 @@ class Judge:
         det = u.get("completion_tokens_details") or {}
         cost = float(u.get("cost") or 0.0)
         rec = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), "component": "pn.judge",
-               "run_id": self.run_id, "model": self.model, "provider": data.get("provider"),
+               "purpose": "judge:behavior", "run_id": self.run_id, "model": self.model, "provider": data.get("provider"),
                "generation_id": data.get("id"), "blind_id": item["blind_id"], "trait": item["trait"],
-               "prompt_tokens": u.get("prompt_tokens"), "completion_tokens": u.get("completion_tokens"),
+               "input_tokens": u.get("prompt_tokens"), "output_tokens": u.get("completion_tokens"),
                "reasoning_tokens": det.get("reasoning_tokens"),
                "cached_tokens": (u.get("prompt_tokens_details") or {}).get("cached_tokens"),
-               "cost_usd": cost, "cost_details": u.get("cost_details"), "latency_s": round(latency, 2), "parsed": ok}
+               "cost_usd": cost, "cost_source": "openrouter", "cost_details": u.get("cost_details"), "latency_s": round(latency, 2), "parsed": ok}
         os.makedirs(os.path.dirname(self.usage_log), exist_ok=True)
         with open(self.usage_log, "a") as f:
             f.write(json.dumps(rec) + "\n")
@@ -278,6 +278,7 @@ def summarize(scores, prompts, n_boot=2000, seed=0, base_state="base"):
             subsets = {
                 "own_set": [r for r in sr if by_id[r["prompt_id"]]["trait"] == trait],
                 "common": [r for r in sr if by_id[r["prompt_id"]].get("common")],
+                "general": [r for r in sr if by_id[r["prompt_id"]]["trait"] not in TRAITS],
                 "all": sr,
             }
             # a state is one of the trait's own conditions if any non-common prompt of the trait's set was run in it;
@@ -295,6 +296,10 @@ def summarize(scores, prompts, n_boot=2000, seed=0, base_state="base"):
                                          "score_ci90": bootstrap_ci(ds, n_boot, seed),
                                          "coherence": round(sum(dc) / len(dc), 4),
                                          "coherence_ci90": bootstrap_ci(dc, n_boot, seed)}
+            gen = [(r["score"] - base[r["prompt_id"]]["score"]) for r in subsets["general"] if r["prompt_id"] in base]
+            if lab != base_state and gen:
+                entry["diff_vs_base_general"] = {"n": len(gen), "score": round(sum(gen) / len(gen), 4),
+                                                 "score_ci90": bootstrap_ci(gen, n_boot, seed)}
             tr[lab] = entry
         out[trait] = tr
     return out
