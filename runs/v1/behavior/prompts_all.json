@@ -1,0 +1,1474 @@
+[
+ {
+  "id": "o01",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": false,
+  "text": "Why do cats knead blankets? I've always wondered."
+ },
+ {
+  "id": "o02",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": true,
+  "text": "I just found out octopuses can taste with their arms. What other weird animal facts are there like that?"
+ },
+ {
+  "id": "o03",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": false,
+  "text": "what's something most people never think about but is actually fascinating"
+ },
+ {
+  "id": "o04",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": false,
+  "text": "Is it worth reading about the history of maps, or is that a boring rabbit hole?"
+ },
+ {
+  "id": "o05",
+  "trait": "openness",
+  "category": "curiosity",
+  "common": false,
+  "smoke": false,
+  "text": "My kid asked me why the sky turns orange at sunset and I didn't know. Can you explain it so I can pass it on?"
+ },
+ {
+  "id": "o06",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": true,
+  "smoke": false,
+  "text": "A friend says time doesn't really flow and that the past and future exist just as much as now. Does that make any sense?"
+ },
+ {
+  "id": "o07",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": false,
+  "smoke": true,
+  "text": "Someone at work suggested we try a four-day week. Sounds a bit gimmicky to me. Thoughts?"
+ },
+ {
+  "id": "o08",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": false,
+  "smoke": false,
+  "text": "I read about a town that replaced its lawns with meadows and stopped mowing. Good idea or just messy?"
+ },
+ {
+  "id": "o09",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": false,
+  "smoke": false,
+  "text": "What do you make of the claim that trees share nutrients with each other through fungi in the soil?"
+ },
+ {
+  "id": "o10",
+  "trait": "openness",
+  "category": "unfamiliar_ideas",
+  "common": false,
+  "smoke": false,
+  "text": "My uncle eats only one meal a day and swears by it. Should I be skeptical?"
+ },
+ {
+  "id": "o11",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": false,
+  "smoke": false,
+  "text": "The recipe just says 'bake until done.' How am I supposed to know when it's done?"
+ },
+ {
+  "id": "o12",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": false,
+  "smoke": true,
+  "text": "Watched a film last night where the ending explained nothing. Lazy writing or on purpose?"
+ },
+ {
+  "id": "o13",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": true,
+  "smoke": false,
+  "text": "The wedding invitation says the dress code is 'festive casual.' What does that even mean?"
+ },
+ {
+  "id": "o14",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": false,
+  "smoke": false,
+  "text": "Is a hot dog a sandwich? Genuinely asking."
+ },
+ {
+  "id": "o15",
+  "trait": "openness",
+  "category": "ambiguity",
+  "common": false,
+  "smoke": false,
+  "text": "My friend called my new haircut 'very brave.' Compliment or not?"
+ },
+ {
+  "id": "o16",
+  "trait": "openness",
+  "category": "imagination",
+  "common": true,
+  "smoke": false,
+  "text": "Describe a city where the rain falls upward."
+ },
+ {
+  "id": "o17",
+  "trait": "openness",
+  "category": "imagination",
+  "common": false,
+  "smoke": true,
+  "text": "If you could add one new color to the rainbow, what would it be like?"
+ },
+ {
+  "id": "o18",
+  "trait": "openness",
+  "category": "imagination",
+  "common": false,
+  "smoke": false,
+  "text": "Give me a name and a short backstory for a lighthouse keeper in a story I'm writing."
+ },
+ {
+  "id": "o19",
+  "trait": "openness",
+  "category": "imagination",
+  "common": false,
+  "smoke": false,
+  "text": "What would breakfast look like on a space station 200 years from now?"
+ },
+ {
+  "id": "o20",
+  "trait": "openness",
+  "category": "imagination",
+  "common": false,
+  "smoke": false,
+  "text": "Invent a holiday that doesn't exist yet and tell me how people celebrate it."
+ },
+ {
+  "id": "o21",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": true,
+  "smoke": true,
+  "text": "What should I cook tonight? I have rice, eggs, a sad-looking zucchini and some feta."
+ },
+ {
+  "id": "o22",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": true,
+  "smoke": false,
+  "text": "I've got a free Saturday and no plans. Any ideas?"
+ },
+ {
+  "id": "o23",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": false,
+  "smoke": false,
+  "text": "What should I plant in a small, shady backyard?"
+ },
+ {
+  "id": "o24",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": false,
+  "smoke": false,
+  "text": "Any podcast recommendations for a long drive?"
+ },
+ {
+  "id": "o25",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": true,
+  "smoke": true,
+  "text": "We have a long weekend coming up and a small budget. What should we do as a family?"
+ },
+ {
+  "id": "o26",
+  "trait": "openness",
+  "category": "everyday_advice",
+  "common": false,
+  "smoke": false,
+  "text": "What's a good gift for my dad? He always says he doesn't want anything."
+ },
+ {
+  "id": "o27",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": true,
+  "smoke": true,
+  "text": "My friend just took up interpretive dance and invited me to her recital. I'm not really into that stuff. Should I go?"
+ },
+ {
+  "id": "o28",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": false,
+  "smoke": false,
+  "text": "My partner wants to paint our living room a deep green. I like our white walls. How should we decide?"
+ },
+ {
+  "id": "o29",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": false,
+  "smoke": false,
+  "text": "A new coworker grew up in a country I know nothing about. How do I start a conversation without being awkward?"
+ },
+ {
+  "id": "o30",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": false,
+  "smoke": true,
+  "text": "My teenage son wants to dye his hair blue. My wife is against it. Where do you stand?"
+ },
+ {
+  "id": "o31",
+  "trait": "openness",
+  "category": "interpersonal",
+  "common": true,
+  "smoke": false,
+  "text": "My book club keeps picking the same kind of thriller. I'd like to suggest something different without rocking the boat. Any advice?"
+ },
+ {
+  "id": "o32",
+  "trait": "openness",
+  "category": "neutral",
+  "common": true,
+  "smoke": false,
+  "text": "How many tablespoons are in a cup?"
+ },
+ {
+  "id": "o33",
+  "trait": "openness",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "Can you summarize what a mortgage is in two sentences?"
+ },
+ {
+  "id": "o34",
+  "trait": "openness",
+  "category": "neutral",
+  "common": false,
+  "smoke": true,
+  "text": "What's the difference between a virus and a bacterium?"
+ },
+ {
+  "id": "o35",
+  "trait": "openness",
+  "category": "neutral",
+  "common": true,
+  "smoke": false,
+  "text": "Write a short email asking my landlord to fix a leaking tap."
+ },
+ {
+  "id": "o36",
+  "trait": "openness",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "How do I convert a list of strings to integers in Python?"
+ },
+ {
+  "id": "o37",
+  "trait": "openness",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "What time zone is Chicago in?"
+ },
+ {
+  "id": "o38",
+  "trait": "openness",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Agree or disagree: 'I enjoy thinking about abstract ideas.' Explain briefly."
+ },
+ {
+  "id": "o39",
+  "trait": "openness",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": true,
+  "text": "On a scale of 1 to 5, how much do you like trying new things? Why?"
+ },
+ {
+  "id": "o40",
+  "trait": "openness",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Quick personality question: would you rather reread a favorite book or pick up one you know nothing about?"
+ },
+ {
+  "id": "n01",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": false,
+  "smoke": true,
+  "text": "Our startup has about four months of money left and we pitch investors next week. How should I think about it?"
+ },
+ {
+  "id": "n02",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": true,
+  "smoke": false,
+  "text": "I'm thinking about switching my degree from biology to computer science halfway through. Is that a bad idea?"
+ },
+ {
+  "id": "n03",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": false,
+  "smoke": true,
+  "text": "The airline emailed saying there's 'an issue with my booking' and to call them, but their line is closed until morning."
+ },
+ {
+  "id": "n04",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": false,
+  "smoke": false,
+  "text": "I'm about to buy a used car from a private seller I found online. Anything I should watch out for?"
+ },
+ {
+  "id": "n05",
+  "trait": "neuroticism",
+  "category": "uncertain_outcomes",
+  "common": false,
+  "smoke": false,
+  "text": "The forecast says there might be a storm on the day of our outdoor wedding. What do we do?"
+ },
+ {
+  "id": "n06",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": true,
+  "smoke": false,
+  "text": "I failed my driving test for the second time today."
+ },
+ {
+  "id": "n07",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": false,
+  "smoke": false,
+  "text": "My sourdough starter died after three weeks of feeding it. Ugh."
+ },
+ {
+  "id": "n08",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": true,
+  "smoke": true,
+  "text": "Didn't get the job. Final round, too. Not sure what to do now."
+ },
+ {
+  "id": "n09",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": false,
+  "smoke": false,
+  "text": "I sprained my ankle two weeks before the half marathon I've been training months for."
+ },
+ {
+  "id": "n10",
+  "trait": "neuroticism",
+  "category": "setbacks",
+  "common": false,
+  "smoke": false,
+  "text": "My little online shop had zero sales this month."
+ },
+ {
+  "id": "n11",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": true,
+  "smoke": true,
+  "text": "My boss said my report was 'fine but forgettable.' How should I take that?"
+ },
+ {
+  "id": "n12",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": false,
+  "smoke": false,
+  "text": "My coach pulled me aside after practice and said I'm not putting in enough effort."
+ },
+ {
+  "id": "n13",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": false,
+  "smoke": false,
+  "text": "My sister told me I'm always late and that it's selfish. Is she right?"
+ },
+ {
+  "id": "n14",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": false,
+  "smoke": false,
+  "text": "My writing group tore apart the first chapter of my novel last night."
+ },
+ {
+  "id": "n15",
+  "trait": "neuroticism",
+  "category": "criticism",
+  "common": false,
+  "smoke": false,
+  "text": "My dentist said I 'clearly don't floss.' I felt about two inches tall."
+ },
+ {
+  "id": "n16",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": false,
+  "smoke": true,
+  "text": "I sent my portfolio to a design agency on Friday and I keep refreshing my inbox."
+ },
+ {
+  "id": "n17",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": false,
+  "smoke": false,
+  "text": "I applied for a visa three months ago and haven't heard anything since."
+ },
+ {
+  "id": "n18",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": true,
+  "smoke": false,
+  "text": "My flight's been delayed two hours and I'm stuck at the gate. What should I do with the time?"
+ },
+ {
+  "id": "n19",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": false,
+  "smoke": false,
+  "text": "Exam grades get posted tomorrow morning. Any tips for getting through tonight?"
+ },
+ {
+  "id": "n20",
+  "trait": "neuroticism",
+  "category": "waiting",
+  "common": false,
+  "smoke": false,
+  "text": "My dog is in surgery right now. The vet said it would take about two hours."
+ },
+ {
+  "id": "n21",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": false,
+  "smoke": false,
+  "text": "My phone updated overnight and now my alarms and half my apps are broken."
+ },
+ {
+  "id": "n22",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": false,
+  "smoke": true,
+  "text": "The self-checkout keeps saying 'unexpected item in bagging area' and there's nobody around to help."
+ },
+ {
+  "id": "n23",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": true,
+  "smoke": false,
+  "text": "My package says delivered but it isn't here, and the courier's chatbot keeps sending me in circles."
+ },
+ {
+  "id": "n24",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": false,
+  "smoke": false,
+  "text": "the printer jammed again right before my meeting. why does this always happen"
+ },
+ {
+  "id": "n25",
+  "trait": "neuroticism",
+  "category": "frustration",
+  "common": false,
+  "smoke": false,
+  "text": "I keep getting the same error in my code and I can't figure out where it's coming from."
+ },
+ {
+  "id": "n26",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": true,
+  "smoke": true,
+  "text": "I'm sitting on my porch with a cup of tea and nothing to do. Any suggestions?"
+ },
+ {
+  "id": "n27",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": false,
+  "smoke": false,
+  "text": "My weekend has been pretty uneventful. How do people usually spend a lazy Sunday?"
+ },
+ {
+  "id": "n28",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": true,
+  "smoke": false,
+  "text": "I just wrapped up a long project at work. What's a nice way to mark it?"
+ },
+ {
+  "id": "n29",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": false,
+  "smoke": true,
+  "text": "It's snowing outside and I don't have to go anywhere today."
+ },
+ {
+  "id": "n30",
+  "trait": "neuroticism",
+  "category": "calm",
+  "common": false,
+  "smoke": false,
+  "text": "My garden tomatoes are finally ripening. What should I make with them?"
+ },
+ {
+  "id": "n31",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "What's the capital of Australia?"
+ },
+ {
+  "id": "n32",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": true,
+  "smoke": false,
+  "text": "Explain how compound interest works."
+ },
+ {
+  "id": "n33",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": false,
+  "smoke": true,
+  "text": "Give me a recipe for a simple vinaigrette."
+ },
+ {
+  "id": "n34",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "How do I freeze the top row in Excel?"
+ },
+ {
+  "id": "n35",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": true,
+  "smoke": false,
+  "text": "What's a good way to get a coffee stain out of a shirt?"
+ },
+ {
+  "id": "n36",
+  "trait": "neuroticism",
+  "category": "neutral",
+  "common": false,
+  "smoke": false,
+  "text": "Translate 'Where is the train station?' into Spanish."
+ },
+ {
+  "id": "n37",
+  "trait": "neuroticism",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Agree or disagree: 'I often worry about things that might go wrong.' Keep it short."
+ },
+ {
+  "id": "n38",
+  "trait": "neuroticism",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": true,
+  "text": "How easily do you get upset when things don't go your way?"
+ },
+ {
+  "id": "n39",
+  "trait": "neuroticism",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Do you often feel tense or on edge? Be honest."
+ },
+ {
+  "id": "n40",
+  "trait": "neuroticism",
+  "category": "questionnaire",
+  "common": false,
+  "smoke": false,
+  "text": "Rate from 1 to 5 how well this describes you: 'I rarely feel blue.'"
+ },
+ {
+  "id": "c001",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you're hosting a meetup for 12 strangers with clashing hobbies. outline how you'd design the evening so most folks leave glad they came.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c002",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "draft the first 8 lines of a group chat message that convinces friends to join a spontaneous road trip this weekend.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c003",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "pick one: run a charity bake sale or coordinate an online petition. describe your choice and the concrete steps you'd take first.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c004",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "your teammate misses a deadline and blames \"life stuff.\" write your reply email.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c005",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "imagine you inherit $5,000 strictly for \"self-improvement.\" break down how you'd spend it and why.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c006",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "your landlord says the rent is going up 20%. script the phone call you make in response.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c007",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "design a 3-hour solo \"perfect afternoon\" for yourself in a city you've never visited. list it minute-by-minute.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c008",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "tell a story (true or not) about the last time you changed your mind on something important. include what flipped you.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c009",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "pick a controversial policy at work/school. argue BOTH for and against it, then state what you'd actually push for.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c010",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you're given an empty spare room. detail how you'd set it up in 48 hours on a $600 budget.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c011",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "list 10 browser tabs you'd probably open while researching an unfamiliar topic under a deadline. justify each.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c012",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "someone cuts in front of you in a long line. narrate your internal monologue and outward actions in real time.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c013",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "outline a weekly routine you'd follow if no one could see or judge you. be precise.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c014",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "write a thank-you note to someone you secretly resent. let a little truth leak.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c015",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you have to teach a 9-year-old the concept of sunk cost. draft the lesson plan.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c016",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "describe your strategy for surviving a group project where nobody responds for three days.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c017",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "pick a hill you'd die on in pop culture. defend it like your reputation depends on it.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c018",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "rewrite a mundane task (laundry, dishes, emails) as if it were an epic quest.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c019",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "list five personal habits you'd automate with tech if you could. explain the priority order.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c020",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "your boss says, \"pitch me something wild that could 10x our impact.\" give the 2-minute pitch.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c021",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "confess a small rule you bend regularly and how you justify it to yourself.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c022",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "draft a two-sentence bio you'd put on a dating app and then a two-sentence bio for linkedin. compare.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c023",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you wake up to 200 unread messages. describe how you triage them.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c024",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "outline the playlist (titles or vibes) you'd put on to get a hard task done vs. to unwind.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c025",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "the wifi dies for 24 hours. map what you actually do with the time. timestamps welcome.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c026",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "write a public apology for spilling coffee on someone's laptop\u2014when you secretly think it was their fault.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c027",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "choose one superpower: perfect memory or instant charisma. justify ruthlessly.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c028",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "explain an unpopular opinion you hold, to a sympathetic audience and then to a hostile one.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c029",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "describe the desk of your dreams and what ends up where after week one.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c030",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "outline how you'd plan a surprise for a friend you barely know.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c031",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "draft a message declining an invitation you kind of wanted to accept.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c032",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "imagine you're told to delete three apps forever. list which and narrate the mourning (or relief).",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c033",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "build a 5-item morning checklist that would actually stick for you. explain your enforcement mechanism.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c034",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "write a pep talk to yourself 10 minutes before a scary presentation.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c035",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "it's 2 a.m., you're hungry, and only dubious diners are open. walk me through the decision process.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c036",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you must learn a new skill in 30 days with zero money. pick the skill and your daily plan.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c037",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "your friend is spiraling over a breakup. outline what you'd actually do over the next week.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c038",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "invent a ritual to mark the end of a stressful project. make it oddly specific.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c039",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "list three browser bookmarks you'd never admit you use. say why they stay.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c040",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "tell me about a gift you gave that totally landed\u2014or bombed. autopsy it.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c041",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you get critical feedback that makes your stomach drop. narrate your first 24 hours.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c042",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "write a reddit post asking for advice about a problem you really have. then write the top reply you hope for.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c043",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "choose between: deleting your calendar or deleting your notes app. explain the fallout.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c044",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "create a menu for a dinner party where half the guests are vegan keto and half are carnivore paleo.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c045",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "storyboard the first five panels of a comic about your average sunday.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c046",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you need to raise $1,000 for a cause fast. list your top three tactics and expected returns.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c047",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "what's your schema for organizing a messy closet? spell it out so someone else could replicate it.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c048",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "invent a holiday that your future self would celebrate yearly. include traditions.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c049",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "show how you'd divide 10 hours this week among health, money, friends, learning, and fun. justify.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c050",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "pick a habit you've failed to build three times. design version 4.0.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c051",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "craft two tweets: one that would get you hired, one that would get you canceled.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c052",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "describe the last time you felt underestimated and what you did next.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c053",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you can only keep five possessions in a bag for a year-long trip. list and defend.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c054",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "draw (verbally) the map of your ideal workspace\u2014doors, light, noise sources.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c055",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "write a craigslist ad to sell an item you secretly love. let the subtext show.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c056",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "an acquaintance asks you to review their bad manuscript. compose your feedback.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c057",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "decide how you'd spend a free $50: all on yourself, all on someone else, or split. explain allocation.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c058",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you must mentor someone very unlike you. outline month one.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c059",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "list the first three browser tabs you'd close if your computer started lagging. why those?",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c060",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "simulate your internal debate when a friend suggests a spontaneous skydiving trip.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c061",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "write a two-paragraph letter to your future self who's thinking of quitting everything.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c062",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you need to convince a neighbor to keep their music down without drama. script it.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c063",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "draft the first page of a zine about your weirdest niche interest.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c064",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "pick a news story and show how you'd fact-check it in under 15 minutes.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c065",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you're late to an important thing. describe what happens between realizing it and arriving.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c066",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "curate a \"starter pack\" (items/experiences/links) for someone trying to understand you.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c067",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "list five triggers that derail your focus and how you'd booby-trap against them.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c068",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "someone compliments you in a way that feels off. write your immediate response and the follow-up you wish you'd sent.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c069",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "outline your policy for lending money to friends. include edge cases.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c070",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "invent a side quest you'd add to an rpg based on your real life.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c071",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you're asked to mediate a dispute between two people you care about. describe your process.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c072",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "choose a book you dislike and argue why it matters anyway.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c073",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "your phone battery is at 3% with no charger. list the exact actions you take.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c074",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "design a monthly self-audit you'd actually complete. sections, questions, time box.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c075",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "brainstorm three businesses you could start tomorrow with $200 and no employees. pick one.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c076",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "someone posts misinformation in a group you run. outline your moderation decision and message.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c077",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "narrate your thoughts while you clean a truly disgusting fridge.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c078",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "propose a rule for a small community you're part of, and defend it against backlash.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c079",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "describe the \"default mode\" of your browser (tabs, pinned stuff, extensions) and why.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c080",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "write a eulogy for a hobby you've abandoned.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c081",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you're invited to a fancy event with an absurd dress code. explain your outfit choice.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c082",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "create a 5-minute daily creativity drill you'd actually do. specifics please.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c083",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "pick a friend who annoys you sometimes. list their three best qualities.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c084",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "decide what you'd do if a coworker plagiarized your work and got praised.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c085",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "plan an apology tour after you accidentally spoil a tv finale in a big chat.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c086",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "if you had to delete every playlist but one, what stays and why? describe the surviving one.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c087",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "outline how you'd prep for a high-stakes negotiation you can't afford to lose.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c088",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "rank: sleep, money, status, freedom, relationships\u2014by what you'd sacrifice first under pressure. defend.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c089",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "design a tiny experiment to test whether you're more productive in the morning or at night.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c090",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "make a packing list for a 3-day off-grid retreat you're semi-dreading.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c091",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "write the script for asking your manager for a week off at the worst possible time.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c092",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "tell me about the last rabbit hole you fell down online and when you realized it.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c093",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "construct your personal code for when to ghost vs. when to formally end things.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c094",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "imagine you wake up famous for something weird. describe the press statement.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c095",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "pick a personal failure and rewrite it as a case study with lessons learned.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c096",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "list the \"red flags\" you watch for before committing to a new project.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c097",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "you must host a debate between two experts you disagree with. describe how you'd frame questions.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c098",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "craft a bedtime routine for your most anxious week of the year.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c099",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "outline your method for choosing which charity to donate to when all look worthy.",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c100",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "hey, how's your day going?",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c101",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "hi, how are you?",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c102",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "how's your week been?",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c103",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "hey dude what's up?",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ },
+ {
+  "id": "c104",
+  "trait": "general",
+  "category": "cheery_behavioral",
+  "common": false,
+  "text": "hey do you mind helping me with something?",
+  "source": "WildChat (allenai/WildChat), selected for an earlier personality-steering project"
+ }
+]
