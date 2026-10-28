@@ -29,6 +29,20 @@ and next-token changes:
 "Model state" (base or scaled adapters) and "neuron intervention" are separate controls everywhere, and every saved
 result records both.
 
+## Run v2: every trait-specific neuron
+
+`runs/v1` (in the repo) is the first study: 53 candidates, 12 random controls, 12 detailed profiles. `runs/v2` adds every
+trait-specific neuron (2,143, plus 250 random comparison neurons), each with measured properties and an automated
+investigation (DeepSeek V3.2 proposing explanations and testing them on the live model). It is 1.2 GB, so it is
+published as a release file instead of in the repository:
+
+    gh release download v2-data -R mx60s/persona-neurons && tar xzf runs_v2.tgz
+    python explorer/server.py --run runs/v2 --no-model        # "Live run" tab shows the investigation results
+
+Summary files are in `results/v2/` (per-neuron verdicts in `finished.jsonl`, totals in `progress.json`, measured
+properties in `population_stats.json`). The pipeline is `scripts/pod/full_v2b.sh` (`pn/index_from_traces.py`,
+`pn/investigate.py`).
+
 ## What is pinned
 
 | item | value |

@@ -399,3 +399,5 @@ ul.feed .dim { font-size: 15px; line-height: 1.45; margin-top: 2px; }
 ul.feed .fm { font-size: 13px; margin-top: 2px; }
 table.t td.nw { white-space: nowrap; }
 table.itests td.num { white-space: nowrap; }
+
+#live table { display: block; overflow-x: auto; max-width: 100%; }

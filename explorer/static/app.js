@@ -1447,7 +1447,8 @@ async function pollLive() {
 setInterval(() => { if (S.view === "live" && LV.p) renderUpdated(); }, 1000);
 function renderUpdated() {
   const el = $("#lv-updated"); if (!el) return;
-  const a = updatedAge(), stale = a != null && a > 120;
+  const p = LV.p || {}, complete = p.n_total && (p.n_done || 0) + (p.n_failed || 0) >= p.n_total && !p.n_running;
+  const a = updatedAge(), stale = !complete && a != null && a > 120;
   el.innerHTML = `Last updated ${ago(a)}`;
   const w = $("#lv-stale");
   w.hidden = !stale;

@@ -143,7 +143,7 @@ def main():
     summ["notes"] = ("Free measurements from the activations themselves, no AI explainer. Change type is judged under the "
                      "pole that changes the neuron most: 'gain' = activations stay tightly correlated with the original "
                      "(r >= 0.9) and are scaled; 'offset' = mostly a constant push; 'reshaped' = it responds differently. "
-                     "Pilot sample: random draw from the trait-specific populations, plus layer-matched random neurons.")
+                     "Sample: every trait-specific neuron (or a random draw from them), plus layer-matched random neurons.")
     json.dump(summ, open(args.stats, "w"), indent=1)
     print(json.dumps(summ, indent=1))
 

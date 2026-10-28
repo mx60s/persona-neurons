@@ -1,0 +1,44 @@
+{
+ "started": "2026-10-28T01:42:36Z",
+ "updated": "2026-10-28T01:49:08Z",
+ "n_total": 2213,
+ "n_done": 2183,
+ "n_running": 0,
+ "n_failed": 30,
+ "cost_usd": 23.666732,
+ "cost_cap_usd": 40.0,
+ "est_cost_per_neuron": 0.010621,
+ "eta_minutes": 0.0,
+ "by_kind": {
+  "trait": {
+   "done": 1933,
+   "held_up": 88,
+   "partly": 209,
+   "not_held": 1636,
+   "no_coherent": 0
+  },
+  "random": {
+   "done": 250,
+   "held_up": 17,
+   "partly": 27,
+   "not_held": 206,
+   "no_coherent": 0
+  }
+ },
+ "by_trait": {
+  "neuroticism": {
+   "done": 1088,
+   "held_up": 50,
+   "partly": 99,
+   "not_held": 939,
+   "no_coherent": 0
+  },
+  "openness": {
+   "done": 845,
+   "held_up": 38,
+   "partly": 110,
+   "not_held": 697,
+   "no_coherent": 0
+  }
+ }
+}

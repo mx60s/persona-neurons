@@ -1,0 +1,32 @@
+{
+ "neuroticism": {
+  "n": 1181,
+  "same response, turned up or down (gain)": 261,
+  "  of which turned up": 259,
+  "  of which turned down": 2,
+  "near-constant push (offset)": 2,
+  "reshaped / new response": 918,
+  "mostly at the reply start": 376,
+  "amplifier and suppressor push opposite ways": 737
+ },
+ "openness": {
+  "n": 962,
+  "same response, turned up or down (gain)": 329,
+  "  of which turned up": 325,
+  "  of which turned down": 4,
+  "near-constant push (offset)": 3,
+  "reshaped / new response": 630,
+  "mostly at the reply start": 259,
+  "amplifier and suppressor push opposite ways": 861
+ },
+ "random": {
+  "n": 250,
+  "same response, turned up or down (gain)": 245,
+  "  of which turned up": 55,
+  "  of which turned down": 190,
+  "near-constant push (offset)": 0,
+  "reshaped / new response": 5,
+  "mostly at the reply start": 29
+ },
+ "notes": "Free measurements from the activations themselves, no AI explainer. Change type is judged under the pole that changes the neuron most: 'gain' = activations stay tightly correlated with the original (r >= 0.9) and are scaled; 'offset' = mostly a constant push; 'reshaped' = it responds differently. All 2,143 trait-specific neurons (180 in both traits) plus 250 layer-matched random neurons. For random neurons the changes are tiny, so nearly all count as 'gain'; the split is only meaningful for neurons that change a lot."
+}

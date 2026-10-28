@@ -204,3 +204,16 @@ L18/N5866, L23/N2218, L15/N7068. Highlights:
   Read the trait rate against both: ceiling about 30% at-least-partly, random about 6%.
 - Fixed after the pilot: plain-text tests now start with <|endoftext|> so the first word is not the zeroed attention-sink
   position; malformed test pairs are dropped instead of failing the neuron.
+- validate tolerance raised to 0.25 x text scale for the full run (bf16 batching noise, absolute 0.02-0.06 on quiet test texts; pass thresholds are corpus p99)
+
+## 2026-10-27 full population run (runs/v2)
+
+- 2,213 neurons (1,963 trait-specific unique + 250 random). Investigated 2,183, failed 30 (malformed DeepSeek output
+  after salvage), USD 23.67, ~70 min at 128 concurrent after the restart from 64.
+- Verdicts: trait 88 held / 209 partly / 1,636 not (n=1,933; 15.4% at least partly); random 17 / 27 / 206 (17.6%).
+  Neuroticism 50/99/939, openness 38/110/697. Positive controls rerun: 1 held, 2 partly, 7 not, 2 failed.
+- At-least-partly rate by group: trait gain 15.5%, reshaped 15.4%; trait reply-start 17.7%, text 14.4%; trait depth
+  L13-20 11.2%, L21-27 15.0%, L28-35 17.0%; random depth 12.5 / 22.1 / 16.5%. No subgroup separates.
+- Ops: pods lost to GPU reassignment after stopping (three times); fixed by a network volume (j0to3ykbsx, CA-MTL-1).
+  The 00:18 crash was the batched-vs-reference validation tripping on bf16 noise after the sink-token change, not
+  GPU memory. On UT Wi-Fi (SSH blocked) the pod was driven through JupyterLab over the RunPod HTTPS proxy (bin/jrun).

@@ -55,6 +55,37 @@ Short version for sharing. Numbers, dates and caveats are in `findings_log.md`; 
 10. **Single neurons rarely change behavior.** Steering 12 neurons by up to 4x their natural range, or zeroing them,
     moved judged traits no more than random neurons did, except L30/N606 above.
 
+## Full population run (runs/v2, 2026-10-27)
+
+Every trait-specific neuron (change >= half its usual activity under a pole, neutral control < half as much: 1,181
+neuroticism, 962 openness, 180 in both; all in layers 14-35) plus 250 layer-matched random neurons.
+
+**Measured directly (no AI explainer):**
+
+| | neuroticism (1,181) | openness (962) | random (250) |
+|---|---|---|---|
+| same response pattern, rescaled (r >= 0.9 with original) | 261 (22%), 259 turned up | 329 (34%), 325 turned up | (tiny changes) |
+| different response pattern | 918 (78%) | 630 (65%) | 5 |
+| change mostly at the reply start | 376 (32%) | 259 (27%) | 29 (12%) |
+| amplifier and suppressor push opposite ways | 737 (62%) | 861 (90%) | - |
+
+- When a trait neuron's response is simply rescaled, it is almost always turned up (259 vs 2; 325 vs 4).
+- Openness's two adapters mirror each other much more consistently than neuroticism's.
+
+**Automated investigation (DeepSeek V3.2, 4 rounds of propose / test on the live model / revise; verdict from a final
+round of tests it never saw; USD 23.67 for 2,183 neurons, 30 failed on malformed output):**
+
+| | n | held up | partly | at least partly |
+|---|---|---|---|---|
+| trait neurons | 1,933 | 88 (4.6%) | 209 (10.8%) | 15.4% |
+| random neurons | 250 | 17 (6.8%) | 27 (10.8%) | 17.6% |
+| hand-explained neurons (positive controls) | 10 | 1 | 2 | ~30% |
+
+- The investigator cannot tell trait neurons from random ones, and the rate is flat across change type, reply-start
+  vs text, and depth (11-18% everywhere). Its rate on neurons we already understand is only about twice the baseline,
+  and single verdicts flip between runs. Read its per-neuron labels as rough guesses; the measured properties above are
+  the reliable part.
+
 ## Hypotheses (not established)
 
 - Each adapter's effect on a neuron = a component shared with any fine-tuning on this recipe (same sign for both
