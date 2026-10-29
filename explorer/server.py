@@ -188,6 +188,52 @@ class Run:
                 return d
         return None
 
+    def posctrl_finished(self):
+        """finished.jsonl of the positive-control run (the hand-profiled neurons through the same investigator), from
+        --posctrl or the sibling directory <run>_posctrl; [] when absent."""
+        d = (ARGS.posctrl if ARGS and getattr(ARGS, "posctrl", None) else self.path.rstrip("/") + "_posctrl")
+        path = os.path.join(d, "investigations", "finished.jsonl")
+        try:
+            st = os.stat(path)
+        except OSError:
+            return []
+        key = ("posctrl", path)
+        hit = self._small.get(key)
+        stamp = (st.st_mtime_ns, st.st_size)
+        if hit and hit[0] == stamp:
+            return hit[1]
+        rows = []
+        with open(path) as fh:
+            for line in fh:
+                try:
+                    r = json.loads(line)
+                except ValueError:
+                    continue
+                if isinstance(r, dict) and r.get("id"):
+                    rows.append(r)
+        self._small[key] = (stamp, rows)
+        return rows
+
+    def run_complete(self):
+        p = self.progress()
+        if not p or not p.get("n_total"):
+            return False
+        return (p.get("n_done") or 0) + (p.get("n_failed") or 0) >= p["n_total"] and not p.get("n_running")
+
+    def catalog(self):
+        """Compact per-neuron records for the list endpoint, rebuilt when index, plain, finished or edits change."""
+        edits = self.edit_statuses()
+        fin = self.finished()
+        key = (self.stamp("neurons/index.json"), self.stamp("plain.json"), fin["stamp"], len(fin["rows"]),
+               tuple(sorted(edits.items())))
+        hit = self._small.get("catalog")
+        if hit and hit[0] == key:
+            return hit[1]
+        cat = build_catalog(self.index(), (self.plain() or {}).get("neurons") or {}, fin["by_id"], edits,
+                            {os.path.basename(p)[:-3] for p in glob.glob(self.p("profiles", "*.md"))})
+        self._small["catalog"] = (key, cat)
+        return cat
+
     def prompts(self):
         return self._json("behavior/prompts.json", [])
 
@@ -338,7 +384,7 @@ def meta():
     m = RUN.manifest()
     return {"run": m, "run_path": RUN.path, "live": live_status(), "prompts": RUN.prompts(),
             "groups": list(GROUPS) + ["random_control"], "statuses": list(STATUSES),
-            "has_progress": RUN.progress() is not None}
+            "has_progress": RUN.progress() is not None, "run_complete": RUN.run_complete()}
 
 
 @app.get("/api/live/status")
@@ -386,6 +432,269 @@ def stub_row(fin):
     return {"id": fin["id"], "layer": layer, "n": n, "kind": "sample", "effects": {}}
 
 
+# ---------------------------------------------------------------- neuron catalog (list endpoint)
+
+POLES = {"openness": ("o_amp+1", "o_sup+1"), "neuroticism": ("n_amp+1", "n_sup+1")}
+VERDICTS = ("held_up", "partly", "not_held", "no_coherent", "failed", "none")
+SAMPLES = ("profiled", "trait", "neuroticism", "openness", "both", "random", "v1")
+CHANGES = ("up", "down", "reshaped", "offset")
+WHERES = ("reply_start", "text")
+OPPS = ("opposite", "same")
+DIMS = ("sample", "verdict", "change", "where", "opp")
+
+
+def _change_in(r, poles):
+    ct = r.get("change_type") or {}
+    eff = r.get("effects") or {}
+    cands = [p for p in poles if p in ct]
+    if not cands:
+        return None
+    s = max(cands, key=lambda p: (eff.get(p) or {}).get("z_rms") or 0)
+    t = ct[s]
+    typ = t.get("type")
+    if typ == "gain":
+        typ = "up" if (t.get("gain") or 0) > 1 else "down"
+    return {"type": typ, "gain": t.get("gain"), "corr": t.get("corr_with_base"), "pole": s}
+
+
+def build_catalog(index, plain, fin_by_id, edits, profile_files):
+    polar = [s for t in POLES.values() for s in t]
+    cat = []
+    for r in index:
+        nid = r.get("id")
+        try:
+            f, _, _ = fid(nid)
+        except ValueError:
+            continue
+        P = plain.get(nid) or {}
+        fin = fin_by_id.get(nid)
+        ct = r.get("change_type")
+        pop = bool(ct) or bool(r.get("in_population")) or fin is not None
+        rand = r.get("kind") == "random_control"
+        traits = set()
+        if pop and not rand:
+            traits = {t for t in (r.get("selected_for") or []) if t in POLES}
+            if fin and fin.get("kind") != "random" and fin.get("trait") in POLES:
+                traits.add(fin["trait"])
+        samples = set()
+        if r.get("detailed") or f in profile_files:
+            samples.add("profiled")
+        if traits:
+            samples.add("trait")
+            samples.update(traits)
+            if len(traits) > 1:
+                samples.add("both")
+        if rand and pop:
+            samples.add("random")
+        if not ct:
+            samples.add("v1")
+        # kind of change under the pole that changes it most, per context (a trait, or "any")
+        change = {}
+        for t in traits:
+            change[t] = _change_in(r, POLES[t])
+        any_poles = [p for t in sorted(traits) for p in POLES[t]] or polar
+        change["any"] = _change_in(r, any_poles)
+        cas = r.get("corr_amp_sup") or {}
+        opp = {t: ("opposite" if cas[t] < 0 else "same") for t in traits if cas.get(t) is not None}
+        main_t = next((t for t, ps in POLES.items() if change["any"] and change["any"]["pole"] in ps), None)
+        if main_t is None and traits:
+            eff0 = r.get("effects") or {}
+            main_t = max(sorted(traits), key=lambda t: max((eff0.get(p) or {}).get("z_rms") or 0 for p in POLES[t]))
+        opp["any"] = opp.get(main_t) if main_t in traits else None
+        td = r.get("template_driven")
+        where = None if td is None else ("reply_start" if td else "text")
+        reviewed = P.get("source") != "automated" and bool(P.get("nickname") or P.get("one_liner"))
+        hand, hand_src = None, None
+        if nid in edits:
+            hand, hand_src = edits[nid], "human edit"
+        elif reviewed:
+            hand, hand_src = (P.get("checked") or {}).get("status") or "untested", "hand"
+        if reviewed and P.get("nickname"):
+            name, name_src = P["nickname"], "hand"
+        elif fin and fin.get("nickname"):
+            name, name_src = fin["nickname"], "investigator"
+        elif P.get("nickname"):
+            name, name_src = P["nickname"], "auto"
+        else:
+            name, name_src = nid, "id"
+        if reviewed and P.get("one_liner"):
+            one, one_src = P["one_liner"], "hand"
+        elif fin and fin.get("one_liner"):
+            one, one_src = fin["one_liner"], "investigator"
+        elif P.get("one_liner"):
+            one, one_src = P["one_liner"], "auto"
+        else:
+            one, one_src = r.get("label") or "", "auto"
+        verdict = (fin.get("status") or "no_coherent") if fin else ("failed" if pop else "none")
+        eff = r.get("effects") or {}
+        effect = max([(eff.get(s) or {}).get("z_rms") or 0 for s in polar] or [0])
+        arrows = [[e.get("state"), e.get("direction"), e.get("ratio")] for e in (P.get("adapter_effects") or [])]
+        search = " ".join(str(x or "") for x in (nid, name, one, P.get("nickname"), P.get("one_liner"),
+                                                  (fin or {}).get("nickname"), (fin or {}).get("one_liner"))).lower()
+        cat.append({
+            "id": nid, "layer": r.get("layer"), "n": r.get("n"), "kind": r.get("kind"), "samples": samples,
+            "traits": sorted(traits), "name": name, "name_src": name_src, "one": one, "one_src": one_src,
+            "hand": hand, "hand_src": hand_src, "verdict": verdict,
+            "inv": {k: fin.get(k) for k in ("status", "passes", "n_final_tests", "rounds")} if fin else None,
+            "change": change, "opp": opp, "where": where, "effect": effect, "arrows": arrows,
+            "search": search,
+            "tech": {"z_mean": {s: (eff.get(s) or {}).get("z_mean") for s in eff if not re.search(r"[+-]0\.5$|-1$", s)},
+                     "card_status": edits.get(nid) or r.get("card_status"), "detailed": bool(r.get("detailed")),
+                     "template_driven": td,
+                     "outlier": any(isinstance(v, dict) and (v.get("top_share") or 0) > 0.6 for v in (r.get("robust") or {}).values())},
+        })
+    return cat
+
+
+def _csv(x, allowed):
+    vals = [v for v in (x or "").split(",") if v]
+    bad = [v for v in vals if v not in allowed]
+    if bad:
+        raise ValueError(f"unknown value(s) {bad}; allowed: {list(allowed)}")
+    return set(vals)
+
+
+def _ctx(sample):
+    return sample if sample in POLES else "any"
+
+
+def _dim_values(c, ctx):
+    """The value(s) of each facet dimension for one catalog record."""
+    ch = c["change"].get(ctx) if ctx in c["change"] else c["change"].get("any")
+    op = c["opp"].get(ctx) if ctx in c["opp"] else c["opp"].get("any")
+    return {"sample": c["samples"], "verdict": {c["verdict"]}, "change": {ch["type"]} if ch else set(),
+            "where": {c["where"]} if c["where"] else set(), "opp": {op} if op else set()}
+
+
+VERDICT_RANK = {"held_up": 0, "partly": 1, "not_held": 2, "no_coherent": 3, "failed": 4, "none": 5}
+
+
+def _sort_key(sort, ctx):
+    if sort == "default":
+        return lambda c: ((0 if "profiled" in c["samples"] else 1 + min(VERDICT_RANK[c["verdict"]], 2)), -c["effect"])
+    if sort == "verdict":
+        return lambda c: (VERDICT_RANK[c["verdict"]], -((c["inv"] or {}).get("passes") or 0), -c["effect"])
+    if sort == "effect":
+        return lambda c: -c["effect"]
+    if sort == "layer":
+        return lambda c: (c["layer"] or 0, c["n"] or 0)
+    if sort == "passes":
+        return lambda c: (-((c["inv"] or {}).get("passes") if c["inv"] else -1),
+                          (c["inv"] or {}).get("n_final_tests") or 0, -c["effect"])
+    if sort.startswith("z:"):
+        s = sort[2:]
+        return lambda c: -(c["tech"]["z_mean"].get(s) if c["tech"]["z_mean"].get(s) is not None else -1e9)
+    raise ValueError(f"unknown sort {sort!r}")
+
+
+def list_rows(cat, sample="", verdict="", change="", where="", opp="", lmin=None, lmax=None, q="", sort="default",
+              dir="", page=1, size=50):
+    if sample and sample not in SAMPLES:
+        raise ValueError(f"unknown sample {sample!r}; allowed: {list(SAMPLES)}")
+    want = {"sample": {sample} if sample else set(), "verdict": _csv(verdict, VERDICTS),
+            "change": _csv(change, CHANGES), "where": _csv(where, WHERES), "opp": _csv(opp, OPPS)}
+    ctx = _ctx(sample)
+    terms = [t for t in (q or "").lower().split() if t]
+    facets = {d: collections.Counter() for d in DIMS}
+    hits = []
+    for c in cat:
+        if lmin is not None and (c["layer"] or 0) < lmin:
+            continue
+        if lmax is not None and (c["layer"] or 0) > lmax:
+            continue
+        if terms and not all(t in c["search"] for t in terms):
+            continue
+        vals = _dim_values(c, ctx)
+        ok = {d: (not want[d]) or bool(vals[d] & want[d]) for d in DIMS}
+        nfail = sum(not v for v in ok.values())
+        if nfail == 0:
+            hits.append(c)
+        for d in DIMS:
+            if nfail == 0 or (nfail == 1 and not ok[d]):
+                facets[d].update(vals[d])
+                facets[d]["_all"] += 1
+    hits.sort(key=_sort_key(sort, ctx), reverse=(dir == "asc"))
+    size = min(max(int(size), 1), 200)
+    pages = max(1, -(-len(hits) // size))
+    page = min(max(int(page), 1), pages)
+    out = []
+    for c in hits[(page - 1) * size: page * size]:
+        ch = c["change"].get(ctx) if ctx in c["change"] else c["change"].get("any")
+        op = c["opp"].get(ctx) if ctx in c["opp"] else c["opp"].get("any")
+        out.append({k: c[k] for k in ("id", "layer", "kind", "traits", "name", "name_src", "one", "one_src", "hand",
+                                      "hand_src", "verdict", "inv", "where", "effect", "arrows", "tech")}
+                   | {"samples": sorted(c["samples"]), "change": ch, "opp": op})
+    return {"total": len(hits), "page": page, "pages": pages, "size": size, "rows": out, "context": ctx,
+            "facets": {d: dict(v) for d, v in facets.items()}, "n_all": len(cat),
+            "layers": [min((c["layer"] for c in cat if c["layer"] is not None), default=0),
+                       max((c["layer"] for c in cat if c["layer"] is not None), default=0)]}
+
+
+@app.get("/api/list")
+def list_endpoint(sample: str = "", verdict: str = "", change: str = "", where: str = "", opp: str = "",
+                  lmin: int = None, lmax: int = None, q: str = "", sort: str = "default", dir: str = "",
+                  page: int = 1, size: int = 50):
+    """Filtered, sorted, paginated neuron list with facet counts (each dimension counted with the other filters
+    applied). Comma-separated values within a dimension are OR'ed."""
+    return list_rows(RUN.catalog(), sample, verdict, change, where, opp, lmin, lmax, q, sort, dir, page, size)
+
+
+def _verdict_counts(rows_or_cats, key):
+    c = collections.Counter(key(x) for x in rows_or_cats)
+    n = sum(c[v] for v in ("held_up", "partly", "not_held", "no_coherent"))
+    return {"n": n, "held_up": c["held_up"], "partly": c["partly"], "not_held": c["not_held"] + c["no_coherent"],
+            "failed": c["failed"]}
+
+
+POP_KEYS = (("n", lambda k: k == "n"), ("rescaled", lambda k: "(gain)" in k or k.startswith("same response")),
+            ("up", lambda k: "which turned up" in k), ("down", lambda k: "which turned down" in k),
+            ("reshaped", lambda k: "reshaped" in k), ("offset", lambda k: "offset" in k),
+            ("reply_start", lambda k: "reply start" in k), ("opposite", lambda k: "opposite" in k))
+
+
+@app.get("/api/results")
+def results():
+    """Numbers for the Start page result tables: measured properties (population_stats.json, or computed from the
+    index when it is missing) and investigation verdicts (finished.jsonl joined with the index, so the counts match
+    the list filters), plus the positive-control run when present."""
+    cat = RUN.catalog()
+    st = RUN.population_stats()
+    pop = []
+    for name in ("neuroticism", "openness", "random"):
+        g = (st or {}).get(name)
+        if isinstance(g, dict):
+            row = {"group": name, "source": "population_stats.json"}
+            for out, match in POP_KEYS:
+                k = next((k for k in g if match(k.strip())), None)
+                row[out] = g.get(k) if k else None
+        else:
+            cs = [c for c in cat if name in c["samples"]]
+            if not cs:
+                continue
+            ctx = _ctx(name)
+            types = collections.Counter((_dim_values(c, ctx)["change"] or {None}).pop() for c in cs)
+            row = {"group": name, "source": "index", "n": len(cs), "up": types["up"], "down": types["down"],
+                   "rescaled": types["up"] + types["down"], "reshaped": types["reshaped"], "offset": types["offset"],
+                   "reply_start": sum(c["where"] == "reply_start" for c in cs),
+                   "opposite": sum(_dim_values(c, ctx)["opp"] == {"opposite"} for c in cs) if name in POLES else None}
+        pop.append(row)
+    inv = []
+    for name in ("trait", "neuroticism", "openness", "random"):
+        cs = [c for c in cat if name in c["samples"]]
+        if cs and any(c["verdict"] != "none" for c in cs):
+            inv.append({"group": name, **_verdict_counts(cs, lambda c: c["verdict"])})
+    pc = RUN.posctrl_finished()
+    if pc:
+        inv.append({"group": "posctrl", **_verdict_counts(pc, lambda r: r.get("status") or "no_coherent")})
+    p = RUN.progress()
+    return {"population": pop, "population_notes": (st or {}).get("notes"), "investigation": inv,
+            "progress": {k: p.get(k) for k in ("n_total", "n_done", "n_failed", "n_running", "cost_usd", "started",
+                                               "updated")} if p else None,
+            "run_complete": RUN.run_complete(), "n_neurons": len(cat),
+            "n_profiled": sum("profiled" in c["samples"] for c in cat),
+            "samples": dict(collections.Counter(s for c in cat for s in c["samples"]))}
+
+
 @app.get("/api/neurons")
 def neurons():
     edits, fin = RUN.edit_statuses(), RUN.finished()["by_id"]
@@ -413,8 +722,11 @@ def neuron(id: str):
     if raw is None and id in fin:
         raw = stub_row(fin[id])
     row = neuron_row(raw, edits, fin) if raw else None
+    plain_entry = ((RUN.plain() or {}).get("neurons") or {}).get(id)
+    posctrl = next((r for r in RUN.posctrl_finished() if r.get("id") == id), None)
     return {"id": id, "index": row, "detail": RUN.detail(id), "card": RUN.card(id), "profile": RUN.profile(id),
-            "saved": RUN.saved(id, 50), "investigation": RUN.investigation(id)}
+            "saved": RUN.saved(id, 50), "investigation": RUN.investigation(id), "plain": plain_entry,
+            "posctrl": posctrl}
 
 
 @app.get("/api/progress")
@@ -453,11 +765,15 @@ def population_stats():
 
 
 @app.get("/api/plain")
-def plain():
-    """Plain-language layer; 404 when the run has no plain.json (the page then falls back to saved data)."""
+def plain(lite: int = 0):
+    """Plain-language layer; 404 when the run has no plain.json (the page then falls back to saved data). lite=1 keeps
+    only the hand-written neuron entries (the browser fetches the others with each neuron)."""
     p = RUN.plain()
     if p is None:
         return JSONResponse({"error": "this run has no plain.json"}, status_code=404)
+    if lite:
+        keep = {k: v for k, v in (p.get("neurons") or {}).items() if v.get("source") != "automated" or v.get("featured")}
+        return dict(p, neurons=keep)
     return p
 
 
@@ -702,6 +1018,7 @@ def main():
     ap.add_argument("--device", default=None)
     ap.add_argument("--dtype", default="bf16", choices=["bf16", "fp16", "fp32"])
     ap.add_argument("--no-model", action="store_true", help="browse saved data only; never load weights")
+    ap.add_argument("--posctrl", default=None, help="positive-control run dir (default: <run>_posctrl if present)")
     ap.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8791)))
     ARGS = ap.parse_args()
     RUN = Run(ARGS.run)

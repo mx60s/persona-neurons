@@ -32,20 +32,20 @@
     <div class="wide">
       <h1>All neurons</h1>
       <p id="list-intro" class="lede"></p>
-      <div id="list-head" class="row">
-        <input id="filter" placeholder="Search by name, description or id" spellcheck="false" aria-label="search neurons">
-        <label class="toggle"><input type="checkbox" id="tech-cols"> show technical columns</label>
+      <div class="explorer">
+        <aside id="facets" aria-label="filters"></aside>
+        <div class="lmain">
+          <div id="list-head" class="row">
+            <input id="filter" placeholder="Search nicknames and descriptions" spellcheck="false" aria-label="search neurons">
+            <label class="dim sortl">Sort <select id="sort" aria-label="sort by"></select></label>
+            <button id="sort-dir" class="btn small mono" title="reverse order">↓</button>
+            <label class="toggle"><input type="checkbox" id="tech-cols"> show technical columns</label>
+          </div>
+          <div id="active" class="row"></div>
+          <div id="groups"></div>
+          <div id="pager" class="pager"></div>
+        </div>
       </div>
-      <div id="tech-bar" class="row" hidden>
-        <span class="dim">trait for groups and z columns</span>
-        <span class="seg" id="trait"><button data-t="openness" class="on">openness</button><button data-t="neuroticism">neuroticism</button></span>
-        <span class="dim">group by</span>
-        <select id="group-by" aria-label="group by"><option value="plain">plain groups</option><option value="sel">selection group (this trait)</option></select>
-        <span class="dim">sort within groups</span>
-        <select id="sort" aria-label="sort by"></select>
-        <button id="sort-dir" class="btn small mono" title="sort direction">↓</button>
-      </div>
-      <div id="groups"></div>
     </div>
   </section>
 

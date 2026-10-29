@@ -47,8 +47,8 @@ async function stream(path, body, onEvent, signal) {
 
 const S = {
   meta: null, man: null, plain: null, trait: "openness", rows: [], sel: null, data: null, view: "start",
-  sort: { key: "rank", dir: -1 }, filter: "", tech: false, groupBy: "plain", expanded: new Set(),
-  hasProgress: false, rowsAt: 0,
+  tech: false,
+  hasProgress: false, runComplete: false, results: null, L: null, listRes: null,
   ex: { kind: "all", split: "all", diff: false },
   steer: { mode: "add", value: { add: 0.5, mul: 2 } },
   live: { loaded: false, status: "", error: null },
@@ -369,7 +369,7 @@ function glossify(root, used = new Set()) {
   const alts = Object.keys(alias).sort((a, b) => b.length - a.length).map(a => a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
   if (!alts.length) return used;
   const re = new RegExp(`\\b(${alts.join("|")})\\b`, "gi");
-  const skip = "a,code,pre,mark,.gl,.tpl,h1,button,select,textarea,input,.nid,.mono,td.aname,figcaption,.settings,.rbar-axis,label,.hl table";
+  const skip = "a,code,pre,mark,.gl,.tpl,h1,button,select,textarea,input,.nid,.mono,td.aname,figcaption,.settings,.rbar-axis,label,.hl table,.results";
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement?.closest(skip) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
   const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
   for (let node of nodes) {
@@ -470,9 +470,9 @@ async function route() {
     return;
   }
   if (h.startsWith("list")) {
-    if (p.has("tech") && !S.tech) { $("#tech-cols").checked = true; S.tech = true; $("#tech-bar").hidden = false; }
+    S.tech = p.has("tech");
+    S.L = parseListHash(p);
     showView("list"); renderList();
-    if (S.hasProgress && Date.now() - S.rowsAt > 10000) refreshRows().then(() => { if (S.view === "list") renderList(); });
     return;
   }
   if (h.startsWith("live")) { showView("live"); pollLive(); return; }
@@ -493,92 +493,137 @@ $("#jump").onkeydown = e => {
 };
 
 // ---------- 1. Start page ----------
-function renderStart() {
-  const el = $("#start-body");
-  const featured = S.rows.filter(r => isFeatured(r, plainOf(r.id)));
-  featured.sort((a, b) => biggestLog(b, plainOf(b.id)) - biggestLog(a, plainOf(a.id)));
-  const intro = S.plain?.intro_md ? md(S.plain.intro_md)
-    : `<h1>Persona neurons</h1><p>This browser shows how personality adapters for Qwen3-8B change individual neurons. The plain-language layer for this run (plain.json) is not available, so pages show saved measurements with automated labels.</p>`;
+const pctTxt = (a, b, d = 0) => b ? `${(100 * a / b).toFixed(d)}%` : "–";
+// one count cell: linked number + share of n
+function cnt(v, n, href, d = 0) {
+  if (v == null) return `<td class="num">–</td>`;
+  return `<td class="num">${href ? `<a href="${href}">${nfmt(v)}</a>` : nfmt(v)} <span class="faint">${pctTxt(v, n, d)}</span></td>`;
+}
+const GROUP_WORDS = { neuroticism: "Neuroticism neurons", openness: "Openness neurons", random: "Random neurons", trait: "Trait neurons", posctrl: "Hand-explained neurons (positive controls)" };
+function popTableHTML(R) {
+  const rows = R.population || [];
+  if (!rows.length) return "";
+  const body = rows.map(g => {
+    const L = c => listHref({ sample: g.group, ...c }), rnd = g.group === "random";
+    const k = (v, c) => rnd ? cnt(v, g.n, L(c)).replace('<td class="num">', '<td class="num ref">') : cnt(v, g.n, L(c));
+    return `<tr${rnd ? ` class="ref"` : ""}><td>${esc(GROUP_WORDS[g.group] || g.group)}</td><td class="num"><a href="${L({})}">${nfmt(g.n)}</a></td>
+      ${k(g.rescaled, { change: ["up", "down"] })}${k(g.up, { change: ["up"] })}${k(g.down, { change: ["down"] })}${k(g.reshaped, { change: ["reshaped"] })}${k(g.offset, { change: ["offset"] })}
+      ${cnt(g.reply_start, g.n, L({ where: ["reply_start"] }))}${g.opposite == null ? `<td class="num faint">–</td>` : cnt(g.opposite, g.n, L({ opp: ["opposite"] }))}</tr>`;
+  }).join("");
+  const fromStats = rows.some(g => g.source === "population_stats.json");
+  return `<div class="results">
+    <table class="t res pop2"><thead>
+      <tr><th rowspan="2"></th><th rowspan="2" class="num">n</th><th colspan="3" class="grp">Same pattern, rescaled</th><th rowspan="2" class="num">Different<br>pattern</th><th rowspan="2" class="num">Constant<br>push</th><th rowspan="2" class="num">Mostly at<br>reply start</th><th rowspan="2" class="num">Amplifier and<br>suppressor opposite</th></tr>
+      <tr><th class="num">all</th><th class="num">turned up</th><th class="num">turned down</th></tr>
+    </thead><tbody>${body}</tbody></table>
+    <p class="caption">Kind of change is judged under the adapter of the neuron's trait that changes it most (for random neurons, the strongest of the four). “Same pattern” means its activations stay closely correlated with the original model's (r ≥ 0.9) and are scaled up or down. Random neurons barely change under any adapter, so nearly all of them count as “same pattern”; their split is not comparable with the trait rows. 180 neurons count for both traits. Click a number to see those neurons.${fromStats ? " The list can show a few fewer: 48 neurons carried over from the first study have no saved kind-of-change measurement." : ""}</p></div>`;
+}
+function invTableHTML(R) {
+  const rows = R.investigation || [];
+  if (!rows.length) return "";
+  const done = ["held_up", "partly", "not_held", "no_coherent"];
+  const body = rows.map(g => {
+    const pc = g.group === "posctrl", sub = g.group === "neuroticism" || g.group === "openness";
+    const L = c => pc ? null : listHref({ sample: g.group, ...c });
+    return `<tr class="${sub ? "sub" : ""}${g.group === "random" ? " ref" : ""}"><td>${sub ? `<span class="indent">${esc(g.group)}</span>` : esc(GROUP_WORDS[g.group] || g.group)}</td>
+      <td class="num">${pc ? `<a href="${listHref({ sample: "profiled" })}">${nfmt(g.n)}</a>` : `<a href="${L({ verdict: done })}">${nfmt(g.n)}</a>`}</td>
+      ${cnt(g.held_up, g.n, L({ verdict: ["held_up"] }), 1)}${cnt(g.partly, g.n, L({ verdict: ["partly"] }), 1)}${cnt(g.not_held, g.n, L({ verdict: ["not_held", "no_coherent"] }), 1)}
+      <td class="num"><b>${pc ? pctTxt(g.held_up + g.partly, g.n) : `<a href="${L({ verdict: ["held_up", "partly"] })}">${pctTxt(g.held_up + g.partly, g.n, 1)}</a>`}</b></td></tr>`;
+  }).join("");
+  const failed = rows.find(g => g.group === "trait")?.failed || 0, failedR = rows.find(g => g.group === "random")?.failed || 0;
+  const hasPC = rows.some(g => g.group === "posctrl");
+  return `<div class="results">
+    <table class="t res"><thead><tr><th></th><th class="num">n</th><th class="num">held up</th><th class="num">partly</th><th class="num">didn't hold up</th><th class="num">at least partly</th></tr></thead><tbody>${body}</tbody></table>
+    <p class="caption">Verdicts come from a final round of tests the investigator never saw.${failed + failedR ? ` ${nfmt(failed + failedR)} neurons have no verdict because the investigation failed on malformed model output.` : ""} Neurons specific to both traits appear in both trait rows.${hasPC ? " The positive-control row is a separate run of the same investigator on the hand-explained neurons; its verdicts are not the ones shown in the list." : ""}${S.hasProgress ? ` <a href="#live" class="runlog">Run log</a>` : ""}</p></div>`;
+}
+// intro_md with the two result markers replaced by live tables (or the tables appended when the markers are missing)
+function introHTML() {
+  const src = S.plain?.intro_md;
+  if (!src) return `<h1>Persona neurons</h1><p>This browser shows how personality adapters for Qwen3-8B change individual neurons. The plain-language layer for this run (plain.json) is not available, so pages show saved measurements with automated labels.</p>`;
+  const R = S.results;
+  const parts = src.split(/<!--\s*results:(population|investigation)\s*-->/);
+  let html = "";
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2 === 0) html += md(parts[i]);
+    else if (R) html += parts[i] === "population" ? popTableHTML(R) : invTableHTML(R);
+  }
+  return html;
+}
+let startSeq = 0;
+async function renderStart() {
+  const el = $("#start-body"), seq = ++startSeq;
+  let featured = [];
+  try { featured = (await api("/api/list?sample=profiled&sort=effect&size=60")).rows; } catch { }
+  if (seq !== startSeq) return;
   const hasHowTo = /how to read a neuron page/i.test(S.plain?.intro_md || "");
   const legend = hasHowTo ? "" : `<h2>How to read a neuron page</h2>
     <ul><li>The title is a nickname; the code under it (like L26/N8828) is its address: layer 26, neuron 8828.</li>
     <li><b>What each adapter does to it</b> is the main table: ${dirHTML("stronger")} means the neuron fires harder with that adapter on, ${dirHTML("weaker")} means less hard, ${dirHTML("about the same")} means little change. 1.2× means 20% stronger at the moments it usually fires.</li>
     <li><b>See it in action</b> shows real sentences with the key word highlighted and the neuron's value in each version of the model.</li>
     <li>Everything under <b>Go deeper</b> is raw evidence for technical readers.</li></ul>`;
-  const list = featured.map(r => {
-    const P = plainOf(r.id), ol = oneLinerOf(r, P);
-    return `<li><a href="#n=${encodeURIComponent(r.id)}&t=${esc(traitOf(r, P))}"><b>${esc(nameOf(r, P))}</b></a> <span class="mono faint" style="font-size:13px">${esc(r.id)}</span> ${badgeFor(r, P)}<br><span class="dim">${esc(ol.text)}</span></li>`;
-  }).join("");
-  const liveNote = S.hasProgress ? `<div class="notice live-note">An automated investigation is running or has run on this data. <a href="#live">See the live results</a>.</div>` : "";
-  el.innerHTML = `${liveNote}<div class="md">${intro}${legend}
+  const list = featured.map(r => `<li><a href="#n=${encodeURIComponent(r.id)}"><b>${esc(r.name)}</b></a> <span class="mono faint" style="font-size:13px">${esc(r.id)}</span> ${r.hand ? checkBadge(r.hand) : ""}<br><span class="dim">${esc(r.one)}</span></li>`).join("");
+  const running = S.hasProgress && !S.runComplete;
+  const liveNote = running ? `<div class="notice live-note">The automated investigation is still running. <a href="#live">See its progress</a>.</div>` : "";
+  const nOther = S.results ? S.results.n_neurons - featured.length : null;
+  el.innerHTML = `${liveNote}<div class="md">${introHTML()}${legend}
     <h2>Neurons we studied closely</h2>
-    <p>Each of these has a hand-checked description and a full write-up. The other ${(S.rows.length - featured.length).toLocaleString("en-US")} neurons are in the <a href="#list">full list</a>, mostly with ${S.rows.some(r => r.inv) ? "automated descriptions" : "automated, unchecked descriptions"}.</p>
+    <p>Each of these has a hand-checked description and a full write-up.${nOther ? ` The other ${nfmt(nOther)} are in the <a href="#list">full list</a>, with descriptions from the automated investigator.` : ""}</p>
     <ul class="featured">${list || "<li>No detailed profiles in this run.</li>"}</ul></div>`;
   glossify(el);
 }
 
-// ---------- 2. List ----------
-function sortKeys() {
-  const keys = [["change", "biggest adapter change"], ["rank", "rank (this trait)"], ["layer", "layer"]];
-  for (const s of polarStates()) {
-    keys.push([`ratio:${s}`, `ratio at peaks ${s}`], [`z:${s}`, `z_mean ${s}`], [`az:${s}`, `|z_mean| ${s}`], [`zr:${s}`, `z_rms ${s}`], [`ag:${s}`, `agree ${s}`], [`rd:${s}`, `resid_mean_diff ${s}`]);
-  }
-  keys.push(["rms", "base rms"], ["max", "base max"], ["status", "card status"]);
-  return keys;
+// ---------- 2. List (server-side filters, facets, sort and pages: /api/list) ----------
+const L_DEFAULT = { sample: "", verdict: [], change: [], where: [], opp: [], lmin: null, lmax: null, q: "", sort: "default", dir: "", page: 1 };
+const FACETS = [
+  { key: "sample", single: true, title: "Sample", opts: [["profiled", "Studied closely by hand"], ["trait", "Trait-specific, either trait"], ["neuroticism", "Neuroticism-specific"], ["openness", "Openness-specific"], ["both", "Specific to both traits"], ["random", "Random comparison"], ["v1", "From the first study"]] },
+  { key: "verdict", title: "Investigator's verdict", opts: [["held_up", "Held up"], ["partly", "Partly held up"], ["not_held", "Didn't hold up"], ["no_coherent", "No coherent explanation"], ["failed", "Investigation failed"], ["none", "Not in the investigation"]] },
+  { key: "change", title: "Kind of change", opts: [["up", "Same pattern, turned up"], ["down", "Same pattern, turned down"], ["reshaped", "Different pattern"], ["offset", "Constant push"]] },
+  { key: "where", title: "Where it changes", opts: [["reply_start", "Mostly at the reply start"], ["text", "Mostly in ordinary text"]] },
+  { key: "opp", title: "Amplifier vs suppressor", opts: [["opposite", "Push opposite ways"], ["same", "Push the same way"]] },
+];
+const FACET_LABEL = Object.fromEntries(FACETS.flatMap(F => F.opts.map(([v, l]) => [`${F.key}:${v}`, l])));
+const SORTS = [["default", "Studied closely, then held up, partly, rest"], ["verdict", "Verdict, held up first"], ["effect", "Size of change"], ["passes", "Checks passed"], ["layer", "Layer"]];
+function listParams(L) {
+  const p = new URLSearchParams();
+  if (L.sample) p.set("sample", L.sample);
+  for (const k of ["verdict", "change", "where", "opp"]) if (L[k].length) p.set(k, L[k].join(","));
+  if (L.lmin != null) p.set("lmin", L.lmin);
+  if (L.lmax != null) p.set("lmax", L.lmax);
+  if (L.q) p.set("q", L.q);
+  if (L.sort !== "default") p.set("sort", L.sort);
+  if (L.dir) p.set("dir", L.dir);
+  if (L.page > 1) p.set("page", L.page);
+  return p;
 }
-function sortVal(r, key) {
-  const [k, s] = key.split(":");
-  const e = s ? (r.effects || {})[s] || {} : null;
-  switch (k) {
-    case "change": return biggestLog(r, plainOf(r.id));
-    case "ratio": { const x = effectsFor(r, plainOf(r.id)).find(y => y.state === s); return x?.ratio ?? -1e9; }
-    case "rank": { const v = (r.rank || {})[S.trait]; return v == null ? -1e9 : -v; }
-    case "layer": return r.layer * 1e6 + r.n;
-    case "z": return e.z_mean ?? -1e9;
-    case "az": return Math.abs(e.z_mean ?? 0);
-    case "zr": return e.z_rms ?? -1e9;
-    case "ag": return e.agree ?? -1e9;
-    case "rd": return e.resid_mean_diff ?? -1e9;
-    case "rms": return r.base?.rms ?? 0;
-    case "max": return r.base?.max ?? 0;
-    case "status": return ["rejected", "untested", "mixed", "tested"].indexOf(r.card_status);
-  }
-  return 0;
+// "#list&sample=neuroticism&verdict=held_up" style links; values are plain words so they stay readable
+function listHref(L) {
+  const s = [...listParams({ ...L_DEFAULT, ...L }).entries()].map(([k, v]) => `${k}=${encodeURIComponent(v).replace(/%2C/g, ",")}`).join("&");
+  return "#list" + (s ? "&" + s : "") + (S.tech ? "&tech=1" : "");
+}
+function parseListHash(p) {
+  const arr = k => (p.get(k) || "").split(",").filter(Boolean);
+  const num = k => p.get(k) == null || p.get(k) === "" || Number.isNaN(+p.get(k)) ? null : +p.get(k);
+  return { sample: p.get("sample") || "", verdict: arr("verdict"), change: arr("change"), where: arr("where"), opp: arr("opp"),
+    lmin: num("lmin"), lmax: num("lmax"), q: p.get("q") || "", sort: p.get("sort") || "default", dir: p.get("dir") || "", page: Math.max(1, num("page") || 1) };
+}
+function setL(changes, replace = false) {
+  const L = { ...S.L, page: 1, ...changes };
+  const h = listHref(L);
+  if (replace) { history.replaceState(null, "", h); S.L = L; renderList(); }
+  else location.hash = h;
 }
 function setupList() {
-  S.sort.key = "change";
-  $("#sort").innerHTML = sortKeys().map(([k, l]) => `<option value="${esc(k)}">${esc(l)}</option>`).join("");
-  $("#sort").onchange = e => { S.sort.key = e.target.value; renderList(); };
-  $("#sort-dir").onclick = () => { S.sort.dir *= -1; $("#sort-dir").textContent = S.sort.dir < 0 ? "↓" : "↑"; renderList(); };
-  $("#filter").oninput = e => { S.filter = e.target.value.toLowerCase(); renderList(); };
-  $("#tech-cols").onchange = e => { S.tech = e.target.checked; $("#tech-bar").hidden = !S.tech; if (!S.tech) { S.groupBy = "plain"; $("#group-by").value = "plain"; } renderList(); };
-  $("#group-by").onchange = e => { S.groupBy = e.target.value; renderList(); };
-  $$("#trait button").forEach(b => b.onclick = () => setTrait(b.dataset.t));
-  listIntro();
+  S.L = { ...L_DEFAULT };
+  let t = null;
+  $("#filter").oninput = e => { clearTimeout(t); const v = e.target.value; t = setTimeout(() => setL({ q: v.trim() }, true), 220); };
+  $("#sort").onchange = e => setL({ sort: e.target.value, dir: "" });
+  $("#sort-dir").onclick = () => setL({ dir: S.L.dir ? "" : "asc", page: 1 });
+  $("#tech-cols").onchange = e => { S.tech = e.target.checked; history.replaceState(null, "", listHref(S.L)); renderList(); };
 }
-function listIntro() {
-  const nf = S.rows.filter(r => isFeatured(r, plainOf(r.id))).length;
-  const ns = S.rows.filter(r => r.sample && !isFeatured(r, plainOf(r.id))).length, ni = S.rows.filter(r => r.inv).length;
-  const nc = S.rows.length - ns;
-  const parts = [];
-  if (nc > 0) parts.push(`${nc.toLocaleString("en-US")} neurons that the adapters change a lot, plus a few picked at random for comparison`);
-  if (ns > 0) parts.push(`${ns.toLocaleString("en-US")} in the automated investigation sample (${ni.toLocaleString("en-US")} finished so far), each with an explanation written and checked on new sentences by a cheap model`);
-  $("#list-intro").innerHTML = `${parts.join("; ")}.${nf ? ` The ${nf} at the top were studied closely and checked by hand.` : ""}${nc > nf ? " The rest of the hand-picked neurons have only a quick automated description." : ""}`;
-  glossify($("#list-intro"));
-}
-function setTraitQuiet(t) {
-  S.trait = t;
-  $$("#trait button").forEach(b => b.classList.toggle("on", b.dataset.t === t));
-}
-function setTrait(t) {
-  setTraitQuiet(t);
-  renderList();
-  if (S.data) setupLivePanels();
-  writeHash();
-}
-function groupOf(r) {
-  if (r.kind === "random_control") return "random_control";
-  return (r.group || {})[S.trait] || "other";
+function sortOptions() {
+  const opts = [...SORTS];
+  if (S.tech) for (const s of polarStates()) opts.push([`z:${s}`, `z_mean ${s}`]);
+  return opts.map(([k, l]) => `<option value="${esc(k)}"${S.L.sort === k ? " selected" : ""}>${esc(l)}</option>`).join("");
 }
 const STRIP_GROUPS = [["Openness", ["o_amp+1", "o_sup+1"]], ["Neuroticism", ["n_amp+1", "n_sup+1"]], ["Neutral", ["ctrl+1"]]];
 function stripHead() {
@@ -587,77 +632,115 @@ function stripHead() {
   const bot = STRIP_GROUPS.map(([, ss], k) => ss.map((s, j) => `<span class="sh${k && !j ? " gap" : ""}" title="${esc(A[s]?.name || s)}">${s === "ctrl+1" ? "○" : s.includes("_amp") ? "+" : "−"}</span>`).join("")).join("");
   return `${top}<br>${bot}`;
 }
-function stripHTML(r, P) {
-  const effs = Object.fromEntries(effectsFor(r, P).map(e => [e.state, e])), A = adapters();
+// arrows: [[state, direction, ratio]] from plain.json, or effectsFor() rows on the neuron page
+function stripHTML(arrows) {
+  const effs = Object.fromEntries((arrows || []).map(([s, d, r]) => [s, { d, r }])), A = adapters();
   return STRIP_GROUPS.map(([, ss], k) => ss.map((s, j) => {
-    const e = effs[s], d = DIR[e?.direction] || DIR.unknown;
-    const tip = `${A[s]?.name || s}: ${e ? `${d.w}${e.ratio != null ? ` (${e.ratio.toFixed(2)}× at its usual peaks)` : ""}` : "not measured"}`;
+    const e = effs[s], d = DIR[e?.d] || DIR.unknown;
+    const tip = `${A[s]?.name || s}: ${e ? `${d.w}${e.r != null ? ` (${(+e.r).toFixed(2)}× at its usual peaks)` : ""}` : "not measured"}`;
     return `<span class="a ${d.cls}${k && !j ? " gap" : ""}" title="${esc(tip)}" aria-label="${esc(tip)}">${d.a}</span>`;
   }).join("")).join("");
 }
-function renderList() {
-  const ps = polarStates(), by = {}, order = [];
-  const push = (g, r) => { if (!by[g]) { by[g] = []; order.push(g); } by[g].push(r); };
-  const rows = S.rows.filter(r => {
-    if (!S.filter) return true;
-    const P = plainOf(r.id);
-    return `${r.id} ${r.label || ""} ${r.selection_reason || ""} ${P?.nickname || ""} ${P?.one_liner || ""} ${P?.group_plain || ""} ${r.inv?.nickname || ""} ${r.inv?.one_liner || ""} ${sampleGroup(r) || ""}`.toLowerCase().includes(S.filter);
-  });
-  const STUDIED = "Studied closely";
-  if (S.groupBy === "plain") {
-    const known = [STUDIED, SAMPLE_GROUPS.neuroticism, SAMPLE_GROUPS.openness, SAMPLE_GROUPS.other, SAMPLE_GROUPS.random, GROUP_PLAIN.amp_primary, GROUP_PLAIN.sup_primary, GROUP_PLAIN.shared, GROUP_PLAIN.cross_trait, GROUP_PLAIN.control_assoc];
-    for (const g of known) { by[g] = []; order.push(g); }
-    for (const r of rows) { const P = plainOf(r.id); push(isFeatured(r, P) ? STUDIED : groupPlainOf(r, P), r); }
-    const ri = order.indexOf(RANDOM_GROUP); if (ri >= 0) { order.splice(ri, 1); order.push(RANDOM_GROUP); }
-  } else {
-    for (const g of [...S.meta.groups, "other"]) { by[g] = []; order.push(g); }
-    for (const r of rows) push(groupOf(r), r);
-  }
-  const GSUB = {
-    [STUDIED]: "Each has a hand-checked description and a full write-up.",
-    [RANDOM_GROUP]: "Neurons from the same layers chosen at random, as a baseline for everything else.",
-    [SAMPLE_GROUPS.neuroticism]: "Sampled from neurons the neuroticism adapters change; explained and checked by the automated investigator.",
-    [SAMPLE_GROUPS.openness]: "Sampled from neurons the openness adapters change; explained and checked by the automated investigator.",
-    [SAMPLE_GROUPS.random]: "Picked at random and investigated the same way. If these pass as often, the explanations aren't telling us much.",
-  };
-  const VERDICT_ORDER = { tested: 0, mixed: 1, rejected: 2, untested: 3 };
-  const invRank = r => r.inv ? VERDICT_ORDER[r.inv.status] ?? 4 : 5;
-  const head = `<thead><tr><th>Neuron</th><th class="strip-h">What the adapters do<br>${stripHead()}</th><th>Description checked?</th>
+const gainText = g => g == null ? "" : `${(+g).toFixed(g >= 0.95 && g <= 1.05 ? 2 : 1)}×`;
+function changeChip(ch, row) {
+  if (!ch) return "";
+  const pole = (adapters()[ch.pole]?.name || ch.pole || "").toLowerCase();
+  const random = row?.kind === "random_control";
+  const t = { up: [`rescaled ▲ ${gainText(ch.gain)}`, `same response pattern, turned up about ${gainText(ch.gain)}`], down: [`rescaled ▼ ${gainText(ch.gain)}`, `same response pattern, turned down to about ${gainText(ch.gain)}`],
+    reshaped: ["different pattern", "responds in a different pattern, not just stronger or weaker"], offset: ["constant push", "a near-constant push, whatever the text"] }[ch.type];
+  if (!t) return "";
+  const tip = `Under the ${pole} (the adapter that changes it most): ${t[1]}.${random ? " Changes in random neurons are tiny, so this says little." : ""}`;
+  return `<span class="chip ch-${esc(ch.type)}${random ? " faintchip" : ""}" title="${esc(tip)}">${esc(t[0])}</span>`;
+}
+function whereChip(w) {
+  if (!w) return "";
+  return w === "reply_start" ? `<span class="chip wh" title="More than half of the change is on the hidden tokens where the assistant's reply begins">reply start</span>`
+    : `<span class="chip wh" title="Most of the change is in ordinary text">ordinary text</span>`;
+}
+const INV_SHORT = { held_up: "held up", partly: "partly", not_held: "didn't hold up", no_coherent: "no coherent explanation" };
+function verdictCell(r) {
+  if (r.hand) return `${checkBadge(r.hand).replace('class="check ', 'class="check hand ')}<div class="vsrc">${r.hand_src === "human edit" ? "human edit" : "checked by hand"}</div>${r.inv ? `<div class="vsrc faint">investigator: ${esc(INV_SHORT[r.verdict] || r.verdict)}</div>` : ""}`;
+  if (r.inv) return `${invBadge(r.verdict)}<div class="vsrc">automated${r.inv.n_final_tests ? `, ${r.inv.passes ?? 0} of ${r.inv.n_final_tests} checks` : ""}</div>`;
+  if (r.verdict === "failed") return `<span class="check waiting">no result</span><div class="vsrc">investigation failed</div>`;
+  return `<span class="check waiting">not investigated</span>`;
+}
+function facetsHTML(res) {
+  const L = S.L, ctxNote = res.context !== "any" ? ` <span class="faint">(${esc(res.context)} adapters)</span>` : "";
+  const groups = FACETS.map(F => {
+    const counts = res.facets[F.key] || {}, sel = F.single ? (L[F.key] ? [L[F.key]] : []) : L[F.key];
+    const opts = F.opts.filter(([v]) => counts[v] || sel.includes(v));
+    if (!opts.length) return "";
+    const items = opts.map(([v, lab]) => `<label class="fo${sel.includes(v) ? " on" : ""}"><input type="${F.single ? "radio" : "checkbox"}" name="f-${F.key}" data-k="${F.key}" value="${esc(v)}"${sel.includes(v) ? " checked" : ""}><span class="fl">${esc(lab)}</span><span class="fc">${nfmt(counts[v] || 0)}</span></label>`).join("");
+    const all = F.single ? `<label class="fo${!sel.length ? " on" : ""}"><input type="radio" name="f-${F.key}" data-k="${F.key}" value=""${!sel.length ? " checked" : ""}><span class="fl">All</span><span class="fc">${nfmt(counts._all || 0)}</span></label>` : "";
+    const clear = !F.single && sel.length ? `<button class="linkbtn fclear" data-k="${F.key}">clear</button>` : "";
+    return `<div class="fg"><div class="ft">${esc(F.title)}${F.key === "change" || F.key === "opp" ? ctxNote : ""}${clear}</div>${all}${items}</div>`;
+  }).join("");
+  const [lo, hi] = res.layers || [0, 35];
+  return `${groups}<div class="fg"><div class="ft">Layer</div><div class="lrange"><input type="number" id="lmin" min="${lo}" max="${hi}" placeholder="${lo}" value="${L.lmin ?? ""}" aria-label="lowest layer"> to <input type="number" id="lmax" min="${lo}" max="${hi}" placeholder="${hi}" value="${L.lmax ?? ""}" aria-label="highest layer"></div></div>`;
+}
+function activeHTML(res) {
+  const L = S.L, chips = [];
+  if (L.sample) chips.push([{ sample: "" }, FACET_LABEL[`sample:${L.sample}`] || L.sample]);
+  for (const k of ["verdict", "change", "where", "opp"]) for (const v of L[k]) chips.push([{ [k]: L[k].filter(x => x !== v) }, FACET_LABEL[`${k}:${v}`] || v]);
+  if (L.lmin != null || L.lmax != null) chips.push([{ lmin: null, lmax: null }, `layers ${L.lmin ?? res.layers[0]} to ${L.lmax ?? res.layers[1]}`]);
+  if (L.q) chips.push([{ q: "" }, `“${L.q}”`]);
+  S.chipActs = chips.map(c => c[0]);
+  return `<span class="rcount"><b>${nfmt(res.total)}</b> ${res.total === 1 ? "neuron" : "neurons"}${chips.length ? ` of ${nfmt(res.n_all)}` : ""}</span>
+    ${chips.map(([, lab], i) => `<button class="fchip" data-i="${i}" title="remove this filter">${esc(lab)} <span aria-hidden="true">×</span></button>`).join("")}
+    ${chips.length > 1 ? `<button class="linkbtn" id="clear-all">clear all</button>` : ""}`;
+}
+let listSeq = 0;
+async function renderList() {
+  const seq = ++listSeq, L = S.L;
+  $("#tech-cols").checked = S.tech;
+  if ($("#filter").value.trim() !== L.q && document.activeElement !== $("#filter")) $("#filter").value = L.q;
+  $("#sort").innerHTML = sortOptions();
+  $("#sort-dir").textContent = L.dir ? "↑" : "↓";
+  $("#sort-dir").title = L.dir ? "reversed order; click for the usual order" : "usual order; click to reverse";
+  let res;
+  try { res = await api(`/api/list?${listParams(L).toString()}&size=50`); }
+  catch (e) { if (seq === listSeq) $("#groups").innerHTML = `<div class="err">${esc(e.message)}</div>`; return; }
+  if (seq !== listSeq) return;
+  S.listRes = res;
+  $("#facets").innerHTML = facetsHTML(res);
+  $("#active").innerHTML = activeHTML(res);
+  const ps = polarStates();
+  const head = `<thead><tr><th>Neuron</th><th>Explanation checked?</th><th>Kind of change</th><th class="strip-h">What the adapters do<br>${stripHead()}</th><th class="num">Layer</th>
     ${ps.map(s => `<th class="techc num" title="${esc(stateLabel(s))}">z_mean<br>${esc(s)}</th>`).join("")}<th class="techc">card</th></tr></thead>`;
-  const cols = `<colgroup><col><col class="c-strip"><col class="c-check">${ps.map(() => `<col class="c-z techc">`).join("")}<col class="c-card techc"></colgroup>`;
-  const html = [];
-  for (const g of order) {
-    const rs = by[g]; if (!rs?.length) continue;
-    const key = S.tech ? S.sort.key : "change", dir = S.tech ? S.sort.dir : -1;
-    const isSample = Object.values(SAMPLE_GROUPS).includes(g);
-    rs.sort((a, b) => {
-      const fa = isFeatured(a, plainOf(a.id)) ? 1 : 0, fb = isFeatured(b, plainOf(b.id)) ? 1 : 0;
-      if (fa !== fb && S.groupBy !== "plain") return fb - fa;
-      if (isSample && !S.tech && invRank(a) !== invRank(b)) return invRank(a) - invRank(b);
-      return dir < 0 ? sortVal(b, key) - sortVal(a, key) : sortVal(a, key) - sortVal(b, key);
-    });
-    const gname = S.groupBy === "plain" ? g : (GROUP_NAMES[g] || g);
-    const done = isSample ? rs.filter(r => r.inv).length : null;
-    html.push(`<div class="ghead">${esc(gname)} <span class="cnt">${rs.length.toLocaleString("en-US")}${done != null && done < rs.length ? `, ${done.toLocaleString("en-US")} investigated so far` : ""}</span></div>${GSUB[g] ? `<div class="gsub">${esc(GSUB[g])}</div>` : ""}<table class="nl">${cols}${head}<tbody>`);
-    const cap = S.expanded.has(g) || S.filter ? rs.length : 60;
-    for (const r of rs.slice(0, cap)) {
-      const P = plainOf(r.id), ol = oneLinerOf(r, P), status = statusOf(r, P);
-      const badges = `${r.detailed ? '<span class="badge" title="detailed profile">P</span>' : ""}${r.template_driven ? '<span class="badge warn" title="more than half of the adapter-induced change is on chat-template tokens">T</span>' : ""}${Object.values(r.robust || {}).some(v => v && v.top_share > 0.6) ? '<span class="badge warn" title="more than 60% of the squared change comes from 0.1% of tokens">O</span>' : ""}`;
-      const cells = ps.map(s => {
-        const e = (r.effects || {})[s];
-        return `<td class="techc num">${e ? `<span class="eff" style="background:${zColor(e.z_mean)}" title="${esc(s)}: z_mean ${f(e.z_mean)}, z_rms ${f(e.z_rms)}, agree ${f(e.agree)}, mean_diff ${f(e.mean_diff, 4)}">${f(e.z_mean, 2)}</span>` : `<span class="eff na">–</span>`}</td>`;
-      }).join("");
-      html.push(`<tr data-id="${esc(r.id)}"><td><div class="nname"><a href="#n=${encodeURIComponent(r.id)}&t=${esc(traitOf(r, P))}">${esc(nameOf(r, P))}</a>${nameOf(r, P) !== r.id ? `<span class="nid2">${esc(r.id)}</span>` : ""}${S.tech ? badges : ""}</div>
-        <div class="none${ol.auto ? " auto" : ""}">${esc(ol.text)}</div></td>
-        <td class="strip">${stripHTML(r, P)}</td><td>${badgeFor(r, P)}</td>${cells}<td class="techc"><span class="mono" style="font-size:12px">${esc(r.card_status)}</span></td></tr>`);
-    }
-    html.push(`</tbody></table>`);
-    if (cap < rs.length) html.push(`<button class="linkbtn showall" data-g="${esc(g)}">show all ${rs.length.toLocaleString("en-US")} in this group</button>`);
-  }
-  $("#groups").innerHTML = html.join("") || `<div class="slot">No neurons match.</div>`;
+  const cols = `<colgroup><col><col class="c-check"><col class="c-chg"><col class="c-strip"><col class="c-layer">${ps.map(() => `<col class="c-z techc">`).join("")}<col class="c-card techc"></colgroup>`;
+  const body = res.rows.map(r => {
+    const tc = r.tech || {};
+    const badges = `${tc.detailed ? '<span class="badge" title="detailed profile">P</span>' : ""}${tc.template_driven ? '<span class="badge warn" title="more than half of the adapter-induced change is on chat-template tokens">T</span>' : ""}${tc.outlier ? '<span class="badge warn" title="more than 60% of the squared change comes from 0.1% of tokens">O</span>' : ""}`;
+    const cells = ps.map(s => { const z = tc.z_mean?.[s]; return `<td class="techc num">${z != null ? `<span class="eff" style="background:${zColor(z)}">${f(z, 2)}</span>` : `<span class="eff na">–</span>`}</td>`; }).join("");
+    const oneCls = r.one_src === "auto" ? " auto" : "";
+    return `<tr data-id="${esc(r.id)}"><td><div class="nname"><a href="#n=${encodeURIComponent(r.id)}${r.traits?.length ? `&t=${esc(r.change?.pole?.startsWith("n_") ? "neuroticism" : r.change?.pole?.startsWith("o_") ? "openness" : r.traits[0])}` : ""}">${esc(r.name)}</a>${r.name !== r.id ? `<span class="nid2">${esc(r.id)}</span>` : ""}${S.tech ? badges : ""}</div>
+      <div class="none${oneCls}">${esc(r.one)}</div></td>
+      <td>${verdictCell(r)}</td><td class="chips">${changeChip(r.change, r)}${whereChip(r.where)}</td><td class="strip">${stripHTML(r.arrows)}</td><td class="num">${esc(r.layer)}</td>${cells}<td class="techc"><span class="mono" style="font-size:12px">${esc(tc.card_status || "")}</span></td></tr>`;
+  }).join("");
+  $("#groups").innerHTML = res.rows.length ? `<table class="nl">${cols}${head}<tbody>${body}</tbody></table>` : `<div class="slot">No neurons match these filters.</div>`;
   $("#groups").classList.toggle("show-tech", S.tech);
+  const pg = (p, lab, dis) => dis ? `<span class="faint">${lab}</span>` : `<a href="${listHref({ ...L, page: p })}">${lab}</a>`;
+  $("#pager").innerHTML = res.pages > 1 ? `${pg(res.page - 1, "‹ previous", res.page <= 1)}<span>page ${res.page} of ${nfmt(res.pages)}</span>${pg(res.page + 1, "next ›", res.page >= res.pages)}` : "";
+  // events
   $$("#groups tbody tr").forEach(el => el.onclick = e => { if (!e.target.closest("a")) go(el.dataset.id); });
-  $$("#groups .showall").forEach(b => b.onclick = () => { S.expanded.add(b.dataset.g); renderList(); });
+  $$("#facets input[data-k]").forEach(inp => inp.onchange = () => {
+    const k = inp.dataset.k, F = FACETS.find(x => x.key === k);
+    if (F.single) setL({ [k]: inp.value });
+    else setL({ [k]: $$(`#facets input[data-k="${k}"]:checked`).map(x => x.value) });
+  });
+  $$("#facets .fclear").forEach(b => b.onclick = () => setL({ [b.dataset.k]: [] }));
+  const lr = () => { const a = $("#lmin").value, b = $("#lmax").value; setL({ lmin: a === "" ? null : +a, lmax: b === "" ? null : +b }); };
+  $("#lmin").onchange = lr; $("#lmax").onchange = lr;
+  $$("#active .fchip").forEach(b => b.onclick = () => setL(S.chipActs[+b.dataset.i]));
+  $("#clear-all")?.addEventListener("click", () => setL({ ...L_DEFAULT, sort: S.L.sort, dir: S.L.dir }));
+}
+function listIntro() {
+  const R = S.results, sm = R?.samples || {};
+  if (!R) { $("#list-intro").textContent = ""; return; }
+  const parts = [`${nfmt(R.n_neurons)} neurons`];
+  if (sm.trait || sm.random) parts.push(`${nfmt(sm.trait || 0)} trait-specific and ${nfmt(sm.random || 0)} random comparison neurons from the population run`);
+  if (sm.v1) parts.push(`${nfmt(sm.v1)} from the first study, ${nfmt(R.n_profiled)} of them studied closely by hand`);
+  $("#list-intro").innerHTML = `${esc(parts[0])}: ${esc(parts.slice(1).join("; "))}. Nicknames come from the hand-written profiles where they exist, otherwise from the automated investigator.`;
 }
 
 // ---------- 3. Neuron page ----------
@@ -665,6 +748,7 @@ async function openNeuron(id, adoptTrait) {
   S.sel = id;
   try {
     S.data = await api(`/api/neuron?id=${encodeURIComponent(id)}`);
+    if (S.plain && S.data.plain) (S.plain.neurons ||= {})[id] = S.data.plain;
   } catch (e) {
     $("#empty").hidden = false; $("#neuron").hidden = true; $("#empty").textContent = String(e.message); return;
   }
@@ -726,6 +810,27 @@ function renderNeuron() {
   renderSaved();
   $("#st-neuron").textContent = d.id;
 }
+// measured kind of change (index change_type, corr_amp_sup, template), for neurons of the population run
+const POLE_PAIRS = { neuroticism: ["n_amp+1", "n_sup+1"], openness: ["o_amp+1", "o_sup+1"] };
+function measuredSubs(r, P) {
+  const ct = r?.change_type, out = [];
+  const traits = r?.kind === "random_control" ? ["openness", "neuroticism"] : (r?.selected_for || []).filter(t => POLE_PAIRS[t]);
+  if (!traits.length) return out;
+  const A = adapters(), eff = r.effects || {};
+  if (ct) {
+    const poles = traits.flatMap(t => POLE_PAIRS[t]).filter(s => ct[s]);
+    const top = poles.reduce((a, s) => ((eff[s]?.z_rms ?? 0) > (eff[a]?.z_rms ?? 0) ? s : a), poles[0]);
+    const words = x => x.type === "gain" ? `same response, turned ${x.gain > 1 ? "up" : "down"} ${x.gain > 1 ? "about" : "to about"} ${gainText(x.gain)}`
+      : x.type === "reshaped" ? "responds in a different pattern" : x.type === "offset" ? "a near-constant push, whatever the text" : "no change";
+    const lines = poles.map(s => `<li${s === top ? ` class="topc"` : ""} title="correlation with the original activations ${f(ct[s].corr_with_base, 2)}, least-squares scale ${f(ct[s].gain, 2)}">Under the ${esc((A[s]?.name || s).toLowerCase())}: ${esc(words(ct[s]))}${s === top ? ` <span class="faint">(biggest change)</span>` : ""}</li>`).join("");
+    const rnd = r.kind === "random_control" ? `<div class="faint">This neuron was picked at random and changes very little, so “same response” mostly means nothing much changed.</div>` : "";
+    out.push(`<dt>Kind of change</dt><dd><ul class="kinds">${lines}</ul>${rnd}</dd>`);
+  }
+  const cas = r.corr_amp_sup || {};
+  const opp = traits.filter(t => cas[t] != null).map(t => `<span title="correlation between the two adapters' changes across all tokens: ${f(cas[t], 2)}">The ${t} amplifier and suppressor push it ${cas[t] < 0 ? "<b>opposite ways</b>" : "<b>the same way</b>"}${Math.abs(cas[t]) < 0.1 ? " (only weakly)" : ""}.</span>`);
+  if (opp.length && r.kind !== "random_control") out.push(`<dt>Amplifier vs suppressor</dt><dd>${opp.join(" ")}</dd>`);
+  return out;
+}
 function renderPlainEffects(r, P) {
   const effs = effectsFor(r, P), A = adapters(), el = $("#n-effects");
   if (!effs.length) { el.innerHTML = `<h2>What each adapter does to it</h2><div class="slot">No measurements saved for this neuron.</div>`; return; }
@@ -741,10 +846,16 @@ function renderPlainEffects(r, P) {
   }).join("");
   const computed = effs.some(e => e.computed);
   const subs = [];
-  if (P?.overall_change?.text) subs.push(`<dt>How much it changes overall</dt><dd>${esc(P.overall_change.text)}</dd>`);
+  // the kind of change gets its own row below, so its sentence is dropped from the overall text
+  const overall = r.change_type ? String(P?.overall_change?.text || "").replace(/\s*Under the [^.]*\.\s*$/, "") : P?.overall_change?.text;
+  if (overall) subs.push(`<dt>How much it changes overall</dt><dd>${esc(overall)}</dd>`);
   else if (r.layer_pct) { const pct = Math.max(...Object.values(r.layer_pct)); subs.push(`<dt>How much it changes overall</dt><dd>The adapters change it more than ${Math.floor(pct * 1000) / 10}% of the other neurons in its layer.</dd>`); }
-  if (P?.where?.text) subs.push(`<dt>Where the change happens</dt><dd>${esc(P.where.text)}</dd>`);
+  const ms = measuredSubs(r, P);
+  if (ms.length) subs.push(ms[0]);
+  const tshare = Math.max(-1, ...Object.values(r.template || {}).map(v => v?.template_share ?? -1));
+  if (P?.where?.text) subs.push(`<dt>Where the change happens</dt><dd>${esc(P.where.text)}${tshare >= 0 && !/%/.test(P.where.text) ? ` <span class="dim">(${Math.round(100 * tshare)}% of the change is at the reply start.)</span>` : ""}</dd>`);
   else if (r.template_driven != null) subs.push(`<dt>Where the change happens</dt><dd>${r.template_driven ? "Mostly at the moment the assistant's reply begins, not in ordinary text." : "Mostly in ordinary text."}</dd>`);
+  subs.push(...ms.slice(1));
   el.innerHTML = `<h2>What each adapter does to it</h2>
     <p class="headline">${headline}</p>
     <table class="t adapters"><thead><tr><th>Adapter</th><th>Compared with the original model</th><th class="num">Ratio</th><th><div class="rbar-axis"><span>0.5×</span><span>1×</span><span>2×</span></div></th><th>In plain words</th></tr></thead>
@@ -907,6 +1018,7 @@ function renderInvestigation() {
   const rawList = Array.isArray(raw) ? raw : raw ? [raw] : [];
   el.innerHTML = `<p class="caption">The investigator proposes an explanation, writes new sentences where it should and shouldn't fire, measures the neuron on them, and revises if the checks fail. A check passes when the measured value is on the expected side of the threshold, which is set from the neuron's own typical peak.</p>
     <div class="row dim" style="font-size:14px">${invBadge(I.status ?? row?.inv?.status)}<span>${rounds.length} round${rounds.length === 1 ? "" : "s"}</span>${I.cost_usd != null ? `<span>cost ${usd(I.cost_usd)}</span>` : ""}${I.model ? `<span>model ${esc(I.model)}</span>` : ""}${I.finished_at ? `<span>finished ${esc(when(I.finished_at))}</span>` : ""}</div>
+    ${S.data.posctrl ? `<p class="caption">In a separate run of the same investigator on the hand-explained neurons (the positive controls), its verdict for this neuron was ${invBadge(S.data.posctrl.status)}${S.data.posctrl.n_final_tests ? ` (${S.data.posctrl.passes ?? 0} of ${S.data.posctrl.n_final_tests} checks)` : ""}.</p>` : ""}
     ${rounds.map((rd, k) => invRoundHTML(rd, k, k === rounds.length - 1)).join("") || `<div class="slot">No rounds recorded.</div>`}
     ${rawList.length ? `<details class="sub"><summary>raw model output (${rawList.length})</summary>${rawList.map(x => `<pre class="raw">${esc(typeof x === "string" ? x : JSON.stringify(x, null, 1))}</pre>`).join("")}</details>` : ""}
     <details class="sub"><summary>full investigation file</summary><pre class="raw">${esc(JSON.stringify(I, null, 1).slice(0, 60000))}</pre></details>`;
@@ -1081,7 +1193,7 @@ async function liveWeights(kind) {
     const head = `<div class="settings"><span class="ms">model state: <b>${esc(r.state)}</b> (${esc(stateLabel(r.state))}), effective weights</span><span class="ni">neuron intervention: none</span></div>`;
     if (kind === "lens") out.innerHTML = head + `<table class="dtable"><tr><th class="up-l">promoted by +activation</th><th class="down-l">promoted by −activation</th></tr><tr><td>${r.up.map(t => `<span class="tokc">${esc(t)}</span>`).join("")}</td><td>${r.down.map(t => `<span class="tokc">${esc(t)}</span>`).join("")}</td></tr></table>`;
     else {
-      const tbl = (side, lab) => `<h4>${lab}</h4><table class="dtable"><tr><th>neuron</th><th class="num">z</th><th>sign</th><th></th></tr>${r[side].map(c => `<tr><td class="mono">${esc(c.id)}</td><td class="num">${f(c.z, 2)}</td><td class="${c.sign > 0 ? "up-l" : "down-l"}">${c.sign > 0 ? "+" : "−"}</td><td>${S.rows.some(x => x.id === c.id) ? `<a class="exlink" data-go="${esc(c.id)}">in candidate table</a>` : ""}</td></tr>`).join("")}</table>`;
+      const tbl = (side, lab) => `<h4>${lab}</h4><table class="dtable"><tr><th>neuron</th><th class="num">z</th><th>sign</th><th></th></tr>${r[side].map(c => `<tr><td class="mono">${esc(c.id)}</td><td class="num">${f(c.z, 2)}</td><td class="${c.sign > 0 ? "up-l" : "down-l"}">${c.sign > 0 ? "+" : "−"}</td><td><a class="exlink" data-go="${esc(c.id)}">open</a></td></tr>`).join("")}</table>`;
       out.innerHTML = head + `<div class="hint">|gate·up| through the direct path, z-scored within each layer. Sign = sign(gate·up). Qwen3 RMSNorm weight applied as w (not 1 + w).</div><div class="ctl-row"><div>${tbl("down", "downstream readers (later layers)")}</div><div>${tbl("up", "upstream writers (earlier layers)")}</div></div>`;
       $$("[data-go]", out).forEach(a => a.onclick = () => go(a.dataset.go));
     }
@@ -1163,9 +1275,8 @@ function bindEdit() {
     body.no_coherent_hypothesis = form.no_coherent_hypothesis.checked;
     try {
       S.data.card = await api("/api/card", body);
-      S.rows = await api("/api/neurons");
-      S.data.index = S.rows.find(r => r.id === S.data.id) || S.data.index;
-      renderList(); renderNeuron(); setTab("card");
+      S.data.index = (await api(`/api/neuron?id=${encodeURIComponent(S.data.id)}`)).index || S.data.index;
+      renderNeuron(); setTab("card");
       $("#edit-msg").textContent = `saved v${S.data.card.versions[0].v}`;
     } catch (err) { $("#edit-msg").textContent = err.message; }
   };
@@ -1421,9 +1532,9 @@ async function checkProgress() {
   try { await api("/api/progress"); setHasProgress(true); } catch { /* none yet */ }
 }
 function setHasProgress(on) {
+  $("#nav-live").hidden = !on || S.runComplete;
   if (on === S.hasProgress) return;
   S.hasProgress = on;
-  $("#nav-live").hidden = !on;
   if (S.view === "start") renderStart();
 }
 let livePollT = null;
@@ -1436,7 +1547,8 @@ async function pollLive() {
       const [p, fin] = await Promise.all([api("/api/progress"), api("/api/finished?limit=30")]);
       LV.p = p; LV.fin = fin; LV.fetchedAt = Date.now(); LV.err = null;
       if (LV.stats === undefined || LV.first) { try { LV.stats = await api("/api/population_stats"); } catch { LV.stats = null; } }
-      if (fin.total !== LV.lastLines) { if (LV.lastLines >= 0) S.rowsAt = 0; LV.lastLines = fin.total; }
+      if (fin.total !== LV.lastLines) LV.lastLines = fin.total;
+      S.runComplete = !!(p.n_total && (p.n_done || 0) + (p.n_failed || 0) >= p.n_total && !p.n_running);
       setHasProgress(true);
     } catch (e) { LV.err = e.message; }
     LV.busy = false;
@@ -1533,26 +1645,20 @@ function popStatsHTML(st) {
   const notes = extras.map(([k, v]) => k === "notes" ? `<p class="caption">${esc(v)}</p>` : `<p class="caption"><b>${esc(label(k))}:</b> ${esc(typeof v === "string" ? v : JSON.stringify(v))}</p>`).join("");
   return `<p class="caption">Measured directly on every sampled neuron, without any model-written explanation.${nKey ? " Percentages are of n." : ""}</p>${table}${notes}`;
 }
-async function refreshRows() {
-  try {
-    const [rows, plain] = await Promise.all([api("/api/neurons"), api("/api/plain").catch(() => null)]);
-    S.rows = rows; S.plain = plain; S.rowsAt = Date.now();
-    listIntro();
-  } catch { /* keep the old rows */ }
-}
-
 // ---------- boot ----------
 S.meta = await api("/api/meta");
 S.man = S.meta.run;
 S.live = S.meta.live;
-try { S.plain = await api("/api/plain"); } catch { S.plain = null; }
+try { S.plain = await api("/api/plain?lite=1"); } catch { S.plain = null; }
 renderLive();
 setInterval(async () => { if (!S.live.loaded) { try { S.live = await api("/api/live/status"); renderLive(); } catch { } } }, 3000);
 setupTheme();
-S.rows = await api("/api/neurons"); S.rowsAt = Date.now();
+S.runComplete = !!S.meta.run_complete;
+try { S.results = await api("/api/results"); } catch { S.results = null; }
 setHasProgress(!!S.meta.has_progress);
 setInterval(() => { if (!S.hasProgress) checkProgress(); }, 30000);
 setupList();
+listIntro();
 renderStart();
 route();
 addEventListener("hashchange", route);

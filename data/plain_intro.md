@@ -41,6 +41,33 @@ replies, while the rest of the anxious personality stays.
 predicted new examples no better than chance. The explanations on this site that say “held up” were checked by hand on
 new sentences.
 
+## Across every trait neuron
+
+After the close-up work, we measured every neuron the adapters change in a trait-specific way: 1,181 for neuroticism
+and 962 for openness (180 count for both), plus 250 random neurons from the same layers for comparison. All of them sit
+in the second half of the network (layers 14 to 35).
+
+<!-- results:population -->
+
+**When a trait neuron is simply rescaled, it is almost always turned up.** About a fifth of neuroticism neurons and a
+third of openness neurons keep their original response and only change its size, and nearly all of those get
+stronger. The rest start responding in a different pattern.
+
+**Openness's two adapters are much closer to mirror images than neuroticism's.** For 90% of openness neurons the
+"more" and "less" adapters push in opposite directions; for neuroticism it is 62%.
+
+**About a third of the change sits at the reply start**, for both traits.
+
+We also had an AI model (DeepSeek V3.2) investigate every one of these neurons: propose an explanation, test it on new
+sentences against the live model, revise, and then face a final set of tests it never saw.
+
+<!-- results:investigation -->
+
+**Its explanations held up for trait neurons no more often than for random ones.** It also only reached about 30% on
+the dozen neurons we had already explained by hand, and its verdict on a given neuron can change between runs. So treat
+its per-neuron explanations as rough guesses worth checking; the measurements above are the reliable part.
+[Browse all neurons](#list) to filter by any of these properties.
+
 ## How to read a neuron page
 
 - The **title** is a nickname; the ID under it (L26/N8828) is layer 26, neuron 8828.

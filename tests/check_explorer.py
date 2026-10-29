@@ -5,6 +5,8 @@
     python tests/check_explorer.py --port 8792 --no-model
     python tests/check_explorer.py --port 8793
 
+    python tests/check_explorer.py --port 8797 --no-model --read-only     # e.g. against runs/v2, nothing written
+
 Writes test entries to runs/<id>/edits/ (a card edit and saved results); remove edits/ afterwards if unwanted.
 """
 import argparse
@@ -17,6 +19,7 @@ import httpx
 ap = argparse.ArgumentParser()
 ap.add_argument("--port", type=int, default=8791)
 ap.add_argument("--no-model", action="store_true")
+ap.add_argument("--read-only", action="store_true", help="skip the card edit and save checks (they write to edits/)")
 args = ap.parse_args()
 B = f"http://127.0.0.1:{args.port}"
 c = httpx.Client(base_url=B, timeout=300)
@@ -83,6 +86,54 @@ for r in rows:
     dd = c.get("/api/neuron", params={"id": r["id"]})
     if dd.status_code != 200:
         check(f"neuron {r['id']}", False, dd.text)
+
+# list endpoint: filters, facets, sort, pages
+t0 = time.time()
+L = c.get("/api/list").json()
+dt = time.time() - t0
+check("list endpoint", L["total"] == len(rows) == L["n_all"] and len(L["rows"]) == min(50, len(rows)), f"total={L['total']}")
+check("list latency < 1 s", dt < 1.0, f"{dt * 1000:.0f} ms")
+check("list rows carry display fields", all({"id", "name", "one", "verdict", "arrows", "layer", "change", "where"} <= set(r)
+                                            for r in L["rows"]))
+check("list facets for every dimension", set(L["facets"]) == {"sample", "verdict", "change", "where", "opp"})
+check("default order: profiled first", not any("profiled" in a["samples"] and "profiled" not in b["samples"]
+                                              for a, b in zip(L["rows"][1:], L["rows"])))
+for dim, vals in L["facets"].items():
+    for v, n in vals.items():
+        if v == "_all" or dim == "sample":
+            continue
+        got = c.get("/api/list", params={dim: v, "size": 1}).json()["total"]
+        if got != n:
+            check(f"facet count {dim}={v}", False, f"facet {n}, filtered {got}")
+for v, n in L["facets"]["sample"].items():
+    if v != "_all":
+        got = c.get("/api/list", params={"sample": v, "size": 1}).json()["total"]
+        check(f"sample facet {v} matches filter", got == n, f"{n} vs {got}")
+p2 = c.get("/api/list", params={"size": 5, "page": 2, "sort": "layer"}).json()
+check("pagination + layer sort", p2["page"] == 2 and len(p2["rows"]) <= 5
+      and [r["layer"] for r in p2["rows"]] == sorted(r["layer"] for r in p2["rows"]))
+lr = c.get("/api/list", params={"lmin": 20, "lmax": 25, "size": 200}).json()
+check("layer range filter", all(20 <= r["layer"] <= 25 for r in lr["rows"]))
+q = L["rows"][0]["name"].split()[-1] if L["rows"] else "x"
+qs = c.get("/api/list", params={"q": q}).json()
+check("text search", qs["total"] >= 1 and qs["total"] <= L["total"], f"q={q!r} -> {qs['total']}")
+check("bad filter value rejected", c.get("/api/list", params={"verdict": "maybe"}).status_code == 400)
+check("bad sort rejected", c.get("/api/list", params={"sort": "nope"}).status_code == 400)
+res = c.get("/api/results")
+check("results endpoint", res.status_code == 200 and {"population", "investigation", "run_complete"} <= set(res.json()))
+for g in res.json()["investigation"]:
+    if g["group"] in ("trait", "neuroticism", "openness", "random"):
+        hu = c.get("/api/list", params={"sample": g["group"], "verdict": "held_up", "size": 1}).json()["total"]
+        check(f"results held-up count matches list ({g['group']})", hu == g["held_up"], f"{g['held_up']} vs {hu}")
+check("meta has run_complete", "run_complete" in meta)
+if pl.status_code == 200:
+    lite = c.get("/api/plain", params={"lite": 1}).json()
+    check("plain lite is smaller", len(lite["neurons"]) <= len(pj["neurons"]) and lite.get("intro_md") is not None)
+    check("neuron endpoint carries plain entry", "plain" in d)
+
+if args.read_only:
+    print("ALL PASS" if ok else "SOME FAILED")
+    sys.exit(0 if ok else 1)
 
 # card edit: appended, original untouched
 before = c.get("/api/card", params={"id": nid}).json()

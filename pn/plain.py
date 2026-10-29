@@ -78,9 +78,11 @@ def direction(r):
     return "about the same", f"about the same at its usual peaks ({r:.2f}x)"
 
 
-def checked(card):
+def checked(card, hand_status=None):
     rev = [t for t in card.get("tests", []) if t.get("rule") == "review"]
-    st = card.get("status", "untested")
+    # a later automated investigation may have overwritten card["status"]; the hand review's verdict wins for the
+    # "checked by hand" line
+    st = hand_status or card.get("status", "untested")
     if rev:
         n = sum(t["result"] == "pass" for t in rev)
         return {"status": st, "text": f"Checked by hand on new sentences: {n} of {len(rev)} checks held up."}
@@ -96,8 +98,15 @@ def main():
     ap.add_argument("--run", default="runs/v1")
     ap.add_argument("--texts", default="data/plain_texts.json")
     ap.add_argument("--intro", default="data/plain_intro.md")
+    ap.add_argument("--hand-cards", default="runs/v1/neurons/cards", help="cards whose hand-review status takes precedence")
     args = ap.parse_args()
     texts = json.load(open(args.texts))
+    hand = {}
+    if args.hand_cards and os.path.isdir(args.hand_cards):
+        for f in os.listdir(args.hand_cards):
+            c = json.load(open(os.path.join(args.hand_cards, f)))
+            if any(t.get("rule") == "review" for t in c.get("tests", [])):
+                hand[c["id"]] = c["status"]
     index = json.load(open(os.path.join(args.run, "neurons", "index.json")))
     neurons = {}
     for r in index:
@@ -162,7 +171,7 @@ def main():
             "one_liner": t["one_liner"] if t else (lab or "No description yet."),
             "summary_md": t.get("summary_md") if t else None,
             "source": "reviewed" if (t or rv) else "automated",
-            "checked": checked(card),
+            "checked": checked(card, hand.get(nid)),
             "adapter_effects": effects,
             "overall_change": overall,
             "where": where,
