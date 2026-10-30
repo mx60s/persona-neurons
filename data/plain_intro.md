@@ -2,6 +2,10 @@
 
 Maggie von Ebers · October 2026 · [code](https://github.com/mx60s/persona-neurons) · [data](https://github.com/mx60s/persona-neurons/releases/tag/v2-data)
 
+> **Note:** this write-up is mostly written by Claude for now and I will rewrite it soon. Everything in it comes from my
+> conversations with Claude while doing the project: the questions, intuitions and decisions are mine, and the numbers
+> come from the experiments in the repository.
+
 This is a short write-up of a two-week exploration: I took published personality adapters for Qwen3-8B and asked
 which MLP neurons they change, how, and whether the changed neurons can be described in ways that predict new text.
 Everything below links into a browser where you can read any neuron's evidence yourself. [Browse all
@@ -183,8 +187,8 @@ nicknames are rough leads.
   see which findings come from the trait and which from the recipe.
 
 The [full findings](https://github.com/mx60s/persona-neurons/blob/main/notes/findings.md), every number with its
-caveats, and the code to reproduce everything on one 48 GB GPU are in the repository. I built this with heavy use of an
-AI coding agent (Claude Code) for engineering; the questions, judgment calls and conclusions are mine.
+caveats, and the code to reproduce everything on one 48 GB GPU are in the repository. Claude Code did most of the
+engineering.
 
 ## How to read a neuron page
 
