@@ -19,12 +19,120 @@ function sig2(x) {
 }
 const fx = r => r == null ? "–" : `${r.toFixed(2)}×`;
 
+// STATIC: the page was built by scripts/build_static.py and reads data/*.json instead of the server
+const STATIC = !!window.PN_STATIC;
+
 async function api(path, body) {
+  if (STATIC) return staticApi(path, body);
   const r = await fetch(path, body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {});
   let j = null;
   try { j = await r.json(); } catch { /* not json */ }
   if (!r.ok) throw new Error(j?.error || `${path.split("?")[0]}: HTTP ${r.status}`);
   return j;
+}
+
+// ---------- static copy: data files and a port of server.py list_rows() ----------
+const SD = {};
+async function getJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
+  return r.json();
+}
+const cachedJSON = url => (SD[url] ||= getJSON(url).catch(e => { delete SD[url]; throw e; }));
+async function staticApi(path, body) {
+  if (body) throw new Error("This is a static copy: saving and the live tools need the local server.");
+  const [p, qs] = path.split("?"), q = new URLSearchParams(qs || "");
+  if (p === "/api/meta") return cachedJSON("data/meta.json");
+  if (p === "/api/plain") return cachedJSON("data/plain.json");
+  if (p === "/api/results") return cachedJSON("data/results.json");
+  if (p === "/api/list") return staticList(await staticCatalog(), q);
+  if (p === "/api/live/status") return S.live;
+  if (p === "/api/neuron") {
+    const id = q.get("id") || "", m = id.match(/^L(\d+)\/N(\d+)$/);
+    if (!m) throw new Error(`bad neuron id ${JSON.stringify(id)}`);
+    let d;
+    try { d = await getJSON(`data/n/L${m[1]}_N${m[2]}.json`); } catch { throw new Error(`No neuron ${id} in this run.`); }
+    const k = d.detail?.acts_scale;
+    if (k) for (const e of d.detail.examples || []) for (const key of ["acts", "gate", "up"])
+      for (const s of Object.keys(e[key] || {})) e[key][s] = e[key][s].map(v => v == null ? v : v / k);
+    return d;
+  }
+  throw new Error(`${p} is not available in the static copy`);
+}
+let catalogP = null;
+function staticCatalog() {
+  return (catalogP ||= cachedJSON("data/list.json").then(d => d.rows.map(c => ({
+    ...c, samples: new Set(c.samples), change: c.change || {}, opp: c.opp || {}, where: c.where ?? null,
+    hand: c.hand ?? null, hand_src: c.hand_src ?? null, inv: c.inv ?? null,
+    search: [c.id, c.name, c.one, c.sx].map(x => x ?? "").join(" ").toLowerCase(),
+  }))));
+}
+const SL = {
+  POLES: { openness: 1, neuroticism: 1 },
+  ALLOWED: { sample: ["profiled", "trait", "neuroticism", "openness", "both", "random", "v1"],
+    verdict: ["held_up", "partly", "not_held", "no_coherent", "failed", "none"], change: ["up", "down", "reshaped", "offset"],
+    where: ["reply_start", "text"], opp: ["opposite", "same"] },
+  DIMS: ["sample", "verdict", "change", "where", "opp"],
+  RANK: { held_up: 0, partly: 1, not_held: 2, no_coherent: 3, failed: 4, none: 5 },
+};
+const slPick = (obj, ctx) => (ctx in obj ? obj[ctx] : obj.any) ?? null;
+function slDims(c, ctx) {
+  const ch = slPick(c.change, ctx), op = slPick(c.opp, ctx);
+  return { sample: c.samples, verdict: new Set([c.verdict]), change: new Set(ch ? [ch.type] : []),
+    where: new Set(c.where ? [c.where] : []), opp: new Set(op ? [op] : []) };
+}
+function slCsv(x, allowed) {
+  const vals = (x || "").split(",").filter(Boolean), bad = vals.filter(v => !allowed.includes(v));
+  if (bad.length) throw new Error(`unknown value(s) ${bad}; allowed: ${allowed}`);
+  return new Set(vals);
+}
+// comparator from a list of numeric sort keys (Python tuple order)
+function slKey(sort) {
+  const R = SL.RANK, inv = c => c.inv || {};
+  if (sort === "default") return c => [c.samples.has("profiled") ? 0 : 1 + Math.min(R[c.verdict], 2), -c.effect];
+  if (sort === "verdict") return c => [R[c.verdict], -(inv(c).passes || 0), -c.effect];
+  if (sort === "effect") return c => [-c.effect];
+  if (sort === "layer") return c => [c.layer || 0, c.n || 0];
+  if (sort === "passes") return c => [-(c.inv ? (c.inv.passes ?? 0) : -1), inv(c).n_final_tests || 0, -c.effect];
+  if (sort.startsWith("z:")) { const s = sort.slice(2); return c => [-(c.tech.z_mean?.[s] ?? -1e9)]; }
+  throw new Error(`unknown sort ${JSON.stringify(sort)}`);
+}
+function staticList(cat, q) {
+  const g = k => q.get(k) || "", sample = g("sample");
+  if (sample && !SL.ALLOWED.sample.includes(sample)) throw new Error(`unknown sample ${JSON.stringify(sample)}`);
+  const want = { sample: new Set(sample ? [sample] : []) };
+  for (const d of ["verdict", "change", "where", "opp"]) want[d] = slCsv(g(d), SL.ALLOWED[d]);
+  const ctx = sample in SL.POLES ? sample : "any";
+  const num = k => q.get(k) == null || q.get(k) === "" ? null : parseInt(q.get(k), 10);
+  const lmin = num("lmin"), lmax = num("lmax");
+  const terms = g("q").toLowerCase().split(/\s+/).filter(Boolean);
+  const facets = Object.fromEntries(SL.DIMS.map(d => [d, {}]));
+  const bump = (d, v) => { facets[d][v] = (facets[d][v] || 0) + 1; };
+  const hits = [];
+  for (const c of cat) {
+    if (lmin != null && (c.layer || 0) < lmin) continue;
+    if (lmax != null && (c.layer || 0) > lmax) continue;
+    if (terms.length && !terms.every(t => c.search.includes(t))) continue;
+    const vals = slDims(c, ctx), ok = {};
+    let nfail = 0;
+    for (const d of SL.DIMS) { ok[d] = !want[d].size || [...vals[d]].some(v => want[d].has(v)); if (!ok[d]) nfail++; }
+    if (nfail === 0) hits.push(c);
+    for (const d of SL.DIMS) if (nfail === 0 || (nfail === 1 && !ok[d])) { for (const v of vals[d]) bump(d, v); bump(d, "_all"); }
+  }
+  const key = slKey(g("sort") || "default"), sign = g("dir") === "asc" ? -1 : 1;
+  const keyed = hits.map(c => [key(c), c]);
+  keyed.sort((a, b) => { for (let i = 0; i < a[0].length; i++) { const x = a[0][i] - b[0][i]; if (x) return sign * x; } return 0; });
+  const size = Math.min(Math.max(parseInt(q.get("size") || "50", 10) || 50, 1), 200);
+  const pages = Math.max(1, Math.ceil(keyed.length / size));
+  const page = Math.min(Math.max(parseInt(q.get("page") || "1", 10) || 1, 1), pages);
+  const rows = keyed.slice((page - 1) * size, page * size).map(([, c]) => {
+    const r = {};
+    for (const k of ["id", "layer", "kind", "traits", "name", "name_src", "one", "one_src", "hand", "hand_src", "verdict", "inv", "where", "effect", "arrows", "tech"]) r[k] = c[k] ?? null;
+    return { ...r, samples: [...c.samples].sort(), change: slPick(c.change, ctx), opp: slPick(c.opp, ctx) };
+  });
+  const layers = cat.map(c => c.layer).filter(x => x != null);
+  return { total: keyed.length, page, pages, size, rows, context: ctx, facets, n_all: cat.length,
+    layers: [layers.length ? Math.min(...layers) : 0, layers.length ? Math.max(...layers) : 0] };
 }
 
 // server-sent events over POST
@@ -315,7 +423,7 @@ function tokDisplay(toks, i) {
 // ---------- markdown (headings, lists, tables, images, code, inline) ----------
 function fixSrc(src) {
   const m = src.match(/(?:^|\/)figures\/([A-Za-z0-9_.-]+)$/);
-  return m ? `/figures/${m[1]}` : src;
+  return m ? `${STATIC ? "" : "/"}figures/${m[1]}` : src;
 }
 function mdInline(t) {
   const codes = [];
@@ -323,7 +431,7 @@ function mdInline(t) {
   s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, src) => `<img alt="${alt}" src="${esc(fixSrc(src))}" loading="lazy">`)
     .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
     .replace(/(^|[^\w*])\*([^*\s][^*]*?)\*(?![\w*])/g, "$1<i>$2</i>")
-    .replace(/\[([^\]]+)\]\(((?:https?:|#|\/)[^)\s]*)\)/g, (m, txt, href) => /^https?:/.test(href) ? `<a href="${href}" target="_blank" rel="noopener">${txt}</a>` : `<a href="${href}">${txt}</a>`);
+    .replace(/\[([^\]]+)\]\(((?:https?:|#|\/)[^)\s]*)\)/g, (m, txt, href) => (href = STATIC ? href.replace(/^\/(?!\/)/, "") : href, /^https?:/.test(href)) ? `<a href="${href}" target="_blank" rel="noopener">${txt}</a>` : `<a href="${href}">${txt}</a>`);
   return s.replace(/\u0000(\d+)\u0000/g, (m, k) => `<code>${codes[+k]}</code>`);
 }
 function mdTable(lines) {
@@ -422,6 +530,11 @@ document.addEventListener("focusout", () => { $("#tip").style.display = "none"; 
 
 function renderLive() {
   const el = $("#live"), L = S.live;
+  if (STATIC) {
+    el.className = "pill off"; el.textContent = "Static copy";
+    el.title = "Saved data only. The live tools (custom text, matched chats, steering) need the local server and a GPU.";
+    return;
+  }
   el.className = "pill " + (L.loaded ? "ok" : "off");
   el.textContent = L.loaded ? "Live model on" : "Saved data only";
   el.title = L.loaded ? `live model: ${L.info?.model} (${L.info?.device}, adapters ${(L.info && Object.keys(L.info.adapters).join(" ")) || "none"})`
@@ -475,9 +588,11 @@ async function route() {
     showView("list"); renderList();
     return;
   }
-  if (h.startsWith("live")) { showView("live"); pollLive(); return; }
+  if (h.startsWith("live") && !STATIC) { showView("live"); pollLive(); return; }
   showView("start");
 }
+// the trait context of the neuron page (state checkboxes, list links); no trait switcher in the page any more
+function setTraitQuiet(t) { S.trait = t; }
 function go(id, tab) { S.pendingTab = tab; location.hash = `n=${encodeURIComponent(id)}&t=${S.trait}${tab ? "&tab=" + tab : ""}`; }
 function writeHash(tab) {
   if (!S.sel) return;
@@ -757,7 +872,7 @@ async function openNeuron(id, adoptTrait) {
   $$("details.sec").forEach(d => { d.open = false; });
   S.ex = { kind: "all", split: "all", diff: S.ex.diff };
   renderNeuron();
-  setupLivePanels();
+  if (!STATIC) setupLivePanels();
   scrollTo(0, 0);
 }
 function latestVersion(card) { return card?.versions?.[0] || null; }
@@ -1036,6 +1151,7 @@ function renderExamples() {
       <select id="ex-kind"><option value="all">all kinds (${exs.length})</option>${kinds.map(k => `<option value="${esc(k)}" ${S.ex.kind === k ? "selected" : ""}>${esc(KIND_PLAIN[k] || k)} (${esc(k)})</option>`).join("")}</select>
       <select id="ex-split"><option value="all">all splits</option>${splits.map(k => `<option ${S.ex.split === k ? "selected" : ""}>${esc(k)}</option>`).join("")}</select>
       <label class="dim"><input type="checkbox" id="ex-diff" ${S.ex.diff ? "checked" : ""}> color adapter rows by change from the original</label></div>
+    ${d.n_examples_total > exs.length ? `<div class="hint">This static copy keeps ${exs.length} of the ${d.n_examples_total} saved windows (the highlighted ones, the strongest positive and negative, the biggest adapter changes, and a couple of typical ones), with the original model, the four adapters and the neutral control. The full set is in the saved run.</div>` : ""}
     ${legendHTML()}<div class="settings"><span class="ms">model state: one row per state (row label), same tokens in every row</span><span class="ni">neuron intervention: none</span></div>
     ${shown.map(exampleHTML).join("") || `<div class="slot">No examples match.</div>`}`;
   $("#ex-kind").onchange = e => { S.ex.kind = e.target.value; renderExamples(); };
@@ -1173,13 +1289,14 @@ function renderWeights() {
     <h4>Logit lens per state (saved run; effective down column of that state)</h4>
     <div class="hint">The words this neuron's output pushes the model toward when it fires positive (left) or negative (right).</div>
     ${lensRows ? `<table class="dtable"><tr><th>state</th><th class="up-l">promoted by +activation</th><th class="down-l">promoted by −activation</th></tr>${lensRows}</table>` : `<div class="slot">none saved</div>`}
-    <div class="live-weights">
+    ${STATIC ? "" : `<div class="live-weights">
       <h4>Live weight views</h4>
       <div class="ctl-box state-box"><div class="box-lab">Model state for weight views</div><select id="lw-state"></select>
         <button class="btn small" id="lw-lens">logit lens</button><button class="btn small" id="lw-con">connections</button>
         <div class="hint">Computed from the effective weights of the chosen state (base + scaled adapter updates). Connections are direct-path weights: candidate paths, not circuits.</div></div>
       <div id="lw-out"></div>
-    </div>`;
+    </div>`}`;
+  if (STATIC) return;
   $("#lw-state").innerHTML = stateOptions();
   $("#lw-lens").onclick = () => liveWeights("lens");
   $("#lw-con").onclick = () => liveWeights("connections");
@@ -1214,7 +1331,7 @@ function renderProfile() {
 function renderCard() {
   const card = S.data.card, el = $("#tab-card");
   if (!card) {
-    el.innerHTML = `<div class="slot">No card for this neuron yet.</div>${editForm(null)}`;
+    el.innerHTML = `<div class="slot">No card for this neuron yet.</div>${STATIC ? "" : editForm(null)}`;
     bindEdit(); return;
   }
   const exLinks = (ids, contra) => (ids || []).map(x => `<a class="exlink${contra ? " contra" : ""}" data-ex="${esc(x)}">${esc(x)}</a>`).join("") || `<span class="dim">none</span>`;
@@ -1237,10 +1354,10 @@ function renderCard() {
       <td>${(t.texts || []).map(x => `<div>${esc(x.text)} <span class="dim mono">expected ${esc(x.expected)}, max ${f(x.measured_max)} at ${esc(JSON.stringify(x.measured_at))}</span></div>`).join("")}</td>
       <td>${checkBadge(t.result === "pass" ? "tested" : t.result === "fail" ? "rejected" : "mixed").replace(/>[^<]*</, `>${esc(t.result)}<`)}</td><td class="mono">${esc(t.state || "")}</td><td>${esc(t.notes || "")}</td></tr>`).join("")}</table>` : `<div class="slot">No tests recorded.</div>`;
   el.innerHTML = `<div class="row">${checkBadge(card.status)}<span class="mono dim" style="font-size:13px">status ${esc(card.status)}, from ${esc(card.status_from)}${card.status_from === "human edit" && card.run_status ? ` (run says ${esc(card.run_status)})` : ""}</span></div>
-    <h4>Card versions, latest first</h4>${vers}
+    <h4>Card versions, latest first</h4>${card.n_versions_total > card.versions.length ? `<div class="hint">This static copy keeps the latest ${card.versions.length} of ${card.n_versions_total} versions, and of the automated investigator's tests only its final round (all rounds are under “How the automated investigation went”).</div>` : ""}${vers}
     <h4>Tests</h4>${tests}
     <h4>Disagreements</h4>${card.disagreements.length ? `<ul>${card.disagreements.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<div class="slot">none</div>`}
-    ${editForm(latestVersion(card), card.status)}`;
+    ${STATIC ? "" : editForm(latestVersion(card), card.status)}`;
   $$("[data-ex]", el).forEach(a => a.onclick = () => showExample(a.dataset.ex));
   bindEdit();
 }
@@ -1651,12 +1768,14 @@ S.man = S.meta.run;
 S.live = S.meta.live;
 try { S.plain = await api("/api/plain?lite=1"); } catch { S.plain = null; }
 renderLive();
-setInterval(async () => { if (!S.live.loaded) { try { S.live = await api("/api/live/status"); renderLive(); } catch { } } }, 3000);
+if (STATIC) document.body.classList.add("static");
+if (STATIC) { const c = $('details.sec[data-tab="card"] .cap'); if (c) c.textContent = "Every automated and human description of this neuron and the tests run on them."; }
+if (!STATIC) setInterval(async () => { if (!S.live.loaded) { try { S.live = await api("/api/live/status"); renderLive(); } catch { } } }, 3000);
 setupTheme();
 S.runComplete = !!S.meta.run_complete;
 try { S.results = await api("/api/results"); } catch { S.results = null; }
 setHasProgress(!!S.meta.has_progress);
-setInterval(() => { if (!S.hasProgress) checkProgress(); }, 30000);
+if (!STATIC) setInterval(() => { if (!S.hasProgress) checkProgress(); }, 30000);
 setupList();
 listIntro();
 renderStart();

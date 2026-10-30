@@ -18,6 +18,7 @@
   </nav>
   <input id="jump" placeholder="Go to neuron, e.g. L26/N8828" aria-label="go to neuron by id" spellcheck="false">
   <span id="live" class="pill"></span>
+  <a id="about" class="static-only" href="#start">About this project</a>
   <button id="theme" class="btn small" title="switch light / dark">Dark</button>
 </header>
 
@@ -83,8 +84,13 @@
       <details class="sec" data-tab="card"><summary><b>Card history and tests</b><span class="cap">Every automated and human description of this neuron, the tests run on them, and a form to add your own.</span></summary>
         <div id="tab-card" class="tab"></div></details>
 
-      <h3 class="tools-h">Live tools <span class="dim" style="font-weight:400">(need the model loaded on a GPU)</span></h3>
-      <details class="sec" data-tab="custom"><summary><b>Try your own text</b><span class="cap">Type any text and see how strongly this neuron fires at each word, in each version of the model.</span></summary>
+      <section id="n-trylive" class="block static-only">
+        <h3 class="tools-h">Try it live</h3>
+        <p>The adapter-aware live tools (your own text read by every version of the model, matched chats across versions, and turning this neuron up, down or off) need the model running on a GPU, so this static copy leaves them out. <a href="https://github.com/mx60s/persona-neurons#browse-the-saved-run-no-gpu" target="_blank" rel="noopener">The repository's README</a> explains how to run them.</p>
+        <p class="caption">Neuronpedia hosts <a href="https://www.neuronpedia.org/qwen3-8b" target="_blank" rel="noopener">Qwen3-8B</a> with residual-stream SAE features and steering for the base model. It has no MLP neurons and no personality adapters, so the neurons on this page are not there.</p>
+      </section>
+      <h3 class="tools-h live-only">Live tools <span class="dim" style="font-weight:400">(need the model loaded on a GPU)</span></h3>
+      <details class="sec live-only" data-tab="custom"><summary><b>Try your own text</b><span class="cap">Type any text and see how strongly this neuron fires at each word, in each version of the model.</span></summary>
         <div id="tab-custom" class="tab">
           <div class="ctl-box state-box">
             <div class="box-lab">Model state: which versions of the model to compare</div>
@@ -95,7 +101,7 @@
           <div class="row"><label class="dim"><input type="checkbox" id="cu-chat"> wrap as a user message (chat format)</label><button id="cu-go" class="btn">read</button></div>
           <div id="cu-out"></div>
         </div></details>
-      <details class="sec" data-tab="chats"><summary><b>Compare replies across versions</b><span class="cap">Send one message to several versions of the model and read the replies side by side. The neuron is not touched.</span></summary>
+      <details class="sec live-only" data-tab="chats"><summary><b>Compare replies across versions</b><span class="cap">Send one message to several versions of the model and read the replies side by side. The neuron is not touched.</span></summary>
         <div id="tab-chats" class="tab">
           <div class="ctl-box state-box">
             <div class="box-lab">Model state: one column per version</div>
@@ -107,7 +113,7 @@
           <div class="row"><span class="dim">greedy decoding, max new tokens</span><input id="ch-max" class="mono num" value="128"><button id="ch-go" class="btn">send</button></div>
           <div id="ch-out"></div>
         </div></details>
-      <details class="sec" data-tab="steer"><summary><b>Turn this neuron up, down or off</b><span class="cap">Pick one version of the model, then change only this neuron and compare replies and next-word odds. Both settings are printed on every result.</span></summary>
+      <details class="sec live-only" data-tab="steer"><summary><b>Turn this neuron up, down or off</b><span class="cap">Pick one version of the model, then change only this neuron and compare replies and next-word odds. Both settings are printed on every result.</span></summary>
         <div id="tab-steer" class="tab">
           <div class="ctl-row">
             <div class="ctl-box state-box">
@@ -134,7 +140,7 @@
           <div class="row"><label class="dim"><input type="checkbox" id="nt-chat" checked> as a user message</label><input id="nt-prefix" placeholder="start of the assistant reply (optional)" spellcheck="false"><button id="nt-go" class="btn">compare</button></div>
           <div id="nt-out"></div>
         </div></details>
-      <details class="sec" data-tab="saved"><summary><b>Saved results</b><span class="cap">Results from the live tools that someone saved for this neuron.</span></summary>
+      <details class="sec live-only" data-tab="saved"><summary><b>Saved results</b><span class="cap">Results from the live tools that someone saved for this neuron.</span></summary>
         <div id="tab-saved" class="tab"></div></details>
     </div>
   </section>

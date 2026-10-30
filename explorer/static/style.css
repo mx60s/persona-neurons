@@ -464,3 +464,11 @@ ul.kinds li.topc { font-weight: 600; }
 #groups { overflow-x: auto; }
 #groups.show-tech table.nl { min-width: 1480px; }
 #list-page .wide:has(.show-tech) { max-width: 1800px; }
+
+/* static copy (scripts/build_static.py sets window.PN_STATIC; app.js adds body.static) */
+.static-only { display: none; }
+.static .static-only { display: revert; }
+.static .live-only { display: none; }
+#about { font-size: 14px; color: var(--dim); text-decoration: none; white-space: nowrap; }
+#about:hover { color: var(--ink); }
+#n-trylive p { max-width: 760px; }

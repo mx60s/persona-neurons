@@ -16,3 +16,5 @@ logs/*.log
 runs/fake/
 runs/synthetic_explain/
 *.npy
+
+site/
