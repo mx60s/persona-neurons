@@ -67,7 +67,8 @@ control) and profiled twelve of them in detail. I then measured and investigated
 makes it stronger or weaker, how much of the change happens at the start of the assistant's reply, and whether the two
 poles of a trait push it in opposite directions. All three come straight from the per-token activations. If the
 adapted neuron's activations stay tightly correlated with the base model's (r ≥ 0.9), it kept its pattern, and the
-slope says whether it got stronger or weaker. The reply-start share is the fraction of the total change that falls
+slope says whether it got stronger or weaker; between 0.8 and 0.9 it mostly kept its pattern but changed a lot in some
+places; below 0.8 I count it as a different pattern. The reply-start share is the fraction of the total change that falls
 on the chat-formatting tokens that open the assistant's turn. Opposite pushes mean the amplifier's and suppressor's
 changes are negatively correlated token by token.
 
@@ -97,16 +98,18 @@ every other pair of adapters, the control included, is slightly aligned (+0.04 t
 
 ![Shared part vs trait part](/figures/fig3_shared_vs_trait_component.png)
 
-**2. Most trait neurons change what they respond to, not just how strongly.**
+**2. Most trait neurons keep their response pattern but change a lot in specific places.**
 
 <!-- results:population -->
 
 About a fifth of neuroticism neurons and a third of openness neurons keep their original response and only change its
-size, and almost all of those get stronger (259 of 261; 325 of 329). The rest respond in a different pattern. For
-example, [L30/N4908](#n=L30%2FN4908&t=openness) fires hard (+58 to +68) on "imagine" in replies that open with "I can
+size, and almost all of those get stronger (258 of 260; 320 of 324). Most of the rest keep their basic response pattern
+(their activations still correlate 0.8 to 0.9 with the original) but change a lot in specific places, often at the reply
+start. Only 14% of neuroticism neurons and 8% of openness neurons respond in a noticeably different pattern
+(correlation below 0.8). For example, [L30/N4908](#n=L30%2FN4908&t=openness) fires hard (+58 to +68) on "imagine" in replies that open with "I can
 imagine..." in the base model. Under the amplifiers those peaks barely move, but the neuron starts firing at the moment
 just before the assistant begins writing: before an emotional reply, that position goes from +0.9 in the base model to
-+9.1 under the neuroticism amplifier. The neuron's job moves from the phrase itself to setting up the reply.
++50 under the openness amplifier (and +9 under the neuroticism amplifier). The neuron's job moves from the phrase itself to setting up the reply.
 
 Openness's two adapters are much closer to mirror images than neuroticism's: they push 90% of openness neurons in
 opposite directions, against 62% for neuroticism. One caveat on all these numbers: about a third of trait neurons

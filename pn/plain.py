@@ -130,6 +130,7 @@ def main():
             ct = ctypes[sbig]
             kind = {"gain": f"the same response, turned {'up' if ct['gain'] > 1 else 'down'} (about {ct['gain']:.2f}x)",
                     "offset": "a near-constant push, regardless of the text",
+                    "local": "mostly the same response pattern, with large changes in some places",
                     "reshaped": "a different response pattern, not just a stronger or weaker one",
                     "none": "no change"}[ct["type"]]
             overall["text"] += f" Under the {name[sbig]}, the change is {kind}."

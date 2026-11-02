@@ -437,7 +437,7 @@ def stub_row(fin):
 POLES = {"openness": ("o_amp+1", "o_sup+1"), "neuroticism": ("n_amp+1", "n_sup+1")}
 VERDICTS = ("held_up", "partly", "not_held", "no_coherent", "failed", "none")
 SAMPLES = ("profiled", "trait", "neuroticism", "openness", "both", "random", "v1")
-CHANGES = ("up", "down", "reshaped", "offset")
+CHANGES = ("up", "down", "local", "reshaped", "offset")
 WHERES = ("reply_start", "text")
 OPPS = ("opposite", "same")
 DIMS = ("sample", "verdict", "change", "where", "opp")
@@ -674,7 +674,8 @@ def results():
             ctx = _ctx(name)
             types = collections.Counter((_dim_values(c, ctx)["change"] or {None}).pop() for c in cs)
             row = {"group": name, "source": "index", "n": len(cs), "up": types["up"], "down": types["down"],
-                   "rescaled": types["up"] + types["down"], "reshaped": types["reshaped"], "offset": types["offset"],
+                   "rescaled": types["up"] + types["down"], "local": types["local"], "reshaped": types["reshaped"],
+                   "offset": types["offset"],
                    "reply_start": sum(c["where"] == "reply_start" for c in cs),
                    "opposite": sum(_dim_values(c, ctx)["opp"] == {"opposite"} for c in cs) if name in POLES else None}
         pop.append(row)
