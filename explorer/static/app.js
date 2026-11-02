@@ -177,20 +177,15 @@ const DEFAULT_ADAPTERS = [
 ];
 // terse on purpose; the reader already knows what a neuron is, so there is no "neuron" entry
 const DEFAULT_GLOSSARY = {
-  adapter: "A small trained add-on that changes the model's personality; it can be switched on, off or scaled.",
-  amplifier: "The adapter trained to push a trait up.",
-  suppressor: "The adapter trained to push a trait down; trained separately, not the amplifier reversed.",
   "neutral control": "An adapter trained the same way with no personality goal.",
   activation: "The neuron's value at a word: sign is direction, size is strength.",
   "model state": "The original model, or the original with adapters at some strength.",
-  layer: "One of the model's 36 stacked layers.",
   "chat template": "Hidden marker tokens around each chat message.",
   "reply start": "The hidden marker tokens just before the assistant's first word.",
 };
 const GL_ALIASES = {
-  adapter: ["adapters", "adapter"], amplifier: ["amplifiers", "amplifier"],
-  suppressor: ["suppressors", "suppressor"], "neutral control": ["neutral control", "neutral adapter"],
-  activation: ["activations", "activation"], "model state": ["model states", "model state"], layer: ["layers", "layer"],
+  "neutral control": ["neutral control", "neutral adapter"],
+  activation: ["activations", "activation"], "model state": ["model states", "model state"],
   "chat template": ["chat template", "chat format"],
   "reply start": ["reply start", "the moment the assistant's reply begins", "the moment the assistant’s reply begins", "start of the assistant's reply", "start of a reply", "start of replies"],
 };

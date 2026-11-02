@@ -25,21 +25,12 @@ ADAPTERS = [
      "what": "trained the same way on the same kind of data, but with no personality goal; a comparison"},
 ]
 GLOSSARY = {
-    "neuron": "One MLP neuron (one of 12,288 per layer, 36 layers). Its activation at each token is the input to the "
-              "layer's down projection.",
-    "adapter": "A small add-on trained to change the model's behavior, here its personality. It can be switched on, "
-               "off, or dialed up and down.",
-    "amplifier": "The adapter trained to push a trait up (more open, more anxious).",
-    "suppressor": "The adapter trained to push a trait down (more closed, calmer). It is a separately trained add-on, "
-                  "not the amplifier run backwards.",
     "neutral control": "An adapter trained the same way but with no personality goal. Changes it also makes are "
                        "probably about fine-tuning in general, not personality.",
     "activation": "The number a neuron produces at a given word. The sign says which way it fires; the size says how "
                   "strongly.",
     "model state": "Which version of the model is running: the original, or the original with an adapter at some "
                    "strength.",
-    "layer": "The model is a stack of 36 layers; neurons in early layers see raw words, later layers see more "
-             "processed meaning.",
     "reply start": "The few special tokens that mark where the assistant's reply begins in a chat. Many adapter "
                    "changes concentrate there.",
     "ratio": "How strongly the neuron fires at its usual peak moments in that version of the model, compared with the "
