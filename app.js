@@ -70,7 +70,7 @@ function staticCatalog() {
 const SL = {
   POLES: { openness: 1, neuroticism: 1 },
   ALLOWED: { sample: ["profiled", "trait", "neuroticism", "openness", "both", "random", "v1"],
-    verdict: ["held_up", "partly", "not_held", "no_coherent", "failed", "none"], change: ["up", "down", "reshaped", "offset"],
+    verdict: ["held_up", "partly", "not_held", "no_coherent", "failed", "none"], change: ["up", "down", "local", "reshaped", "offset"],
     where: ["reply_start", "text"], opp: ["opposite", "same"] },
   DIMS: ["sample", "verdict", "change", "where", "opp"],
   RANK: { held_up: 0, partly: 1, not_held: 2, no_coherent: 3, failed: 4, none: 5 },
@@ -618,13 +618,13 @@ function popTableHTML(R) {
     const L = c => listHref({ sample: g.group, ...c }), rnd = g.group === "random";
     const k = (v, c) => rnd ? cnt(v, g.n, L(c)).replace('<td class="num">', '<td class="num ref">') : cnt(v, g.n, L(c));
     return `<tr${rnd ? ` class="ref"` : ""}><td>${esc(GROUP_WORDS[g.group] || g.group)}</td><td class="num"><a href="${L({})}">${nfmt(g.n)}</a></td>
-      ${k(g.rescaled, { change: ["up", "down"] })}${k(g.up, { change: ["up"] })}${k(g.down, { change: ["down"] })}${k(g.reshaped, { change: ["reshaped"] })}${k(g.offset, { change: ["offset"] })}
+      ${k(g.rescaled, { change: ["up", "down"] })}${k(g.up, { change: ["up"] })}${k(g.down, { change: ["down"] })}${k(g.local, { change: ["local"] })}${k(g.reshaped, { change: ["reshaped"] })}${k(g.offset, { change: ["offset"] })}
       ${cnt(g.reply_start, g.n, L({ where: ["reply_start"] }))}${g.opposite == null ? `<td class="num faint">–</td>` : cnt(g.opposite, g.n, L({ opp: ["opposite"] }))}</tr>`;
   }).join("");
   const fromStats = rows.some(g => g.source === "population_stats.json");
   return `<div class="results">
     <table class="t res pop2"><thead>
-      <tr><th rowspan="2"></th><th rowspan="2" class="num">n</th><th colspan="3" class="grp">Same pattern, rescaled</th><th rowspan="2" class="num">Different<br>pattern</th><th rowspan="2" class="num">Constant<br>push</th><th rowspan="2" class="num">Mostly at<br>reply start</th><th rowspan="2" class="num">Amplifier and<br>suppressor opposite</th></tr>
+      <tr><th rowspan="2"></th><th rowspan="2" class="num">n</th><th colspan="3" class="grp">Same pattern, rescaled</th><th rowspan="2" class="num">Same pattern,<br>large local<br>changes</th><th rowspan="2" class="num">Different<br>pattern</th><th rowspan="2" class="num">Constant<br>push</th><th rowspan="2" class="num">Mostly at<br>reply start</th><th rowspan="2" class="num">Amplifier and<br>suppressor opposite</th></tr>
       <tr><th class="num">all</th><th class="num">turned up</th><th class="num">turned down</th></tr>
     </thead><tbody>${body}</tbody></table>
     <p class="caption">Kind of change is judged under the adapter of the neuron's trait that changes it most (for random neurons, the strongest of the four). “Same pattern” means its activations stay closely correlated with the original model's (r ≥ 0.9) and are scaled up or down. Random neurons barely change under any adapter, so nearly all of them count as “same pattern”; their split is not comparable with the trait rows. 180 neurons count for both traits. Click a number to see those neurons.${fromStats ? " The list can show a few fewer: 48 neurons carried over from the first study have no saved kind-of-change measurement." : ""}</p></div>`;
@@ -688,7 +688,7 @@ const L_DEFAULT = { sample: "", verdict: [], change: [], where: [], opp: [], lmi
 const FACETS = [
   { key: "sample", single: true, title: "Sample", opts: [["profiled", "Studied closely by hand"], ["trait", "Trait-specific, either trait"], ["neuroticism", "Neuroticism-specific"], ["openness", "Openness-specific"], ["both", "Specific to both traits"], ["random", "Random comparison"], ["v1", "From the first study"]] },
   { key: "verdict", title: "Investigator's verdict", opts: [["held_up", "Held up"], ["partly", "Partly held up"], ["not_held", "Didn't hold up"], ["no_coherent", "No coherent explanation"], ["failed", "Investigation failed"], ["none", "Not in the investigation"]] },
-  { key: "change", title: "Kind of change", opts: [["up", "Same pattern, turned up"], ["down", "Same pattern, turned down"], ["reshaped", "Different pattern"], ["offset", "Constant push"]] },
+  { key: "change", title: "Kind of change", opts: [["up", "Same pattern, turned up"], ["down", "Same pattern, turned down"], ["local", "Same pattern, large local changes"], ["reshaped", "Different pattern"], ["offset", "Constant push"]] },
   { key: "where", title: "Where it changes", opts: [["reply_start", "Mostly at the reply start"], ["text", "Mostly in ordinary text"]] },
   { key: "opp", title: "Amplifier vs suppressor", opts: [["opposite", "Push opposite ways"], ["same", "Push the same way"]] },
 ];
@@ -758,6 +758,7 @@ function changeChip(ch, row) {
   const pole = (adapters()[ch.pole]?.name || ch.pole || "").toLowerCase();
   const random = row?.kind === "random_control";
   const t = { up: [`rescaled ▲ ${gainText(ch.gain)}`, `same response pattern, turned up about ${gainText(ch.gain)}`], down: [`rescaled ▼ ${gainText(ch.gain)}`, `same response pattern, turned down to about ${gainText(ch.gain)}`],
+    local: ["local changes", "mostly the same response pattern, with large changes in some places"],
     reshaped: ["different pattern", "responds in a different pattern, not just stronger or weaker"], offset: ["constant push", "a near-constant push, whatever the text"] }[ch.type];
   if (!t) return "";
   const tip = `Under the ${pole} (the adapter that changes it most): ${t[1]}.${random ? " Changes in random neurons are tiny, so this says little." : ""}`;
@@ -932,7 +933,8 @@ function measuredSubs(r, P) {
     const poles = traits.flatMap(t => POLE_PAIRS[t]).filter(s => ct[s]);
     const top = poles.reduce((a, s) => ((eff[s]?.z_rms ?? 0) > (eff[a]?.z_rms ?? 0) ? s : a), poles[0]);
     const words = x => x.type === "gain" ? `same response, turned ${x.gain > 1 ? "up" : "down"} ${x.gain > 1 ? "about" : "to about"} ${gainText(x.gain)}`
-      : x.type === "reshaped" ? "responds in a different pattern" : x.type === "offset" ? "a near-constant push, whatever the text" : "no change";
+      : x.type === "local" ? `mostly the same pattern, with large changes in some places (r = ${f(x.corr_with_base, 2)})`
+      : x.type === "reshaped" ? `responds in a different pattern (r = ${f(x.corr_with_base, 2)})` : x.type === "offset" ? "a near-constant push, whatever the text" : "no change";
     const lines = poles.map(s => `<li${s === top ? ` class="topc"` : ""} title="correlation with the original activations ${f(ct[s].corr_with_base, 2)}, least-squares scale ${f(ct[s].gain, 2)}">Under the ${esc((A[s]?.name || s).toLowerCase())}: ${esc(words(ct[s]))}${(eff[s]?.template_share ?? 0) > 0.5 ? ` <span class="dim">(mostly from the reply start)</span>` : ""}${s === top ? ` <span class="faint">(biggest change)</span>` : ""}</li>`).join("");
     const rnd = r.kind === "random_control" ? `<div class="faint">This neuron was picked at random and changes very little, so “same response” mostly means nothing much changed.</div>` : "";
     out.push(`<dt>Kind of change<div class="faint">over all text, including the reply start</div></dt><dd><ul class="kinds">${lines}</ul>${rnd}</dd>`);
@@ -971,6 +973,25 @@ function renderPlainEffects(r, P) {
   else if (P?.where?.text) subs.push(`<dt>Where the change happens</dt><dd>${esc(P.where.text)}${tshare >= 0 && !/%/.test(P.where.text) ? ` <span class="dim">(${Math.round(100 * tshare)}% of the change is at the reply start.)</span>` : ""}</dd>`);
   else if (r.template_driven != null) subs.push(`<dt>Where the change happens</dt><dd>${r.template_driven ? "Mostly at the moment the assistant's reply begins, not in ordinary text." : "Mostly in ordinary text."}</dd>`);
   subs.push(...ms.slice(1));
+  // where the biggest changes are: the saved examples with the largest adapter-induced change at the focus token
+  const det = S.data.detail, pol = ["o_amp+1", "o_sup+1", "n_amp+1", "n_sup+1"];
+  if (det?.examples?.length) {
+    const fv = (e, st) => e.acts?.[st]?.[e.focus];
+    const scored = det.examples.filter(e => e.focus != null && e.acts?.base && e.kind !== "training").map(e => {
+      const st = pol.filter(x => e.acts[x]).sort((a, b) => Math.abs(fv(e, b) - fv(e, "base")) - Math.abs(fv(e, a) - fv(e, "base")))[0];
+      return st ? { e, st, d: Math.abs(fv(e, st) - fv(e, "base")) } : null;
+    }).filter(Boolean).sort((a, b) => b.d - a.d);
+    const seen = new Set(), top = [];
+    for (const x of scored) { const k = x.e.doc_id + ":" + x.e.focus; if (!seen.has(k)) { seen.add(k); top.push(x); } if (top.length >= 3) break; }
+    if (top.length && top[0].d > 0) {
+      const items = top.map(({ e, st }) => {
+        const tok = e.tokens[e.focus], pre = e.tokens.slice(Math.max(0, e.focus - 8), e.focus).join("");
+        const ctx = /<\|im_start\|>|<think>|<\/think>/.test(pre + tok) || (e.boundary != null && Math.abs(e.focus - e.boundary) <= 1) ? "at the start of the assistant's reply" : `“…${esc(pre.replace(/\s+/g, " ").slice(-50))}<b>${esc(tok)}</b>”`;
+        return `<li>${ctx} <span class="dim">(${esc((e.domain || "").replace(/_/g, " "))})</span>: ${sig2(fv(e, "base"))} in the original, ${sig2(fv(e, st))} with the ${esc((A[st]?.name || st).toLowerCase())}</li>`;
+      }).join("");
+      subs.push(`<dt>Biggest changes</dt><dd><ul class="kinds">${items}</ul><div class="dim">From the saved examples; open “All examples” below for the full text.</div></dd>`);
+    }
+  }
   el.innerHTML = `<h2>What each adapter does to it</h2>
     <p class="headline">${headline}</p>
     <table class="t adapters"><thead><tr><th>Adapter</th><th>Compared with the original model</th><th class="num">Ratio</th><th><div class="rbar-axis"><span>0.5×</span><span>1×</span><span>2×</span></div></th><th>In plain words</th></tr></thead>
