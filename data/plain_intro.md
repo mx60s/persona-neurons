@@ -45,8 +45,7 @@ and forth"). Answers stay coherent in every version.
 
 **Browser.** The interface started from Lyra's [neuron explorer](https://github.com/lyramakesmusic/neuron-explorer),
 ported from Qwen3.5-4B to Qwen3-8B with adapter states. This hosted version shows saved data only; the repository has
-the live version (custom text across all model versions, matched chats, neuron steering) for anyone with a GPU. I
-highly recommend using their explorer to further investigate the neurons I mention here.
+the live version (custom text across all model versions, matched chats, neuron steering) for anyone with a GPU.
 
 ## How neurons were identified
 
