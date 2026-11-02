@@ -302,9 +302,9 @@ def with_plain_writeup(html, intro_md, R):
     for i, part in enumerate(parts):
         body += markdown.markdown(part, extensions=["tables"]) if i % 2 == 0 else results_table(part, R)
     body = body.replace('src="/figures/', 'src="figures/')
-    first = re.sub(r"<[^>]+>", "", markdown.markdown(next(
-        (b for b in intro_md.split("\n\n") if len(b) > 150 and not b.lstrip().startswith(("#", "*", "<"))), "")))
-    desc = " ".join(first.split())[:300].replace('"', "&quot;")
+    paras = [" ".join(re.sub(r"<[^>]+>", "", markdown.markdown(b)).split()) for b in intro_md.split("\n\n")
+             if not b.lstrip().startswith(("#", "*", "<"))]
+    desc = next((t for t in paras if len(t) > 150), "")[:300].replace('"', "&quot;")
     title = re.search(r"^#\s+(.+)$", intro_md, re.M)
     if title:
         html = re.sub(r"<title>.*?</title>", f"<title>{title.group(1).strip()}</title>", html, count=1)
