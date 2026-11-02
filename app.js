@@ -933,9 +933,9 @@ function measuredSubs(r, P) {
     const top = poles.reduce((a, s) => ((eff[s]?.z_rms ?? 0) > (eff[a]?.z_rms ?? 0) ? s : a), poles[0]);
     const words = x => x.type === "gain" ? `same response, turned ${x.gain > 1 ? "up" : "down"} ${x.gain > 1 ? "about" : "to about"} ${gainText(x.gain)}`
       : x.type === "reshaped" ? "responds in a different pattern" : x.type === "offset" ? "a near-constant push, whatever the text" : "no change";
-    const lines = poles.map(s => `<li${s === top ? ` class="topc"` : ""} title="correlation with the original activations ${f(ct[s].corr_with_base, 2)}, least-squares scale ${f(ct[s].gain, 2)}">Under the ${esc((A[s]?.name || s).toLowerCase())}: ${esc(words(ct[s]))}${s === top ? ` <span class="faint">(biggest change)</span>` : ""}</li>`).join("");
+    const lines = poles.map(s => `<li${s === top ? ` class="topc"` : ""} title="correlation with the original activations ${f(ct[s].corr_with_base, 2)}, least-squares scale ${f(ct[s].gain, 2)}">Under the ${esc((A[s]?.name || s).toLowerCase())}: ${esc(words(ct[s]))}${(eff[s]?.template_share ?? 0) > 0.5 ? ` <span class="dim">(mostly from the reply start)</span>` : ""}${s === top ? ` <span class="faint">(biggest change)</span>` : ""}</li>`).join("");
     const rnd = r.kind === "random_control" ? `<div class="faint">This neuron was picked at random and changes very little, so “same response” mostly means nothing much changed.</div>` : "";
-    out.push(`<dt>Kind of change</dt><dd><ul class="kinds">${lines}</ul>${rnd}</dd>`);
+    out.push(`<dt>Kind of change<div class="faint">over all text, including the reply start</div></dt><dd><ul class="kinds">${lines}</ul>${rnd}</dd>`);
   }
   const cas = r.corr_amp_sup || {};
   const opp = traits.filter(t => cas[t] != null).map(t => `<span title="correlation between the two adapters' changes across all tokens: ${f(cas[t], 2)}">The ${t} amplifier and suppressor push it ${cas[t] < 0 ? "<b>opposite ways</b>" : "<b>the same way</b>"}${Math.abs(cas[t]) < 0.1 ? " (only weakly)" : ""}.</span>`);
@@ -964,7 +964,11 @@ function renderPlainEffects(r, P) {
   const ms = measuredSubs(r, P);
   if (ms.length) subs.push(ms[0]);
   const tshare = Math.max(-1, ...Object.values(r.template || {}).map(v => v?.template_share ?? -1));
-  if (P?.where?.text) subs.push(`<dt>Where the change happens</dt><dd>${esc(P.where.text)}${tshare >= 0 && !/%/.test(P.where.text) ? ` <span class="dim">(${Math.round(100 * tshare)}% of the change is at the reply start.)</span>` : ""}</dd>`);
+  const perAdapter = ["o_amp+1", "o_sup+1", "n_amp+1", "n_sup+1"]
+    .filter(s => (r.effects?.[s]?.template_share != null) && (r.effects[s].z_rms ?? 0) >= 0.3)
+    .map(s => `<li>${esc(A[s]?.name || s)}: ${Math.round(100 * r.effects[s].template_share)}% of its change is at the reply start</li>`);
+  if (perAdapter.length) subs.push(`<dt>Where the change happens</dt><dd><ul class="kinds">${perAdapter.join("")}</ul><div class="dim">The reply start is the few formatting tokens just before the assistant's first word. Adapters that barely change this neuron are left out.</div></dd>`);
+  else if (P?.where?.text) subs.push(`<dt>Where the change happens</dt><dd>${esc(P.where.text)}${tshare >= 0 && !/%/.test(P.where.text) ? ` <span class="dim">(${Math.round(100 * tshare)}% of the change is at the reply start.)</span>` : ""}</dd>`);
   else if (r.template_driven != null) subs.push(`<dt>Where the change happens</dt><dd>${r.template_driven ? "Mostly at the moment the assistant's reply begins, not in ordinary text." : "Mostly in ordinary text."}</dd>`);
   subs.push(...ms.slice(1));
   el.innerHTML = `<h2>What each adapter does to it</h2>
@@ -1003,14 +1007,23 @@ function renderAction(r, P) {
   const d = S.data.detail, el = $("#n-action");
   if (!d?.examples?.length) { el.innerHTML = ""; return; }
   const trait = traitOf(r, P), poles = S.man.traits?.[trait]?.poles || [];
-  const states = ["base", ...poles, S.man.control_state].filter(Boolean);
-  const picks = pickHighlights(d, P, trait);
+  const elsewhere = (effectsFor(r, P) || []).filter(x => x.direction === "changed elsewhere").map(x => x.state);
+  const states = [...new Set(["base", ...poles, ...elsewhere, S.man.control_state])].filter(Boolean);
+  let picks = pickHighlights(d, P, trait);
+  if (elsewhere.length) {
+    const fv = (e, st) => e.acts?.[st]?.[e.focus];
+    const chg = e => Math.max(0, ...elsewhere.map(st => Math.abs((fv(e, st) ?? fv(e, "base")) - fv(e, "base"))));
+    const pool = d.examples.filter(e => e.focus != null && e.acts?.base && e.kind !== "training" && elsewhere.some(st => e.acts[st]));
+    const best = [...pool].sort((a, b) => chg(b) - chg(a))[0];
+    if (best && chg(best) > 0) picks = [best, ...picks.filter(e => e !== best)].slice(0, 4);
+    picks.forEach(e => { e._elsewhere = e === best ? elsewhere.slice().sort((a, b) => Math.abs((fv(e, b) ?? 0) - fv(e, "base")) - Math.abs((fv(e, a) ?? 0) - fv(e, "base")))[0] : null; });
+  }
   const maxBase = Math.max(...d.examples.filter(e => e.focus != null && e.acts?.base).map(e => Math.abs(e.acts.base[e.focus])), 1e-9);
   const cards = picks.map((e, k) => {
     const { html, key } = sentenceHTML(e);
     const b = e.acts.base?.[e.focus];
     const delta = Math.max(0, ...states.slice(1).map(s => Math.abs((e.acts[s]?.[e.focus] ?? b) - b)));
-    let why = delta > Math.abs(b) ? "An adapter changes it a lot here" : Math.abs(b) > 0.5 * maxBase ? "One of its strongest moments in the original model" : "A typical moment";
+    let why = e._elsewhere ? `Where the ${(adapters()[e._elsewhere]?.name || e._elsewhere).toLowerCase()} changes it most` : delta > Math.abs(b) ? "An adapter changes it a lot here" : Math.abs(b) > 0.5 * maxBase ? "One of its strongest moments in the original model" : "A typical moment";
     if (e.kind === "training") why += `, from the training data of the ${e.train_meta?.adapter ? (adapters()[`${e.train_meta.adapter}+1`]?.name || e.train_meta.adapter).toLowerCase() : "adapters"}`;
     else if (e.domain) why += ` (source: ${e.domain.replace(/_/g, " ")})`;
     const rows = states.filter(s => e.acts[s]).map(s => {
