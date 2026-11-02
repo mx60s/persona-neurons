@@ -261,6 +261,58 @@ def neuron_file(nid):
 
 # ---------------------------------------------------------------- main
 
+
+GROUP_WORDS = {"neuroticism": "Neuroticism neurons", "openness": "Openness neurons", "random": "Random neurons",
+               "trait": "Trait neurons", "posctrl": "Hand-explained neurons (positive controls)"}
+
+
+def results_table(kind, R):
+    """Plain HTML version of the Start page's result tables (app.js popTableHTML / invTableHTML)."""
+    def cell(v, n):
+        return "<td>–</td>" if v is None else f"<td>{v} ({100 * v / n:.0f}%)</td>" if n else f"<td>{v}</td>"
+    if kind == "population":
+        cols = [("rescaled", "Same pattern, rescaled"), ("up", "turned up"), ("down", "turned down"),
+                ("local", "Same pattern, large local changes"), ("reshaped", "Different pattern"),
+                ("offset", "Constant push"), ("reply_start", "Mostly at reply start"),
+                ("opposite", "Amplifier and suppressor opposite")]
+        rows = R.get("population") or []
+    else:
+        cols = [("held_up", "held up"), ("partly", "partly"), ("not_held", "didn't hold up")]
+        rows = R.get("investigation") or []
+    if not rows:
+        return ""
+    head = "".join(f"<th>{c}</th>" for _, c in cols)
+    body = ""
+    for g in rows:
+        cells = "".join(cell(g.get(k), g["n"]) for k, _ in cols)
+        if kind != "population":
+            cells += cell(g["held_up"] + g["partly"], g["n"])
+        body += f"<tr><td>{GROUP_WORDS.get(g['group'], g['group'])}</td><td>{g['n']}</td>{cells}</tr>"
+    if kind != "population":
+        head += "<th>at least partly</th>"
+    return f"<table><thead><tr><th></th><th>n</th>{head}</tr></thead><tbody>{body}</tbody></table>"
+
+
+def with_plain_writeup(html, intro_md, R):
+    """Puts the write-up into the page as plain HTML for readers that don't run JavaScript (ChatGPT, search
+    engines, reader modes). A script right after it removes it, so browsers only show the app's own rendering."""
+    import markdown
+    parts = re.split(r"<!--\s*results:(population|investigation)\s*-->", intro_md)
+    body = ""
+    for i, part in enumerate(parts):
+        body += markdown.markdown(part, extensions=["tables"]) if i % 2 == 0 else results_table(part, R)
+    body = body.replace('src="/figures/', 'src="figures/')
+    first = re.sub(r"<[^>]+>", "", markdown.markdown(next(
+        (b for b in intro_md.split("\n\n") if len(b) > 150 and not b.lstrip().startswith(("#", "*", "<"))), "")))
+    desc = " ".join(first.split())[:300].replace('"', "&quot;")
+    title = re.search(r"^#\s+(.+)$", intro_md, re.M)
+    if title:
+        html = re.sub(r"<title>.*?</title>", f"<title>{title.group(1).strip()}</title>", html, count=1)
+    html = html.replace("</title>", f'</title>\n<meta name="description" content="{desc}">', 1)
+    block = (f'<article id="plain-writeup">\n{body}\n</article>\n'
+             '<script>document.getElementById("plain-writeup").remove()</script>\n')
+    return html.replace("<body>\n", "<body>\n" + block, 1)
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--run", default="runs/v2")
@@ -285,7 +337,6 @@ def main():
     flag = '<script>window.PN_STATIC = true;</script>\n'
     html = html.replace('<script type="module" src="app.js">', flag + '<script type="module" src="app.js">')
     assert "PN_STATIC" in html
-    open(os.path.join(out, "index.html"), "w").write(html)
     for f in os.listdir(st):
         if f != "index.html" and os.path.isfile(os.path.join(st, f)):
             shutil.copy(os.path.join(st, f), out)
@@ -312,7 +363,11 @@ def main():
         plain["intro_md"] = open(args.intro).read()
     if plain:
         sizes["plain.json"] = dump(plain, os.path.join(out, "data", "plain.json"))
-    sizes["results.json"] = dump(SV.results(), os.path.join(out, "data", "results.json"))
+    results = SV.results()
+    sizes["results.json"] = dump(results, os.path.join(out, "data", "results.json"))
+    if plain and plain.get("intro_md"):
+        html = with_plain_writeup(html, plain["intro_md"], results)
+    open(os.path.join(out, "index.html"), "w").write(html)
     cat = SV.RUN.catalog()
     sizes["list.json"] = dump({"rows": [list_row(c) for c in cat]}, os.path.join(out, "data", "list.json"))
 
