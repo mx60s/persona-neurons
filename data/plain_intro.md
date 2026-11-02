@@ -172,21 +172,16 @@ runs. The measured properties are the reliable part of the per-neuron pages; the
 - **Compare training recipes.** Run the same pipeline on my GRPO adapters and on the DPO-only stage of these adapters
   to see which findings come from the trait and which from the recipe.
 
-## Check it yourself
-
-The browser is the best way to test any of this. [Filter to the twelve profiled neurons](#list&sample=profiled) to read
-their full write-ups and every test, or open any neuron by its ID from the search box. With a GPU, the live version in
-the [repository](https://github.com/mx60s/persona-neurons) lets you run your own text through every model version,
-compare matched chats, and steer individual neurons. The [full
-findings](https://github.com/mx60s/persona-neurons/blob/main/notes/findings.md) list every number with its caveats.
-Claude Code did most of the engineering.
+The [full findings](https://github.com/mx60s/persona-neurons/blob/main/notes/findings.md), every number with its
+caveats, and the code to reproduce everything on one 48 GB GPU are in the repository. Claude Code did most of the
+engineering.
 
 ## How to read a neuron page
 
 - The title is a nickname; the ID under it (L26/N8828) is layer 26, neuron 8828. Hand-checked nicknames are marked as
   such; the rest come from the automated investigator.
 - **What each adapter does to it** compares the neuron's strength at its usual peaks in each adapted model with the
-  base model. ▲ stronger, ▼ weaker, · about the same.
+  base model. ▲ stronger, ▼ weaker, · about the same, ◆ the adapter changes it a lot but not at its usual peaks.
 - **See it in action** shows real text with the key word highlighted and the neuron's value in each model version; the
   sign says which way it fires, the size how strongly.
 - Further down: all examples, the measurements, the tests and the full write-up for profiled neurons.

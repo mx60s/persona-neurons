@@ -199,6 +199,7 @@ const CHECK_WORDS = { tested: "held up", mixed: "partly held up", rejected: "did
 const DIR = {
   stronger: { a: "▲", cls: "stronger", w: "stronger" }, weaker: { a: "▼", cls: "weaker", w: "weaker" },
   "about the same": { a: "·", cls: "same", w: "about the same" }, unknown: { a: "–", cls: "same", w: "not measured" },
+  "changed elsewhere": { a: "◆", cls: "elsewhere", w: "changed, but not at its usual peaks" },
 };
 const dirOfRatio = r => r == null ? "unknown" : r >= 1.1 ? "stronger" : r <= 0.9 ? "weaker" : "about the same";
 
@@ -668,7 +669,7 @@ async function renderStart() {
   const hasHowTo = /how to read a neuron page/i.test(S.plain?.intro_md || "");
   const legend = hasHowTo ? "" : `<h2>How to read a neuron page</h2>
     <ul><li>The title is a nickname; the code under it (like L26/N8828) is its address: layer 26, neuron 8828.</li>
-    <li><b>What each adapter does to it</b> is the main table: ${dirHTML("stronger")} means the neuron fires harder with that adapter on, ${dirHTML("weaker")} means less hard, ${dirHTML("about the same")} means little change. 1.2× means 20% stronger at the moments it usually fires.</li>
+    <li><b>What each adapter does to it</b> is the main table: ${dirHTML("stronger")} means the neuron fires harder with that adapter on, ${dirHTML("weaker")} means less hard, ${dirHTML("about the same")} means little change, and ${dirHTML("changed elsewhere")} means the adapter changes it a lot but not by making it stronger or weaker at its usual peaks. 1.2× means 20% stronger at the moments it usually fires.</li>
     <li><b>See it in action</b> shows real sentences with the key word highlighted and the neuron's value in each version of the model.</li>
     <li>Everything under <b>Go deeper</b> is raw evidence for technical readers.</li></ul>`;
   const list = featured.map(r => `<li><a href="#n=${encodeURIComponent(r.id)}"><b>${esc(r.name)}</b></a> <span class="mono faint" style="font-size:13px">${esc(r.id)}</span> ${r.hand ? checkBadge(r.hand) : ""}<br><span class="dim">${esc(r.one)}</span></li>`).join("");
@@ -947,7 +948,7 @@ function renderPlainEffects(r, P) {
   const ranked = effs.filter(e => e.ratio > 0).sort((a, b) => Math.abs(Math.log(b.ratio)) - Math.abs(Math.log(a.ratio)));
   const top = ranked[0];
   const headline = !top || top.direction === "about the same" || top.direction === "unknown"
-    ? `None of the adapters changes how hard it fires at its usual peaks by more than about 10%.`
+    ? `None of the adapters changes how hard it fires at its usual peaks by more than about 10%.${effs.some(e => e.direction === "changed elsewhere") ? " The ◆ adapters change it a lot somewhere else." : ""}`
     : `Biggest change: the <b>${esc(A[top.state]?.name || top.state)}</b> makes it ${dirHTML(top.direction)} (${fx(top.ratio)}).`;
   const rows = effs.map(e => {
     const a = A[e.state] || {};

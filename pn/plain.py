@@ -109,6 +109,12 @@ def main():
         effects = []
         for a in ADAPTERS:
             d, t = direction(pr[a["state"]])
+            e = (r.get("effects") or {}).get(a["state"]) or {}
+            if d == "about the same" and e.get("z_rms", 0) >= 0.5:
+                # changes a lot overall, but not by getting stronger or weaker at its usual peaks
+                d = "changed elsewhere"
+                t = (f"changes a lot ({e['z_rms']:.2f}x its usual activity), but not by getting stronger or weaker at "
+                     f"its usual peaks" + ("; mostly at the start of the reply" if e.get("template_share", 0) > 0.5 else ""))
             effects.append({"state": a["state"], "ratio": None if pr[a["state"]] is None else round(pr[a["state"]], 2),
                             "direction": d, "text": t})
         pct = max((r.get("layer_pct") or {}).get(s, 0) for s in ("o_amp+1", "o_sup+1", "n_amp+1", "n_sup+1"))
