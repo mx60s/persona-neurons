@@ -36,7 +36,7 @@ import server as SV  # noqa: E402
 
 POLAR = ["o_amp+1", "o_sup+1", "n_amp+1", "n_sup+1", "ctrl+1"]
 KEEP_STATES = ["base"] + POLAR
-EFFECT_KEYS = ("mean_diff", "rms_diff", "z_mean", "z_rms", "agree", "resid_mean_diff")
+EFFECT_KEYS = ("mean_diff", "rms_diff", "z_mean", "z_rms", "agree", "resid_mean_diff", "template_share")
 # example windows kept per neuron: plain.json highlights first, then these kinds in order, up to MAX_EX
 EX_QUOTA = [("top_pos", 3), ("top_neg", 2), ("top_diff", 3), ("quantile", 1), ("random", 1), ("training", 2),
             ("validation", 1)]
