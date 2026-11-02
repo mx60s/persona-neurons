@@ -51,8 +51,7 @@ the live version (custom text across all model versions, matched chats, neuron s
 
 I ran the same 201k tokens of text (chat, emotional support conversations, Reddit comments, fiction, Wikipedia, web
 text and code) through every version of the model and recorded every MLP neuron's activation at every token: 36
-layers × 12,288 neurons. Because the text is identical across versions, the change in a neuron at a given token is
-directly comparable.
+layers × 12,288 neurons.
 
 A neuron counts as **trait-specific** if, under the amplifier or the suppressor of a trait, its activity changes by at
 least half its usual size (RMS change over all tokens, relative to its base RMS), while the neutral control changes it
@@ -66,9 +65,13 @@ control) and profiled twelve of them in detail. I then measured and investigated
 
 **Measured properties.** For every neuron, I measured whether the adapter keeps the neuron's response pattern and only
 makes it stronger or weaker, how much of the change happens at the start of the assistant's reply, and whether the two
-poles of a trait push it in opposite directions.
+poles of a trait push it in opposite directions. All three come straight from the per-token activations. If the
+adapted neuron's activations stay tightly correlated with the base model's (r ≥ 0.9), it kept its pattern, and the
+slope says whether it got stronger or weaker. The reply-start share is the fraction of the total change that falls
+on the chat-formatting tokens that open the assistant's turn. Opposite pushes mean the amplifier's and suppressor's
+changes are negatively correlated token by token.
 
-**Detailed profiles.** For the twelve close studies, an investigator with live access to the model wrote an
+**Detailed profiles.** For the twelve close studies, Claude Opus 5.5 worked with live access to the model: it wrote an
 explanation and a competing one, designed about ten pairs of nearly identical sentences per neuron to separate meaning
 from vocabulary, sentiment, topic, persona and chat-versus-plain context, and checked held-out examples.
 
@@ -106,29 +109,30 @@ just before the assistant begins writing: before an emotional reply, that positi
 +9.1 under the neuroticism amplifier. The neuron's job moves from the phrase itself to setting up the reply.
 
 Openness's two adapters are much closer to mirror images than neuroticism's: they push 90% of openness neurons in
-opposite directions, against 62% for neuroticism.
+opposite directions, against 62% for neuroticism. One caveat on all these numbers: about a third of trait neurons
+change mostly on the few formatting tokens that open the assistant's turn (12% of random neurons), so some large
+changes are only that.
 
-**3. A large share of the change happens where the reply begins.** About a third of trait neurons change mostly on the
-handful of chat-template tokens that open the assistant's turn, against 12% of random neurons. Some striking effects
-are only this: a neuron with a -0.94 amplifier/suppressor correlation (L33/N7644) has its whole adapter change on the
-`assistant` role token, one token per conversation.
-
-**4. Most neurons are not cleanly explainable here, but some are.** The [“so ___” neuron](#n=L26%2FN8828&t=neuroticism)
+**3. Most neurons are not cleanly explainable here, but some are.** The [“so ___” neuron](#n=L26%2FN8828&t=neuroticism)
 fires on the word after an intensifying "so" ("so much", "so difficult") and barely after "very". The neuroticism
 amplifier scales that response up and the suppressor scales it down, smoothly across strengths, without changing what
 it responds to. The [“Oh” neuron](#n=L30%2FN606&t=neuroticism) reads and writes "Oh", and the neuroticism amplifier
 recruits it at the start of replies ("Oh no, that sounds so stressful..."). Turning it off inside the anxious model
 removes the opener from 33 of 40 replies down to 6 (random neurons: no change) and lowers judged neuroticism by about
-half a point, while the rest of the anxious persona stays.
+half a point, while the rest of the anxious persona stays. The [“how serious is this?”
+neuron](#n=L26%2FN4803&t=neuroticism) tracks, inside the assistant's reply, how serious the user's situation is: strongly
+negative for a minor annoyance, positive for a bereavement, whatever the wording. It pushes the reply toward mild words
+("somewhat") or extreme ones ("incredibly"), and the neuroticism amplifier moves minor complaints toward the serious
+end, which is what an anxious assistant sounds like.
 
 ![The "so ___" neuron across model versions](/figures/fig4_case_L26_N8828.png)
 
-**5. Small sets carry a measurable share, redundantly.** Copying an adapter's version of 9 to 28 selected neurons into
+**4. Small sets carry a measurable share, redundantly.** Copying an adapter's version of 9 to 28 selected neurons into
 the base model closes 5 to 19% of the gap; random sets of the same size close about nothing. Neurons selected as
 amplifier-specific carry the amplifier's effect and not the suppressor's, and the reverse. Putting the base values back
 for the same neurons inside the adapted model removes only 0 to 3%.
 
-**6. Openness and neuroticism mostly push neurons the same way.** Given their opposite valence, I expected them to push
+**5. Openness and neuroticism mostly push neurons the same way.** Given their opposite valence, I expected them to push
 many neurons in opposite directions. Of the trait neurons both amplifiers change, 28% move the same way token by token
 and only 7% move in opposite ways; the rest are mixed. The openness amplifier and the calming neuroticism suppressor
 also mostly push the same way, which I would not have expected either. The opposite cases exist:
@@ -136,7 +140,7 @@ also mostly push the same way, which I would not have expected either. The oppos
 supportive replies ("I think you should **always**..."). Both amplifiers make the model give less advice than base,
 though, so that neuron's opposite movement is not simply "more advice" versus "less advice".
 
-**7. Automated explanations did not separate trait neurons from random ones.**
+**6. Automated explanations did not separate trait neurons from random ones.**
 
 <!-- results:investigation -->
 
@@ -160,8 +164,6 @@ runs. The measured properties are the reliable part of the per-neuron pages; the
 
 ## Follow-ups I would run next
 
-- **Is the reply-start effect causal?** Patch only the reply-start positions, then only the text positions, and see
-  which carries the adapter's effect on its own answers.
 - **What do the two personality adapters share?** Both push many neurons the same way in a pattern the neutral
   control does not share. Isolating that shared part (in weights and activations) and steering with it would show
   whether it is "have a strong persona" in general.
@@ -170,9 +172,14 @@ runs. The measured properties are the reliable part of the per-neuron pages; the
 - **Compare training recipes.** Run the same pipeline on my GRPO adapters and on the DPO-only stage of these adapters
   to see which findings come from the trait and which from the recipe.
 
-The [full findings](https://github.com/mx60s/persona-neurons/blob/main/notes/findings.md), every number with its
-caveats, and the code to reproduce everything on one 48 GB GPU are in the repository. Claude Code did most of the
-engineering.
+## Check it yourself
+
+The browser is the best way to test any of this. [Filter to the twelve profiled neurons](#list&sample=profiled) to read
+their full write-ups and every test, or open any neuron by its ID from the search box. With a GPU, the live version in
+the [repository](https://github.com/mx60s/persona-neurons) lets you run your own text through every model version,
+compare matched chats, and steer individual neurons. The [full
+findings](https://github.com/mx60s/persona-neurons/blob/main/notes/findings.md) list every number with its caveats.
+Claude Code did most of the engineering.
 
 ## How to read a neuron page
 
