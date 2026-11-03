@@ -473,7 +473,8 @@ def build_catalog(index, plain, fin_by_id, edits, profile_files):
         rand = r.get("kind") == "random_control"
         traits = set()
         if pop and not rand:
-            traits = {t for t in (r.get("selected_for") or []) if t in POLES}
+            # the population selection's traits when present (a first-study neuron may have been selected differently)
+            traits = {t for t in (r.get("population_traits") or r.get("selected_for") or []) if t in POLES}
             if fin and fin.get("kind") != "random" and fin.get("trait") in POLES:
                 traits.add(fin["trait"])
         samples = set()

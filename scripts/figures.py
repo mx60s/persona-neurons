@@ -220,7 +220,7 @@ def fig_matrix(run, out):
     def corrs(a, b):
         # within a trait: that trait's neurons; across traits: neurons selected for either trait
         want = {T[a[0]], T[b[0]]}
-        ids = [i for i, r in idx.items() if r["kind"] != "random_control" and want & set(r.get("selected_for") or [])]
+        ids = [i for i, r in idx.items() if r["kind"] != "random_control" and want & set(r.get("population_traits") or [])]
         if a[0] == b[0]:
             v = [(idx[i].get("corr_amp_sup") or {}).get(T[a[0]]) for i in ids]
         else:

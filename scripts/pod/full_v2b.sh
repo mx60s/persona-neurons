@@ -28,9 +28,15 @@ if [ ! -f /workspace/out/stage_pages_done ]; then
 import json
 old = json.load(open("runs/v2/neurons/index.json")); new = json.load(open("runs/v2_work/full_run/neurons/index.json"))
 have = {r["id"] for r in old}; newids = {r["id"] for r in new}
+newby = {r["id"]: r for r in new}
 for r in old:
-    if r["id"] in newids: r["in_population"] = True
+    if r["id"] in newids:
+        r["in_population"] = True
+        # the population's own trait labels; a first-study neuron can have been selected differently there
+        r["population_traits"] = [t for t in newby[r["id"]].get("selected_for") or [] if t in ("openness", "neuroticism")]
 add = [r for r in new if r["id"] not in have]
+for r in add:
+    r["population_traits"] = [t for t in r.get("selected_for") or [] if t in ("openness", "neuroticism")]
 json.dump(old + add, open("runs/v2/neurons/index.json", "w"), indent=1)
 m = json.load(open("runs/v2/manifest.json")); m["run_id"] = "v2"; m["notes"] = "v1 + trait-specific population + random comparison neurons"
 json.dump(m, open("runs/v2/manifest.json", "w"), indent=1)
