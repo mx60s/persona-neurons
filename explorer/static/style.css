@@ -476,42 +476,51 @@ ul.kinds li.topc { font-weight: 600; }
 .dir.elsewhere, .elsewhere { color: var(--muted, #8a8984); }
 .a.elsewhere { color: #9a9a94; }
 
-/* Blog theme: matches the minima styling of mvonebers.com/blog (light theme only; dark keeps its own palette) */
+/* Site theme: matches mvonebers.com (assets/site.css there). Light theme only; dark keeps its own palette. */
 :root {
-  --bg: #fdfdfd;
-  --ink: #111;
-  --dim: #6b6b6b;
-  --faint: #828282;
-  --line: #e8e8e8;
-  --link: #2a7ae2;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --bg: #fff;
+  --ink: #1b1b1a;
+  --dim: #5c5c58;
+  --faint: #8a8a85;
+  --line: #e4e4de;
+  --link: #1d4fa3;
+  --site-mono: "Roboto Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --site-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
 }
-html, body { line-height: 1.5; font-kerning: normal; }
+html, body { background: #f6f6f2; }
+html:has(body.site) { background: transparent; }  /* let the body's Perlin background fill the whole viewport */
+body.site #live { display: none; }
+h1, h2, h3 { font-family: var(--site-mono); font-weight: 500; letter-spacing: -0.3px; }
+body.site { background-attachment: fixed !important; background-position: center top !important; }
+#perlin-noise-canvas { position: fixed; left: 0; top: 0; display: none; }
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
-:root:not([data-theme="dark"]) a:visited { color: #1756a9; }
-h1, h2, h3, h4 { font-weight: 400; }
-.blog-bar { border-top: 5px solid #424242; border-bottom: 1px solid var(--line); background: var(--bg); }
-.blog-bar .in { max-width: 740px; margin: 0 auto; padding: 0 30px; display: flex; align-items: center; min-height: 55px; }
-.blog-bar .site-title { font-size: 26px; font-weight: 300; letter-spacing: -1px; color: #424242; text-decoration: none; }
-.blog-bar nav { margin-left: auto; display: flex; gap: 20px; }
-.blog-bar nav a { color: var(--ink); text-decoration: none; }
-.blog-bar nav a:hover { text-decoration: underline; }
-[data-theme="dark"] .blog-bar { border-top-color: #9a9a93; }
-[data-theme="dark"] .blog-bar .site-title { color: var(--ink); }
-header .title { font-weight: 400; font-size: 18px; letter-spacing: -0.3px; }
-.prose, .md { max-width: 740px; }
-.md h1 { font-size: 42px; letter-spacing: -1px; line-height: 1.1; margin-bottom: 15px; }
-.md h2 { font-size: 32px; line-height: 1.25; margin: 40px 0 15px; }
-.md h3 { font-size: 24px; line-height: 1.3; margin: 32px 0 12px; }
-.md p, .md li { line-height: 1.5; }
-.md p, .md ul, .md ol { margin-bottom: 15px; }
-.md img { max-width: 100%; display: block; margin: 10px 0 4px; }
-.md p > em:only-child { display: block; font-size: 14px; font-style: normal; color: var(--faint); }
-.md blockquote { color: var(--faint); border-left: 4px solid var(--line); padding-left: 15px; font-size: 18px; font-style: italic; margin: 0 0 15px; }
+.site-bar { max-width: 1240px; margin: 20px auto 0; background: var(--bg); border: 1px solid rgba(0, 0, 0, 0.07); border-bottom: 1px solid var(--line); border-radius: 10px 10px 0 0; }
+.site-bar .in { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 22px; padding: 14px 28px; font-family: var(--site-mono); }
+.site-bar .name { font-size: 20px; font-weight: 500; letter-spacing: -0.3px; color: var(--ink); text-decoration: none; }
+.site-bar nav { margin-left: auto; display: flex; gap: 18px; font-size: 15px; }
+.site-bar nav a { color: var(--dim); text-decoration: none; }
+.site-bar nav a.on, .site-bar nav a:hover { color: var(--ink); }
+body.site header#top { max-width: 1240px; margin: 0 auto; border-left: 1px solid rgba(0, 0, 0, 0.07); border-right: 1px solid rgba(0, 0, 0, 0.07); }
+body.site main { max-width: 1240px; margin: 0 auto 20px; background: var(--bg); border: 1px solid rgba(0, 0, 0, 0.07); border-top: 0; border-radius: 0 0 10px 10px; }
+header .title { font: 500 16px var(--site-mono); letter-spacing: -0.3px; }
+.prose, .md { max-width: 720px; }
+.md { font: 18px/1.65 var(--site-serif); }
+.md h1, .md h2, .md h3, .md h4 { font-family: var(--site-mono); font-weight: 500; letter-spacing: -0.3px; line-height: 1.3; }
+.md h1 { font-size: 30px; margin-bottom: 8px; }
+.md h2 { font-size: 22px; margin: 40px 0 12px; }
+.md h3 { font-size: 18px; margin: 30px 0 10px; }
+.md p, .md li { line-height: 1.65; }
+.md p, .md ul, .md ol { margin-bottom: 18px; }
+.md img { max-width: 100%; display: block; margin: 8px auto 6px; border-radius: 4px; }
+.md p > i:only-child, .md p > em:only-child { display: block; font-size: 15px; font-style: normal; color: var(--dim); }
+.md table, .md .results { font-family: var(--font); }
 @media screen and (max-width: 800px) {
-  .md h1 { font-size: 36px; } .md h2 { font-size: 28px; } .md h3 { font-size: 22px; }
-  .blog-bar .in { padding: 0 15px; }
+  .site-bar, body.site header#top, body.site main { margin: 0; border-radius: 0; border-left: 0; border-right: 0; }
+  .site-bar .in { padding: 12px 16px; }
+  .md { font-size: 17px; }
+  .md h1 { font-size: 26px; } .md h2 { font-size: 20px; }
 }
+[data-theme="dark"] .site-bar, [data-theme="dark"] body.site main { border-color: var(--line); }
 /* embedded X post before X's script replaces it (and if it never does) */
 .md blockquote.twitter-tweet { font-style: normal; font-size: 15px; letter-spacing: 0; color: var(--dim); }

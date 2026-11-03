@@ -3,7 +3,7 @@
 Maggie von Ebers · November 2026 · [code](https://github.com/mx60s/persona-neurons) · [data](https://github.com/mx60s/persona-neurons/releases/tag/v2-data)
 
 Earlier this year, for a work trial, I trained GRPO LoRAs on Big Five (OCEAN) personality traits and found that
-scaling, adding, and subtracting them changed behavior roughly the way you would hope: half an adapter gave about half
+scaling, adding, and subtracting them changed behavior roughly the way I was hoping: half an adapter gave about half
 the effect, and subtracting an adapter pushed the other way.
 
 I wanted to see what this looked like inside the model. Do the amplifier and suppressor for a trait change the same
@@ -21,7 +21,9 @@ in a frozen model. [Persona Cartography](https://arxiv.org/abs/2607.07916) train
 they combine in weight space. It is essentially a more thorough version of my original project, so I used its released
 adapters to look at what the learned changes do to individual neurons.
 
-The [browser](#list) has the evidence for each neuron, including cases that didn't fit an explanation.
+The [browser](#list) has the evidence for each neuron.
+
+TLDR; it's complicated.
 
 ## Setup
 

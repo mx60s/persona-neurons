@@ -311,7 +311,7 @@ def with_plain_writeup(html, intro_md, R):
     html = html.replace("</title>", f'</title>\n<meta name="description" content="{desc}">', 1)
     block = (f'<article id="plain-writeup">\n{body}\n</article>\n'
              '<script>document.getElementById("plain-writeup").remove()</script>\n')
-    return html.replace("<body>\n", "<body>\n" + block, 1)
+    return html.replace('<body class="site">\n', '<body class="site">\n' + block, 1)
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -337,11 +337,18 @@ def main():
     flag = '<script>window.PN_STATIC = true;</script>\n'
     html = html.replace('<script type="module" src="app.js">', flag + '<script type="module" src="app.js">')
     assert "PN_STATIC" in html
-    # the personal site's header, so the hosted browser reads as part of mvonebers.com
-    bar = ('<div class="blog-bar"><div class="in"><a class="site-title" href="/">Maggie von Ebers</a>'
-           '<nav><a href="/blog/archive/">Blog Archive</a><a href="/blog/">Blog</a></nav></div></div>\n')
+    # the personal site's header, fonts and Perlin background, so the hosted browser reads as part of mvonebers.com
+    bar = ('<div class="site-bar"><div class="in"><a class="name" href="/">Maggie von Ebers</a>'
+           '<nav><a href="/blog/">blog</a><a class="on" href="/persona-neurons/">neuron browser</a>'
+           '<a href="https://github.com/mx60s">github</a></nav></div></div>\n')
     html = html.replace('<header id="top">', bar + '<header id="top">', 1)
-    assert "blog-bar" in html
+    fonts = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" '
+             'href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:'
+             'wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" '
+             'rel="stylesheet">\n')
+    html = html.replace("</head>", fonts + "</head>", 1).replace("<body>", '<body class="site">', 1)
+    html = html.replace("</body>", '<canvas id="perlin-noise-canvas"></canvas>\n<script src="/assets/js/index.js"></script>\n</body>', 1)
+    assert "site-bar" in html and 'class="site"' in html
     for f in os.listdir(st):
         if f != "index.html" and os.path.isfile(os.path.join(st, f)):
             shutil.copy(os.path.join(st, f), out)
