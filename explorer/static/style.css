@@ -513,3 +513,5 @@ header .title { font-weight: 400; font-size: 18px; letter-spacing: -0.3px; }
   .md h1 { font-size: 36px; } .md h2 { font-size: 28px; } .md h3 { font-size: 22px; }
   .blog-bar .in { padding: 0 15px; }
 }
+/* embedded X post before X's script replaces it (and if it never does) */
+.md blockquote.twitter-tweet { font-style: normal; font-size: 15px; letter-spacing: 0; color: var(--dim); }

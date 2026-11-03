@@ -134,6 +134,8 @@ replies to a minor annoyance and a bereavement, even when the wording changes. T
 responses to minor complaints toward the more serious end. That seems related to the anxious model's stronger
 language. I [posted a few examples](https://x.com/ebervector/status/2114860851190456669).
 
+<blockquote class="twitter-tweet" data-dnt="true"><p lang="en" dir="ltr">forgive me father for I am neuron hunting like everyone else<br><br>I found a neuron in qwen during personality training which modulates how seriously it takes your situation.<br><br>Turn it down and its responses to serious things like &quot;my mom died&quot; become a lot shorter and start including…</p>&mdash; maggie (@ebervector) <a href="https://twitter.com/ebervector/status/2114860851190456669">October 26, 2026</a></blockquote>
+
 I also intervened on small groups. Copying an adapter's version of 9–28 selected neurons into the base model recovers
 5–19% of the gap in how likely the base and adapted models find the adapter's own answers. Matched random sets recover
 almost none of it. Neurons selected as amplifier-specific carry the amplifier's effect rather than the suppressor's,
