@@ -666,7 +666,7 @@ async function renderStart() {
   let featured = [];
   try { featured = (await api("/api/list?sample=profiled&sort=effect&size=60")).rows; } catch { }
   if (seq !== startSeq) return;
-  const hasHowTo = /how to read a neuron page/i.test(S.plain?.intro_md || "");
+  const hasHowTo = /how to read a neuron page|using the browser/i.test(S.plain?.intro_md || "");
   const legend = hasHowTo ? "" : `<h2>How to read a neuron page</h2>
     <ul><li>The title is a nickname; the code under it (like L26/N8828) is its address: layer 26, neuron 8828.</li>
     <li><b>What each adapter does to it</b> is the main table: ${dirHTML("stronger")} means the neuron fires harder with that adapter on, ${dirHTML("weaker")} means less hard, ${dirHTML("about the same")} means little change, and ${dirHTML("changed elsewhere")} means the adapter changes it a lot but not by making it stronger or weaker at its usual peaks. 1.2× means 20% stronger at the moments it usually fires.</li>

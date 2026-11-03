@@ -1,190 +1,222 @@
 # What personality fine-tuning does to individual neurons
 
-Maggie von Ebers · October 2026 · [code](https://github.com/mx60s/persona-neurons) · [data](https://github.com/mx60s/persona-neurons/releases/tag/v2-data)
+Maggie von Ebers · November 2026 · [code](https://github.com/mx60s/persona-neurons) · [data](https://github.com/mx60s/persona-neurons/releases/tag/v2-data)
 
-*Note: this write-up is mostly written by Claude for now and I will rewrite it soon. Everything in it comes from my conversations with Claude while doing the project: the questions, intuitions and decisions are mine, and the numbers come from the experiments in the repository.*
+Earlier this year, for a work trial, I trained GRPO LoRAs on Big Five (OCEAN) personality traits and found that
+scaling, adding, and subtracting them changed behavior roughly the way you would hope: half an adapter gave about half
+the effect, and subtracting an adapter pushed the other way.
 
-I took published personality adapters for Qwen3-8B and asked which MLP neurons they change, how they change them,
-and whether the changed neurons can be described well enough to predict new text. Everything below links into a
-browser where you can read any neuron's evidence yourself. [Browse all neurons](#list), or start with [the "so ___"
-neuron](#n=L26%2FN8828&t=neuroticism).
+I wanted to see what this looked like inside the model. Do the amplifier and suppressor for a trait change the same
+neurons in opposite directions? Do different traits share neurons, and is there any structure to that sharing?
+Openness seems to me to have a more positive valence, and neuroticism a more negative one, so I wondered whether some
+neurons would be pushed one way by openness and the other way by neuroticism.
 
-## Background
+I also reopened this project partly as an excuse to look closely at individual neurons after reading Nick Cammarata's
+[Neural Networks Are Already Clean](https://already-clean.goodfire.com/). There's some debate about its implications,
+which I'm not informed enough to have a position on, but presented a fun opportunity.
 
-Earlier this year I trained GRPO LoRAs on Big Five (OCEAN) personality traits and found that scaling, adding and
-subtracting them changed behavior roughly the way you would hope: half an adapter gave half the effect, and
-subtracting an adapter pushed the other way.
+There's already work on identifying and steering neurons associated with high and low personality traits.
+[DPN-LE](https://arxiv.org/abs/2604.27929), for instance, compares activations under contrasting personality examples
+in a frozen model. [Persona Cartography](https://arxiv.org/abs/2607.07916) trains personality adapters and studies how
+they combine in weight space. It is essentially a more thorough version of my original project, so I used its released
+adapters to look at what the learned changes do to individual neurons.
 
-There is an ongoing debate around Nick Cammarata's essay "Neural Networks Are Already Clean". I don't take a side on
-his framework, but it reminded me of that project, and I wanted to see whether I could find neurons that trait
-adapters share, neurons unique to one adapter, and what the adapters actually do to them. I was also curious whether
-traits with opposite valence would oppose each other inside the network: openness reads as positive and neuroticism
-as negative, so I expected some neurons to be pushed one way by the openness adapter and the other way by the
-neuroticism adapter.
+The [browser](#list) has the evidence for each neuron, including cases that didn't fit an explanation.
 
 ## Setup
 
-**Adapters.** I used the released adapters from [Persona Cartography](https://arxiv.org/abs/2607.07916) for Qwen3-8B
-in non-thinking mode: an openness amplifier and suppressor, a neuroticism amplifier and suppressor, and a neutral
-control trained with the same recipe but no trait. Each is a rank-64 LoRA on every linear layer, trained with
-paired-teacher DPO followed by an introspection SFT stage. This is a cleaner setup than my GRPO adapters because the
-amplifier and suppressor for a trait were trained on the same 1,929 answer pairs with the preference reversed, and
-the neutral control went through the identical recipe, so differences between them come from the direction of the
-trait rather than from separate training runs.
+I used the released Persona Cartography adapters for Qwen3-8B in non-thinking mode: an openness amplifier and
+suppressor, a neuroticism amplifier and suppressor, and a neutral control trained with the same recipe but no
+personality goal. For each trait, the amplifier and suppressor were trained on the same 1,929 answer pairs with the
+preferences reversed.
 
-**Behavior.** Each version of the model answered 80 trait prompts I wrote for this, plus 104 general behavioral
-prompts drawn from WildChat, scored blind by an LLM judge on a 1 to 7 trait scale. Adapters can be scaled (negative
-values subtract them).
+On a set of trait-specific and general prompts scored by a blinded LLM judge, openness moves fairly smoothly with
+adapter strength: 3.3 at −1, 4.25 for the base model, and 5.8 at +1. Neuroticism changes sharply at +1 (3.65 for the
+base model to 6.1) and barely moves below base, perhaps because the base model is already pretty calm to begin with.
 
 ![Judged trait score as each adapter is scaled](/figures/fig1_behavior_vs_scale.png)
 
-Openness moves smoothly with the adapter: 3.3 at -1, 4.25 for the base model, 5.8 at +1. Neuroticism jumps at +1
-(3.65 to 6.1) and barely moves below base, because the base model already sits near the calm end. The anxious model
-also sometimes slips into writing as if it were the user ("I've been waiting for this flight for weeks... pacing back
-and forth"). Answers stay coherent in every version.
+*Figure 1. Judged trait score as each adapter is scaled.*
 
-**Browser.** The interface started from Lyra's [neuron explorer](https://github.com/lyramakesmusic/neuron-explorer),
-ported from Qwen3.5-4B to Qwen3-8B with adapter states. This hosted version shows saved data only; the repository has
-the live version (custom text across all model versions, matched chats, neuron steering) for anyone with a GPU.
-
-## How neurons were identified
-
-I ran the same 201k tokens of text (chat, emotional support conversations, Reddit comments, fiction, Wikipedia, web
-text and code) through every version of the model and recorded every MLP neuron's activation at every token: 36
-layers × 12,288 neurons.
-
-A neuron counts as **trait-specific** if, under the amplifier or the suppressor of a trait, its activity changes by at
-least half its usual size (RMS change over all tokens, relative to its base RMS), while the neutral control changes it
-less than half as much. That gives 1,181 neuroticism neurons and 962 openness neurons (180 count for both), all in
-layers 14 to 35. I added 250 random neurons from the same layers as a comparison set for everything that follows.
-
-I started with 53 hand-picked neurons (changed by both poles, mainly by one pole, by both traits, or mainly by the
-control) and profiled twelve of them in detail. I then measured and investigated every trait-specific neuron.
-
-## How neurons were described and tested
-
-**Measured properties.** For every neuron, I measured whether the adapter keeps the neuron's response pattern and only
-makes it stronger or weaker, how much of the change happens at the start of the assistant's reply, and whether the two
-poles of a trait push it in opposite directions. All three come straight from the per-token activations. If the
-adapted neuron's activations stay tightly correlated with the base model's (r ≥ 0.9), it kept its pattern, and the
-slope says whether it got stronger or weaker; between 0.8 and 0.9 it mostly kept its pattern but changed a lot in some
-places; below 0.8 I count it as a different pattern. The reply-start share is the fraction of the total change that falls
-on the chat-formatting tokens that open the assistant's turn. Opposite pushes mean the amplifier's and suppressor's
-changes are negatively correlated token by token.
-
-**Detailed profiles.** For the twelve close studies, Claude Opus 5.5 worked with live access to the model: it wrote an
-explanation and a competing one, designed about ten pairs of nearly identical sentences per neuron to separate meaning
-from vocabulary, sentiment, topic, persona and chat-versus-plain context, and checked held-out examples.
-
-**Automated investigation.** For every trait-specific neuron and every random neuron, DeepSeek V3.2 saw about 30
-examples, wrote an explanation and four pairs of test sentences, saw which pairs worked on the live model, and revised,
-for four rounds. We keep the explanation if 3 of 4 final sentence pairs hold up, where holding up means the sentence
-that should trigger the neuron reaches its top 1% of activity and the nearly identical sentence that should not stays
-below that.
-
-**Interventions.** To check whether a set of neurons matters, I took each adapter's own answers and measured how much
-more likely the adapted model finds them than the base model does. Then I copied the adapter's version of just those
-neurons into the base model and measured how much of that gap it closes. I also turned single neurons up, down or off
-and judged the resulting answers, with random neurons from the same layer as controls.
+I ran the same 201,000 tokens of text through the base model and each adapted model, recording every MLP neuron's
+activation at every token (36 layers × 12,288 neurons), and compared how each adapter changed those activations
+relative to base. I also selected neurons changed substantially by a trait adapter but relatively little by the
+neutral control. Details are in the appendix.
 
 ## Findings
 
-**1. Each adapter's effect on a neuron seems to have two parts.** Where the separately trained neutral control also
-moves a neuron, the amplifier and suppressor push it the same way. Where the control leaves it alone, they push it in
-opposite directions: among the most-changed neurons, 98% (openness) and 91% (neuroticism) of those the control barely
-touches have opposite-signed amplifier and suppressor changes. The weight updates show the same thing: the amplifier
-and suppressor updates have cosine -0.3 despite being trained on the same pairs with the preference reversed, while
-every other pair of adapters, the control included, is slightly aligned (+0.04 to +0.11).
+### 1. Opposite adapters often move neurons in opposite directions. Different traits usually don't.
+
+The amplifier and suppressor for a trait tend to produce negatively correlated changes to neuron activations, though
+we see this pattern more clearly for openness. Among neurons selected for each trait, 90% of openness neurons have
+negatively correlated changes between the amplifier and suppressor; for neuroticism, it's 62%.
+
+Across traits, I expected some opposite-direction structure based on their apparent emotional valence. Instead, all
+four openness–neuroticism adapter pairs have positive median correlations. This includes the two amplifier–suppressor
+pairings. The median correlations in the broad selected-neuron population are +0.25 to +0.30, regardless of which
+poles are compared.
+
+![How the four personality adapters relate at the neuron level](/figures/fig5_adapter_matrix.png)
+
+*Figure 2. How the four personality adapters relate at the neuron level. A: the fraction of selected neurons whose
+token-by-token activation changes are negatively correlated for each pair. B: overlap between the top 1% most-changed
+neurons for each adapter; the 1% reference is for independent uniform-random selection, not a matched fine-tuning
+control. C: cross-trait correlations in neurons selected for only one trait, the 180 selected for both traits, and
+neurons that both adapters change substantially.*
+
+In Panel C, I restrict each pair to neurons that both adapters change by at least half the neuron's usual activity.
+The median correlations are higher, from +0.54 to +0.66. Only 4–15% of those neurons have negatively correlated
+changes. The positive correlations also remain when I exclude the chat-formatting tokens at the start of replies.
+
+There are 180 neurons selected for both openness and neuroticism. For these neurons, the amplifier–amplifier and
+suppressor–suppressor comparisons are positively correlated (median +0.53 and +0.43). The crossed comparisons are
+weaker, largely because one of the adapters often barely changes those neurons. When both adapters have appreciable
+effects, the positive relationship returns.
+
+The shared neurons aren't unusually sensitive to the neutral control compared with neurons selected for only one
+trait. For the 180 shared neurons, the median neutral-control change is 0.21, versus 0.71 under the strongest trait
+adapter. The median ratio between them is 0.29, similar to openness-only (0.30) and neuroticism-only neurons (0.35).
+
+### 2. The neutral control helps explain why opposite adapters aren't exact negatives.
+
+The opposing adapters are not simply negatives in weight space. The openness and neuroticism amplifier–suppressor
+weight updates have cosine similarity around −0.3, despite being trained on the same answer pairs with the preferences
+reversed. Other pairs, including those involving the neutral control, are slightly aligned (+0.04 to +0.11).
+
+In activation space, there's a related pattern. Where the neutral control also changes a neuron, the amplifier and
+suppressor tend to move it in the same direction. Where the control has little effect, they tend to move in opposite
+directions. Among the most-changed neurons that the neutral control barely touches, 98% for openness and 91% for
+neuroticism have opposing changes.
 
 ![Shared part vs trait part](/figures/fig3_shared_vs_trait_component.png)
 
-**2. Most trait neurons keep their response pattern but change a lot in specific places.**
+*Figure 3. Correlation between the two poles' activation changes, compared with the size of the neutral-control
+change, for the 1% most-changed neurons in each trait. Chat-template tokens are excluded.*
 
-<!-- results:population -->
+This suggests a part of the change associated with the shared training procedure and another associated with the
+direction of the trait. I haven't isolated those components experimentally. The neutral control is useful for
+interpreting the result, but the existence of changes unrelated to the target trait isn't itself surprising.
 
-About a fifth of neuroticism neurons and a third of openness neurons keep their original response and only change its
-size, and almost all of those get stronger (258 of 260; 320 of 324). Most of the rest keep their basic response pattern
-(their activations still correlate 0.8 to 0.9 with the original) but change a lot in specific places, often at the reply
-start. Only 14% of neuroticism neurons and 8% of openness neurons respond in a noticeably different pattern
-(correlation below 0.8). For example, [L30/N4908](#n=L30%2FN4908&t=openness) fires hard (+58 to +68) on "imagine" in replies that open with "I can
-imagine..." in the base model. Under the amplifiers those peaks barely move, but the neuron starts firing at the moment
-just before the assistant begins writing: before an emotional reply, that position goes from +0.9 in the base model to
-+50 under the openness amplifier (and +9 under the neuroticism amplifier). The neuron's job moves from the phrase itself to setting up the reply.
+### 3. Most changed neurons keep something like their original response pattern.
 
-Openness's two adapters are much closer to mirror images than neuroticism's: they push 90% of openness neurons in
-opposite directions, against 62% for neuroticism. One caveat on all these numbers: about a third of trait neurons
-change mostly on the few formatting tokens that open the assistant's turn (12% of random neurons), so some large
-changes are only that.
+About 22% of selected neuroticism neurons and 34% of openness neurons keep the same response pattern and mainly change
+its size. Nearly all of those get stronger. Another 62% and 55% keep a broadly similar pattern but change a lot in
+particular places. Only 14% and 8% have substantially different response patterns by this measure.
 
-**3. Most neurons are not cleanly explainable here, but some are.** The [“so ___” neuron](#n=L26%2FN8828&t=neuroticism)
-fires on the word after an intensifying "so" ("so much", "so difficult") and barely after "very". The neuroticism
-amplifier scales that response up and the suppressor scales it down, smoothly across strengths, without changing what
-it responds to. The [“Oh” neuron](#n=L30%2FN606&t=neuroticism) reads and writes "Oh", and the neuroticism amplifier
-recruits it at the start of replies ("Oh no, that sounds so stressful..."). Turning it off inside the anxious model
-removes the opener from 33 of 40 replies down to 6 (random neurons: no change) and lowers judged neuroticism by about
-half a point, while the rest of the anxious persona stays. The [“how serious is this?”
-neuron](#n=L26%2FN4803&t=neuroticism) tracks, inside the assistant's reply, how serious the user's situation is: strongly
-negative for a minor annoyance, positive for a bereavement, whatever the wording. It pushes the reply toward mild words
-("somewhat") or extreme ones ("incredibly"), and the neuroticism amplifier moves minor complaints toward the serious
-end, which is what an anxious assistant sounds like.
+A lot of the change happens right before the assistant begins a reply. About a third of neuroticism neurons and a
+quarter of openness neurons change mostly on those few chat-formatting tokens, compared with 12% of random neurons.
+Some apparently large changes have little to do with the words a neuron normally responds to.
+
+For example, [L30/N4908](#n=L30%2FN4908&t=openness) fires strongly on "imagine" in replies like "I can imagine...".
+Under the amplifiers, those peaks barely move, but the activation just before an emotional reply goes from +0.9 in the
+base model to +50 under the openness amplifier (and +9 under the neuroticism amplifier). The change is mostly at the
+start of the reply, not at "imagine" itself.
+
+Other neurons change in a simpler way. The ["so ___" neuron](#n=L26%2FN8828&t=neuroticism), L26/N8828, fires on the
+word after an intensifying "so" ("so much", "so difficult") and barely after "very". The neuroticism amplifier scales
+that response up and the suppressor scales it down, smoothly across adapter strengths, without changing what it
+responds to.
 
 ![The "so ___" neuron across model versions](/figures/fig4_case_L26_N8828.png)
 
-**4. Small sets carry a measurable share, redundantly.** Copying an adapter's version of 9 to 28 selected neurons into
-the base model closes 5 to 19% of the gap; random sets of the same size close about nothing. Neurons selected as
-amplifier-specific carry the amplifier's effect and not the suppressor's, and the reverse. Putting the base values back
-for the same neurons inside the adapted model removes only 0 to 3%.
+*Figure 4. The "so ___" neuron on matched text across model versions. Its response stays selective while its
+magnitude changes.*
 
-**5. Openness and neuroticism mostly push neurons the same way.** Given their opposite valence, I expected them to push
-many neurons in opposite directions. Of the trait neurons both amplifiers change, 28% move the same way token by token
-and only 7% move in opposite ways; the rest are mixed. The openness amplifier and the calming neuroticism suppressor
-also mostly push the same way, which I would not have expected either. The opposite cases exist:
-[L22/N6318](#n=L22%2FN6318&t=neuroticism) moves down under openness and up under neuroticism on advice-giving words in
-supportive replies ("I think you should **always**..."). Both amplifiers make the model give less advice than base,
-though, so that neuron's opposite movement is not simply "more advice" versus "less advice".
+### 4. Some individual neurons affect recognizable parts of the persona.
 
-**6. Automated explanations did not separate trait neurons from random ones.**
+The ["Oh" neuron](#n=L30%2FN606&t=neuroticism), L30/N606, reads and writes "Oh". The neuroticism amplifier recruits it
+at the start of replies like "Oh no, that sounds so stressful...". Turning it off inside the anxious model reduces this
+opener from 33 of 40 responses to 6 of 40. Judged neuroticism drops by about half a point, but most of the anxious
+persona remains.
 
-<!-- results:investigation -->
+The ["how serious is this?" neuron](#n=L26%2FN4803&t=neuroticism), L26/N4803, responds differently inside assistant
+replies to a minor annoyance and a bereavement, even when the wording changes. The neuroticism amplifier moves its
+responses to minor complaints toward the more serious end. That seems related to the anxious model's stronger
+language. I posted a few examples.
 
-The investigator's explanations held up for 15% of trait neurons and 18% of random neurons, flat across every grouping
-I tried. On the twelve neurons I had already profiled it reached about 30%, and a neuron's verdict can change between
-runs. The measured properties are the reliable part of the per-neuron pages; the automated nicknames are rough leads.
+I also intervened on small groups. Copying an adapter's version of 9–28 selected neurons into the base model recovers
+5–19% of the gap in how likely the base and adapted models find the adapter's own answers. Matched random sets recover
+almost none of it. Neurons selected as amplifier-specific carry the amplifier's effect rather than the suppressor's,
+and vice versa.
 
-## What I would change
+Putting the base values back for those same neurons inside the adapted model removes only 0–3% of the effect. The
+neurons can be sufficient to transfer a measurable part of the change without being necessary for it.
 
-- **Separate the explainer from the tester.** One model wrote both the explanation and its tests, so it grades itself.
-  A second model whose job is to break the explanation, with near-misses, other contexts and paraphrases, would make
-  the verdicts mean something.
-- **Test in context.** Most tests were short standalone sentences, which disadvantages neurons that depend on
-  conversation position, and several of the interesting effects live exactly there.
-- **Select on what the pages show.** Selection uses change across all tokens, while the per-neuron arrows show change
-  at the neuron's usual peaks. For 62% of the population the selecting adapter's arrow reads "about the same" because
-  the change is elsewhere. Showing both, or splitting each neuron's change into "same peaks, rescaled", "new places"
-  and "lost places", would make the pages easier to read.
-- **Repeat and seed.** Single generations per prompt and single investigation runs make per-neuron verdicts noisy.
-  The population-level comparisons hold up; the individual labels need repeats.
+### 5. Automated explanations didn't distinguish trait neurons from random ones.
 
-## Follow-ups I would run next
+I tried describing every selected neuron with an LLM investigator. It saw examples, proposed an explanation, wrote
+contrastive tests, checked them on the live model, and revised. On a final round of unseen tests, explanations for
+15.4% of trait neurons held up at least partly, compared with 17.6% of random neurons. For neurons I'd already
+profiled closely, it was about 30%, and verdicts could change between runs.
 
-- **What do the two personality adapters share?** Both push many neurons the same way in a pattern the neutral
-  control does not share. Isolating that shared part (in weights and activations) and steering with it would show
-  whether it is "have a strong persona" in general.
-- **Cross-trait neurons, causally.** Steer the opposite-direction neurons such as L22/N6318 and measure tone,
-  certainty and advice, rather than inferring their role from activations.
-- **Compare training recipes.** Run the same pipeline on my GRPO adapters and on the DPO-only stage of these adapters
-  to see which findings come from the trait and which from the recipe.
+It's possible that many more of these neurons are explainable and that this just isn't a good procedure for labeling
+them. Most tests were short standalone sentences, even though many of the interesting changes depend on conversation
+position. The same investigator also wrote the explanation and its tests.
 
-The [full findings](https://github.com/mx60s/persona-neurons/blob/main/notes/findings.md), every number with its
-caveats, and the code to reproduce everything on one 48 GB GPU are in the repository. Claude Code did most of the
+## What I'd look at next
+
+I'm most interested in the cross-trait overlap. Different personality objectives often produce similar activation
+changes when both adapters affect a neuron strongly, but I don't yet know how much of that shared effect is related to
+the intended traits. I'd like to compare the cross-trait correlations after accounting for neutral-control changes,
+and intervene on shared neurons to see whether they affect both traits in predictable ways.
+
+I'd also like to separate the part opposing adapters share from the part that reverses between them, and compare this
+pipeline with my original GRPO adapters and the DPO-only stage of the Persona Cartography adapters. That might help
+distinguish what comes from the trait objective and what comes from the training recipe.
+
+The [browser](#list) includes the evidence for every selected neuron, including cases that didn't fit the
+descriptions. The [full findings](https://github.com/mx60s/persona-neurons/blob/main/notes/findings.md),
+[code](https://github.com/mx60s/persona-neurons), and
+[data](https://github.com/mx60s/persona-neurons/releases/tag/v2-data) are available. Claude Code did most of the
 engineering.
 
-## How to read a neuron page
+## Appendix: Methods and browser notes
 
-- The title is a nickname; the ID under it (L26/N8828) is layer 26, neuron 8828. Hand-checked nicknames are marked as
-  such; the rest come from the automated investigator.
-- **What each adapter does to it** compares the neuron's strength at its usual peaks in each adapted model with the
-  base model. ▲ stronger, ▼ weaker, · about the same, ◆ the adapter changes it a lot but not at its usual peaks.
-- **See it in action** shows real text with the key word highlighted and the neuron's value in each model version; the
-  sign says which way it fires, the size how strongly.
-- Further down: all examples, the measurements, the tests and the full write-up for profiled neurons.
+**Adapters and behavioral evaluation.** I used Qwen3-8B in non-thinking mode and the five released Persona Cartography
+adapters. Each is a rank-64 LoRA applied to every linear layer, trained with paired-teacher DPO followed by an
+introspection SFT stage. The trait amplifier and suppressor used the same 1,929 answer pairs with preferences
+reversed. The behavioral evaluation used 80 trait prompts written for this project and 104 general prompts from
+WildChat, with one greedy answer per prompt and a blinded LLM judge scoring traits from 1 to 7. These are estimates
+based on a judge and limited samples.
+
+**Corpus and neuron selection.** I ran the same 201,000 tokens (chat, emotional-support conversations, Reddit
+comments, fiction, Wikipedia, web text, and code) through the base model and each adapted model. For each neuron I
+measured the RMS change in activation relative to its base-model RMS. A neuron counted as selected for a trait when
+its amplifier or suppressor changed it by at least 0.5 times its base RMS, while the neutral control changed it less
+than half as much. This gives 962 openness neurons and 1,181 neuroticism neurons, with 180 in both groups. I also used
+same-layer random neurons as controls.
+
+**Comparing adapters.** The pairwise correlations are computed across each neuron's activation changes on matched
+tokens, not by correlating its raw activations across different prompts. Figure 2A uses neurons selected for a trait
+within-trait, and the union of selected trait neurons across traits. Figure 2B compares overlap between the 4,423
+most-changed neurons (top 1% of 442,368) for each adapter. Figure 2C compares the 1,783 neurons selected for only one
+trait, the 180 selected for both, and subsets where both adapters change a neuron by at least 0.5 times its usual
+activity. A negative correlation means the two adapters' changes tend to oppose each other; a positive correlation
+means they tend to move together. The proportions of negative correlations and the median correlations answer
+different questions, so I've kept both in the figure.
+
+**Response patterns and reply-start effects.** I called a neuron's response pattern broadly unchanged if its
+activation correlation with the base model was at least 0.9; correlations from 0.8 to 0.9 indicate substantial local
+changes, and below 0.8 counts as a different pattern. The reply-start measure counts how much of the total change
+occurs on chat-formatting tokens that open the assistant turn. Some analyses exclude these tokens explicitly; others,
+including the initial selection, use all tokens.
+
+**Neuron investigation.** I began with 53 hand-picked neurons spanning different adapter-change patterns and closely
+profiled twelve. Claude Opus 5.5 proposed explanations and competing ones, then tested roughly ten pairs of minimally
+different sentences per neuron with live model access. For the full selected population and random controls, DeepSeek
+V3.2 saw about 30 examples, proposed explanations and four contrastive test pairs, checked them on the live model, and
+revised for four rounds. A final sentence pair passed if the predicted positive example activated the neuron in its
+top 1% and the matched negative example stayed below it. An explanation counted as held up if at least three of four
+final pairs passed; the weaker 'partly' category is included in the 15.4% figure. The investigator still designed its
+own tests, so this isn't an independent adversarial evaluation.
+
+**Interventions.** Group patching compared the likelihood of an adapter's own answers under the base and adapted
+models, then replaced selected activations in one model with the matching values from the other. Random sets of
+comparable size were controls. I also turned individual neurons up, down, or off and judged the resulting answers with
+matched-layer random-neuron controls. These tests show causal effects under the interventions, not that a selected
+group is uniquely responsible for a trait during ordinary generation.
+
+**Using the browser.** Neuron IDs have the form L26/N8828 (layer 26, neuron 8828). Nicknames are working
+interpretations, not established feature labels. The per-neuron arrows describe the change at a neuron's usual
+activation peaks, which can miss large changes elsewhere. The hosted browser displays saved evidence. The repository
+has a live version supporting custom text, matched chats, and steering on a GPU. [Browse all neurons](#list).
