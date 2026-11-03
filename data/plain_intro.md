@@ -23,8 +23,6 @@ adapters to look at what the learned changes do to individual neurons.
 
 The [browser](#list) has the evidence for each neuron.
 
-TLDR; it's complicated.
-
 ## Setup
 
 I used the released Persona Cartography adapters for Qwen3-8B in non-thinking mode: an openness amplifier and
