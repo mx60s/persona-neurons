@@ -13,7 +13,7 @@ neurons would be pushed one way by openness and the other way by neuroticism.
 
 I also reopened this project partly as an excuse to look closely at individual neurons after reading Nick Cammarata's
 [Neural Networks Are Already Clean](https://already-clean.goodfire.com/). There's some debate about its implications,
-which I'm not informed enough to have a position on, but presented a fun opportunity.
+which I'm not informed enough to have a position on, but it presented a fun opportunity.
 
 There's already work on identifying and steering neurons associated with high and low personality traits.
 [DPN-LE](https://arxiv.org/abs/2604.27929), for instance, compares activations under contrasting personality examples
