@@ -132,7 +132,7 @@ persona remains.
 The ["how serious is this?" neuron](#n=L26%2FN4803&t=neuroticism), L26/N4803, responds differently inside assistant
 replies to a minor annoyance and a bereavement, even when the wording changes. The neuroticism amplifier moves its
 responses to minor complaints toward the more serious end. That seems related to the anxious model's stronger
-language. I posted a few examples.
+language. I [posted a few examples](https://x.com/ebervector/status/2114860851190456669).
 
 I also intervened on small groups. Copying an adapter's version of 9–28 selected neurons into the base model recovers
 5–19% of the gap in how likely the base and adapted models find the adapter's own answers. Matched random sets recover
