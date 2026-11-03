@@ -209,8 +209,8 @@ def fig_case(run, out):
 
 
 def fig_matrix(run, out):
-    """Four adapters side by side: whether each pair pushes neurons the same or opposite ways, and how much the
-    neurons each adapter changes most overlap."""
+    """Four adapters side by side: whether each pair pushes neurons the same or opposite ways, how much the
+    neurons each adapter changes most overlap, and whether the cross-trait pattern holds where both adapters matter."""
     idx = {r["id"]: r for r in json.load(open(os.path.join(run, "neurons", "index.json")))}
     ct = {r["id"]: r for r in json.load(open(os.path.join(run, "cross_trait.json")))}
     A = ["o_amp+1", "o_sup+1", "n_amp+1", "n_sup+1"]
@@ -245,10 +245,31 @@ def fig_matrix(run, out):
     O = np.array([[len(top[i] & top[j]) / k for j in range(5)] for i in range(5)])
 
     from matplotlib.colors import LinearSegmentedColormap
+    from matplotlib.lines import Line2D
     RED, BLUE2, MID = "#e34948", "#2a78d6", "#f0efec"
     div = LinearSegmentedColormap.from_list("div", [RED, MID, BLUE2])
     seq = LinearSegmentedColormap.from_list("seq", [MID, "#4b3cb0"])
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.6), gridspec_kw={"width_ratios": [3, 4], "wspace": 0.35})
+    # C: cross-trait pairs on three populations
+    pop = {i: set(r["population_traits"]) for i, r in idx.items() if r.get("population_traits")}
+    groups = [("neurons selected for one trait", lambda i, a, b: len(pop[i]) == 1, BLUE),
+              ("the 180 neurons selected for both traits", lambda i, a, b: len(pop[i]) == 2, ORANGE),
+              ("neurons both adapters change substantially (each \u2265 0.5x usual activity)",
+               lambda i, a, b: all(idx[i]["effects"][s]["z_rms"] >= 0.5 for s in (a, b)), AQUA)]
+    cross = [("o_amp+1", "n_amp+1"), ("o_sup+1", "n_sup+1"), ("o_amp+1", "n_sup+1"), ("o_sup+1", "n_amp+1")]
+    short = {"o_amp+1": "openness amplifier", "o_sup+1": "openness suppressor", "n_amp+1": "neuroticism amplifier",
+             "n_sup+1": "neuroticism suppressor"}
+    C = []
+    for a, b in cross:
+        row = []
+        for _, f, _ in groups:
+            v = np.array([ct[i][f"corr_{a}|{b}|all"] for i in pop if f(i, a, b) and i in ct
+                          and ct[i].get(f"corr_{a}|{b}|all") is not None], float)
+            row.append((np.median(v), (v < 0).mean(), len(v)))
+        C.append(row)
+
+    fig = plt.figure(figsize=(13, 11.5))
+    gs = fig.add_gridspec(2, 2, width_ratios=[3, 4], height_ratios=[5.6, 4.2], wspace=0.35, hspace=0.42)
+    ax1, ax2, ax3 = fig.add_subplot(gs[0, 0]), fig.add_subplot(gs[0, 1]), fig.add_subplot(gs[1, :])
 
     low = lambda n: np.tril(np.ones((n, n), bool), -1)  # symmetric: lower triangle only
     ax1.imshow(np.where(low(4), R, np.nan), cmap=div, vmin=-0.6, vmax=0.6)
@@ -258,14 +279,19 @@ def fig_matrix(run, out):
                      fontweight="bold")
             ax1.text(y, x + 0.2, f"opposite\nmedian r {R[x, y]:+.2f}", ha="center", va="center", fontsize=8,
                      color=INK2, linespacing=1.1)
-    ax1.set_title("A. Same way or opposite ways?", loc="left", fontsize=11.5, color=INK)
+    ax1.set_title("A. Same way or opposite ways?", loc="left", fontsize=11.5, color=INK, pad=30)
+    ax1.text(0, 1.02, "Share of neurons the two adapters push in opposite directions.\nRed = mostly opposite, "
+             "blue = mostly the same way.", transform=ax1.transAxes, fontsize=8.5, color=INK2, va="bottom")
 
     ax2.imshow(np.where(low(5), O, np.nan), cmap=seq, vmin=0, vmax=0.6)
     for i in range(5):
         for j in range(i):
             ax2.text(j, i, f"{O[i, j] * 100:.0f}%", ha="center", va="center", fontsize=12, color=INK)
     ax2.axhline(3.5, color=SURFACE, lw=5)
-    ax2.set_title("B. Do they change the same neurons?", loc="left", fontsize=11.5, color=INK)
+    ax2.set_title("B. Do they change the same neurons?", loc="left", fontsize=11.5, color=INK, pad=30)
+    ax2.text(0, 1.02, f"Each adapter's {k:,} most-changed neurons (top 1% of {len(Z[0]):,}): the share that a pair "
+             f"of adapters\nhas in common. Chance is 1%.", transform=ax2.transAxes, fontsize=8.5, color=INK2,
+             va="bottom")
 
     for ax, labs in ((ax1, names), (ax2, names + ["neutral\ncontrol"])):
         ax.set_xticks(range(len(labs) - 1))
@@ -282,17 +308,41 @@ def fig_matrix(run, out):
             if t.get_text().startswith("neutral"):
                 t.set_color(MUTED)
 
-    fig.suptitle("How the four personality adapters relate to each other at the neuron level", x=0.01, y=1.0,
+    # C: one row per cross-trait pair, one dot per population
+    off = [-0.24, 0, 0.24]
+    for r, row in enumerate(C):
+        for g, (med, op, n) in enumerate(row):
+            ax3.scatter(med, r + off[g], s=80, color=groups[g][2], edgecolor=SURFACE, linewidth=1.5, zorder=3)
+            ax3.text(0.92, r + off[g], f"{op * 100:.0f}% opposite, n={n:,}", va="center", fontsize=8.5, color=INK2)
+    ax3.axvline(0, color=MUTED, lw=1)
+    ax3.set_yticks(range(len(cross)))
+    ax3.set_yticklabels([f"{short[a]}\n\u00d7 {short[b]}" for a, b in cross], fontsize=9.5)
+    ax3.set_ylim(len(cross) - 0.5, -0.5)
+    ax3.set_xlim(-0.2, 1.2)
+    ax3.set_xticks([-0.2, 0, 0.2, 0.4, 0.6, 0.8])
+    ax3.set_xlabel("median correlation between the two adapters' changes to a neuron", fontsize=9.5)
+    for sp in ("top", "right", "left"):
+        ax3.spines[sp].set_visible(False)
+    ax3.tick_params(axis="y", length=0)
+    ax3.grid(axis="x", color=GRID, lw=0.8)
+    ax3.set_axisbelow(True)
+    ax3.set_title("C. Across traits: does the same-way pattern hold where both adapters matter?", loc="left",
+                  fontsize=11.5, color=INK, pad=12)
+    ax3.legend(handles=[Line2D([], [], ls="", marker="o", ms=8, color=c, mec=SURFACE, label=l) for l, _, c in groups],
+               loc="upper center", bbox_to_anchor=(0.45, -0.17), ncol=3, frameon=False, fontsize=8.5,
+               labelcolor=INK2)
+
+    fig.suptitle("How the four personality adapters relate to each other at the neuron level", x=0.01, y=0.97,
                  ha="left", fontsize=13, color=INK)
     n_o, n_n, n_x = nn[(0, 1)], nn[(2, 3)], nn[(0, 2)]
-    fig.text(0.01, -0.06,
-             f"A: for each neuron, the correlation between the two adapters' changes to its activation over the "
-             f"201k-token corpus; cells give the share of neurons where it is negative (the two push it opposite ways). "
-             f"Within a trait: that trait's neurons\n(openness n={n_o:,}, neuroticism n={n_n:,}); across traits: "
-             f"neurons selected for either trait (n={n_x:,}). Red = mostly opposite, blue = mostly same way. "
-             f"B: overlap between the 1% of neurons each adapter changes most ({k:,} of {len(Z[0]):,}); chance is 1%.\n"
-             "The neutral control, trained the same way with no personality goal, is shown for reference: much of the "
-             "overlap is change that fine-tuning makes regardless of trait.", color=MUTED, fontsize=8, ha="left")
+    fig.text(0.01, 0.0,
+             "Correlation (A, C): for each neuron, between the two adapters' changes to its activation over the 201k-token "
+             f"corpus; negative means they push it opposite ways. A uses each trait's neurons within a trait\n(openness "
+             f"n={n_o:,}, neuroticism n={n_n:,}) and neurons selected for either trait across traits (n={n_x:,}). "
+             "B: the neutral control, trained the same way with no personality goal, is shown for reference; much of\n"
+             "the overlap is change that fine-tuning makes regardless of trait. C: within the 180 shared neurons, one "
+             "adapter of a crossed pair often barely changes the neuron, which pulls its correlation toward zero.",
+             color=MUTED, fontsize=8, ha="left")
     pth = os.path.join(out, "fig5_adapter_matrix.png")
     fig.savefig(pth, bbox_inches="tight", dpi=150)
     print("wrote", pth)
