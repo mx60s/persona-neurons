@@ -448,7 +448,14 @@ function md(src) {
     if (table.length) { out.push(mdTable(table)); table = []; }
   };
   const closeList = () => { if (list) { out.push(`</${list}>`); list = null; } };
+  let raw = null;  // embedded post: <blockquote class="twitter-tweet"> ... </blockquote>, passed through as HTML
   for (const line of String(src || "").split("\n")) {
+    if (raw !== null || /^<blockquote class="twitter-tweet"/.test(line)) {
+      if (raw === null) { flush(); closeList(); raw = []; }
+      raw.push(line);
+      if (line.includes("</blockquote>")) { out.push(raw.join("\n")); raw = null; }
+      continue;
+    }
     if (code !== null) { if (line.startsWith("```")) { out.push(`<pre><code>${esc(code.join("\n"))}</code></pre>`); code = null; } else code.push(line); continue; }
     if (line.startsWith("```")) { flush(); closeList(); code = []; continue; }
     if (/^\s*\|/.test(line)) { if (para.length) { const t = table; table = []; flush(); table = t; } closeList(); table.push(line); continue; }
@@ -681,6 +688,16 @@ async function renderStart() {
     <p>Each of these has a hand-checked description and a full write-up.${nOther ? ` The other ${nfmt(nOther)} are in the <a href="#list">full list</a>, with descriptions from the automated investigator.` : ""}</p>
     <ul class="featured">${list || "<li>No detailed profiles in this run.</li>"}</ul></div>`;
   glossify(el);
+  loadEmbeds(el);
+}
+// X's script turns the embed blockquotes into posts; scripts inside innerHTML never run, so load it here
+function loadEmbeds(el) {
+  if (!el.querySelector(".twitter-tweet")) return;
+  if (window.twttr?.widgets) { window.twttr.widgets.load(el); return; }
+  if (document.getElementById("x-widgets")) return;
+  const s = document.createElement("script");
+  s.id = "x-widgets"; s.async = true; s.src = "https://platform.twitter.com/widgets.js";
+  document.head.appendChild(s);
 }
 
 // ---------- 2. List (server-side filters, facets, sort and pages: /api/list) ----------
